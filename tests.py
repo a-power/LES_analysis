@@ -6,3 +6,4 @@ data_in = Dataset(file_in, mode='r')
 print('time 0', data_in.variables['time_series_120_600'][:], "time 1", data_in.variables['time_series_600_600'][:])
 
 
+
