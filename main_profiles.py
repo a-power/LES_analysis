@@ -25,3 +25,5 @@ for i, var in enumerate(myvars):
         plt.plot(var_plot, z/z_i, label=f'$\\Delta x$ = {str(res)} m')
     plt.legend(fontsize=12)
     figs.savefig(f'plots/{var}_{set_time}_time_av_profile.png')
+    plt.show()
+
