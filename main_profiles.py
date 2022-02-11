@@ -21,7 +21,7 @@ for i, var in enumerate(myvars):
 
     for m, res in enumerate(model_res_list):
         var_plot = np.load(f'files/{res}_{var}_time_av.npy')
-        z_plot = np.load(f'files/{res}_z')
+        z_plot = np.load(f'files/{res}_z.npy')
         print(len(var_plot))
         plt.plot(var_plot, z_plot, label=f'$\\Delta x$ = {str(model_res_list_int[m])} m')
     plt.legend(fontsize=12)
