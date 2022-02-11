@@ -13,7 +13,7 @@ def time_av_prof(vars, dx_list, time_in, indir):
         nt = len(times)
         print("nt = ", nt)
         z_in = ds_in['z']
-        z = z_in.data[0]
+        z = z_in.data
         print("length of z = ", len(z))
 
         for j, var_in in enumerate(vars):
