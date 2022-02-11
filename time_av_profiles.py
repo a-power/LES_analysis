@@ -17,8 +17,8 @@ def time_av_prof(vars, dx_list, time_in, indir):
         print("length of z = ", len(z))
 
         for j, var_in in enumerate(vars):
-            var_data = np.zeros(z)
-            av_var_data = np.zeros(z)
+            var_data = np.zeros(len(z))
+            av_var_data = np.zeros(len(z))
             for k, time_stamp in enumerate(times):
                 my_var = ds_in[f'{var_in}'][k,...]
                 var_data += my_var.data
