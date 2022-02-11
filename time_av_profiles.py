@@ -7,9 +7,9 @@ def time_av_prof(vars, dx_list, time_in, indir):
         print('retrieved file')
         ds_in = xr.open_dataset(file_in)
         print('file opened')
-        time_in = ds_in['time_series_600_600']
+        time_data = ds_in['time_series_600_600']
         print('time retrieved')
-        times = time_in.data
+        times = time_data.data
         nt = len(times)
         print("nt = ", nt)
         z_in = ds_in['z']
