@@ -14,7 +14,7 @@ z_i = 1000
 z = avp.time_av_prof(myvars, model_res_list, set_time, mydir)
 
 for i, var in enumerate(myvars):
-    print('plotting', var, "number of vars = ", len(i))
+    print('plotting', var, "number of vars = ", len(myvars))
 
     figs = plt.figure(figsize=(6, 6))
     plt.ylabel(r'z')
