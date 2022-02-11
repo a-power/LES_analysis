@@ -10,6 +10,7 @@ def time_av_prof(vars, dx_list, time_in, indir):
         nt = len(times)
         z_in = ds_in['z']
         z = z_in.data
+        np.save(f'files/{dx}_z', z)
 
         for j, var_in in enumerate(vars):
             var_data = np.zeros(len(z))

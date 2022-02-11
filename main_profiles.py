@@ -11,10 +11,9 @@ model_res_list_int = np.array([20, 25, 40, 80, 160, 320])
 
 myvars = ['ww_mean']
 z_i = 1000
-z = avp.time_av_prof(myvars, model_res_list, set_time, mydir)
+avp.time_av_prof(myvars, model_res_list, set_time, mydir)
 
 for i, var in enumerate(myvars):
-    print('plotting', var, "number of vars = ", len(myvars))
 
     figs = plt.figure(figsize=(6, 6))
     plt.ylabel(r'z')
@@ -22,8 +21,9 @@ for i, var in enumerate(myvars):
 
     for m, res in enumerate(model_res_list):
         var_plot = np.load(f'files/{res}_{var}_time_av.npy')
-        print(var_plot)
-        plt.plot(var_plot, z/z_i, label=f'$\\Delta x$ = {str(model_res_list_int[m])} m')
+        z_plot = np.load(f'files/{res}_z')
+        print(len(var_plot))
+        plt.plot(var_plot, z_plot, label=f'$\\Delta x$ = {str(model_res_list_int[m])} m')
     plt.legend(fontsize=12)
     figs.savefig(f'plots/{var}_{set_time}_time_av_profile.png')
     plt.show()
