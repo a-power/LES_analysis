@@ -3,44 +3,31 @@ from scipy import ndimage
 # Ignore divide-by-zero warnings that occur when converting between wavenumbers/frequency/wavelength
 np.seterr(divide='ignore')
 
-
-# def sig_to_dx_filt(sig_smag, sig_filt):
-#     dx = (np.pi/(1.5174))*(np.sqrt((sig_smag**2)+(sig_filt**2))) #10% method
-#     return round(dx, 2)
-
 def sig_to_dx(sig_filt):
-    dx = np.sqrt(6)*(sig_filt) #(np.pi/(2))
+    dx = 2*(sig_filt)
     return round(dx, 2)
 
-# def dx_to_sig_filt(dx_want, dw_orig, sig_smag):
-#     sig_filt = np.sqrt((4/np.pi**2)*(dx_want - dx_orig)**2 - sig_smag)
-#     return sig_filt
-
-def dx_to_sig_filt(dx_eff, sig_smag):
-    sig_filt = np.sqrt((2.3/np.pi**2)*(dx_eff)**2 - sig_smag**2)
+def dx_to_sig_filt(dx_eff):
+    sig_filt = dx_eff/2
     return sig_filt
 
-def S_smag(u, v, w):
-    "calculates S for each point, therefore at each point you haev an Sij matrix/tensor"
+def S_smag(u, v, w): #This is the old Sij calc I used
+    "calculates S for each point, at each point you have an Sij matrix/tensor"
 
     S = 0.5*[[2*np.diff(u, axis=0), np.diff(u, axis=1)+np.diff(v, axis=0), np.diff(u, axis=2)+np.diff(x, axis=0)],
         [np.diff(v, axis=0)+np.diff(u, axis=1), 2*np.diff(v, axis=1), np.diff(v, axis=2)+np.diff(w, axis=1)],
         [np.diff(w, axis=0)+np.diff(u, axis=2), np.diff(w, axis=1)+np.diff(v, axis=2), 2*np.diff(w, axis=2)]]
     return S
-
-def L(u,v,w,uu,vv,ww,uv,uw,vw):
-    "inputs must all be filtered versions"
     
 
 def C_dyn(L, M): # set_z=None):
     "calculates the local dynamic Smagorinsky constant"
     
     if np.shape(L) != np.shape(M):
-        print("Arrays dimentions do not match")
+        print("Array dimentions do not match")
         
     
     else:
-        C = 0
         C = (1/2)*(L*M/M**2)
            
     return C
