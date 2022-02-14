@@ -1,18 +1,13 @@
 import os
 import numpy as np
 import xarray as xr
-import matplotlib
-import matplotlib.pyplot as plt
 
 import subfilter as sf
 import filters as filt
-import difference_ops as do
 import dask
 
 
 options = {
-#        'FFT_type': 'FFTconvolve',
-#        'FFT_type': 'FFT',
         'FFT_type': 'RFFT',
         'save_all': 'Yes',
         'th_ref': 300.0,
@@ -29,19 +24,6 @@ os.makedirs(odir, exist_ok = True)
 
 file = 'cbl_13200.nc' 
 ref_file = None
-
-def k_cut_find(delta):
-    return np.pi/(delta)
-
-def sigma_find(delta):
-    return delta/2 #(np.sqrt(6))
-
-def L_ij_sym(u, v, w, uu, uv, uw, vv, vw, ww):
-    
-    L_ij = np.array([ (u*u-uu), (u*v-uv), (u*w-uw),
-                                (v*v-vv), (v*w-vw),
-                                          (w*w-ww) ] )
-    return L_ij
 
 def main():
     '''
