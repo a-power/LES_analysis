@@ -9,6 +9,7 @@ odir = outdir + '20m_gauss_dyn' +'/'
 
 os.makedirs(odir, exist_ok = True)
 
+filter_name = 'gaussian'  # "wave_cutoff"
 sigma_list = np.array([20, 40])
 opgrid = 'w'
 
@@ -19,3 +20,4 @@ options = {
         'dx': 20.0,
         'dy': 20.0,
           }
+
