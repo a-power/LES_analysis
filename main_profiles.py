@@ -14,6 +14,7 @@ model_res_list_int = np.array([20, 25, 40, 80, 160, 320])
 
 ########################### mean profiles #########################################
 
+
 myvars = ['u_wind_mean','v_wind_mean','w_wind_mean','ww_mean','theta_mean','vapour_mmr_mean', \
           'liquid_mmr_mean','wtheta_ad_mean','wtheta_cn_mean','wql_ad_mean','wql_cn_mean',\
           'wqv_ad_mean', 'wqv_cn_mean', 'total_cloud_fraction']
