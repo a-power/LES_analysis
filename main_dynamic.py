@@ -21,4 +21,4 @@ options = {
         'dy': 20.0,
           }
 
-time_av_dyn(dx, set_time, filter_name, sigma_list, in_dir, outdir, options, opgrid, domain_in=16, ref_file = None)
+tdy.time_av_dyn(dx, set_time, filter_name, sigma_list, in_dir, outdir, options, opgrid, domain_in=16, ref_file = None)
