@@ -155,21 +155,6 @@ def time_av_dyn(dx_in, time_in, filt, filt_scale, indir, odir, opt, grid, domain
                 L_ij.name = "L_ij"
                 L_ij = save_field(filtered_data, L_ij)
 
-                ### Lines 204 to 217 don't run - grid / indexing problem ###
-
-                # deform_filt_r, deform_filt_s = sf.filtered_deformation(dataset,
-                #                                      ref_dataset,
-                #                                      derived_data, filtered_data,
-                #                                      opt, new_filter)#,
-                # grid = grid)
-
-                #             S_ij_temp_hat, abs_S_temp_hat = sf.shear(deform_filt_r)
-
-                #             S_ij_hat = 1/2*S_ij_temp_hat
-                #             abs_S_hat = np.sqrt(abs_S_temp_hat)
-
-                ###############################################
-
                 deform = sf.deformation(dataset,
                                         ref_dataset,
                                         derived_data,
@@ -193,11 +178,6 @@ def time_av_dyn(dx_in, time_in, filt, filt_scale, indir, odir, opt, grid, domain
 
                 S_ij_abs_S_hat_filt = sf.filter_field(S_ij_abs_S, filtered_data,
                                                       opt, new_filter)
-
-                #             filt_scale_copy = filt_scale.copy()
-                #             filt_scale_copy.append("domain")
-                #             filt_scale = xr.DataArray(data=filt_scale_copy[j], name = "filt_scale")
-                #             filt_scale = sf.save_field(filtered_data, filt_scale)
 
             filtered_data['ds'].close()
         derived_data['ds'].close()
