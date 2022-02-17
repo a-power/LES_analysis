@@ -175,7 +175,7 @@ def time_av_dyn(dx_in, time_in, filt, filt_scale, indir, odir, opt, grid, domain
      dx: the grid spacing and number of grid points in the format:  """
 
     file_in = f'{indir}{dx_in}/diagnostic_files/BOMEX_m{dx_in}_all_{time_in}.nc'
-    ds_in = xr.open_ds_in(file_in)
+    ds_in = xr.open_dataset(file_in)
     z_in = ds_in['z']
     z = z_in.data
     np.save(f'files/{dx_in}_z', z)
