@@ -7,12 +7,28 @@ def sigma_find(delta):
     return delta/2
 
 
-def L_ij_sym(u, v, w, uu, uv, uw, vv, vw, ww):
+def my_L_ij_sym(u, v, w, uu, uv, uw, vv, vw, ww):
     
     L_ij = np.array([ (u*u-uu), (u*v-uv), (u*w-uw),
                                 (v*v-vv), (v*w-vw),
                                           (w*w-ww) ] )
     
+    return L_ij
+
+
+def L_ij_sym(file_in):
+
+    s_uu = file_in['u_on_p.u_on_p_r']
+    s_uv = file_in['u_on_p.v_on_p_r']
+    s_uw = file_in['u_on_p.w_on_p_r']
+    s_vv = file_in['v_on_p.v_on_p_r']
+    s_vw = file_in['v_on_p.w_on_p_r']
+    s_ww = file_in['w_on_p.w_on_p_r']
+
+    L_ij = np.array([(s_uu), (s_uv), (s_uw),
+                             (s_vv), (s_vw),
+                                     (s_ww)])
+
     return L_ij
 
 

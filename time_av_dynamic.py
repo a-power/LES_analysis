@@ -1,9 +1,9 @@
 import numpy as np
 import xarray as xr
-import dynamic as dyn
+import dynamic as dy
 import subfilter as sf
-import filters as filt
 import dask
+from netCDF4 import Dataset
 
 def time_av_dyn(dx_in, time_in, filt, filt_scale, indir, odir, opt, grid, domain_in=16, ref_file = None):
 
@@ -43,9 +43,9 @@ def time_av_dyn(dx_in, time_in, filt, filt_scale, indir, odir, opt, grid, domain
 
     for t_in in(nt):
 
-        dataset = xr.open_dataset(file_in, chunks={timevar: t_in,
+        dataset = xr.open_dataset(file_in, chunks={timevar: 1,
                                                       xvar: nch, yvar: nch,
-                                                      'z': 'auto', 'zn': 'auto'})
+                                                      'z': 'auto', 'zn': 'auto'})[t_in,...]  #preprocess: check versions
 
         if ref_file is not None:
             ref_dataset = xr.open_dataset(dir + ref_file)
@@ -63,7 +63,7 @@ def time_av_dyn(dx_in, time_in, filt, filt_scale, indir, odir, opt, grid, domain
         fname = filter_name
 
         derived_data, exists = \
-            sf.setup_derived_data_file(indir, odir+str(timevar[t_in]), fname,
+            sf.setup_derived_data_file(indir, odir+"/"+str(timevar[t_in]), fname,
                                        opt, override=True)
 
         filter_list = list([])
@@ -138,23 +138,6 @@ def time_av_dyn(dx_in, time_in, filt, filt_scale, indir, odir, opt, grid, domain
                                                                opt, new_filter,
                                                                var_list=var_list,
                                                                grid=grid)
-
-                ##################### Lij filtered
-
-                u_hat = filtered_data['u_on_p_r']
-                v_hat = filtered_data['v_on_p_r']
-                w_hat = filtered_data['w_on_p_r']
-                uu_hat = filtered_data['u_on_p.u_on_p_r']
-                uv_hat = filtered_data['u_on_p.v_on_p_r']
-                uw_hat = filtered_data['u_on_p.w_on_p_r']
-                vv_hat = filtered_data['v_on_p.v_on_p_r']
-                vw_hat = filtered_data['v_on_p.w_on_p_r']
-                ww_hat = filtered_data['w_on_p.w_on_p_r']
-
-                L_ij = L_ij_sym(u_hat, v_hat, w_hat, uu_hat, uv_hat, uw_hat, vv_hat, vw_hat, ww_hat)
-                L_ij.name = "L_ij"
-                L_ij = save_field(filtered_data, L_ij)
-
                 deform = sf.deformation(dataset,
                                         ref_dataset,
                                         derived_data,
@@ -182,6 +165,21 @@ def time_av_dyn(dx_in, time_in, filt, filt_scale, indir, odir, opt, grid, domain
             filtered_data['ds'].close()
         derived_data['ds'].close()
         dataset.close()
-
-
     return
+
+def time_av_Cs(indir, time_in):
+
+    """ function takes in:  """
+
+    file_in = f'{indir}____.nc'
+    ds_in = xr.open_ds_in(file_in)
+    time_data = ds_in['time']
+    times = time_data.data
+    nt = len(times)
+    ds_in.close()
+
+    for t_in in(nt):
+
+        datain = Dataset(file_in, mode='r')
+
+        Lij = dy.L_ij_sym(data_in)

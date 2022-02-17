@@ -21,3 +21,5 @@ def time_av_prof(vars, dx_list, time_in, indir):
             av_var_data = var_data/nt
             np.save(f'files/{dx}_{var_in}_time_av', av_var_data)
     return
+
+## Dataset.mean(time).plot()

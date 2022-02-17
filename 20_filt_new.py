@@ -186,8 +186,6 @@ def main():
                 #             ww_hat = filtered_data['w_on_p.w_on_p_r'] 
 
                 #             L_ij = L_ij_sym(u_hat, v_hat, w_hat, uu_hat, uv_hat, uw_hat, vv_hat, vw_hat, ww_hat)
-                #             L_ij.name = "L_ij"
-                #             L_ij = save_field(filtered_data, L_ij)
 
 
               ### Lines 204 to 217 don't run - grid / indexing problem ###
