@@ -2,10 +2,11 @@ import numpy as np
 import xarray as xr
 import dynamic as dy
 import subfilter as sf
+import filters as filt
 import dask
 from netCDF4 import Dataset
 
-def time_av_dyn_timeloop(dx_in, time_in, filt, filt_scale, indir, odir, opt, grid, domain_in=16, ref_file = None):
+def time_av_dyn_timeloop(dx_in, time_in, filt_in, filt_scale, indir, odir, opt, grid, domain_in=16, ref_file = None):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
@@ -20,7 +21,7 @@ def time_av_dyn_timeloop(dx_in, time_in, filt, filt_scale, indir, odir, opt, gri
     np.save(f'files/{dx_in}_z', z)
 
     N = domain_in*(1000)/dx_in
-    filter_name = filt
+    filter_name = filt_in
     width = -1
     cutoff = 0.000001
 
@@ -169,7 +170,7 @@ def time_av_dyn_timeloop(dx_in, time_in, filt, filt_scale, indir, odir, opt, gri
 
 
 
-def time_av_dyn(res_in, time_in, filt, filt_scale, indir, odir, opt, grid, dx_in=20, domain_in=16, ref_file = None):
+def time_av_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, grid, dx_in=20, domain_in=16, ref_file = None):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
@@ -184,7 +185,7 @@ def time_av_dyn(res_in, time_in, filt, filt_scale, indir, odir, opt, grid, dx_in
     np.save(f'files/{dx_in}_z', z)
 
     N = domain_in*(1000)/dx_in
-    filter_name = filt
+    filter_name = filt_in
     width = -1
     cutoff = 0.000001
 
