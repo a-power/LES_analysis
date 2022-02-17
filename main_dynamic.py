@@ -1,12 +1,7 @@
 import matplotlib.pyplot as plt
 import time_av_dynamic as tdy #dot to get folder outside
 import numpy as np
-import netCDF4
-from netCDF4 import Dataset
-from matplotlib.ticker import PercentFormatter
-from importlib import reload
-from scipy.stats import gaussian_kde
-import dynamic as dy
+import os
 
 set_time = '14400'
 in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
