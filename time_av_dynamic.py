@@ -169,12 +169,12 @@ def time_av_dyn_timeloop(dx_in, time_in, filt, filt_scale, indir, odir, opt, gri
 
 
 
-def time_av_dyn(dx_in, time_in, filt, filt_scale, indir, odir, opt, grid, domain_in=16, ref_file = None):
+def time_av_dyn(res_in, time_in, filt, filt_scale, indir, odir, opt, grid, dx_in=20, domain_in=16, ref_file = None):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
 
-    file_in = f'{indir}{dx_in}/diagnostic_files/BOMEX_m{dx_in}_all_{time_in}.nc'
+    file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
     ds_in = xr.open_dataset(file_in)
     z_in = ds_in['z']
     z = z_in.data
