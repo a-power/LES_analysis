@@ -20,7 +20,7 @@ def time_av_dyn_timeloop(dx_in, time_in, filt_in, filt_scale, indir, odir, opt, 
     z = z_in.data
     np.save(f'files/{dx_in}_z', z)
 
-    N = domain_in*(1000)/dx_in
+    N = int(domain_in*(1000)/dx_in)
     filter_name = filt_in
     width = -1
     cutoff = 0.000001
@@ -42,7 +42,7 @@ def time_av_dyn_timeloop(dx_in, time_in, filt_in, filt_scale, indir, odir, opt, 
 
     ds_in.close()
 
-    for t_in in(nt):
+    for t_in in range(nt):
 
         dataset = xr.open_dataset(file_in, chunks={timevar: 1,
                                                       xvar: nch, yvar: nch,
@@ -184,7 +184,7 @@ def time_av_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, grid, dx
     z = z_in.data
     np.save(f'files/{dx_in}_z', z)
 
-    N = domain_in*(1000)/dx_in
+    N = int(domain_in*(1000)/dx_in)
     filter_name = filt_in
     width = -1
     cutoff = 0.000001
@@ -342,7 +342,7 @@ def time_av_Cs(indir, dx, dx_hat):
     nt = len(times)
     ds_in.close()
 
-    for t_in in(nt):
+    for t_in in range(nt):
 
         data_in = Dataset(file_in, mode='r')
 
