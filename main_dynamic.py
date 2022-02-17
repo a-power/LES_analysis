@@ -17,7 +17,6 @@ os.makedirs(plotdir, exist_ok = True)
 filter_name = 'gaussian'  # "wave_cutoff"
 sigma_list = np.array([20, 40])
 opgrid = 'w'
-dx=20
 
 options = {
         'FFT_type': 'RFFT',
@@ -27,6 +26,8 @@ options = {
         'dy': 20.0,
           }
 
-tdy.time_av_dyn(dx, set_time, filter_name, sigma_list, in_dir, outdir, options, opgrid, domain_in=16, ref_file = None)
+
+for i, model_res in enumerate(model_res_list):
+        tdy.time_av_dyn(model_res, set_time, filter_name, sigma_list, in_dir, outdir, options, opgrid, domain_in=16, ref_file = None)
 
 
