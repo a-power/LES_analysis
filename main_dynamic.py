@@ -17,6 +17,7 @@ os.makedirs(plotdir, exist_ok = True)
 filter_name = 'gaussian'  # "wave_cutoff"
 sigma_list = np.array([20, 40])
 opgrid = 'w'
+dx=20
 
 options = {
         'FFT_type': 'RFFT',
