@@ -180,7 +180,6 @@ def time_av_dyn(res_in, time_in, filt, filt_scale, indir, odir, opt, grid, dx_in
     z = z_in.data
     np.save(f'files/{dx_in}_z', z)
 
-
     N = domain_in*(1000)/dx_in
     filter_name = filt
     width = -1
