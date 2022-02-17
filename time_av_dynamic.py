@@ -176,6 +176,9 @@ def time_av_dyn(res_in, time_in, filt, filt_scale, indir, odir, opt, grid, dx_in
 
     file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
     ds_in = xr.open_dataset(file_in)
+    time_data = ds_in['time_series_600_600']
+    times = time_data.data
+    nt = len(times)
     z_in = ds_in['z']
     z = z_in.data
     np.save(f'files/{dx_in}_z', z)
