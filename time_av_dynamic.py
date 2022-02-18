@@ -220,7 +220,7 @@ def time_av_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, grid, dx
     fname = filter_name
 
     derived_data, exists = \
-        sf.setup_derived_data_file(indir, odir, fname,
+        sf.setup_derived_data_file(file_in, odir, fname,
                                    opt, override=True)
 
     filter_list = list([])
