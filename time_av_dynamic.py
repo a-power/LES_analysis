@@ -16,9 +16,6 @@ def time_av_dyn_timeloop(dx_in, time_in, filt_in, filt_scale, indir, odir, opt, 
     time_data = ds_in['time_series_600_600']
     times = time_data.data
     nt = len(times)
-    z_in = ds_in['z']
-    z = z_in.data
-    np.save(f'files/{dx_in}_z', z)
 
     N = int(domain_in*(1000)/dx_in)
     filter_name = filt_in
@@ -180,9 +177,6 @@ def time_av_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, grid, dx
     time_data = ds_in['time_series_600_600']
     times = time_data.data
     nt = len(times)
-    z_in = ds_in['z']
-    z = z_in.data
-    np.save(f'files/{dx_in}_z', z)
 
     N = int(domain_in*(1000)/dx_in)
     filter_name = filt_in
@@ -206,7 +200,7 @@ def time_av_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, grid, dx
 
     ds_in.close()
 
-    dataset = xr.open_dataset(file_in, chunks={timevar: nt,
+    dataset = xr.open_dataset(file_in, chunks={timevar: 1,
                                                       xvar: nch, yvar: nch,
                                                       'z': 'auto', 'zn': 'auto'}) #preprocess: check versions
 
@@ -254,12 +248,6 @@ def time_av_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, grid, dx
                                       delta_x=dx)
 
         filter_list.append(twod_filter)
-
-    # Add whole domain filter
-    filter_name = 'domain'
-    filter_id = 'filter_do{:02d}'.format(len(filter_list))
-    twod_filter = filt.Filter(filter_id, filter_name, delta_x=dx)
-    filter_list.append(twod_filter)
 
     print(filter_list)
 
