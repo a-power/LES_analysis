@@ -558,7 +558,7 @@ def setup_derived_data_file(source_file, destdir, fname,
     """
     derived_dataset_name = os.path.basename(source_file)
     derived_dataset_name = ('.').join(derived_dataset_name.split('.')[:-1])
-    derived_dataset_name = destdir+derived_dataset_name + fname + "_" + ".nc"
+    derived_dataset_name = destdir+derived_dataset_name + "_" + fname + ".nc"
 
     derived_dataset, exists = setup_data_file(source_file,
                     derived_dataset_name, override=override)
@@ -586,7 +586,7 @@ def setup_filtered_data_file(source_file, destdir, fname,
     filtered_dataset_name = os.path.basename(source_file)
     filtered_dataset_name = ('.').join(filtered_dataset_name.split('.')[:-1])
     filtered_dataset_name = destdir+filtered_dataset_name + "_" \
-        + "_" + filter_def.id + ".nc"
+                        + filter_def.id + ".nc"
     filtered_dataset, exists = setup_data_file(source_file,
                     filtered_dataset_name, override=override)
     if not exists :
