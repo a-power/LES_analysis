@@ -6,7 +6,7 @@ import filters as filt
 import dask
 from netCDF4 import Dataset
 
-def time_av_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, grid, dx_in=20, domain_in=16, ref_file = None):
+def time_av_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_in=20, domain_in=16, ref_file = None):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
@@ -111,7 +111,7 @@ def time_av_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, grid, dx
                                                  derived_data, filtered_data,
                                                  opt, new_filter,
                                                  var_list=var_list,
-                                                 grid=grid)
+                                                 grid=ingrid)
 
             var_list = [["w", "th"],
                         ["u", "u"],
@@ -127,7 +127,7 @@ def time_av_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, grid, dx
                                                            derived_data, filtered_data,
                                                            opt, new_filter,
                                                            var_list=var_list,
-                                                           grid=grid)
+                                                           grid=ingrid)
             deform = sf.deformation(dataset,
                                     ref_dataset,
                                     derived_data,
