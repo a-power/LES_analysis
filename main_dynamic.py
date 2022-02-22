@@ -6,7 +6,7 @@ import os
 set_time = '14400'
 in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
 model_res_list = ['0020_g0800']
-outdir_og = '/work/scratch-pw/apower'
+outdir_og = '/work/scratch-pw/apower/'
 outdir = outdir_og + '20m_gauss_dyn_p' +'/'
 plotdir = outdir_og+'plots/dyn/'
 
