@@ -1135,7 +1135,7 @@ def shear(d, no_trace=True) :
 
     mod_S.name = 'mod_S' + vname
     mod_S.attrs={'units':'s-2'}
-    S = re_chunk(S)
+    mod_S = re_chunk(mod_S)
 
     return S, mod_S
 
