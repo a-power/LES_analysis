@@ -6,9 +6,8 @@ import os
 set_time = '14400'
 in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
 model_res_list = ['0020_g0800']
-outdir_og = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/'
-outdir = outdir_og + '20m_gauss_dyn' +'/'
-
+outdir_og = '/work/scratch-pw/apower/'
+outdir = outdir_og + '20m_gauss_dyn_p' +'/'
 plotdir = outdir_og+'plots/dyn/'
 
 os.makedirs(outdir, exist_ok = True)
@@ -16,7 +15,7 @@ os.makedirs(plotdir, exist_ok = True)
 
 filter_name = 'gaussian'  # "wave_cutoff"
 sigma_list = np.array([20, 40])
-opgrid = 'w'
+opgrid = 'p'
 
 options = {
         'FFT_type': 'RFFT',

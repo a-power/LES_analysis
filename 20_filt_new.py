@@ -15,14 +15,16 @@ options = {
         'dy': 20.0,
           }
 
+set_time = '14400'
+dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m0020_g0800/diagnostic_files/'
+outdir_og = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/'
+odir = outdir_og + '20m_gauss_dyn_oldscript' +'/'
 
-dir = '/storage/silver/scenario/si818415/phd/20mLES/'
-odir = '/storage/silver/MONC_data/Alanna/'
-odir = odir + '20m_gauss_sig_Delta_match_25' +'/'
+
 
 os.makedirs(odir, exist_ok = True)
 
-file = 'cbl_13200.nc' 
+file = 'BOMEX_m0020_g0800_all_14400.nc'
 ref_file = None
 
 def main():
@@ -30,18 +32,16 @@ def main():
 	20m data to be filtered using xarray
     '''
 #   Non-global variables that are set once
+    domain_in = 16 #km
     dx = 20.0
-    dy = 20.0
-    N = 240
+    N = int((domain_in*(1000))/dx)
     filter_name =  'gaussian' #"wave_cutoff"
     width=-1
     cutoff=0.000001
     
-    opgrid = 'w'
-    
-    #Delta = np.array([20, 40, 80, 160, 320])
-    #k_cut_list = np.array([0.1571])#k_cut_find(Delta) 
-    sigma_list = np.array([25])
+    opgrid = 'p'
+
+    sigma_list = np.array([20, 40])
 
     dask.config.set({"array.slicing.split_large_chunks": True})
     dataset = xr.open_dataset(dir+file)
@@ -172,40 +172,7 @@ def main():
                                                   options, new_filter,
                                                   var_list=var_list,
                                                            grid = opgrid)
-            
-            ##################### Lij
-            
-                #             u_hat = filtered_data['u_on_p_r']             
-                #             v_hat = filtered_data['v_on_p_r']             
-                #             w_hat = filtered_data['w_on_p_r']            
-                #             uu_hat = filtered_data['u_on_p.u_on_p_r']             
-                #             uv_hat = filtered_data['u_on_p.v_on_p_r']             
-                #             uw_hat = filtered_data['u_on_p.w_on_p_r']             
-                #             vv_hat = filtered_data['v_on_p.v_on_p_r']             
-                #             vw_hat = filtered_data['v_on_p.w_on_p_r']             
-                #             ww_hat = filtered_data['w_on_p.w_on_p_r'] 
 
-                #             L_ij = L_ij_sym(u_hat, v_hat, w_hat, uu_hat, uv_hat, uw_hat, vv_hat, vw_hat, ww_hat)
-
-
-              ### Lines 204 to 217 don't run - grid / indexing problem ###
-    
-            #deform_filt_r, deform_filt_s = sf.filtered_deformation(dataset,
-            #                                      ref_dataset,
-            #                                      derived_data, filtered_data,
-            #                                      options, new_filter)#,
-                                                           #grid = opgrid)
-            
-          
-            
-            #             S_ij_temp_hat, abs_S_temp_hat = sf.shear(deform_filt_r)
-
-            #             S_ij_hat = 1/2*S_ij_temp_hat
-            #             abs_S_hat = np.sqrt(abs_S_temp_hat)
-            
-            
-            ###############################################            
-            
             
             deform = sf.deformation(dataset,
                                     ref_dataset,
@@ -231,13 +198,6 @@ def main():
             
             S_ij_abs_S_hat_filt = sf.filter_field(S_ij_abs_S, filtered_data,
                                                   options, new_filter)
-            
-            #             filt_scale_list_copy = filt_scale_list.copy()
-            #             filt_scale_list_copy.append("domain")
-            #             filt_scale = xr.DataArray(data=filt_scale_list_copy[j], name = "filt_scale")
-            #             filt_scale = sf.save_field(filtered_data, filt_scale)
-            
-
 
 
         filtered_data['ds'].close()
