@@ -17,8 +17,8 @@ def time_av_prof(vars, dx_list, time_in, indir, data='bomex'):
             print("data type not yet configured for a file path")
 
         #### create dir:
-        path1 = './files/{data}/'
-        path2 = './plots/{data}/'
+        path1 = f'./files/{data}/'
+        path2 = f'./plots/{data}/'
         isExist1 = os.path.exists(path1)
         if not isExist1:
             os.makedirs(path1)
