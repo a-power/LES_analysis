@@ -2,6 +2,8 @@ import numpy as np
 import time_av_profiles as avp
 import matplotlib.pyplot as plt
 
+mydata = 'dry_cbl' #'bomex'
+
 #set_time = '14400'
 set_time='13200'
 
@@ -25,7 +27,7 @@ model_res_list_int = np.array([20, 50, 100, 200, 400, 800])
 
 myvars = ['wtheta_ad_mean']
 
-avp.time_av_prof(myvars, model_res_list, set_time, mydir, 'dry_cbl')
+avp.time_av_prof(myvars, model_res_list, set_time, mydir, mydata)
 
 for i, var in enumerate(myvars):
 
@@ -34,11 +36,11 @@ for i, var in enumerate(myvars):
     plt.xlabel(f'{var}')
 
     for m, res in enumerate(model_res_list):
-        var_plot = np.load(f'files/{data}/{res}_{var}_time_av.npy')
-        z_plot = np.load(f'files/{data}/{res}_z.npy')
+        var_plot = np.load(f'files/{mydata}/{res}_{var}_time_av.npy')
+        z_plot = np.load(f'files/{mydata}/{res}_z.npy')
         plt.plot(var_plot, z_plot, label=f'$\\Delta x$ = {str(model_res_list_int[m])} m')
     plt.legend(fontsize=12)
-    figs.savefig(f'plots/{data}/{var}_{set_time}_time_av_profile.png')
+    figs.savefig(f'plots/{mydata}/{var}_{set_time}_time_av_profile.png')
     print("Finished plotting profile for ", var, ",", \
           len(model_res_list)-(m+1), "variables remaining")
 
