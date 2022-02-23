@@ -30,7 +30,7 @@ def time_av_prof(vars, dx_list, time_in, indir, data='bomex'):
         if data=='bomex':
             time_data = ds_in['time_series_600_600']
         elif data=='dry_cbl':
-            time_data = ds_in['time_series_25_300 ']
+            time_data = ds_in['time_series_25_300']
         else:
             print('find time veriable for data')
         times = time_data.data
