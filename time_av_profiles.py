@@ -7,8 +7,8 @@ def time_av_prof(vars, dx_list, time_in, indir, data='bomex'):
         if data=='bomex':
             file_in = f'{indir}{dx}/diagnostic_files/BOMEX_m{dx}_all_{time_in}.nc'
         elif data=='dry_cbl':
-            time_in=13200
-            if dx==5:
+            time_in='13200'
+            if dx=='5':
                 print('find file path for 5m profile data - subgrid directory?')
                 #file_in = f'/storage/silver/scenario/si818415/phd/{dx}mLES/cbl_{time_in}.nc'
             else:
@@ -17,10 +17,14 @@ def time_av_prof(vars, dx_list, time_in, indir, data='bomex'):
             print("data type not yet configured for a file path")
 
         #### create dir:
-        path = './files/{data}/'
-        isExist = os.path.exists(path)
-        if not isExist:
-            os.makedirs(path)
+        path1 = './files/{data}/'
+        path2 = './plots/{data}/'
+        isExist1 = os.path.exists(path1)
+        if not isExist1:
+            os.makedirs(path1)
+        isExist2 = os.path.exists(path2)
+        if not isExist2:
+            os.makedirs(path2)
 
         ds_in = xr.open_dataset(file_in)
         if data=='bomex':
