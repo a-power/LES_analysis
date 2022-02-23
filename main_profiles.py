@@ -25,7 +25,7 @@ model_res_list_int = np.array([20, 50, 100, 200, 400, 800])
 #           'liquid_mmr_mean','wtheta_ad_mean','wtheta_cn_mean','wql_ad_mean','wql_cn_mean',\
 #           'wqv_ad_mean', 'wqv_cn_mean', 'total_cloud_fraction']
 
-myvars = ['wtheta_ad_mean']
+myvars = ['w_wind_mean']
 
 avp.time_av_prof(myvars, model_res_list, set_time, mydir, mydata)
 
