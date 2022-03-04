@@ -159,11 +159,11 @@ def time_av_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, 
     return
 
 
-def time_av_Cs(indir, dx, dx_hat):
+def time_av_Cs(indir, plotdir, dx, dx_hat):
 
     """ function takes in:  """
 
-    file_in = f'{indir}____.nc'
+    file_in = f'{indir}.nc'
     ds_in = xr.open_ds_in(file_in)
     time_data = ds_in['time']
     times = time_data.data
