@@ -196,7 +196,7 @@ def time_av_Cs(indir, dx, dx_hat, Cs_av_method = 'all'):
     Cs_av_field = dy.get_Cs(Cs_sq_av_field)
     Cs_av_prof = dy.Cs_av_levels(Lij_av, Mij_av, av_method=Cs_av_method)
 
-    return Cs_av_prof, Cs_av_field
+    return Cs_av_prof, Cs_av_field, times
 
 
 
