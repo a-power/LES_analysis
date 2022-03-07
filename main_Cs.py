@@ -1,5 +1,6 @@
 import time_av_dynamic as t_dy
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.ticker import PercentFormatter
 
 
