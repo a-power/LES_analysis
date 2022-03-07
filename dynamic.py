@@ -157,7 +157,7 @@ def C_s_sq(L_ij, M_ij):
 
 
 
-def Cs_av_levels(L_ij, M_ij, av_method = 'all'):
+def Cs_av_levels(L_ij, M_ij, av_method = 'all', return_all=0):
     """ Calculates the horizontal average Cs value at each level 
     using the Lij and Mij fields as input.
     
@@ -267,8 +267,10 @@ def Cs_av_levels(L_ij, M_ij, av_method = 'all'):
         #             else:
         #                 Cs_av[i] = Cs_av_sq[i]**(1/2)
                 
-        
-    return Cs_av, LM_av, MM_av, Cs_av_sq
+    if return_all == 1:
+        return Cs_av, LM_av, MM_av, Cs_av_sq
+    else:
+        return Cs_av
       
     
     
