@@ -171,7 +171,6 @@ def time_av_Cs(indir, dx, dx_hat, Cs_av_method = 'all'):
         print('IT WORKS')
     else:
         print('Stop!')
-        break
     nt = len(times)
     ds_in.close()
 
