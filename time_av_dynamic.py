@@ -167,10 +167,6 @@ def time_av_Cs(indir, dx, dx_hat, Cs_av_method = 'all'):
     ds_in = xr.open_dataset(file_in)
     time_data = ds_in['time']
     times = time_data.data
-    if times.all()==times.all():
-        print('IT WORKS')
-    else:
-        print('Stop!')
     nt = len(times)
     ds_in.close()
 
