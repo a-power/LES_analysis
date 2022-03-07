@@ -164,7 +164,7 @@ def time_av_Cs(indir, dx, dx_hat, Cs_av_method = 'all'):
     """ function takes in:  """
 
     file_in = f'{indir}'
-    ds_in = xr.open_ds_in(file_in)
+    ds_in = xr.open_dataset(file_in)
     time_data = ds_in['time']
     times = time_data.data
     nt = len(times)
@@ -175,7 +175,7 @@ def time_av_Cs(indir, dx, dx_hat, Cs_av_method = 'all'):
 
     for t_in in range(nt):
 
-        ds_in = xr.open_ds_in(file_in)
+        ds_in = xr.open_dataset(file_in)
         uu = ds_in['s(u,u)_on_p'].data[t_in,...]
         uv = ds_in['s(u,v)_on_p'].data[t_in,...]
         uw = ds_in['s(u,w)_on_p'].data[t_in,...]
