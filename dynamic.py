@@ -16,6 +16,14 @@ def my_L_ij_sym(u, v, w, uu, uv, uw, vv, vw, ww):
     return L_ij
 
 
+def L_ij_sym_xarray(uu, uv, uw, vv, vw, ww):
+    L_ij = np.array([-(uu), -(uv), -(uw),
+                           -(vv), -(vw),
+                                 -(ww)])
+
+    return L_ij
+
+
 def L_ij_sym(file_in):
 
     s_uu = file_in['u_on_p.u_on_p_r']

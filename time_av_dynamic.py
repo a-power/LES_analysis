@@ -159,24 +159,45 @@ def time_av_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, 
     return
 
 
-def time_av_Cs(indir, plotdir, dx, dx_hat):
+def time_av_Cs(indir, dx, dx_hat, Cs_av_method = 'all'):
 
     """ function takes in:  """
 
-    file_in = f'{indir}.nc'
+    file_in = f'{indir}'
     ds_in = xr.open_ds_in(file_in)
     time_data = ds_in['time']
     times = time_data.data
     nt = len(times)
     ds_in.close()
 
+    Lij = 0
+    Mij = 0
+
     for t_in in range(nt):
 
-        data_in = Dataset(file_in, mode='r')
+        ds_in = xr.open_ds_in(file_in)
+        uu = ds_in['s(u,u)_on_p'].data[t_in,...]
+        uv = ds_in['s(u,v)_on_p'].data[t_in,...]
+        uw = ds_in['s(u,w)_on_p'].data[t_in,...]
+        vv = ds_in['s(v,v)_on_p'].data[t_in,...]
+        vw = ds_in['s(v,w)_on_p'].data[t_in,...]
+        ww = ds_in['s(w,w)_on_p'].data[t_in,...]
 
-        Lij = dy.L_ij_sym(data_in)
+        Lij += dy.L_ij_sym_xarray(uu, uv, uw, vv, vw, ww)
 
-        hat_Sij_abs_S = data_in.variables['S_ij_abs_S_r'][:, t_in, :, :, :]
-        hat_Sij = data_in.variables['S_ij_r'][:, t_in, :, :, :]
-        abs_S_hat_Sij_hat = dy.abs_S_hat_S_ij_hat(hat_Sij)
-        Mij = dy.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
+        hat_Sij_abs_S = ds_in['S_ij_abs_S_r'].data[:, t_in, :, :, :]
+        hat_Sij = ds_in['S_ij_r'].data[:, t_in, :, :, :]
+        Mij += dy.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
+
+    Lij_av = Lij/nt
+    Mij_av = Mij/nt
+
+    Cs_av_field = np.sqrt(C_s_sq(Lij_av, Mij_av))
+    Cs_av_prof, LM_av_prof, MM_av_prof, Cs_av_sq_prof = Cs_av_levels(L_ij, M_ij, av_method=Cs_av_method)
+
+    return Cs_av_prof, Cs_av_field
+
+
+
+
+
