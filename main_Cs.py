@@ -20,7 +20,7 @@ Cs_4D_av, Cs_4D_av_field, times_4D = t_dy.time_av_Cs(data_4D, dx=20, dx_hat=80)
 
 if times_2D.all() == times_4D.all():
 
-    z = np.arange(0,3000,20)
+    z = np.arange(0,3020,20)
 
     fig = plt.figure(figsize=(12, 10))
     # plt.plot(Cs_t_av_prof, z, '-', markersize=6, label='$C_{s \\beta}$')
