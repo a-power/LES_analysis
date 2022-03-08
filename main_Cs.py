@@ -27,7 +27,7 @@ if times_2D.all() == times_4D.all():
     y = 200
     levels1 = np.linspace(0, 0.4, 7)
 
-    cm1 = plt.contourf(np.transpose(Cs_2D_av_field[:, y, :])), levels1, extend='both')
+    cm1 = plt.contourf(np.transpose(Cs_2D_av_field[:, y, :]), levels1, extend='both')
     cb1 = plt.colorbar(cm1)
     plt.title(f'Cs 2D averaged over times: {times_2D}')
     plt.xlabel("x")
@@ -36,7 +36,7 @@ if times_2D.all() == times_4D.all():
     plt.savefig(plotdir + "Cs_2D_cross_sec_y=" + str(y) + "_t_av.png", pad_inches=0)
 
 
-    cm2 = plt.contourf(np.transpose(Cs_4D_av_field[:, y, :])), levels1, extend='both')
+    cm2 = plt.contourf(np.transpose(Cs_4D_av_field[:, y, :]), levels1, extend='both')
     #cb2 = plt.colorbar(cm2)
     plt.title(f'Cs 4D averaged over times: {times_4D}')
     plt.xlabel("x")
