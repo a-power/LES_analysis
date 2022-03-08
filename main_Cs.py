@@ -23,6 +23,28 @@ if times_2D.all() == times_4D.all():
 
     z = np.arange(0,3020,20)
 
+
+    y = 200
+    #levels1 = np.linspace(-0.2, 0.6, 7)
+
+    cm1 = plt.contourf(np.transpose(Cs_2D_av_field[:, y, :]))#, levels1, extend='both')
+    cb1 = plt.colorbar(cm1)
+    plt.title(f'Cs 2D averaged over times: {times_2D}')
+    plt.xlabel("x")
+    plt.ylabel("z")
+    cb1.set_label("$C_{s}$", size=12)
+    plt.savefig(plotdir + "Cs_2D_cross_sec_y=" + str(y) + "_t_av.png", pad_inches=0)
+
+
+    cm2 = plt.contourf(np.transpose(Cs_4D_av_field[:, y, :]))#, levels1, extend='both')
+    cb2 = plt.colorbar(cm2)
+    plt.title(f'Cs 4D averaged over times: {times_4D}')
+    plt.xlabel("x")
+    plt.ylabel("z")
+    cb2.set_label("$C_{s}$", size=12)
+    plt.savefig(plotdir + "Cs_4D_cross_sec_y=" + str(y) + "_t_av.png", pad_inches=0)
+
+
     fig = plt.figure(figsize=(12, 10))
     # plt.plot(Cs_t_av_prof, z, '-', markersize=6, label='$C_{s \\beta}$')
     # plt.plot(10, 10, 'o', markersize=6) #get correct colour
@@ -65,27 +87,6 @@ if times_2D.all() == times_4D.all():
     plt.xlabel('$ C_{s} $', fontsize=14)
     plt.legend(fontsize=12, loc='upper right')
     plt.savefig(plotdir + "Cs_profiles_t_av_line_scaled_zoomed_" + str(av_type) + ".png", pad_inches=0)
-
-
-    y = 200
-    levels1 = np.linspace(-0.2, 0.6, 7)
-
-    cm1 = plt.contourf(np.transpose(Cs_2D_av_field[:, y, :]), levels1, extend='both')
-    cb1 = plt.colorbar(cm1)
-    plt.title(f'Cs 2D averaged over times: {times_2D}')
-    plt.xlabel("x")
-    plt.ylabel("z")
-    cb1.set_label("$C_{s}$", size=12)
-    plt.savefig(plotdir + "Cs_2D_cross_sec_y=" + str(y) + "_t_av.png", pad_inches=0)
-
-
-    cm2 = plt.contourf(np.transpose(Cs_4D_av_field[:, y, :]), levels1, extend='both')
-    cb2 = plt.colorbar(cm1)
-    plt.title(f'Cs 4D averaged over times: {times_4D}')
-    plt.xlabel("x")
-    plt.ylabel("z")
-    cb2.set_label("$C_{s}$", size=12)
-    plt.savefig(plotdir + "Cs_4D_cross_sec_y=" + str(y) + "_t_av.png", pad_inches=0)
 
 else:
     print('times for 2Delta data = ', times_2D, 'times for 4Delta data = ', times_4D)
