@@ -13,8 +13,8 @@ data_2D = path20f+file20+str('ga00.nc')
 data_4D = path20f+file20+str('ga01.nc')
 
 
-Cs_2D_av, Cs_2D_av_field, times_2D = t_dy.time_av_Cs(data_2D, dx=20, dx_hat=40, av_type)
-Cs_4D_av, Cs_4D_av_field, times_4D = t_dy.time_av_Cs(data_4D, dx=20, dx_hat=80, av_type)
+Cs_2D_av, Cs_2D_av_field, times_2D = t_dy.time_av_Cs(data_2D, dx=20, dx_hat=40,  Cs_av_method = av_type)
+Cs_4D_av, Cs_4D_av_field, times_4D = t_dy.time_av_Cs(data_4D, dx=20, dx_hat=80,  Cs_av_method = av_type)
 
 
 #########################plots#########################
