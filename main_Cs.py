@@ -49,8 +49,7 @@ if times_2D.all() == times_4D.all():
     plt.ylabel('$z/z_i')
     plt.xlabel('$ C_{s} $', fontsize=14)
     plt.legend(fontsize=12, loc='upper right')
-    plt.savefig(plotdir + "Cs_profiles_t_av_line_scaled" + str(av_type) + ".png", pad_inches=0)
-    plt.show()
+    plt.savefig(plotdir + "Cs_profiles_t_av_line_scaled_" + str(av_type) + ".png", pad_inches=0)
 
     fig3 = plt.figure(figsize=(12, 10))
     # plt.plot(Cs_t_av_prof, z, '-', markersize=6, label='$C_{s \\beta}$')
@@ -60,13 +59,12 @@ if times_2D.all() == times_4D.all():
     # plt.plot(Cs_8D_av, z, '-', markersize=6, label='$ C_{s 8 \\Delta} $')
     # plt.plot(Cs_16D_av, z, '-', markersize=6, label='$ C_{s 16 \\Delta} $')
     plt.xlim(-0.01, 0.2)
-    plt.xlim(0, 2)
+    plt.ylim(0, 2)
     plt.title(f'Cs averaged over times: {times_2D}')
-    plt.ylabel('$z/z_i')
+    plt.ylabel('$z/z_i$')
     plt.xlabel('$ C_{s} $', fontsize=14)
     plt.legend(fontsize=12, loc='upper right')
-    plt.savefig(plotdir + "Cs_profiles_t_av_line_scaled_zoomed" + str(av_type) + ".png", pad_inches=0)
-    plt.show()
+    plt.savefig(plotdir + "Cs_profiles_t_av_line_scaled_zoomed_" + str(av_type) + ".png", pad_inches=0)
 
 
     y = 200
@@ -78,7 +76,7 @@ if times_2D.all() == times_4D.all():
     plt.xlabel("x")
     plt.ylabel("z")
     cb1.set_label("$C_{s}$", size=12)
-    plt.savefig(plotdir + "Cs_2D_cross_sec_y=" + str(y) + "t_av.png", pad_inches=0)
+    plt.savefig(plotdir + "Cs_2D_cross_sec_y=" + str(y) + "_t_av.png", pad_inches=0)
 
 
     cm2 = plt.contourf(np.transpose(Cs_4D_av_field[:, y, :]), levels1, extend='both')
@@ -86,8 +84,8 @@ if times_2D.all() == times_4D.all():
     plt.title(f'Cs 4D averaged over times: {times_4D}')
     plt.xlabel("x")
     plt.ylabel("z")
-    cb1.set_label("$C_{s}$", size=12)
-    plt.savefig(plotdir + "Cs_4D_cross_sec_y=" + str(y) + "t_av.png", pad_inches=0)
+    cb2.set_label("$C_{s}$", size=12)
+    plt.savefig(plotdir + "Cs_4D_cross_sec_y=" + str(y) + "_t_av.png", pad_inches=0)
 
 else:
     print('times for 2Delta data = ', times_2D, 'times for 4Delta data = ', times_4D)
