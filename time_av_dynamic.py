@@ -1,8 +1,8 @@
 import numpy as np
 import xarray as xr
 import dynamic as dy
-import Subfilter.filters as filt
-import Subfilter.subfilter as sf
+import Subfilter.subfilter.filters as filt
+import Subfilter.subfilter.subfilter as sf
 import dask
 from netCDF4 import Dataset
 
