@@ -24,23 +24,6 @@ def L_ij_sym_xarray(uu, uv, uw, vv, vw, ww):
     return L_ij
 
 
-def L_ij_sym(file_in):
-
-    s_uu = file_in['u_on_p.u_on_p_r']
-    s_uv = file_in['u_on_p.v_on_p_r']
-    s_uw = file_in['u_on_p.w_on_p_r']
-    s_vv = file_in['v_on_p.v_on_p_r']
-    s_vw = file_in['v_on_p.w_on_p_r']
-    s_ww = file_in['w_on_p.w_on_p_r']
-
-    L_ij = np.array([(s_uu), (s_uv), (s_uw),
-                             (s_vv), (s_vw),
-                                     (s_ww)])
-
-    return L_ij
-
-
-
 def S_ij(u, v, w, dx):
     
     surf_BC_0s = np.zeros_like(u)
@@ -234,19 +217,6 @@ def Cs_av_levels(L_ij, M_ij, av_method = 'all', return_all=0):
     ##########################################
     elif av_method == 'all':
 
-        #         for k in range(z_num):    
-        #             n = 0
-        #             LM_pos_sum = 0
-        #             MM_pos_sum = 0
-
-        #             for ij in range(horiz_num): 
-        #                 LM_pos_sum += LM_flat[ij,k]
-        #                 MM_pos_sum += MM_flat[ij,k]
-        #                 n = n+1
-        #             if n != 0:
-        #                 LM_av[k] = LM_pos_sum/n
-        #                 MM_av[k] = MM_pos_sum/n
-        
         for k in range(z_num):    
             
             LM_av[k] = np.sum(LM_flat[:,k])/horiz_num
@@ -257,16 +227,7 @@ def Cs_av_levels(L_ij, M_ij, av_method = 'all', return_all=0):
         Cs_av_temp = Cs_av_sq.copy()
         Cs_av_temp[Cs_av_sq < 0] = 0
         Cs_av = Cs_av_temp**(1/2)
-        
-        #Cs_av = np.zeros_like(Cs_av_sq)
 
-        #         for i in range(len(Cs_av_sq)):
-        #             if Cs_av_sq[i] < 0:
-        #                 Cs_av[i] = 0
-
-        #             else:
-        #                 Cs_av[i] = Cs_av_sq[i]**(1/2)
-                
     if return_all == 1:
         return Cs_av, LM_av, MM_av, Cs_av_sq
     else:

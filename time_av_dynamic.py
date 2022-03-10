@@ -1,12 +1,12 @@
 import numpy as np
 import xarray as xr
 import dynamic as dy
-import subfilter as sf
-import filters as filt
+import Subfilter.filters as filt
+import Subfilter.subfilter as sf
 import dask
 from netCDF4 import Dataset
 
-def time_av_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_in=20, domain_in=16, ref_file = None):
+def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_in=20, domain_in=16, ref_file = None):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
@@ -197,6 +197,40 @@ def time_av_Cs(indir, dx, dx_hat, Cs_av_method = 'all'):
     Cs_av_prof = dy.Cs_av_levels(Lij_av, Mij_av, av_method=Cs_av_method)
 
     return Cs_av_prof, Cs_av_field, times
+
+
+
+
+def indiv_Cs(indir, dx, dx_hat, t_in=0, Cs_av_method = 'all'):
+
+    """ function takes in:  """
+
+    file_in = f'{indir}'
+    ds_in = xr.open_dataset(file_in)
+    time_data = ds_in['time']
+    times = time_data.data
+    nt = len(times)
+    ds_in.close()
+
+    ds_in = xr.open_dataset(file_in)
+    uu = ds_in['s(u,u)_on_p'].data[t_in,...]
+    uv = ds_in['s(u,v)_on_p'].data[t_in,...]
+    uw = ds_in['s(u,w)_on_p'].data[t_in,...]
+    vv = ds_in['s(v,v)_on_p'].data[t_in,...]
+    vw = ds_in['s(v,w)_on_p'].data[t_in,...]
+    ww = ds_in['s(w,w)_on_p'].data[t_in,...]
+
+    Lij = dy.L_ij_sym_xarray(uu, uv, uw, vv, vw, ww)
+
+    hat_Sij_abs_S = ds_in['S_ij_abs_S_r'].data[:, t_in, :, :, :]
+    hat_Sij = ds_in['S_ij_r'].data[:, t_in, :, :, :]
+    Mij = dy.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
+
+    Cs_sq_field = dy.C_s_sq(Lij_av, Mij_av)
+    Cs_field = dy.get_Cs(Cs_sq_av_field)
+    Cs_prof = dy.Cs_av_levels(Lij_av, Mij_av, av_method=Cs_av_method)
+
+    return Cs_prof, Cs_field
 
 
 

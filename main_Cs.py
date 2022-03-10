@@ -1,12 +1,11 @@
 import time_av_dynamic as t_dy
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.ticker import PercentFormatter
 
 av_type = 'all'
 
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/'
-path20f = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn_p/'
+path20f = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn_w/'
 file20 = "BOMEX_m0020_g0800_all_14400_filter_"
 
 data_2D = path20f+file20+str('ga00.nc')

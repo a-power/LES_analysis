@@ -7,7 +7,7 @@ set_time = '14400'
 in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
 model_res_list = ['0020_g0800']
 outdir_og = '/work/scratch-pw/apower/'
-outdir = outdir_og + '20m_gauss_dyn_p' +'/'
+outdir = outdir_og + '20m_gauss_dyn_w' +'/'
 plotdir = outdir_og+'plots/dyn/'
 
 os.makedirs(outdir, exist_ok = True)
@@ -15,7 +15,7 @@ os.makedirs(plotdir, exist_ok = True)
 
 filter_name = 'gaussian'  # "wave_cutoff"
 sigma_list = np.array([20, 40])
-opgrid = 'p'
+opgrid = 'w'
 
 options = {
         'FFT_type': 'RFFT',
@@ -27,6 +27,6 @@ options = {
 
 
 for i, model_res in enumerate(model_res_list):
-        tdy.time_av_dyn(model_res, set_time, filter_name, sigma_list, in_dir, outdir, options, opgrid, domain_in=16, ref_file = None)
+        tdy.run_dyn(model_res, set_time, filter_name, sigma_list, in_dir, outdir, options, opgrid, domain_in=16, ref_file = None)
 
 

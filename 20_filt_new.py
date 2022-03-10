@@ -39,7 +39,7 @@ def main():
     width=-1
     cutoff=0.000001
     
-    opgrid = 'p'
+    opgrid = 'w'
 
     sigma_list = np.array([20, 40])
 
