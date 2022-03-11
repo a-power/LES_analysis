@@ -159,7 +159,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
     return
 
 
-def time_av_Cs(indir, dx, dx_hat, save_all = 0, Cs_av_method = 'all'):
+def time_av_Cs(indir, dx, dx_hat, ingrid, save_all = 0, Cs_av_method = 'all'):
 
     """ function takes in:  """
 
@@ -176,12 +176,12 @@ def time_av_Cs(indir, dx, dx_hat, save_all = 0, Cs_av_method = 'all'):
     for t_in in range(nt):
 
         ds_in = xr.open_dataset(file_in)
-        uu = ds_in['s(u,u)_on_p'].data[t_in,...]
-        uv = ds_in['s(u,v)_on_p'].data[t_in,...]
-        uw = ds_in['s(u,w)_on_p'].data[t_in,...]
-        vv = ds_in['s(v,v)_on_p'].data[t_in,...]
-        vw = ds_in['s(v,w)_on_p'].data[t_in,...]
-        ww = ds_in['s(w,w)_on_p'].data[t_in,...]
+        uu = ds_in[f's(u,u)_on_{ingrid}'].data[t_in,...]
+        uv = ds_in[f's(u,v)_on_{ingrid}'].data[t_in,...]
+        uw = ds_in[f's(u,w)_on_{ingrid}'].data[t_in,...]
+        vv = ds_in[f's(v,v)_on_{ingrid}'].data[t_in,...]
+        vw = ds_in[f's(v,w)_on_{ingrid}'].data[t_in,...]
+        ww = ds_in[f's(w,w)_on_{ingrid}'].data[t_in,...]
 
         Lij += dy.L_ij_sym_xarray(uu, uv, uw, vv, vw, ww)
 
@@ -205,7 +205,7 @@ def time_av_Cs(indir, dx, dx_hat, save_all = 0, Cs_av_method = 'all'):
 
 
 
-def indiv_Cs(indir, dx, dx_hat, t_in=0, save_all=0, Cs_av_method = 'all'):
+def indiv_Cs(indir, dx, dx_hat, t_in=0, ingrid, save_all=0, Cs_av_method = 'all'):
 
     """ function takes in:  """
 
@@ -217,12 +217,12 @@ def indiv_Cs(indir, dx, dx_hat, t_in=0, save_all=0, Cs_av_method = 'all'):
     ds_in.close()
 
     ds_in = xr.open_dataset(file_in)
-    uu = ds_in['s(u,u)_on_p'].data[t_in,...]
-    uv = ds_in['s(u,v)_on_p'].data[t_in,...]
-    uw = ds_in['s(u,w)_on_p'].data[t_in,...]
-    vv = ds_in['s(v,v)_on_p'].data[t_in,...]
-    vw = ds_in['s(v,w)_on_p'].data[t_in,...]
-    ww = ds_in['s(w,w)_on_p'].data[t_in,...]
+    uu = ds_in[f's(u,u)_on_{ingrid}'].data[t_in, ...]
+    uv = ds_in[f's(u,v)_on_{ingrid}'].data[t_in, ...]
+    uw = ds_in[f's(u,w)_on_{ingrid}'].data[t_in, ...]
+    vv = ds_in[f's(v,v)_on_{ingrid}'].data[t_in, ...]
+    vw = ds_in[f's(v,w)_on_{ingrid}'].data[t_in, ...]
+    ww = ds_in[f's(w,w)_on_{ingrid}'].data[t_in, ...]
 
     Lij = dy.L_ij_sym_xarray(uu, uv, uw, vv, vw, ww)
 
