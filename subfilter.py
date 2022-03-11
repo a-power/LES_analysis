@@ -1100,7 +1100,7 @@ def filtered_deformation(source_dataset, ref_dataset, derived_dataset,
 
     return (d_var_r, d_var_s)
 
-def shear(d, no_trace=True) :
+def shear(d, no_trace=False) :
     trace = 0
     vname = ''
     if no_trace :

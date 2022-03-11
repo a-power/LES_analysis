@@ -133,7 +133,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
                                     derived_data,
                                     opt)
 
-            S_ij_temp, abs_S_temp = sf.shear(deform)
+            S_ij_temp, abs_S_temp = sf.shear(deform, no_trace=False)
             #print("shape of S_ij_temp = ", np.shape(S_ij_temp), "shape of abs_S_temp =", np.shape(abs_S_temp))
 
             S_ij = 1 / 2 * S_ij_temp
