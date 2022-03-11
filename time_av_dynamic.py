@@ -205,7 +205,7 @@ def time_av_Cs(indir, dx, dx_hat, ingrid, save_all = 0, Cs_av_method = 'all'):
 
 
 
-def indiv_Cs(indir, dx, dx_hat, t_in=0, ingrid, save_all=0, Cs_av_method = 'all'):
+def indiv_Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=0, Cs_av_method = 'all'):
 
     """ function takes in:  """
 
