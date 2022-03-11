@@ -11,13 +11,13 @@ file20 = "BOMEX_m0020_g0800_all_14400_filter_"
 data_2D = path20f+file20+str('ga00.nc')
 data_4D = path20f+file20+str('ga01.nc')
 
-Cs_2D_prof_t0 = indiv_Cs(data_2D, dx=20, dx_hat=40, t_in=0)
-Cs_2D_prof_t1 = indiv_Cs(data_2D, dx=20, dx_hat=40, t_in=1)
-Cs_2D_prof_t2 = indiv_Cs(data_2D, dx=20, dx_hat=40, t_in=2)
+Cs_2D_prof_t0 = t_dy.indiv_Cs(data_2D, dx=20, dx_hat=40, t_in=0)
+Cs_2D_prof_t1 = t_dy.indiv_Cs(data_2D, dx=20, dx_hat=40, t_in=1)
+Cs_2D_prof_t2 = t_dy.indiv_Cs(data_2D, dx=20, dx_hat=40, t_in=2)
 Cs_2D_av, times_2D = t_dy.time_av_Cs(data_2D, dx=20, dx_hat=40,  Cs_av_method = av_type)
-Cs_4D_prof_t0 = indiv_Cs(data_4D, dx=20, dx_hat=80, t_in=0)
-Cs_4D_prof_t1 = indiv_Cs(data_4D, dx=20, dx_hat=80, t_in=1)
-Cs_4D_prof_t2 = indiv_Cs(data_4D, dx=20, dx_hat=80, t_in=2)
+Cs_4D_prof_t0 = t_dy.indiv_Cs(data_4D, dx=20, dx_hat=80, t_in=0)
+Cs_4D_prof_t1 = t_dy.indiv_Cs(data_4D, dx=20, dx_hat=80, t_in=1)
+Cs_4D_prof_t2 = t_dy.indiv_Cs(data_4D, dx=20, dx_hat=80, t_in=2)
 Cs_4D_av, times_4D = t_dy.time_av_Cs(data_4D, dx=20, dx_hat=80,  Cs_av_method = av_type)
 
 
