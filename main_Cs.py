@@ -6,8 +6,9 @@ import numpy as np
 av_type = 'all'
 ingrid = 'w'
 
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/'
-path20f = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn_w/'
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/trace/'
+path20f = '/work/scratch-pw/apower/20m_gauss_dyn_w_trace/'
+#'/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn_w/'
 file20 = "BOMEX_m0020_g0800_all_14400_filter_"
 
 data_2D = path20f+file20+str('ga00.nc')
