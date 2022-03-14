@@ -1,5 +1,6 @@
 import time_av_dynamic as t_dy
 import matplotlib.pyplot as plt
+import xarray as xr
 import numpy as np
 
 av_type = 'all'
