@@ -14,11 +14,12 @@ file20 = "BOMEX_m0020_g0800_all_14400_filter_"
 data_2D = path20f+file20+str('ga00.nc')
 data_4D = path20f+file20+str('ga01.nc')
 
-file_in = data_2D
-ds_in = xr.open_dataset(file_in)
-time_data = ds_in['time']
-times = time_data.data
-ds_in.close()
+# ds_in = xr.open_dataset(data_2D)
+# time_data = ds_in['time']
+# times = time_data.data
+# ds_in.close()
+
+times = [13200, 13800, 14400]
 
 Cs_2D_prof_t0 = t_dy.indiv_Cs(data_2D, dx=20, dx_hat=40, ingrid = 'w', t_in=0)
 Cs_2D_prof_t1 = t_dy.indiv_Cs(data_2D, dx=20, dx_hat=40, ingrid = 'w', t_in=1)
@@ -27,7 +28,7 @@ Cs_2D_av = (Cs_2D_prof_t0 + Cs_2D_prof_t1 + Cs_2D_prof_t2)/3
 Cs_4D_prof_t0 = t_dy.indiv_Cs(data_4D, dx=20, dx_hat=80, ingrid = 'w', t_in=0)
 Cs_4D_prof_t1 = t_dy.indiv_Cs(data_4D, dx=20, dx_hat=80, ingrid = 'w', t_in=1)
 Cs_4D_prof_t2 = t_dy.indiv_Cs(data_4D, dx=20, dx_hat=80, ingrid = 'w', t_in=2)
-Cs_4D_av = (Cs_2D_prof_t0 + Cs_2D_prof_t1 + Cs_2D_prof_t2)/3
+Cs_4D_av = (Cs_4D_prof_t0 + Cs_4D_prof_t1 + Cs_4D_prof_t2)/3
 
 
 #########################plots#########################
