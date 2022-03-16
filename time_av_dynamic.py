@@ -189,7 +189,7 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=0, Cs_av_method = 'all'):
         Cs_sq_field = dy.C_s_sq(Lij, Mij)
         Cs_field = dy.get_Cs(Cs_sq_field)
     else:
-    Cs_prof = dy.Cs_av_levels(Lij, Mij, av_method=Cs_av_method)
+        Cs_prof = dy.Cs_av_levels(Lij, Mij, av_method=Cs_av_method)
 
     if save_all==1:
         return Cs_prof, Cs_field
