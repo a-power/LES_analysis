@@ -159,53 +159,8 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
     return
 
 
-def time_av_Cs(indir, dx, dx_hat, ingrid, save_all = 0, Cs_av_method = 'all'):
 
-    """ function takes in:  """
-
-    file_in = f'{indir}'
-    ds_in = xr.open_dataset(file_in)
-    time_data = ds_in['time']
-    times = time_data.data
-    nt = len(times)
-    ds_in.close()
-
-    Lij = 0
-    Mij = 0
-
-    for t_in in range(nt):
-
-        ds_in = xr.open_dataset(file_in)
-        uu = ds_in[f's(u,u)_on_{ingrid}'].data[t_in,...]
-        uv = ds_in[f's(u,v)_on_{ingrid}'].data[t_in,...]
-        uw = ds_in[f's(u,w)_on_{ingrid}'].data[t_in,...]
-        vv = ds_in[f's(v,v)_on_{ingrid}'].data[t_in,...]
-        vw = ds_in[f's(v,w)_on_{ingrid}'].data[t_in,...]
-        ww = ds_in[f's(w,w)_on_{ingrid}'].data[t_in,...]
-
-        Lij += dy.L_ij_sym_xarray(uu, uv, uw, vv, vw, ww)
-
-        hat_Sij_abs_S = ds_in['S_ij_abs_S_r'].data[:, t_in, :, :, :]
-        hat_Sij = ds_in['S_ij_r'].data[:, t_in, :, :, :]
-        Mij += dy.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
-
-    Lij_av = Lij/nt
-    Mij_av = Mij/nt
-
-    Cs_sq_av_field = dy.C_s_sq(Lij_av, Mij_av)
-    Cs_av_field = dy.get_Cs(Cs_sq_av_field)
-    Cs_av_prof = dy.Cs_av_levels(Lij_av, Mij_av, av_method=Cs_av_method)
-
-    if save_all==1:
-        return Cs_av_prof, Cs_av_field, times
-    else:
-        return Cs_av_prof, times
-
-
-
-
-
-def indiv_Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=0, Cs_av_method = 'all'):
+def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=0, Cs_av_method = 'all'):
 
     """ function takes in:  """
 
@@ -230,14 +185,16 @@ def indiv_Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=0, Cs_av_method = 'all'
     hat_Sij = ds_in['S_ij_r'].data[:, t_in, :, :, :]
     Mij = dy.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
 
-    Cs_sq_field = dy.C_s_sq(Lij, Mij)
-    Cs_field = dy.get_Cs(Cs_sq_field)
+    if save_all==1:
+        Cs_sq_field = dy.C_s_sq(Lij, Mij)
+        Cs_field = dy.get_Cs(Cs_sq_field)
+    else:
     Cs_prof = dy.Cs_av_levels(Lij, Mij, av_method=Cs_av_method)
 
     if save_all==1:
         return Cs_prof, Cs_field
     else:
-        return Cs_prof
+        return Cs_prof, times
 
 
 
