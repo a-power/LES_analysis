@@ -14,7 +14,7 @@ os.makedirs(outdir, exist_ok = True)
 os.makedirs(plotdir, exist_ok = True)
 
 filter_name = 'gaussian'  # "wave_cutoff"
-sigma_list = np.array([20, 40])
+sigma_list = np.array([20])
 opgrid = 'w'
 
 options = {
