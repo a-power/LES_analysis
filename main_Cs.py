@@ -10,8 +10,8 @@ mygrid = 'p'
 # path20f = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn_w_trace/'
 # file20 = "BOMEX_m0020_g0800_all_14400_filter_"
 
-plotdir = '/storage/silver/MONC_data/Alanna/dry_CBL/plots/dyn/time_av'
-path20f = '/storage/silver/MONC_data/Alanna/dry_CBL/20m_gauss_sig_Delta'
+plotdir = '/storage/silver/MONC_data/Alanna/dry_CBL/plots/dyn/time_av/'
+path20f = '/storage/silver/MONC_data/Alanna/dry_CBL/20m_gauss_sig_Delta/'
 file20 = "cbl_13200__filter_"
 
 data_2D = path20f+file20+str('ga00.nc')
