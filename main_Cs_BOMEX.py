@@ -19,8 +19,6 @@ data_4D = path20f+file20+str('ga01.nc')
 # times = time_data.data
 # ds_in.close()
 
-times = [13200, 13800, 14400]
-
 Cs_2D_prof_t0, times = t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=0)
 Cs_2D_prof_t1, times = t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=1)
 Cs_2D_prof_t2, times = t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=2)
