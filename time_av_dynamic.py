@@ -101,26 +101,25 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
             print('Derived data file exists')
         else:
 
-            var_list = ["u",
-                        "v",
-                        "w",
-                        "th"
-                        ]
+            # var_list = ["u",
+            #             "v",
+            #             "w",
+            #             "th"
+            #             ]
+            #
+            # field_list = sf.filter_variable_list(dataset, ref_dataset,
+            #                                      derived_data, filtered_data,
+            #                                      opt, new_filter,
+            #                                      var_list=var_list,
+            #                                      grid=ingrid)
 
-            field_list = sf.filter_variable_list(dataset, ref_dataset,
-                                                 derived_data, filtered_data,
-                                                 opt, new_filter,
-                                                 var_list=var_list,
-                                                 grid=ingrid)
-
-            var_list = [["w", "th"],
-                        ["u", "u"],
+            var_list = [["u", "u"],
                         ["u", "v"],
                         ["u", "w"],
                         ["v", "v"],
                         ["v", "w"],
                         ["w", "w"]
-                        ]
+                        ] #["w", "th"],
 
             quad_field_list = sf.filter_variable_pair_list(dataset,
                                                            ref_dataset,
@@ -192,9 +191,9 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=0, Cs_av_method = 'all'):
         Cs_prof = dy.Cs_av_levels(Lij, Mij, av_method=Cs_av_method)
 
     if save_all==1:
-        return Cs_prof, Cs_field
-    else:
         return Cs_prof, times
+    else:
+        return Cs_prof
 
 
 
