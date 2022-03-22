@@ -57,15 +57,15 @@ for k, time_file in enumerate(new_set_time):
 
     Cs_2D_prof_t0, times = t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=0, save_all=1)
 
-    Cs_2D_prof = np.zeros((len(new_set_time)*len(time), len(Cs_2D_prof_t0)))
-    Cs_4D_prof = np.zeros((len(new_set_time)*len(time), len(Cs_2D_prof_t0)))
+    Cs_2D_prof = np.zeros((len(new_set_time)*len(times), len(Cs_2D_prof_t0)))
+    Cs_4D_prof = np.zeros((len(new_set_time)*len(times), len(Cs_2D_prof_t0)))
 
     Cs_2D_prof[0,:] = Cs_2D_prof_t0
 
     for l in range(1,len(times)):
-        Cs_2D_prof[(k*len(times) + l),:] = t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=l, save_all=0)
+        Cs_2D_prof[(k*len(times) + l), :] = t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=l, save_all=0)
     for m in range(len(times)):
-        Cs_4D_prof[(k*len(times) + l),:] = t_dy.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=m, save_all=0)
+        Cs_4D_prof[(k*len(times) + m), :] = t_dy.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=m, save_all=0)
 
 np.save(filedir + 'Cs_2D_prof', Cs_2D_prof)
 np.save(filedir + 'Cs_4D_prof', Cs_4D_prof)
