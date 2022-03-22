@@ -21,13 +21,13 @@ data_4D = path20f+file20+str('ga01.nc')
 
 times = [13200, 13800, 14400]
 
-Cs_2D_prof_t0, times = t_dy.indiv_Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=0)
-Cs_2D_prof_t1, times = t_dy.indiv_Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=1)
-Cs_2D_prof_t2, times = t_dy.indiv_Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=2)
+Cs_2D_prof_t0, times = t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=0)
+Cs_2D_prof_t1, times = t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=1)
+Cs_2D_prof_t2, times = t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=2)
 Cs_2D_av = (Cs_2D_prof_t0 + Cs_2D_prof_t1 + Cs_2D_prof_t2)/len(times)
-Cs_4D_prof_t0, times = t_dy.indiv_Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=0)
-Cs_4D_prof_t1, times = t_dy.indiv_Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=1)
-Cs_4D_prof_t2, times = t_dy.indiv_Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=2)
+Cs_4D_prof_t0, times = t_dy.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=0)
+Cs_4D_prof_t1, times = t_dy.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=1)
+Cs_4D_prof_t2, times = t_dy.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=2)
 Cs_4D_av = (Cs_4D_prof_t0 + Cs_4D_prof_t1 + Cs_4D_prof_t2)/len(times)
 
 
