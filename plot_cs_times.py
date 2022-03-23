@@ -53,7 +53,7 @@ plt.close()
 
 fig3 = plt.figure(figsize=(10, 8))
 plt.plot(Cs_2D_prof_av, z / 500, 'b-', markersize=6, label='$Av C_{s 2 \\Delta} $')
-plt.plot(Cs_4D_prof_av, z / 500, 'o.npy-', markersize=6, label='$Av C_{s 4 \\Delta} $')
+plt.plot(Cs_4D_prof_av, z / 500, 'r-', markersize=6, label='$Av C_{s 4 \\Delta} $')
 plt.xlim(-0.01, 0.2)
 plt.ylabel('$z/z_i')
 plt.xlabel('$ C_{s} $', fontsize=14)
