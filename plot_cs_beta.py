@@ -33,7 +33,7 @@ plt.plot(Cs_2D_prof_av, z / 500, 'b-', markersize=6, label='$Av C_{s 2 \\Delta} 
 plt.plot(Cs_4D_prof_av, z / 500, 'r-', markersize=6, label='$Av C_{s 4 \\Delta} $')
 plt.plot(Cs_beta, z / 500, 'k-', markersize=6, label='$Av C_{s \\beta} $')
 plt.xlim(-0.01, 0.22)
-plt.ylabel('$z/z_i')
+plt.ylabel('$z/z_i$')
 plt.xlabel('$ C_{s} $', fontsize=14)
 plt.legend(fontsize=16, loc='best')
 plt.savefig(plotdir + f"Cs_profiles_beta_2D_4D_scaled_t{time_file}.png", pad_inches=0)
