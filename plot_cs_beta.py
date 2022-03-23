@@ -7,7 +7,7 @@ plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/trace/t
 
 time_file = '14400'
 times = 3
-z_len = 300
+z_len = 151
 
 Cs_2D_prof = np.zeros((times, z_len))
 Cs_4D_prof = np.zeros((times, z_len))
