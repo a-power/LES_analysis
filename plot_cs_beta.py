@@ -13,8 +13,8 @@ Cs_2D_prof = np.zeros((times, z_len))
 Cs_4D_prof = np.zeros((times, z_len))
 
 for l in range(times):
-    Cs_2D_prof[(l), :] = np.load(filedir + f'Cs_2D_prof_t{time_file}_{l}')
-    Cs_4D_prof[(l), :] = np.load(filedir + f'Cs_4D_prof_t{time_file}_{l}')
+    Cs_2D_prof[(l), :] = np.load(filedir + f'Cs_2D_prof_t{time_file}_{l}.npy')
+    Cs_4D_prof[(l), :] = np.load(filedir + f'Cs_4D_prof_t{time_file}_{l}.npy')
 
 Cs_2D_prof_av = np.mean(Cs_2D_prof, axis=0)
 Cs_4D_prof_av = np.mean(Cs_4D_prof, axis=0)
