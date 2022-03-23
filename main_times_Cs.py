@@ -10,7 +10,7 @@ mygrid = 'w'
 
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/trace/t_av_4_times/'
 filedir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/files/t_av_4_times/'
-count = 0
+
 for k, time_file in enumerate(new_set_time):
     if k==1:
         path20f = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn_w_trace/'
@@ -22,7 +22,7 @@ for k, time_file in enumerate(new_set_time):
     data_4D = path20f + file20 + str('ga01.nc')
 
     Cs_2D_prof_t0, times = t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=0, save_all=1)
-    np.save(filedir + 'Cs_2D_prof_t0', Cs_2D_prof_t0)
+    np.save(filedir + f'Cs_2D_prof_t{time_file}_0', Cs_2D_prof_t0)
 
     # Cs_2D_prof = np.zeros((len(new_set_time)*len(times), len(Cs_2D_prof_t0)))
     # Cs_4D_prof = np.zeros((len(new_set_time)*len(times), len(Cs_2D_prof_t0)))
