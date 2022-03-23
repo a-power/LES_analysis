@@ -184,11 +184,10 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=0, Cs_av_method = 'all'):
     hat_Sij = ds_in['S_ij_r'].data[:, t_in, :, :, :]
     Mij = dy.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
 
-    if save_all==1:
+    if save_all==2:
         Cs_sq_field = dy.C_s_sq(Lij, Mij)
         Cs_field = dy.get_Cs(Cs_sq_field)
-    else:
-        Cs_prof = dy.Cs_av_levels(Lij, Mij, av_method=Cs_av_method)
+    Cs_prof = dy.Cs_av_levels(Lij, Mij, av_method=Cs_av_method)
 
     if save_all==1:
         return Cs_prof, times
