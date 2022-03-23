@@ -249,13 +249,7 @@ def beta_calc(C_2D_sq_in, C_4D_sq_in):
     
     return beta
     
-    
-def Cs_sq_beta_dep(C_s2_sq, beta):    
-    
-    """ calculates Cs_sq using C_s = C_s2_sq/beta """
-    
-    return C_s2_sq/beta
-    
+
 
 def get_Cs(Cs_sq):
     
@@ -267,4 +261,13 @@ def get_Cs(Cs_sq):
     Cs = np.sqrt(Cs_sq_copy)
     
     return Cs
+
+
+def Cs_beta(C_s2_sq, beta):
+    """ calculates Cs using C_s = C_s2_sq/beta """
+    Cs_beta_sq = C_s2_sq / beta
+    Cs_beta = get_Cs(Cs_beta_sq)
+
+    return Cs_beta
+
     
