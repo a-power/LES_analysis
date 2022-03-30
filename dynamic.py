@@ -137,7 +137,15 @@ def C_s_sq(L_ij, M_ij):
     return C_s_sq
 
 
+def get_Cs(Cs_sq):
+    """ calculates C_s from C_s^2 by setting neg values to zero
+    and sq rooting"""
 
+    Cs_sq_copy = Cs_sq.copy()
+    Cs_sq_copy[Cs_sq < 0] = 0
+    Cs = np.sqrt(Cs_sq_copy)
+
+    return Cs
 
 
 def Cs_av_levels(L_ij, M_ij, av_method = 'all', return_all=0):
@@ -249,25 +257,57 @@ def beta_calc(C_2D_sq_in, C_4D_sq_in):
     
     return beta
     
-
-
-def get_Cs(Cs_sq):
     
-    """ calculates C_s from C_s^2 by setting neg values to zero 
-    and sq rooting"""
+def Cs_sq_beta_dep(C_s2_sq, beta):    
     
-    Cs_sq_copy = Cs_sq.copy()
-    Cs_sq_copy[Cs_sq<0] = 0
-    Cs = np.sqrt(Cs_sq_copy)
+    """ calculates Cs_sq using C_s = C_s2_sq/beta """
     
-    return Cs
-
-
-def Cs_beta(C_s2_sq, beta):
-    """ calculates Cs using C_s = C_s2_sq/beta """
-    Cs_beta_sq = C_s2_sq / beta
-    Cs_beta = get_Cs(Cs_beta_sq)
-
-    return Cs_beta
-
+    return C_s2_sq/beta
     
+
+def w_therm_field(w, t_in, return_all=False):
+    w_95th = np.zeros_like(w[t_in, 0, 0, :])
+    w_therm = np.zeros_like(w[t_in, ...])
+
+    i_ind = []
+    j_ind = []
+    k_ind = []
+
+    for k in range(len(w[t_in, 0, 0, :])):
+        w_95th[k] = np.percentile(w[t_in, :, :, k], 95)
+        for i in range(len(w[t_in, :, 0, 0])):
+            for j in range(len(w[t_in, 0, :, 0])):
+                if w[i, j, k] >= w_95th[k]:
+                    w_therm[i, j, k] = w[t_in, i, j, k]
+                    i_ind = np.append(i_ind, i)
+                    j_ind = np.append(j_ind, j)
+                    k_ind = np.append(k_ind, k)
+
+    if return_all == True:
+        return w_therm, i_ind, j_ind, k_ind, w_95th
+    else:
+        return w_therm, i_ind, j_ind, k_ind
+
+
+def cloud_field_ind(cloud_field, t_in, i_ind=[], j_ind=[], k_ind=[]):
+    for k in range(len(c[t_in, 0, 0, :])):
+        for i in range(len(c[t_in, :, 0, 0])):
+            for j in range(len(c[t_in, 0, :, 0])):
+                if cloud_field[t_in, i, j, k] >= 0:
+                    i_ind = np.append(i_ind, i)
+                    j_ind = np.append(j_ind, j)
+                    k_ind = np.append(k_ind, k)
+
+    return i_ind, j_ind, k_ind
+
+
+def Cs_therm_cloud_field(Cs, t_in, i_ind, j_ind, k_ind):
+    Cs_therm_cloud = np.zeros_like(Cs[t_in, ...])
+
+    for i in range(len(i_ind)):
+        Cs_therm_cloud[i_ind[i], j_ind[i], k_ind[i]] = Cs[t_in, i_ind[i], j_ind[i], k_ind[i]]
+
+    return Cs_therm_cloud
+
+
+#### check time indices for Cs (Lij and Mij)
