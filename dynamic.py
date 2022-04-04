@@ -284,7 +284,7 @@ def cloud_field_ind(cloud_field, t_in, cloud_liquid_threshold = 10**(-5)):
     clouds = np.zeros_like(cloud_field[t_in, ...])
 
     for k in range(len(cloud_field[t_in, 0, 0, :])):
-        clouds[:, :, k] = (cloud[t_in, :, :, k] >= cloud_liquid_threshold)
+        clouds[:, :, k] = (cloud_field[t_in, :, :, k] >= cloud_liquid_threshold)
 
     return clouds
 
