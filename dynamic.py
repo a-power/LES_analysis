@@ -271,7 +271,7 @@ def w_therm_field(w, t_in, return_all=False):
 
     for k in range(len(w[t_in, 0, 0, :])):
         w_95th[k] = np.percentile(w[t_in, :, :, k], 95)
-        w_therm[:, :, k] = (w[t_in, i, j, k] >= w_95th[k])
+        w_therm[:, :, k] = (w[t_in, :, :, k] >= w_95th[k])
 
     if return_all == True:
         return w_therm, w_95th
