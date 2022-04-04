@@ -1,6 +1,6 @@
 import numpy as np
 import os
-import dynamicas as dy
+import dynamic as dy
 import xarray as xr
 
 set_time = '14400'
