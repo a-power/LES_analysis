@@ -6,7 +6,7 @@ import xarray as xr
 set_time = '14400'
 set_time_step = 0
 in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
-dx = ['0020_g0800']
+dx = '0020_g0800'
 outdir_og = '/work/scratch-pw/apower/'
 outdir = outdir_og + '20m_cloud_thermal' +'/'
 plotdir = outdir_og+'plots/dyn/'
