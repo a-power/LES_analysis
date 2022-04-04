@@ -9,6 +9,11 @@ in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
 dx = '0020_g0800'
 outdir_og = '/work/scratch-pw/apower/'
 outdir = outdir_og + '20m_cloud_thermal' +'/'
+
+isExist1 = os.path.exists(outdir)
+if not isExist1:
+    os.makedirs(outdir)
+
 plotdir = outdir_og+'plots/dyn/'
 
 
