@@ -26,6 +26,6 @@ q_cloud = q_in.data
 thermals_field, w_95th = dy.w_therm_field(w_field, t_in=set_time_step, return_all=True)
 clouds_field = dy.cloud_field_ind(q_cloud, t_in=set_time_step, cloud_liquid_threshold = 10**(-5))
 
-np.save(outdir+'thermals'+set_time_step, thermals_field)
-np.save(outdir+'w_95th'+set_time_step, w_95th)
-np.save(outdir+'clouds'+set_time_step, clouds_field)
+np.save(outdir+'thermals'+str(set_time_step), thermals_field)
+np.save(outdir+'w_95th'+str(set_time_step), w_95th)
+np.save(outdir+'clouds'+str(set_time_step), clouds_field)
