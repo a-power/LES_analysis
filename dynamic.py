@@ -269,36 +269,24 @@ def w_therm_field(w, t_in, return_all=False):
     w_95th = np.zeros_like(w[t_in, 0, 0, :])
     w_therm = np.zeros_like(w[t_in, ...])
 
-    i_ind = []
-    j_ind = []
-    k_ind = []
-
     for k in range(len(w[t_in, 0, 0, :])):
         w_95th[k] = np.percentile(w[t_in, :, :, k], 95)
-        for i in range(len(w[t_in, :, 0, 0])):
-            for j in range(len(w[t_in, 0, :, 0])):
-                if w[i, j, k] >= w_95th[k]:
-                    w_therm[i, j, k] = w[t_in, i, j, k]
-                    i_ind = np.append(i_ind, i)
-                    j_ind = np.append(j_ind, j)
-                    k_ind = np.append(k_ind, k)
+        w_therm[:, :, k] = (w[t_in, i, j, k] >= w_95th[k])
 
     if return_all == True:
-        return w_therm, i_ind, j_ind, k_ind, w_95th
+        return w_therm, w_95th
     else:
-        return w_therm, i_ind, j_ind, k_ind
+        return w_therm
 
 
-def cloud_field_ind(cloud_field, t_in, i_ind=[], j_ind=[], k_ind=[]):
-    for k in range(len(c[t_in, 0, 0, :])):
-        for i in range(len(c[t_in, :, 0, 0])):
-            for j in range(len(c[t_in, 0, :, 0])):
-                if cloud_field[t_in, i, j, k] >= 0:
-                    i_ind = np.append(i_ind, i)
-                    j_ind = np.append(j_ind, j)
-                    k_ind = np.append(k_ind, k)
+def cloud_field_ind(cloud_field, t_in, cloud_liquid_threshold = 10**(-5)):
 
-    return i_ind, j_ind, k_ind
+    clouds = np.zeros_like(cloud_field[t_in, ...])
+
+    for k in range(len(cloud_field[t_in, 0, 0, :])):
+        clouds[:, :, k] = (cloud[t_in, :, :, k] >= cloud_liquid_threshold)
+
+    return clouds
 
 
 def Cs_therm_cloud_field(Cs, t_in, i_ind, j_ind, k_ind):
