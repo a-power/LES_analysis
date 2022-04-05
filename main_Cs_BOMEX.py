@@ -11,7 +11,7 @@ path20f = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn_w_t
 file20 = "BOMEX_m0020_g0800_all_14400_filter_"
 
 outdir_og = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/'
-outdir = outdir_og + '20m_cloud_thermal' +'/'
+outdir = outdir_og + '20m_cloud_thermal/backup' +'/'
 
 data_2D = path20f+file20+str('ga00.nc')
 data_4D = path20f+file20+str('ga01.nc')
