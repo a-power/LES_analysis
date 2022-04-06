@@ -2,6 +2,7 @@ import time_av_dynamic as t_dy
 import matplotlib.pyplot as plt
 import xarray as xr
 import numpy as np
+import functions as f
 
 av_type = 'all'
 mygrid = 'w'
@@ -11,28 +12,34 @@ path20f = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn_w_t
 file20 = "BOMEX_m0020_g0800_all_14400_filter_"
 
 outdir_og = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/'
-outdir = outdir_og + '20m_cloud_thermal/backup' +'/'
+outdir = outdir_og + '20m_cloud_thermal' +'/'
 
-data_2D = path20f+file20+str('ga00.nc')
-data_4D = path20f+file20+str('ga01.nc')
+# data_2D = path20f+file20+str('ga00.nc')
+# data_4D = path20f+file20+str('ga01.nc')
 
 # ds_in = xr.open_dataset(data_2D)
 # time_data = ds_in['time']
 # times = time_data.data
 # ds_in.close()
 
-Cs_2D_prof_t0, Cs_2D_field_t0, times = t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=0, save_all=2)
-np.save(outdir+'Cs_2D', Cs_2D_field_t0)
+cs_2D = np.load(outdir+'Cs_2D.npy')
+cs_4D = np.load(outdir+'Cs_4D.npy')
+
+Cs_2D_filt = f.filt_ma9_2d(cs_2D)
+Cs_4D_filt = f.filt_ma9_2d(cs_4D)
+
+np.save(outdir+'Cs_2D_filt', Cs_2D_filt)
+np.save(outdir+'Cs_4D_filt', Cs_4D_filt)
 
 # Cs_2D_prof_t1, Cs_field_t1, times = t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=1)
 # Cs_2D_prof_t2, Cs_field_t2, times = t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=2)
 # Cs_2D_av = (Cs_2D_prof_t0 + Cs_2D_prof_t1 + Cs_2D_prof_t2)/len(times)
-Cs_4D_prof_t0, Cs_4D_field_t0, times = t_dy.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=0, save_all=2)
-# Cs_4D_prof_t1, Cs_field_t1, times = t_dy.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=1)
-# Cs_4D_prof_t2, Cs_field_t2, times = t_dy.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=2)
-# Cs_4D_av = (Cs_4D_prof_t0 + Cs_4D_prof_t1 + Cs_4D_prof_t2)/len(times)
-
-np.save(outdir+'Cs_4D', Cs_4D_field_t0)
+# Cs_4D_prof_t0, Cs_4D_field_t0, times = t_dy.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=0, save_all=2)
+# # Cs_4D_prof_t1, Cs_field_t1, times = t_dy.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=1)
+# # Cs_4D_prof_t2, Cs_field_t2, times = t_dy.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=2)
+# # Cs_4D_av = (Cs_4D_prof_t0 + Cs_4D_prof_t1 + Cs_4D_prof_t2)/len(times)
+#
+# np.save(outdir+'Cs_4D', Cs_4D_field_t0)
 
 #########################plots#########################
 #
