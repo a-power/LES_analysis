@@ -1,8 +1,14 @@
 import numpy as np
 import xarray as xr
+
+import Subfilter.subfilter.filters as filt
+import Subfilter.subfilter.subfilter as sf
+
+# import filters as filt
+# import subfilter as sf
+
+import Subfilter.subfilter.utils.deformation as defm
 import dynamic as dy
-import filters as filt # Subfilter.subfilter.
-import subfilter as sf
 import dask
 from netCDF4 import Dataset
 
@@ -23,7 +29,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
     cutoff = 0.000001
 
     dask.config.set({"array.slicing.split_large_chunks": True})
-    [itime, iix, iiy, iiz] = sf.find_var(ds_in.dims, ['time', 'x', 'y', 'z'])
+    [itime, iix, iiy, iiz] = sf.utils.string_utils.get_string_index(ds_in.dims, ['time', 'x', 'y', 'z'])
     timevar = list(ds_in.dims)[itime]
     xvar = list(ds_in.dims)[iix]
     yvar = list(ds_in.dims)[iiy]
@@ -101,25 +107,27 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
             print('Derived data file exists')
         else:
 
-            # var_list = ["u",
-            #             "v",
-            #             "w",
-            #             "th"
-            #             ]
-            #
-            # field_list = sf.filter_variable_list(dataset, ref_dataset,
-            #                                      derived_data, filtered_data,
-            #                                      opt, new_filter,
-            #                                      var_list=var_list,
-            #                                      grid=ingrid)
+            var_list = ["u",
+                        "v",
+                        "w",
+                        "th"
+                        ]
+
+            field_list = sf.filter_variable_list(dataset, ref_dataset,
+                                                 derived_data, filtered_data,
+                                                 opt, new_filter,
+                                                 var_list=var_list,
+                                                 grid=ingrid)
 
             var_list = [["u", "u"],
                         ["u", "v"],
                         ["u", "w"],
                         ["v", "v"],
                         ["v", "w"],
-                        ["w", "w"]
-                        ] #["w", "th"],
+                        ["w", "w"],
+                        ["u", "th"],
+                        ["v", "th"],
+                        ["w", "th"]]
 
             quad_field_list = sf.filter_variable_pair_list(dataset,
                                                            ref_dataset,
@@ -127,12 +135,16 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
                                                            opt, new_filter,
                                                            var_list=var_list,
                                                            grid=ingrid)
-            deform = sf.deformation(dataset,
+            deform = defm.deformation(dataset,
                                     ref_dataset,
                                     derived_data,
-                                    opt)
+                                    opt, ingrid)
 
-            S_ij_temp, abs_S_temp = sf.shear(deform, no_trace=False)
+            dth_dx = dy.d_th_d_x_i(dataset, ref_dataset, opt, ingrid)
+            dth_dx.name = 'dth_dx'
+
+
+            S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
             #print("shape of S_ij_temp = ", np.shape(S_ij_temp), "shape of abs_S_temp =", np.shape(abs_S_temp))
 
             S_ij = 1 / 2 * S_ij_temp
@@ -146,10 +158,19 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
             abs_S_filt = sf.filter_field(abs_S, filtered_data,
                                          opt, new_filter)
 
+            dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
+                                        opt, new_filter)
+
             S_ij_abs_S = S_ij * abs_S
             S_ij_abs_S.name = 'S_ij_abs_S'
 
             S_ij_abs_S_hat_filt = sf.filter_field(S_ij_abs_S, filtered_data,
+                                                  opt, new_filter)
+
+            abs_S_dth_dx_filt = abs_S * dth_dx
+            abs_S_dth_dx_filt.name = 'abs_S_dth_dx'
+
+            abs_S_dth_dx_filt_filt = sf.filter_field(abs_S_dth_dx_filt, filtered_data,
                                                   opt, new_filter)
 
         filtered_data['ds'].close()
