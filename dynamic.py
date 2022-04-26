@@ -1,4 +1,5 @@
 import numpy as np
+import xarray as xr
 
 def k_cut_find(delta):
     return np.pi/(delta)
@@ -95,6 +96,39 @@ def M_ij(dx, dx_filt, S_filt, HAT_abs_S_Sij, beta=1):
     M_ij = dx_filt**2 * beta**power * abs_S_hat_S_ij_hat(S_filt) - dx**2 * HAT_abs_S_Sij
     
     return M_ij
+
+
+def d_th_d_x_i(source_dataset, ref_dataset, options, ingrid):
+
+    th = get_data(source_dataset, ref_dataset, 'th', options)
+    [iix, iiy, iiz] = get_string_index(th.dims, ['x', 'y', 'z'])
+
+    sh = np.shape(th)
+
+    max_ch = subfilter.global_config['chunk_size']
+
+    nch = int(sh[iix]/(2**int(np.log(sh[iix]*sh[iiy]*sh[iiz]/max_ch)/np.log(2)/2)))
+
+    print(f'theta nch={nch}')
+
+    th = re_chunk(th, xch=nch, ych=nch, zch = 'all')
+
+    z = source_dataset["z"]
+    zn = source_dataset["zn"]
+
+    thx = do.d_by_dx_field(th, z, zn, grid = ingrid )
+
+    thy = do.d_by_dy_field(th, z, zn, grid = ingrid )
+
+    thz = do.d_by_dz_field(th, z, zn, grid = ingrid )
+
+    th = None # Save some memory
+
+    th_xi = xr.concat([thx, thy, thz], dim='j', coords='minimal',
+                       compat='override')
+
+    return th_xi
+
 
 
 
