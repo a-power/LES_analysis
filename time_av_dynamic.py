@@ -11,7 +11,18 @@ import Subfilter.subfilter.utils.deformation as defm
 
 import dynamic as dy
 import dask
-from netCDF4 import Dataset
+
+
+def bytarr_to_dict(d):
+
+    # Converted for xarray use
+    res = {}
+    for i in range(np.shape(d)[0]):
+        opt = d[i,0].decode('utf-8')
+        val = d[i,1].decode('utf-8')
+
+        res[opt] = val
+    return res
 
 
 def options_database(source_dataset):
