@@ -12,6 +12,8 @@ import Subfilter.subfilter.utils.deformation as defm
 import dynamic as dy
 import dask
 
+import Subfilter.subfilter
+
 
 def bytarr_to_dict(d):
 
@@ -74,7 +76,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
     xvar = list(ds_in.dims)[iix]
     yvar = list(ds_in.dims)[iiy]
     zvar = list(ds_in.dims)[iiz]
-    max_ch = subfilter_setup['chunk_size']
+    max_ch = Subfilter.subfilter.global_config['chunk_size']
 
     # This is a rough way to estimate chunck size
     nch = np.min([int(ds_in.dims[xvar] / (2 ** int(np.log(ds_in.dims[xvar]
