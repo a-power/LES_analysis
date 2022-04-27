@@ -3,19 +3,48 @@ import xarray as xr
 
 import Subfilter.subfilter.filters as filt
 import Subfilter.subfilter.subfilter as sf
+import Subfilter.subfilter.utils as ut
+import Subfilter.subfilter.utils.deformation as defm
 
 # import filters as filt
 # import subfilter as sf
 
-import Subfilter.subfilter.utils.deformation as defm
 import dynamic as dy
 import dask
 from netCDF4 import Dataset
+
+
+def options_database(source_dataset):
+    '''
+    Convert options_database in source_dataset to dictionary.
+    Parameters
+    ----------
+    source_dataset : netCDF4 file
+        MONC output file.
+    Returns
+    -------
+    options_database : dict
+    '''
+
+    # Converted to xarray
+
+    if 'options_database' in source_dataset.variables:
+        options_database = bytarr_to_dict(
+            source_dataset['options_database'].values)
+    else:
+        options_database = None
+    return options_database
+
 
 def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_in=20, domain_in=16, ref_file = None):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
+
+    subfilter_setup = {'write_sleeptime': 3,
+                       'use_concat': True,
+                       'chunk_size': 2 ** 22}
+
 
     file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
     ds_in = xr.open_dataset(file_in)
@@ -29,12 +58,12 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
     cutoff = 0.000001
 
     dask.config.set({"array.slicing.split_large_chunks": True})
-    [itime, iix, iiy, iiz] = sf.utils.string_utils.get_string_index(ds_in.dims, ['time', 'x', 'y', 'z'])
+    [itime, iix, iiy, iiz] = ut.string_utils.get_string_index(ds_in.dims, ['time', 'x', 'y', 'z'])
     timevar = list(ds_in.dims)[itime]
     xvar = list(ds_in.dims)[iix]
     yvar = list(ds_in.dims)[iiy]
     zvar = list(ds_in.dims)[iiz]
-    max_ch = sf.subfilter_setup['chunk_size']
+    max_ch = subfilter_setup['chunk_size']
 
     # This is a rough way to estimate chunck size
     nch = np.min([int(ds_in.dims[xvar] / (2 ** int(np.log(ds_in.dims[xvar]
@@ -54,7 +83,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
     else:
         ref_dataset = None
 
-    od = sf.options_database(dataset)
+    od = options_database(dataset)
     if od is None:
         dx = opt['dx']
         dy = opt['dy']
@@ -140,7 +169,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
                                     derived_data,
                                     opt, ingrid)
 
-            dth_dx = dy.d_th_d_x_i(dataset, ref_dataset, opt, ingrid)
+            dth_dx = dy.d_th_d_x_i(dataset, ref_dataset, opt, ingrid, subfilter_setup)
             dth_dx.name = 'dth_dx'
 
 
