@@ -9,7 +9,7 @@ import subfilter.utils.deformation as defm
 # import filters as filt
 # import subfilter as sf
 
-import dynamic as dy
+import dynamic as dyn
 import dask
 
 import subfilter
@@ -92,7 +92,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
                                                       'z': 'auto', 'zn': 'auto'}) #preprocess: check versions
 
     if ref_file is not None:
-        ref_dataset = xr.open_dataset(dir + ref_file)
+        ref_dataset = xr.open_dataset(indir + ref_file)
     else:
         ref_dataset = None
 
@@ -182,7 +182,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
                                     derived_data,
                                     opt, ingrid)
 
-            dth_dx = dy.d_th_d_x_i(dataset, ref_dataset, opt, ingrid, subfilter_setup)
+            dth_dx = dyn.d_th_d_x_i(dataset, ref_dataset, opt, ingrid, subfilter_setup)
             dth_dx.name = 'dth_dx'
 
 
@@ -241,23 +241,23 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=0, Cs_av_method = 'all'):
     vw = ds_in[f's(v,w)_on_{ingrid}'].data[t_in, ...]
     ww = ds_in[f's(w,w)_on_{ingrid}'].data[t_in, ...]
 
-    Lij = dy.L_ij_sym_xarray(uu, uv, uw, vv, vw, ww)
+    Lij = dyn.L_ij_sym_xarray(uu, uv, uw, vv, vw, ww)
 
     hat_Sij_abs_S = ds_in['S_ij_abs_S_r'].data[:, t_in, :, :, :]
     hat_Sij = ds_in['S_ij_r'].data[:, t_in, :, :, :]
 
-    Mij = dy.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
+    Mij = dyn.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
 
-    Cs_prof = dy.Cs_av_levels(Lij, Mij, av_method=Cs_av_method)
+    Cs_prof = dyn.Cs_av_levels(Lij, Mij, av_method=Cs_av_method)
 
     if save_all==3:
-        Cs_sq_field = dy.C_s_sq(Lij, Mij)
-        Cs_field = dy.get_Cs(Cs_sq_field)
+        Cs_sq_field = dyn.C_s_sq(Lij, Mij)
+        Cs_field = dyn.get_Cs(Cs_sq_field)
         return Cs_prof, Cs_field, Lij, Mij, times
 
     if save_all==2:
-        Cs_sq_field = dy.C_s_sq(Lij, Mij)
-        Cs_field = dy.get_Cs(Cs_sq_field)
+        Cs_sq_field = dyn.C_s_sq(Lij, Mij)
+        Cs_field = dyn.get_Cs(Cs_sq_field)
         return Cs_prof, Cs_field, times
 
     if save_all==1:

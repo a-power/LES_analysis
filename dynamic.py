@@ -240,7 +240,7 @@ def Cs_av_levels(L_ij, M_ij, av_method = 'all', return_all=0):
                 LM_av[k] = LM_pos_sum/n
                 MM_av[k] = MM_pos_sum/n
         Cs_av_sq = (0.5*(LM_av / MM_av))
-        Cs_av = Cs_av_sq**(1/2)
+        Cs_av = np.sqrt(Cs_av_sq)
                 
     ##########################################
     elif av_method == 'neg_to_zero':
@@ -259,7 +259,7 @@ def Cs_av_levels(L_ij, M_ij, av_method = 'all', return_all=0):
                 LM_av[k] = LM_pos_sum/n
                 MM_av[k] = MM_pos_sum/n
         Cs_av_sq = (0.5*(LM_av / MM_av))
-        Cs_av = Cs_av_sq**(1/2)
+        Cs_av = np.sqrt(Cs_av_sq)
                 
     ##########################################
     elif av_method == 'all':
@@ -273,7 +273,7 @@ def Cs_av_levels(L_ij, M_ij, av_method = 'all', return_all=0):
         Cs_av_sq = (0.5*(LM_av / MM_av))
         Cs_av_temp = Cs_av_sq.copy()
         Cs_av_temp[Cs_av_sq < 0] = 0
-        Cs_av = Cs_av_temp**(1/2)
+        Cs_av = np.sqrt(Cs_av_temp)
 
     if return_all == 1:
         return Cs_av, LM_av, MM_av, Cs_av_sq
