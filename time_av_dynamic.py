@@ -1,10 +1,10 @@
 import numpy as np
 import xarray as xr
 
-import Subfilter.subfilter.filters as filt
-import Subfilter.subfilter.subfilter as sf
-import Subfilter.subfilter.utils as ut
-import Subfilter.subfilter.utils.deformation as defm
+import subfilter.filters as filt
+import subfilter.subfilter as sf
+import subfilter.utils as ut
+import subfilter.utils.deformation as defm
 
 # import filters as filt
 # import subfilter as sf
@@ -12,7 +12,7 @@ import Subfilter.subfilter.utils.deformation as defm
 import dynamic as dy
 import dask
 
-import Subfilter.subfilter
+import subfilter
 
 
 def bytarr_to_dict(d):
@@ -76,7 +76,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
     xvar = list(ds_in.dims)[iix]
     yvar = list(ds_in.dims)[iiy]
     zvar = list(ds_in.dims)[iiz]
-    max_ch = Subfilter.subfilter.global_config['chunk_size']
+    max_ch = subfilter.global_config['chunk_size']
 
     # This is a rough way to estimate chunck size
     nch = np.min([int(ds_in.dims[xvar] / (2 ** int(np.log(ds_in.dims[xvar]
@@ -245,8 +245,15 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=0, Cs_av_method = 'all'):
 
     hat_Sij_abs_S = ds_in['S_ij_abs_S_r'].data[:, t_in, :, :, :]
     hat_Sij = ds_in['S_ij_r'].data[:, t_in, :, :, :]
+
     Mij = dy.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
+
     Cs_prof = dy.Cs_av_levels(Lij, Mij, av_method=Cs_av_method)
+
+    if save_all==3:
+        Cs_sq_field = dy.C_s_sq(Lij, Mij)
+        Cs_field = dy.get_Cs(Cs_sq_field)
+        return Cs_prof, Cs_field, Lij, Mij, times
 
     if save_all==2:
         Cs_sq_field = dy.C_s_sq(Lij, Mij)
