@@ -1,10 +1,10 @@
 import numpy as np
 import xarray as xr
 
-import Subfilter.subfilter.utils.difference_ops as do
-from Subfilter.subfilter.utils.string_utils import get_string_index
-from Subfilter.subfilter.utils.dask_utils import re_chunk
-from Subfilter.subfilter.io.datain import get_data
+import subfilter.utils.difference_ops as do
+from subfilter.utils.string_utils import get_string_index
+from subfilter.utils.dask_utils import re_chunk
+from subfilter.io.datain import get_data
 
 def k_cut_find(delta):
     return np.pi/(delta)
