@@ -49,7 +49,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_
                                                             * ds_in.dims[yvar]
                                                             * ds_in.dims[zvar]
                                                             / max_ch) / np.log(2) / 2))),
-                  ds_in.dims[xvar]])
+                                                            ds_in.dims[xvar]])
 
     ds_in.close()
 
@@ -147,7 +147,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_
 
             dth_dx = dyn.d_th_d_x_i(dataset, ref_dataset, opt, ingrid)
             dth_dx.name = 'dth_dx'
-            dth_dx = re_chunk(dth_dx, xch=nch, ych=nch, zch='all')
+            dth_dx = re_chunk(dth_dx)
 
             S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
 
