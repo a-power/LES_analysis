@@ -153,11 +153,11 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_
 
             S_ij = 1 / 2 * S_ij_temp
             S_ij.name = 'S_ij'
-            S_ij = re_chunk(S_ij, xch=nch, ych=nch, zch='all')
+            S_ij = re_chunk(S_ij)
 
             abs_S = np.sqrt(abs_S_temp)
             abs_S.name = "abs_S"
-            abs_S = re_chunk(abs_S, xch=nch, ych=nch, zch='all')
+            abs_S = re_chunk(abs_S)
 
             S_ij_filt = sf.filter_field(S_ij, filtered_data,
                                         opt, new_filter)
@@ -170,14 +170,14 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_
 
             S_ij_abs_S = S_ij * abs_S
             S_ij_abs_S.name = 'S_ij_abs_S'
-            S_ij_abs_S = re_chunk(S_ij_abs_S, xch=nch, ych=nch, zch='all')
+            S_ij_abs_S = re_chunk(S_ij_abs_S)
 
             S_ij_abs_S_hat_filt = sf.filter_field(S_ij_abs_S, filtered_data,
                                                   opt, new_filter)
 
             abs_S_dth_dx = abs_S * dth_dx
             abs_S_dth_dx.name = 'abs_S_dth_dx'
-            abs_S_dth_dx = re_chunk(abs_S_dth_dx, xch=nch, ych=nch, zch='all')
+            abs_S_dth_dx = re_chunk(abs_S_dth_dx)
 
             abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
                                                   opt, new_filter)
