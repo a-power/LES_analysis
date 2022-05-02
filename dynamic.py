@@ -6,6 +6,8 @@ from subfilter.utils.string_utils import get_string_index
 from subfilter.utils.dask_utils import re_chunk
 from subfilter.io.datain import get_data
 
+import subfilter
+
 def k_cut_find(delta):
     return np.pi/(delta)
 
@@ -103,14 +105,14 @@ def M_ij(dx, dx_filt, S_filt, HAT_abs_S_Sij, beta=1):
     return M_ij
 
 
-def d_th_d_x_i(source_dataset, ref_dataset, options, ingrid, subfilter_setup):
+def d_th_d_x_i(source_dataset, ref_dataset, options, ingrid):
 
     th = get_data(source_dataset, ref_dataset, 'th', options)
     [iix, iiy, iiz] = get_string_index(th.dims, ['x', 'y', 'z'])
 
     sh = np.shape(th)
 
-    max_ch = subfilter_setup['chunk_size']
+    max_ch = subfilter.global_config['chunk_size']
 
     nch = int(sh[iix]/(2**int(np.log(sh[iix]*sh[iiy]*sh[iiz]/max_ch)/np.log(2)/2)))
 

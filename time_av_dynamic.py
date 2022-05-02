@@ -5,58 +5,21 @@ import subfilter.filters as filt
 import subfilter.subfilter as sf
 import subfilter.utils as ut
 import subfilter.utils.deformation as defm
+from subfilter.utils.dask_utils import re_chunk
 
 # import filters as filt
 # import subfilter as sf
 
 import dynamic as dyn
 import dask
-
 import subfilter
 
 
-def bytarr_to_dict(d):
-
-    # Converted for xarray use
-    res = {}
-    for i in range(np.shape(d)[0]):
-        opt = d[i,0].decode('utf-8')
-        val = d[i,1].decode('utf-8')
-
-        res[opt] = val
-    return res
-
-
-def options_database(source_dataset):
-    '''
-    Convert options_database in source_dataset to dictionary.
-    Parameters
-    ----------
-    source_dataset : netCDF4 file
-        MONC output file.
-    Returns
-    -------
-    options_database : dict
-    '''
-
-    # Converted to xarray
-
-    if 'options_database' in source_dataset.variables:
-        options_database = bytarr_to_dict(
-            source_dataset['options_database'].values)
-    else:
-        options_database = None
-    return options_database
-
-
-def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_in=20, domain_in=16, ref_file = None):
+def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_file = None):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
 
-    subfilter_setup = {'write_sleeptime': 3,
-                       'use_concat': True,
-                       'chunk_size': 2 ** 22}
 
 
     file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
@@ -65,7 +28,10 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
     times = time_data.data
     nt = len(times)
 
+    dx_in = float(opt['dx'])
+    domain_in = float(opt['domain'])
     N = int((domain_in*(1000))/dx_in)
+
     filter_name = filt_in
     width = -1
     cutoff = 0.000001
@@ -96,13 +62,6 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
     else:
         ref_dataset = None
 
-    od = options_database(dataset)
-    if od is None:
-        dx = opt['dx']
-        dy = opt['dy']
-    else:
-        dx = float(od['dxx'])
-        dy = float(od['dyy'])
 
     fname = filter_name
 
@@ -119,22 +78,26 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
             twod_filter = filt.Filter(filter_id,
                                       filter_name, npoints=N,
                                       sigma=filt_set, width=width,
-                                      delta_x=dx, cutoff=cutoff)
+                                      delta_x=dx_in, cutoff=cutoff)
         elif filter_name == 'wave_cutoff':
             filter_id = 'filter_wc{:02d}'.format(i)
             twod_filter = filt.Filter(filter_id, filter_name,
                                       wavenumber=filt_set,
                                       width=width, npoints=N,
-                                      delta_x=dx)
+                                      delta_x=dx_in)
         elif filter_name == 'running_mean':
             filter_id = 'filter_rm{:02d}'.format(i)
             twod_filter = filt.Filter(filter_id,
                                       filter_name,
                                       width=filt_set,
                                       npoints=N,
-                                      delta_x=dx)
+                                      delta_x=dx_in)
+        else:
+            print('Filter name not defined')
+            break
 
         filter_list.append(twod_filter)
+
 
     print(filter_list)
 
@@ -182,17 +145,19 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
                                     derived_data,
                                     opt, ingrid)
 
-            dth_dx = dyn.d_th_d_x_i(dataset, ref_dataset, opt, ingrid, subfilter_setup)
+            dth_dx = dyn.d_th_d_x_i(dataset, ref_dataset, opt, ingrid)
             dth_dx.name = 'dth_dx'
-
+            dth_dx = re_chunk(dth_dx, xch=nch, ych=nch, zch='all')
 
             S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
-            #print("shape of S_ij_temp = ", np.shape(S_ij_temp), "shape of abs_S_temp =", np.shape(abs_S_temp))
 
             S_ij = 1 / 2 * S_ij_temp
             S_ij.name = 'S_ij'
+            S_ij = re_chunk(S_ij, xch=nch, ych=nch, zch='all')
+
             abs_S = np.sqrt(abs_S_temp)
             abs_S.name = "abs_S"
+            abs_S = re_chunk(abs_S, xch=nch, ych=nch, zch='all')
 
             S_ij_filt = sf.filter_field(S_ij, filtered_data,
                                         opt, new_filter)
@@ -205,14 +170,16 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
 
             S_ij_abs_S = S_ij * abs_S
             S_ij_abs_S.name = 'S_ij_abs_S'
+            S_ij_abs_S = re_chunk(S_ij_abs_S, xch=nch, ych=nch, zch='all')
 
             S_ij_abs_S_hat_filt = sf.filter_field(S_ij_abs_S, filtered_data,
                                                   opt, new_filter)
 
-            abs_S_dth_dx_filt = abs_S * dth_dx
-            abs_S_dth_dx_filt.name = 'abs_S_dth_dx'
+            abs_S_dth_dx = abs_S * dth_dx
+            abs_S_dth_dx.name = 'abs_S_dth_dx'
+            abs_S_dth_dx = re_chunk(abs_S_dth_dx, xch=nch, ych=nch, zch='all')
 
-            abs_S_dth_dx_filt_filt = sf.filter_field(abs_S_dth_dx_filt, filtered_data,
+            abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
                                                   opt, new_filter)
 
         filtered_data['ds'].close()

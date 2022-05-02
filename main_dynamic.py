@@ -25,12 +25,13 @@ options = {
         'th_ref': 300.0,
         'dx': 20.0,
         'dy': 20.0,
+        'domain' : 16.0
           }
 
 for j in range(len(set_time)):
         for i, model_res in enumerate(model_res_list):
                 tdy.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, options, \
-                            opgrid, domain_in=16, ref_file = None)
+                            opgrid, ref_file = None)
 
 
 
