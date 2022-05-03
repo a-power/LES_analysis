@@ -231,6 +231,12 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
         Cs_prof_sq, Cs_prof, LM_prof, MM_prof = dyn.Cs_prof(Lij, Mij, return_all=1)
         Lij = None
         Mij = None
+
+        Cs_prof_sq.name = 'Cs_sq_profile'
+        Cs_prof.name = 'Cs_profile'
+        LM_prof.name = 'LM_profile'
+        MM_prof.name = 'MM_profile'
+
         return Cs_prof_sq, Cs_prof, LM_prof, MM_prof
 
     if save_all==2:
@@ -238,11 +244,31 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
         Cs_sq_field = dyn.C_s_sq(Lij, Mij)
         Lij = None
         Mij = None
+
+        Cs_prof_sq.name = 'Cs_sq_profile'
+        Cs_prof.name = 'Cs_profile'
+        LM_prof.name = 'LM_profile'
+        MM_prof.name = 'MM_profile'
+        Cs_sq_field.name = 'Cs_sq_field'
+        LM_field.name = 'LM_field'
+        MM_field.name = 'MM_field'
+
         return Cs_prof_sq, Cs_prof, LM_prof, MM_prof, Cs_sq_field, LM_field, MM_field
 
     if save_all==3:
         Cs_prof_sq, Cs_prof, LM_prof, MM_prof, LM_field, MM_field = dyn.Cs_prof(Lij, Mij, return_all=2)
         Cs_sq_field = dyn.C_s_sq(Lij, Mij)
+
+        Cs_prof_sq.name = 'Cs_sq_profile'
+        Cs_prof.name = 'Cs_profile'
+        LM_prof.name = 'LM_profile'
+        MM_prof.name = 'MM_profile'
+        Cs_sq_field.name = 'Cs_sq_field'
+        LM_field.name = 'LM_field'
+        MM_field.name = 'MM_field'
+        Lij.name = 'Lij_field'
+        Mij.name = 'Mij_field'
+
         return Cs_prof_sq, Cs_prof, LM_prof, MM_prof, Cs_sq_field, LM_field, MM_field, Lij, Mij
 
     else:
