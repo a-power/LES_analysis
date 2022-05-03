@@ -219,8 +219,8 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
     vw = None # Save storage
     ww = None # Save storage
 
-    hat_Sij_abs_S = ds_in['S_ij_abs_S_r'].data[:, t_in, :, :, :]
-    hat_Sij = ds_in['S_ij_r'].data[:, t_in, :, :, :]
+    hat_Sij_abs_S = ds_in['f(S_ij_abs_S)_r'].data[:, t_in, :, :, :]
+    hat_Sij = ds_in['f(S_ij)_r'].data[:, t_in, :, :, :]
 
     Mij = dyn.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
 
