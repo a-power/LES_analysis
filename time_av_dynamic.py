@@ -189,16 +189,18 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_
 
 
 
-def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=0, Cs_av_method = 'all'):
+def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
 
-    """ function takes in:  """
+    """ function takes in:
+
+    save_all: 1 is for profiles, 2 is for fields, 3 is for all fields PLUS Lij and Mij"""
 
     file_in = f'{indir}'
-    ds_in = xr.open_dataset(file_in)
-    time_data = ds_in['time']
-    times = time_data.data
-    nt = len(times)
-    ds_in.close()
+    # ds_in = xr.open_dataset(file_in)
+    # time_data = ds_in['time']
+    # times = time_data.data
+    # nt = len(times)
+    # ds_in.close()
 
     ds_in = xr.open_dataset(file_in)
     uu = ds_in[f's(u,u)_on_{ingrid}'].data[t_in, ...]
@@ -210,26 +212,43 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=0, Cs_av_method = 'all'):
 
     Lij = dyn.L_ij_sym_xarray(uu, uv, uw, vv, vw, ww)
 
+    uu = None # Save storage
+    uv = None # Save storage
+    uw = None # Save storage
+    vv = None # Save storage
+    vw = None # Save storage
+    ww = None # Save storage
+
     hat_Sij_abs_S = ds_in['S_ij_abs_S_r'].data[:, t_in, :, :, :]
     hat_Sij = ds_in['S_ij_r'].data[:, t_in, :, :, :]
 
     Mij = dyn.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
 
-    Cs_prof = dyn.Cs_av_levels(Lij, Mij, av_method=Cs_av_method)
-
-    if save_all==3:
-        Cs_sq_field = dyn.C_s_sq(Lij, Mij)
-        Cs_field = dyn.get_Cs(Cs_sq_field)
-        return Cs_prof, Cs_field, Lij, Mij, times
-
-    if save_all==2:
-        Cs_sq_field = dyn.C_s_sq(Lij, Mij)
-        Cs_field = dyn.get_Cs(Cs_sq_field)
-        return Cs_prof, Cs_field, times
+    hat_Sij_abs_S = None
+    hat_Sij = None
 
     if save_all==1:
-        return Cs_prof, times
+        Cs_prof_sq, Cs_prof, LM_prof, MM_prof = dyn.Cs_prof(Lij, Mij, return_all=1)
+        Lij = None
+        Mij = None
+        return Cs_prof_sq, Cs_prof, LM_prof, MM_prof
+
+    if save_all==2:
+        Cs_prof_sq, Cs_prof, LM_prof, MM_prof, LM_field, MM_field = dyn.Cs_prof(Lij, Mij, return_all=2)
+        Cs_sq_field = dyn.C_s_sq(Lij, Mij)
+        Lij = None
+        Mij = None
+        return Cs_prof_sq, Cs_prof, LM_prof, MM_prof, Cs_sq_field, LM_field, MM_field
+
+    if save_all==3:
+        Cs_prof_sq, Cs_prof, LM_prof, MM_prof, LM_field, MM_field = dyn.Cs_prof(Lij, Mij, return_all=2)
+        Cs_sq_field = dyn.C_s_sq(Lij, Mij)
+        return Cs_prof_sq, Cs_prof, LM_prof, MM_prof, Cs_sq_field, LM_field, MM_field, Lij, Mij
+
     else:
+        Cs_prof_sq, Cs_prof, LM_prof, MM_prof = dyn.Cs_prof(Lij, Mij, return_all=1)
+        Lij = None
+        Mij = None
         return Cs_prof
 
 

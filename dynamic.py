@@ -189,14 +189,11 @@ def get_Cs(Cs_sq):
     return Cs
 
 
-def Cs_av_levels(L_ij, M_ij, av_method = 'all', return_all=0):
+def Cs_profiles(L_ij, M_ij, return_all=1):
     """ Calculates the horizontal average Cs value at each level 
     using the Lij and Mij fields as input.
     
-    av_method can equal:
-    'all': all Cs_squared values are used in the calculation, 
-    neg_to_zero: the negative Cs_squared values are set to zero, 
-    or 'no_neg': the negative Cs_squared values are not included in the calculation
+    return_all: 1 is for profiles, 2 is for fields
     
     """
     
@@ -224,63 +221,24 @@ def Cs_av_levels(L_ij, M_ij, av_method = 'all', return_all=0):
 
     MM_flat = C_s_den.reshape(horiz_num,z_num)
     MM_av = np.zeros(z_num)
-    
-    #########################################
-    if av_method == 'no_neg':
 
-        for k in range(z_num):    
-            n = 0
-            LM_pos_sum = 0
-            MM_pos_sum = 0
+    for k in range(z_num):
 
-            for ij in range(horiz_num): 
-                if LM_flat[ij,k] > 0:
-                    LM_pos_sum += LM_flat[ij,k]
-                    MM_pos_sum += MM_flat[ij,k]
-                    n = n+1
-            if n != 0:
-                LM_av[k] = LM_pos_sum/n
-                MM_av[k] = MM_pos_sum/n
-        Cs_av_sq = (0.5*(LM_av / MM_av))
-        Cs_av = np.sqrt(Cs_av_sq)
-                
-    ##########################################
-    elif av_method == 'neg_to_zero':
+        LM_av[k] = np.sum(LM_flat[:,k])/horiz_num
+        MM_av[k] = np.sum(MM_flat[:,k])/horiz_num
 
-        for k in range(z_num):    
-            n = 0
-            LM_pos_sum = 0
-            MM_pos_sum = 0
 
-            for ij in range(horiz_num): 
-                if LM_flat[ij,k] > 0:
-                    LM_pos_sum += LM_flat[ij,k]
-                MM_pos_sum += MM_flat[ij,k]
-                n = n+1
-            if n != 0:
-                LM_av[k] = LM_pos_sum/n
-                MM_av[k] = MM_pos_sum/n
-        Cs_av_sq = (0.5*(LM_av / MM_av))
-        Cs_av = np.sqrt(Cs_av_sq)
-                
-    ##########################################
-    elif av_method == 'all':
+    Cs_av_sq = (0.5*(LM_av / MM_av))
 
-        for k in range(z_num):    
-            
-            LM_av[k] = np.sum(LM_flat[:,k])/horiz_num
-            MM_av[k] = np.sum(MM_flat[:,k])/horiz_num
-
-       
-        Cs_av_sq = (0.5*(LM_av / MM_av))
-        Cs_av_temp = Cs_av_sq.copy()
-        Cs_av_temp[Cs_av_sq < 0] = 0
-        Cs_av = np.sqrt(Cs_av_temp)
+    Cs_av = get_Cs(Cs_av_sq)
 
     if return_all == 1:
-        return Cs_av, LM_av, MM_av, Cs_av_sq
+        return Cs_av_sq, Cs_av, LM_av, MM_av
+
+    if return_all == 2:
+        return Cs_av_sq, Cs_av, LM_av, MM_av, C_s_num, C_s_den
     else:
-        return Cs_av
+        return Cs_av_sq
       
     
     
