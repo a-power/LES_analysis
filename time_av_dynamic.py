@@ -247,6 +247,7 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
 
         Cs_sq_prof = xr.DataArray(Cs_sq_prof, coords={'z': z_s},
                                   dims=["z"], name='Cs_sq_prof')
+        Cs_sq_prof.assign_coords({'time' : 0})
 
         Cs_prof = xr.DataArray(Cs_prof, coords={'z': z_s},
                                dims=["z"], name='Cs_prof')
