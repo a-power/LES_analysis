@@ -20,11 +20,25 @@ data_2D = path20f+file20+str('ga00.nc')
 data_4D = path20f+file20+str('ga01.nc')
 
 
+dataset_name2 = path20f+file20+'profiles_2D.nc'
+dataset_name4 = path20f+file20+'profiles_4D.nc'
+
 Cs_prof_sq_2d, Cs_prof_2d, LM_prof_2d, MM_prof_2d, Cs_sq_field_2d, LM_field_2d, MM_field_2d = \
     t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=0, save_all=2)
 
-ds_2 = xr.open_dataset(data_2D, mode='a', chunks='auto')
-ds_in2 = {'file':data_2D, 'ds': ds_2}
+
+ds_2 = xr.Dataset()#coords =
+                        #{'z':ds.coords['z']})
+
+# Ensure bool, dict, and None items can be stored
+# atts_out = {**atts, **subfilter.global_config, **options}
+# for inc in atts_out:
+#     if isinstance(atts_out[inc], (dict, bool, type(None))):
+#         atts_out[inc] = str(atts_out[inc])
+# derived_dataset.attrs = atts_out
+ds_2.to_netcdf(dataset_name2, mode='w')
+#ds_2 = xr.open_dataset(data_2D, mode='a', chunks='auto')
+ds_in2 = {'file':dataset_name2, 'ds': ds_2}
 
 save_field(ds_in2, Cs_prof_sq_2d)
 save_field(ds_in2, Cs_prof_2d)
@@ -42,15 +56,15 @@ Cs_sq_field_2d = None       #free memory
 LM_field_2d = None          #free memory
 MM_field_2d = None          #free memory
 
-ds_in2.close()
+ds_2.close()
 
 
 Cs_prof_sq_4d, Cs_prof_4d, LM_prof_4d, MM_prof_4d, Cs_sq_field_4d, LM_field_4d, MM_field_4d = \
     t_dy.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, t_in=0, save_all=2)
 
-ds_4 = xr.open_dataset(data_4D, mode='a', chunks='auto')
-ds_in4 = {'file':data_4D, 'ds': ds_4}
-
+ds_4 = xr.Dataset()
+ds_4.to_netcdf(dataset_name4, mode='w')
+ds_in4 = {'file':dataset_name4, 'ds': ds_4}
 
 save_field(ds_in4, Cs_prof_sq_4d)
 save_field(ds_in4, Cs_prof_4d)
@@ -60,7 +74,7 @@ save_field(ds_in4, Cs_sq_field_4d)
 save_field(ds_in4, LM_field_4d)
 save_field(ds_in4, MM_field_4d)
 
-ds_in4.close()
+ds_4.close()
 
 #########################plots#########################
 #
