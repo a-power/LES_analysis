@@ -26,6 +26,7 @@ dataset_name4 = path20f+file20+'profiles_4D.nc'
 Cs_prof_sq_2d, Cs_prof_2d, LM_prof_2d, MM_prof_2d, Cs_sq_field_2d, LM_field_2d, MM_field_2d = \
     t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=0, save_all=2)
 
+print(Cs_prof_sq_2d, Cs_prof_2d, LM_prof_2d, MM_prof_2d, Cs_sq_field_2d, LM_field_2d, MM_field_2d)
 
 ds_2 = xr.Dataset()#coords =
                         #{'z':ds.coords['z']})
