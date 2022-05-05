@@ -280,11 +280,11 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
         Cs_sq_field= xr.DataArray(Cs_sq_field, coords = {'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
                                   dims = ["x_p", "y_p", "z"], name = 'Cs_sq_field')
 
-        LM_field= xr.DataArray(LM_field, coords = {'i_j': ij_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
-                                  dims = ["i_j", "x_p", "y_p", "z"], name = 'LM_field')
+        LM_field= xr.DataArray(LM_field, coords = {'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+                                  dims = ["x_p", "y_p", "z"], name = 'LM_field')
 
-        MM_field= xr.DataArray(MM_field, coords = {'i_j': ij_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
-                                  dims = ["i_j", "x_p", "y_p", "z"], name = 'MM_field')
+        MM_field= xr.DataArray(MM_field, coords = {'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+                                  dims = ["x_p", "y_p", "z"], name = 'MM_field')
 
 
         return Cs_sq_prof, Cs_prof, LM_prof, MM_prof, Cs_sq_field, LM_field, MM_field
@@ -308,11 +308,11 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
         Cs_sq_field= xr.DataArray(Cs_sq_field, coords = {'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
                                   dims = ["x_p", "y_p", "z"], name = 'Cs_sq_field')
 
-        LM_field= xr.DataArray(LM_field, coords = {'i_j': ij_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
-                                  dims = ["i_j", "x_p", "y_p", "z"], name = 'LM_field')
+        LM_field= xr.DataArray(LM_field, coords = {'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+                                  dims = ["x_p", "y_p", "z"], name = 'LM_field')
 
-        MM_field= xr.DataArray(MM_field, coords = {'i_j': ij_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
-                                  dims = ["i_j", "x_p", "y_p", "z"], name = 'MM_field')
+        MM_field= xr.DataArray(MM_field, coords = {'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+                                  dims = ["x_p", "y_p", "z"], name = 'MM_field')
 
         Lij = xr.DataArray(Lij, coords={'i_j': ij_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
                                 dims=["i_j", "x_p", "y_p", "z"], name='Lij')
