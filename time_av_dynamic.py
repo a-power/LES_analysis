@@ -197,12 +197,12 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
 
     file_in = f'{indir}'
     ds_in = xr.open_dataset(file_in)
-    time_data = ds_in['time']
-    times = time_data.data
-    nt = len(times)
+    # time_data = ds_in['time']
+    # times = time_data.data
+    # nt = len(times)
 
     z_data = ds_in['z']
-    z_s = time_data.data
+    z_s = z_data.data
 
     ds_in.close()
 
@@ -236,17 +236,17 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
         Lij = None
         Mij = None
 
-        Cs_sq_prof= xr.DataArray(Cs_sq_prof, coords={'z': z_s, 'time': times},
-                               dims=["z", "time"], name = 'Cs_sq_prof')
+        Cs_sq_prof = xr.DataArray(Cs_sq_prof, coords={'z': z_s},
+                                  dims=["z"], name='Cs_sq_prof')
 
-        Cs_prof= xr.DataArray(Cs_prof, coords = {'z': z_s, 'time': times},
-                                  dims = ["z", "time"], name = 'Cs_prof')
+        Cs_prof = xr.DataArray(Cs_prof, coords={'z': z_s},
+                               dims=["z"], name='Cs_prof')
 
-        LM_prof= xr.DataArray(LM_prof, coords = {'z': z_s, 'time': times},
-                                  dims = ["z", "time"], name = 'LM_prof')
+        LM_prof = xr.DataArray(LM_prof, coords={'z': z_s},
+                               dims=["z"], name='LM_prof')
 
-        MM_prof= xr.DataArray(MM_prof, coords = {'z': z_s, 'time': times},
-                                  dims = ["z", "time"], name = 'MM_prof')
+        MM_prof = xr.DataArray(MM_prof, coords={'z': z_s},
+                               dims=["z"], name='MM_prof')
 
         return Cs_sq_prof, Cs_prof, LM_prof, MM_prof
 
@@ -256,26 +256,26 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
         Lij = None
         Mij = None
 
-        Cs_sq_prof = xr.DataArray(Cs_sq_prof, coords={'z': z_s, 'time': times},
-                                  dims=["z", "time"], name='Cs_sq_prof')
+        Cs_sq_prof = xr.DataArray(Cs_sq_prof, coords={'z': z_s},
+                                  dims=["z"], name='Cs_sq_prof')
 
-        Cs_prof = xr.DataArray(Cs_prof, coords={'z': z_s, 'time': times},
-                               dims=["z", "time"], name='Cs_prof')
+        Cs_prof = xr.DataArray(Cs_prof, coords={'z': z_s},
+                               dims=["z"], name='Cs_prof')
 
-        LM_prof = xr.DataArray(LM_prof, coords={'z': z_s, 'time': times},
-                               dims=["z", "time"], name='LM_prof')
+        LM_prof = xr.DataArray(LM_prof, coords={'z': z_s},
+                               dims=["z"], name='LM_prof')
 
-        MM_prof = xr.DataArray(MM_prof, coords={'z': z_s, 'time': times},
-                               dims=["z", "time"], name='MM_prof')
+        MM_prof = xr.DataArray(MM_prof, coords={'z': z_s},
+                               dims=["z"], name='MM_prof')
 
-        Cs_sq_field= xr.DataArray(Cs_sq_field, coords = {'z': z_s, 'time': times},
-                                  dims = ["z", "time"], name = 'Cs_sq_field')
+        Cs_sq_field= xr.DataArray(Cs_sq_field, coords = {'z': z_s},
+                                  dims = ["z"], name = 'Cs_sq_field')
 
-        LM_field= xr.DataArray(LM_field, coords = {'z': z_s, 'time': times},
-                                  dims = ["z", "time"], name = 'LM_field')
+        LM_field= xr.DataArray(LM_field, coords = {'z': z_s},
+                                  dims = ["z"], name = 'LM_field')
 
-        MM_field= xr.DataArray(MM_field, coords = {'z': z_s, 'time': times},
-                                  dims = ["z", "time"], name = 'MM_field')
+        MM_field= xr.DataArray(MM_field, coords = {'z': z_s},
+                                  dims = ["z"], name = 'MM_field')
 
 
         return Cs_sq_prof, Cs_prof, LM_prof, MM_prof, Cs_sq_field, LM_field, MM_field
@@ -284,32 +284,32 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
         Cs_sq_prof, Cs_prof, LM_prof, MM_prof, LM_field, MM_field = dyn.Cs_profiles(Lij, Mij, return_all=2)
         Cs_sq_field = dyn.C_s_sq(Lij, Mij)
 
-        Cs_sq_prof = xr.DataArray(Cs_sq_prof, coords={'z': z_s, 'time': times},
-                                  dims=["z", "time"], name='Cs_sq_prof')
+        Cs_sq_prof = xr.DataArray(Cs_sq_prof, coords={'z': z_s},
+                                  dims=["z"], name='Cs_sq_prof')
 
-        Cs_prof = xr.DataArray(Cs_prof, coords={'z': z_s, 'time': times},
-                               dims=["z", "time"], name='Cs_prof')
+        Cs_prof = xr.DataArray(Cs_prof, coords={'z': z_s},
+                               dims=["z"], name='Cs_prof')
 
-        LM_prof = xr.DataArray(LM_prof, coords={'z': z_s, 'time': times},
-                               dims=["z", "time"], name='LM_prof')
+        LM_prof = xr.DataArray(LM_prof, coords={'z': z_s},
+                               dims=["z"], name='LM_prof')
 
-        MM_prof = xr.DataArray(MM_prof, coords={'z': z_s, 'time': times},
-                               dims=["z", "time"], name='MM_prof')
+        MM_prof = xr.DataArray(MM_prof, coords={'z': z_s},
+                               dims=["z"], name='MM_prof')
 
-        Cs_sq_field = xr.DataArray(Cs_sq_field, coords={'z': z_s, 'time': times},
-                                   dims=["z", "time"], name='Cs_sq_field')
+        Cs_sq_field= xr.DataArray(Cs_sq_field, coords = {'z': z_s},
+                                  dims = ["z"], name = 'Cs_sq_field')
 
-        LM_field = xr.DataArray(LM_field, coords={'z': z_s, 'time': times},
-                                dims=["z", "time"], name='LM_field')
+        LM_field= xr.DataArray(LM_field, coords = {'z': z_s},
+                                  dims = ["z"], name = 'LM_field')
 
-        MM_field = xr.DataArray(MM_field, coords={'z': z_s, 'time': times},
-                                dims=["z", "time"], name='MM_field')
+        MM_field= xr.DataArray(MM_field, coords = {'z': z_s},
+                                  dims = ["z"], name = 'MM_field')
 
-        Lij = xr.DataArray(Lij, coords={'z': z_s, 'time': times},
-                                dims=["z", "time"], name='Lij')
+        Lij = xr.DataArray(Lij, coords={'z': z_s},
+                                dims=["z"], name='Lij')
 
-        Mij = xr.DataArray(Mij, coords={'z': z_s, 'time': times},
-                                dims=["z", "time"], name='Mij')
+        Mij = xr.DataArray(Mij, coords={'z': z_s},
+                                dims=["z"], name='Mij')
 
 
         return Cs_sq_prof, Cs_prof, LM_prof, MM_prof, Cs_sq_field, LM_field, MM_field, Lij, Mij
