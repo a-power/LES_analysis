@@ -246,16 +246,16 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
         Lij = None
         Mij = None
 
-        Cs_sq_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time' : times[t_in],'z': z_s},
+        Cs_sq_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
                                   dims=['time', "z"], name='Cs_sq_prof')
 
-        Cs_prof = xr.DataArray(Cs_prof[np.newaxis, ...], coords={'time' : times[t_in],'z': z_s},
+        Cs_prof = xr.DataArray(Cs_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
                                dims=['time', "z"], name='Cs_prof')
 
-        LM_prof = xr.DataArray(LM_prof[np.newaxis, ...], coords={'time' : times[t_in],'z': z_s},
+        LM_prof = xr.DataArray(LM_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
                                dims=['time', "z"], name='LM_prof')
 
-        MM_prof = xr.DataArray(MM_prof[np.newaxis, ...], coords={'time' : times[t_in],'z': z_s},
+        MM_prof = xr.DataArray(MM_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
                                dims=['time', "z"], name='MM_prof')
 
         return Cs_sq_prof, Cs_prof, LM_prof, MM_prof
@@ -266,25 +266,25 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
         Lij = None
         Mij = None
 
-        Cs_sq_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time' : times[t_in],'z': z_s},
+        Cs_sq_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
                                   dims=['time', "z"], name='Cs_sq_prof')
 
-        Cs_prof = xr.DataArray(Cs_prof[np.newaxis, ...], coords={'time' : times[t_in],'z': z_s},
+        Cs_prof = xr.DataArray(Cs_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
                                dims=['time', "z"], name='Cs_prof')
 
-        LM_prof = xr.DataArray(LM_prof[np.newaxis, ...], coords={'time' : times[t_in],'z': z_s},
+        LM_prof = xr.DataArray(LM_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
                                dims=['time', "z"], name='LM_prof')
 
-        MM_prof = xr.DataArray(MM_prof[np.newaxis, ...], coords={'time' : times[t_in],'z': z_s},
+        MM_prof = xr.DataArray(MM_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
                                dims=['time', "z"], name='MM_prof')
 
-        Cs_sq_field= xr.DataArray(Cs_sq_field[np.newaxis, ...], coords={'time' : times[t_in], 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+        Cs_sq_field= xr.DataArray(Cs_sq_field[np.newaxis, ...], coords={'time' : [times[t_in]], 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
                                   dims = ["time", "x_p", "y_p", "z"], name = 'Cs_sq_field')
 
-        LM_field= xr.DataArray(LM_field[np.newaxis, ...], coords={'time' : times[t_in], 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+        LM_field= xr.DataArray(LM_field[np.newaxis, ...], coords={'time' : [times[t_in]], 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
                                   dims = ["time", "x_p", "y_p", "z"], name = 'LM_field')
 
-        MM_field= xr.DataArray(MM_field[np.newaxis, ...], coords={'time' : times[t_in], 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+        MM_field= xr.DataArray(MM_field[np.newaxis, ...], coords={'time' : [times[t_in]], 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
                                   dims = ["time", "x_p", "y_p", "z"], name = 'MM_field')
 
 
@@ -294,32 +294,32 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
         Cs_sq_prof, Cs_prof, LM_prof, MM_prof, LM_field, MM_field = dyn.Cs_profiles(Lij, Mij, return_all=2)
         Cs_sq_field = dyn.C_s_sq(Lij, Mij)
 
-        Cs_sq_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time': times[t_in], 'z': z_s},
+        Cs_sq_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
                                   dims=['time', "z"], name='Cs_sq_prof')
 
-        Cs_prof = xr.DataArray(Cs_prof[np.newaxis, ...], coords={'time': times[t_in], 'z': z_s},
+        Cs_prof = xr.DataArray(Cs_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
                                dims=['time', "z"], name='Cs_prof')
 
-        LM_prof = xr.DataArray(LM_prof[np.newaxis, ...], coords={'time': times[t_in], 'z': z_s},
+        LM_prof = xr.DataArray(LM_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
                                dims=['time', "z"], name='LM_prof')
 
-        MM_prof = xr.DataArray(MM_prof[np.newaxis, ...], coords={'time': times[t_in], 'z': z_s},
+        MM_prof = xr.DataArray(MM_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
                                dims=['time', "z"], name='MM_prof')
 
         Cs_sq_field = xr.DataArray(Cs_sq_field[np.newaxis, ...],
-                                   coords={'time': times[t_in], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                   coords={'time': [times[t_in]], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                                    dims=["time", "x_p", "y_p", "z"], name='Cs_sq_field')
 
-        LM_field = xr.DataArray(LM_field[np.newaxis, ...], coords={'time': times[t_in], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+        LM_field = xr.DataArray(LM_field[np.newaxis, ...], coords={'time': [times[t_in]], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                                 dims=["time", "x_p", "y_p", "z"], name='LM_field')
 
-        MM_field = xr.DataArray(MM_field[np.newaxis, ...], coords={'time': times[t_in], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+        MM_field = xr.DataArray(MM_field[np.newaxis, ...], coords={'time': [times[t_in]], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                                 dims=["time", "x_p", "y_p", "z"], name='MM_field')
 
-        Lij = xr.DataArray(Lij[np.newaxis, ...], coords={'time': times[t_in], 'i_j': ij_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+        Lij = xr.DataArray(Lij[np.newaxis, ...], coords={'time': [times[t_in]], 'i_j': ij_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
                                 dims=["time", "i_j", "x_p", "y_p", "z"], name='Lij')
 
-        Mij = xr.DataArray(Mij[np.newaxis, ...], coords={'time': times[t_in], 'i_j': ij_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+        Mij = xr.DataArray(Mij[np.newaxis, ...], coords={'time': [times[t_in]], 'i_j': ij_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
                                 dims=["time", "i_j", "x_p", "y_p", "z"], name='Mij')
 
 
@@ -328,7 +328,7 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
     else:
         Cs_sq_prof, Cs_prof, LM_prof, MM_prof = dyn.Cs_profiles(Lij, Mij, return_all=1)
 
-        Cs_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time': times[t_in], 'z': z_s},
+        Cs_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
                                   dims=['time', "z"], name='Cs_sq_prof')
         Lij = None
         Mij = None
