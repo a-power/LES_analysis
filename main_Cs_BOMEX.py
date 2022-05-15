@@ -8,7 +8,7 @@ mygrid = 'w'
 
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/update_subfilt/'
 path20f = '/work/scratch-pw/apower/20m_gauss_dyn_update_subfilt/'
-file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_"
+file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_MM_"
 
 outdir_og = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/'
 outdir = outdir_og + '20m_update_subfilt' + '/'
