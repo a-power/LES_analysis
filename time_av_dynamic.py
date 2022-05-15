@@ -168,7 +168,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_
             dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
                                         opt, new_filter)
 
-            S_ij_abs_S = S_ij * abs_S
+            S_ij_abs_S = abs_S * S_ij
             S_ij_abs_S.name = 'S_ij_abs_S'
             S_ij_abs_S = re_chunk(S_ij_abs_S)
 
@@ -233,8 +233,8 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
     vw = None # Save storage
     ww = None # Save storage
 
-    hat_Sij_abs_S = ds_in['f(S_ij_abs_S)_r'].data[:, t_in, :, :, :]
     hat_Sij = ds_in['f(S_ij)_r'].data[:, t_in, :, :, :]
+    hat_Sij_abs_S = ds_in['f(S_ij_abs_S)_r'].data[:, t_in, :, :, :]
 
     Mij = dyn.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
 
@@ -258,7 +258,7 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
         MM_prof = xr.DataArray(MM_prof[np.newaxis, ...], coords={'time' : times[t_in],'z': z_s},
                                dims=['time', "z"], name='MM_prof')
 
-        return Cs_sq_prof, Cs_prof, LM_prof, MM_prof[t_in]
+        return Cs_sq_prof, Cs_prof, LM_prof, MM_prof
 
     if save_all==2:
         Cs_sq_prof, Cs_prof, LM_prof, MM_prof, LM_field, MM_field = dyn.Cs_profiles(Lij, Mij, return_all=2)

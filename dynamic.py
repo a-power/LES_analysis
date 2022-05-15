@@ -78,8 +78,6 @@ def abs_S_hat(S_filt_in):
             S_sum += 2*S_filt_in[i,:,:,:]*S_filt_in[i,:,:,:]
         else:
             S_sum += S_filt_in[i,:,:,:]*S_filt_in[i,:,:,:]
-    
-
     abs_S_hat_out = np.sqrt(2*S_sum)
     
     return abs_S_hat_out
@@ -198,18 +196,18 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
     """
     
     C_s_num = np.zeros_like(L_ij[0,:,:,:])
-    C_s_den = np.zeros_like(L_ij[0,:,:,:])
+    C_s_den = np.zeros_like(M_ij[0,:,:,:])
   
                         
     for it in range(0,6):
         if it in [0,3,5]:
             
             C_s_num += L_ij[it,:,:,:] * M_ij[it,:,:,:]
-            C_s_den += M_ij[it,:,:,:]**2
+            C_s_den += M_ij[it,:,:,:] * M_ij[it,:,:,:]
 
         else:        
             C_s_num += 2*(L_ij[it,:,:,:] * M_ij[it,:,:,:])
-            C_s_den += 2*M_ij[it,:,:,:]**2
+            C_s_den += 2*(M_ij[it,:,:,:] * M_ij[it,:,:,:])
             
             
     z_num = len(C_s_num[0,0,:])
