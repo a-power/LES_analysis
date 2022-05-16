@@ -11,8 +11,8 @@ new_set_time = ['12600', '14400', '16200', '18000']
 times = 1
 z_len = 151
 
-Cs_2D_prof = hat_Sij = ds_in['f(S_ij)_r'].data[:, t_in, :, :, :]
-Cs_4D_prof = hat_Sij = ds_in['f(S_ij)_r'].data[:, t_in, :, :, :]
+Cs_2D_prof = np.zeros((len(new_set_time)*times, z_len))
+Cs_4D_prof = np.zeros((len(new_set_time)*times, z_len))
 
 for k, time_file in enumerate(new_set_time):
     for l in range(times):
