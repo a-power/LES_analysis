@@ -9,6 +9,9 @@ import dynamic as dyn
 import dask
 import subfilter
 
+av_type = 'all'
+mygrid = 'w'
+
 path20f = '/storage/silver/MONC_data/Alanna/bomex/'
 file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_"
 
