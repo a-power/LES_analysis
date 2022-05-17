@@ -151,8 +151,6 @@ def R_j(dx, dx_filt, abs_S_hat, dth_dxj_hat, HAT_abs_S_dth_dxj, beta=1):
     alpha = dx_filt / dx
     power = alpha / 2
 
-
-
     R_j = dx_filt*dx_filt * beta ** power * abs_S_hat * dth_dxj_hat  -  dx*dx * HAT_abs_S_dth_dxj
 
     return R_j
@@ -204,8 +202,8 @@ def C_th_sq(Hj, Rj):
     C_th_den = np.zeros_like(Hj[0, :, :, :])
 
     for it in range(0, 3):
-        C_th_num += Hj[..., it] * Rj[..., it]
-        C_th_den += Rj[..., it] * Rj[..., it]
+        C_th_num += Hj[it, ...] * Rj[it, ...]
+        C_th_den += Rj[it, ...] * Rj[it, ...]
 
 
     C_th_sq = 0.5 * C_th_num / C_th_den
@@ -287,19 +285,15 @@ def C_th_profiles(H_ij, R_ij, return_all=2):
     C_th_num = np.zeros_like(H_ij[0, :, :, :])
     C_th_den = np.zeros_like(R_ij[0, :, :, :])
 
-    for it in range(0, 6):
-        if it in [0, 3, 5]:
+    for it in range(0, 3):
 
-            C_th_num += H_ij[it, :, :, :] * R_ij[it, :, :, :]
-            C_th_den += R_ij[it, :, :, :] * R_ij[it, :, :, :]
+        C_th_num += H_ij[it, :, :, :] * R_ij[it, :, :, :]
+        C_th_den += R_ij[it, :, :, :] * R_ij[it, :, :, :]
 
-        else:
-            C_th_num += 2 * (H_ij[it, :, :, :] * R_ij[it, :, :, :])
-            C_th_den += 2 * (R_ij[it, :, :, :] * R_ij[it, :, :, :])
 
     z_num = len(C_th_num[0, 0, :])
     horiz_num_temp = len(C_th_num[0, :, 0])
-    horiz_num = horiz_num_temp ** 2
+    horiz_num = horiz_num_temp * horiz_num_temp
 
     HR_flat = C_th_num.reshape(horiz_num, z_num)
     HR_av = np.zeros(z_num)
