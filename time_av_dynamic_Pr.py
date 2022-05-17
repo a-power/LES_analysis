@@ -16,7 +16,7 @@ import subfilter
 
 
 
-def C_th(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
+def C_th(indir, dx, dx_hat, ingrid, t_in=0):
 
     """ function takes in:
 
@@ -56,8 +56,15 @@ def C_th(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
 
     hat_abs_S = ds_in['f(abs_S)_r'].data[t_in, ...]
     dth_dx_hat = ds_in['f(dth_dx)_r'].data[:,t_in, ...]
+
+
+
+    ##########Rough axis fix###########
+
     HAT_abs_S_dth_dx_temp = ds_in['f(abs_S_dth_dx)_r'].data[t_in, ...]
     HAT_abs_S_dth_dx = np.transpose(HAT_abs_S_dth_dx_temp, axes=[3, 0, 1, 2])
+
+
 
     Rj = dyn.R_j(dx, dx_hat, hat_abs_S, dth_dx_hat, HAT_abs_S_dth_dx, beta=1)
 
@@ -87,11 +94,11 @@ def C_th(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
     RR_field = xr.DataArray(RR_field[np.newaxis, ...], coords={'time': [times[t_in]], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                             dims=["time", "x_p", "y_p", "z"], name='RR_field')
 
-    Hj = xr.DataArray(Hj[np.newaxis, ...], coords={'time': [times[t_in]], 'i_j': ij_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
-                            dims=["time", "i_j", "x_p", "y_p", "z"], name='Hj')
+    Hj = xr.DataArray(Hj[np.newaxis, ...], coords={'time': [times[t_in]], 'j': j_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+                            dims=["time", "j", "x_p", "y_p", "z"], name='Hj')
 
-    Rj = xr.DataArray(Rj[np.newaxis, ...], coords={'time': [times[t_in]], 'i_j': ij_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
-                            dims=["time", "i_j", "x_p", "y_p", "z"], name='Rj')
+    Rj = xr.DataArray(Rj[np.newaxis, ...], coords={'time': [times[t_in]], 'j': j_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+                            dims=["time", "j", "x_p", "y_p", "z"], name='Rj')
 
 
     return C_th_sq_prof, C_th_prof, HR_prof, RR_prof, C_th_sq_field, HR_field, RR_field, Hj, Rj
