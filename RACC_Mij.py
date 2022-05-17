@@ -15,10 +15,7 @@ mygrid = 'w'
 path20f = '/storage/silver/MONC_data/Alanna/bomex/'
 file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_"
 
-outdir_og = '/storage/silver/MONC_data/Alanna/bomex/'
-outdir = outdir_og + '20m_update_subfilt_MM' + '/'
-
-os.makedirs(outdir, exist_ok = True)
+#os.makedirs(outdir, exist_ok = True)
 
 data_2D = path20f+file20+str('ga00.nc')
 dataset_name2 = path20f+file20+'profiles_2D.nc'

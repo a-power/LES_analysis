@@ -15,6 +15,14 @@ def sigma_find(delta):
     return delta/2
 
 
+def l_mix_MONC(Cs_sq, Delta, k=0.4):
+
+    l_mix = np.sqrt( 1 / ( (1/(Cs_sq * Delta*Delta)) + (1/(k*k * Delta*Delta)) ) )
+
+    return l_mix
+
+
+
 def my_L_ij_sym(u, v, w, uu, uv, uw, vv, vw, ww):
     
     L_ij = np.array([ (u*u-uu), (u*v-uv), (u*w-uw),

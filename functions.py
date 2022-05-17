@@ -20,7 +20,7 @@ def S_smag(u, v, w): #This is the old Sij calc I used
     return S
     
 
-def C_dyn(L, M): # set_z=None):
+def C_dyn_sq(L, M): # set_z=None):
     "calculates the local dynamic Smagorinsky constant"
     
     if np.shape(L) != np.shape(M):
@@ -28,7 +28,7 @@ def C_dyn(L, M): # set_z=None):
         
     
     else:
-        C = (1/2)*(L*M/M**2)
+        C = (1/2)*(L*M/M*M)
            
     return C
  
