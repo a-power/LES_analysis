@@ -48,7 +48,7 @@ def C_th(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
     v_th = ds_in[f's(v,th)_on_{ingrid}'].data[t_in, ...]
     w_th = ds_in[f's(w,th)_on_{ingrid}'].data[t_in, ...]
 
-    Hj = H_j(u_th, v_th, w_th)
+    Hj = dyn.H_j(u_th, v_th, w_th)
 
     u_th = None # Save storage
     v_th = None # Save storage

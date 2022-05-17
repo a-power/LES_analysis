@@ -47,7 +47,7 @@ u_th = ds_in[f's(u,th)_on_{ingrid}'].data[t_in, ...]
 v_th = ds_in[f's(v,th)_on_{ingrid}'].data[t_in, ...]
 w_th = ds_in[f's(w,th)_on_{ingrid}'].data[t_in, ...]
 
-Hj = H_j(u_th, v_th, w_th)
+Hj = dyn.H_j(u_th, v_th, w_th)
 
 u_th = None # Save storage
 v_th = None # Save storage
@@ -57,7 +57,7 @@ hat_abs_S = ds_in['f(abs_S)_r'].data[t_in, ...]
 dth_dx_hat = ds_in['f(dth_dx)_r'].data[:,t_in, ...]
 HAT_abs_S_dth_dx = ds_in['f(abs_S_dth_dx)_r'].data[t_in, ...]
 
-Rj = dyn.R_j(dx, dx_hat, hat_abs_S, dth_dx_hat, HAT_abs_S_dth_dx, beta=1)
+Rj = dyn.R_j(20, 40, hat_abs_S, dth_dx_hat, HAT_abs_S_dth_dx, beta=1)
 
 Hj = xr.DataArray(Hj[np.newaxis, ...], coords={'time': [times[t_in]], 'j': j_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
                         dims=["time", "j", "x_p", "y_p", "z"], name='Hj')
