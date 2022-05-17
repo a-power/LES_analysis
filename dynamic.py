@@ -39,6 +39,10 @@ def L_ij_sym_xarray(uu, uv, uw, vv, vw, ww):
 
     return L_ij
 
+def H_j(u_th, v_th, w_th):
+    H_j = np.array([ -u_th, -v_th, -w_th ])
+    return H_j
+
 
 def S_ij(u, v, w, dx):
     
@@ -142,6 +146,14 @@ def d_th_d_x_i(source_dataset, ref_dataset, options, ingrid):
 
     return th_xi
 
+
+def R_j(dx, dx_filt, abs_S_hat, dth_dxj_hat, HAT_abs_S_dth_dxj, beta=1):
+    alpha = dx_filt / dx
+    power = alpha / 2
+
+    R_j = dx_filt*dx_filt * beta ** power * abs_S_hat * dth_dxj_hat  -  dx*dx * HAT_abs_S_dth_dxj
+
+    return R_j
 
 
 

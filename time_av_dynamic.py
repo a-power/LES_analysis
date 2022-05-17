@@ -175,7 +175,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_
             S_ij_abs_S_hat_filt = sf.filter_field(S_ij_abs_S, filtered_data,
                                                   opt, new_filter)
 
-            abs_S_dth_dx = abs_S * dth_dx
+            abs_S_dth_dx = dth_dx * abs_S
             abs_S_dth_dx.name = 'abs_S_dth_dx'
             abs_S_dth_dx = re_chunk(abs_S_dth_dx)
 

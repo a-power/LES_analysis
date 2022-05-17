@@ -56,7 +56,7 @@ def C_th(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
 
     hat_abs_S = ds_in['f(abs_S)_r'].data[t_in, ...]
     dth_dx_hat = ds_in['f(dth_dx)_r'].data[:,t_in, ...]
-    HAT_abs_S_dth_dx = ds_in[f's(w,th)_on_{ingrid}'].data[t_in, ...]
+    HAT_abs_S_dth_dx = ds_in['f(abs_S_dth_dx)_r'].data[t_in, ...]
 
     Rj = dyn.R_j(dx, dx_hat, hat_abs_S, dth_dx_hat, HAT_abs_S_dth_dx, beta=1)
 
