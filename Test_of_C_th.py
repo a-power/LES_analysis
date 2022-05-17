@@ -14,12 +14,12 @@ file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_"
 
 #os.makedirs(outdir, exist_ok = True)
 
-data_2D = path20f+file20+str('ga00.nc')
-dataset_name2 = path20f+file20+'Pr_profiles_2D.nc'
+data_2D = path20f+file20+str('ga01.nc')
+dataset_name2 = path20f+file20+'Pr_profiles_4D.nc'
 
 
 C_th_sq_prof, C_th_prof, HR_prof, RR_prof, C_th_sq_field, HR_field, RR_field, Hj, Rj = \
-    t_dy.C_th(data_2D, dx=20, dx_hat=40, ingrid=mygrid)
+    t_dy.C_th(data_2D, dx=20, dx_hat=80, ingrid=mygrid)
 
 
 
