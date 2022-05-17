@@ -38,8 +38,10 @@ def C_th(indir, dx, dx_hat, ingrid, t_in=0):
     z_data = ds_in['z']
     z_s = z_data.data
 
-    ij_data = ds_in['i_j']
-    ij_s = ij_data.data
+    j_data = ds_in['j']
+    j_s = j_data.data
+
+
 
     ds_in.close()
 
