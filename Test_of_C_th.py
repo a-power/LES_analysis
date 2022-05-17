@@ -2,7 +2,7 @@ import numpy as np
 import xarray as xr
 from subfilter.io.dataout import save_field
 import dynamic as dyn
-import dask
+
 import subfilter
 
 
