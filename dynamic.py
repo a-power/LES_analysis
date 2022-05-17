@@ -151,7 +151,7 @@ def R_j(dx, dx_filt, abs_S_hat, dth_dxj_hat, HAT_abs_S_dth_dxj, beta=1):
     alpha = dx_filt / dx
     power = alpha / 2
 
-    R_j = dx_filt*dx_filt * beta ** power * abs_S_hat * dth_dxj_hat  -  dx*dx * HAT_abs_S_dth_dxj
+    R_j = dx_filt*dx_filt * beta ** power * dth_dxj_hat * abs_S_hat  -  dx*dx * HAT_abs_S_dth_dxj
 
     return R_j
 
@@ -194,6 +194,21 @@ def C_s_sq(L_ij, M_ij):
                         
     
     return C_s_sq
+
+
+def C_th_sq(Hj, Rj):
+
+    C_th_num = np.zeros_like(Hj[0, :, :, :])
+    C_th_den = np.zeros_like(Hj[0, :, :, :])
+
+    for it in range(0, 3):
+        C_th_num += Hj[..., it] * Rj[..., it]
+        C_th_den += Rj[..., it] * Rj[..., it]
+
+
+    C_th_sq = 0.5 * C_th_num / C_th_den
+
+    return C_th_sq
 
 
 def get_Cs(Cs_sq):
@@ -257,9 +272,56 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         return Cs_av_sq, Cs_av, LM_av, MM_av, C_s_num, C_s_den
     else:
         return Cs_av_sq
-      
-    
-    
+
+
+def C_th_profiles(H_ij, R_ij, return_all=2):
+    """ Calculates the horizontal average Cs value at each level
+    using the Lij and Mij fields as input.
+
+    return_all: 1 is for profiles, 2 is for fields
+
+    """
+
+    C_th_num = np.zeros_like(H_ij[0, :, :, :])
+    C_th_den = np.zeros_like(R_ij[0, :, :, :])
+
+    for it in range(0, 6):
+        if it in [0, 3, 5]:
+
+            C_th_num += H_ij[it, :, :, :] * R_ij[it, :, :, :]
+            C_th_den += R_ij[it, :, :, :] * R_ij[it, :, :, :]
+
+        else:
+            C_th_num += 2 * (H_ij[it, :, :, :] * R_ij[it, :, :, :])
+            C_th_den += 2 * (R_ij[it, :, :, :] * R_ij[it, :, :, :])
+
+    z_num = len(C_th_num[0, 0, :])
+    horiz_num_temp = len(C_th_num[0, :, 0])
+    horiz_num = horiz_num_temp ** 2
+
+    HR_flat = C_th_num.reshape(horiz_num, z_num)
+    HR_av = np.zeros(z_num)
+
+    RR_flat = C_th_den.reshape(horiz_num, z_num)
+    RR_av = np.zeros(z_num)
+
+    for k in range(z_num):
+        HR_av[k] = np.sum(HR_flat[:, k]) / horiz_num
+        RR_av[k] = np.sum(RR_flat[:, k]) / horiz_num
+
+    C_th_av_sq = (0.5 * (HR_av / RR_av))
+
+    C_th_av = get_Cs(C_th_av_sq)
+
+    if return_all == 1:
+        return C_th_av_sq, C_th_av, HR_av, RR_av
+
+    if return_all == 2:
+        return C_th_av_sq, C_th_av, HR_av, RR_av, C_th_num, C_th_den
+    else:
+        return C_th_av_sq
+
+
 def beta_calc(C_2D_sq_in, C_4D_sq_in):
     
     Cs_2D_sq_copy1 = C_2D_sq_in.copy()
