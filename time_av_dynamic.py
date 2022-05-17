@@ -384,10 +384,12 @@ def C_th(indir, dx, dx_hat, ingrid, t_in=0):
 
     HAT_abs_S_dth_dx_temp = ds_in['f(abs_S_dth_dx)_r'].data[t_in, ...]
     HAT_abs_S_dth_dx = np.transpose(HAT_abs_S_dth_dx_temp, axes=[3, 0, 1, 2])
+    HAT_abs_S_dth_dx_temp = None
 
     Rj = dyn.R_j(dx, dx_hat, hat_abs_S, dth_dx_hat, HAT_abs_S_dth_dx, beta=1)
+    HAT_abs_S_dth_dx = None
 
-    C_th_sq_prof, C_th_prof, HR_prof, RR_prof, RH, RR = dyn.C_th_profiles(Hj, Rj, return_all=2)
+    C_th_sq_prof, C_th_prof, HR_prof, RR_prof, HR_field, RR_field = dyn.C_th_profiles(Hj, Rj, return_all=2)
     C_th_sq_field = dyn.C_th_sq(Hj, Rj)
 
     C_th_sq_prof = xr.DataArray(C_th_sq_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
