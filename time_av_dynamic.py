@@ -234,12 +234,14 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
     ww = None # Save storage
 
     hat_Sij = ds_in['f(S_ij)_r'].data[:, t_in, :, :, :]
+    hat_abs_S = ds_in['f(abs_S)_r'].data[t_in, ...]
     hat_Sij_abs_S = ds_in['f(S_ij_abs_S)_r'].data[:, t_in, :, :, :]
 
-    Mij = dyn.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
+    Mij = dyn.M_ij(dx, dx_hat, hat_Sij, hat_abs_S, hat_Sij_abs_S)
 
     hat_Sij_abs_S = None
     hat_Sij = None
+    hat_abs_S=None
 
     if save_all==1:
         Cs_sq_prof, Cs_prof, LM_prof, MM_prof = dyn.Cs_profiles(Lij, Mij, return_all=1)

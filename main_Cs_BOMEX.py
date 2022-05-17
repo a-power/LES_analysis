@@ -6,39 +6,32 @@ import xarray as xr
 av_type = 'all'
 mygrid = 'w'
 
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/update_subfilt/'
-path20f = '/work/scratch-pw/apower/20m_gauss_dyn_update_subfilt/'
-file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_MM_"
+# plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/update_subfilt/'
+# path20f = '/work/scratch-pw/apower/20m_gauss_dyn_update_subfilt/'
+# file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_MM_"
+#
+# outdir_og = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/'
+# outdir = outdir_og + '20m_update_subfilt' + '/'
+#
+# os.makedirs(outdir, exist_ok = True)
+# os.makedirs(plotdir, exist_ok = True)
 
-outdir_og = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/'
-outdir = outdir_og + '20m_update_subfilt' + '/'
-
-os.makedirs(outdir, exist_ok = True)
-os.makedirs(plotdir, exist_ok = True)
+path20f = '/storage/silver/MONC_data/Alanna/bomex/'
+file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_"
 
 data_2D = path20f+file20+str('ga00.nc')
 data_4D = path20f+file20+str('ga01.nc')
 
-
 dataset_name2 = path20f+file20+'profiles_2D.nc'
 dataset_name4 = path20f+file20+'profiles_4D.nc'
 
-Cs_prof_sq_2d, Cs_prof_2d, LM_prof_2d, MM_prof_2d, Cs_sq_field_2d, LM_field_2d, MM_field_2d = \
-    t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=0, save_all=2)
+Cs_prof_sq_2d, Cs_prof_2d, LM_prof_2d, MM_prof_2d, Cs_sq_field_2d, LM_field_2d, MM_field_2d, L_ij, M_ij = \
+    t_dy.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, t_in=0, save_all=3)
 
 print(Cs_prof_sq_2d, Cs_prof_2d, LM_prof_2d, MM_prof_2d, Cs_sq_field_2d, LM_field_2d, MM_field_2d)
 
-ds_2 = xr.Dataset()#coords =
-                        #{'z':ds.coords['z']})
-
-# Ensure bool, dict, and None items can be stored
-# atts_out = {**atts, **subfilter.global_config, **options}
-# for inc in atts_out:
-#     if isinstance(atts_out[inc], (dict, bool, type(None))):
-#         atts_out[inc] = str(atts_out[inc])
-# derived_dataset.attrs = atts_out
+ds_2 = xr.Dataset()
 ds_2.to_netcdf(dataset_name2, mode='w')
-#ds_2 = xr.open_dataset(data_2D, mode='a', chunks='auto')
 ds_in2 = {'file':dataset_name2, 'ds': ds_2}
 
 save_field(ds_in2, Cs_prof_sq_2d)
@@ -48,6 +41,8 @@ save_field(ds_in2, MM_prof_2d)
 save_field(ds_in2, Cs_sq_field_2d)
 save_field(ds_in2, LM_field_2d)
 save_field(ds_in2, MM_field_2d)
+save_field(ds_in2, L_ij)
+save_field(ds_in2, M_ij)
 
 Cs_prof_sq_2d = None        #free memory
 Cs_prof_2d = None           #free memory

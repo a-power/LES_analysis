@@ -105,13 +105,22 @@ def abs_S_hat_S_ij_hat(S_filt):
 
 
 
-def M_ij(dx, dx_filt, S_filt, HAT_abs_S_Sij, beta=1):
+def M_ij_old(dx, dx_filt, S_filt, HAT_abs_S_Sij, beta=1):
     
     alpha = dx_filt/dx
     power = alpha/2
     
     M_ij = dx_filt**2 * beta**power * abs_S_hat_S_ij_hat(S_filt) - dx**2 * HAT_abs_S_Sij
     
+    return M_ij
+
+
+def M_ij(dx, dx_filt, S_filt, abs_S_filt, HAT_abs_S_Sij, beta=1):
+    alpha = dx_filt / dx
+    power = alpha / 2
+
+    M_ij = dx_filt * dx_filt * (beta ** power) * abs_S_filt * S_filt  -  dx ** 2 * HAT_abs_S_Sij
+
     return M_ij
 
 
