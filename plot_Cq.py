@@ -4,7 +4,7 @@ import xarray as xr
 import os
 
 dir_data = '/work/scratch-pw/apower/20m_gauss_dyn_update_subfilt/BOMEX_m0020_g0800_all_14400_gaussian_filter_Cq_'
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_update_subfilt/plots/
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_update_subfilt/plots/'
 os.makedirs(plotdir, exist_ok = True)
 
 data_2D = xr.open_dataset(dir_data + '2D_attempt.nc')
