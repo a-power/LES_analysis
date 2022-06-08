@@ -53,7 +53,7 @@ plt.plot(beta, z)
 plt.xlabel('$\\beta$', fontsize=14)
 plt.ylabel("z (m)")
 plt.xlim(0, 2)
-plt.savefig('plotdir/Cq_beta_prof_zoom.png')
+plt.savefig(plotdir+'Cq_beta_prof_zoom.png')
 
 Cs_beta_sq = Cs_sq_2/beta
 
@@ -62,7 +62,7 @@ plt.plot(Cs_beta_sq, z)
 plt.xlabel('$C_{q \\beta} ^2$', fontsize=14)
 plt.ylabel("z (m)")
 #plt.xlim(1, 3)
-plt.savefig('plotdir/Cq_beta_sq_prof.png')
+plt.savefig(plotdir+'Cq_beta_sq_prof.png')
 
 
 
@@ -88,7 +88,7 @@ plt.plot(Cs_beta, z)
 plt.xlabel('$C_{q \\beta}$', fontsize=14)
 plt.ylabel("z (m)")
 #plt.xlim(1, 3)
-plt.savefig('plotdir/Cq_beta_prof.png')
+plt.savefig(plotdir+'Cq_beta_prof.png')
 
 plt.figure(figsize=(6,7))
 plt.plot(Cs_2, z, label = '$C_{q 2 \\Delta}$')
@@ -98,7 +98,7 @@ plt.xlabel('$C_{q}$', fontsize=14)
 plt.ylabel("z (m)")
 plt.legend(fontsize=16, loc='upper right')
 #plt.xlim(1, 3)
-plt.savefig('plotdir/Cq_prof_w_beta.png')
+plt.savefig(plotdir+'Cq_prof_w_beta.png')
 
 
 plt.figure(figsize=(6,7))
@@ -109,7 +109,7 @@ plt.xlabel('$l_{q}$', fontsize=14)
 plt.ylabel("z (m)")
 plt.legend(fontsize=16, loc='upper right')
 #plt.xlim(1, 3)
-plt.savefig('plotdir/l_q.png')
+plt.savefig(plotdir+'l_q.png')
 
 
 
