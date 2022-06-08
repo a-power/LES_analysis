@@ -372,6 +372,14 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, t_in=0, axisfix=False):
 
     save_all: 1 is for profiles, 2 is for fields, 3 is for all fields PLUS Lij and Mij"""
 
+    if scalar=='q_total':
+        scalar_name='q'
+    elif scalar=='th':
+        scalar_name='th'
+    else:
+        print("scalar not recognised, only inputs available are 'th' or 'q_total'.")
+        return
+
     file_in = f'{indir}'
     ds_in = xr.open_dataset(file_in)
     time_data = ds_in['time']
@@ -405,16 +413,16 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, t_in=0, axisfix=False):
     w_s = None  # Save storage
 
     hat_abs_S = ds_in['f(abs_S)_r'].data[t_in, ...]
-    ds_dx_hat = ds_in[f'f(d{scalar}_dx)_r'].data[:, t_in, ...]
+    ds_dx_hat = ds_in[f'f(d{scalar_name}_dx)_r'].data[:, t_in, ...]
 
     ##########Rough axis fix###########
 
     if axisfix == True:
-        HAT_abs_S_ds_dx_temp = ds_in[f'f(abs_S_d{scalar}_dx)_r'].data[t_in, ...]
+        HAT_abs_S_ds_dx_temp = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[t_in, ...]
         HAT_abs_S_ds_dx = np.transpose(HAT_abs_S_ds_dx_temp, axes=[3, 0, 1, 2])
         HAT_abs_S_ds_dx_temp = None
     else:
-        HAT_abs_S_ds_dx = ds_in[f'f(abs_S_d{scalar}_dx)_r'].data[:, t_in, ...]
+        HAT_abs_S_ds_dx = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[:, t_in, ...]
 
     Rj = dyn.R_j(dx, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
     HAT_abs_S_ds_dx = None
