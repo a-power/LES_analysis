@@ -20,8 +20,8 @@ data_2D = path20f+file20+str('ga00.nc')
 data_4D = path20f+file20+str('ga01.nc')
 
 
-dataset_name2 = path20f+file20+'Cq_2D.nc'
-dataset_name4 = path20f+file20+'Cq_4D.nc'
+dataset_name2 = path20f+file20+'Cq_2D_attempt.nc'
+dataset_name4 = path20f+file20+'Cq_4D_attempt.nc'
 
 
 ########################################################################
