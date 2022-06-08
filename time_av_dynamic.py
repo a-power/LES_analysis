@@ -115,7 +115,8 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_
             var_list = ["u",
                         "v",
                         "w",
-                        "th"
+                        "th",
+                        "q_total"
                         ]
 
             field_list = sf.filter_variable_list(dataset, ref_dataset,
@@ -132,7 +133,11 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_
                         ["w", "w"],
                         ["u", "th"],
                         ["v", "th"],
-                        ["w", "th"]]
+                        ["w", "th"],
+                        ["u", "q_total"],
+                        ["v", "q_total"],
+                        ["w", "q_total"]
+                        ]
 
             quad_field_list = sf.filter_variable_pair_list(dataset,
                                                            ref_dataset,
@@ -145,9 +150,13 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_
                                     derived_data,
                                     opt, ingrid)
 
-            dth_dx = dyn.d_th_d_x_i(dataset, ref_dataset, opt, ingrid)
+            dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, opt, ingrid)
             dth_dx.name = 'dth_dx'
             dth_dx = re_chunk(dth_dx)
+
+            dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid)
+            dq_dx.name = 'dq_dx'
+            dq_dx = re_chunk(dq_dx)
 
             S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
 
@@ -168,6 +177,9 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_
             dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
                                         opt, new_filter)
 
+            dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
+                                          opt, new_filter)
+
             S_ij_abs_S = abs_S * S_ij
             S_ij_abs_S.name = 'S_ij_abs_S'
             S_ij_abs_S = re_chunk(S_ij_abs_S)
@@ -181,6 +193,13 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_
 
             abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
                                                   opt, new_filter)
+
+            abs_S_dq_dx = dq_dx * abs_S
+            abs_S_dq_dx.name = 'abs_S_dq_dx'
+            abs_S_dq_dx = re_chunk(abs_S_dq_dx)
+
+            abs_S_dq_dx_filt = sf.filter_field(abs_S_dq_dx, filtered_data,
+                                                opt, new_filter)
 
         filtered_data['ds'].close()
     derived_data['ds'].close()
@@ -342,7 +361,7 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1):
 
 
 
-def C_th(indir, dx, dx_hat, ingrid, t_in=0):
+def C_s(scalar, indir, dx, dx_hat, ingrid, t_in=0, axisfix=False):
     """ function takes in:
 
     save_all: 1 is for profiles, 2 is for fields, 3 is for all fields PLUS Lij and Mij"""
@@ -369,30 +388,33 @@ def C_th(indir, dx, dx_hat, ingrid, t_in=0):
     ds_in.close()
 
     ds_in = xr.open_dataset(file_in)
-    u_th = ds_in[f's(u,th)_on_{ingrid}'].data[t_in, ...]
-    v_th = ds_in[f's(v,th)_on_{ingrid}'].data[t_in, ...]
-    w_th = ds_in[f's(w,th)_on_{ingrid}'].data[t_in, ...]
+    u_s = ds_in[f's(u,{scalar})_on_{ingrid}'].data[t_in, ...]
+    v_s = ds_in[f's(v,{scalar})_on_{ingrid}'].data[t_in, ...]
+    w_s = ds_in[f's(w,{scalar})_on_{ingrid}'].data[t_in, ...]
 
-    Hj = dyn.H_j(u_th, v_th, w_th)
+    Hj = dyn.H_j(u_s, v_s, w_s)
 
-    u_th = None  # Save storage
-    v_th = None  # Save storage
-    w_th = None  # Save storage
+    u_s = None  # Save storage
+    v_s = None  # Save storage
+    w_s = None  # Save storage
 
     hat_abs_S = ds_in['f(abs_S)_r'].data[t_in, ...]
-    dth_dx_hat = ds_in['f(dth_dx)_r'].data[:, t_in, ...]
+    ds_dx_hat = ds_in[f'f(d{scalar}_dx)_r'].data[:, t_in, ...]
 
     ##########Rough axis fix###########
 
-    HAT_abs_S_dth_dx_temp = ds_in['f(abs_S_dth_dx)_r'].data[t_in, ...]
-    HAT_abs_S_dth_dx = np.transpose(HAT_abs_S_dth_dx_temp, axes=[3, 0, 1, 2])
-    HAT_abs_S_dth_dx_temp = None
+    if axisfix == True:
+        HAT_abs_S_ds_dx_temp = ds_in['f(abs_S_dth_dx)_r'].data[t_in, ...]
+        HAT_abs_S_ds_dx = np.transpose(HAT_abs_S_ds_dx_temp, axes=[3, 0, 1, 2])
+        HAT_abs_S_ds_dx_temp = None
+    else:
+        HAT_abs_S_ds_dx = ds_in[f'f(abs_S_d{scalar}_dx)_r'].data[t_in, ...]
 
-    Rj = dyn.R_j(dx, dx_hat, hat_abs_S, dth_dx_hat, HAT_abs_S_dth_dx, beta=1)
-    HAT_abs_S_dth_dx = None
+    Rj = dyn.R_j(dx, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
+    HAT_abs_S_ds_dx = None
 
-    C_th_sq_prof, C_th_prof, HR_prof, RR_prof, HR_field, RR_field = dyn.C_th_profiles(Hj, Rj, return_all=2)
-    C_th_sq_field = dyn.C_th_sq(Hj, Rj)
+    C_th_sq_prof, C_th_prof, HR_prof, RR_prof, HR_field, RR_field = dyn.C_scalar_profiles(Hj, Rj, return_all=2)
+    C_th_sq_field = dyn.C_scalar_sq(Hj, Rj)
 
     C_th_sq_prof = xr.DataArray(C_th_sq_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
                                 dims=['time', "z"], name='C_th_sq_prof')

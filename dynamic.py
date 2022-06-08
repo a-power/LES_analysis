@@ -39,8 +39,8 @@ def L_ij_sym_xarray(uu, uv, uw, vv, vw, ww):
 
     return L_ij
 
-def H_j(u_th, v_th, w_th):
-    H_j = np.array([ -u_th, -v_th, -w_th ])
+def H_j(u_s, v_s, w_s):
+    H_j = np.array([ -u_s, -v_s, -w_s ])
     return H_j
 
 
@@ -105,15 +105,6 @@ def abs_S_hat_S_ij_hat(S_filt):
 
 
 
-def M_ij_old(dx, dx_filt, S_filt, HAT_abs_S_Sij, beta=1):
-    
-    alpha = dx_filt/dx
-    power = alpha/2
-    
-    M_ij = dx_filt**2 * beta**power * abs_S_hat_S_ij_hat(S_filt) - dx**2 * HAT_abs_S_Sij
-    
-    return M_ij
-
 
 def M_ij(dx, dx_filt, S_filt, abs_S_filt, HAT_abs_S_Sij, beta=1):
     alpha = dx_filt / dx
@@ -124,43 +115,51 @@ def M_ij(dx, dx_filt, S_filt, abs_S_filt, HAT_abs_S_Sij, beta=1):
     return M_ij
 
 
-def d_th_d_x_i(source_dataset, ref_dataset, options, ingrid):
+def ds_dxi(scalar, source_dataset, ref_dataset, options, ingrid):
 
-    th = get_data(source_dataset, ref_dataset, 'th', options)
-    [iix, iiy, iiz] = get_string_index(th.dims, ['x', 'y', 'z'])
+    if scalar == "q_total":
+        s = get_data(source_dataset, ref_dataset, 'q_total', options)
 
-    sh = np.shape(th)
+        # ql = get_data(source_dataset, ref_dataset, 'q_cloud_liquid_mass', options)
+        # qv = get_data(source_dataset, ref_dataset, 'q_vapour', options)
+        # s = ql + qv
 
+
+    elif scalar == 'th':
+        s = get_data(source_dataset, ref_dataset, 'th', options)
+
+    else:
+        print("Scalar input not recognised: only inputs available are 'th' or 'q'.")
+        return
+
+    [iix, iiy, iiz] = get_string_index(s.dims, ['x', 'y', 'z'])
+    sh = np.shape(s)
     max_ch = subfilter.global_config['chunk_size']
-
     nch = int(sh[iix]/(2**int(np.log(sh[iix]*sh[iiy]*sh[iiz]/max_ch)/np.log(2)/2)))
+    print(f'{scalar} nch={nch}')
 
-    print(f'theta nch={nch}')
-
-    th = re_chunk(th, xch=nch, ych=nch, zch = 'all')
+    s = re_chunk(s, xch=nch, ych=nch, zch = 'all')
 
     z = source_dataset["z"]
     zn = source_dataset["zn"]
 
-    thx = do.d_by_dx_field(th, z, zn, grid = ingrid )
+    sx = do.d_by_dx_field(s, z, zn, grid = ingrid )
+    sy = do.d_by_dy_field(s, z, zn, grid = ingrid )
+    sz = do.d_by_dz_field(s, z, zn, grid = ingrid )
 
-    thy = do.d_by_dy_field(th, z, zn, grid = ingrid )
+    s = None # Save some memory
 
-    thz = do.d_by_dz_field(th, z, zn, grid = ingrid )
-
-    th = None # Save some memory
-
-    th_xi = xr.concat([thx, thy, thz], dim='j', coords='minimal',
+    s_xi = xr.concat([sx, sy, sz], dim='j', coords='minimal',
                        compat='override')
 
-    return th_xi
+    return s_xi
 
 
-def R_j(dx, dx_filt, abs_S_hat, dth_dxj_hat, HAT_abs_S_dth_dxj, beta=1):
+def R_j(dx, dx_filt, abs_S_hat, ds_dxj_hat, HAT_abs_S_ds_dxj, beta=1):
     alpha = dx_filt / dx
     power = alpha / 2
 
-    R_j = dx_filt*dx_filt * beta ** power * abs_S_hat * dth_dxj_hat  -  dx*dx * HAT_abs_S_dth_dxj
+    R_j = dx_filt*dx_filt * beta ** power * abs_S_hat * ds_dxj_hat  -  dx*dx * HAT_abs_S_ds_dxj
 
     return R_j
 
@@ -205,7 +204,7 @@ def C_s_sq(L_ij, M_ij):
     return C_s_sq
 
 
-def C_th_sq(Hj, Rj):
+def C_scalar_sq(Hj, Rj):
 
     C_th_num = np.zeros_like(Hj[0, :, :, :])
     C_th_den = np.zeros_like(Hj[0, :, :, :])
@@ -283,7 +282,7 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         return Cs_av_sq
 
 
-def C_th_profiles(H_ij, R_ij, return_all=2):
+def C_scalar_profiles(H_ij, R_ij, return_all=2):
     """ Calculates the horizontal average Cs value at each level
     using the Lij and Mij fields as input.
 
