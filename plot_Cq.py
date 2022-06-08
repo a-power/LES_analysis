@@ -74,8 +74,6 @@ def get_Cs(Cs_sq):
     Cs_sq_copy[Cs_sq < 0] = 0
     Cs = np.sqrt(Cs_sq_copy)
 
-    Cs_beta = get_Cs(Cs_beta_sq)
-
     return Cs
 
 Cs_beta = get_Cs(Cs_beta_sq)
