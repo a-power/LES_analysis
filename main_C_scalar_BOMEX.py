@@ -20,40 +20,40 @@ data_2D = path20f+file20+str('ga00.nc')
 data_4D = path20f+file20+str('ga01.nc')
 
 
-dataset_name2 = path20f+file20+'Cq_2D_attempt.nc'
-dataset_name4 = path20f+file20+'Cq_4D_attempt.nc'
+dataset_name2 = path20f+file20+'Cq_2D.nc'
+dataset_name4 = path20f+file20+'Cq_4D.nc'
 
 
 ########################################################################
 
-# C_q_sq_prof_2D, C_q_prof_2D, HR_prof_2D, RR_prof_2D, C_q_sq_field_2D, HR_field_2D, RR_field_2D, Hj_2D, Rj_2D = \
-#     t_dy.C_scalar('q_total', data_2D, dx=20, dx_hat=40, ingrid=mygrid)
-#
-# ds_2 = xr.Dataset()
-# ds_2.to_netcdf(dataset_name2, mode='w')
-# ds_in2 = {'file':dataset_name2, 'ds': ds_2}
-#
-# save_field(ds_in2, C_q_sq_prof_2D)
-# save_field(ds_in2, C_q_prof_2D)
-# save_field(ds_in2, HR_prof_2D)
-# save_field(ds_in2, RR_prof_2D)
-# save_field(ds_in2, C_q_sq_field_2D)
-# save_field(ds_in2, HR_field_2D)
-# save_field(ds_in2, RR_field_2D)
-# save_field(ds_in2, Hj_2D)
-# save_field(ds_in2, Rj_2D)
-#
-# ds_2.close()
-#
-# C_q_sq_prof_2D = None
-# C_q_prof_2D = None
-# HR_prof_2D = None
-# RR_prof_2D = None
-# C_q_sq_field_2D = None
-# HR_field_2D = None
-# RR_field_2D = None
-# Hj_2D = None
-# Rj_2D = None
+C_q_sq_prof_2D, C_q_prof_2D, HR_prof_2D, RR_prof_2D, C_q_sq_field_2D, HR_field_2D, RR_field_2D, Hj_2D, Rj_2D = \
+    t_dy.C_scalar('q_total', data_2D, dx=20, dx_hat=40, ingrid=mygrid)
+
+ds_2 = xr.Dataset()
+ds_2.to_netcdf(dataset_name2, mode='w')
+ds_in2 = {'file':dataset_name2, 'ds': ds_2}
+
+save_field(ds_in2, C_q_sq_prof_2D)
+save_field(ds_in2, C_q_prof_2D)
+save_field(ds_in2, HR_prof_2D)
+save_field(ds_in2, RR_prof_2D)
+save_field(ds_in2, C_q_sq_field_2D)
+save_field(ds_in2, HR_field_2D)
+save_field(ds_in2, RR_field_2D)
+save_field(ds_in2, Hj_2D)
+save_field(ds_in2, Rj_2D)
+
+ds_2.close()
+
+C_q_sq_prof_2D = None
+C_q_prof_2D = None
+HR_prof_2D = None
+RR_prof_2D = None
+C_q_sq_field_2D = None
+HR_field_2D = None
+RR_field_2D = None
+Hj_2D = None
+Rj_2D = None
 
 ##########################################
 
