@@ -5,58 +5,21 @@ import subfilter.filters as filt
 import subfilter.subfilter as sf
 import subfilter.utils as ut
 import subfilter.utils.deformation as defm
+from subfilter.utils.dask_utils import re_chunk
 
 # import filters as filt
 # import subfilter as sf
 
 import dynamic as dyn
 import dask
-
 import subfilter
 
 
-def bytarr_to_dict(d):
-
-    # Converted for xarray use
-    res = {}
-    for i in range(np.shape(d)[0]):
-        opt = d[i,0].decode('utf-8')
-        val = d[i,1].decode('utf-8')
-
-        res[opt] = val
-    return res
-
-
-def options_database(source_dataset):
-    '''
-    Convert options_database in source_dataset to dictionary.
-    Parameters
-    ----------
-    source_dataset : netCDF4 file
-        MONC output file.
-    Returns
-    -------
-    options_database : dict
-    '''
-
-    # Converted to xarray
-
-    if 'options_database' in source_dataset.variables:
-        options_database = bytarr_to_dict(
-            source_dataset['options_database'].values)
-    else:
-        options_database = None
-    return options_database
-
-
-def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_in=20, domain_in=16, ref_file = None):
+def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_file = None):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
 
-    subfilter_setup = {'write_sleeptime': 3,
-                       'use_concat': True,
-                       'chunk_size': 2 ** 22}
 
 
     file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
@@ -65,7 +28,10 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
     times = time_data.data
     nt = len(times)
 
+    dx_in = float(opt['dx'])
+    domain_in = float(opt['domain'])
     N = int((domain_in*(1000))/dx_in)
+
     filter_name = filt_in
     width = -1
     cutoff = 0.000001
@@ -83,7 +49,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
                                                             * ds_in.dims[yvar]
                                                             * ds_in.dims[zvar]
                                                             / max_ch) / np.log(2) / 2))),
-                  ds_in.dims[xvar]])
+                                                            ds_in.dims[xvar]])
 
     ds_in.close()
 
@@ -96,13 +62,6 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
     else:
         ref_dataset = None
 
-    od = options_database(dataset)
-    if od is None:
-        dx = opt['dx']
-        dy = opt['dy']
-    else:
-        dx = float(od['dxx'])
-        dy = float(od['dyy'])
 
     fname = filter_name
 
@@ -119,22 +78,26 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
             twod_filter = filt.Filter(filter_id,
                                       filter_name, npoints=N,
                                       sigma=filt_set, width=width,
-                                      delta_x=dx, cutoff=cutoff)
+                                      delta_x=dx_in, cutoff=cutoff)
         elif filter_name == 'wave_cutoff':
             filter_id = 'filter_wc{:02d}'.format(i)
             twod_filter = filt.Filter(filter_id, filter_name,
                                       wavenumber=filt_set,
                                       width=width, npoints=N,
-                                      delta_x=dx)
+                                      delta_x=dx_in)
         elif filter_name == 'running_mean':
             filter_id = 'filter_rm{:02d}'.format(i)
             twod_filter = filt.Filter(filter_id,
                                       filter_name,
                                       width=filt_set,
                                       npoints=N,
-                                      delta_x=dx)
+                                      delta_x=dx_in)
+        else:
+            print('Filter name not defined')
+            break
 
         filter_list.append(twod_filter)
+
 
     print(filter_list)
 
@@ -152,7 +115,8 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
             var_list = ["u",
                         "v",
                         "w",
-                        "th"
+                        "th",
+                        "q_total"
                         ]
 
             field_list = sf.filter_variable_list(dataset, ref_dataset,
@@ -169,7 +133,11 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
                         ["w", "w"],
                         ["u", "th"],
                         ["v", "th"],
-                        ["w", "th"]]
+                        ["w", "th"],
+                        ["u", "q_total"],
+                        ["v", "q_total"],
+                        ["w", "q_total"]
+                        ]
 
             quad_field_list = sf.filter_variable_pair_list(dataset,
                                                            ref_dataset,
@@ -182,17 +150,23 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
                                     derived_data,
                                     opt, ingrid)
 
-            dth_dx = dyn.d_th_d_x_i(dataset, ref_dataset, opt, ingrid, subfilter_setup)
+            dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, opt, ingrid)
             dth_dx.name = 'dth_dx'
+            dth_dx = re_chunk(dth_dx)
 
+            dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid)
+            dq_dx.name = 'dq_dx'
+            dq_dx = re_chunk(dq_dx)
 
             S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
-            #print("shape of S_ij_temp = ", np.shape(S_ij_temp), "shape of abs_S_temp =", np.shape(abs_S_temp))
 
             S_ij = 1 / 2 * S_ij_temp
             S_ij.name = 'S_ij'
+            S_ij = re_chunk(S_ij)
+
             abs_S = np.sqrt(abs_S_temp)
             abs_S.name = "abs_S"
+            abs_S = re_chunk(abs_S)
 
             S_ij_filt = sf.filter_field(S_ij, filtered_data,
                                         opt, new_filter)
@@ -203,17 +177,29 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
             dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
                                         opt, new_filter)
 
+            dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
+                                          opt, new_filter)
+
             S_ij_abs_S = S_ij * abs_S
             S_ij_abs_S.name = 'S_ij_abs_S'
+            S_ij_abs_S = re_chunk(S_ij_abs_S)
 
             S_ij_abs_S_hat_filt = sf.filter_field(S_ij_abs_S, filtered_data,
                                                   opt, new_filter)
 
-            abs_S_dth_dx_filt = abs_S * dth_dx
-            abs_S_dth_dx_filt.name = 'abs_S_dth_dx'
+            abs_S_dth_dx = dth_dx * abs_S
+            abs_S_dth_dx.name = 'abs_S_dth_dx'
+            abs_S_dth_dx = re_chunk(abs_S_dth_dx)
 
-            abs_S_dth_dx_filt_filt = sf.filter_field(abs_S_dth_dx_filt, filtered_data,
+            abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
                                                   opt, new_filter)
+
+            abs_S_dq_dx = dq_dx * abs_S
+            abs_S_dq_dx.name = 'abs_S_dq_dx'
+            abs_S_dq_dx = re_chunk(abs_S_dq_dx)
+
+            abs_S_dq_dx_filt = sf.filter_field(abs_S_dq_dx, filtered_data,
+                                                opt, new_filter)
 
         filtered_data['ds'].close()
     derived_data['ds'].close()
@@ -222,15 +208,31 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, dx_i
 
 
 
-def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=0, Cs_av_method = 'all'):
+def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1, reaxes=False):
 
-    """ function takes in:  """
+    """ function takes in:
+
+    save_all: 1 is for profiles, 2 is for fields, 3 is for all fields PLUS Lij and Mij"""
 
     file_in = f'{indir}'
     ds_in = xr.open_dataset(file_in)
     time_data = ds_in['time']
     times = time_data.data
     nt = len(times)
+    print('lenght of the time array in Cs function is', nt)
+
+    x_data = ds_in['x_p']
+    x_s = x_data.data
+
+    y_data = ds_in['y_p']
+    y_s = y_data.data
+
+    z_data = ds_in['z']
+    z_s = z_data.data
+
+    ij_data = ds_in['i_j']
+    ij_s = ij_data.data
+
     ds_in.close()
 
     ds_in = xr.open_dataset(file_in)
@@ -243,27 +245,223 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=0, Cs_av_method = 'all'):
 
     Lij = dyn.L_ij_sym_xarray(uu, uv, uw, vv, vw, ww)
 
-    hat_Sij_abs_S = ds_in['S_ij_abs_S_r'].data[:, t_in, :, :, :]
-    hat_Sij = ds_in['S_ij_r'].data[:, t_in, :, :, :]
+    uu = None # Save storage
+    uv = None # Save storage
+    uw = None # Save storage
+    vv = None # Save storage
+    vw = None # Save storage
+    ww = None # Save storage
 
-    Mij = dyn.M_ij(dx, dx_hat, hat_Sij, hat_Sij_abs_S)
+    hat_Sij = ds_in['f(S_ij)_r'].data[:, t_in, :, :, :]
+    hat_abs_S = ds_in['f(abs_S)_r'].data[t_in, ...]
 
-    Cs_prof = dyn.Cs_av_levels(Lij, Mij, av_method=Cs_av_method)
+    if reaxes == True:
+        hat_Sij_abs_S_temp = ds_in['f(S_ij_abs_S)_r'].data[t_in, ...] # (time, x, y, z, ij)
+        hat_Sij_abs_S = np.transpose(hat_Sij_abs_S_temp, axes=[3, 0, 1, 2])
+        hat_Sij_abs_S_temp = None
+    else:
+        hat_Sij_abs_S = ds_in['f(S_ij_abs_S)_r'].data[:, t_in, ...]
 
-    if save_all==3:
-        Cs_sq_field = dyn.C_s_sq(Lij, Mij)
-        Cs_field = dyn.get_Cs(Cs_sq_field)
-        return Cs_prof, Cs_field, Lij, Mij, times
+    Mij = dyn.M_ij(dx, dx_hat, hat_Sij, hat_abs_S, hat_Sij_abs_S)
 
-    if save_all==2:
-        Cs_sq_field = dyn.C_s_sq(Lij, Mij)
-        Cs_field = dyn.get_Cs(Cs_sq_field)
-        return Cs_prof, Cs_field, times
+    hat_Sij_abs_S = None
+    hat_Sij = None
+    hat_abs_S=None
 
     if save_all==1:
-        return Cs_prof, times
+        Cs_sq_prof, Cs_prof, LM_prof, MM_prof = dyn.Cs_profiles(Lij, Mij, return_all=1)
+        Lij = None
+        Mij = None
+
+        Cs_sq_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
+                                  dims=['time', "z"], name='Cs_sq_prof')
+
+        Cs_prof = xr.DataArray(Cs_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
+                               dims=['time', "z"], name='Cs_prof')
+
+        LM_prof = xr.DataArray(LM_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
+                               dims=['time', "z"], name='LM_prof')
+
+        MM_prof = xr.DataArray(MM_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
+                               dims=['time', "z"], name='MM_prof')
+
+        return Cs_sq_prof, Cs_prof, LM_prof, MM_prof
+
+    if save_all==2:
+        Cs_sq_prof, Cs_prof, LM_prof, MM_prof, LM_field, MM_field = dyn.Cs_profiles(Lij, Mij, return_all=2)
+        Cs_sq_field = dyn.C_s_sq(Lij, Mij)
+        Lij = None
+        Mij = None
+
+        Cs_sq_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
+                                  dims=['time', "z"], name='Cs_sq_prof')
+
+        Cs_prof = xr.DataArray(Cs_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
+                               dims=['time', "z"], name='Cs_prof')
+
+        LM_prof = xr.DataArray(LM_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
+                               dims=['time', "z"], name='LM_prof')
+
+        MM_prof = xr.DataArray(MM_prof[np.newaxis, ...], coords={'time' : [times[t_in]],'z': z_s},
+                               dims=['time', "z"], name='MM_prof')
+
+        Cs_sq_field= xr.DataArray(Cs_sq_field[np.newaxis, ...], coords={'time' : [times[t_in]], 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+                                  dims = ["time", "x_p", "y_p", "z"], name = 'Cs_sq_field')
+
+        LM_field= xr.DataArray(LM_field[np.newaxis, ...], coords={'time' : [times[t_in]], 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+                                  dims = ["time", "x_p", "y_p", "z"], name = 'LM_field')
+
+        MM_field= xr.DataArray(MM_field[np.newaxis, ...], coords={'time' : [times[t_in]], 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+                                  dims = ["time", "x_p", "y_p", "z"], name = 'MM_field')
+
+
+        return Cs_sq_prof, Cs_prof, LM_prof, MM_prof, Cs_sq_field, LM_field, MM_field
+
+    if save_all==3:
+        Cs_sq_prof, Cs_prof, LM_prof, MM_prof, LM_field, MM_field = dyn.Cs_profiles(Lij, Mij, return_all=2)
+        Cs_sq_field = dyn.C_s_sq(Lij, Mij)
+
+        Cs_sq_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
+                                  dims=['time', "z"], name='Cs_sq_prof')
+
+        Cs_prof = xr.DataArray(Cs_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
+                               dims=['time', "z"], name='Cs_prof')
+
+        LM_prof = xr.DataArray(LM_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
+                               dims=['time', "z"], name='LM_prof')
+
+        MM_prof = xr.DataArray(MM_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
+                               dims=['time', "z"], name='MM_prof')
+
+        Cs_sq_field = xr.DataArray(Cs_sq_field[np.newaxis, ...],
+                                   coords={'time': [times[t_in]], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                   dims=["time", "x_p", "y_p", "z"], name='Cs_sq_field')
+
+        LM_field = xr.DataArray(LM_field[np.newaxis, ...], coords={'time': [times[t_in]], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                dims=["time", "x_p", "y_p", "z"], name='LM_field')
+
+        MM_field = xr.DataArray(MM_field[np.newaxis, ...], coords={'time': [times[t_in]], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                dims=["time", "x_p", "y_p", "z"], name='MM_field')
+
+        Lij = xr.DataArray(Lij[np.newaxis, ...], coords={'time': [times[t_in]], 'i_j': ij_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+                                dims=["time", "i_j", "x_p", "y_p", "z"], name='Lij')
+
+        Mij = xr.DataArray(Mij[np.newaxis, ...], coords={'time': [times[t_in]], 'i_j': ij_s, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+                                dims=["time", "i_j", "x_p", "y_p", "z"], name='Mij')
+
+
+        return Cs_sq_prof, Cs_prof, LM_prof, MM_prof, Cs_sq_field, LM_field, MM_field, Lij, Mij
+
     else:
+        Cs_sq_prof, Cs_prof, LM_prof, MM_prof = dyn.Cs_profiles(Lij, Mij, return_all=1)
+
+        Cs_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
+                                  dims=['time', "z"], name='Cs_sq_prof')
+        Lij = None
+        Mij = None
+
         return Cs_prof
+
+
+
+
+
+
+def C_scalar(scalar, indir, dx, dx_hat, ingrid, t_in=0, axisfix=False):
+    """ function takes in:
+
+    save_all: 1 is for profiles, 2 is for fields, 3 is for all fields PLUS Lij and Mij"""
+
+    if scalar=='q_total':
+        scalar_name='q'
+    elif scalar=='th':
+        scalar_name='th'
+    else:
+        print("scalar not recognised, only inputs available are 'th' or 'q_total'.")
+        return
+
+    file_in = f'{indir}'
+    ds_in = xr.open_dataset(file_in)
+    time_data = ds_in['time']
+    times = time_data.data
+    nt = len(times)
+    print('lenght of the time array in Cs function is', nt)
+
+    x_data = ds_in['x_p']
+    x_s = x_data.data
+
+    y_data = ds_in['y_p']
+    y_s = y_data.data
+
+    z_data = ds_in['z']
+    z_s = z_data.data
+
+    j_data = ds_in['j']
+    j_s = j_data.data
+
+    ds_in.close()
+
+    ds_in = xr.open_dataset(file_in)
+    u_s = ds_in[f's(u,{scalar})_on_{ingrid}'].data[t_in, ...]
+    v_s = ds_in[f's(v,{scalar})_on_{ingrid}'].data[t_in, ...]
+    w_s = ds_in[f's(w,{scalar})_on_{ingrid}'].data[t_in, ...]
+
+    Hj = dyn.H_j(u_s, v_s, w_s)
+
+    u_s = None  # Save storage
+    v_s = None  # Save storage
+    w_s = None  # Save storage
+
+    hat_abs_S = ds_in['f(abs_S)_r'].data[t_in, ...]
+    ds_dx_hat = ds_in[f'f(d{scalar_name}_dx)_r'].data[:, t_in, ...]
+
+    ##########Rough axis fix###########
+
+    if axisfix == True:
+        HAT_abs_S_ds_dx_temp = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[t_in, ...]
+        HAT_abs_S_ds_dx = np.transpose(HAT_abs_S_ds_dx_temp, axes=[3, 0, 1, 2])
+        HAT_abs_S_ds_dx_temp = None
+    else:
+        HAT_abs_S_ds_dx = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[:, t_in, ...]
+
+    Rj = dyn.R_j(dx, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
+    HAT_abs_S_ds_dx = None
+
+    C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, HR_field, RR_field = dyn.C_scalar_profiles(Hj, Rj, return_all=2)
+    C_scalar_sq_field = dyn.C_scalar_sq(Hj, Rj)
+
+    C_scalar_sq_prof = xr.DataArray(C_scalar_sq_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
+                                dims=['time', "z"], name=f'C_{scalar}_sq_prof')
+
+    C_scalar_prof = xr.DataArray(C_scalar_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
+                             dims=['time', "z"], name=f'C_{scalar}_prof')
+
+    HR_prof = xr.DataArray(HR_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
+                           dims=['time', "z"], name=f'HR_{scalar}_prof')
+
+    RR_prof = xr.DataArray(RR_prof[np.newaxis, ...], coords={'time': [times[t_in]], 'z': z_s},
+                           dims=['time', "z"], name=f'RR_{scalar}_prof')
+
+    C_scalar_sq_field = xr.DataArray(C_scalar_sq_field[np.newaxis, ...],
+                                 coords={'time': [times[t_in]], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                 dims=["time", "x_p", "y_p", "z"], name=f'C_{scalar}_sq_field')
+
+    HR_field = xr.DataArray(HR_field[np.newaxis, ...], coords={'time': [times[t_in]], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                            dims=["time", "x_p", "y_p", "z"], name=f'HR_{scalar}_field')
+
+    RR_field = xr.DataArray(RR_field[np.newaxis, ...], coords={'time': [times[t_in]], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                            dims=["time", "x_p", "y_p", "z"], name=f'RR_{scalar}_field')
+
+    Hj = xr.DataArray(Hj[np.newaxis, ...], coords={'time': [times[t_in]], 'j': j_s, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                      dims=["time", "j", "x_p", "y_p", "z"], name=f'Hj_{scalar}')
+
+    Rj = xr.DataArray(Rj[np.newaxis, ...], coords={'time': [times[t_in]], 'j': j_s, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                      dims=["time", "j", "x_p", "y_p", "z"], name=f'Rj_{scalar}')
+
+    return C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, C_scalar_sq_field, HR_field, RR_field, Hj, Rj
+
+
+
 
 
 

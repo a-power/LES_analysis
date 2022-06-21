@@ -1,11 +1,14 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
-filedir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/files/t_av_4_times/'
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/trace/t_av_4_times/'
+filedir = '/work/scratch-pw/apower/20m_gauss_dyn_update_subfilt/BOMEX_m0020_g0800_all_14400_gaussian_filter_profiles_2D.nc'
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/updated_subfilter/'
+
+os.makedirs(plotdir, exist_ok = True)
 
 new_set_time = ['12600', '14400', '16200', '18000']
-times = 3
+times = 1
 z_len = 151
 
 Cs_2D_prof = np.zeros((len(new_set_time)*times, z_len))

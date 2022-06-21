@@ -6,11 +6,21 @@ from subfilter.utils.string_utils import get_string_index
 from subfilter.utils.dask_utils import re_chunk
 from subfilter.io.datain import get_data
 
+import subfilter
+
 def k_cut_find(delta):
     return np.pi/(delta)
 
 def sigma_find(delta):
     return delta/2
+
+
+def l_mix_MONC(Cs_sq, Delta, z_in, k=0.4):
+
+    l_mix = np.sqrt( 1 / ( (1/(Cs_sq * Delta*Delta)) + (1/(k*k * z_in*z_in)) ) )
+
+    return l_mix
+
 
 
 def my_L_ij_sym(u, v, w, uu, uv, uw, vv, vw, ww):
@@ -28,6 +38,10 @@ def L_ij_sym_xarray(uu, uv, uw, vv, vw, ww):
                                  -(ww)])
 
     return L_ij
+
+def H_j(u_s, v_s, w_s):
+    H_j = np.array([ -u_s, -v_s, -w_s ])
+    return H_j
 
 
 def S_ij(u, v, w, dx):
@@ -76,8 +90,6 @@ def abs_S_hat(S_filt_in):
             S_sum += 2*S_filt_in[i,:,:,:]*S_filt_in[i,:,:,:]
         else:
             S_sum += S_filt_in[i,:,:,:]*S_filt_in[i,:,:,:]
-    
-
     abs_S_hat_out = np.sqrt(2*S_sum)
     
     return abs_S_hat_out
@@ -93,47 +105,63 @@ def abs_S_hat_S_ij_hat(S_filt):
 
 
 
-def M_ij(dx, dx_filt, S_filt, HAT_abs_S_Sij, beta=1):
-    
-    alpha = dx_filt/dx
-    power = alpha/2
-    
-    M_ij = dx_filt**2 * beta**power * abs_S_hat_S_ij_hat(S_filt) - dx**2 * HAT_abs_S_Sij
-    
+
+def M_ij(dx, dx_filt, S_filt, abs_S_filt, HAT_abs_S_Sij, beta=1):
+    alpha = dx_filt / dx
+    power = alpha / 2
+
+    M_ij = dx_filt * dx_filt * (beta ** power) * abs_S_filt * S_filt  -  dx ** 2 * HAT_abs_S_Sij
+
     return M_ij
 
 
-def d_th_d_x_i(source_dataset, ref_dataset, options, ingrid, subfilter_setup):
+def ds_dxi(scalar, source_dataset, ref_dataset, options, ingrid):
 
-    th = get_data(source_dataset, ref_dataset, 'th', options)
-    [iix, iiy, iiz] = get_string_index(th.dims, ['x', 'y', 'z'])
+    if scalar == "q_total":
+        s = get_data(source_dataset, ref_dataset, 'q_total', options)
 
-    sh = np.shape(th)
+        # ql = get_data(source_dataset, ref_dataset, 'q_cloud_liquid_mass', options)
+        # qv = get_data(source_dataset, ref_dataset, 'q_vapour', options)
+        # s = ql + qv
 
-    max_ch = subfilter_setup['chunk_size']
 
+    elif scalar == 'th':
+        s = get_data(source_dataset, ref_dataset, 'th', options)
+
+    else:
+        print("Scalar input not recognised: only inputs available are 'th' or 'q'.")
+        return
+
+    [iix, iiy, iiz] = get_string_index(s.dims, ['x', 'y', 'z'])
+    sh = np.shape(s)
+    max_ch = subfilter.global_config['chunk_size']
     nch = int(sh[iix]/(2**int(np.log(sh[iix]*sh[iiy]*sh[iiz]/max_ch)/np.log(2)/2)))
+    print(f'{scalar} nch={nch}')
 
-    print(f'theta nch={nch}')
-
-    th = re_chunk(th, xch=nch, ych=nch, zch = 'all')
+    s = re_chunk(s, xch=nch, ych=nch, zch = 'all')
 
     z = source_dataset["z"]
     zn = source_dataset["zn"]
 
-    thx = do.d_by_dx_field(th, z, zn, grid = ingrid )
+    sx = do.d_by_dx_field(s, z, zn, grid = ingrid )
+    sy = do.d_by_dy_field(s, z, zn, grid = ingrid )
+    sz = do.d_by_dz_field(s, z, zn, grid = ingrid )
 
-    thy = do.d_by_dy_field(th, z, zn, grid = ingrid )
+    s = None # Save some memory
 
-    thz = do.d_by_dz_field(th, z, zn, grid = ingrid )
-
-    th = None # Save some memory
-
-    th_xi = xr.concat([thx, thy, thz], dim='j', coords='minimal',
+    s_xi = xr.concat([sx, sy, sz], dim='j', coords='minimal',
                        compat='override')
 
-    return th_xi
+    return s_xi
 
+
+def R_j(dx, dx_filt, abs_S_hat, ds_dxj_hat, HAT_abs_S_ds_dxj, beta=1):
+    alpha = dx_filt / dx
+    power = alpha / 2
+
+    R_j = dx_filt*dx_filt * beta ** power * abs_S_hat * ds_dxj_hat  -  dx*dx * HAT_abs_S_ds_dxj
+
+    return R_j
 
 
 
@@ -176,6 +204,21 @@ def C_s_sq(L_ij, M_ij):
     return C_s_sq
 
 
+def C_scalar_sq(Hj, Rj):
+
+    C_th_num = np.zeros_like(Hj[0, :, :, :])
+    C_th_den = np.zeros_like(Hj[0, :, :, :])
+
+    for it in range(0, 3):
+        C_th_num += Hj[it, ...] * Rj[it, ...]
+        C_th_den += Rj[it, ...] * Rj[it, ...]
+
+
+    C_th_sq = 0.5 * C_th_num / C_th_den
+
+    return C_th_sq
+
+
 def get_Cs(Cs_sq):
     """ calculates C_s from C_s^2 by setting neg values to zero
     and sq rooting"""
@@ -187,30 +230,27 @@ def get_Cs(Cs_sq):
     return Cs
 
 
-def Cs_av_levels(L_ij, M_ij, av_method = 'all', return_all=0):
+def Cs_profiles(L_ij, M_ij, return_all=1):
     """ Calculates the horizontal average Cs value at each level 
     using the Lij and Mij fields as input.
     
-    av_method can equal:
-    'all': all Cs_squared values are used in the calculation, 
-    neg_to_zero: the negative Cs_squared values are set to zero, 
-    or 'no_neg': the negative Cs_squared values are not included in the calculation
+    return_all: 1 is for profiles, 2 is for fields
     
     """
     
     C_s_num = np.zeros_like(L_ij[0,:,:,:])
-    C_s_den = np.zeros_like(L_ij[0,:,:,:])
+    C_s_den = np.zeros_like(M_ij[0,:,:,:])
   
                         
     for it in range(0,6):
         if it in [0,3,5]:
             
             C_s_num += L_ij[it,:,:,:] * M_ij[it,:,:,:]
-            C_s_den += M_ij[it,:,:,:]**2
+            C_s_den += M_ij[it,:,:,:] * M_ij[it,:,:,:]
 
         else:        
             C_s_num += 2*(L_ij[it,:,:,:] * M_ij[it,:,:,:])
-            C_s_den += 2*M_ij[it,:,:,:]**2
+            C_s_den += 2*(M_ij[it,:,:,:] * M_ij[it,:,:,:])
             
             
     z_num = len(C_s_num[0,0,:])
@@ -222,66 +262,70 @@ def Cs_av_levels(L_ij, M_ij, av_method = 'all', return_all=0):
 
     MM_flat = C_s_den.reshape(horiz_num,z_num)
     MM_av = np.zeros(z_num)
-    
-    #########################################
-    if av_method == 'no_neg':
 
-        for k in range(z_num):    
-            n = 0
-            LM_pos_sum = 0
-            MM_pos_sum = 0
+    for k in range(z_num):
 
-            for ij in range(horiz_num): 
-                if LM_flat[ij,k] > 0:
-                    LM_pos_sum += LM_flat[ij,k]
-                    MM_pos_sum += MM_flat[ij,k]
-                    n = n+1
-            if n != 0:
-                LM_av[k] = LM_pos_sum/n
-                MM_av[k] = MM_pos_sum/n
-        Cs_av_sq = (0.5*(LM_av / MM_av))
-        Cs_av = np.sqrt(Cs_av_sq)
-                
-    ##########################################
-    elif av_method == 'neg_to_zero':
+        LM_av[k] = np.sum(LM_flat[:,k])/horiz_num
+        MM_av[k] = np.sum(MM_flat[:,k])/horiz_num
 
-        for k in range(z_num):    
-            n = 0
-            LM_pos_sum = 0
-            MM_pos_sum = 0
 
-            for ij in range(horiz_num): 
-                if LM_flat[ij,k] > 0:
-                    LM_pos_sum += LM_flat[ij,k]
-                MM_pos_sum += MM_flat[ij,k]
-                n = n+1
-            if n != 0:
-                LM_av[k] = LM_pos_sum/n
-                MM_av[k] = MM_pos_sum/n
-        Cs_av_sq = (0.5*(LM_av / MM_av))
-        Cs_av = np.sqrt(Cs_av_sq)
-                
-    ##########################################
-    elif av_method == 'all':
+    Cs_av_sq = (0.5*(LM_av / MM_av))
 
-        for k in range(z_num):    
-            
-            LM_av[k] = np.sum(LM_flat[:,k])/horiz_num
-            MM_av[k] = np.sum(MM_flat[:,k])/horiz_num
-
-       
-        Cs_av_sq = (0.5*(LM_av / MM_av))
-        Cs_av_temp = Cs_av_sq.copy()
-        Cs_av_temp[Cs_av_sq < 0] = 0
-        Cs_av = np.sqrt(Cs_av_temp)
+    Cs_av = get_Cs(Cs_av_sq)
 
     if return_all == 1:
-        return Cs_av, LM_av, MM_av, Cs_av_sq
+        return Cs_av_sq, Cs_av, LM_av, MM_av
+
+    if return_all == 2:
+        return Cs_av_sq, Cs_av, LM_av, MM_av, C_s_num, C_s_den
     else:
-        return Cs_av
-      
-    
-    
+        return Cs_av_sq
+
+
+def C_scalar_profiles(H_ij, R_ij, return_all=2):
+    """ Calculates the horizontal average Cs value at each level
+    using the Lij and Mij fields as input.
+
+    return_all: 1 is for profiles, 2 is for fields
+
+    """
+
+    C_th_num = np.zeros_like(H_ij[0, :, :, :])
+    C_th_den = np.zeros_like(R_ij[0, :, :, :])
+
+    for it in range(0, 3):
+
+        C_th_num += H_ij[it, :, :, :] * R_ij[it, :, :, :]
+        C_th_den += R_ij[it, :, :, :] * R_ij[it, :, :, :]
+
+
+    z_num = len(C_th_num[0, 0, :])
+    horiz_num_temp = len(C_th_num[0, :, 0])
+    horiz_num = horiz_num_temp * horiz_num_temp
+
+    HR_flat = C_th_num.reshape(horiz_num, z_num)
+    HR_av = np.zeros(z_num)
+
+    RR_flat = C_th_den.reshape(horiz_num, z_num)
+    RR_av = np.zeros(z_num)
+
+    for k in range(z_num):
+        HR_av[k] = np.sum(HR_flat[:, k]) / horiz_num
+        RR_av[k] = np.sum(RR_flat[:, k]) / horiz_num
+
+    C_th_av_sq = (0.5 * (HR_av / RR_av))
+
+    C_th_av = get_Cs(C_th_av_sq)
+
+    if return_all == 1:
+        return C_th_av_sq, C_th_av, HR_av, RR_av
+
+    if return_all == 2:
+        return C_th_av_sq, C_th_av, HR_av, RR_av, C_th_num, C_th_den
+    else:
+        return C_th_av_sq
+
+
 def beta_calc(C_2D_sq_in, C_4D_sq_in):
     
     Cs_2D_sq_copy1 = C_2D_sq_in.copy()
