@@ -7,7 +7,7 @@ plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/updated
 
 os.makedirs(plotdir, exist_ok = True)
 
-new_set_time = ['12600', '14400', '16200', '18000']
+new_set_time = ['14400'] #['12600', '14400', '16200', '18000']
 times = 1
 z_len = 151
 

@@ -373,11 +373,15 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, t_in=0, axisfix=False):
     save_all: 1 is for profiles, 2 is for fields, 3 is for all fields PLUS Lij and Mij"""
 
     if scalar=='q_total':
-        scalar_name='q'
-    elif scalar=='th':
-        scalar_name='th'
+        scalar_name='q_t'
+    elif scalar == 'q_cloud_liquid_mass':
+        scalar_name = 'q_l'
+    elif scalar == 'q_vapour':
+        scalar_name = 'q_v'
+    elif scalar == 'th':
+        scalar_name = 'th'
     else:
-        print("scalar not recognised, only inputs available are 'th' or 'q_total'.")
+        print("scalar not recognised, only inputs available are 'th', 'q_cloud_liquid_mass', 'q_vapour', or 'q_total'.")
         return
 
     file_in = f'{indir}'

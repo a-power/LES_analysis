@@ -3,15 +3,36 @@ import matplotlib.pyplot as plt
 import xarray as xr
 import os
 
-dir_data = '/work/scratch-pw/apower/20m_gauss_dyn_update_subfilt/BOMEX_m0020_g0800_all_14400_gaussian_filter_Cq_'
+dir_data_Cs = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/BOMEX_m0020_g0800_all_14400_gaussian_filter_profiles_'
+dir_data_C_scalar = '/work/scratch-pw/apower/20m_gauss_dyn_update_subfilt/BOMEX_m0020_g0800_all_14400_gaussian_filter_Cscalar_'
+dir_data_Cq_tot = '/work/scratch-pw/apower/20m_gauss_dyn_update_subfilt/BOMEX_m0020_g0800_all_14400_gaussian_filter_Cq_'
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_update_subfilt/plots/'
 os.makedirs(plotdir, exist_ok = True)
 
-data_2D = xr.open_dataset(dir_data + '2D_attempt.nc')
-data_4D = xr.open_dataset(dir_data + '4D_attempt.nc')
+data_2D_s = xr.open_dataset(dir_data_Cs + '2D.nc')
+data_4D_s = xr.open_dataset(dir_data_Cs + '4D.nc')
 
-Cs_2 = data_2D['C_q_total_prof'].data[0, ...]
-Cs_4 = data_4D['C_q_total_prof'].data[0, ...]
+data_2D_scalar = xr.open_dataset(dir_data_C_scalar + 'C_scalar_2D.nc')
+data_4D_scalar = xr.open_dataset(dir_data_C_scalar + 'C_scalar_4D.nc')
+
+data_2D_qtot = xr.open_dataset(dir_data_Cq_tot + '2D_attempt.nc')
+data_4D_qtot = xr.open_dataset(dir_data_Cq_tot + '4D_attempt.nc')
+
+
+Cs_2 = data_2D_s['C_s_prof'].data[0, ...]
+Cs_4 = data_4D_s['C_s_prof'].data[0, ...]
+
+Cth_2 = data_2D_scalar['C_th_prof'].data[0, ...]
+Cth_4 = data_4D_scalar['C_th_prof'].data[0, ...]
+
+Cql_2 = data_2D_scalar['C_ql_prof'].data[0, ...]
+Cql_4 = data_4D_scalar['C_ql_prof'].data[0, ...]
+
+Cqv_2 = data_2D_scalar['C_qv_prof'].data[0, ...]
+Cqv_4 = data_4D_scalar['C_qv_prof'].data[0, ...]
+
+Cq_2 = data_2D_qtot['C_q_total_prof'].data[0, ...]
+Cq_4 = data_4D_qtot['C_q_total_prof'].data[0, ...]
 
 z = np.arange(0, 3020, 20)
 
