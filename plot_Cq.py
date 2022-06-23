@@ -122,7 +122,7 @@ plt.legend(fontsize=16, loc='upper right')
 plt.xlabel('$\\beta$', fontsize=14)
 plt.ylabel("z/z$_{ML}$")
 plt.xlim(0, 1)
-plt.savefig(plotdir+'beta_profs_scaled.png')/z_i
+plt.savefig(plotdir+'beta_profs_scaled.png')
 
 
 ###########################################################################################################
