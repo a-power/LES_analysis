@@ -349,8 +349,8 @@ def Cs_sq_beta_dep(C_s2_sq, beta):
 
 
 
-def Pr(Cs, C_scalar):
-     Pr = Cs/C_scalar
+def Pr(Cs_sq, C_scalar_sq):
+     Pr = Cs_sq/C_scalar_sq
      return Pr
     
 

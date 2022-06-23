@@ -5,6 +5,7 @@ import os
 import dynamic as dyn
 
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
+np.seterr(invalid=’ignore’)
 
 dir_data_Cs = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_update_subfilt/BOMEX_m0020_g0800_all_14400_gaussian_filter_profiles_'
 dir_data_C_scalar = '/work/scratch-pw/apower/20m_gauss_dyn_update_subfilt/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_scalar_'
