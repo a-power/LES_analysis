@@ -98,52 +98,52 @@ Rj_th_2D = None
 # Hj_2D = None
 # Rj_2D = None
 
-
-C_qv_sq_prof_2D, C_qv_prof_2D, HR_v_prof_2D, RR_v_prof_2D, C_qv_sq_field_2D, HR_v_field_2D, RR_v_field_2D, Hj_v_2D, Rj_v_2D = \
-    t_dy.C_scalar("q_vapour", data_2D, dx=20, dx_hat=40, ingrid=mygrid)
-
-save_field(ds_in2, C_qv_sq_prof_2D)
-save_field(ds_in2, C_qv_prof_2D)
-save_field(ds_in2, HR_v_prof_2D)
-save_field(ds_in2, RR_v_prof_2D)
-save_field(ds_in2, C_qv_sq_field_2D)
-save_field(ds_in2, HR_v_field_2D)
-save_field(ds_in2, RR_v_field_2D)
-save_field(ds_in2, Hj_v_2D)
-save_field(ds_in2, Rj_v_2D)
-
-C_qv_sq_prof_2D = None
-C_qv_prof_2D = None
-HR_v_prof_2D = None
-RR_v_prof_2D = None
-C_qv_sq_field_2D = None
-HR_v_field_2D = None
-RR_v_field_2D = None
-Hj_v_2D = None
-Rj_v_2D = None
-
-C_ql_sq_prof_2D, C_ql_prof_2D, HR_l_prof_2D, RR_l_prof_2D, C_ql_sq_field_2D, HR_l_field_2D, RR_l_field_2D, Hj_l_2D, Rj_l_2D = \
-    t_dy.C_scalar("q_cloud_liquid_mass", data_2D, dx=20, dx_hat=40, ingrid=mygrid)
-
-save_field(ds_in2, C_ql_sq_prof_2D)
-save_field(ds_in2, C_ql_prof_2D)
-save_field(ds_in2, HR_l_prof_2D)
-save_field(ds_in2, RR_l_prof_2D)
-save_field(ds_in2, C_ql_sq_field_2D)
-save_field(ds_in2, HR_l_field_2D)
-save_field(ds_in2, RR_l_field_2D)
-save_field(ds_in2, Hj_l_2D)
-save_field(ds_in2, Rj_l_2D)
-
-C_ql_sq_prof_2D = None
-C_ql_prof_2D = None
-HR_l_prof_2D = None
-RR_l_prof_2D = None
-C_ql_sq_field_2D = None
-HR_l_field_2D = None
-RR_l_field_2D = None
-Hj_l_2D = None
-Rj_l_2D = None
+#
+# C_qv_sq_prof_2D, C_qv_prof_2D, HR_v_prof_2D, RR_v_prof_2D, C_qv_sq_field_2D, HR_v_field_2D, RR_v_field_2D, Hj_v_2D, Rj_v_2D = \
+#     t_dy.C_scalar("q_vapour", data_2D, dx=20, dx_hat=40, ingrid=mygrid)
+#
+# save_field(ds_in2, C_qv_sq_prof_2D)
+# save_field(ds_in2, C_qv_prof_2D)
+# save_field(ds_in2, HR_v_prof_2D)
+# save_field(ds_in2, RR_v_prof_2D)
+# save_field(ds_in2, C_qv_sq_field_2D)
+# save_field(ds_in2, HR_v_field_2D)
+# save_field(ds_in2, RR_v_field_2D)
+# save_field(ds_in2, Hj_v_2D)
+# save_field(ds_in2, Rj_v_2D)
+#
+# C_qv_sq_prof_2D = None
+# C_qv_prof_2D = None
+# HR_v_prof_2D = None
+# RR_v_prof_2D = None
+# C_qv_sq_field_2D = None
+# HR_v_field_2D = None
+# RR_v_field_2D = None
+# Hj_v_2D = None
+# Rj_v_2D = None
+#
+# C_ql_sq_prof_2D, C_ql_prof_2D, HR_l_prof_2D, RR_l_prof_2D, C_ql_sq_field_2D, HR_l_field_2D, RR_l_field_2D, Hj_l_2D, Rj_l_2D = \
+#     t_dy.C_scalar("q_cloud_liquid_mass", data_2D, dx=20, dx_hat=40, ingrid=mygrid)
+#
+# save_field(ds_in2, C_ql_sq_prof_2D)
+# save_field(ds_in2, C_ql_prof_2D)
+# save_field(ds_in2, HR_l_prof_2D)
+# save_field(ds_in2, RR_l_prof_2D)
+# save_field(ds_in2, C_ql_sq_field_2D)
+# save_field(ds_in2, HR_l_field_2D)
+# save_field(ds_in2, RR_l_field_2D)
+# save_field(ds_in2, Hj_l_2D)
+# save_field(ds_in2, Rj_l_2D)
+#
+# C_ql_sq_prof_2D = None
+# C_ql_prof_2D = None
+# HR_l_prof_2D = None
+# RR_l_prof_2D = None
+# C_ql_sq_field_2D = None
+# HR_l_field_2D = None
+# RR_l_field_2D = None
+# Hj_l_2D = None
+# Rj_l_2D = None
 
 
 ds_2.close()
@@ -226,53 +226,53 @@ Rj_th_4D = None
 # Hj_4D = None
 # Rj_4D = None
 
-
-C_qv_sq_prof_4D, C_qv_prof_4D, HR_v_prof_4D, RR_v_prof_4D, C_qv_sq_field_4D, HR_v_field_4D, RR_v_field_4D, Hj_v_4D, Rj_v_4D = \
-    t_dy.C_scalar("q_vapour", data_4D, dx=20, dx_hat=80, ingrid=mygrid)
-
-save_field(ds_in4, C_qv_sq_prof_4D)
-save_field(ds_in4, C_qv_prof_4D)
-save_field(ds_in4, HR_v_prof_4D)
-save_field(ds_in4, RR_v_prof_4D)
-save_field(ds_in4, C_qv_sq_field_4D)
-save_field(ds_in4, HR_v_field_4D)
-save_field(ds_in4, RR_v_field_4D)
-save_field(ds_in4, Hj_v_4D)
-save_field(ds_in4, Rj_v_4D)
-
-C_qv_sq_prof_4D = None
-C_qv_prof_4D = None
-HR_v_prof_4D = None
-RR_v_prof_4D = None
-C_qv_sq_field_4D = None
-HR_v_field_4D = None
-RR_v_field_4D = None
-Hj_v_4D = None
-Rj_v_4D = None
-
-C_ql_sq_prof_4D, C_ql_prof_4D, HR_l_prof_4D, RR_l_prof_4D, C_ql_sq_field_4D, HR_l_field_4D, RR_l_field_4D, Hj_l_4D, Rj_l_4D = \
-    t_dy.C_scalar("q_cloud_liquid_mass", data_4D, dx=20, dx_hat=80, ingrid=mygrid)
-
-save_field(ds_in4, C_ql_sq_prof_4D)
-save_field(ds_in4, C_ql_prof_4D)
-save_field(ds_in4, HR_l_prof_4D)
-save_field(ds_in4, RR_l_prof_4D)
-save_field(ds_in4, C_ql_sq_field_4D)
-save_field(ds_in4, HR_l_field_4D)
-save_field(ds_in4, RR_l_field_4D)
-save_field(ds_in4, Hj_l_4D)
-save_field(ds_in4, Rj_l_4D)
-
-C_ql_sq_prof_4D = None
-C_ql_prof_4D = None
-HR_l_prof_4D = None
-RR_l_prof_4D = None
-C_ql_sq_field_4D = None
-HR_l_field_4D = None
-RR_l_field_4D = None
-Hj_l_4D = None
-Rj_l_4D = None
-
+#
+# C_qv_sq_prof_4D, C_qv_prof_4D, HR_v_prof_4D, RR_v_prof_4D, C_qv_sq_field_4D, HR_v_field_4D, RR_v_field_4D, Hj_v_4D, Rj_v_4D = \
+#     t_dy.C_scalar("q_vapour", data_4D, dx=20, dx_hat=80, ingrid=mygrid)
+#
+# save_field(ds_in4, C_qv_sq_prof_4D)
+# save_field(ds_in4, C_qv_prof_4D)
+# save_field(ds_in4, HR_v_prof_4D)
+# save_field(ds_in4, RR_v_prof_4D)
+# save_field(ds_in4, C_qv_sq_field_4D)
+# save_field(ds_in4, HR_v_field_4D)
+# save_field(ds_in4, RR_v_field_4D)
+# save_field(ds_in4, Hj_v_4D)
+# save_field(ds_in4, Rj_v_4D)
+#
+# C_qv_sq_prof_4D = None
+# C_qv_prof_4D = None
+# HR_v_prof_4D = None
+# RR_v_prof_4D = None
+# C_qv_sq_field_4D = None
+# HR_v_field_4D = None
+# RR_v_field_4D = None
+# Hj_v_4D = None
+# Rj_v_4D = None
+#
+# C_ql_sq_prof_4D, C_ql_prof_4D, HR_l_prof_4D, RR_l_prof_4D, C_ql_sq_field_4D, HR_l_field_4D, RR_l_field_4D, Hj_l_4D, Rj_l_4D = \
+#     t_dy.C_scalar("q_cloud_liquid_mass", data_4D, dx=20, dx_hat=80, ingrid=mygrid)
+#
+# save_field(ds_in4, C_ql_sq_prof_4D)
+# save_field(ds_in4, C_ql_prof_4D)
+# save_field(ds_in4, HR_l_prof_4D)
+# save_field(ds_in4, RR_l_prof_4D)
+# save_field(ds_in4, C_ql_sq_field_4D)
+# save_field(ds_in4, HR_l_field_4D)
+# save_field(ds_in4, RR_l_field_4D)
+# save_field(ds_in4, Hj_l_4D)
+# save_field(ds_in4, Rj_l_4D)
+#
+# C_ql_sq_prof_4D = None
+# C_ql_prof_4D = None
+# HR_l_prof_4D = None
+# RR_l_prof_4D = None
+# C_ql_sq_field_4D = None
+# HR_l_field_4D = None
+# RR_l_field_4D = None
+# Hj_l_4D = None
+# Rj_l_4D = None
+#
 
 ds_4.close()
 
