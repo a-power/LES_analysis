@@ -7,7 +7,7 @@ import dynamic as dyn
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 
 dir_data_Cs = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_update_subfilt/BOMEX_m0020_g0800_all_14400_gaussian_filter_profiles_'
-dir_data_C_scalar = '/work/scratch-pw/apower/20m_gauss_dyn_update_subfilt/BOMEX_m0020_g0800_all_14400_gaussian_filter_Cscalar_'
+dir_data_C_scalar = '/work/scratch-pw/apower/20m_gauss_dyn_update_subfilt/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_scalar_'
 dir_data_Cq_tot = '/work/scratch-pw/apower/20m_gauss_dyn_update_subfilt/BOMEX_m0020_g0800_all_14400_gaussian_filter_Cq_'
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_update_subfilt/plots/'
 os.makedirs(plotdir, exist_ok = True)
@@ -15,8 +15,8 @@ os.makedirs(plotdir, exist_ok = True)
 data_2D_s = xr.open_dataset(dir_data_Cs + '2D.nc')
 data_4D_s = xr.open_dataset(dir_data_Cs + '4D.nc')
 
-data_2D_scalar = xr.open_dataset(dir_data_C_scalar + 'C_scalar_2D.nc')
-data_4D_scalar = xr.open_dataset(dir_data_C_scalar + 'C_scalar_4D.nc')
+data_2D_scalar = xr.open_dataset(dir_data_C_scalar + '2D.nc')
+data_4D_scalar = xr.open_dataset(dir_data_C_scalar + '4D.nc')
 
 data_2D_qtot = xr.open_dataset(dir_data_Cq_tot + '2D_attempt.nc')
 data_4D_qtot = xr.open_dataset(dir_data_Cq_tot + '4D_attempt.nc')
