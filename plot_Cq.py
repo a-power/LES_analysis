@@ -78,7 +78,7 @@ plt.figure(figsize=(6,7))
 plt.plot(beta_q, z)
 plt.xlabel('$\\beta_{qt}$', fontsize=14)
 plt.ylabel("z (m)")
-plt.xlim(0.18, 0.25)
+plt.xlim(0.19, 0.21)
 plt.savefig(plotdir+'Cq_beta_prof.png')
 
 plt.figure(figsize=(6,7))
@@ -90,6 +90,39 @@ plt.xlabel('$\\beta$', fontsize=14)
 plt.ylabel("z (m)")
 plt.xlim(0, 1)
 plt.savefig(plotdir+'beta_profs.png')
+
+
+
+plt.figure(figsize=(6,7))
+plt.plot(beta_s, z/z_i)
+plt.xlabel('$\\beta_s$', fontsize=14)
+plt.ylabel("z/z$_{ML}$")
+plt.xlim(0, 1)
+plt.savefig(plotdir+'Cs_beta_prof_scaled.png')
+
+plt.figure(figsize=(6,7))
+plt.plot(beta_th, z/z_i)
+plt.xlabel('$\\beta_{\\theta}$', fontsize=14)
+plt.ylabel("z/z$_{ML}$")
+plt.xlim(0, 1)
+plt.savefig(plotdir+'Cth_beta_prof_scaled.png')
+
+plt.figure(figsize=(6,7))
+plt.plot(beta_q, z/z_i)
+plt.xlabel('$\\beta_{qt}$', fontsize=14)
+plt.ylabel("z/z$_{ML}$")
+plt.xlim(0.19, 0.21)
+plt.savefig(plotdir+'Cq_beta_prof_scaled.png')
+
+plt.figure(figsize=(6,7))
+plt.plot(beta_s, z/z_i, label='$\\beta_s$')
+plt.plot(beta_th, z/z_i, label='$\\beta_{\\theta}$')
+plt.plot(beta_q, z/z_i, label='$\\beta_{qt}$')
+plt.legend(fontsize=16, loc='upper right')
+plt.xlabel('$\\beta$', fontsize=14)
+plt.ylabel("z/z$_{ML}$")
+plt.xlim(0, 1)
+plt.savefig(plotdir+'beta_profs_scaled.png')/z_i
 
 
 ###########################################################################################################
