@@ -41,9 +41,9 @@ my_vars_filt = ['f(w_on_w.w_on_w)_r', 'f(w_on_w.th_on_w)_r', 'f(w_on_w.q_total_o
 avp.time_av_prof(my_vars_filt, filter_res_list, set_time, mydir_filt, 'bomex_filt')
 
 plot_vars = []
-plot_vars.append(myvars)
+plot_vars.extend(myvars)
 plot_vars.append('wqt')
-plot_vars.append(my_vars_filt)
+plot_vars.extend(my_vars_filt)
 
 for i, var in enumerate(plot_vars):
 
