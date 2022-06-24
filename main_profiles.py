@@ -104,7 +104,15 @@ for i, var in enumerate(plot_vars):
     for m, res in enumerate(res_list):
         if mydata=='bomex_filt':
             if m == 0:
-                var_plot = np.load(f'files/bomex_og/{res}_{var}.npy')
+                if var == 'f(w_on_w.w_on_w)_r':
+                    var_out = 'ww_mean'
+                elif var == 'f(w_on_w.th_on_w)_r':
+                    var_out = 'wtheta_cn_mean'
+                elif var == 'f(w_on_w.q_total_on_w)_r':
+                    var_out = 'wqt'
+                else:
+                    print(var, 'not programed correctly')
+                var_plot = np.load(f'files/bomex_og/{res}_{_out}.npy')
         else:
             var_plot = np.load(f'files/{mydata}/{res}_{var}.npy')
         z_plot = np.load(f'files/{mydata}/{res}_z.npy')
