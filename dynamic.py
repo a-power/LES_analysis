@@ -17,7 +17,7 @@ def sigma_find(delta):
 
 def l_mix_MONC(Cs_sq, Delta, z_in, k=0.4):
 
-    l_mix = np.sqrt( 1 / ( (1/((Cs_sq * Delta*Delta)*(Cs_sq * Delta*Delta))) + (1/((k*k * z_in*z_in)*(k*k * z_in*z_in)) ) ))
+    l_mix = np.sqrt( 1 / ( (1/((Cs_sq * Delta*Delta)**2)) + (1/((k*k * z_in*z_in)**2)) ) )
 
     return l_mix
 
