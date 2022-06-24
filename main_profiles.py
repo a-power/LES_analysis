@@ -97,7 +97,7 @@ for i, var in enumerate(plot_vars):
         res_list = ['0020_g0800', '0', '1']
 
     else:
-        print('name not configured for this variable')
+        print(var, ' does not have a name configured for this variable')
 
     plt.xlabel(f'{var_name}')
 
