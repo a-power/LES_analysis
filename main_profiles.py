@@ -112,7 +112,7 @@ for i, var in enumerate(plot_vars):
                     var_out = 'wqt'
                 else:
                     print(var, 'not programed correctly')
-                var_plot = np.load(f'files/bomex_og/{res}_{_out}.npy')
+                var_plot = np.load(f'files/bomex_og/{res}_{var_out}.npy')
         else:
             var_plot = np.load(f'files/{mydata}/{res}_{var}.npy')
         z_plot = np.load(f'files/{mydata}/{res}_z.npy')
