@@ -1,6 +1,7 @@
 import numpy as np
 import xarray as xr
 import os as os
+import functions as fn
 
 def time_av_prof(vars, dx_list, time_in, indir, data='bomex_og'):
     for i, dx in enumerate(dx_list):
