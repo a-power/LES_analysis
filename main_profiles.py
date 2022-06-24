@@ -15,7 +15,7 @@ model_res_list = ['0020_g0800', '0040_g0400', '0080_g0200']
 model_res_list_int = np.array([20, 40, 80])
 
 filter_res_list = ['0', '1']
-filter_res_list_int = np.array([40, 80])
+filter_res_list_int = np.array([20, 40, 80])
 
 # model_res_list = ['0020_g0800', '0025_g0640', '0040_g0400', '0080_g0200', '0160_g0100', '0320_g0050']
 # model_res_list_int = np.array([20, 25, 40, 80, 160, 320])
@@ -53,45 +53,60 @@ for i, var in enumerate(plot_vars):
     if var == 'w_wind_mean':
         var_name = "$\overline{w'}$"
         mydata = 'bomex_og'
+        res_list = ['0020_g0800', '0040_g0400', '0080_g0200']
     elif var == 'ww_mean':
         var_name = "$\overline{w'^2}$"
         mydata = 'bomex_og'
+        res_list = ['0020_g0800', '0040_g0400', '0080_g0200']
     elif var == 'theta_mean':
         var_name = "$\overline{\\theta'}$"
         mydata = 'bomex_og'
+        res_list = ['0020_g0800', '0040_g0400', '0080_g0200']
     elif var == 'wtheta_cn_mean':
         var_name = "$\overline{w' \\theta'}$"
         mydata = 'bomex_og'
+        res_list = ['0020_g0800', '0040_g0400', '0080_g0200']
     elif var == 'total_cloud_fraction':
         var_name = "Total cloud fraction"
         mydata = 'bomex_og'
+        res_list = ['0020_g0800', '0040_g0400', '0080_g0200']
     elif var == 'wqv_cn_mean':
         var_name = "$\overline{w' q_v'}$"
         mydata = 'bomex_og'
+        res_list = ['0020_g0800', '0040_g0400', '0080_g0200']
     elif var == 'wql_cn_mean':
         var_name = "$\overline{w' q_l'}$"
         mydata = 'bomex_og'
+        res_list = ['0020_g0800', '0040_g0400', '0080_g0200']
     elif var == 'wqt':
         var_name = "$\overline{w' q_t'}$"
         mydata = 'bomex_og'
+        res_list = ['0020_g0800', '0040_g0400', '0080_g0200']
 
     elif var == 'f(w_on_w.w_on_w)_r':
         var_name = "$\overline{w'^2}$"
         mydata = 'bomex_filt'
+        res_list = ['0020_g0800', '0', '1']
     elif var == 'f(w_on_w.th_on_w)_r':
         var_name = "$\overline{w' \\theta'}$"
         mydata = 'bomex_filt'
+        res_list = ['0020_g0800', '0', '1']
     elif var == 'f(w_on_w.q_total_on_w)_r':
         var_name = "$\overline{w' q_t'}$"
         mydata = 'bomex_filt'
+        res_list = ['0020_g0800', '0', '1']
 
     else:
         print('name not configured for this variable')
 
     plt.xlabel(f'{var_name}')
 
-    for m, res in enumerate(model_res_list):
-        var_plot = np.load(f'files/{mydata}/{res}_{var}_time_av.npy')
+    for m, res in enumerate(res_list):
+        if mydata=='bomex_filt':
+            if m == 0:
+                var_plot = np.load(f'files/bomex_og/{res}_{var}.npy')
+        else:
+            var_plot = np.load(f'files/{mydata}/{res}_{var}.npy')
         z_plot = np.load(f'files/{mydata}/{res}_z.npy')
         plt.plot(var_plot, z_plot, label=f'$\\Delta x$ = {str(model_res_list_int[m])} m')
     plt.legend(fontsize=12)
