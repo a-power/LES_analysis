@@ -115,10 +115,15 @@ for i, var in enumerate(plot_vars):
                 var_plot = np.load(f'files/bomex_og/{res}_{var_out}.npy')
         else:
             var_plot = np.load(f'files/{mydata}/{res}_{var}.npy')
-        z_plot = np.load(f'files/{mydata}/{res}_z.npy')
+
+        if mydata=='bomex_filt':
+            if m == 0:
+                z_plot = np.load(f'files/bomex_og/{res}_z.npy')
+        else:
+            z_plot = np.load(f'files/{mydata}/{res}_z.npy')
         plt.plot(var_plot, z_plot, label=f'$\\Delta x$ = {str(model_res_list_int[m])} m')
     plt.legend(fontsize=12)
     figs.savefig(f'plots/{mydata}/{var}_{set_time}_profile.png')
     print("Finished plotting profile for ", var, ",", \
-          len(model_res_list)-(m+1), "variables remaining")
+          len(res_list)-(m+1), "variables remaining")
 
