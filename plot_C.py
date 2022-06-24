@@ -233,6 +233,7 @@ plt.legend(fontsize=16, loc='upper right')
 #plt.xlim(1, 3)
 plt.savefig(plotdir+'l_mix_w_MONC_scaled.png', pad_inches=0)
 
+print('plotted l')
 
 #########################################################################################################################
 
