@@ -61,8 +61,9 @@ def time_av_prof(vars, dx_list, time_in, indir, data='bomex_og'):
             #     var_data += my_var.data
             # av_var_data = var_data/nt
             np.save(f'files/{data}/{dx}_{var_in}', my_var)
-        wqt = wql + wqv
-        np.save(f'files/{data}/{dx}_wqt', wqt)
+        if data == 'bomex_og':
+            wqt = wql + wqv
+            np.save(f'files/{data}/{dx}_wqt', wqt)
     return
 
 ## Dataset.mean(time).plot()
