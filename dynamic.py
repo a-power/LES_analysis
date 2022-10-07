@@ -15,9 +15,9 @@ def sigma_find(delta):
     return delta/2
 
 
-def l_mix_MONC(Cs_sq, Delta, z_in, k=0.4):
+def l_mix_MONC(Cs, Delta, z_in, k=0.4):
 
-    l_mix = np.sqrt( 1 / ( (1/(Cs_sq * Delta*Delta)) + (1/(k*k * z_in*z_in)) ) )
+    l_mix = np.sqrt( 1 / ( (1/(Cs*Cs * Delta*Delta) ) + (1/(k*k * z_in*z_in) ) )  )
 
     return l_mix
 
@@ -327,17 +327,17 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
 
 
 def beta_calc(C_2D_sq_in, C_4D_sq_in):
-    
+
     Cs_2D_sq_copy1 = C_2D_sq_in.copy()
     Cs_2D_sq_copy2 = C_2D_sq_in.copy()
     Cs_4D_sq_copy = C_4D_sq_in.copy()
-    
+
     Cs_2D_sq_copy2[Cs_2D_sq_copy1==0.00000] = 1
     Cs_4D_sq_copy[Cs_2D_sq_copy1==0.00000] = 100000 #go to inf
-    
+
     beta = Cs_4D_sq_copy/Cs_2D_sq_copy2
     beta[beta < 0.125] = 0.125
-    
+
     return beta
     
     
@@ -346,6 +346,12 @@ def Cs_sq_beta_dep(C_s2_sq, beta):
     """ calculates Cs_sq using C_s = C_s2_sq/beta """
     
     return C_s2_sq/beta
+
+
+
+def Pr(Cs_sq, C_scalar_sq):
+     Pr = Cs_sq/C_scalar_sq
+     return Pr
     
 
 def w_therm_field(w, t_in, return_all=False):
