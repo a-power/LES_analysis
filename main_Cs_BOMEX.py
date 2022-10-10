@@ -1,4 +1,4 @@
-import time_av_dynamic as t_dy
+import dynamic_script as t_dy
 from subfilter.io.dataout import save_field
 import os
 import xarray as xr

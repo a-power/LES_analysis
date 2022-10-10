@@ -1,7 +1,7 @@
 import numpy as np
 import xarray as xr
 from subfilter.io.dataout import save_field
-import time_av_dynamic as t_dy
+import dynamic_script as t_dy
 
 import subfilter
 

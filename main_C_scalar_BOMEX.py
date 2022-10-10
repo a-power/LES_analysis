@@ -1,4 +1,4 @@
-import time_av_dynamic as t_dy
+import time_av_dynamic_script as dy_s
 from subfilter.io.dataout import save_field
 import os
 import xarray as xr
@@ -27,7 +27,7 @@ dataset_name4 = path20f+file20+'Cq_4D.nc'
 ########################################################################
 
 C_q_sq_prof_2D, C_q_prof_2D, HR_prof_2D, RR_prof_2D, C_q_sq_field_2D, HR_field_2D, RR_field_2D, Hj_2D, Rj_2D = \
-    t_dy.C_scalar('q_total', data_2D, dx=20, dx_hat=40, ingrid=mygrid)
+    dy_s.C_scalar('q_total', data_2D, dx=20, dx_hat=40, ingrid=mygrid)
 
 ds_2 = xr.Dataset()
 ds_2.to_netcdf(dataset_name2, mode='w')
@@ -58,7 +58,7 @@ Rj_2D = None
 ##########################################
 
 C_q_sq_prof_4D, C_q_prof_4D, HR_prof_4D, RR_prof_4D, C_q_sq_field_4D, HR_field_4D, RR_field_4D, Hj_4D, Rj_4D = \
-    t_dy.C_scalar('q_total', data_2D, dx=20, dx_hat=80, ingrid=mygrid)
+    dy_s.C_scalar('q_total', data_2D, dx=20, dx_hat=80, ingrid=mygrid)
 
 ds_4 = xr.Dataset()
 ds_4.to_netcdf(dataset_name4, mode='w')

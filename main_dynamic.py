@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
-import time_av_dynamic as tdy #dot to get folder outside
+import dynamic_script as tdy #dot to get folder outside
 import numpy as np
 import os
-import time_av_dynamic as t_dy
+import dynamic_script as t_dy
 import xarray as xr
 
 set_time = ['14400'] # ,'12600', '16200', '18000'

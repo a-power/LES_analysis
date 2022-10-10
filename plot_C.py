@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import xarray as xr
 import os
-import dynamic as dyn
+import dynamic_functions as dyn
 
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')

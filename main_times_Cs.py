@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-import time_av_dynamic as t_dy
+import dynamic_script as t_dy
 
 new_set_time = ['12600', '14400', '16200', '18000']
 av_type = 'all'

@@ -10,7 +10,7 @@ from subfilter.utils.dask_utils import re_chunk
 # import filters as filt
 # import subfilter as sf
 
-import dynamic as dyn
+import dynamic_functions as dyn
 import dask
 import subfilter
 

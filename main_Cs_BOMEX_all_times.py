@@ -1,4 +1,4 @@
-import time_av_dynamic as t_dy
+import dynamic_script as t_dy
 import matplotlib.pyplot as plt
 import xarray as xr
 import numpy as np

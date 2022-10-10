@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import dynamic as dy
+import dynamic_functions as dy
 
 filedir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/files/t_av_4_times/'
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/trace/t_av_4_times/'

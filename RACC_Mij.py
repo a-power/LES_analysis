@@ -1,11 +1,11 @@
-import time_av_dynamic as t_dy
+import dynamic_script as t_dy
 from subfilter.io.dataout import save_field
 import os
 import numpy as np
 import xarray as xr
 
 
-import dynamic as dyn
+import dynamic_functions as dyn
 import dask
 import subfilter
 
