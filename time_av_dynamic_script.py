@@ -212,7 +212,7 @@ def Cs(indir, dx, dx_hat, ingrid, t_in=0, save_all=1, reaxes=False):
 
     """ function takes in:
 
-    save_all: 1 is for profiles, 2 is for fields, 3 is for all fields PLUS Lij and Mij"""
+    save_all: 1 is for profiles, 2 is for profiles and fields, 3 is for profiles, fields, PLUS Lij and Mij"""
 
     file_in = f'{indir}'
     ds_in = xr.open_dataset(file_in)

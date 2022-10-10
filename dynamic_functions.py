@@ -98,7 +98,7 @@ def abs_S_hat(S_filt_in):
 def abs_S_hat_S_ij_hat(S_filt):
     
     abs_S_filt = abs_S_hat(S_filt)
-    abs_S_hat_S_ij_hat = abs_S_filt*S_filt
+    abs_S_hat_S_ij_hat = S_filt * abs_S_filt
     
     return abs_S_hat_S_ij_hat
 
@@ -110,27 +110,20 @@ def M_ij(dx, dx_filt, S_filt, abs_S_filt, HAT_abs_S_Sij, beta=1):
     alpha = dx_filt / dx
     power = alpha / 2
 
-    M_ij = dx_filt * dx_filt * (beta ** power) * abs_S_filt * S_filt  -  dx ** 2 * HAT_abs_S_Sij
+    M_ij = dx_filt * dx_filt * (beta ** power) * abs_S_filt * S_filt  -  dx * dx * HAT_abs_S_Sij
 
     return M_ij
 
 
 def ds_dxi(scalar, source_dataset, ref_dataset, options, ingrid):
 
-    if scalar == "q_total":
-        s = get_data(source_dataset, ref_dataset, 'q_total', options)
+    #scalar can be either 'th' or "q_total"
 
-        # ql = get_data(source_dataset, ref_dataset, 'q_cloud_liquid_mass', options)
-        # qv = get_data(source_dataset, ref_dataset, 'q_vapour', options)
-        # s = ql + qv
+    if scalar == 'q':
+        scalar = 'q_total'
 
+    s = get_data(source_dataset, ref_dataset, str(scalar), options)
 
-    elif scalar == 'th':
-        s = get_data(source_dataset, ref_dataset, 'th', options)
-
-    else:
-        print("Scalar input not recognised: only inputs available are 'th' or 'q'.")
-        return
 
     [iix, iiy, iiz] = get_string_index(s.dims, ['x', 'y', 'z'])
     sh = np.shape(s)
@@ -184,19 +177,19 @@ def index_sym(i,j, i_j_in):
 
 def C_s_sq(L_ij, M_ij):
     
-    C_s_sq = np.zeros_like(L_ij[0,:,:,:])
-    C_s_num = np.zeros_like(L_ij[0,:,:,:])
-    C_s_den = np.zeros_like(L_ij[0,:,:,:])
+    C_s_sq = np.zeros_like(L_ij[0, ...])
+    C_s_num = np.zeros_like(L_ij[0, ...])
+    C_s_den = np.zeros_like(L_ij[0, ...])
                         
     for it in range(0,6):
         if it in [0,3,5]:
             
-            C_s_num += L_ij[it,:,:,:] * M_ij[it,:,:,:]
-            C_s_den += M_ij[it,:,:,:]**2            
+            C_s_num += L_ij[it, ...] * M_ij[it, ...]
+            C_s_den += M_ij[it, ...]**2
     
         else:        
-            C_s_num += 2*(L_ij[it,:,:,:] * M_ij[it,:,:,:])
-            C_s_den += 2*M_ij[it,:,:,:]**2
+            C_s_num += 2*(L_ij[it, ...] * M_ij[it, ...])
+            C_s_den += 2*M_ij[it, ...]**2
        
     C_s_sq = 0.5 * C_s_num / C_s_den
                         
@@ -206,8 +199,8 @@ def C_s_sq(L_ij, M_ij):
 
 def C_scalar_sq(Hj, Rj):
 
-    C_th_num = np.zeros_like(Hj[0, :, :, :])
-    C_th_den = np.zeros_like(Hj[0, :, :, :])
+    C_th_num = np.zeros_like(Hj[0, ...])
+    C_th_den = np.zeros_like(Hj[0, ...])
 
     for it in range(0, 3):
         C_th_num += Hj[it, ...] * Rj[it, ...]
@@ -238,30 +231,34 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
     
     """
     
-    C_s_num = np.zeros_like(L_ij[0,:,:,:])
-    C_s_den = np.zeros_like(M_ij[0,:,:,:])
+    C_s_num = np.zeros_like(L_ij[0, ...])
+    C_s_den = np.zeros_like(M_ij[0, ...])
   
                         
     for it in range(0,6):
         if it in [0,3,5]:
             
-            C_s_num += L_ij[it,:,:,:] * M_ij[it,:,:,:]
-            C_s_den += M_ij[it,:,:,:] * M_ij[it,:,:,:]
+            C_s_num += L_ij[it, ...] * M_ij[it, ...]
+            C_s_den += M_ij[it, ...] * M_ij[it, ...]
 
         else:        
-            C_s_num += 2*(L_ij[it,:,:,:] * M_ij[it,:,:,:])
-            C_s_den += 2*(M_ij[it,:,:,:] * M_ij[it,:,:,:])
+            C_s_num += 2*(L_ij[it, ...] * M_ij[it, ...])
+            C_s_den += 2*(M_ij[it, ...] * M_ij[it, ...])
             
             
-    z_num = len(C_s_num[0,0,:])
-    horiz_num_temp = len(C_s_num[0,:,0])
+    z_num = (C_s_num.shape)[-1]
+    horiz_num_temp = (C_s_num.shape)[-2]
     horiz_num = horiz_num_temp**2
 
     LM_flat = C_s_num.reshape(horiz_num,z_num)
     LM_av = np.zeros(z_num)
 
+    C_s_num = None
+
     MM_flat = C_s_den.reshape(horiz_num,z_num)
     MM_av = np.zeros(z_num)
+
+    C_s_den = None
 
     for k in range(z_num):
 
@@ -290,17 +287,17 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
 
     """
 
-    C_th_num = np.zeros_like(H_ij[0, :, :, :])
-    C_th_den = np.zeros_like(R_ij[0, :, :, :])
+    C_th_num = np.zeros_like(H_ij[0, ...])
+    C_th_den = np.zeros_like(R_ij[0, ...])
 
     for it in range(0, 3):
 
-        C_th_num += H_ij[it, :, :, :] * R_ij[it, :, :, :]
-        C_th_den += R_ij[it, :, :, :] * R_ij[it, :, :, :]
+        C_th_num += H_ij[it, ...] * R_ij[it, ...]
+        C_th_den += R_ij[it, ...] * R_ij[it, ...]
 
 
-    z_num = len(C_th_num[0, 0, :])
-    horiz_num_temp = len(C_th_num[0, :, 0])
+    z_num = (C_th_num.shape)[-1]
+    horiz_num_temp = (C_th_num.shape)[-2]
     horiz_num = horiz_num_temp * horiz_num_temp
 
     HR_flat = C_th_num.reshape(horiz_num, z_num)
