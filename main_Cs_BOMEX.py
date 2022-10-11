@@ -23,10 +23,10 @@ data_4D = path20f+file20+str('ga01.nc')
 data_8D = path20f+file20+str('ga02.nc')
 data_16D = path20f+file20+str('ga03.nc')
 
-dataset_name2 = path20f+file20+'profiles_2D.nc'
-dataset_name4 = path20f+file20+'profiles_4D.nc'
-dataset_name8 = path20f+file20+'profiles_8D.nc'
-dataset_name16 = path20f+file20+'profiles_16D.nc'
+dataset_name2 = path20f+file20+'Cs_2D.nc'
+dataset_name4 = path20f+file20+'Cs_4D.nc'
+dataset_name8 = path20f+file20+'Cs_8D.nc'
+dataset_name16 = path20f+file20+'Cs_16D.nc'
 
 
 
