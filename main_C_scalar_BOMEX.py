@@ -6,8 +6,6 @@ import xarray as xr
 av_type = 'all'
 mygrid = 'w'
 
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/update_subfilt/'
-
 path20f = '/work/scratch-pw/apower/20m_gauss_dyn/'
 file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_"
 
@@ -43,7 +41,7 @@ DX_16D = {
 
 # outdir_og = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/'
 # outdir = outdir_og + '20m_update_subfilt' + '/'
-#
+# plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/update_subfilt/'
 # os.makedirs(outdir, exist_ok = True)
 # os.makedirs(plotdir, exist_ok = True)
 
