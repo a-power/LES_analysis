@@ -323,21 +323,21 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         return C_th_av_sq
 
 
-def beta_calc(Cs_2D_sq_in, Cs_4D_sq_in):
+def minimal_beta_calc(Cs_2D_sq_in, Cs_4D_sq_in):
 
     beta = Cs_4D_sq_in/Cs_2D_sq_in
     # beta[beta < 0.125] = 0.125
 
     return beta
 
-def og_beta_calc(C_2D_sq_in, C_4D_sq_in):
+def beta_calc(C_2D_sq_in, C_4D_sq_in):
 
     Cs_2D_sq_copy1 = C_2D_sq_in.copy()
     Cs_2D_sq_copy2 = C_2D_sq_in.copy()
     Cs_4D_sq_copy = C_4D_sq_in.copy()
 
-    Cs_2D_sq_copy2[Cs_2D_sq_copy1==0.00000] = 1
-    Cs_4D_sq_copy[Cs_2D_sq_copy1==0.00000] = 100000 #go to inf
+    Cs_2D_sq_copy2[Cs_2D_sq_copy1==0.00000000000] = 1
+    Cs_4D_sq_copy[Cs_2D_sq_copy1==0.00000000000] = 100000 #go to inf
 
     beta = Cs_4D_sq_copy/Cs_2D_sq_copy2
     beta[beta < 0.125] = 0.125

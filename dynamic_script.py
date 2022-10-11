@@ -370,7 +370,7 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
     save_all: 1 is for profiles, 2 is for fields, 3 is for all fields PLUS Lij and Mij"""
 
     if scalar=='q_total':
-        scalar_name='q_t'
+        scalar_name='q'
     elif scalar == 'q_cloud_liquid_mass':
         scalar_name = 'q_l'
     elif scalar == 'q_vapour':
