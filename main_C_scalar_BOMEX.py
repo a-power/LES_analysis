@@ -3,8 +3,6 @@ from subfilter.io.dataout import save_field
 import os
 import xarray as xr
 
-scalar = ['th', 'q_total']
-
 av_type = 'all'
 mygrid = 'w'
 
@@ -23,6 +21,8 @@ dataset_name4 = [path20f+file20+'C_th_4D.nc', path20f+file20+'C_qt_4D.nc']
 dataset_name8 = [path20f+file20+'C_th_8D.nc', path20f+file20+'C_qt_8D.nc']
 dataset_name16 = [path20f+file20+'C_th_16D.nc', path20f+file20+'C_qt_16D.nc']
 
+
+scalar = ['th', 'q_total']
 
 DX_2D = {
     'indir': data_2D,
