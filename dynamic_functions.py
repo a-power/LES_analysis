@@ -248,22 +248,35 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
             
     z_num = (C_s_num.shape)[-1]
     horiz_num_temp = (C_s_num.shape)[-2]
-    horiz_num = horiz_num_temp**2
+    horiz_num = horiz_num_temp* horiz_num_temp
 
-    LM_flat = C_s_num.reshape(horiz_num,z_num)
-    LM_av = np.zeros(z_num)
+    if len(L_ij.shape) == 5:
+        num_times = (C_s_num.shape)[0]
+        total_num = num_times*horiz_num
+        LM_flat = C_s_num.reshape(total_num, z_num)
+
+    else:
+        LM_flat = C_s_num.reshape(horiz_num,z_num)
+        total_num = horiz_num
 
     C_s_num = None
 
-    MM_flat = C_s_den.reshape(horiz_num,z_num)
-    MM_av = np.zeros(z_num)
+    if len(L_ij.shape) == 5:
+        MM_flat = C_s_den.reshape(total_num, z_num)
+
+    else:
+        MM_flat = C_s_den.reshape(horiz_num,z_num)
+        total_num = horiz_num
 
     C_s_den = None
 
+    LM_av = np.zeros(z_num)
+    MM_av = np.zeros(z_num)
+
     for k in range(z_num):
 
-        LM_av[k] = np.sum(LM_flat[:,k])/horiz_num
-        MM_av[k] = np.sum(MM_flat[:,k])/horiz_num
+        LM_av[k] = np.sum(LM_flat[:,k])/total_num
+        MM_av[k] = np.sum(MM_flat[:,k])/total_num
 
 
     Cs_av_sq = (0.5*(LM_av / MM_av))
@@ -300,15 +313,33 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
     horiz_num_temp = (C_th_num.shape)[-2]
     horiz_num = horiz_num_temp * horiz_num_temp
 
-    HR_flat = C_th_num.reshape(horiz_num, z_num)
-    HR_av = np.zeros(z_num)
+    if len(H_ij.shape) == 5:
+        num_times = (C_th_num.shape)[0]
+        total_num = num_times * horiz_num
+        HR_flat = C_th_num.reshape(total_num, z_num)
 
-    RR_flat = C_th_den.reshape(horiz_num, z_num)
+    else:
+        HR_flat = C_th_num.reshape(horiz_num, z_num)
+        total_num = horiz_num
+
+    C_th_num = None
+
+    if len(H_ij.shape) == 5:
+        RR_flat = C_th_den.reshape(total_num, z_num)
+
+    else:
+        RR_flat = C_th_den.reshape(horiz_num, z_num)
+        total_num = horiz_num
+
+    C_th_den = None
+
+
+    HR_av = np.zeros(z_num)
     RR_av = np.zeros(z_num)
 
     for k in range(z_num):
-        HR_av[k] = np.sum(HR_flat[:, k]) / horiz_num
-        RR_av[k] = np.sum(RR_flat[:, k]) / horiz_num
+        HR_av[k] = np.sum(HR_flat[:, k]) / total_num
+        RR_av[k] = np.sum(RR_flat[:, k]) / total_num
 
     C_th_av_sq = (0.5 * (HR_av / RR_av))
 
