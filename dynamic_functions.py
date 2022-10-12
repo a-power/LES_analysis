@@ -354,12 +354,14 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         return C_th_av_sq
 
 
+
 def minimal_beta_calc(Cs_2D_sq_in, Cs_4D_sq_in):
 
     beta = Cs_4D_sq_in/Cs_2D_sq_in
     # beta[beta < 0.125] = 0.125
 
     return beta
+
 
 def beta_calc(C_2D_sq_in, C_4D_sq_in):
 
