@@ -39,11 +39,11 @@ save_field(ds_in2, Cs_prof_sq_2d)
 save_field(ds_in2, Cs_prof_2d)
 save_field(ds_in2, LM_prof_2d)
 save_field(ds_in2, MM_prof_2d)
-save_field(ds_in2, Cs_sq_field_2d)
 save_field(ds_in2, LM_field_2d)
 save_field(ds_in2, MM_field_2d)
 save_field(ds_in2, L_ij_2)
 save_field(ds_in2, M_ij_2)
+# save_field(ds_in2, Cs_sq_field_2d)
 
 Cs_prof_sq_2d = None        #free memory
 Cs_prof_2d = None           #free memory
@@ -69,11 +69,11 @@ save_field(ds_in4, Cs_prof_sq_4d)
 save_field(ds_in4, Cs_prof_4d)
 save_field(ds_in4, LM_prof_4d)
 save_field(ds_in4, MM_prof_4d)
-save_field(ds_in4, Cs_sq_field_4d)
 save_field(ds_in4, LM_field_4d)
 save_field(ds_in4, MM_field_4d)
 save_field(ds_in4, L_ij_4)
 save_field(ds_in4, M_ij_4)
+# save_field(ds_in4, Cs_sq_field_4d)
 
 Cs_prof_sq_4d = None        #free memory
 Cs_prof_4d = None           #free memory
@@ -100,11 +100,11 @@ save_field(ds_in8, Cs_prof_sq_8d)
 save_field(ds_in8, Cs_prof_8d)
 save_field(ds_in8, LM_prof_8d)
 save_field(ds_in8, MM_prof_8d)
-save_field(ds_in8, Cs_sq_field_8d)
 save_field(ds_in8, LM_field_8d)
 save_field(ds_in8, MM_field_8d)
 save_field(ds_in8, L_ij_8)
 save_field(ds_in8, M_ij_8)
+# save_field(ds_in8, Cs_sq_field_8d)
 
 Cs_prof_sq_8d = None        #free memory
 Cs_prof_8d = None           #free memory
@@ -130,11 +130,11 @@ save_field(ds_in16, Cs_prof_sq_16d)
 save_field(ds_in16, Cs_prof_16d)
 save_field(ds_in16, LM_prof_16d)
 save_field(ds_in16, MM_prof_16d)
-save_field(ds_in16, Cs_sq_field_16d)
 save_field(ds_in16, LM_field_16d)
 save_field(ds_in16, MM_field_16d)
 save_field(ds_in16, L_ij_16)
 save_field(ds_in16, M_ij_16)
+# save_field(ds_in16, Cs_sq_field_16d)
 
 Cs_prof_sq_18d = None        #free memory
 Cs_prof_18d = None           #free memory
