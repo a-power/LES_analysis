@@ -28,8 +28,10 @@ dataset_name16 = path20f+file20+'Cs_16D.nc'
 
 
 
-Cs_prof_sq_2d, Cs_prof_2d, LM_prof_2d, MM_prof_2d, Cs_sq_field_2d, LM_field_2d, MM_field_2d, L_ij_2, M_ij_2 = \
+Cs_prof_sq_2d, Cs_prof_2d, LM_prof_2d, MM_prof_2d = \
     dy_s.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, save_all=1)
+
+#, Cs_sq_field_2d, LM_field_2d, MM_field_2d, L_ij_2, M_ij_2
 
 ds_2 = xr.Dataset()
 ds_2.to_netcdf(dataset_name2, mode='w')
@@ -39,10 +41,10 @@ save_field(ds_in2, Cs_prof_sq_2d)
 save_field(ds_in2, Cs_prof_2d)
 save_field(ds_in2, LM_prof_2d)
 save_field(ds_in2, MM_prof_2d)
-save_field(ds_in2, LM_field_2d)
-save_field(ds_in2, MM_field_2d)
-save_field(ds_in2, L_ij_2)
-save_field(ds_in2, M_ij_2)
+# save_field(ds_in2, LM_field_2d)
+# save_field(ds_in2, MM_field_2d)
+# save_field(ds_in2, L_ij_2)
+# save_field(ds_in2, M_ij_2)
 # save_field(ds_in2, Cs_sq_field_2d)
 
 Cs_prof_sq_2d = None        #free memory
@@ -58,8 +60,10 @@ M_ij_2 = None
 ds_2.close()
 
 
-Cs_prof_sq_4d, Cs_prof_4d, LM_prof_4d, MM_prof_4d, Cs_sq_field_4d, LM_field_4d, MM_field_4d, L_ij_4, M_ij_4  = \
+Cs_prof_sq_4d, Cs_prof_4d, LM_prof_4d, MM_prof_4d  = \
     dy_s.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, save_all=1)
+
+#, Cs_sq_field_4d, LM_field_4d, MM_field_4d, L_ij_4, M_ij_4
 
 ds_4 = xr.Dataset()
 ds_4.to_netcdf(dataset_name4, mode='w')
@@ -69,10 +73,10 @@ save_field(ds_in4, Cs_prof_sq_4d)
 save_field(ds_in4, Cs_prof_4d)
 save_field(ds_in4, LM_prof_4d)
 save_field(ds_in4, MM_prof_4d)
-save_field(ds_in4, LM_field_4d)
-save_field(ds_in4, MM_field_4d)
-save_field(ds_in4, L_ij_4)
-save_field(ds_in4, M_ij_4)
+# save_field(ds_in4, LM_field_4d)
+# save_field(ds_in4, MM_field_4d)
+# save_field(ds_in4, L_ij_4)
+# save_field(ds_in4, M_ij_4)
 # save_field(ds_in4, Cs_sq_field_4d)
 
 Cs_prof_sq_4d = None        #free memory
@@ -89,8 +93,10 @@ ds_4.close()
 
 
 
-Cs_prof_sq_8d, Cs_prof_8d, LM_prof_8d, MM_prof_8d, Cs_sq_field_8d, LM_field_8d, MM_field_8d, L_ij_8, M_ij_8  = \
+Cs_prof_sq_8d, Cs_prof_8d, LM_prof_8d, MM_prof_8d  = \
     dy_s.Cs(data_8D, dx=20, dx_hat=160, ingrid = mygrid, save_all=1)
+
+#, Cs_sq_field_8d, LM_field_8d, MM_field_8d, L_ij_8, M_ij_8
 
 ds_8 = xr.Dataset()
 ds_8.to_netcdf(dataset_name8, mode='w')
@@ -100,10 +106,10 @@ save_field(ds_in8, Cs_prof_sq_8d)
 save_field(ds_in8, Cs_prof_8d)
 save_field(ds_in8, LM_prof_8d)
 save_field(ds_in8, MM_prof_8d)
-save_field(ds_in8, LM_field_8d)
-save_field(ds_in8, MM_field_8d)
-save_field(ds_in8, L_ij_8)
-save_field(ds_in8, M_ij_8)
+# save_field(ds_in8, LM_field_8d)
+# save_field(ds_in8, MM_field_8d)
+# save_field(ds_in8, L_ij_8)
+# save_field(ds_in8, M_ij_8)
 # save_field(ds_in8, Cs_sq_field_8d)
 
 Cs_prof_sq_8d = None        #free memory
@@ -119,8 +125,10 @@ M_ij_8 = None
 ds_8.close()
 
 
-Cs_prof_sq_16d, Cs_prof_16d, LM_prof_16d, MM_prof_16d, Cs_sq_field_16d, LM_field_16d, MM_field_16d, L_ij_16, M_ij_16  = \
+Cs_prof_sq_16d, Cs_prof_16d, LM_prof_16d, MM_prof_16d = \
     dy_s.Cs(data_16D, dx=20, dx_hat=320, ingrid = mygrid, save_all=1)
+
+#, Cs_sq_field_16d, LM_field_16d, MM_field_16d, L_ij_16, M_ij_16
 
 ds_16 = xr.Dataset()
 ds_16.to_netcdf(dataset_name16, mode='w')
@@ -130,10 +138,10 @@ save_field(ds_in16, Cs_prof_sq_16d)
 save_field(ds_in16, Cs_prof_16d)
 save_field(ds_in16, LM_prof_16d)
 save_field(ds_in16, MM_prof_16d)
-save_field(ds_in16, LM_field_16d)
-save_field(ds_in16, MM_field_16d)
-save_field(ds_in16, L_ij_16)
-save_field(ds_in16, M_ij_16)
+# save_field(ds_in16, LM_field_16d)
+# save_field(ds_in16, MM_field_16d)
+# save_field(ds_in16, L_ij_16)
+# save_field(ds_in16, M_ij_16)
 # save_field(ds_in16, Cs_sq_field_16d)
 
 Cs_prof_sq_18d = None        #free memory

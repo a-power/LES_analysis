@@ -49,8 +49,10 @@ for i, scalar_in in enumerate(scalar):
 
 ########################################################################
 
-    C_sq_prof_2D, C_prof_2D, HR_prof_2D, RR_prof_2D, C_sq_field_2D, HR_field_2D, RR_field_2D, Hj_2D, Rj_2D = \
+    C_sq_prof_2D, C_prof_2D, HR_prof_2D, RR_prof_2D = \
         dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_2D)
+
+#, C_sq_field_2D, HR_field_2D, RR_field_2D, Hj_2D, Rj_2D
 
     ds_2 = xr.Dataset()
     ds_2.to_netcdf(dataset_name2[i], mode='w')
@@ -60,11 +62,11 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in2, C_prof_2D)
     save_field(ds_in2, HR_prof_2D)
     save_field(ds_in2, RR_prof_2D)
-    save_field(ds_in2, C_sq_field_2D)
-    save_field(ds_in2, HR_field_2D)
-    save_field(ds_in2, RR_field_2D)
-    save_field(ds_in2, Hj_2D)
-    save_field(ds_in2, Rj_2D)
+    # save_field(ds_in2, C_sq_field_2D)
+    # save_field(ds_in2, HR_field_2D)
+    # save_field(ds_in2, RR_field_2D)
+    # save_field(ds_in2, Hj_2D)
+    # save_field(ds_in2, Rj_2D)
 
     ds_2.close()
 
@@ -80,8 +82,10 @@ for i, scalar_in in enumerate(scalar):
 
     ##########################################
 
-    C_q_sq_prof_4D, C_q_prof_4D, HR_prof_4D, RR_prof_4D, C_q_sq_field_4D, HR_field_4D, RR_field_4D, Hj_4D, Rj_4D = \
+    C_q_sq_prof_4D, C_q_prof_4D, HR_prof_4D, RR_prof_4D = \
         dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_4D)
+
+#, C_q_sq_field_4D, HR_field_4D, RR_field_4D, Hj_4D, Rj_4D
     ds_4 = xr.Dataset()
     ds_4.to_netcdf(dataset_name4[i], mode='w')
     ds_in4 = {'file':dataset_name4[i], 'ds': ds_4}
@@ -90,11 +94,11 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in4, C_q_prof_4D)
     save_field(ds_in4, HR_prof_4D)
     save_field(ds_in4, RR_prof_4D)
-    save_field(ds_in4, C_q_sq_field_4D)
-    save_field(ds_in4, HR_field_4D)
-    save_field(ds_in4, RR_field_4D)
-    save_field(ds_in4, Hj_4D)
-    save_field(ds_in4, Rj_4D)
+    # save_field(ds_in4, C_q_sq_field_4D)
+    # save_field(ds_in4, HR_field_4D)
+    # save_field(ds_in4, RR_field_4D)
+    # save_field(ds_in4, Hj_4D)
+    # save_field(ds_in4, Rj_4D)
 
     ds_4.close()
 
@@ -112,8 +116,10 @@ for i, scalar_in in enumerate(scalar):
     #########################################################################
 
 
-    C_q_sq_prof_8D, C_q_prof_8D, HR_prof_8D, RR_prof_8D, C_q_sq_field_8D, HR_field_8D, RR_field_8D, Hj_8D, Rj_8D = \
+    C_q_sq_prof_8D, C_q_prof_8D, HR_prof_8D, RR_prof_8D = \
         dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_8D)
+
+#, C_q_sq_field_8D, HR_field_8D, RR_field_8D, Hj_8D, Rj_8D
 
     ds_8 = xr.Dataset()
     ds_8.to_netcdf(dataset_name8[i], mode='w')
@@ -123,11 +129,11 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in8, C_q_prof_8D)
     save_field(ds_in8, HR_prof_8D)
     save_field(ds_in8, RR_prof_8D)
-    save_field(ds_in8, C_q_sq_field_8D)
-    save_field(ds_in8, HR_field_8D)
-    save_field(ds_in8, RR_field_8D)
-    save_field(ds_in8, Hj_8D)
-    save_field(ds_in8, Rj_8D)
+    # save_field(ds_in8, C_q_sq_field_8D)
+    # save_field(ds_in8, HR_field_8D)
+    # save_field(ds_in8, RR_field_8D)
+    # save_field(ds_in8, Hj_8D)
+    # save_field(ds_in8, Rj_8D)
 
     ds_8.close()
 
@@ -143,8 +149,10 @@ for i, scalar_in in enumerate(scalar):
 
     ##########################################
 
-    C_q_sq_prof_16D, C_q_prof_16D, HR_prof_16D, RR_prof_16D, C_q_sq_field_16D, HR_field_16D, RR_field_16D, Hj_16D, Rj_16D = \
-        dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_8D)
+    C_q_sq_prof_16D, C_q_prof_16D, HR_prof_16D, RR_prof_16D = \
+        dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_16D)
+
+#, C_q_sq_field_16D, HR_field_16D, RR_field_16D, Hj_16D, Rj_16D
 
     ds_16 = xr.Dataset()
     ds_16.to_netcdf(dataset_name16[i], mode='w')
@@ -154,11 +162,11 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in16, C_q_prof_16D)
     save_field(ds_in16, HR_prof_16D)
     save_field(ds_in16, RR_prof_16D)
-    save_field(ds_in16, C_q_sq_field_16D)
-    save_field(ds_in16, HR_field_16D)
-    save_field(ds_in16, RR_field_16D)
-    save_field(ds_in16, Hj_16D)
-    save_field(ds_in16, Rj_16D)
+    # save_field(ds_in16, C_q_sq_field_16D)
+    # save_field(ds_in16, HR_field_16D)
+    # save_field(ds_in16, RR_field_16D)
+    # save_field(ds_in16, Hj_16D)
+    # save_field(ds_in16, Rj_16D)
 
     ds_16.close()
 
