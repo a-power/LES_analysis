@@ -20,7 +20,7 @@ dataset_name8 = [path20f+file20+'C_th_8D.nc', path20f+file20+'C_qt_8D.nc']
 dataset_name16 = [path20f+file20+'C_th_16D.nc', path20f+file20+'C_qt_16D.nc']
 
 
-scalar = ['q_total']#'th',
+scalar = ['th', 'q_total']
 
 DX_2D = {
     'indir': data_2D,
@@ -148,34 +148,34 @@ for i, scalar_in in enumerate(scalar):
     Rj_8D = None
 
     ##########################################
-
-    C_q_sq_prof_16D, C_q_prof_16D, HR_prof_16D, RR_prof_16D = \
-        dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_16D)
-
-#, C_q_sq_field_16D, HR_field_16D, RR_field_16D, Hj_16D, Rj_16D
-
-    ds_16 = xr.Dataset()
-    ds_16.to_netcdf(dataset_name16[i], mode='w')
-    ds_in16 = {'file':dataset_name16[i], 'ds': ds_16}
-
-    save_field(ds_in16, C_q_sq_prof_16D)
-    save_field(ds_in16, C_q_prof_16D)
-    save_field(ds_in16, HR_prof_16D)
-    save_field(ds_in16, RR_prof_16D)
-    # save_field(ds_in16, C_q_sq_field_16D)
-    # save_field(ds_in16, HR_field_16D)
-    # save_field(ds_in16, RR_field_16D)
-    # save_field(ds_in16, Hj_16D)
-    # save_field(ds_in16, Rj_16D)
-
-    ds_16.close()
-
-    C_q_sq_prof_16D = None
-    C_q_prof_16D = None
-    HR_prof_16D = None
-    RR_prof_16D = None
-    C_q_sq_field_16D = None
-    HR_field_16D = None
-    RR_field_16D = None
-    Hj_16D = None
-    Rj_16D = None
+#
+#     C_q_sq_prof_16D, C_q_prof_16D, HR_prof_16D, RR_prof_16D = \
+#         dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_16D)
+#
+# #, C_q_sq_field_16D, HR_field_16D, RR_field_16D, Hj_16D, Rj_16D
+#
+#     ds_16 = xr.Dataset()
+#     ds_16.to_netcdf(dataset_name16[i], mode='w')
+#     ds_in16 = {'file':dataset_name16[i], 'ds': ds_16}
+#
+#     save_field(ds_in16, C_q_sq_prof_16D)
+#     save_field(ds_in16, C_q_prof_16D)
+#     save_field(ds_in16, HR_prof_16D)
+#     save_field(ds_in16, RR_prof_16D)
+#     # save_field(ds_in16, C_q_sq_field_16D)
+#     # save_field(ds_in16, HR_field_16D)
+#     # save_field(ds_in16, RR_field_16D)
+#     # save_field(ds_in16, Hj_16D)
+#     # save_field(ds_in16, Rj_16D)
+#
+#     ds_16.close()
+#
+#     C_q_sq_prof_16D = None
+#     C_q_prof_16D = None
+#     HR_prof_16D = None
+#     RR_prof_16D = None
+#     C_q_sq_field_16D = None
+#     HR_field_16D = None
+#     RR_field_16D = None
+#     Hj_16D = None
+#     Rj_16D = None
