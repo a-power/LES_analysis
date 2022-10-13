@@ -20,7 +20,7 @@ dataset_name8 = [path20f+file20+'C_th_8D.nc', path20f+file20+'C_qt_8D.nc']
 dataset_name16 = [path20f+file20+'C_th_16D.nc', path20f+file20+'C_qt_16D.nc']
 
 
-scalar = ['th', 'q_total']
+scalar = ['q_total']#'th',
 
 DX_2D = {
     'indir': data_2D,
