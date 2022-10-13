@@ -322,7 +322,8 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         HR_flat = C_th_num.reshape(horiz_num, z_num)
         total_num = horiz_num
 
-    C_th_num = None
+    if return_all !=2:
+        C_th_num = None
 
     if len(H_ij.shape) == 5:
         RR_flat = C_th_den.reshape(total_num, z_num)
@@ -331,7 +332,8 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         RR_flat = C_th_den.reshape(horiz_num, z_num)
         total_num = horiz_num
 
-    C_th_den = None
+    if return_all != 2:
+        C_th_den = None
 
 
     HR_av = np.zeros(z_num)
