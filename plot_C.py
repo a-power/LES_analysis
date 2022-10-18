@@ -233,7 +233,7 @@ plt.legend(fontsize=16, loc='upper right')
 #plt.xlim(1, 3)
 plt.savefig(plotdir+'l_mix_w_MONC_scaled.png', pad_inches=0)
 
-print('plotted l th')
+print('plotted l mix')
 
 #########################################################################################################################
 
@@ -243,9 +243,9 @@ print('plotted l th')
 
 C_scalar = np.sqrt((0.23*0.23)/0.7)
 
-monc_l_scalar_20 = dyn.l_mix_MONC(0.23, 20, z, k=0.4)
-monc_l_scalar_40 = dyn.l_mix_MONC(0.23, 40, z, k=0.4)
-monc_l_scalar_80 = dyn.l_mix_MONC(0.23, 80, z, k=0.4)
+monc_l_scalar_20 = dyn.l_mix_MONC(C_scalar, 20, z, k=0.4)
+monc_l_scalar_40 = dyn.l_mix_MONC(C_scalar, 40, z, k=0.4)
+monc_l_scalar_80 = dyn.l_mix_MONC(C_scalar, 80, z, k=0.4)
 
 # plt.figure(figsize=(6,7))
 # plt.plot(Cth_beta*(20), z, '.', markersize = 10, label = '$\\Delta = 20$m')
