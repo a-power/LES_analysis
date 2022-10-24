@@ -191,9 +191,20 @@ def C_s_sq(L_ij, M_ij):
             C_s_num += 2*(L_ij[it, ...] * M_ij[it, ...])
             C_s_den += 2*M_ij[it, ...]**2
        
-    C_s_sq = 0.5 * C_s_num / C_s_den
-                        
-    
+    if len(M_ij.shape) == 5:
+        print("number of times = ", (C_s_num.shape)[0])
+
+        C_s_num_av = np.mean(C_s_num, 0)
+        C_s_num = 0
+
+        C_s_den_av = np.mean(C_s_den, 0)
+        C_s_den = 0
+
+        C_s_sq = 0.5 * C_s_num_av / C_s_den_av
+
+    else:
+        C_s_sq = 0.5 * C_s_num / C_s_den
+
     return C_s_sq
 
 
@@ -206,8 +217,19 @@ def C_scalar_sq(Hj, Rj):
         C_th_num += Hj[it, ...] * Rj[it, ...]
         C_th_den += Rj[it, ...] * Rj[it, ...]
 
+    if len(Hj.shape) == 5:
+        print("number of times = ", (C_th_num.shape)[0])
 
-    C_th_sq = 0.5 * C_th_num / C_th_den
+        C_th_num_av = np.mean(C_th_num, 0)
+        C_th_num = 0
+
+        C_th_den_av = np.mean(C_th_den, 0)
+        C_th_den = 0
+
+        C_th_sq = 0.5 * C_th_num_av / C_th_den_av
+
+    else:
+        C_th_sq = 0.5 * C_th_num / C_th_den
 
     return C_th_sq
 
@@ -259,6 +281,12 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         LM_flat = C_s_num.reshape(horiz_num,z_num)
         total_num = horiz_num
 
+    if return_all == 2:
+        if len(L_ij.shape) == 5:
+            LM_field_av = np.mean(C_s_num, 0)
+        else:
+            LM_field_av = C_s_num
+
     C_s_num = None
 
     if len(L_ij.shape) == 5:
@@ -267,6 +295,12 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
     else:
         MM_flat = C_s_den.reshape(horiz_num,z_num)
         total_num = horiz_num
+
+    if return_all == 2:
+        if len(L_ij.shape) == 5:
+            MM_field_av = np.mean(C_s_den, 0)
+        else:
+            MM_field_av = C_s_den
 
     C_s_den = None
 
@@ -287,7 +321,7 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         return Cs_av_sq, Cs_av, LM_av, MM_av
 
     if return_all == 2:
-        return Cs_av_sq, Cs_av, LM_av, MM_av, C_s_num, C_s_den
+        return Cs_av_sq, Cs_av, LM_av, MM_av, LM_field_av, MM_field_av
     else:
         return Cs_av_sq
 
@@ -322,8 +356,13 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         HR_flat = C_th_num.reshape(horiz_num, z_num)
         total_num = horiz_num
 
-    if return_all !=2:
-        C_th_num = None
+    if return_all == 2:
+        if len(H_ij.shape) == 5:
+            HR_field_av = np.mean(C_th_num, 0)
+        else:
+            HR_field_av = C_th_num
+
+    C_th_num = None
 
     if len(H_ij.shape) == 5:
         RR_flat = C_th_den.reshape(total_num, z_num)
@@ -332,8 +371,13 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         RR_flat = C_th_den.reshape(horiz_num, z_num)
         total_num = horiz_num
 
-    if return_all != 2:
-        C_th_den = None
+    if return_all == 2:
+        if len(H_ij.shape) == 5:
+            RR_field_av = np.mean(C_th_den, 0)
+        else:
+            RR_field_av = C_th_den
+
+    C_th_den = None
 
 
     HR_av = np.zeros(z_num)
@@ -351,7 +395,7 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         return C_th_av_sq, C_th_av, HR_av, RR_av
 
     if return_all == 2:
-        return C_th_av_sq, C_th_av, HR_av, RR_av, C_th_num, C_th_den
+        return C_th_av_sq, C_th_av, HR_av, RR_av, HR_field_av, RR_field_av
     else:
         return C_th_av_sq
 
