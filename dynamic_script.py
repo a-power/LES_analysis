@@ -12,14 +12,17 @@ import dask
 import subfilter
 
 
-def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, start_point=0, ref_file = None):
+def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, start_point=0, filtered_data=0, ref_file = None):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
 
+    if type(filtered_data) == str:
+        file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}_{filtered_data}.nc'
 
+    else:
+        file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
 
-    file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
     ds_in = xr.open_dataset(file_in)
     time_data = ds_in['time_series_600_600']
     times = time_data.data
