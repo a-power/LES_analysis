@@ -3,12 +3,12 @@ import numpy as np
 import os
 
 
-set_time = ['48600'] # ,'12600', '16200', '18000'
+set_time = ['21600'] # ,'12600', '16200', '18000'
 in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
 model_res_list = ['0020_g0800']
 
 outdir_og = '/work/scratch-pw/apower/'
-outdir = outdir_og + '20m_gauss_dyn_13hrs' +'/'
+outdir = outdir_og + '20m_gauss_dyn_6hrs' +'/'
 plotdir = outdir_og+'plots/dyn/'
 
 os.makedirs(outdir, exist_ok = True)
