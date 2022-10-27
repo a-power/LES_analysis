@@ -12,7 +12,7 @@ import dask
 import subfilter
 
 
-def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_file = None):
+def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, start_point=0, ref_file = None):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
@@ -71,19 +71,19 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, ref_
     for i, filt_set in enumerate(filt_scale):
         print(filt_set)
         if filter_name == 'gaussian':
-            filter_id = 'filter_ga{:02d}'.format(i)
+            filter_id = 'filter_ga{:02d}'.format(i+start_point)
             twod_filter = filt.Filter(filter_id,
                                       filter_name, npoints=N,
                                       sigma=filt_set, width=width,
                                       delta_x=dx_in, cutoff=cutoff)
         elif filter_name == 'wave_cutoff':
-            filter_id = 'filter_wc{:02d}'.format(i)
+            filter_id = 'filter_wc{:02d}'.format(i+start_point)
             twod_filter = filt.Filter(filter_id, filter_name,
                                       wavenumber=filt_set,
                                       width=width, npoints=N,
                                       delta_x=dx_in)
         elif filter_name == 'running_mean':
-            filter_id = 'filter_rm{:02d}'.format(i)
+            filter_id = 'filter_rm{:02d}'.format(i+start_point)
             twod_filter = filt.Filter(filter_id,
                                       filter_name,
                                       width=filt_set,

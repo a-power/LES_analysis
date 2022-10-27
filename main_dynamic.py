@@ -15,7 +15,10 @@ os.makedirs(outdir, exist_ok = True)
 os.makedirs(plotdir, exist_ok = True)
 
 filter_name = 'gaussian'  # "wave_cutoff"
-sigma_list = np.array([20, 40, 80, 160])
+sigma_list = np.array([160, 320, 640]) #([20, 40, 80])
+#Note short serial queue on JASMIN times out after 3 filter scales
+#Sigma = hat(Delta)/2
+
 opgrid = 'w'
 
 options = {
@@ -30,4 +33,4 @@ options = {
 for j in range(len(set_time)):
         for i, model_res in enumerate(model_res_list):
                 dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, options, \
-                            opgrid, ref_file = None)
+                            opgrid, start_point=3, ref_file = None)
