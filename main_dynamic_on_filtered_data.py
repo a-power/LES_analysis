@@ -10,7 +10,7 @@ model_res_list = ['0020_g0800']
 use_filtered_data = 'ga00' #set to string if you want to filter a previously filtered dataset,
 # and give 'ga00' or whatever, if want to filter LES data set to 0 or something
 
-
+#dont forget to change dx and dy in options
 start_point_filtering = 0 #for labelling output files: ie skiping ga00.nc and going straight to ga03.nc if set =3
 
 outdir_og = '/work/scratch-pw/apower/'
