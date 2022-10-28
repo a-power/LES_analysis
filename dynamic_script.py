@@ -18,7 +18,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
      dx: the grid spacing and number of grid points in the format:  """
 
     if type(filtered_data) == str:
-        file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}_{filtered_data}.nc'
+        file_in = f'{indir}{res_in}_all_{time_in}_gaussian_filter_{filtered_data}.nc'
 
     else:
         file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'

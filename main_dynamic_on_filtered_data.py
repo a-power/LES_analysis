@@ -4,7 +4,7 @@ import os
 
 
 set_time = ['14400'] # , '21600', '48600'
-in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
+in_dir = '/work/scratch-pw/apower/20m_gauss_dyn/BOMEX_m'
 model_res_list = ['0020_g0800']
 
 use_filtered_data = 'ga00' #set to string if you want to filter a previously filtered dataset,
