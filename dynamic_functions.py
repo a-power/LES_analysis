@@ -397,7 +397,7 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
     if return_all == 2:
         return C_th_av_sq, C_th_av, HR_av, RR_av, HR_field_av, RR_field_av
     else:
-        return C_th_av_sq
+        return C_th_av_sq, C_th_av
 
 
 
