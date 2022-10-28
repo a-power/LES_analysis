@@ -7,7 +7,6 @@ set_time = ['21600'] # ,'12600', '16200', '18000'
 in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
 model_res_list = ['0020_g0800']
 
-start=0
 
 outdir_og = '/work/scratch-pw/apower/'
 outdir = outdir_og + '20m_gauss_dyn_6hrs' +'/'
@@ -18,6 +17,7 @@ os.makedirs(plotdir, exist_ok = True)
 
 filter_name = 'gaussian'  # "wave_cutoff"
 sigma_list = np.array([20, 40, 80]) #([160, 320, 640])
+start=0
 #Note short serial queue on JASMIN times out after 3 filter scales
 #Sigma = hat(Delta)/2
 
