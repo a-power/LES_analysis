@@ -7,6 +7,8 @@ set_time = ['21600'] # ,'12600', '16200', '18000'
 in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
 model_res_list = ['0020_g0800']
 
+start=0
+
 outdir_og = '/work/scratch-pw/apower/'
 outdir = outdir_og + '20m_gauss_dyn_6hrs' +'/'
 plotdir = outdir_og+'plots/dyn/'
@@ -33,4 +35,4 @@ options = {
 for j in range(len(set_time)):
         for i, model_res in enumerate(model_res_list):
                 dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, options, \
-                            opgrid, start_point=3, ref_file = None)
+                            opgrid, start_point=start, ref_file = None)
