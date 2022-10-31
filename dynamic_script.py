@@ -403,7 +403,7 @@ def Cs(indir, dx, dx_hat, ingrid, save_all=2, reaxes=False):
         Lij = None
         Mij = None
 
-        return Cs_prof
+        return Cs_sq_prof, Cs_prof
 
 
 

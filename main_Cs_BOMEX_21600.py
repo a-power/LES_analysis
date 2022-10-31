@@ -6,90 +6,102 @@ import xarray as xr
 av_type = 'all'
 mygrid = 'w'
 
-path20f = '/work/scratch-pw/apower/20m_gauss_dyn_6hrs/'
-file20 = "BOMEX_m0020_g0800_all_21600_gaussian_filter_"
+hrs = ['6', '13']
+sec = ['21600', '48600']
 
-# outdir_og = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/'
-# outdir = outdir_og + '20m_update_subfilt' + '/'
-# plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/plots/dyn/update_subfilt/'
-# os.makedirs(outdir, exist_ok = True)
-# os.makedirs(plotdir, exist_ok = True)
+for i in len(hrs):
 
+    path20f = f'/work/scratch-pw/apower/20m_gauss_dyn_{hrs[i]}hrs/'
+    file20 = f'BOMEX_m0020_g0800_all_{sec[i]}_gaussian_filter_'
 
-data_2D = path20f+file20+str('ga00.nc')
-data_4D = path20f+file20+str('ga01.nc')
-data_8D = path20f+file20+str('ga02.nc')
+    data_2D = path20f+file20+str('ga00.nc')
+    data_4D = path20f+file20+str('ga01.nc')
+    data_8D = path20f+file20+str('ga02.nc')
 
-dataset_name2 = path20f+file20+'Cs_2D.nc'
-dataset_name4 = path20f+file20+'Cs_4D.nc'
-dataset_name8 = path20f+file20+'Cs_8D.nc'
-
-
-Cs_prof_sq_2d, Cs_prof_2d, LM_prof_2d, MM_prof_2d = \
-    dy_s.Cs(data_2D, dx=20, dx_hat=40, ingrid = mygrid, save_all=1)
+    dataset_name2 = [path20f+file20+'Cs_2D.nc', path20f + file20 + 'C_th_2D.nc', path20f + file20 + 'C_qt_2D.nc']
+    dataset_name4 = [path20f+file20+'Cs_4D.nc', path20f + file20 + 'C_th_4D.nc', path20f + file20 + 'C_qt_4D.nc']
+    dataset_name8 = [path20f+file20+'Cs_8D.nc', path20f + file20 + 'C_th_8D.nc', path20f + file20 + 'C_qt_8D.nc']
 
 
 
-ds_2 = xr.Dataset()
-ds_2.to_netcdf(dataset_name2, mode='w')
-ds_in2 = {'file':dataset_name2, 'ds': ds_2}
+    scalar = ['momentum', 'th', 'q_total']
 
-save_field(ds_in2, Cs_prof_sq_2d)
-save_field(ds_in2, Cs_prof_2d)
-save_field(ds_in2, LM_prof_2d)
-save_field(ds_in2, MM_prof_2d)
-
-Cs_prof_sq_2d = None        #free memory
-Cs_prof_2d = None           #free memory
-LM_prof_2d = None           #free memory
-MM_prof_2d = None           #free memory
-
-ds_2.close()
-
+    DX_2D = {
+        'indir': data_2D,
+        'dx_hat': 40
+    }
+    DX_4D = {
+        'indir': data_4D,
+        'dx_hat': 80
+    }
+    DX_8D = {
+        'indir': data_8D,
+        'dx_hat': 160
+    }
 
 
 
-Cs_prof_sq_4d, Cs_prof_4d, LM_prof_4d, MM_prof_4d = \
-    dy_s.Cs(data_4D, dx=20, dx_hat=80, ingrid = mygrid, save_all=1)
+    for j, scalar_in in enumerate(scalar):
 
-ds_4 = xr.Dataset()
-ds_4.to_netcdf(dataset_name4, mode='w')
-ds_in4 = {'file':dataset_name4, 'ds': ds_4}
+        if scalar_in == 'momentum':
+            C_sq_prof_2D, C_prof_2D = dy_s.Cs(dx=20, ingrid = mygrid, save_all=0, **DX_2D)
+        else:
 
-save_field(ds_in4, Cs_prof_sq_4d)
-save_field(ds_in4, Cs_prof_4d)
-save_field(ds_in4, LM_prof_4d)
-save_field(ds_in4, MM_prof_4d)
+            C_sq_prof_2D, C_prof_2D = dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all=1, **DX_2D)
 
-Cs_prof_sq_4d = None        #free memory
-Cs_prof_4d = None           #free memory
-LM_prof_4d = None           #free memory
-MM_prof_4d = None           #free memory
+        ds_2 = xr.Dataset()
+        ds_2.to_netcdf(dataset_name2[j], mode='w')
+        ds_in2 = {'file': dataset_name2[j], 'ds': ds_2}
 
-ds_4.close()
+        save_field(ds_in2, C_sq_prof_2D)
+        save_field(ds_in2, C_prof_2D)
+
+        ds_2.close()
+
+        C_q_sq_prof_2D = None
+        C_q_prof_2D = None
+
+####################################################################################################################
+
+        if scalar_in == 'momentum':
+            C_sq_prof_4D, C_prof_4D = dy_s.Cs(dx=20, ingrid = mygrid, save_all=0, **DX_4D)
+        else:
+
+            C_sq_prof_4D, C_prof_4D = dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all=1, **DX_4D)
+
+        ds_4 = xr.Dataset()
+        ds_4.to_netcdf(dataset_name4[j], mode='w')
+        ds_in4 = {'file': dataset_name4[j], 'ds': ds_4}
+
+        save_field(ds_in4, C_sq_prof_4D)
+        save_field(ds_in4, C_prof_4D)
+
+        ds_4.close()
+
+        C_q_sq_prof_4D = None
+        C_q_prof_4D = None
+
+####################################################################################################################
+
+        if scalar_in == 'momentum':
+            C_sq_prof_8D, C_prof_8D = dy_s.Cs(dx=20, ingrid=mygrid, save_all=0, **DX_8D)
+        else:
+
+            C_sq_prof_8D, C_prof_8D = dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all=1, **DX_8D)
+
+        ds_8 = xr.Dataset()
+        ds_8.to_netcdf(dataset_name8[j], mode='w')
+        ds_in8 = {'file': dataset_name8[j], 'ds': ds_8}
+
+        save_field(ds_in8, C_sq_prof_8D)
+        save_field(ds_in8, C_prof_8D)
+
+        ds_8.close()
+
+        C_q_sq_prof_8D = None
+        C_q_prof_8D = None
 
 
 
-
-
-Cs_prof_sq_8d, Cs_prof_8d, LM_prof_8d, MM_prof_8d = \
-    dy_s.Cs(data_8D, dx=20, dx_hat=160, ingrid = mygrid, save_all=1)
-
-
-ds_8 = xr.Dataset()
-ds_8.to_netcdf(dataset_name8, mode='w')
-ds_in8 = {'file':dataset_name8, 'ds': ds_8}
-
-save_field(ds_in8, Cs_prof_sq_8d)
-save_field(ds_in8, Cs_prof_8d)
-save_field(ds_in8, LM_prof_8d)
-save_field(ds_in8, MM_prof_8d)
-
-Cs_prof_sq_8d = None        #free memory
-Cs_prof_8d = None           #free memory
-LM_prof_8d = None           #free memory
-MM_prof_8d = None           #free memory
-
-ds_8.close()
 
 
