@@ -62,7 +62,7 @@ for i, scalar_in in enumerate(scalar):
 ########################################################################
 
     C_sq_prof_2D, C_prof_2D, HR_prof_2D, RR_prof_2D, C_sq_field_2D, HR_field_2D, RR_field_2D, Hj_2D, Rj_2D2 = \
-        dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_2D)
+        dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = 3, **DX_2D)
 
     ds_2 = xr.Dataset()
     ds_2.to_netcdf(dataset_name2[i], mode='w')
@@ -93,7 +93,7 @@ for i, scalar_in in enumerate(scalar):
     ##########################################
 
     C_q_sq_prof_4D, C_q_prof_4D, HR_prof_4D, RR_prof_4D, C_q_sq_field_4D, HR_field_4D, RR_field_4D, Hj_4D, Rj_4D = \
-        dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_4D)
+        dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = 3, **DX_4D)
 
 
     ds_4 = xr.Dataset()
@@ -127,7 +127,7 @@ for i, scalar_in in enumerate(scalar):
 
 
     C_q_sq_prof_8D, C_q_prof_8D, HR_prof_8D, RR_prof_8D, C_q_sq_field_8D, HR_field_8D, RR_field_8D, Hj_8D, Rj_8D = \
-        dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_8D)
+        dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = 3, **DX_8D)
 
 
 
@@ -160,7 +160,7 @@ for i, scalar_in in enumerate(scalar):
     ##########################################
 
     C_q_sq_prof_16D, C_q_prof_16D, HR_prof_16D, RR_prof_16D, C_q_sq_field_16D, C_q_field_16D, HR_field_16D, RR_field_16D, Hj_16D, Rj_16D = \
-        dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_16D)
+        dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = 3, **DX_16D)
 
     ds_16 = xr.Dataset()
     ds_16.to_netcdf(dataset_name16[i], mode='w')
@@ -191,7 +191,7 @@ for i, scalar_in in enumerate(scalar):
 ##########################################
 
 C_q_sq_prof_32D, C_q_prof_32D, HR_prof_32D, RR_prof_32D, C_q_sq_field_32D, C_q_field_32D, HR_field_32D, RR_field_32D, Hj_32D, Rj_32D = \
-    dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_32D)
+    dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = 3, **DX_32D)
 
 ds_32 = xr.Dataset()
 ds_32.to_netcdf(dataset_name32[i], mode='w')
@@ -222,7 +222,7 @@ Rj_32D = None
 ##########################################
 
 C_q_sq_prof_64D, C_q_prof_64D, HR_prof_64D, RR_prof_64D, C_q_sq_field_64D, C_q_field_64D, HR_field_64D, RR_field_64D, Hj_64D, Rj_64D  = \
-    dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_64D)
+    dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = 3, **DX_64D)
 
 ds_64 = xr.Dataset()
 ds_64.to_netcdf(dataset_name64[i], mode='w')
