@@ -398,7 +398,7 @@ def Cs(indir, dx, dx_hat, ingrid, save_all=2, reaxes=False):
     else:
         Cs_sq_prof, Cs_prof, LM_prof, MM_prof = dyn.Cs_profiles(Lij, Mij, return_all=1)
 
-        Cs_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time': times, 'z': z_s},
+        Cs_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
                                   dims=['time', "z"], name='Cs_sq_prof')
         Lij = None
         Mij = None
