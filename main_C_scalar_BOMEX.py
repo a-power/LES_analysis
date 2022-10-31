@@ -159,7 +159,7 @@ for i, scalar_in in enumerate(scalar):
 
     ##########################################
 
-    C_q_sq_prof_16D, C_q_prof_16D, HR_prof_16D, RR_prof_16D, C_q_sq_field_16D, C_q_field_16D, HR_field_16D, RR_field_16D, Hj_16D, Rj_16D = \
+    C_q_sq_prof_16D, C_q_prof_16D, HR_prof_16D, RR_prof_16D, C_q_sq_field_16D, HR_field_16D, RR_field_16D, Hj_16D, Rj_16D = \
         dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = 3, **DX_16D)
 
     ds_16 = xr.Dataset()
@@ -190,7 +190,7 @@ for i, scalar_in in enumerate(scalar):
 
 ##########################################
 
-C_q_sq_prof_32D, C_q_prof_32D, HR_prof_32D, RR_prof_32D, C_q_sq_field_32D, C_q_field_32D, HR_field_32D, RR_field_32D, Hj_32D, Rj_32D = \
+C_q_sq_prof_32D, C_q_prof_32D, HR_prof_32D, RR_prof_32D, C_q_sq_field_32D, HR_field_32D, RR_field_32D, Hj_32D, Rj_32D = \
     dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = 3, **DX_32D)
 
 ds_32 = xr.Dataset()
@@ -221,7 +221,7 @@ Rj_32D = None
 
 ##########################################
 
-C_q_sq_prof_64D, C_q_prof_64D, HR_prof_64D, RR_prof_64D, C_q_sq_field_64D, C_q_field_64D, HR_field_64D, RR_field_64D, Hj_64D, Rj_64D  = \
+C_q_sq_prof_64D, C_q_prof_64D, HR_prof_64D, RR_prof_64D, C_q_sq_field_64D, HR_field_64D, RR_field_64D, Hj_64D, Rj_64D  = \
     dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = 3, **DX_64D)
 
 ds_64 = xr.Dataset()
