@@ -485,28 +485,27 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
         Rj_av = np.mean(Rj, 1)
         Rj = None
 
-        C_scalar_sq_field = dyn.C_s_sq(Rj_av, Hj_av)
-
         Rj = xr.DataArray(Rj_av[np.newaxis, ...],
-                           coords={'time': [nt], 'i_j': ij_s, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                           coords={'time': [nt], 'i_j': j_s, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                            dims=["time", "i_j", "x_p", "y_p", "z"], name='Lij')
 
         Hj = xr.DataArray(Hj_av[np.newaxis, ...],
-                           coords={'time': [nt], 'i_j': ij_s, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                           coords={'time': [nt], 'i_j': j_s, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                            dims=["time", "i_j", "x_p", "y_p", "z"], name='Mij')
     else:
         Rj = xr.DataArray(Rj[np.newaxis, ...],
-                           coords={'time': [nt], 'i_j': ij_s, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                           coords={'time': [nt], 'i_j': j_s, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                            dims=["time", "i_j", "x_p", "y_p", "z"], name='Lij')
 
         Hj = xr.DataArray(Hj[np.newaxis, ...],
-                           coords={'time': [nt], 'i_j': ij_s, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                           coords={'time': [nt], 'i_j': j_s, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                            dims=["time", "i_j", "x_p", "y_p", "z"], name='Mij')
 
 
 
 
     if save_all == 1:
+
         C_scalar_sq_prof, C_scalar_prof = dyn.C_scalar_profiles(Hj, Rj, return_all=0)
 
         C_scalar_sq_prof = xr.DataArray(C_scalar_sq_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
@@ -520,7 +519,8 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
 
 
     if save_all == 2:
-        C_scalar_sq_field = dyn.C_s_sq(Hj, Rj)
+
+        C_scalar_sq_field = dyn.C_scalar_sq(Rj_av, Hj_av)
 
         C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof = dyn.C_scalar_profiles(Hj, Rj, return_all=1)
 
@@ -546,7 +546,7 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
 
     if save_all == 3:
 
-        C_scalar_sq_field = dyn.C_s_sq(Hj, Rj)
+        C_scalar_sq_field = dyn.C_scalar_sq(Rj_av, Hj_av)
 
         C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, HR_field, RR_field = dyn.C_scalar_profiles(Hj, Rj, return_all=2)
 
