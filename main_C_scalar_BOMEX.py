@@ -61,7 +61,7 @@ for i, scalar_in in enumerate(scalar):
 
 ########################################################################
 
-    C_sq_prof_2D, C_prof_2D, HR_prof_2D, RR_prof_2D, C_sq_field_2D, HR_field_2D, RR_field_2D, Hj_2D, Rj_2D2 = \
+    C_sq_prof_2D, C_prof_2D, HR_prof_2D, RR_prof_2D, C_sq_field_2D, HR_field_2D, RR_field_2D, Hj_2D, Rj_2D = \
         dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = 3, **DX_2D)
 
     ds_2 = xr.Dataset()
