@@ -9,7 +9,7 @@ mygrid = 'w'
 hrs = ['6', '13']
 sec = ['21600', '48600']
 
-for i in len(hrs):
+for i in range(len(hrs)):
 
     path20f = f'/work/scratch-pw/apower/20m_gauss_dyn_{hrs[i]}hrs/'
     file20 = f'BOMEX_m0020_g0800_all_{sec[i]}_gaussian_filter_'
