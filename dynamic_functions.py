@@ -200,7 +200,10 @@ def C_s_sq(L_ij, M_ij):
         C_s_den_av = np.mean(C_s_den, 0)
         C_s_den = 0
 
-        C_s_sq = 0.5 * C_s_num_av / C_s_den_av
+        C_s_den_av_copy = C_s_den_av.copy()
+        C_s_den_av_copy[C_s_den_av == 0.00000000000] = 0.000000001
+
+        C_s_sq = 0.5 * C_s_num_av / C_s_den_av_copy
 
     else:
         C_s_sq = 0.5 * C_s_num / C_s_den
@@ -226,7 +229,10 @@ def C_scalar_sq(Hj, Rj):
         C_th_den_av = np.mean(C_th_den, 0)
         C_th_den = 0
 
-        C_th_sq = 0.5 * C_th_num_av / C_th_den_av
+        C_th_den_av_copy = C_th_den_av.copy()
+        C_th_den_av_copy[C_th_den_av == 0.00000000000] = 0.000000001
+
+        C_th_sq = 0.5 * C_th_num_av / C_th_den_av_copy
 
     else:
         C_th_sq = 0.5 * C_th_num / C_th_den
@@ -313,7 +319,10 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         MM_av[k] = np.sum(MM_flat[:,k])/total_num
 
 
-    Cs_av_sq = (0.5*(LM_av / MM_av))
+    MM_av_copy = MM_av.copy()
+    MM_av_copy[MM_av==0.00000000000] = 0.000000001
+
+    Cs_av_sq = (0.5*(LM_av / MM_av_copy))
 
     Cs_av = get_Cs(Cs_av_sq)
 
@@ -387,7 +396,10 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         HR_av[k] = np.sum(HR_flat[:, k]) / total_num
         RR_av[k] = np.sum(RR_flat[:, k]) / total_num
 
-    C_th_av_sq = (0.5 * (HR_av / RR_av))
+    RR_av_copy = RR_av.copy()
+    RR_av_copy[RR_av==0.00000000000] = 0.000000001
+
+    C_th_av_sq = (0.5 * (HR_av / RR_av_copy))
 
     C_th_av = get_Cs(C_th_av_sq)
 
