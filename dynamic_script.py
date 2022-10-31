@@ -475,8 +475,9 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
     HAT_abs_S_ds_dx = None
 
 
-
     if len(Hj.shape) == 5:
+
+        tag=True
 
         print("number of times = ", (Hj.shape)[1])
 
@@ -493,6 +494,9 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
                            coords={'time': [nt], 'i_j': j_s, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                            dims=["time", "i_j", "x_p", "y_p", "z"], name='Mij')
     else:
+
+        tag=False
+
         Rj = xr.DataArray(Rj[np.newaxis, ...],
                            coords={'time': [nt], 'i_j': j_s, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                            dims=["time", "i_j", "x_p", "y_p", "z"], name='Lij')
@@ -502,11 +506,17 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
                            dims=["time", "i_j", "x_p", "y_p", "z"], name='Mij')
 
 
+    if tag == True:
+        C_scalar_sq_prof, C_scalar_prof = dyn.C_scalar_profiles(Rj_av, Hj_av, return_all=0)
+    elif tag == False:
+        C_scalar_sq_prof, C_scalar_prof = dyn.C_scalar_profiles(Rj, Hj, return_all=0)
+    else:
+        print('broken')
+
+
 
 
     if save_all == 1:
-
-        C_scalar_sq_prof, C_scalar_prof = dyn.C_scalar_profiles(Hj, Rj, return_all=0)
 
         C_scalar_sq_prof = xr.DataArray(C_scalar_sq_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
                                         dims=['time', "z"], name=f'C_{scalar}_sq_prof')
@@ -519,8 +529,6 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
 
 
     if save_all == 2:
-
-        C_scalar_sq_field = dyn.C_scalar_sq(Rj_av, Hj_av)
 
         C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof = dyn.C_scalar_profiles(Hj, Rj, return_all=1)
 
@@ -546,7 +554,12 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
 
     if save_all == 3:
 
-        C_scalar_sq_field = dyn.C_scalar_sq(Rj_av, Hj_av)
+        if tag==True:
+            C_scalar_sq_field = dyn.C_scalar_sq(Rj_av, Hj_av)
+        elif tag == False:
+            C_scalar_sq_field = dyn.C_scalar_sq(Rj, Hj)
+        else:
+            print('broken')
 
         C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, HR_field, RR_field = dyn.C_scalar_profiles(Hj, Rj, return_all=2)
 
