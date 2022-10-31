@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --job-name=c_plot
+#SBATCH -p short-serial-4hr
+#SBATCH --account=short4hr
+#SBATCH -o ../jobs/out_%x.out
+#SBATCH -e ../jobs/err_%x.err
+#SBATCH --time=04:00:00
+#SBATCH --mem=64000
+ 
+# executable
+source ~/myenv/bin/activate
+python ../plot_C.py
+
