@@ -70,7 +70,7 @@ Cq_64 = data_64D_qtot['C_q_total_prof'].data[0, ...]
 
 
 Cs_sq_2 = data_2D_s['Cs_sq_prof'].data[0, ...]
-Cs_sq_4 = data_4D_s['Cssq__prof'].data[0, ...]
+Cs_sq_4 = data_4D_s['Cs_sq_prof'].data[0, ...]
 Cs_sq_8 = data_8D_s['Cs_sq_prof'].data[0, ...]
 Cs_sq_16 = data_16D_s['Cs_sq_prof'].data[0, ...]
 Cs_sq_32 = data_32D_s['Cs_sq_prof'].data[0, ...]
