@@ -397,7 +397,7 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         RR_av[k] = np.sum(RR_flat[:, k]) / total_num
 
     RR_av_copy = RR_av.copy()
-    RR_av_copy[RR_av==0.00000000000] = 0.000000001
+    RR_av_copy[RR_av==0.000000000000000] = 0.0000000000001
 
     C_th_av_sq = (0.5 * (HR_av / RR_av_copy))
 
