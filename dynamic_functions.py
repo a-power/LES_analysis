@@ -8,6 +8,10 @@ from subfilter.io.datain import get_data
 
 import subfilter
 
+np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
+np.seterr(invalid='ignore')
+
+
 def k_cut_find(delta):
     return np.pi/(delta)
 
@@ -272,11 +276,18 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         else:        
             C_s_num += 2*(L_ij[it, ...] * M_ij[it, ...])
             C_s_den += 2*(M_ij[it, ...] * M_ij[it, ...])
-            
+
+    if return_all == 2:
+        if len(L_ij.shape) == 5:
+            LM_field_av = np.mean(C_s_num, 0)
+            MM_field_av = np.mean(C_s_den, 0)
+        else:
+            LM_field_av = C_s_num.copy()
+            MM_field_av = C_s_den.copy()
             
     z_num = (C_s_num.shape)[-1]
     horiz_num_temp = (C_s_num.shape)[-2]
-    horiz_num = horiz_num_temp* horiz_num_temp
+    horiz_num = horiz_num_temp * horiz_num_temp
 
     if len(L_ij.shape) == 5:
         num_times = (C_s_num.shape)[0]
@@ -287,12 +298,6 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         LM_flat = C_s_num.reshape(horiz_num,z_num)
         total_num = horiz_num
 
-    if return_all == 2:
-        if len(L_ij.shape) == 5:
-            LM_field_av = np.mean(C_s_num, 0)
-        else:
-            LM_field_av = C_s_num
-
     C_s_num = None
 
     if len(L_ij.shape) == 5:
@@ -301,12 +306,6 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
     else:
         MM_flat = C_s_den.reshape(horiz_num,z_num)
         total_num = horiz_num
-
-    if return_all == 2:
-        if len(L_ij.shape) == 5:
-            MM_field_av = np.mean(C_s_den, 0)
-        else:
-            MM_field_av = C_s_den
 
     C_s_den = None
 
@@ -319,10 +318,7 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         MM_av[k] = np.sum(MM_flat[:,k])/total_num
 
 
-    MM_av_copy = MM_av.copy()
-    MM_av_copy[MM_av==0.00000000000] = 0.000000001
-
-    Cs_av_sq = (0.5*(LM_av / MM_av_copy))
+    Cs_av_sq = (0.5*(LM_av / MM_av))
 
     Cs_av = get_Cs(Cs_av_sq)
 
@@ -332,7 +328,7 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
     if return_all == 2:
         return Cs_av_sq, Cs_av, LM_av, MM_av, LM_field_av, MM_field_av
     else:
-        return Cs_av_sq
+        return Cs_av_sq, Cs_av
 
 
 def C_scalar_profiles(H_ij, R_ij, return_all=2):
@@ -351,6 +347,14 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         C_th_num += H_ij[it, ...] * R_ij[it, ...]
         C_th_den += R_ij[it, ...] * R_ij[it, ...]
 
+    if return_all == 2:
+        if len(H_ij.shape) == 5:
+            HR_field_av = np.mean(C_th_num, 0)
+            RR_field_av = np.mean(C_th_den, 0)
+        else:
+            HR_field_av = C_th_num.copy()
+            RR_field_av = C_th_den.copy()
+
 
     z_num = (C_th_num.shape)[-1]
     horiz_num_temp = (C_th_num.shape)[-2]
@@ -365,12 +369,6 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         HR_flat = C_th_num.reshape(horiz_num, z_num)
         total_num = horiz_num
 
-    if return_all == 2:
-        if len(H_ij.shape) == 5:
-            HR_field_av = np.mean(C_th_num, 0)
-        else:
-            HR_field_av = C_th_num
-
     C_th_num = None
 
     if len(H_ij.shape) == 5:
@@ -380,14 +378,7 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         RR_flat = C_th_den.reshape(horiz_num, z_num)
         total_num = horiz_num
 
-    if return_all == 2:
-        if len(H_ij.shape) == 5:
-            RR_field_av = np.mean(C_th_den, 0)
-        else:
-            RR_field_av = C_th_den
-
     C_th_den = None
-
 
     HR_av = np.zeros(z_num)
     RR_av = np.zeros(z_num)
@@ -396,10 +387,7 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         HR_av[k] = np.sum(HR_flat[:, k]) / total_num
         RR_av[k] = np.sum(RR_flat[:, k]) / total_num
 
-    RR_av_copy = RR_av.copy()
-    RR_av_copy[RR_av==0.000000000000000] = 0.0000000000001
-
-    C_th_av_sq = (0.5 * (HR_av / RR_av_copy))
+    C_th_av_sq = (0.5 * (HR_av / RR_av))
 
     C_th_av = get_Cs(C_th_av_sq)
 
