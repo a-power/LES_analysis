@@ -13,141 +13,127 @@ np.seterr(invalid='ignore')
 
 
 def k_cut_find(delta):
-    return np.pi/(delta)
+    return np.pi / (delta)
+
 
 def sigma_find(delta):
-    return delta/2
+    return delta / 2
 
 
 def l_mix_MONC(Cs, Delta, z_in, k=0.4):
-
-    l_mix = np.sqrt( 1 / ( (1/(Cs*Cs * Delta*Delta) ) + (1/(k*k * z_in*z_in) ) )  )
+    l_mix = np.sqrt(1 / ((1 / (Cs * Cs * Delta * Delta)) + (1 / (k * k * z_in * z_in))))
 
     return l_mix
 
 
-
 def my_L_ij_sym(u, v, w, uu, uv, uw, vv, vw, ww):
-    
-    L_ij = np.array([ (u*u-uu), (u*v-uv), (u*w-uw),
-                                (v*v-vv), (v*w-vw),
-                                          (w*w-ww) ] )
-    
+    L_ij = np.array([(u * u - uu), (u * v - uv), (u * w - uw),
+                     (v * v - vv), (v * w - vw),
+                     (w * w - ww)])
+
     return L_ij
 
 
 def L_ij_sym_xarray(uu, uv, uw, vv, vw, ww):
     L_ij = np.array([-(uu), -(uv), -(uw),
-                           -(vv), -(vw),
-                                 -(ww)])
+                     -(vv), -(vw),
+                     -(ww)])
 
     return L_ij
 
+
 def H_j(u_s, v_s, w_s):
-    H_j = np.array([ -u_s, -v_s, -w_s ])
+    H_j = np.array([-u_s, -v_s, -w_s])
     return H_j
 
 
 def S_ij(u, v, w, dx):
-    
     surf_BC_0s = np.zeros_like(u)
-    
-    dudx = np.diff(np.insert(u, 0, [u[-1, :, :]], axis=0), axis=0)/dx
-    dudy = np.diff(np.insert(u, 0, [u[:, -1, :]], axis=1), axis=1)/dx
-    dudz = np.diff(np.insert(u, 0, [surf_BC_0s[:, :, 0]], axis=2), axis=2)/dx
-    
-    dvdx = np.diff(np.insert(v, 0, [v[-1, :, :]], axis=0), axis=0)/dx
-    dvdy = np.diff(np.insert(v, 0, [v[:, -1, :]], axis=1), axis=1)/dx
-    dvdz = np.diff(np.insert(v, 0, [surf_BC_0s[:, :, 0]], axis=2), axis=2)/dx
-    
-    dwdx = np.diff(np.insert(w, 0, [w[-1, :, :]], axis=0), axis=0)/dx
-    dwdy = np.diff(np.insert(w, 0, [w[:, -1, :]], axis=1), axis=1)/dx
-    dwdz = np.diff(np.insert(w, 0, [surf_BC_0s[:, :, 0]], axis=2), axis=2)/dx
-    
-    
-    S_ij = 0.5*np.array([ [(2*dudx), (dudy+dvdx), (dudz+dwdx)],
-                          [(dvdx+dudy), (2*dvdy), (dvdz+dwdy)],
-                          [(dwdx+dudz), (dwdy+dvdz), (2*dwdz)] ])
-    
-    
+
+    dudx = np.diff(np.insert(u, 0, [u[-1, :, :]], axis=0), axis=0) / dx
+    dudy = np.diff(np.insert(u, 0, [u[:, -1, :]], axis=1), axis=1) / dx
+    dudz = np.diff(np.insert(u, 0, [surf_BC_0s[:, :, 0]], axis=2), axis=2) / dx
+
+    dvdx = np.diff(np.insert(v, 0, [v[-1, :, :]], axis=0), axis=0) / dx
+    dvdy = np.diff(np.insert(v, 0, [v[:, -1, :]], axis=1), axis=1) / dx
+    dvdz = np.diff(np.insert(v, 0, [surf_BC_0s[:, :, 0]], axis=2), axis=2) / dx
+
+    dwdx = np.diff(np.insert(w, 0, [w[-1, :, :]], axis=0), axis=0) / dx
+    dwdy = np.diff(np.insert(w, 0, [w[:, -1, :]], axis=1), axis=1) / dx
+    dwdz = np.diff(np.insert(w, 0, [surf_BC_0s[:, :, 0]], axis=2), axis=2) / dx
+
+    S_ij = 0.5 * np.array([[(2 * dudx), (dudy + dvdx), (dudz + dwdx)],
+                           [(dvdx + dudy), (2 * dvdy), (dvdz + dwdy)],
+                           [(dwdx + dudz), (dwdy + dvdz), (2 * dwdz)]])
+
     return S_ij
 
 
-
 def abs_S(s):
-    
-    abs_S = np.sqrt(2*( s[0,0]*s[0,0] + s[0,1]*s[0,1] + s[0,2]*s[0,2] +
-                       s[1,0]*s[1,0] + s[1,1]*s[1,1] + s[1,2]*s[1,2] +
-                       s[2,0]*s[2,0] + s[2,1]*s[2,1] + s[2,2]*s[2,2]
-                    ))
+    abs_S = np.sqrt(2 * (s[0, 0] * s[0, 0] + s[0, 1] * s[0, 1] + s[0, 2] * s[0, 2] +
+                         s[1, 0] * s[1, 0] + s[1, 1] * s[1, 1] + s[1, 2] * s[1, 2] +
+                         s[2, 0] * s[2, 0] + s[2, 1] * s[2, 1] + s[2, 2] * s[2, 2]
+                         ))
     return abs_S
 
 
-
 def abs_S_hat(S_filt_in):
-    
-    temp_S_sum = np.zeros_like(S_filt_in[0,:,:,:])
+    temp_S_sum = np.zeros_like(S_filt_in[0, :, :, :])
     S_sum = np.zeros_like(S_filt_in)
-    
+
     for i in range(6):
-        if i in [1,2,4]:
-            S_sum += 2*S_filt_in[i,:,:,:]*S_filt_in[i,:,:,:]
+        if i in [1, 2, 4]:
+            S_sum += 2 * S_filt_in[i, :, :, :] * S_filt_in[i, :, :, :]
         else:
-            S_sum += S_filt_in[i,:,:,:]*S_filt_in[i,:,:,:]
-    abs_S_hat_out = np.sqrt(2*S_sum)
-    
+            S_sum += S_filt_in[i, :, :, :] * S_filt_in[i, :, :, :]
+    abs_S_hat_out = np.sqrt(2 * S_sum)
+
     return abs_S_hat_out
 
 
 def abs_S_hat_S_ij_hat(S_filt):
-    
     abs_S_filt = abs_S_hat(S_filt)
     abs_S_hat_S_ij_hat = S_filt * abs_S_filt
-    
+
     return abs_S_hat_S_ij_hat
-
-
-
 
 
 def M_ij(dx, dx_filt, S_filt, abs_S_filt, HAT_abs_S_Sij, beta=1):
     alpha = dx_filt / dx
     power = alpha / 2
 
-    M_ij = dx_filt * dx_filt * (beta ** power) * abs_S_filt * S_filt  -  dx * dx * HAT_abs_S_Sij
+    M_ij = dx_filt * dx_filt * (beta ** power) * abs_S_filt * S_filt - dx * dx * HAT_abs_S_Sij
 
     return M_ij
 
 
 def ds_dxi(scalar, source_dataset, ref_dataset, options, ingrid):
-
-    #scalar can be either 'th' or "q_total"
+    # scalar can be either 'th' or "q_total"
 
     if scalar == 'q':
         scalar = 'q_total'
 
     s = get_data(source_dataset, ref_dataset, str(scalar), options)
 
-
     [iix, iiy, iiz] = get_string_index(s.dims, ['x', 'y', 'z'])
     sh = np.shape(s)
     max_ch = subfilter.global_config['chunk_size']
-    nch = int(sh[iix]/(2**int(np.log(sh[iix]*sh[iiy]*sh[iiz]/max_ch)/np.log(2)/2)))
+    nch = int(sh[iix] / (2 ** int(np.log(sh[iix] * sh[iiy] * sh[iiz] / max_ch) / np.log(2) / 2)))
     print(f'{scalar} nch={nch}')
 
-    s = re_chunk(s, xch=nch, ych=nch, zch = 'all')
+    s = re_chunk(s, xch=nch, ych=nch, zch='all')
 
     z = source_dataset["z"]
     zn = source_dataset["zn"]
 
-    sx = do.d_by_dx_field(s, z, zn, grid = ingrid )
-    sy = do.d_by_dy_field(s, z, zn, grid = ingrid )
-    sz = do.d_by_dz_field(s, z, zn, grid = ingrid )
+    sx = do.d_by_dx_field(s, z, zn, grid=ingrid)
+    sy = do.d_by_dy_field(s, z, zn, grid=ingrid)
+    sz = do.d_by_dz_field(s, z, zn, grid=ingrid)
 
-    s = None # Save some memory
+    s = None  # Save some memory
 
     s_xi = xr.concat([sx, sy, sz], dim='j', coords='minimal',
-                       compat='override')
+                     compat='override')
 
     return s_xi
 
@@ -156,45 +142,45 @@ def R_j(dx, dx_filt, abs_S_hat, ds_dxj_hat, HAT_abs_S_ds_dxj, beta=1):
     alpha = dx_filt / dx
     power = alpha / 2
 
-    R_j = dx_filt*dx_filt * beta ** power * abs_S_hat * ds_dxj_hat  -  dx*dx * HAT_abs_S_ds_dxj
+    R_j = dx_filt * dx_filt * beta ** power * abs_S_hat * ds_dxj_hat - dx * dx * HAT_abs_S_ds_dxj
 
     return R_j
 
 
 
 def index_sym(i,j, i_j_in):
-    
+
     if j < i:
         i_new = j
         j_new = i
-        
+
     else:
         i_new = i
         j_new = j
-        
+
     index_str = '{}_{}'.format(i_new,j_new)
 
     index = np.where(i_j_in == index_str)[0][0]
-    
+
     return index
 
 
 def C_s_sq(L_ij, M_ij):
-    
+
     C_s_sq = np.zeros_like(L_ij[0, ...])
     C_s_num = np.zeros_like(L_ij[0, ...])
     C_s_den = np.zeros_like(L_ij[0, ...])
-                        
+
     for it in range(0,6):
         if it in [0,3,5]:
-            
+
             C_s_num += L_ij[it, ...] * M_ij[it, ...]
             C_s_den += M_ij[it, ...]**2
-    
-        else:        
+
+        else:
             C_s_num += 2*(L_ij[it, ...] * M_ij[it, ...])
             C_s_den += 2*M_ij[it, ...]**2
-       
+
     if len(M_ij.shape) == 5:
         print("number of times = ", (C_s_num.shape)[0])
 
@@ -204,10 +190,7 @@ def C_s_sq(L_ij, M_ij):
         C_s_den_av = np.mean(C_s_den, 0)
         C_s_den = 0
 
-        C_s_den_av_copy = C_s_den_av.copy()
-        C_s_den_av_copy[C_s_den_av == 0.00000000000] = 0.000000001
-
-        C_s_sq = 0.5 * C_s_num_av / C_s_den_av_copy
+        C_s_sq = 0.5 * C_s_num_av / C_s_den_av
 
     else:
         C_s_sq = 0.5 * C_s_num / C_s_den
@@ -233,10 +216,7 @@ def C_scalar_sq(Hj, Rj):
         C_th_den_av = np.mean(C_th_den, 0)
         C_th_den = 0
 
-        C_th_den_av_copy = C_th_den_av.copy()
-        C_th_den_av_copy[C_th_den_av == 0.00000000000] = 0.000000001
-
-        C_th_sq = 0.5 * C_th_num_av / C_th_den_av_copy
+        C_th_sq = 0.5 * C_th_num_av / C_th_den_av
 
     else:
         C_th_sq = 0.5 * C_th_num / C_th_den
@@ -256,35 +236,27 @@ def get_Cs(Cs_sq):
 
 
 def Cs_profiles(L_ij, M_ij, return_all=1):
-    """ Calculates the horizontal average Cs value at each level 
+    """ Calculates the horizontal average Cs value at each level
     using the Lij and Mij fields as input.
-    
+
     return_all: 1 is for profiles, 2 is for fields
-    
+
     """
-    
+
     C_s_num = np.zeros_like(L_ij[0, ...])
     C_s_den = np.zeros_like(M_ij[0, ...])
-  
-                        
+
+
     for it in range(0,6):
         if it in [0,3,5]:
-            
+
             C_s_num += L_ij[it, ...] * M_ij[it, ...]
             C_s_den += M_ij[it, ...] * M_ij[it, ...]
 
-        else:        
+        else:
             C_s_num += 2*(L_ij[it, ...] * M_ij[it, ...])
             C_s_den += 2*(M_ij[it, ...] * M_ij[it, ...])
 
-    if return_all == 2:
-        if len(L_ij.shape) == 5:
-            LM_field_av = np.mean(C_s_num, 0)
-            MM_field_av = np.mean(C_s_den, 0)
-        else:
-            LM_field_av = C_s_num.copy()
-            MM_field_av = C_s_den.copy()
-            
     z_num = (C_s_num.shape)[-1]
     horiz_num_temp = (C_s_num.shape)[-2]
     horiz_num = horiz_num_temp * horiz_num_temp
@@ -293,20 +265,22 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         num_times = (C_s_num.shape)[0]
         total_num = num_times*horiz_num
         LM_flat = C_s_num.reshape(total_num, z_num)
-
+        MM_flat = C_s_den.reshape(total_num, z_num)
     else:
         LM_flat = C_s_num.reshape(horiz_num,z_num)
-        total_num = horiz_num
-
-    C_s_num = None
-
-    if len(L_ij.shape) == 5:
-        MM_flat = C_s_den.reshape(total_num, z_num)
-
-    else:
         MM_flat = C_s_den.reshape(horiz_num,z_num)
         total_num = horiz_num
 
+
+    if return_all == 2:
+        if len(L_ij.shape) == 5:
+            LM_field_av = np.mean(C_s_num, 0)
+            MM_field_av = np.mean(C_s_den, 0)
+        else:
+            LM_field_av = C_s_num.copy()
+            MM_field_av = C_s_den.copy()
+
+    C_s_num = None
     C_s_den = None
 
     LM_av = np.zeros(z_num)
@@ -347,6 +321,21 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         C_th_num += H_ij[it, ...] * R_ij[it, ...]
         C_th_den += R_ij[it, ...] * R_ij[it, ...]
 
+    z_num = (C_th_num.shape)[-1]
+    horiz_num_temp = (C_th_num.shape)[-2]
+    horiz_num = horiz_num_temp * horiz_num_temp
+
+    if len(H_ij.shape) == 5:
+        num_times = (C_th_num.shape)[0]
+        total_num = num_times * horiz_num
+        HR_flat = C_th_num.reshape(total_num, z_num)
+        RR_flat = C_th_den.reshape(total_num, z_num)
+    else:
+        HR_flat = C_th_num.reshape(horiz_num, z_num)
+        RR_flat = C_th_den.reshape(horiz_num, z_num)
+        total_num = horiz_num
+
+
     if return_all == 2:
         if len(H_ij.shape) == 5:
             HR_field_av = np.mean(C_th_num, 0)
@@ -356,28 +345,7 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
             RR_field_av = C_th_den.copy()
 
 
-    z_num = (C_th_num.shape)[-1]
-    horiz_num_temp = (C_th_num.shape)[-2]
-    horiz_num = horiz_num_temp * horiz_num_temp
-
-    if len(H_ij.shape) == 5:
-        num_times = (C_th_num.shape)[0]
-        total_num = num_times * horiz_num
-        HR_flat = C_th_num.reshape(total_num, z_num)
-
-    else:
-        HR_flat = C_th_num.reshape(horiz_num, z_num)
-        total_num = horiz_num
-
     C_th_num = None
-
-    if len(H_ij.shape) == 5:
-        RR_flat = C_th_den.reshape(total_num, z_num)
-
-    else:
-        RR_flat = C_th_den.reshape(horiz_num, z_num)
-        total_num = horiz_num
-
     C_th_den = None
 
     HR_av = np.zeros(z_num)
@@ -422,12 +390,12 @@ def beta_calc(C_2D_sq_in, C_4D_sq_in):
     beta[beta < 0.125] = 0.125
 
     return beta
-    
-    
-def Cs_sq_beta_dep(C_s2_sq, beta):    
-    
+
+
+def Cs_sq_beta_dep(C_s2_sq, beta):
+
     """ calculates Cs_sq using C_s = C_s2_sq/beta """
-    
+
     return C_s2_sq/beta
 
 
@@ -435,7 +403,7 @@ def Cs_sq_beta_dep(C_s2_sq, beta):
 def Pr(Cs_sq, C_scalar_sq):
      Pr = Cs_sq/C_scalar_sq
      return Pr
-    
+
 
 def w_therm_field(w, t_in, return_all=False):
     w_95th = np.zeros_like(w[t_in, 0, 0, :])

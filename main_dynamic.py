@@ -33,11 +33,11 @@ options = {
         'dy': 20.0,
         'domain' : 16.0,
 
-        'aliases': {'u': 'f(u_on_p)_r',
-                    'v': 'f(v_on_p)_r',
-                    'w': 'f(w_on_p)_r',
-                    'th': 'f(th_on_p)_r',
-                    'q_total': 'f(q_total_on_p)_r'
+        'aliases': {'u': ['f(u_on_p)_r'],
+                    'v': ['f(v_on_p)_r'],
+                    'w': ['f(w_on_p)_r'],
+                    'th': ['f(th_on_p)_r'],
+                    'q_total': ['f(q_total_on_p)_r']
                     }
 
           }
@@ -45,4 +45,4 @@ options = {
 for j in range(len(set_time)):
         for i, model_res in enumerate(model_res_list):
                 dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, options, \
-                            opgrid, start_point=start, ref_file = None)
+                            opgrid, start_point=start, filtered_data=0, ref_file = None)
