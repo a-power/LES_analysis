@@ -7,7 +7,9 @@ av_type = 'all'
 mygrid = 'w'
 
 path20f = '/work/scratch-pw/apower/20m_gauss_dyn/'
+test_path = path20f+'test/'
 file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_"
+os.makedirs(test_path, exist_ok = True)
 
 data_2D = path20f+file20+str('ga00.nc')
 data_4D = path20f+file20+str('ga01.nc')
@@ -16,22 +18,15 @@ data_16D = path20f+file20+str('ga03.nc')
 data_32D = path20f+file20+str('ga04.nc')
 data_64D = path20f+file20+str('ga05.nc')
 
-dataset_name2 = [path20f+file20+'C_qt_2D.nc']
-dataset_name4 = [path20f+file20+'C_qt_4D.nc']
-dataset_name8 = [path20f+file20+'C_qt_8D.nc']
-dataset_name16 = [path20f+file20+'C_qt_16D.nc']
-dataset_name32 = [path20f+file20+'C_qt_32D.nc']
-dataset_name64 = [path20f+file20+'C_qt_64D.nc']
-
-# dataset_name2 = [path20f+file20+'C_th_2D.nc', path20f+file20+'C_qt_2D.nc']
-# dataset_name4 = [path20f+file20+'C_th_4D.nc', path20f+file20+'C_qt_4D.nc']
-# dataset_name8 = [path20f+file20+'C_th_8D.nc', path20f+file20+'C_qt_8D.nc']
-# dataset_name16 = [path20f+file20+'C_th_16D.nc', path20f+file20+'C_qt_16D.nc']
-# dataset_name32 = [path20f+file20+'C_th_32D.nc', path20f+file20+'C_qt_32D.nc']
-# dataset_name64 = [path20f+file20+'C_th_64D.nc', path20f+file20+'C_qt_64D.nc']
+dataset_name2 = [test_path+file20+'C_th_2D.nc', test_path+file20+'C_qt_2D.nc']
+dataset_name4 = [test_path+file20+'C_th_4D.nc', test_path+file20+'C_qt_4D.nc']
+dataset_name8 = [test_path+file20+'C_th_8D.nc', test_path+file20+'C_qt_8D.nc']
+dataset_name16 = [test_path+file20+'C_th_16D.nc', test_path+file20+'C_qt_16D.nc']
+dataset_name32 = [test_path+file20+'C_th_32D.nc', test_path+file20+'C_qt_32D.nc']
+dataset_name64 = [test_path+file20+'C_th_64D.nc', test_path+file20+'C_qt_64D.nc']
 
 
-scalar = ['q_total'] #'th',
+scalar = ['th','q_total'] #
 
 DX_2D = {
     'indir': data_2D,
