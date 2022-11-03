@@ -32,14 +32,6 @@ options = {
         'dx': 20.0,
         'dy': 20.0,
         'domain' : 16.0,
-
-        'aliases': {'u': ['f(u_on_p)_r'],
-                    'v': ['f(v_on_p)_r'],
-                    'w': ['f(w_on_p)_r'],
-                    'th': ['f(th_on_p)_r'],
-                    'q_total': ['f(q_total_on_p)_r']
-                    }
-
           }
 
 for j in range(len(set_time)):
