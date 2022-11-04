@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=all_C_BOMEX_scalars_21600_48600_short
-#SBATCH -p short-serial
+#SBATCH --job-name=C_BOMEX_14400
+#SBATCH -p high-mem
 #SBATCH -o /gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/jobs/out_%x.out
 #SBATCH -e /gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/jobs/err_%x.err
-#SBATCH --time=08:00:00
-#SBATCH --mem=64000
+#SBATCH --time=12:00:00
+#SBATCH --mem=1000000
 #SBATCH --nodes=2
  
 # executable
 source ~/myenv/bin/activate
-python /gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/main_C_BOMEX_times.py
+python /gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/main_C_BOMEX.py
