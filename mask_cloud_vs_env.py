@@ -46,3 +46,11 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater_threas='greater', 
     return out_mask
 
 
+def get_masked_fields(dataset_in, other_var_choice = False, other_var_thres=False, less_greater='greater', my_and_or = 'and', cloud_thres=10**(-5)):
+
+    if other_var_choice == False:
+        mask = cloudy_and_or(data_in = dataset_in, other_var = other_var_choice, var_thres, less_greater_threas='greater', and_or='and',
+                  cloud_liquid_threshold=10 ** (-5))
+
+
+
