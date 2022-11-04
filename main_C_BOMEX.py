@@ -55,13 +55,13 @@ for i, scalar_in in enumerate(scalar):
 
 ########################################################################
 
-    if scalar == 'momentum':
+    if scalar_in == 'momentum':
         C_sq_prof_2D, C_prof_2D, HR_prof_2D, RR_prof_2D, C_sq_field_2D, HR_field_2D, RR_field_2D, Hj_2D, Rj_2D = \
-    dy_s.Cs(dx=20, ingrid = mygrid, save_all=3, **DX_2D)
+            dy_s.Cs(dx=20, ingrid = mygrid, save_all=3, **DX_2D)
 
     else:
         C_sq_prof_2D, C_prof_2D, HR_prof_2D, RR_prof_2D, C_sq_field_2D, HR_field_2D, RR_field_2D, Hj_2D, Rj_2D = \
-        dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = 3, **DX_2D)
+            dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = 3, **DX_2D)
 
     ds_2 = xr.Dataset()
     ds_2.to_netcdf(dataset_name2[i], mode='w')
@@ -91,7 +91,7 @@ for i, scalar_in in enumerate(scalar):
 
     ##########################################
 
-    if scalar == 'momentum':
+    if scalar_in == 'momentum':
         C_sq_prof_4D, C_prof_4D, HR_prof_4D, RR_prof_4D, C_sq_field_4D, HR_field_4D, RR_field_4D, Hj_4D, Rj_4D = \
             dy_s.Cs(dx=20, ingrid = mygrid, save_all=3, **DX_4D)
 
@@ -129,7 +129,7 @@ for i, scalar_in in enumerate(scalar):
 
     #########################################################################
 
-    if scalar == 'momentum':
+    if scalar_in == 'momentum':
         C_sq_prof_8D, C_prof_8D, HR_prof_8D, RR_prof_8D, C_sq_field_8D, HR_field_8D, RR_field_8D, Hj_8D, Rj_8D = \
             dy_s.Cs(dx=20, ingrid = mygrid, save_all=3, **DX_8D)
 
@@ -167,7 +167,7 @@ for i, scalar_in in enumerate(scalar):
 
     ##########################################
 
-    if scalar == 'momentum':
+    if scalar_in == 'momentum':
         C_sq_prof_16D, C_prof_16D, HR_prof_16D, RR_prof_16D, C_sq_field_16D, HR_field_16D, RR_field_16D, Hj_16D, Rj_16D = \
             dy_s.Cs(dx=20, ingrid = mygrid, save_all=3, **DX_16D)
 
@@ -203,7 +203,7 @@ for i, scalar_in in enumerate(scalar):
 
 ##########################################
 
-    if scalar == 'momentum':
+    if scalar_in == 'momentum':
         C_sq_prof_32D, C_prof_32D, HR_prof_32D, RR_prof_32D, C_sq_field_32D, HR_field_32D, RR_field_32D, Hj_32D, Rj_32D = \
             dy_s.Cs(dx=20, ingrid = mygrid, save_all=3, **DX_32D)
 
@@ -239,7 +239,7 @@ for i, scalar_in in enumerate(scalar):
 
     ##########################################
 
-    if scalar == 'momentum':
+    if scalar_in == 'momentum':
         C_sq_prof_64D, C_prof_64D, HR_prof_64D, RR_prof_64D, C_sq_field_64D, HR_field_64D, RR_field_64D, Hj_64D, Rj_64D = \
             dy_s.Cs(dx=20, ingrid = mygrid, save_all=3, **DX_64D)
 
