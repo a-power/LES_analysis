@@ -6,7 +6,7 @@
 #SBATCH -e /gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/jobs/err_%x.err
 #SBATCH --time=04:00:00
 #SBATCH --mem=64000
-#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=FAIL,END
 #SBATCH --mail-user=a.power@pgr.reading.ac.uk
  
 # executable
