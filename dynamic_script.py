@@ -14,6 +14,8 @@ import subfilter
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
+#code now has theta_l and _v, q_l, q_v were all added to the filtering code in this iteration
+
 
 def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, start_point=0, filtered_data=0, ref_file = None):
 
