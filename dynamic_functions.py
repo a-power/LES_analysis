@@ -276,16 +276,16 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         total_num = horiz_num
 
 
-    if return_all == 2:
-        if len(L_ij.shape) == 5:
-            LM_field_av = np.mean(C_s_num, 0)
-            MM_field_av = np.mean(C_s_den, 0)
-        else:
-            LM_field_av = C_s_num.copy()
-            MM_field_av = C_s_den.copy()
-
-    C_s_num = None
-    C_s_den = None
+    # if return_all == 2:
+    #     if len(L_ij.shape) == 5:
+    #         LM_field_av = np.mean(C_s_num, 0)
+    #         MM_field_av = np.mean(C_s_den, 0)
+    #     else:
+    #         LM_field_av = C_s_num.copy()
+    #         MM_field_av = C_s_den.copy()
+    #
+    # C_s_num = None
+    # C_s_den = None
 
     LM_av = np.zeros(z_num)
     MM_av = np.zeros(z_num)
@@ -304,7 +304,7 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         return Cs_av_sq, Cs_av, LM_av, MM_av
 
     if return_all == 2:
-        return Cs_av_sq, Cs_av, LM_av, MM_av, LM_field_av, MM_field_av
+        return Cs_av_sq, Cs_av, LM_av, MM_av, C_s_num, C_s_den
     else:
         return Cs_av_sq, Cs_av
 
@@ -340,17 +340,17 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         total_num = horiz_num
 
 
-    if return_all == 2:
-        if len(H_ij.shape) == 5:
-            HR_field_av = np.mean(C_th_num, 0)
-            RR_field_av = np.mean(C_th_den, 0)
-        else:
-            HR_field_av = C_th_num.copy()
-            RR_field_av = C_th_den.copy()
+    # if return_all == 2:
+        # if len(H_ij.shape) == 5:
+        #     HR_field_av = np.mean(C_th_num, 0)
+        #     RR_field_av = np.mean(C_th_den, 0)
+        # else:
+        #     HR_field_av = C_th_num.copy()
+        #     RR_field_av = C_th_den.copy()
 
 
-    C_th_num = None
-    C_th_den = None
+    # C_th_num = None
+    # C_th_den = None
 
     HR_av = np.zeros(z_num)
     RR_av = np.zeros(z_num)
@@ -367,7 +367,7 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         return C_th_av_sq, C_th_av, HR_av, RR_av
 
     if return_all == 2:
-        return C_th_av_sq, C_th_av, HR_av, RR_av, HR_field_av, RR_field_av
+        return C_th_av_sq, C_th_av, HR_av, RR_av, C_th_num, C_th_den
     else:
         return C_th_av_sq, C_th_av
 

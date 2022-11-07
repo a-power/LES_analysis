@@ -116,14 +116,14 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
         else:
 
             var_list = [
-                        # "u",
-                        # "v",
-                        # "w",
-                        # "th",
-                        # "th_v",
-                        # "th_L",
-                        # "q_total",
-                        # "q_vapour",
+                        "u",
+                        "v",
+                        "w",
+                        "th",
+                        "th_v",
+                        "th_L",
+                        "q_total",
+                        "q_vapour",
                         "q_cloud_liquid_mass"
                         ]
 
@@ -133,81 +133,89 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
                                                  var_list=var_list,
                                                  grid=ingrid)
 
-            # var_list = [["u", "u"],
-            #             ["u", "v"],
-            #             ["u", "w"],
-            #             ["v", "v"],
-            #             ["v", "w"],
-            #             ["w", "w"],
-            #             ["u", "th"],
-            #             ["v", "th"],
-            #             ["w", "th"],
-            #             ["u", "q_total"],
-            #             ["v", "q_total"],
-            #             ["w", "q_total"]
-            #             ]
-            #
-            # quad_field_list = sf.filter_variable_pair_list(dataset,
-            #                                                ref_dataset,
-            #                                                derived_data, filtered_data,
-            #                                                opt, new_filter,
-            #                                                var_list=var_list,
-            #                                                grid=ingrid)
-            # deform = defm.deformation(dataset,
-            #                         ref_dataset,
-            #                         derived_data,
-            #                         opt, ingrid)
-            #
-            # dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, opt, ingrid)
-            # dth_dx.name = 'dth_dx'
-            # dth_dx = re_chunk(dth_dx)
-            #
-            # dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid)
-            # dq_dx.name = 'dq_dx'
-            # dq_dx = re_chunk(dq_dx)
-            #
-            # S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
-            #
-            # S_ij = 1 / 2 * S_ij_temp
-            # S_ij.name = 'S_ij'
-            # S_ij = re_chunk(S_ij)
-            #
-            # abs_S = np.sqrt(abs_S_temp)
-            # abs_S.name = "abs_S"
-            # abs_S = re_chunk(abs_S)
-            #
-            # S_ij_filt = sf.filter_field(S_ij, filtered_data,
-            #                             opt, new_filter)
-            #
-            # abs_S_filt = sf.filter_field(abs_S, filtered_data,
-            #                              opt, new_filter)
-            #
-            # dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
-            #                             opt, new_filter)
-            #
-            # dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
-            #                               opt, new_filter)
-            #
-            # S_ij_abs_S = S_ij * abs_S
-            # S_ij_abs_S.name = 'S_ij_abs_S'
-            # S_ij_abs_S = re_chunk(S_ij_abs_S)
-            #
-            # S_ij_abs_S_hat_filt = sf.filter_field(S_ij_abs_S, filtered_data,
-            #                                       opt, new_filter)
-            #
-            # abs_S_dth_dx = dth_dx * abs_S
-            # abs_S_dth_dx.name = 'abs_S_dth_dx'
-            # abs_S_dth_dx = re_chunk(abs_S_dth_dx)
-            #
-            # abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
-            #                                       opt, new_filter)
-            #
-            # abs_S_dq_dx = dq_dx * abs_S
-            # abs_S_dq_dx.name = 'abs_S_dq_dx'
-            # abs_S_dq_dx = re_chunk(abs_S_dq_dx)
-            #
-            # abs_S_dq_dx_filt = sf.filter_field(abs_S_dq_dx, filtered_data,
-            #                                     opt, new_filter)
+            var_list = [["u", "u"],
+                        ["u", "v"],
+                        ["u", "w"],
+                        ["v", "v"],
+                        ["v", "w"],
+                        ["w", "w"],
+                        ["u", "th"],
+                        ["v", "th"],
+                        ["w", "th"],
+                        ["u", "q_total"],
+                        ["v", "q_total"],
+                        ["w", "q_total"],
+                        ["w", "th_L"],
+                        ["w", "q_vapour"],
+                        ["w", "q_cloud_liquid_mass"],
+                        ["th_L", "th_L"],
+                        ["th_L", "q_total"],
+                        ["q_total", "q_total"],
+                        ["th_L", "q_vapour"],
+                        ["th_L", "q_cloud_liquid_mass"]
+                        ]
+
+            quad_field_list = sf.filter_variable_pair_list(dataset,
+                                                           ref_dataset,
+                                                           derived_data, filtered_data,
+                                                           opt, new_filter,
+                                                           var_list=var_list,
+                                                           grid=ingrid)
+            deform = defm.deformation(dataset,
+                                    ref_dataset,
+                                    derived_data,
+                                    opt, ingrid)
+
+            dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, opt, ingrid)
+            dth_dx.name = 'dth_dx'
+            dth_dx = re_chunk(dth_dx)
+
+            dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid)
+            dq_dx.name = 'dq_dx'
+            dq_dx = re_chunk(dq_dx)
+
+            S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
+
+            S_ij = 1 / 2 * S_ij_temp
+            S_ij.name = 'S_ij'
+            S_ij = re_chunk(S_ij)
+
+            abs_S = np.sqrt(abs_S_temp)
+            abs_S.name = "abs_S"
+            abs_S = re_chunk(abs_S)
+
+            S_ij_filt = sf.filter_field(S_ij, filtered_data,
+                                        opt, new_filter)
+
+            abs_S_filt = sf.filter_field(abs_S, filtered_data,
+                                         opt, new_filter)
+
+            dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
+                                        opt, new_filter)
+
+            dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
+                                          opt, new_filter)
+
+            S_ij_abs_S = S_ij * abs_S
+            S_ij_abs_S.name = 'S_ij_abs_S'
+            S_ij_abs_S = re_chunk(S_ij_abs_S)
+
+            S_ij_abs_S_hat_filt = sf.filter_field(S_ij_abs_S, filtered_data,
+                                                  opt, new_filter)
+
+            abs_S_dth_dx = dth_dx * abs_S
+            abs_S_dth_dx.name = 'abs_S_dth_dx'
+            abs_S_dth_dx = re_chunk(abs_S_dth_dx)
+
+            abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
+                                                  opt, new_filter)
+
+            abs_S_dq_dx = dq_dx * abs_S
+            abs_S_dq_dx.name = 'abs_S_dq_dx'
+            abs_S_dq_dx = re_chunk(abs_S_dq_dx)
+
+            abs_S_dq_dx_filt = sf.filter_field(abs_S_dq_dx, filtered_data,
+                                                opt, new_filter)
 
         filtered_data['ds'].close()
     derived_data['ds'].close()
@@ -316,10 +324,10 @@ def Cs(indir, dx, dx_hat, ingrid, save_all=2, reaxes=False):
                                dims=['time', "z"], name='MM_prof')
 
 
-        LM_field = xr.DataArray(LM_field[np.newaxis, ...], coords={'time' : [nt], 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+        LM_field = xr.DataArray(LM_field, coords={'time' : times, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
                                   dims = ["time", "x_p", "y_p", "z"], name = 'LM_field')
 
-        MM_field = xr.DataArray(MM_field[np.newaxis, ...], coords={'time' : [nt], 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
+        MM_field = xr.DataArray(MM_field, coords={'time' : times, 'x_p' : x_s, 'y_p' : y_s, 'z': z_s},
                                   dims = ["time", "x_p", "y_p", "z"], name = 'MM_field')
 
 
@@ -352,10 +360,10 @@ def Cs(indir, dx, dx_hat, ingrid, save_all=2, reaxes=False):
         MM_prof = xr.DataArray(MM_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
                                dims=['time', "z"], name='MM_prof')
 
-        LM_field = xr.DataArray(LM_field[np.newaxis, ...], coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+        LM_field = xr.DataArray(LM_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                                 dims=["time", "x_p", "y_p", "z"], name='LM_field')
 
-        MM_field = xr.DataArray(MM_field[np.newaxis, ...], coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+        MM_field = xr.DataArray(MM_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                                 dims=["time", "x_p", "y_p", "z"], name='MM_field')
         if len(Mij.shape) == 5:
 
@@ -492,10 +500,10 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
         C_scalar_prof = xr.DataArray(C_scalar_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
                                      dims=['time', "z"], name=f'C_{scalar}_prof')
 
-        HR_prof = xr.DataArray(HR_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+        HR_prof = xr.DataArray(HR_prof[np.newaxis, ...], coords={'time': times, 'z': z_s},
                                dims=['time', "z"], name=f'HR_{scalar}_prof')
 
-        RR_prof = xr.DataArray(RR_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+        RR_prof = xr.DataArray(RR_prof[np.newaxis, ...], coords={'time': times, 'z': z_s},
                                dims=['time', "z"], name=f'RR_{scalar}_prof')
 
 
@@ -521,10 +529,10 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
         RR_prof = xr.DataArray(RR_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
                                dims=['time', "z"], name=f'RR_{scalar}_prof')
 
-        HR_field = xr.DataArray(HR_field[np.newaxis, ...], coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+        HR_field = xr.DataArray(HR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                                      dims=["time", "x_p", "y_p", "z"], name=f'HR_{scalar}_field')
 
-        RR_field = xr.DataArray(RR_field[np.newaxis, ...], coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+        RR_field = xr.DataArray(RR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
                                      dims=["time", "x_p", "y_p", "z"], name=f'RR_{scalar}_field')
 
         C_scalar_sq_field = xr.DataArray(C_scalar_sq_field[np.newaxis, ...],
