@@ -58,15 +58,36 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater_threas='greater', 
         else:
             q_in = ds_in['q_cloud_liquid_mass']
 
-    q_cloud = q_in.data
+    q_cloud_temp = q_in.data
 
-    var_in = ds_in[f'{other_var}']
-    var_data = var_in.data
+    if len(np.shape(q_cloud_temp)) == 4:
+        q_cloud = np.mean(q_cloud_temp, axis=0)
+    elif len(np.shape(q_cloud_temp)) == 3:
+        q_cloud = q_cloud_temp
+        q_cloud_temp = None
+    else:
+        print('q_l shape is not len 3 or len 4: missing/extra dimentions. q_l has shape:', np.shape(q_cloud_temp))
+
+
+    if f'f({other_var}_on_w)_r' in ds_in:
+        var_in = ds_in[f'f({other_var}_on_w)_r']
+    else:
+        var_in = ds_in[f'{other_var}']
+
+    var_data_temp = var_in.data
+
+    if len(np.shape(var_data_temp)) == 4:
+        var_data = np.mean(var_data_temp, axis=0)
+    elif len(np.shape(var_data_temp)) == 3:
+        var_data = var_data_temp
+        var_data_temp = None
+    else:
+        print(f'var shape is not len 3 or len 4: missing/extra dimentions. {other_var} has shape:', np.shape(var_data_temp))
 
     masked_q_cloud = ma.masked_less(q_cloud, cloud_liquid_threshold)
 
     if less_greater_threas=='less':
-        masked_var = ma.masked_less_equal(var_data, var_thres)
+        masked_var = ma.masked_less(var_data, var_thres)
     elif less_greater_threas=='greater':
         masked_var = ma.masked_greater_equal(var_data, var_thres)
     else:
