@@ -27,7 +27,7 @@ options = {
 
     'return_all_masks': False,
 
-    'data_path': path20f+file20
+    'dataset_in': path20f+file20
 }
 
 
