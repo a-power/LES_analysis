@@ -4,18 +4,19 @@ import xarray as xr
 
 def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5), res_counter=None):
 
-    ds_in = xr.open_dataset(data_in)
+    data_in_new = data_in + f'ga0{res_counter}.nc'
 
-    if res_counter != None:
+    ds_in = xr.open_dataset(data_in_new)
 
-        ds_in2 = xr.open_dataset(f'/work/scratch-pw/apower/20m_gauss_dyn/q_l/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0{res_counter}.nc')
-        q_in = ds_in2['f(q_cloud_liquid_mass_on_w)_r']
+    if 'f(q_cloud_liquid_mass_on_w)_r' in ds_in:
+        q_in = ds_in['f(q_cloud_liquid_mass_on_w)_r']
+
+    elif 'q_cloud_liquid_mass' in ds_in:
+        q_in = ds_in['q_cloud_liquid_mass']
 
     else:
-        if 'f(q_cloud_liquid_mass_on_w)_r' in ds_in:
-            q_in = ds_in['f(q_cloud_liquid_mass_on_w)_r']
-        else:
-            q_in = ds_in['q_cloud_liquid_mass']
+        ds_in2 = xr.open_dataset(f'/work/scratch-pw/apower/20m_gauss_dyn/q_l/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0{res_counter}.nc')
+        q_in = ds_in2['f(q_cloud_liquid_mass_on_w)_r']
 
     q_cloud = q_in.data
 
@@ -71,24 +72,33 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater_threas='greater', 
     elif and_or == 'or':
         out_mask = ma.mask_and(cloud_mask, var_mask)
 
-    if return_all=False:
+    if return_all == False:
         return out_mask
     else:
         return out_mask, cloud_mask, var_mask
 
 
 
-def get_masked_fields(dataset_in, C_data_fields, delta, res_count = None, other_var_choice = False, \
-                      other_var_thres=False, less_greater='greater', my_and_or = 'and', return_all_masks=False, \
-                      return_fields=True, cloud_thres = 10**(-5)):
+def get_masked_fields(dataset_in, delta, res_count = None, return_fields=True, cloud_thres = 10**(-5), other_var_choice = False, \
+                      other_var_thres=False, less_greater='greater', my_and_or = 'and', return_all_masks=False):
 
-    data_s = xr.open_dataset(C_data_fields + f's_{delta}.nc')
-    data_th = xr.open_dataset(C_data_fields + f'_th_{delta}.nc')
-    data_qtot = xr.open_dataset(C_data_fields + f'q_tot_{delta}.nc')
+    data_s = xr.open_dataset(dataset_in + f'Cs_{delta}.nc')
+    data_th = xr.open_dataset(dataset_in + f'C_th_{delta}.nc')
+    data_qtot = xr.open_dataset(dataset_in + f'C_qt_{delta}.nc')
 
     Cs = data_s['Cs_prof'].data[0, ...]
     Cth = data_th['C_th_prof'].data[0, ...]
-    Cq = data_qtot['C_q_total_prof'].data[0, ...]
+    Cqt = data_qtot['C_q_total_prof'].data[0, ...]
+
+
+    time_data = data_s['time']
+    nt = time_data.data
+    x_data = data_s['x_p']
+    x_s = x_data.data
+    y_data = data_s['y_p']
+    y_s = y_data.data
+    z_data = data_s['z']
+    z_s = z_data.data
 
 
 
@@ -98,23 +108,76 @@ def get_masked_fields(dataset_in, C_data_fields, delta, res_count = None, other_
                                                             res_counter=res_count)
         Cs_cloud = ma.masked_array(Cs, mask=cloud_only_mask)
         Cs_env = ma.masked_array(Cs, mask=env_only_mask)
-        Cth_cloud = ma.masked_array(Cth, masqk=cloud_only_mask)
+        Cth_cloud = ma.masked_array(Cth, mask=cloud_only_mask)
         Cth_env = ma.masked_array(Cth, mask=env_only_mask)
-        Cqt_cloud = ma.masked_array(Cq, mask=cloud_only_mask)
-        Cqt_env = ma.masked_array(Cq, mask=env_only_mask)
+        Cqt_cloud = ma.masked_array(Cqt, mask=cloud_only_mask)
+        Cqt_env = ma.masked_array(Cqt, mask=env_only_mask)
 
-        if return_fields == True:
-            return Cs_cloud, Cs_env, Cth_cloud, Cth_env, Cqt_cloud, Cqt_env
+
+        Cs_cloud_prof = np.mean(Cs_cloud, axis=2)
+        Cs_env_prof = np.mean(Cs_env, axis=2)
+        Cth_cloud_prof = np.mean(Cth_cloud, axis=2)
+        Cth_env_prof = np.mean(Cth_env, axis=2)
+        Cqt_cloud_prof = np.mean(Cqt_cloud, axis=2)
+        Cqt_env_prof = np.mean(Cqt_env, axis=2)
+
+
+        Cs_cloud_prof_out = xr.DataArray(Cs_cloud_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='')
+        Cs_env_prof_out = xr.DataArray(Cs_env_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='')
+        Cth_cloud_prof_out = xr.DataArray(Cth_cloud_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='')
+        Cth_env_prof_out = xr.DataArray(Cth_env_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='')
+        Cqt_cloud_prof_out = xr.DataArray(Cqt_cloud_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='')
+        Cqt_env_prof_out = xr.DataArray(Cqt_env_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='')
+
+
+        if return_fields == False:
+
+            Cs_cloud = None
+            Cs_env = None
+            Cth_cloud = None
+            Cth_env = None
+            Cqt_cloud = None
+            Cqt_env = None
+
+            return Cs_cloud_prof_out, Cs_env_prof_out, Cth_cloud_prof_out, Cth_env_prof_out, Cqt_cloud_prof_out, Cqt_env_prof_out
 
         else:
-            Cs_cloud_prof = np.mean(Cs_cloud, axis=2)
-            Cs_env_prof = np.mean(Cs_env, axis=2)
-            Cth_cloud_prof = np.mean(Cth_cloud, axis=2)
-            Cth_env_prof = np.mean(Cth_env, axis=2)
-            Cqt_cloud_prof = np.mean(Cqt_cloud, axis=2)
-            Cqt_env_prof = np.mean(Cqt_env, axis=2)
 
-            return Cs_cloud_prof, Cs_env_prof, Cth_cloud_prof, Cth_env_prof, Cqt_cloud_prof, Cqt_env_prof
+            Cs_cloud_out =  xr.DataArray(Cs_cloud[np.newaxis, ...],
+                                             coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='Cs_cloud_field')
+            Cs_env_out =  xr.DataArray(Cs_env[np.newaxis, ...],
+                                             coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='Cs_env_field')
+            Cth_cloud_out = xr.DataArray(Cth_cloud[np.newaxis, ...],
+                                             coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='C_th_cloud_field')
+            Cth_env_out =  xr.DataArray(Cth_env[np.newaxis, ...],
+                                             coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='C_th_env_field')
+            Cqt_cloud_out =  xr.DataArray(Cqt_cloud[np.newaxis, ...],
+                                             coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='C_qt_cloud_field')
+            Cqt_env_out = xr.DataArray(Cqt_env[np.newaxis, ...],
+                                             coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='C_qt_env_field')
+
+            Cs_cloud = None
+            Cs_env = None
+            Cth_cloud = None
+            Cth_env = None
+            Cqt_cloud = None
+            Cqt_env = None
+
+            return Cs_cloud_out, Cs_env_out, Cth_cloud_out, Cth_env_out, Cqt_cloud_out, Cqt_env_out, \
+                   Cs_cloud_prof_out, Cs_env_prof_out, Cth_cloud_prof_out, Cth_env_prof_out, Cqt_cloud_prof_out, Cqt_env_prof_out
+
 
     #
     # else:
