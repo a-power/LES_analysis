@@ -16,6 +16,7 @@ def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5)):
 
     return cloud_only_mask, env_only_mask
 
+
 def cloudy_and_or(data_in, other_var, var_thres, less_greater_threas='greater', and_or = 'and', cloud_liquid_threshold=10**(-5)):
 
     ds_in = xr.open_dataset(data_in)
@@ -46,9 +47,24 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater_threas='greater', 
     return out_mask
 
 
-def get_masked_fields(dataset_in, other_var_choice = False, other_var_thres=False, less_greater='greater', my_and_or = 'and', cloud_thres=10**(-5)):
+def get_masked_fields(unfilt_dataset_in, C_data_fields, delta, other_var_choice = False, \
+                      other_var_thres=False, less_greater='greater', my_and_or = 'and', cloud_thres=10**(-5)):
+
+    data_s = xr.open_dataset(C_data_fields + f's_{delta}.nc')
+    data_th = xr.open_dataset(C_data_fields + f'_th_{delta}.nc')
+    data_qtot = xr.open_dataset(C_data_fields + f'q_tot_{delta}.nc')
+
+    Cs = data_s['Cs_prof'].data[0, ...]
+    Cth = data_th['C_th_prof'].data[0, ...]
+    Cq = data_qtot['C_q_total_prof'].data[0, ...]
 
     if other_var_choice == False:
+
+        cloud_only_mask, env_only_mask = cloud_vs_env_masks(unfilt_dataset_in, cloud_liquid_threshold=cloud_thres)
+
+
+
+
         mask = cloudy_and_or(data_in = dataset_in, other_var = other_var_choice, var_thres, less_greater_threas='greater', and_or='and',
                   cloud_liquid_threshold=10 ** (-5))
 
