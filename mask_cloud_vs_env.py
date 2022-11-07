@@ -1,6 +1,7 @@
 import numpy as np
 import numpy.ma as ma
 import xarray as xr
+import dynamic_functions as dyn
 
 def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5), res_counter=None):
 
@@ -86,10 +87,15 @@ def get_masked_fields(dataset_in, delta, res_count = None, return_fields=True, c
     data_th = xr.open_dataset(dataset_in + f'C_th_{delta}.nc')
     data_qtot = xr.open_dataset(dataset_in + f'C_qt_{delta}.nc')
 
-    Cs = data_s['Cs_prof'].data[0, ...]
-    Cth = data_th['C_th_prof'].data[0, ...]
-    Cqt = data_qtot['C_q_total_prof'].data[0, ...]
+    Cs_sq = data_s['Cs_sq_field'].data[0, ...]
+    Cth_sq = data_th['C_th_sq_field'].data[0, ...]
+    Cqt_sq = data_qtot['C_q_total_sq_field'].data[0, ...]
 
+    print('shape pf Cs_sq is = ', np.shape(Cs_sq))
+
+    Cs = dyn.get_Cs(Cs_sq)
+    Cth = dyn.get_Cs(Cth_sq)
+    Cqt = dyn.get_Cs(Cqt_sq)
 
     time_data = data_s['time']
     nt = time_data.data
