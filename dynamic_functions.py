@@ -167,6 +167,8 @@ def index_sym(i,j, i_j_in):
 
 def C_s_sq(L_ij, M_ij):
 
+    print('shape of Lij is', np.shape(L_ij))
+
     C_s_sq = np.zeros_like(L_ij[0, ...])
     C_s_num = np.zeros_like(L_ij[0, ...])
     C_s_den = np.zeros_like(L_ij[0, ...])
@@ -194,6 +196,8 @@ def C_s_sq(L_ij, M_ij):
 
     else:
         C_s_sq = 0.5 * C_s_num / C_s_den
+
+    print('shape of C_S_sq in function dyn.C_s_sq is', np.shape(C_s_sq))
 
     return C_s_sq
 

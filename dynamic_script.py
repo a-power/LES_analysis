@@ -332,6 +332,8 @@ def Cs(indir, dx, dx_hat, ingrid, save_all=2, reaxes=False):
 
         Cs_sq_field = dyn.C_s_sq(Lij, Mij)
 
+        print('in dynamic script the shape of Cs_sq_field is', np.shape(Cs_sq_field))
+
         Cs_sq_prof, Cs_prof, LM_prof, MM_prof, LM_field, MM_field = dyn.Cs_profiles(Lij, Mij, return_all=2)
 
         Cs_sq_prof = xr.DataArray(Cs_sq_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},

@@ -19,10 +19,18 @@ def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5), res_counter=Non
         ds_in2 = xr.open_dataset(f'/work/scratch-pw/apower/20m_gauss_dyn/q_l/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0{res_counter}.nc')
         q_in = ds_in2['f(q_cloud_liquid_mass_on_w)_r']
 
-    q_cloud = q_in.data
+    q_cloud_temp = q_in.data
 
-    masked_q_cloud = ma.greater_equal(q_cloud, cloud_liquid_threshold)
-    masked_q_env = ma.less_equal(q_cloud, cloud_liquid_threshold)
+    if len(np.shape(q_cloud_temp)) == 4:
+        q_cloud = np.mean(q_cloud_temp, axis=0)
+    elif len(np.shape(q_cloud_temp)) == 3:
+        q_cloud = q_cloud_temp
+        q_cloud_temp = None
+    else:
+        print('q_l shape is not len 3 or len 4: missing/extra dimentions. q_l has shape:', np.shape(q_cloud_temp))
+
+    masked_q_cloud = ma.masked_less(q_cloud, cloud_liquid_threshold) #masking lower values
+    masked_q_env = ma.masked_greater_equal(q_cloud, cloud_liquid_threshold) #masking larger values
 
     cloud_only_mask = ma.getmaskarray(masked_q_cloud)
     env_only_mask = ma.getmaskarray(masked_q_env)
@@ -55,14 +63,14 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater_threas='greater', 
     var_in = ds_in[f'{other_var}']
     var_data = var_in.data
 
-    masked_q_cloud = ma.greater_equal(q_cloud, cloud_liquid_threshold)
+    masked_q_cloud = ma.masked_less(q_cloud, cloud_liquid_threshold)
 
     if less_greater_threas=='less':
-        masked_var = ma.less_equal(var_data, var_thres)
+        masked_var = ma.masked_less_equal(var_data, var_thres)
     elif less_greater_threas=='greater':
-        masked_var = ma.greater_equal(var_data, var_thres)
+        masked_var = ma.masked_greater_equal(var_data, var_thres)
     else:
-        print("must pick 'less' or 'greater'.")
+        print("must pick 'less' (values lower than threshold are masked/EXCLUDED) or 'greater' (values higher than threshold are masked/EXCLUDED).")
 
 
     cloud_mask = ma.getmaskarray(masked_q_cloud)
