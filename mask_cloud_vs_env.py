@@ -19,15 +19,7 @@ def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5), res_counter=Non
         ds_in2 = xr.open_dataset(f'/work/scratch-pw/apower/20m_gauss_dyn/q_l/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0{res_counter}.nc')
         q_in = ds_in2['f(q_cloud_liquid_mass_on_w)_r']
 
-    q_cloud_temp = q_in.data
-
-    if len(np.shape(q_cloud_temp)) == 4:
-        q_cloud = np.mean(q_cloud_temp, axis=0)
-    elif len(np.shape(q_cloud_temp)) == 3:
-        q_cloud = q_cloud_temp
-        q_cloud_temp = None
-    else:
-        print('q_l shape is not len 3 or len 4: missing/extra dimentions. q_l has shape:', np.shape(q_cloud_temp))
+    q_cloud = q_in.data
 
     masked_q_cloud = ma.masked_less(q_cloud, cloud_liquid_threshold) #masking lower values
     masked_q_env = ma.masked_greater_equal(q_cloud, cloud_liquid_threshold) #masking larger values
@@ -58,31 +50,14 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater_threas='greater', 
         else:
             q_in = ds_in['q_cloud_liquid_mass']
 
-    q_cloud_temp = q_in.data
-
-    if len(np.shape(q_cloud_temp)) == 4:
-        q_cloud = np.mean(q_cloud_temp, axis=0)
-    elif len(np.shape(q_cloud_temp)) == 3:
-        q_cloud = q_cloud_temp
-        q_cloud_temp = None
-    else:
-        print('q_l shape is not len 3 or len 4: missing/extra dimentions. q_l has shape:', np.shape(q_cloud_temp))
-
+    q_cloud = q_in.data
 
     if f'f({other_var}_on_w)_r' in ds_in:
         var_in = ds_in[f'f({other_var}_on_w)_r']
     else:
         var_in = ds_in[f'{other_var}']
 
-    var_data_temp = var_in.data
-
-    if len(np.shape(var_data_temp)) == 4:
-        var_data = np.mean(var_data_temp, axis=0)
-    elif len(np.shape(var_data_temp)) == 3:
-        var_data = var_data_temp
-        var_data_temp = None
-    else:
-        print(f'var shape is not len 3 or len 4: missing/extra dimentions. {other_var} has shape:', np.shape(var_data_temp))
+    var_data = var_in.data
 
     masked_q_cloud = ma.masked_less(q_cloud, cloud_liquid_threshold)
 
@@ -92,7 +67,6 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater_threas='greater', 
         masked_var = ma.masked_greater_equal(var_data, var_thres)
     else:
         print("must pick 'less' (values lower than threshold are masked/EXCLUDED) or 'greater' (values higher than threshold are masked/EXCLUDED).")
-
 
     cloud_mask = ma.getmaskarray(masked_q_cloud)
     var_mask = ma.getmaskarray(masked_var)
@@ -116,15 +90,16 @@ def get_masked_fields(dataset_in, delta, res_count = None, return_fields=True, c
     data_th = xr.open_dataset(dataset_in + f'C_th_{delta}.nc')
     data_qtot = xr.open_dataset(dataset_in + f'C_qt_{delta}.nc')
 
-    Cs_sq = data_s['Cs_sq_field'].data[...]
-    Cth_sq = data_th['C_th_sq_field'].data[...]
-    Cqt_sq = data_qtot['C_q_total_sq_field'].data[...]
+    LijMij = data_s['LM_field'].data[...]
+    MijMij = data_s['MM_field'].data[...]
 
-    print('shape of Cs_sq is = ', np.shape(Cs_sq))
+    HjRj_th = data_th['HR_th_field'].data[...]
+    RjRj_th = data_th['RR_th_field'].data[...]
 
-    Cs = dyn.get_Cs(Cs_sq)
-    Cth = dyn.get_Cs(Cth_sq)
-    Cqt = dyn.get_Cs(Cqt_sq)
+    HjRj_qt = data_qtot['HR_q_total_field'].data[...]
+    RjRj_qt = data_qtot['RR_q_total_field'].data[...]
+
+    print('shape of LijMij is = ', np.shape(LijMij), 'and the shape of HjRj_th is = ', np.shape(HjRj_th))
 
     time_data = data_s['time']
     nt = time_data.data
@@ -136,18 +111,114 @@ def get_masked_fields(dataset_in, delta, res_count = None, return_fields=True, c
     z_s = z_data.data
 
 
-
     if other_var_choice == False:
 
         cloud_only_mask, env_only_mask = cloud_vs_env_masks(dataset_in, cloud_liquid_threshold=cloud_thres, \
                                                             res_counter=res_count)
-        Cs_cloud = ma.masked_array(Cs, mask=cloud_only_mask)
-        Cs_env = ma.masked_array(Cs, mask=env_only_mask)
-        Cth_cloud = ma.masked_array(Cth, mask=cloud_only_mask)
-        Cth_env = ma.masked_array(Cth, mask=env_only_mask)
-        Cqt_cloud = ma.masked_array(Cqt, mask=cloud_only_mask)
-        Cqt_env = ma.masked_array(Cqt, mask=env_only_mask)
+        LijMij_cloud = ma.masked_array(LijMij, mask=cloud_only_mask)
+        LijMij_env = ma.masked_array(LijMij, mask=env_only_mask)
+        MijMij_cloud = ma.masked_array(MijMij, mask=cloud_only_mask)
+        MijMij_env = ma.masked_array(MijMij, mask=env_only_mask)
 
+        HjRj_th_cloud = ma.masked_array(HjRj_th, mask=cloud_only_mask)
+        HjRj_th_env = ma.masked_array(HjRj_th, mask=env_only_mask)
+        RjRj_th_cloud = ma.masked_array(RjRj_th, mask=cloud_only_mask)
+        RjRj_th_env = ma.masked_array(RjRj_th, mask=env_only_mask)
+
+        HjRj_qt_cloud = ma.masked_array(HjRj_qt, mask=cloud_only_mask)
+        HjRj_qt_env = ma.masked_array(HjRj_qt, mask=env_only_mask)
+        RjRj_qt_cloud = ma.masked_array(RjRj_qt, mask=cloud_only_mask)
+        RjRj_qt_env = ma.masked_array(RjRj_qt, mask=env_only_mask)
+
+
+        z_num = (LijMij.shape)[-1]
+        horiz_num_temp = (LijMij.shape)[-2]
+        horiz_num = horiz_num_temp * horiz_num_temp
+
+        if len(LijMij.shape) == 4:
+            num_times = (LijMij.shape)[0]
+            total_num = num_times * horiz_num
+
+            LM_flat_cloud = LijMij_cloud.reshape(total_num, z_num)
+            LM_flat_env = LijMij_env.reshape(total_num, z_num)
+            MM_flat_cloud = MijMij_cloud.reshape(total_num, z_num)
+            MM_flat_env = MijMij_env.reshape(total_num, z_num)
+
+            HR_th_flat_cloud = HjRj_th_cloud.reshape(total_num, z_num)
+            HR_th_flat_env = HjRj_th_env.reshape(total_num, z_num)
+            RR_th_flat_cloud = RjRj_th_cloud.reshape(total_num, z_num)
+            RR_th_flat_env = RjRj_th_env.reshape(total_num, z_num)
+
+            HR_qt_flat_cloud = HjRj_qt_cloud.reshape(total_num, z_num)
+            HR_qt_flat_env = HjRj_qt_env.reshape(total_num, z_num)
+            RR_qt_flat_cloud = RjRj_qt_cloud.reshape(total_num, z_num)
+            RR_qt_flat_env = RjRj_qt_env.reshape(total_num, z_num)
+
+        else:
+            LM_flat_cloud = LijMij_cloud.reshape(horiz_num, z_num)
+            LM_flat_env = LijMij_env.reshape(horiz_num, z_num)
+            MM_flat_cloud = MijMij_cloud.reshape(horiz_num, z_num)
+            MM_flat_env = MijMij_env.reshape(horiz_num, z_num)
+
+            HR_th_flat_cloud = HjRj_th_cloud.reshape(horiz_num, z_num)
+            HR_th_flat_env = HjRj_th_env.reshape(horiz_num, z_num)
+            RR_th_flat_cloud = RjRj_th_cloud.reshape(horiz_num, z_num)
+            RR_th_flat_env = RjRj_th_env.reshape(horiz_num, z_num)
+
+            HR_qt_flat_cloud = HjRj_qt_cloud.reshape(horiz_num, z_num)
+            HR_qt_flat_env = HjRj_qt_env.reshape(horiz_num, z_num)
+            RR_qt_flat_cloud = RjRj_qt_cloud.reshape(horiz_num, z_num)
+            RR_qt_flat_env = RjRj_qt_env.reshape(horiz_num, z_num)
+
+            total_num = horiz_num
+
+        LM_cloud_av = np.zeros(z_num)
+        LM_env_av = np.zeros(z_num)
+        MM_cloud_av = np.zeros(z_num)
+        MM_env_av = np.zeros(z_num)
+
+        HR_th_cloud_av = np.zeros(z_num)
+        HR_th_env_av = np.zeros(z_num)
+        RR_th_cloud_av = np.zeros(z_num)
+        RR_th_env_av = np.zeros(z_num)
+
+        HR_qt_cloud_av = np.zeros(z_num)
+        HR_qt_env_av = np.zeros(z_num)
+        RR_qt_cloud_av = np.zeros(z_num)
+        RR_qt_env_av = np.zeros(z_num)
+
+
+
+
+        for k in range(z_num):
+            LM_cloud_av[k] = np.sum(LM_flat_cloud[:, k]) / total_num
+            LM_env_av[k] = np.sum(LM_flat_env[:, k]) / total_num
+            MM_cloud_av[k] = np.sum(MM_flat_cloud[:, k]) / total_num
+            MM_env_av[k] = np.sum(MM_flat_env[:, k]) / total_num
+
+            HR_th_cloud_av[k] = np.sum( HR_th_flat_cloud[:, k] ) / total_num
+            HR_th_env_av[k] = np.sum( HR_th_flat_env[:, k] ) / total_num
+            RR_th_cloud_av[k] = np.sum( RR_th_flat_cloud[:, k] ) / total_num
+            RR_th_env_av[k] = np.sum( RR_th_flat_env[:, k] ) / total_num
+
+            HR_qt_cloud_av[k] = np.sum( HR_qt_flat_cloud[:, k] ) / total_num
+            HR_qt_env_av[k] = np.sum( HR_qt_flat_env[:, k] ) / total_num
+            RR_qt_cloud_av[k] = np.sum( RR_qt_flat_cloud[:, k] ) / total_num
+            RR_qt_env_av[k] = np.sum( RR_qt_flat_env[:, k] ) / total_num
+
+        Cs_av_sq = (0.5 * (LM_av / MM_av))
+
+
+
+
+
+
+        Cs = dyn.get_Cs(Cs_sq)
+        Cs = dyn.get_Cs(Cs_sq)
+        Cth = dyn.get_Cs(Cth_sq)
+        Cth = dyn.get_Cs(Cth_sq)
+        Cqt = dyn.get_Cs(Cqt_sq)
+        Cqt = dyn.get_Cs(Cqt_sq)
 
         Cs_cloud_prof = np.mean(Cs_cloud, axis=2)
         Cs_env_prof = np.mean(Cs_env, axis=2)

@@ -72,9 +72,9 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in2, C_prof_2D)
     save_field(ds_in2, HR_prof_2D)
     save_field(ds_in2, RR_prof_2D)
-    save_field(ds_in2, C_sq_field_2D)
     save_field(ds_in2, HR_field_2D)
     save_field(ds_in2, RR_field_2D)
+    # save_field(ds_in2, C_sq_field_2D)
     # save_field(ds_in2, Hj_2D)
     # save_field(ds_in2, Rj_2D)
 
@@ -84,9 +84,9 @@ for i, scalar_in in enumerate(scalar):
     C_prof_2D = None
     HR_prof_2D = None
     RR_prof_2D = None
-    C_sq_field_2D = None
     HR_field_2D = None
     RR_field_2D = None
+    # C_sq_field_2D = None
     # Hj_2D = None
     # Rj_2D = None
 
@@ -109,9 +109,9 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in4, C_prof_4D)
     save_field(ds_in4, HR_prof_4D)
     save_field(ds_in4, RR_prof_4D)
-    save_field(ds_in4, C_sq_field_4D)
     save_field(ds_in4, HR_field_4D)
     save_field(ds_in4, RR_field_4D)
+    # save_field(ds_in4, C_sq_field_4D)
     # save_field(ds_in4, Hj_4D)
     # save_field(ds_in4, Rj_4D)
 
@@ -121,9 +121,9 @@ for i, scalar_in in enumerate(scalar):
     C_prof_4D = None
     HR_prof_4D = None
     RR_prof_4D = None
-    C_sq_field_4D = None
     HR_field_4D = None
     RR_field_4D = None
+    # C_sq_field_4D = None
     # Hj_4D = None
     # Rj_4D = None
 
@@ -148,9 +148,9 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in8, C_prof_8D)
     save_field(ds_in8, HR_prof_8D)
     save_field(ds_in8, RR_prof_8D)
-    save_field(ds_in8, C_sq_field_8D)
     save_field(ds_in8, HR_field_8D)
     save_field(ds_in8, RR_field_8D)
+    # save_field(ds_in8, C_sq_field_8D)
     # save_field(ds_in8, Hj_8D)
     # save_field(ds_in8, Rj_8D)
 
@@ -160,9 +160,9 @@ for i, scalar_in in enumerate(scalar):
     C_prof_8D = None
     HR_prof_8D = None
     RR_prof_8D = None
-    C_sq_field_8D = None
     HR_field_8D = None
     RR_field_8D = None
+    # C_sq_field_8D = None
     # Hj_8D = None
     # Rj_8D = None
 
@@ -184,9 +184,9 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in16, C_prof_16D)
     save_field(ds_in16, HR_prof_16D)
     save_field(ds_in16, RR_prof_16D)
-    save_field(ds_in16, C_sq_field_16D)
     save_field(ds_in16, HR_field_16D)
     save_field(ds_in16, RR_field_16D)
+    # save_field(ds_in16, C_sq_field_16D)
     # save_field(ds_in16, Hj_16D)
     # save_field(ds_in16, Rj_16D)
 
@@ -196,9 +196,9 @@ for i, scalar_in in enumerate(scalar):
     C_prof_16D = None
     HR_prof_16D = None
     RR_prof_16D = None
-    C_sq_field_16D = None
     HR_field_16D = None
     RR_field_16D = None
+    # C_sq_field_16D = None
     # Hj_16D = None
     # Rj_16D = None
 
@@ -220,9 +220,9 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in32, C_prof_32D)
     save_field(ds_in32, HR_prof_32D)
     save_field(ds_in32, RR_prof_32D)
-    save_field(ds_in32, C_sq_field_32D)
     save_field(ds_in32, HR_field_32D)
     save_field(ds_in32, RR_field_32D)
+    # save_field(ds_in32, C_sq_field_32D)
     # save_field(ds_in32, Hj_32D)
     # save_field(ds_in32, Rj_32D)
 
@@ -232,9 +232,9 @@ for i, scalar_in in enumerate(scalar):
     C_prof_32D = None
     HR_prof_32D = None
     RR_prof_32D = None
-    C_sq_field_32D = None
     HR_field_32D = None
     RR_field_32D = None
+    # C_sq_field_32D = None
     # Hj_32D = None
     # Rj_32D = None
 
@@ -256,9 +256,9 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in64, C_prof_64D)
     save_field(ds_in64, HR_prof_64D)
     save_field(ds_in64, RR_prof_64D)
-    save_field(ds_in64, C_sq_field_64D)
     save_field(ds_in64, HR_field_64D)
     save_field(ds_in64, RR_field_64D)
+    # save_field(ds_in64, C_sq_field_64D)
     # save_field(ds_in64, Hj_64D)
     # save_field(ds_in64, Rj_64D)
 
@@ -268,8 +268,8 @@ for i, scalar_in in enumerate(scalar):
     C_prof_64D = None
     HR_prof_64D = None
     RR_prof_64D = None
-    C_sq_field_64D = None
     HR_field_64D = None
     RR_field_64D = None
+    # C_sq_field_64D = None
     # Hj_64D = None
     # Rj_64D = None
