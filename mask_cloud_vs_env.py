@@ -102,7 +102,8 @@ def get_masked_fields(dataset_in, delta, res_count = None, return_fields=True, c
     print('shape of LijMij is = ', np.shape(LijMij), 'and the shape of HjRj_th is = ', np.shape(HjRj_th))
 
     time_data = data_s['time']
-    nt = time_data.data
+    times = time_data.data
+    nt = len(times)
     x_data = data_s['x_p']
     x_s = x_data.data
     y_data = data_s['y_p']
@@ -187,10 +188,8 @@ def get_masked_fields(dataset_in, delta, res_count = None, return_fields=True, c
         RR_qt_cloud_av = np.zeros(z_num)
         RR_qt_env_av = np.zeros(z_num)
 
-
-
-
         for k in range(z_num):
+
             LM_cloud_av[k] = np.sum(LM_flat_cloud[:, k]) / total_num
             LM_env_av[k] = np.sum(LM_flat_env[:, k]) / total_num
             MM_cloud_av[k] = np.sum(MM_flat_cloud[:, k]) / total_num
@@ -206,83 +205,138 @@ def get_masked_fields(dataset_in, delta, res_count = None, return_fields=True, c
             RR_qt_cloud_av[k] = np.sum( RR_qt_flat_cloud[:, k] ) / total_num
             RR_qt_env_av[k] = np.sum( RR_qt_flat_env[:, k] ) / total_num
 
-        Cs_av_sq = (0.5 * (LM_av / MM_av))
+        LM_flat_cloud = None
+        LM_flat_env = None
+        MM_flat_cloud = None
+        MM_flat_env = None
+
+        HR_th_flat_cloud = None
+        HR_th_flat_env = None
+        RR_th_flat_cloud = None
+        RR_th_flat_env = None
+
+        HR_qt_flat_cloud = None
+        HR_qt_flat_env = None
+        RR_qt_flat_cloud = None
+        RR_qt_flat_env = None
 
 
+        Cs_cloud_av_sq = (0.5 * (LM_cloud_av / MM_cloud_av))
+        Cs_env_av_sq = (0.5 * (LM_env_av / MM_env_av))
+
+        C_th_cloud_av_sq = (0.5 * (HR_th_cloud_av / RR_th_cloud_av))
+        C_th_env_av_sq = (0.5 * (HR_th_env_av / RR_th_env_av))
+
+        C_qt_cloud_av_sq = (0.5 * (HR_qt_cloud_av / RR_qt_cloud_av))
+        C_qt_env_av_sq = (0.5 * (HR_qt_env_av / RR_qt_env_av))
 
 
-
-
-        Cs = dyn.get_Cs(Cs_sq)
-        Cs = dyn.get_Cs(Cs_sq)
-        Cth = dyn.get_Cs(Cth_sq)
-        Cth = dyn.get_Cs(Cth_sq)
-        Cqt = dyn.get_Cs(Cqt_sq)
-        Cqt = dyn.get_Cs(Cqt_sq)
-
-        Cs_cloud_prof = np.mean(Cs_cloud, axis=2)
-        Cs_env_prof = np.mean(Cs_env, axis=2)
-        Cth_cloud_prof = np.mean(Cth_cloud, axis=2)
-        Cth_env_prof = np.mean(Cth_env, axis=2)
-        Cqt_cloud_prof = np.mean(Cqt_cloud, axis=2)
-        Cqt_env_prof = np.mean(Cqt_env, axis=2)
+        Cs_cloud_prof = dyn.get_Cs(Cs_cloud_av_sq)
+        Cs_env_prof = dyn.get_Cs(Cs_env_av_sq)
+        Cth_cloud_prof = dyn.get_Cs(C_th_cloud_av_sq)
+        Cth_env_prof = dyn.get_Cs(C_th_env_av_sq)
+        Cqt_cloud_prof = dyn.get_Cs(C_qt_cloud_av_sq)
+        Cqt_env_prof = dyn.get_Cs(C_qt_env_av_sq)
 
 
         Cs_cloud_prof_out = xr.DataArray(Cs_cloud_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
-                                     dims=['time', "z"], name='')
+                                     dims=['time', "z"], name='Cs_cloud_prof')
         Cs_env_prof_out = xr.DataArray(Cs_env_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
-                                     dims=['time', "z"], name='')
+                                     dims=['time', "z"], name='Cs_env_prof')
         Cth_cloud_prof_out = xr.DataArray(Cth_cloud_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
-                                     dims=['time', "z"], name='')
+                                     dims=['time', "z"], name='Cth_cloud_prof')
         Cth_env_prof_out = xr.DataArray(Cth_env_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
-                                     dims=['time', "z"], name='')
+                                     dims=['time', "z"], name='Cth_env_prof')
         Cqt_cloud_prof_out = xr.DataArray(Cqt_cloud_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
-                                     dims=['time', "z"], name='')
+                                     dims=['time', "z"], name='Cqt_cloud_prof')
         Cqt_env_prof_out = xr.DataArray(Cqt_env_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
-                                     dims=['time', "z"], name='')
+                                     dims=['time', "z"], name='Cqt_env_prof')
+
+
+
+        LM_cloud_av = xr.DataArray(LM_cloud_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='LijMij_cloud_prof')
+        LM_env_av = xr.DataArray(LM_env_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='LijMij_env_prof')
+        MM_cloud_av = xr.DataArray(MM_cloud_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='MijMij_cloud_prof')
+        MM_env_av = xr.DataArray(MM_env_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='MijMij_env_prof')
+
+        HR_th_cloud_av = xr.DataArray(HR_th_cloud_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='HjRj_th_cloud_prof')
+        HR_th_env_av = xr.DataArray(HR_th_env_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='HjRj_th_env_prof')
+        RR_th_cloud_av = xr.DataArray(RR_th_cloud_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='RjRj_th_cloud_prof')
+        RR_th_env_av = xr.DataArray(RR_th_env_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='RjRj_th_env_prof')
+
+        HR_qt_cloud_av = xr.DataArray(HR_qt_cloud_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='HjRj_qt_cloud_prof')
+        HR_qt_env_av = xr.DataArray(HR_qt_env_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='HjRj_qt_env_prof')
+        RR_qt_cloud_av = xr.DataArray(RR_qt_cloud_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='RjRj_qt_cloud_prof')
+        RR_qt_env_av = xr.DataArray(RR_qt_env_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                     dims=['time', "z"], name='RjRj_qt_env_prof')
 
 
         if return_fields == False:
 
-            Cs_cloud = None
-            Cs_env = None
-            Cth_cloud = None
-            Cth_env = None
-            Cqt_cloud = None
-            Cqt_env = None
-
-            return Cs_cloud_prof_out, Cs_env_prof_out, Cth_cloud_prof_out, Cth_env_prof_out, Cqt_cloud_prof_out, Cqt_env_prof_out
+            return Cs_cloud_prof_out, Cs_env_prof_out, Cth_cloud_prof_out, Cth_env_prof_out, Cqt_cloud_prof_out, Cqt_env_prof_out, \
+                   LM_cloud_av, LM_env_av, MM_cloud_av, MM_env_av, \
+                   HR_th_cloud_av, HR_th_env_av, RR_th_cloud_av, RR_th_env_av, \
+                   HR_qt_cloud_av, HR_qt_env_av, RR_qt_cloud_av, RR_qt_env_av
 
         else:
 
-            Cs_cloud_out =  xr.DataArray(Cs_cloud[np.newaxis, ...],
-                                             coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
-                                             dims=["time", "x_p", "y_p", "z"], name='Cs_cloud_field')
-            Cs_env_out =  xr.DataArray(Cs_env[np.newaxis, ...],
-                                             coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
-                                             dims=["time", "x_p", "y_p", "z"], name='Cs_env_field')
-            Cth_cloud_out = xr.DataArray(Cth_cloud[np.newaxis, ...],
-                                             coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
-                                             dims=["time", "x_p", "y_p", "z"], name='C_th_cloud_field')
-            Cth_env_out =  xr.DataArray(Cth_env[np.newaxis, ...],
-                                             coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
-                                             dims=["time", "x_p", "y_p", "z"], name='C_th_env_field')
-            Cqt_cloud_out =  xr.DataArray(Cqt_cloud[np.newaxis, ...],
-                                             coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
-                                             dims=["time", "x_p", "y_p", "z"], name='C_qt_cloud_field')
-            Cqt_env_out = xr.DataArray(Cqt_env[np.newaxis, ...],
-                                             coords={'time': [nt], 'x_p': x_s, 'y_p': y_s, 'z': z_s},
-                                             dims=["time", "x_p", "y_p", "z"], name='C_qt_env_field')
+            LijMij_cloud = xr.DataArray(LijMij_cloud[np.newaxis, ...],
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='LijMij_cloud_field')
+            LijMij_env = xr.DataArray(LijMij_env[np.newaxis, ...],
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='LijMij_env_field')
+            MijMij_cloud = xr.DataArray(MijMij_cloud[np.newaxis, ...],
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='MijMij_cloud_field')
+            MijMij_env = xr.DataArray(MijMij_env[np.newaxis, ...],
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='MijMij_env_field')
 
-            Cs_cloud = None
-            Cs_env = None
-            Cth_cloud = None
-            Cth_env = None
-            Cqt_cloud = None
-            Cqt_env = None
+            HjRj_th_cloud = xr.DataArray(HjRj_th_cloud[np.newaxis, ...],
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='HjRj_th_cloud_field')
+            HjRj_th_env = xr.DataArray(HjRj_th_env[np.newaxis, ...],
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='HjRj_th_env_field')
+            RjRj_th_cloud = xr.DataArray(RjRj_th_cloud[np.newaxis, ...],
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='RjRj_th_cloud_field')
+            RjRj_th_env = xr.DataArray(RjRj_th_env[np.newaxis, ...],
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='RjRj_th_env_field')
 
-            return Cs_cloud_out, Cs_env_out, Cth_cloud_out, Cth_env_out, Cqt_cloud_out, Cqt_env_out, \
-                   Cs_cloud_prof_out, Cs_env_prof_out, Cth_cloud_prof_out, Cth_env_prof_out, Cqt_cloud_prof_out, Cqt_env_prof_out
+            HjRj_qt_cloud = xr.DataArray(HjRj_qt_cloud[np.newaxis, ...],
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='HjRj_qt_cloud_field')
+            HjRj_qt_env = xr.DataArray(HjRj_qt_env[np.newaxis, ...],
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='HjRj_qt_env_field')
+            RjRj_qt_cloud = xr.DataArray(RjRj_qt_cloud[np.newaxis, ...],
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='RjRj_qt_cloud_field')
+            RjRj_qt_env = xr.DataArray(RjRj_qt_env[np.newaxis, ...],
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='RjRj_qt_env_field')
+
+            return Cs_cloud_prof_out, Cs_env_prof_out, Cth_cloud_prof_out, Cth_env_prof_out, Cqt_cloud_prof_out, Cqt_env_prof_out, \
+                   LM_cloud_av, LM_env_av, MM_cloud_av, MM_env_av, \
+                   HR_th_cloud_av, HR_th_env_av, RR_th_cloud_av, RR_th_env_av, \
+                   HR_qt_cloud_av, HR_qt_env_av, RR_qt_cloud_av, RR_qt_env_av, \
+                    LijMij_cloud, LijMij_env, MijMij_cloud, MijMij_env, \
+                          HjRj_th_cloud, HjRj_th_env, RjRj_th_cloud, RjRj_th_env, \
+                          HjRj_qt_cloud, HjRj_qt_env, RjRj_qt_cloud, RjRj_qt_env
 
 
     #
