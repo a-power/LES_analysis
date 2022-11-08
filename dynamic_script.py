@@ -576,7 +576,77 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
         return C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, HR_field, RR_field, C_scalar_sq_field, Hj, Rj
 
 
+def LijMij_fields(scalar, indir, dx, dx_hat, ingrid):
+    """ function takes in:
 
+    save_all: 1 is for profiles, 2 is for fields, 3 is for all fields PLUS Lij and Mij"""
+
+    if scalar == 'q_total':
+        scalar_name = 'q'
+    elif scalar == 'q_cloud_liquid_mass':
+        scalar_name = 'q_l'
+    elif scalar == 'q_vapour':
+        scalar_name = 'q_v'
+    elif scalar == 'th':
+        scalar_name = 'th'
+    elif scalar == 'momentum':
+        scalar_name = 's'
+    else:
+        print("scalar not recognised, only inputs available are 'th', 'q_cloud_liquid_mass', 'q_vapour', or 'q_total'.")
+        return
+
+    file_in = f'{indir}'
+    ds_in = xr.open_dataset(file_in)
+    time_data = ds_in['time']
+    times = time_data.data
+    print('time array is', times)
+
+    x_data = ds_in['x_p']
+    x_s = x_data.data
+
+    y_data = ds_in['y_p']
+    y_s = y_data.data
+
+    z_data = ds_in['z']
+    z_s = z_data.data
+
+
+    ds_in.close()
+
+    ds_in = xr.open_dataset(file_in)
+    u_s = ds_in[f's(u,{scalar})_on_{ingrid}'].data[...]
+    v_s = ds_in[f's(v,{scalar})_on_{ingrid}'].data[...]
+    w_s = ds_in[f's(w,{scalar})_on_{ingrid}'].data[...]
+
+    if scalar == 'momentum':
+
+    LM_field = xr.DataArray(LM_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                            dims=["time", "x_p", "y_p", "z"], name='LM_field')
+
+    MM_field = xr.DataArray(MM_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                            dims=["time", "x_p", "y_p", "z"], name='MM_field')
+
+    else:
+
+    Hj = dyn.H_j(u_s, v_s, w_s)
+
+    u_s = None  # Save storage
+    v_s = None  # Save storage
+    w_s = None  # Save storage
+
+    hat_abs_S = ds_in['f(abs_S)_r'].data[...]
+    ds_dx_hat = ds_in[f'f(d{scalar_name}_dx)_r'].data[...]
+
+    HAT_abs_S_ds_dx = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[...]
+
+    Rj = dyn.R_j(dx, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
+    HAT_abs_S_ds_dx = None
+
+    HR_field = xr.DataArray(HR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                            dims=["time", "x_p", "y_p", "z"], name=f'HR_{scalar}_field')
+
+    RR_field = xr.DataArray(RR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                            dims=["time", "x_p", "y_p", "z"], name=f'RR_{scalar}_field')
 
 
 
