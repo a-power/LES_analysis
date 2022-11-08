@@ -577,9 +577,6 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
 
 
 def LijMij_fields(scalar, indir, dx, dx_hat, ingrid):
-    """ function takes in:
-
-    save_all: 1 is for profiles, 2 is for fields, 3 is for all fields PLUS Lij and Mij"""
 
     if scalar == 'q_total':
         scalar_name = 'q'
@@ -610,45 +607,96 @@ def LijMij_fields(scalar, indir, dx, dx_hat, ingrid):
     z_data = ds_in['z']
     z_s = z_data.data
 
-
     ds_in.close()
-
-    ds_in = xr.open_dataset(file_in)
-    u_s = ds_in[f's(u,{scalar})_on_{ingrid}'].data[...]
-    v_s = ds_in[f's(v,{scalar})_on_{ingrid}'].data[...]
-    w_s = ds_in[f's(w,{scalar})_on_{ingrid}'].data[...]
 
     if scalar == 'momentum':
 
-    LM_field = xr.DataArray(LM_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
-                            dims=["time", "x_p", "y_p", "z"], name='LM_field')
+        ds_in = xr.open_dataset(file_in)
+        uu = ds_in[f's(u,u)_on_{ingrid}'].data[...]
+        uv = ds_in[f's(u,v)_on_{ingrid}'].data[...]
+        uw = ds_in[f's(u,w)_on_{ingrid}'].data[...]
+        vv = ds_in[f's(v,v)_on_{ingrid}'].data[...]
+        vw = ds_in[f's(v,w)_on_{ingrid}'].data[...]
+        ww = ds_in[f's(w,w)_on_{ingrid}'].data[...]
 
-    MM_field = xr.DataArray(MM_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
-                            dims=["time", "x_p", "y_p", "z"], name='MM_field')
+        Lij = dyn.L_ij_sym_xarray(uu, uv, uw, vv, vw, ww)
+
+        uu = None  # Save storage
+        uv = None  # Save storage
+        uw = None  # Save storage
+        vv = None  # Save storage
+        vw = None  # Save storage
+        ww = None  # Save storage
+
+        hat_Sij = ds_in['f(S_ij)_r'].data[...]
+        hat_abs_S = ds_in['f(abs_S)_r'].data[...]
+
+        hat_Sij_abs_S = ds_in['f(S_ij_abs_S)_r'].data[...]
+
+        Mij = dyn.M_ij(dx, dx_hat, hat_Sij, hat_abs_S, hat_Sij_abs_S)
+
+        hat_Sij_abs_S = None
+        hat_Sij = None
+        hat_abs_S = None
+
+
+        LM_field = np.zeros_like(Lij[0, ...])
+        MM_field = np.zeros_like(Mij[0, ...])
+
+        for it in range(0, 6):
+            if it in [0, 3, 5]:
+
+                LM_field += Lij[it, ...] * Mij[it, ...]
+                MM_field += Mij[it, ...] * Mij[it, ...]
+
+            else:
+                LM_field += 2 * (Lij[it, ...] * Mij[it, ...])
+                MM_field += 2 * (Mij[it, ...] * Mij[it, ...])
+
+        LM_field = xr.DataArray(LM_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                dims=["time", "x_p", "y_p", "z"], name='LM_field')
+
+        MM_field = xr.DataArray(MM_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                dims=["time", "x_p", "y_p", "z"], name='MM_field')
+
+        return LM_field, MM_field
+
 
     else:
+        ds_in = xr.open_dataset(file_in)
+        u_s = ds_in[f's(u,{scalar})_on_{ingrid}'].data[...]
+        v_s = ds_in[f's(v,{scalar})_on_{ingrid}'].data[...]
+        w_s = ds_in[f's(w,{scalar})_on_{ingrid}'].data[...]
 
-    Hj = dyn.H_j(u_s, v_s, w_s)
+        Hj = dyn.H_j(u_s, v_s, w_s)
 
-    u_s = None  # Save storage
-    v_s = None  # Save storage
-    w_s = None  # Save storage
+        u_s = None  # Save storage
+        v_s = None  # Save storage
+        w_s = None  # Save storage
 
-    hat_abs_S = ds_in['f(abs_S)_r'].data[...]
-    ds_dx_hat = ds_in[f'f(d{scalar_name}_dx)_r'].data[...]
+        hat_abs_S = ds_in['f(abs_S)_r'].data[...]
+        ds_dx_hat = ds_in[f'f(d{scalar_name}_dx)_r'].data[...]
 
-    HAT_abs_S_ds_dx = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[...]
+        HAT_abs_S_ds_dx = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[...]
 
-    Rj = dyn.R_j(dx, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
-    HAT_abs_S_ds_dx = None
+        Rj = dyn.R_j(dx, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
+        HAT_abs_S_ds_dx = None
 
-    HR_field = xr.DataArray(HR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
-                            dims=["time", "x_p", "y_p", "z"], name=f'HR_{scalar}_field')
+        HR_field = np.zeros_like(Hj[0, ...])
+        RR_field = np.zeros_like(Rj[0, ...])
 
-    RR_field = xr.DataArray(RR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
-                            dims=["time", "x_p", "y_p", "z"], name=f'RR_{scalar}_field')
+        for it in range(0, 3):
+            HR_field += Hj[it, ...] * Rj[it, ...]
+            RR_field += Rj[it, ...] * Rj[it, ...]
 
 
+        HR_field = xr.DataArray(HR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                dims=["time", "x_p", "y_p", "z"], name=f'HR_{scalar}_field')
+
+        RR_field = xr.DataArray(RR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},
+                                dims=["time", "x_p", "y_p", "z"], name=f'RR_{scalar}_field')
+
+        return HR_field, RR_field
 
 
 
