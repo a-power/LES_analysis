@@ -502,10 +502,10 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
         C_scalar_prof = xr.DataArray(C_scalar_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
                                      dims=['time', "z"], name=f'C_{scalar}_prof')
 
-        HR_prof = xr.DataArray(HR_prof[np.newaxis, ...], coords={'time': times, 'z': z_s},
+        HR_prof = xr.DataArray(HR_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
                                dims=['time', "z"], name=f'HR_{scalar}_prof')
 
-        RR_prof = xr.DataArray(RR_prof[np.newaxis, ...], coords={'time': times, 'z': z_s},
+        RR_prof = xr.DataArray(RR_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
                                dims=['time', "z"], name=f'RR_{scalar}_prof')
 
         HR_field = xr.DataArray(HR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'z': z_s},

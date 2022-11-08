@@ -6,8 +6,7 @@ import xarray as xr
 av_type = 'all'
 mygrid = 'w'
 
-path20f = '/work/scratch-pw/apower/20m_gauss_dyn/'
-test_path = path20f+'test/'
+path20f = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/'
 file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_"
 
 data_2D = path20f+file20+str('ga00.nc')
