@@ -16,12 +16,12 @@ data_16D = path20f+file20+str('ga03.nc')
 data_32D = path20f+file20+str('ga04.nc')
 data_64D = path20f+file20+str('ga05.nc')
 
-dataset_name2 = path20f+file20+'LijMij_HjRj_2D.nc'
-dataset_name4 = path20f+file20+'LijMij_HjRj_4D.nc'
-dataset_name8 = path20f+file20+'LijMij_HjRj_8D.nc'
-dataset_name16 = path20f+file20+'LijMij_HjRj_16D.nc'
-dataset_name32 = path20f+file20+'LijMij_HjRj_32D.nc'
-dataset_name64 = path20f+file20+'LijMij_HjRj_64D.nc'
+dataset_name2 = [path20f+file20+'LijMij_2D.nc', path20f+file20+'HjRj_th_2D.nc', path20f+file20+'HjRj_qt_2D.nc']
+dataset_name4 = [path20f+file20+'LijMij_4D.nc', path20f+file20+'HjRj_th_4D.nc', path20f+file20+'HjRj_qt_4D.nc']
+dataset_name8 = [path20f+file20+'LijMij_8D.nc', path20f+file20+'HjRj_th_8D.nc', path20f+file20+'HjRj_qt_8D.nc']
+dataset_name16 = [path20f+file20+'LijMij_16D.nc', path20f+file20+'HjRj_th_16D.nc', path20f+file20+'HjRj_qt_16D.nc']
+dataset_name32 = [path20f+file20+'LijMij_32D.nc', path20f+file20+'HjRj_th_32D.nc', path20f+file20+'HjRj_qt_32D.nc']
+dataset_name64 = [path20f+file20+'LijMij_64D.nc', path20f+file20+'HjRj_th_64D.nc', path20f+file20+'HjRj_qt_64D.nc']
 
 scalar = ['momentum', 'th', 'q_total']
 
@@ -57,8 +57,8 @@ for i, scalar_in in enumerate(scalar):
     HR_field_2D, RR_field_2D = dy_s.LijMij_fields(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_2D)
 
     ds_2 = xr.Dataset()
-    ds_2.to_netcdf(dataset_name2, mode='w')
-    ds_in2 = {'file': dataset_name2, 'ds': ds_2}
+    ds_2.to_netcdf(dataset_name2[i], mode='w')
+    ds_in2 = {'file': dataset_name2[i], 'ds': ds_2}
 
     save_field(ds_in2, HR_field_2D)
     save_field(ds_in2, RR_field_2D)
@@ -74,8 +74,8 @@ for i, scalar_in in enumerate(scalar):
 
 
     ds_4 = xr.Dataset()
-    ds_4.to_netcdf(dataset_name4, mode='w')
-    ds_in4 = {'file':dataset_name4, 'ds': ds_4}
+    ds_4.to_netcdf(dataset_name4[i], mode='w')
+    ds_in4 = {'file':dataset_name4[i], 'ds': ds_4}
 
     save_field(ds_in4, HR_field_4D)
     save_field(ds_in4, RR_field_4D)
@@ -91,8 +91,8 @@ for i, scalar_in in enumerate(scalar):
     HR_field_8D, RR_field_8D = dy_s.LijMij_fields(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_8D)
 
     ds_8 = xr.Dataset()
-    ds_8.to_netcdf(dataset_name8, mode='w')
-    ds_in8 = {'file':dataset_name8, 'ds': ds_8}
+    ds_8.to_netcdf(dataset_name8[i], mode='w')
+    ds_in8 = {'file':dataset_name8[i], 'ds': ds_8}
 
     save_field(ds_in8, HR_field_8D)
     save_field(ds_in8, RR_field_8D)
@@ -107,8 +107,8 @@ for i, scalar_in in enumerate(scalar):
     HR_field_16D, RR_field_16D = dy_s.LijMij_fields(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_16D)
 
     ds_16 = xr.Dataset()
-    ds_16.to_netcdf(dataset_name16, mode='w')
-    ds_in16 = {'file':dataset_name16, 'ds': ds_16}
+    ds_16.to_netcdf(dataset_name16[i], mode='w')
+    ds_in16 = {'file':dataset_name16[i], 'ds': ds_16}
 
     save_field(ds_in16, HR_field_16D)
     save_field(ds_in16, RR_field_16D)
@@ -124,8 +124,8 @@ for i, scalar_in in enumerate(scalar):
     HR_field_32D, RR_field_32D = dy_s.LijMij_fields(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_32D)
 
     ds_32 = xr.Dataset()
-    ds_32.to_netcdf(dataset_name32, mode='w')
-    ds_in32 = {'file': dataset_name32, 'ds': ds_32}
+    ds_32.to_netcdf(dataset_name32[i], mode='w')
+    ds_in32 = {'file': dataset_name32[i], 'ds': ds_32}
 
     save_field(ds_in32, HR_field_32D)
     save_field(ds_in32, RR_field_32D)
@@ -140,8 +140,8 @@ for i, scalar_in in enumerate(scalar):
     HR_field_64D, RR_field_64D = dy_s.LijMij_fields(scalar=scalar_in, dx=20, ingrid=mygrid, **DX_64D)
 
     ds_64 = xr.Dataset()
-    ds_64.to_netcdf(dataset_name64, mode='w')
-    ds_in64 = {'file': dataset_name64, 'ds': ds_64}
+    ds_64.to_netcdf(dataset_name64[i], mode='w')
+    ds_in64 = {'file': dataset_name64[i], 'ds': ds_64}
 
     save_field(ds_in64, HR_field_64D)
     save_field(ds_in64, RR_field_64D)
