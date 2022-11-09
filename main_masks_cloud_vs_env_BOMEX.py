@@ -54,30 +54,69 @@ for i, delta_in in enumerate(deltas):
     ds_in = {'file': dataset_name[i], 'ds':ds}
 
 
-    save_field(ds_in, Cs_cloud_field)
-    save_field(ds_in, Cs_env_field)
-    save_field(ds_in, Cth_cloud_field)
-    save_field(ds_in, Cth_env_field)
-    save_field(ds_in, Cqt_cloud_field)
-    save_field(ds_in, Cqt_env_field)
     save_field(ds_in, Cs_cloud_prof)
     save_field(ds_in, Cs_env_prof)
     save_field(ds_in, Cth_cloud_prof)
     save_field(ds_in, Cth_env_prof)
     save_field(ds_in, Cqt_cloud_prof)
     save_field(ds_in, Cqt_env_prof)
+    save_field(ds_in, LM_cloud_av)
+    save_field(ds_in, LM_env_av)
+    save_field(ds_in, MM_cloud_av)
+    save_field(ds_in, MM_env_av)
+    save_field(ds_in, HR_th_cloud_av)
+    save_field(ds_in, HR_th_env_av)
+    save_field(ds_in, RR_th_cloud_av)
+    save_field(ds_in, RR_th_env_av)
+    save_field(ds_in, HR_qt_cloud_av)
+    save_field(ds_in, HR_qt_env_av)
+    save_field(ds_in, RR_qt_cloud_av)
+    save_field(ds_in, RR_qt_env_av)
+
+    save_field(ds_in, LijMij_cloud)
+    save_field(ds_in, LijMij_env)
+    save_field(ds_in, MijMij_cloud)
+    save_field(ds_in, MijMij_env)
+    save_field(ds_in, HjRj_th_cloud)
+    save_field(ds_in, HjRj_th_env)
+    save_field(ds_in, RjRj_th_cloud)
+    save_field(ds_in, RjRj_th_env)
+    save_field(ds_in, HjRj_qt_cloud)
+    save_field(ds_in, HjRj_qt_env)
+    save_field(ds_in, RjRj_qt_cloud)
+    save_field(ds_in, RjRj_qt_env)
+
 
     ds.close()
 
-    Cs_cloud_field = None
-    Cs_env_field = None
-    Cth_cloud_field = None
-    Cth_env_field = None
-    Cqt_cloud_field = None
-    Cth_env_field = None
     Cs_cloud_prof = None
     Cs_env_prof = None
     Cth_cloud_prof = None
     Cth_env_prof = None
     Cqt_cloud_prof = None
     Cqt_env_prof = None
+    LM_cloud_av = None
+    LM_env_av = None
+    MM_cloud_av = None
+    MM_env_av = None
+    HR_th_cloud_av = None
+    RR_th_env_av = None
+    HR_th_cloud_av = None
+    RR_th_env_av = None
+    HR_qt_cloud_av = None
+    RR_qt_env_av = None
+    HR_qt_cloud_av = None
+    RR_qt_env_av = None
+
+    LijMij_cloud = None
+    LijMij_env = None
+    MijMij_cloud = None
+    MijMij_env = None
+    HjRj_th_cloud = None
+    HjRj_th_env = None
+    RjRj_th_cloud = None
+    RjRj_th_env = None
+    HjRj_qt_cloud = None
+    HjRj_qt_env = None
+    RjRj_qt_cloud = None
+    RjRj_qt_env = None
