@@ -100,12 +100,12 @@ for i, delta_in in enumerate(deltas):
     MM_cloud_av = None
     MM_env_av = None
     HR_th_cloud_av = None
-    RR_th_env_av = None
-    HR_th_cloud_av = None
+    HR_th_env_av = None
+    RR_th_cloud_av = None
     RR_th_env_av = None
     HR_qt_cloud_av = None
-    RR_qt_env_av = None
-    HR_qt_cloud_av = None
+    HR_qt_env_av = None
+    RR_qt_cloud_av = None
     RR_qt_env_av = None
 
     LijMij_cloud = None
