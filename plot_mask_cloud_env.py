@@ -7,32 +7,16 @@ import dynamic_functions as dyn
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
-dir_data_Cs = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_Cs_'
-dir_data_C_th = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_th_'
-dir_data_Cq_tot = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_qt_'
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/plots/coarse_data/'
+dir_data = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_cloud_vs_env_'
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/plots/coarse_data/cloud_v_env/'
 os.makedirs(plotdir, exist_ok = True)
 
-data_2D_s = xr.open_dataset(dir_data_Cs + '2D.nc')
-data_4D_s = xr.open_dataset(dir_data_Cs + '4D.nc')
-data_8D_s = xr.open_dataset(dir_data_Cs + '8D.nc')
-data_16D_s = xr.open_dataset(dir_data_Cs + '16D.nc')
-data_32D_s = xr.open_dataset(dir_data_Cs + '32D.nc')
-data_64D_s = xr.open_dataset(dir_data_Cs + '64D.nc')
-
-data_2D_th = xr.open_dataset(dir_data_C_th + '2D.nc')
-data_4D_th = xr.open_dataset(dir_data_C_th + '4D.nc')
-data_8D_th = xr.open_dataset(dir_data_C_th + '8D.nc')
-data_16D_th = xr.open_dataset(dir_data_C_th + '16D.nc')
-data_32D_th = xr.open_dataset(dir_data_C_th + '32D.nc')
-data_64D_th = xr.open_dataset(dir_data_C_th + '64D.nc')
-
-data_2D_qtot = xr.open_dataset(dir_data_Cq_tot + '2D.nc')
-data_4D_qtot = xr.open_dataset(dir_data_Cq_tot + '4D.nc')
-data_8D_qtot = xr.open_dataset(dir_data_Cq_tot + '8D.nc')
-data_16D_qtot = xr.open_dataset(dir_data_Cq_tot + '16D.nc')
-data_32D_qtot = xr.open_dataset(dir_data_Cq_tot + '32D.nc')
-data_64D_qtot = xr.open_dataset(dir_data_Cq_tot + '64D.nc')
+data_2D = xr.open_dataset(dir_data + '2D.nc')
+data_4D = xr.open_dataset(dir_data + '4D.nc')
+data_8D = xr.open_dataset(dir_data + '8D.nc')
+data_16D = xr.open_dataset(dir_data + '16D.nc')
+data_32D = xr.open_dataset(dir_data + '32D.nc')
+data_64D = xr.open_dataset(dir_data + '64D.nc')
 
 
 z = np.arange(0, 3020, 20)
@@ -40,141 +24,253 @@ z_i = 490
 
 #index of 0 at the start is to get rid of the dummy time index thats required to save the files
 
-Cs_2 = data_2D_s['Cs_prof'].data[0, ...]
-Cs_4 = data_4D_s['Cs_prof'].data[0, ...]
-Cs_8 = data_8D_s['Cs_prof'].data[0, ...]
-Cs_16 = data_16D_s['Cs_prof'].data[0, ...]
-Cs_32 = data_32D_s['Cs_prof'].data[0, ...]
-Cs_64 = data_64D_s['Cs_prof'].data[0, ...]
+Cs_cloud_2 = data_2D['Cs_cloud_prof'].data[0, ...]
+Cs_cloud_4 = data_4D['Cs_cloud_prof'].data[0, ...]
+Cs_cloud_8 = data_8D['Cs_cloud_prof'].data[0, ...]
+Cs_cloud_16 = data_16D['Cs_cloud_prof'].data[0, ...]
+Cs_cloud_32 = data_32D['Cs_cloud_prof'].data[0, ...]
+Cs_cloud_64 = data_64D['Cs_cloud_prof'].data[0, ...]
 
-Cth_2 = data_2D_th['C_th_prof'].data[0, ...]
-Cth_4 = data_4D_th['C_th_prof'].data[0, ...]
-Cth_8 = data_8D_th['C_th_prof'].data[0, ...]
-Cth_16 = data_16D_th['C_th_prof'].data[0, ...]
-Cth_32 = data_32D_th['C_th_prof'].data[0, ...]
-Cth_64 = data_64D_th['C_th_prof'].data[0, ...]
+Cth_cloud_2 = data_2D['Cth_cloud_prof'].data[0, ...]
+Cth_cloud_4 = data_4D['Cth_cloud_prof'].data[0, ...]
+Cth_cloud_8 = data_8D['Cth_cloud_prof'].data[0, ...]
+Cth_cloud_16 = data_16D['Cth_cloud_prof'].data[0, ...]
+Cth_cloud_32 = data_32D['Cth_cloud_prof'].data[0, ...]
+Cth_cloud_64 = data_64D['Cth_cloud_prof'].data[0, ...]
 
-Cq_2 = data_2D_qtot['C_q_total_prof'].data[0, ...]
-Cq_4 = data_4D_qtot['C_q_total_prof'].data[0, ...]
-Cq_8 = data_8D_qtot['C_q_total_prof'].data[0, ...]
-Cq_16 = data_16D_qtot['C_q_total_prof'].data[0, ...]
-Cq_32 = data_32D_qtot['C_q_total_prof'].data[0, ...]
-Cq_64 = data_64D_qtot['C_q_total_prof'].data[0, ...]
+Cqt_cloud_2 = data_2D['Cqt_cloud_prof'].data[0, ...]
+Cqt_cloud_4 = data_4D['Cqt_cloud_prof'].data[0, ...]
+Cqt_cloud_8 = data_8D['Cqt_cloud_prof'].data[0, ...]
+Cqt_cloud_16 = data_16D['Cqt_cloud_prof'].data[0, ...]
+Cqt_cloud_32 = data_32D['Cqt_cloud_prof'].data[0, ...]
+Cqt_cloud_64 = data_64D['Cqt_cloud_prof'].data[0, ...]
 
-# Cql_2 = data_2D_th['C_ql_prof'].data[0, ...]
-# Cql_4 = data_4D_th['C_ql_prof'].data[0, ...]
-#
-# Cqv_2 = data_2D_th['C_qv_prof'].data[0, ...]
-# Cqv_4 = data_4D_th['C_qv_prof'].data[0, ...]
+###############################################################
 
 
+Cs_env_2 = data_2D['Cs_env_prof'].data[0, ...]
+Cs_env_4 = data_4D['Cs_env_prof'].data[0, ...]
+Cs_env_8 = data_8D['Cs_env_prof'].data[0, ...]
+Cs_env_16 = data_16D['Cs_env_prof'].data[0, ...]
+Cs_env_32 = data_32D['Cs_env_prof'].data[0, ...]
+Cs_env_64 = data_64D['Cs_env_prof'].data[0, ...]
 
-Cs_sq_2 = data_2D_s['Cs_sq_prof'].data[0, ...]
-Cs_sq_4 = data_4D_s['Cs_sq_prof'].data[0, ...]
-Cs_sq_8 = data_8D_s['Cs_sq_prof'].data[0, ...]
-Cs_sq_16 = data_16D_s['Cs_sq_prof'].data[0, ...]
-Cs_sq_32 = data_32D_s['Cs_sq_prof'].data[0, ...]
-Cs_sq_64 = data_64D_s['Cs_sq_prof'].data[0, ...]
+Cth_env_2 = data_2D['Cth_env_prof'].data[0, ...]
+Cth_env_4 = data_4D['Cth_env_prof'].data[0, ...]
+Cth_env_8 = data_8D['Cth_env_prof'].data[0, ...]
+Cth_env_16 = data_16D['Cth_env_prof'].data[0, ...]
+Cth_env_32 = data_32D['Cth_env_prof'].data[0, ...]
+Cth_env_64 = data_64D['Cth_env_prof'].data[0, ...]
 
-Cth_sq_2 = data_2D_th['C_th_sq_prof'].data[0, ...]
-Cth_sq_4 = data_4D_th['C_th_sq_prof'].data[0, ...]
-Cth_sq_8 = data_8D_th['C_th_sq_prof'].data[0, ...]
-Cth_sq_16 = data_16D_th['C_th_sq_prof'].data[0, ...]
-Cth_sq_32 = data_32D_th['C_th_sq_prof'].data[0, ...]
-Cth_sq_64 = data_64D_th['C_th_sq_prof'].data[0, ...]
-
-Cq_sq_2 = data_2D_qtot['C_q_total_sq_prof'].data[0, ...]
-Cq_sq_4 = data_4D_qtot['C_q_total_sq_prof'].data[0, ...]
-Cq_sq_8 = data_8D_qtot['C_q_total_sq_prof'].data[0, ...]
-Cq_sq_16 = data_16D_qtot['C_q_total_sq_prof'].data[0, ...]
-Cq_sq_32 = data_32D_qtot['C_q_total_sq_prof'].data[0, ...]
-Cq_sq_64 = data_64D_qtot['C_q_total_sq_prof'].data[0, ...]
+Cqt_env_2 = data_2D['Cqt_env_prof'].data[0, ...]
+Cqt_env_4 = data_4D['Cqt_env_prof'].data[0, ...]
+Cqt_env_8 = data_8D['Cqt_env_prof'].data[0, ...]
+Cqt_env_16 = data_16D['Cqt_env_prof'].data[0, ...]
+Cqt_env_32 = data_32D['Cqt_env_prof'].data[0, ...]
+Cqt_env_64 = data_64D['Cqt_env_prof'].data[0, ...]
 
 
 ########################################################################################################################
 
 
-beta_s = dyn.beta_calc(Cs_sq_2, Cs_sq_4)
-beta_th = dyn.beta_calc(Cth_sq_2, Cth_sq_4)
-beta_q = dyn.beta_calc(Cq_sq_2, Cq_sq_4)
+LijMij_cloud_2 = data_2D['LijMij_cloud_prof'].data[0, ...]
+LijMij_cloud_4 = data_4D['LijMij_cloud_prof'].data[0, ...]
+LijMij_cloud_8 = data_8D['LijMij_cloud_prof'].data[0, ...]
+LijMij_cloud_16 = data_16D['LijMij_cloud_prof'].data[0, ...]
+LijMij_cloud_32 = data_32D['LijMij_cloud_prof'].data[0, ...]
+LijMij_cloud_64 = data_64D['LijMij_cloud_prof'].data[0, ...]
 
-# plt.figure(figsize=(6,7))
-# plt.plot(beta_s, z)
-# plt.xlabel('$\\beta_s$', fontsize=14)
-# plt.ylabel("z (m)")
-# plt.xlim(0, 1)
-# plt.savefig(plotdir+'Cs_beta_prof.png', pad_inches=0)
-#
-# plt.figure(figsize=(6,7))
-# plt.plot(beta_th, z)
-# plt.xlabel('$\\beta_{\\theta}$', fontsize=14)
-# plt.ylabel("z (m)")
-# plt.xlim(0, 1)
-# plt.savefig(plotdir+'Cth_beta_prof.png', pad_inches=0)
-#
-# plt.figure(figsize=(6,7))
-# plt.plot(beta_q, z)
-# plt.xlabel('$\\beta_{qt}$', fontsize=14)
-# plt.ylabel("z (m)")
-# plt.xlim(0.19, 0.21)
-# plt.savefig(plotdir+'Cq_beta_prof.png', pad_inches=0)
+HjRj_th_cloud_2 = data_2D['HjRj_th_cloud_prof'].data[0, ...]
+HjRj_th_cloud_4 = data_4D['HjRj_th_cloud_prof'].data[0, ...]
+HjRj_th_cloud_8 = data_8D['HjRj_th_cloud_prof'].data[0, ...]
+HjRj_th_cloud_16 = data_16D['HjRj_th_cloud_prof'].data[0, ...]
+HjRj_th_cloud_32 = data_32D['HjRj_th_cloud_prof'].data[0, ...]
+HjRj_th_cloud_64 = data_64D['HjRj_th_cloud_prof'].data[0, ...]
 
-# plt.figure(figsize=(6,7))
-# plt.plot(beta_s, z, label='$\\beta_s$')
-# plt.plot(beta_th, z, label='$\\beta_{\\theta}$')
-# plt.plot(beta_q, z, label='$\\beta_{qt}$')
-# plt.legend(fontsize=12, loc='upper right')
-# plt.xlabel('$\\beta$', fontsize=14)
-# plt.ylabel("z (m)")
-# #plt.xlim(0, 1)
-# plt.savefig(plotdir+'all_beta_profs.png', pad_inches=0)
-# plt.close()
+HjRj_qt_cloud_2 = data_2D['HjRj_qt_cloud_prof'].data[0, ...]
+HjRj_qt_cloud_4 = data_4D['HjRj_qt_cloud_prof'].data[0, ...]
+HjRj_qt_cloud_8 = data_8D['HjRj_qt_cloud_prof'].data[0, ...]
+HjRj_qt_cloud_16 = data_16D['HjRj_qt_cloud_prof'].data[0, ...]
+HjRj_qt_cloud_32 = data_32D['HjRj_qt_cloud_prof'].data[0, ...]
+HjRj_qt_cloud_64 = data_64D['HjRj_qt_cloud_prof'].data[0, ...]
+
+###############################################################
 
 
+MijMij_cloud_2 = data_2D['MijMij_cloud_prof'].data[0, ...]
+MijMij_cloud_4 = data_4D['MijMij_cloud_prof'].data[0, ...]
+MijMij_cloud_8 = data_8D['MijMij_cloud_prof'].data[0, ...]
+MijMij_cloud_16 = data_16D['MijMij_cloud_prof'].data[0, ...]
+MijMij_cloud_32 = data_32D['MijMij_cloud_prof'].data[0, ...]
+MijMij_cloud_64 = data_64D['MijMij_cloud_prof'].data[0, ...]
 
-# plt.figure(figsize=(6,7))
-# plt.plot(beta_s, z/z_i)
-# plt.xlabel('$\\beta_s$', fontsize=14)
-# plt.ylabel("z/z$_{ML}$")
-# plt.xlim(0, 1)
-# plt.savefig(plotdir+'Cs_beta_prof_scaled.png', pad_inches=0)
-#
-# plt.figure(figsize=(6,7))
-# plt.plot(beta_th, z/z_i)
-# plt.xlabel('$\\beta_{\\theta}$', fontsize=14)
-# plt.ylabel("z/z$_{ML}$")
-# plt.xlim(0, 1)
-# plt.savefig(plotdir+'Cth_beta_prof_scaled.png', pad_inches=0)
-#
-# plt.figure(figsize=(6,7))
-# plt.plot(beta_q, z/z_i)
-# plt.xlabel('$\\beta_{qt}$', fontsize=14)
-# plt.ylabel("z/z$_{ML}$")
-# plt.xlim(0.19, 0.21)
-# plt.savefig(plotdir+'Cq_beta_prof_scaled.png', pad_inches=0)
+RjRj_th_cloud_2 = data_2D['RjRj_th_cloud_prof'].data[0, ...]
+RjRj_th_cloud_4 = data_4D['RjRj_th_cloud_prof'].data[0, ...]
+RjRj_th_cloud_8 = data_8D['RjRj_th_cloud_prof'].data[0, ...]
+RjRj_th_cloud_16 = data_16D['RjRj_th_cloud_prof'].data[0, ...]
+RjRj_th_cloud_32 = data_32D['RjRj_th_cloud_prof'].data[0, ...]
+RjRj_th_cloud_64 = data_64D['RjRj_th_cloud_prof'].data[0, ...]
+
+RjRj_qt_cloud_2 = data_2D['RjRj_qt_cloud_prof'].data[0, ...]
+RjRj_qt_cloud_4 = data_4D['RjRj_qt_cloud_prof'].data[0, ...]
+RjRj_qt_cloud_8 = data_8D['RjRj_qt_cloud_prof'].data[0, ...]
+RjRj_qt_cloud_16 = data_16D['RjRj_qt_cloud_prof'].data[0, ...]
+RjRj_qt_cloud_32 = data_32D['RjRj_qt_cloud_prof'].data[0, ...]
+RjRj_qt_cloud_64 = data_64D['RjRj_qt_cloud_prof'].data[0, ...]
+
+###############################################################
+
+
+MijMij_env_2 = data_2D['MijMij_env_prof'].data[0, ...]
+MijMij_env_4 = data_4D['MijMij_env_prof'].data[0, ...]
+MijMij_env_8 = data_8D['MijMij_env_prof'].data[0, ...]
+MijMij_env_16 = data_16D['MijMij_env_prof'].data[0, ...]
+MijMij_env_32 = data_32D['MijMij_env_prof'].data[0, ...]
+MijMij_env_64 = data_64D['MijMij_env_prof'].data[0, ...]
+
+RjRj_th_env_2 = data_2D['RjRj_th_env_prof'].data[0, ...]
+RjRj_th_env_4 = data_4D['RjRj_th_env_prof'].data[0, ...]
+RjRj_th_env_8 = data_8D['RjRj_th_env_prof'].data[0, ...]
+RjRj_th_env_16 = data_16D['RjRj_th_env_prof'].data[0, ...]
+RjRj_th_env_32 = data_32D['RjRj_th_env_prof'].data[0, ...]
+RjRj_th_env_64 = data_64D['RjRj_th_env_prof'].data[0, ...]
+
+RjRj_qt_env_2 = data_2D['RjRj_qt_env_prof'].data[0, ...]
+RjRj_qt_env_4 = data_4D['RjRj_qt_env_prof'].data[0, ...]
+RjRj_qt_env_8 = data_8D['RjRj_qt_env_prof'].data[0, ...]
+RjRj_qt_env_16 = data_16D['RjRj_qt_env_prof'].data[0, ...]
+RjRj_qt_env_32 = data_32D['RjRj_qt_env_prof'].data[0, ...]
+RjRj_qt_env_64 = data_64D['RjRj_qt_env_prof'].data[0, ...]
+
+
+
+################################################################
+
+
+LijMij_env_2 = data_2D['LijMij_env_prof'].data[0, ...]
+LijMij_env_4 = data_4D['LijMij_env_prof'].data[0, ...]
+LijMij_env_8 = data_8D['LijMij_env_prof'].data[0, ...]
+LijMij_env_16 = data_16D['LijMij_env_prof'].data[0, ...]
+LijMij_env_32 = data_32D['LijMij_env_prof'].data[0, ...]
+LijMij_env_64 = data_64D['LijMij_env_prof'].data[0, ...]
+
+HjRj_th_env_2 = data_2D['HjRj_th_env_prof'].data[0, ...]
+HjRj_th_env_4 = data_4D['HjRj_th_env_prof'].data[0, ...]
+HjRj_th_env_8 = data_8D['HjRj_th_env_prof'].data[0, ...]
+HjRj_th_env_16 = data_16D['HjRj_th_env_prof'].data[0, ...]
+HjRj_th_env_32 = data_32D['HjRj_th_env_prof'].data[0, ...]
+HjRj_th_env_64 = data_64D['HjRj_th_env_prof'].data[0, ...]
+
+HjRj_qt_env_2 = data_2D['HjRj_qt_env_prof'].data[0, ...]
+HjRj_qt_env_4 = data_4D['HjRj_qt_env_prof'].data[0, ...]
+HjRj_qt_env_8 = data_8D['HjRj_qt_env_prof'].data[0, ...]
+HjRj_qt_env_16 = data_16D['HjRj_qt_env_prof'].data[0, ...]
+HjRj_qt_env_32 = data_32D['HjRj_qt_env_prof'].data[0, ...]
+HjRj_qt_env_64 = data_64D['HjRj_qt_env_prof'].data[0, ...]
+
+
+########################################################################################################################
+
+
+
+Cs_sq_cloud_2 = LijMij_cloud_2 / MijMij_cloud_2
+Cs_sq_cloud_4 = LijMij_cloud_4 / MijMij_cloud_4
+Cs_sq_cloud_8 = LijMij_cloud_8 / MijMij_cloud_8
+Cs_sq_cloud_16 = LijMij_cloud_16 / MijMij_cloud_16
+Cs_sq_cloud_32 = LijMij_cloud_32 / MijMij_cloud_32
+Cs_sq_cloud_64 = LijMij_cloud_64 / MijMij_cloud_64
+
+Cth_sq_cloud_2 = HjRj_th_cloud_2 / RjRj_th_cloud_2
+Cth_sq_cloud_4 = HjRj_th_cloud_4 / RjRj_th_cloud_4
+Cth_sq_cloud_8 = HjRj_th_cloud_8 / RjRj_th_cloud_8
+Cth_sq_cloud_16 = HjRj_th_cloud_16 / RjRj_th_cloud_16
+Cth_sq_cloud_32 = HjRj_th_cloud_32 / RjRj_th_cloud_32
+Cth_sq_cloud_64 = HjRj_th_cloud_64 / RjRj_th_cloud_64
+
+Cqt_sq_cloud_2 = HjRj_qt_cloud_2 / RjRj_qt_cloud_2
+Cqt_sq_cloud_4 = HjRj_qt_cloud_4 / RjRj_qt_cloud_4
+Cqt_sq_cloud_8 = HjRj_qt_cloud_8 / RjRj_qt_cloud_8
+Cqt_sq_cloud_16 = HjRj_qt_cloud_16 / RjRj_qt_cloud_16
+Cqt_sq_cloud_32 = HjRj_qt_cloud_32 / RjRj_qt_cloud_32
+Cqt_sq_cloud_64 = HjRj_qt_cloud_64 / RjRj_qt_cloud_64
+###############################################################
+
+
+Cs_sq_env_2 = LijMij_env_2 / MijMij_env_2
+Cs_sq_env_4 = LijMij_env_4 / MijMij_env_4
+Cs_sq_env_8 = LijMij_env_8 / MijMij_env_8
+Cs_sq_env_16 = LijMij_env_16 / MijMij_env_16
+Cs_sq_env_32 = LijMij_env_32 / MijMij_env_32
+Cs_sq_env_64 = LijMij_env_64 / MijMij_env_64
+
+Cth_sq_env_2 = HjRj_th_env_2 / RjRj_th_env_2
+Cth_sq_env_4 = HjRj_th_env_4 / RjRj_th_env_4
+Cth_sq_env_8 = HjRj_th_env_8 / RjRj_th_env_8
+Cth_sq_env_16 = HjRj_th_env_16 / RjRj_th_env_16
+Cth_sq_env_32 = HjRj_th_env_32 / RjRj_th_env_32
+Cth_sq_env_64 = HjRj_th_env_64 / RjRj_th_env_64
+
+Cqt_sq_env_2 = HjRj_qt_env_2 / RjRj_qt_env_2
+Cqt_sq_env_4 = HjRj_qt_env_4 / RjRj_qt_env_4
+Cqt_sq_env_8 = HjRj_qt_env_8 / RjRj_qt_env_8
+Cqt_sq_env_16 = HjRj_qt_env_16 / RjRj_qt_env_16
+Cqt_sq_env_32 = HjRj_qt_env_32 / RjRj_qt_env_32
+Cqt_sq_env_64 = HjRj_qt_env_64 / RjRj_qt_env_64
+
+
+###################################################################################################
+
+beta_s_cloud = dyn.beta_calc(Cs_sq_cloud_2, Cs_sq_cloud_4)
+beta_th_cloud = dyn.beta_calc(Cth_sq_cloud_2, Cth_sq_cloud_4)
+beta_q_cloud = dyn.beta_calc(Cqt_sq_cloud_2, Cqt_sq_cloud_4)
+
+beta_s_env = dyn.beta_calc(Cs_sq_env_2, Cs_sq_env_4)
+beta_th_env = dyn.beta_calc(Cth_sq_env_2, Cth_sq_env_4)
+beta_q_env = dyn.beta_calc(Cqt_sq_env_2, Cqt_sq_env_4)
+
+
 
 plt.figure(figsize=(6,7))
-plt.plot(beta_s, z/z_i, label='$\\beta_s$')
-plt.plot(beta_th, z/z_i, label='$\\beta_{\\theta}$')
-plt.plot(beta_q, z/z_i, label='$\\beta_{qt}$')
+plt.plot(beta_s_cloud, z/z_i, label='$\\beta_s$')
+plt.plot(beta_th_cloud, z/z_i, label='$\\beta_{\\theta}$')
+plt.plot(beta_q_cloud, z/z_i, label='$\\beta_{qt}$')
 plt.legend(fontsize=12, loc='upper right')
-plt.xlabel('$\\beta$', fontsize=14)
+plt.xlabel('$\\beta$ in cloud', fontsize=14)
 plt.ylabel("z/z$_{ML}$")
 plt.xlim(0, 1)
-plt.savefig(plotdir+'all_beta_profs_scaled.png', pad_inches=0)
+plt.savefig(plotdir+'all_beta_profs_cloud_scaled.png', pad_inches=0)
+plt.close()
+
+plt.figure(figsize=(6,7))
+plt.plot(beta_s_env, z/z_i, label='$\\beta_s$')
+plt.plot(beta_th_env, z/z_i, label='$\\beta_{\\theta}$')
+plt.plot(beta_q_env, z/z_i, label='$\\beta_{qt}$')
+plt.legend(fontsize=12, loc='upper right')
+plt.xlabel('$\\beta$ in env', fontsize=14)
+plt.ylabel("z/z$_{ML}$")
+plt.xlim(0, 1)
+plt.savefig(plotdir+'all_beta_profs_env_scaled.png', pad_inches=0)
 plt.close()
 
 
 ###########################################################################################################
 
 
-Cs_beta_sq = Cs_sq_2/beta_s
-Cth_beta_sq = Cth_sq_2/beta_th
-Cq_beta_sq = Cq_sq_2/beta_q
+Cs_cloud_beta_sq = Cs_sq_cloud_2/beta_s_cloud
+Cth_cloud_beta_sq = Cth_sq_cloud_2/beta_th_cloud
+Cqt_cloud_beta_sq = Cqt_sq_cloud_2/beta_q_cloud
 
-Cs_beta = dyn.get_Cs(Cs_beta_sq)
-Cth_beta = dyn.get_Cs(Cth_beta_sq)
-Cq_beta = dyn.get_Cs(Cq_beta_sq)
+Cs_env_beta_sq = Cs_sq_env_2/beta_s_env
+Cth_env_beta_sq = Cth_sq_env_2/beta_th_env
+Cqt_env_beta_sq = Cqt_sq_env_2/beta_q_env
+
+Cs_cloud_beta = dyn.get_Cs(Cs_cloud_beta_sq)
+Cth_cloud_beta = dyn.get_Cs(Cth_cloud_beta_sq)
+Cqt_cloud_beta = dyn.get_Cs(Cqt_cloud_beta_sq)
+
+Cs_env_beta = dyn.get_Cs(Cs_env_beta_sq)
+Cth_env_beta = dyn.get_Cs(Cth_env_beta_sq)
+Cqt_env_beta = dyn.get_Cs(Cqt_env_beta_sq)
 
 
 # plt.figure(figsize=(6,7))
@@ -188,35 +284,71 @@ Cq_beta = dyn.get_Cs(Cq_beta_sq)
 # plt.savefig(plotdir+'Cs_prof.png', pad_inches=0)
 
 plt.figure(figsize=(6,7))
-plt.plot(Cs_beta, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Cs_2, z/z_i, label = '$\\Delta = 40}m$')
-plt.plot(Cs_4, z/z_i, label = '$\\Delta = 80}m$')
-plt.plot(Cs_8, z/z_i, label = '$\\Delta = 160}m$')
-plt.plot(Cs_16, z/z_i, label = '$\\Delta = 320}m$')
-plt.plot(Cs_32, z/z_i, label = '$\\Delta = 640}m$')
-plt.plot(Cs_64, z/z_i, label = '$\\Delta = 1280}m$')
-plt.xlabel('$C_{s}$', fontsize=16)
+plt.plot(Cs_cloud_beta, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cs_cloud_2, z/z_i, label = '$\\Delta = 40}m$')
+plt.plot(Cs_cloud_4, z/z_i, label = '$\\Delta = 80}m$')
+plt.plot(Cs_cloud_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cs_cloud_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cs_cloud_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cs_cloud_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C_{s}$ in Cloud', fontsize=16)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
-plt.savefig(plotdir+'Cs_prof_scaled.png', pad_inches=0)
+plt.savefig(plotdir+'Cs_cloud_prof_scaled.png', pad_inches=0)
 plt.close()
 
 
 plt.figure(figsize=(6,7))
-plt.plot(Cs_beta_sq, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Cs_sq_2, z/z_i, label = '$\\Delta = 40}m$')
-plt.plot(Cs_sq_4, z/z_i, label = '$\\Delta = 80}m$')
-plt.plot(Cs_sq_8, z/z_i, label = '$\\Delta = 160}m$')
-plt.plot(Cs_sq_16, z/z_i, label = '$\\Delta = 320}m$')
-plt.plot(Cs_sq_32, z/z_i, label = '$\\Delta = 640}m$')
-plt.plot(Cs_sq_64, z/z_i, label = '$\\Delta = 1280}m$')
-plt.xlabel('$C^2_{s}$', fontsize=16)
+plt.plot(Cs_env_beta, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cs_env_2, z/z_i, label = '$\\Delta = 40}m$')
+plt.plot(Cs_env_4, z/z_i, label = '$\\Delta = 80}m$')
+plt.plot(Cs_env_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cs_env_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cs_env_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cs_env_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C_{s}$ in env', fontsize=16)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
-plt.savefig(plotdir+'Cs_sq_prof_scaled.png', pad_inches=0)
+plt.savefig(plotdir+'Cs_env_prof_scaled.png', pad_inches=0)
 plt.close()
+
+
+
+
+plt.figure(figsize=(6,7))
+plt.plot(Cs_cloud_beta_sq, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cs_sq_cloud_2, z/z_i, label = '$\\Delta = 40}m$')
+plt.plot(Cs_sq_cloud_4, z/z_i, label = '$\\Delta = 80}m$')
+plt.plot(Cs_sq_cloud_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cs_sq_cloud_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cs_sq_cloud_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cs_sq_cloud_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C^2_{s}$ in Cloud', fontsize=16)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cs_sq_cloud_prof_scaled.png', pad_inches=0)
+plt.close()
+
+
+plt.figure(figsize=(6,7))
+plt.plot(Cs_env_beta_sq, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cs_sq_env_2, z/z_i, label = '$\\Delta = 40}m$')
+plt.plot(Cs_sq_env_4, z/z_i, label = '$\\Delta = 80}m$')
+plt.plot(Cs_sq_env_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cs_sq_env_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cs_sq_env_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cs_sq_env_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C^2_{s}$ in env', fontsize=16)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cs_sq_env_prof_scaled.png', pad_inches=0)
+plt.close()
+
+
 
 
 #
@@ -231,78 +363,145 @@ plt.close()
 # plt.savefig(plotdir+'Cqt_prof.png', pad_inches=0)
 
 plt.figure(figsize=(6,7))
-plt.plot(Cq_beta, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Cq_2, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Cq_4, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Cq_8, z/z_i, label = '$\\Delta = 160}m$')
-plt.plot(Cq_16, z/z_i, label = '$\\Delta = 320}m$')
-plt.plot(Cq_32, z/z_i, label = '$\\Delta = 640}m$')
-plt.plot(Cq_64, z/z_i, label = '$\\Delta = 1280}m$')
-plt.xlabel('$C_{qt}$', fontsize=14)
+plt.plot(Cth_cloud_beta, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cth_cloud_2, z/z_i, label = '$\\Delta = 40}m$')
+plt.plot(Cth_cloud_4, z/z_i, label = '$\\Delta = 80}m$')
+plt.plot(Cth_cloud_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cth_cloud_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cth_cloud_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cth_cloud_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C_{s}$ in Cloud', fontsize=16)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
-plt.savefig(plotdir+'Cqt_prof_scaled.png', pad_inches=0)
+plt.savefig(plotdir+'Cth_cloud_prof_scaled.png', pad_inches=0)
 plt.close()
 
 
 plt.figure(figsize=(6,7))
-plt.plot(Cq_beta_sq, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Cq_sq_2, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Cq_sq_4, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Cq_sq_8, z/z_i, label = '$\\Delta = 160}m$')
-plt.plot(Cq_sq_16, z/z_i, label = '$\\Delta = 320}m$')
-plt.plot(Cq_sq_32, z/z_i, label = '$\\Delta = 640}m$')
-plt.plot(Cq_sq_64, z/z_i, label = '$\\Delta = 1280}m$')
-plt.xlabel('$C^2_{qt}$', fontsize=14)
+plt.plot(Cth_env_beta, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cth_env_2, z/z_i, label = '$\\Delta = 40}m$')
+plt.plot(Cth_env_4, z/z_i, label = '$\\Delta = 80}m$')
+plt.plot(Cth_env_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cth_env_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cth_env_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cth_env_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C_{s}$ in env', fontsize=16)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
-plt.savefig(plotdir+'Cqt_sq_prof_scaled.png', pad_inches=0)
+plt.savefig(plotdir+'Cth_env_prof_scaled.png', pad_inches=0)
 plt.close()
 
 
-#
-# plt.figure(figsize=(6,7))
-# plt.plot(Cth_beta, z, label = '$\\Delta = 20$m')
-# plt.plot(Cth_2, z, label = '$\\Delta = 40$m')
-# plt.plot(Cth_4, z, label = '$\\Delta = 80$m')
-# plt.xlabel('$C_{\\theta}$', fontsize=14)
-# plt.ylabel("z (m)")
-# plt.legend(fontsize=12, loc='upper right')
-# #plt.xlim(1, 3)
-# plt.savefig(plotdir+'Cth_prof.png', pad_inches=0)
-
-plt.figure(figsize=(6,7))
-plt.plot(Cth_beta, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Cth_2, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Cth_4, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Cth_8, z/z_i, label = '$\\Delta = 160}m$')
-plt.plot(Cth_16, z/z_i, label = '$\\Delta = 320}m$')
-plt.plot(Cth_32, z/z_i, label = '$\\Delta = 640}m$')
-plt.plot(Cth_64, z/z_i, label = '$\\Delta = 1280}m$')
-plt.xlabel('$C_{\\theta}$', fontsize=14)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
-plt.legend(fontsize=12, loc='upper right')
-#plt.xlim(1, 3)
-plt.savefig(plotdir+'Cth_prof_scaled.png', pad_inches=0)
-plt.close
 
 
 plt.figure(figsize=(6,7))
-plt.plot(Cth_beta_sq, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Cth_sq_2, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Cth_sq_4, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Cth_sq_8, z/z_i, label = '$\\Delta = 160}m$')
-plt.plot(Cth_sq_16, z/z_i, label = '$\\Delta = 320}m$')
-plt.plot(Cth_sq_32, z/z_i, label = '$\\Delta = 640}m$')
-plt.plot(Cth_sq_64, z/z_i, label = '$\\Delta = 1280}m$')
-plt.xlabel('$C^2_{\\theta}$', fontsize=14)
+plt.plot(Cth_cloud_beta_sq, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cth_sq_cloud_2, z/z_i, label = '$\\Delta = 40}m$')
+plt.plot(Cth_sq_cloud_4, z/z_i, label = '$\\Delta = 80}m$')
+plt.plot(Cth_sq_cloud_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cth_sq_cloud_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cth_sq_cloud_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cth_sq_cloud_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C^2_{\\theta}$ in Cloud', fontsize=16)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
-plt.savefig(plotdir+'Cth_sq_prof_scaled.png', pad_inches=0)
-plt.close
+plt.savefig(plotdir+'Cth_sq_cloud_prof_scaled.png', pad_inches=0)
+plt.close()
+
+
+plt.figure(figsize=(6,7))
+plt.plot(Cth_env_beta_sq, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cth_sq_env_2, z/z_i, label = '$\\Delta = 40}m$')
+plt.plot(Cth_sq_env_4, z/z_i, label = '$\\Delta = 80}m$')
+plt.plot(Cth_sq_env_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cth_sq_env_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cth_sq_env_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cth_sq_env_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C^2_{\\theta}$ in env', fontsize=16)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cth_sq_env_prof_scaled.png', pad_inches=0)
+plt.close()
+
+
+
+plt.figure(figsize=(6,7))
+plt.plot(Cqt_cloud_beta, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cqt_cloud_2, z/z_i, label = '$\\Delta = 40}m$')
+plt.plot(Cqt_cloud_4, z/z_i, label = '$\\Delta = 80}m$')
+plt.plot(Cqt_cloud_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cqt_cloud_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cqt_cloud_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cqt_cloud_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C_{qt}$ in Cloud', fontsize=16)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cqt_cloud_prof_scaled.png', pad_inches=0)
+plt.close()
+
+
+plt.figure(figsize=(6,7))
+plt.plot(Cqt_env_beta, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cqt_env_2, z/z_i, label = '$\\Delta = 40}m$')
+plt.plot(Cqt_env_4, z/z_i, label = '$\\Delta = 80}m$')
+plt.plot(Cqt_env_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cqt_env_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cqt_env_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cqt_env_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C_{qt}$ in env', fontsize=16)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cqt_env_prof_scaled.png', pad_inches=0)
+plt.close()
+
+
+
+
+plt.figure(figsize=(6,7))
+plt.plot(Cqt_cloud_beta_sq, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cqt_sq_cloud_2, z/z_i, label = '$\\Delta = 40}m$')
+plt.plot(Cqt_sq_cloud_4, z/z_i, label = '$\\Delta = 80}m$')
+plt.plot(Cqt_sq_cloud_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cqt_sq_cloud_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cqt_sq_cloud_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cqt_sq_cloud_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C^2_{qt}$ in Cloud', fontsize=16)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cqt_sq_cloud_prof_scaled.png', pad_inches=0)
+plt.close()
+
+
+plt.figure(figsize=(6,7))
+plt.plot(Cqt_env_beta_sq, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cqt_sq_env_2, z/z_i, label = '$\\Delta = 40}m$')
+plt.plot(Cqt_sq_env_4, z/z_i, label = '$\\Delta = 80}m$')
+plt.plot(Cqt_sq_env_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cqt_sq_env_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cqt_sq_env_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cqt_sq_env_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C^2_{qt}$ in env', fontsize=16)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cqt_sq_env_prof_scaled.png', pad_inches=0)
+plt.close()
+
+
+
+######################################################################################################################
+
+
+
+
+
 
 
 #########################################################################################################################
@@ -328,15 +527,14 @@ monc_l_1280 = dyn.l_mix_MONC(0.23, 1280, z, k=0.4)
 # #plt.xlim(1, 3)
 # plt.savefig(plotdir+'l_mix_w_MONC.png', pad_inches=0)
 
-plt.figure(figsize=(6,7))
 
-plt.plot(Cs_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
-plt.plot(Cs_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
-plt.plot(Cs_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
-plt.plot(Cs_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
-plt.plot(Cs_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
-plt.plot(Cs_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
-plt.plot(Cs_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
+plt.plot(Cs_cloud_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
+plt.plot(Cs_cloud_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
+plt.plot(Cs_cloud_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
+plt.plot(Cs_cloud_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
+plt.plot(Cs_cloud_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
+plt.plot(Cs_cloud_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
+plt.plot(Cs_cloud_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
 
 # plt.plot(monc_l_20, z/z_i, color ='tab:blue')
 # plt.plot(monc_l_40, z/z_i, color ='tab:orange')
@@ -346,14 +544,44 @@ plt.plot(Cs_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\De
 # plt.plot(monc_l_640, z/z_i, color ='tab:grey')
 # plt.plot(monc_l_1280, z/z_i, color ='tab:pink')
 
-plt.xlabel('$l_{mix}$', fontsize=16)
+plt.xlabel('$l_{mix} in cloud$', fontsize=16)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
-plt.savefig(plotdir+'l_mix_no_stan_w_MONC_scaled.png', pad_inches=0)
+plt.savefig(plotdir+'l_mix_cloud_no_stan_w_MONC_scaled.png', pad_inches=0)
 plt.close()
 
 print('plotted l mix')
+
+
+
+
+
+plt.plot(Cs_env_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
+plt.plot(Cs_env_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
+plt.plot(Cs_env_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
+plt.plot(Cs_env_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
+plt.plot(Cs_env_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
+plt.plot(Cs_env_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
+plt.plot(Cs_env_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
+
+# plt.plot(monc_l_20, z/z_i, color ='tab:blue')
+# plt.plot(monc_l_40, z/z_i, color ='tab:orange')
+# plt.plot(monc_l_80, z/z_i, color ='tab:green')
+# plt.plot(monc_l_160, z/z_i, color ='tab:red')
+# plt.plot(monc_l_320, z/z_i, color ='tab:purple')
+# plt.plot(monc_l_640, z/z_i, color ='tab:grey')
+# plt.plot(monc_l_1280, z/z_i, color ='tab:pink')
+
+plt.xlabel('$l_{mix} in env$', fontsize=16)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'l_mix_env_no_stan_w_MONC_scaled.png', pad_inches=0)
+plt.close()
+
+print('plotted l mix')
+
 
 #########################################################################################################################
 
@@ -385,13 +613,13 @@ monc_l_scalar_1280 = dyn.l_mix_MONC(C_scalar, 1280, z, k=0.4)
 # plt.savefig(plotdir+'l_th_w_MONC.png', pad_inches=0)
 
 plt.figure(figsize=(6,7))
-plt.plot(Cth_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
-plt.plot(Cth_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
-plt.plot(Cth_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
-plt.plot(Cth_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
-plt.plot(Cth_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
-plt.plot(Cth_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
-plt.plot(Cth_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
+plt.plot(Cth_cloud_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
+plt.plot(Cth_cloud_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
+plt.plot(Cth_cloud_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
+plt.plot(Cth_cloud_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
+plt.plot(Cth_cloud_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
+plt.plot(Cth_cloud_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
+plt.plot(Cth_cloud_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
 
 # plt.plot(monc_l_scalar_20, z/z_i, color ='tab:blue')
 # plt.plot(monc_l_scalar_40, z/z_i, color ='tab:orange')
@@ -401,11 +629,39 @@ plt.plot(Cth_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\D
 # plt.plot(monc_l_scalar_640, z/z_i, color ='tab:grey')
 # plt.plot(monc_l_scalar_1280, z/z_i, color ='tab:pink')
 
-plt.xlabel('$l_{\\theta}$', fontsize=16)
+plt.xlabel('$l_{\\theta}$ in cloud', fontsize=16)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
-plt.savefig(plotdir+'l_th_no_stan_w_MONC_scaled.png', pad_inches=0)
+plt.savefig(plotdir+'l_th_cloud_no_stan_w_MONC_scaled.png', pad_inches=0)
+plt.close()
+
+print('plotted l_th')
+
+
+
+plt.figure(figsize=(6,7))
+plt.plot(Cth_env_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
+plt.plot(Cth_env_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
+plt.plot(Cth_env_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
+plt.plot(Cth_env_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
+plt.plot(Cth_env_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
+plt.plot(Cth_env_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
+plt.plot(Cth_env_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
+
+# plt.plot(monc_l_scalar_20, z/z_i, color ='tab:blue')
+# plt.plot(monc_l_scalar_40, z/z_i, color ='tab:orange')
+# plt.plot(monc_l_scalar_80, z/z_i, color ='tab:green')
+# plt.plot(monc_l_scalar_160, z/z_i, color ='tab:red')
+# plt.plot(monc_l_scalar_320, z/z_i, color ='tab:purple')
+# plt.plot(monc_l_scalar_640, z/z_i, color ='tab:grey')
+# plt.plot(monc_l_scalar_1280, z/z_i, color ='tab:pink')
+
+plt.xlabel('$l_{\\theta}$ in env', fontsize=16)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'l_th_env_no_stan_w_MONC_scaled.png', pad_inches=0)
 plt.close()
 
 print('plotted l_th')
@@ -430,15 +686,14 @@ print('plotted l_th')
 # #plt.xlim(1, 3)
 # plt.savefig(plotdir+'l_qt_w_MONC.png', pad_inches=0)
 
-plt.figure(figsize=(6,7))
 
-plt.plot(Cq_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
-plt.plot(Cq_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
-plt.plot(Cq_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
-plt.plot(Cq_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
-plt.plot(Cq_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
-plt.plot(Cq_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
-plt.plot(Cq_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
+plt.plot(Cqt_cloud_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
+plt.plot(Cqt_cloud_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
+plt.plot(Cqt_cloud_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
+plt.plot(Cqt_cloud_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
+plt.plot(Cqt_cloud_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
+plt.plot(Cqt_cloud_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
+plt.plot(Cqt_cloud_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
 
 # plt.plot(monc_l_scalar_20, z/z_i, color ='tab:blue')
 # plt.plot(monc_l_scalar_40, z/z_i, color ='tab:orange')
@@ -448,11 +703,41 @@ plt.plot(Cq_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\De
 # plt.plot(monc_l_scalar_640, z/z_i, color ='tab:grey')
 # plt.plot(monc_l_scalar_1280, z/z_i, color ='tab:pink')
 
-plt.xlabel('$l_{qt}$', fontsize=16)
+plt.xlabel('$l_{qt}$ in cloud', fontsize=16)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
-plt.savefig(plotdir+'l_qt_no_stan_w_MONC_scaled.png', pad_inches=0)
+plt.savefig(plotdir+'l_qt_cloud_no_stan_w_MONC_scaled.png', pad_inches=0)
+plt.close()
+
+print('plotted l_qt')
+
+
+
+
+
+
+plt.plot(Cqt_env_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
+plt.plot(Cqt_env_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
+plt.plot(Cqt_env_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
+plt.plot(Cqt_env_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
+plt.plot(Cqt_env_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
+plt.plot(Cqt_env_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
+plt.plot(Cqt_env_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
+
+# plt.plot(monc_l_scalar_20, z/z_i, color ='tab:blue')
+# plt.plot(monc_l_scalar_40, z/z_i, color ='tab:orange')
+# plt.plot(monc_l_scalar_80, z/z_i, color ='tab:green')
+# plt.plot(monc_l_scalar_160, z/z_i, color ='tab:red')
+# plt.plot(monc_l_scalar_320, z/z_i, color ='tab:purple')
+# plt.plot(monc_l_scalar_640, z/z_i, color ='tab:grey')
+# plt.plot(monc_l_scalar_1280, z/z_i, color ='tab:pink')
+
+plt.xlabel('$l_{qt}$ in env', fontsize=16)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'l_qt_env_no_stan_w_MONC_scaled.png', pad_inches=0)
 plt.close()
 
 print('plotted l_qt')
@@ -460,13 +745,22 @@ print('plotted l_qt')
 #########################################################################################################################
 
 
-Pr_th_beta = dyn.Pr(Cs_beta_sq, Cth_beta_sq)
-Pr_th_2D = dyn.Pr(Cs_sq_2, Cth_sq_2)
-Pr_th_4D = dyn.Pr(Cs_sq_4, Cth_sq_4)
-Pr_th_8D = dyn.Pr(Cs_sq_8, Cth_sq_8)
-Pr_th_16D = dyn.Pr(Cs_sq_16, Cth_sq_16)
-Pr_th_32D = dyn.Pr(Cs_sq_32, Cth_sq_32)
-Pr_th_64D = dyn.Pr(Cs_sq_64, Cth_sq_64)
+Pr_th_cloud_beta = dyn.Pr(Cs_cloud_beta_sq, Cth_cloud_beta_sq)
+Pr_th_cloud_2D = dyn.Pr(Cs_sq_cloud_2, Cth_sq_cloud_2)
+Pr_th_cloud_4D = dyn.Pr(Cs_sq_cloud_4, Cth_sq_cloud_4)
+Pr_th_cloud_8D = dyn.Pr(Cs_sq_cloud_8, Cth_sq_cloud_8)
+Pr_th_cloud_16D = dyn.Pr(Cs_sq_cloud_16, Cth_sq_cloud_16)
+Pr_th_cloud_32D = dyn.Pr(Cs_sq_cloud_32, Cth_sq_cloud_32)
+Pr_th_cloud_64D = dyn.Pr(Cs_sq_cloud_64, Cth_sq_cloud_64)
+
+
+Pr_th_env_beta = dyn.Pr(Cs_env_beta_sq, Cth_env_beta_sq)
+Pr_th_env_2D = dyn.Pr(Cs_sq_env_2, Cth_sq_env_2)
+Pr_th_env_4D = dyn.Pr(Cs_sq_env_4, Cth_sq_env_4)
+Pr_th_env_8D = dyn.Pr(Cs_sq_env_8, Cth_sq_env_8)
+Pr_th_env_16D = dyn.Pr(Cs_sq_env_16, Cth_sq_env_16)
+Pr_th_env_32D = dyn.Pr(Cs_sq_env_32, Cth_sq_env_32)
+Pr_th_env_64D = dyn.Pr(Cs_sq_env_64, Cth_sq_env_64)
 
 # plt.figure(figsize=(6,7))
 # plt.plot(Pr_th_beta, z, label = '$\\Delta = 20$m')
@@ -485,108 +779,91 @@ Pr_th_64D = dyn.Pr(Cs_sq_64, Cth_sq_64)
 # plt.close()
 
 plt.figure(figsize=(6,7))
-plt.plot(Pr_th_beta, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Pr_th_2D, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Pr_th_4D, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Pr_th_8D, z/z_i, label = '$\\Delta = 160$m')
-plt.plot(Pr_th_16D, z/z_i, label = '$\\Delta = 320$m')
-plt.plot(Pr_th_32D, z/z_i, label = '$\\Delta = 640$m')
-plt.plot(Pr_th_64D, z/z_i, label = '$\\Delta = 1280$m')
-plt.xlabel('$Pr_{\\theta}$', fontsize=14)
+plt.plot(Pr_th_cloud_beta, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Pr_th_cloud_2D, z/z_i, label = '$\\Delta = 40$m')
+plt.plot(Pr_th_cloud_4D, z/z_i, label = '$\\Delta = 80$m')
+plt.plot(Pr_th_cloud_8D, z/z_i, label = '$\\Delta = 160$m')
+plt.plot(Pr_th_cloud_16D, z/z_i, label = '$\\Delta = 320$m')
+plt.plot(Pr_th_cloud_32D, z/z_i, label = '$\\Delta = 640$m')
+plt.plot(Pr_th_cloud_64D, z/z_i, label = '$\\Delta = 1280$m')
+plt.xlabel('$Pr_{\\theta}$ in cloud', fontsize=14)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 plt.vlines(0.7, 0, 3020/z_i, 'k', linestyles='dashed', label='')
 plt.xlim(-3, 7)
-plt.savefig(plotdir+'Pr_th_prof_scaled1.png', pad_inches=0)
+plt.savefig(plotdir+'Pr_th_cloud_prof_scaled.png', pad_inches=0)
 plt.close()
 
 
 plt.figure(figsize=(6,7))
-plt.plot(Pr_th_beta, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Pr_th_2D, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Pr_th_4D, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Pr_th_8D, z/z_i, label = '$\\Delta = 160$m')
-plt.plot(Pr_th_16D, z/z_i, label = '$\\Delta = 320$m')
-plt.plot(Pr_th_32D, z/z_i, label = '$\\Delta = 640$m')
-plt.plot(Pr_th_64D, z/z_i, label = '$\\Delta = 1280$m')
-plt.xlabel('$Pr_{\\theta}$', fontsize=14)
+plt.plot(Pr_th_env_beta, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Pr_th_env_2D, z/z_i, label = '$\\Delta = 40$m')
+plt.plot(Pr_th_env_4D, z/z_i, label = '$\\Delta = 80$m')
+plt.plot(Pr_th_env_8D, z/z_i, label = '$\\Delta = 160$m')
+plt.plot(Pr_th_env_16D, z/z_i, label = '$\\Delta = 320$m')
+plt.plot(Pr_th_env_32D, z/z_i, label = '$\\Delta = 640$m')
+plt.plot(Pr_th_env_64D, z/z_i, label = '$\\Delta = 1280$m')
+plt.xlabel('$Pr_{\\theta}$ in env', fontsize=14)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 plt.vlines(0.7, 0, 3020/z_i, 'k', linestyles='dashed', label='')
-plt.xlim(-3, 31)
-plt.savefig(plotdir+'Pr_th_prof_scaled2.png', pad_inches=0)
+plt.xlim(-3, 7)
+plt.savefig(plotdir+'Pr_th_env_prof_scaled.png', pad_inches=0)
 plt.close()
+
+
 
 ###############################################################################################
 
-Pr_q_beta = dyn.Pr(Cs_beta_sq, Cq_beta_sq)
-Pr_q_2D = dyn.Pr(Cs_sq_2, Cq_sq_2)
-Pr_q_4D = dyn.Pr(Cs_sq_4, Cq_sq_4)
-Pr_q_8D = dyn.Pr(Cs_sq_8, Cq_sq_8)
-Pr_q_16D = dyn.Pr(Cs_sq_16, Cq_sq_16)
-Pr_q_32D = dyn.Pr(Cs_sq_32, Cq_sq_32)
-Pr_q_64D = dyn.Pr(Cs_sq_64, Cq_sq_64)
+Pr_qt_cloud_beta = dyn.Pr(Cs_cloud_beta_sq, Cqt_cloud_beta_sq)
+Pr_qt_cloud_2D = dyn.Pr(Cs_sq_cloud_2, Cqt_sq_cloud_2)
+Pr_qt_cloud_4D = dyn.Pr(Cs_sq_cloud_4, Cqt_sq_cloud_4)
+Pr_qt_cloud_8D = dyn.Pr(Cs_sq_cloud_8, Cqt_sq_cloud_8)
+Pr_qt_cloud_16D = dyn.Pr(Cs_sq_cloud_16, Cqt_sq_cloud_16)
+Pr_qt_cloud_32D = dyn.Pr(Cs_sq_cloud_32, Cqt_sq_cloud_32)
+Pr_qt_cloud_64D = dyn.Pr(Cs_sq_cloud_64, Cqt_sq_cloud_64)
 
-# plt.figure(figsize=(6,7))
-# plt.plot(Pr_q_beta, z, label = '$\\Delta = 20$m')
-# plt.plot(Pr_q_2D, z, label = '$\\Delta = 40$m')
-# plt.plot(Pr_q_4D, z, label = '$\\Delta = 80$m')
-# plt.plot(Pr_q_8D, z, label = '$\\Delta = 160$m')
-# plt.plot(Pr_q_16D, z, label = '$\\Delta = 320$m')
-# plt.plot(Pr_q_32D, z, label = '$\\Delta = 640$m')
-# plt.plot(Pr_q_64D, z, label = '$\\Delta = 1280$m')
-# plt.xlabel('$Pr_{qt}$', fontsize=14)
-# plt.ylabel("z (m)")
-# plt.legend(fontsize=12, loc='upper right')
-# plt.vlines(0.7, 0, 3020, 'k', linestyles='dashed', label='')
-# #plt.xlim(-3, 7)
-# plt.savefig(plotdir+'Pr_qt_prof.png', pad_inches=0)
-# plt.close()
+Pr_qt_env_beta = dyn.Pr(Cs_env_beta_sq, Cqt_env_beta_sq)
+Pr_qt_env_2D = dyn.Pr(Cs_sq_env_2, Cqt_sq_env_2)
+Pr_qt_env_4D = dyn.Pr(Cs_sq_env_4, Cqt_sq_env_4)
+Pr_qt_env_8D = dyn.Pr(Cs_sq_env_8, Cqt_sq_env_8)
+Pr_qt_env_16D = dyn.Pr(Cs_sq_env_16, Cqt_sq_env_16)
+Pr_qt_env_32D = dyn.Pr(Cs_sq_env_32, Cqt_sq_env_32)
+Pr_qt_env_64D = dyn.Pr(Cs_sq_env_64, Cqt_sq_env_64)
+
+
 
 plt.figure(figsize=(6,7))
-plt.plot(Pr_q_beta, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Pr_q_2D, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Pr_q_4D, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Pr_q_8D, z/z_i, label = '$\\Delta = 160$m')
-plt.plot(Pr_q_16D, z/z_i, label = '$\\Delta = 320$m')
-plt.plot(Pr_q_32D, z/z_i, label = '$\\Delta = 640$m')
-plt.plot(Pr_th_64D, z/z_i, label = '$\\Delta = 1280$m')
-plt.xlabel('$Pr_{qt}$', fontsize=14)
+plt.plot(Pr_qt_cloud_beta, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Pr_qt_cloud_2D, z/z_i, label = '$\\Delta = 40$m')
+plt.plot(Pr_qt_cloud_4D, z/z_i, label = '$\\Delta = 80$m')
+plt.plot(Pr_qt_cloud_8D, z/z_i, label = '$\\Delta = 160$m')
+plt.plot(Pr_qt_cloud_16D, z/z_i, label = '$\\Delta = 320$m')
+plt.plot(Pr_qt_cloud_32D, z/z_i, label = '$\\Delta = 640$m')
+plt.plot(Pr_qt_cloud_64D, z/z_i, label = '$\\Delta = 1280$m')
+plt.xlabel('$Pr_{qt}$ in cloud', fontsize=14)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 plt.vlines(0.7, 0, 3020/z_i, 'k', linestyles='dashed', label='')
 plt.xlim(-3, 7)
-plt.savefig(plotdir+'Pr_qt_prof_scaled.png', pad_inches=0)
+plt.savefig(plotdir+'Pr_qt_cloud_prof_scaled.png', pad_inches=0)
 plt.close()
 
 
-
-# plt.figure(figsize=(6,7))
-# plt.plot(Pr_th_beta, z, label = '$Pr_{\\theta}:$ $\\Delta = 20$m')
-# plt.plot(Pr_th_2D, z, label = '$Pr_{\\theta}:$ $\\Delta = 40$m')
-# plt.plot(Pr_th_4D, z, label = '$Pr_{\\theta}:$ $\\Delta = 80$m')
-# plt.plot(Pr_q_beta, z, label = '$Pr_{qt}:$ $\\Delta = 20$m', color ='tab:blue', linestyle='dashdot')
-# plt.plot(Pr_q_2D, z, label = '$Pr_{qt}:$ $\\Delta = 40$m', color ='tab:orange', linestyle='dashdot')
-# plt.plot(Pr_q_4D, z, label = '$Pr_{qt}:$ $\\Delta = 80$m', color ='tab:green', linestyle='dashdot')
-# plt.xlabel('$Pr$', fontsize=14)
-# plt.ylabel("z (m)")
-# plt.legend(fontsize=12, loc='upper right')
-# plt.vlines(0.7, 0, 3020, 'k', linestyles='dashed', label='')
-# plt.xlim(-3, 7)
-# plt.savefig(plotdir+'Pr_all_prof.png', pad_inches=0)
-#
-# plt.figure(figsize=(6,7))
-# plt.plot(Pr_th_beta, z/z_i, label = '$Pr_{\\theta}:$ $\\Delta = 20$m')
-# plt.plot(Pr_th_2D, z/z_i, label = '$Pr_{\\theta}:$ $\\Delta = 40$m')
-# plt.plot(Pr_th_4D, z/z_i, label = '$Pr_{\\theta}:$ $\\Delta = 80$m')
-# plt.plot(Pr_q_beta, z/z_i, label = '$Pr_{qt}:$ $\\Delta = 20$m', color ='tab:blue', linestyle='dashdot')
-# plt.plot(Pr_q_2D, z/z_i, label = '$Pr_{qt}:$ $\\Delta = 40$m', color ='tab:orange', linestyle='dashdot')
-# plt.plot(Pr_q_4D, z/z_i, label = '$Pr_{qt}:$ $\\Delta = 80$m', color ='tab:green', linestyle='dashdot')
-# plt.xlabel('$Pr$', fontsize=14)
-# plt.ylabel("z/$_{ML}$")
-# plt.legend(fontsize=12, loc='upper right')
-# plt.vlines(0.7, 0, 3020/z_i, 'k', linestyles='dashed', label='')
-# plt.xlim(-3, 7)
-# plt.savefig(plotdir+'Pr_all_prof_scaled.png', pad_inches=0)
+plt.figure(figsize=(6,7))
+plt.plot(Pr_qt_env_beta, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Pr_qt_env_2D, z/z_i, label = '$\\Delta = 40$m')
+plt.plot(Pr_qt_env_4D, z/z_i, label = '$\\Delta = 80$m')
+plt.plot(Pr_qt_env_8D, z/z_i, label = '$\\Delta = 160$m')
+plt.plot(Pr_qt_env_16D, z/z_i, label = '$\\Delta = 320$m')
+plt.plot(Pr_qt_env_32D, z/z_i, label = '$\\Delta = 640$m')
+plt.plot(Pr_qt_env_64D, z/z_i, label = '$\\Delta = 1280$m')
+plt.xlabel('$Pr_{qt}$ in env', fontsize=14)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+plt.vlines(0.7, 0, 3020/z_i, 'k', linestyles='dashed', label='')
+plt.xlim(-3, 7)
+plt.savefig(plotdir+'Pr_qt_env_prof_scaled.png', pad_inches=0)
+plt.close()
 
 
