@@ -36,23 +36,73 @@ deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
 dataset_name = [data_path+'cloud_v_env_2D.nc', data_path+'cloud_v_env_4D.nc', data_path+'cloud_v_env_8D.nc', \
                  data_path+'cloud_v_env_16D.nc', data_path+'cloud_v_env_32D.nc', data_path+'cloud_v_env_64D.nc',]
+dataset_field = [data_path+'cloud_v_env_field_2D.nc', data_path+'cloud_v_env_field_4D.nc', data_path+'cloud_v_env_field_8D.nc', \
+                 data_path+'cloud_v_env_field_16D.nc', data_path+'cloud_v_env_field_32D.nc', data_path+'cloud_v_env_field_64D.nc',]
 
 
 for i, delta_in in enumerate(deltas):
 
-    Cs_cloud_prof, Cs_env_prof, Cth_cloud_prof, Cth_env_prof, Cqt_cloud_prof, Cqt_env_prof, \
-    LM_cloud_av, LM_env_av, MM_cloud_av, MM_env_av, \
-    HR_th_cloud_av, HR_th_env_av, RR_th_cloud_av, RR_th_env_av, \
-    HR_qt_cloud_av, HR_qt_env_av, RR_qt_cloud_av, RR_qt_env_av, \
-    LijMij_cloud, LijMij_env, MijMij_cloud, MijMij_env, \
-    HjRj_th_cloud, HjRj_th_env, RjRj_th_cloud, RjRj_th_env, \
-    HjRj_qt_cloud, HjRj_qt_env, RjRj_qt_cloud, RjRj_qt_env = clo.get_masked_fields(delta = delta_in, res_count = i, **options)
+    if options['return_fields'] == True:
+
+        Cs_cloud_prof, Cs_env_prof, Cth_cloud_prof, Cth_env_prof, Cqt_cloud_prof, Cqt_env_prof, \
+        LM_cloud_av, LM_env_av, MM_cloud_av, MM_env_av, \
+        HR_th_cloud_av, HR_th_env_av, RR_th_cloud_av, RR_th_env_av, \
+        HR_qt_cloud_av, HR_qt_env_av, RR_qt_cloud_av, RR_qt_env_av, \
+        LijMij_cloud, LijMij_env, MijMij_cloud, MijMij_env, \
+        HjRj_th_cloud, HjRj_th_env, RjRj_th_cloud, RjRj_th_env, \
+        HjRj_qt_cloud, HjRj_qt_env, RjRj_qt_cloud, RjRj_qt_env = clo.get_masked_fields(delta = delta_in, res_count = i, **options)
+
+
+        ds_field = xr.Dataset()
+        ds_field.to_netcdf(dataset_field[i], mode='w')
+        ds_field_in = {'file': dataset_field[i], 'ds': ds}
+
+        save_field(ds_field_in, LijMij_cloud)
+        save_field(ds_field_in, LijMij_env)
+        save_field(ds_field_in, MijMij_cloud)
+        save_field(ds_field_in, MijMij_env)
+        save_field(ds_field_in, HjRj_th_cloud)
+        save_field(ds_field_in, HjRj_th_env)
+        save_field(ds_field_in, RjRj_th_cloud)
+        save_field(ds_field_in, RjRj_th_env)
+        save_field(ds_field_in, HjRj_qt_cloud)
+        save_field(ds_field_in, HjRj_qt_env)
+        save_field(ds_field_in, RjRj_qt_cloud)
+        save_field(ds_field_in, RjRj_qt_env)
+
+        LijMij_cloud = None
+        LijMij_env = None
+        MijMij_cloud = None
+        MijMij_env = None
+        HjRj_th_cloud = None
+        HjRj_th_env = None
+        RjRj_th_cloud = None
+        RjRj_th_env = None
+        HjRj_qt_cloud = None
+        HjRj_qt_env = None
+        RjRj_qt_cloud = None
+        RjRj_qt_env = None
+
+        ds_field.close()
+
+
+
+    elif options['return_fields'] == False:
+
+        Cs_cloud_prof, Cs_env_prof, Cth_cloud_prof, Cth_env_prof, Cqt_cloud_prof, Cqt_env_prof, \
+        LM_cloud_av, LM_env_av, MM_cloud_av, MM_env_av, \
+        HR_th_cloud_av, HR_th_env_av, RR_th_cloud_av, RR_th_env_av, \
+        HR_qt_cloud_av, HR_qt_env_av, RR_qt_cloud_av, RR_qt_env_av \
+            = clo.get_masked_fields(delta=delta_in, res_count=i, **options)
+
+    else:
+        print('must set return_fields to True or False')
+
 
 
     ds = xr.Dataset()
     ds.to_netcdf(dataset_name[i], mode='w')
-    ds_in = {'file': dataset_name[i], 'ds':ds}
-
+    ds_in = {'file': dataset_name[i], 'ds': ds}
 
     save_field(ds_in, Cs_cloud_prof)
     save_field(ds_in, Cs_env_prof)
@@ -72,20 +122,6 @@ for i, delta_in in enumerate(deltas):
     save_field(ds_in, HR_qt_env_av)
     save_field(ds_in, RR_qt_cloud_av)
     save_field(ds_in, RR_qt_env_av)
-
-    save_field(ds_in, LijMij_cloud)
-    save_field(ds_in, LijMij_env)
-    save_field(ds_in, MijMij_cloud)
-    save_field(ds_in, MijMij_env)
-    save_field(ds_in, HjRj_th_cloud)
-    save_field(ds_in, HjRj_th_env)
-    save_field(ds_in, RjRj_th_cloud)
-    save_field(ds_in, RjRj_th_env)
-    save_field(ds_in, HjRj_qt_cloud)
-    save_field(ds_in, HjRj_qt_env)
-    save_field(ds_in, RjRj_qt_cloud)
-    save_field(ds_in, RjRj_qt_env)
-
 
     ds.close()
 
@@ -108,15 +144,3 @@ for i, delta_in in enumerate(deltas):
     RR_qt_cloud_av = None
     RR_qt_env_av = None
 
-    LijMij_cloud = None
-    LijMij_env = None
-    MijMij_cloud = None
-    MijMij_env = None
-    HjRj_th_cloud = None
-    HjRj_th_env = None
-    RjRj_th_cloud = None
-    RjRj_th_env = None
-    HjRj_qt_cloud = None
-    HjRj_qt_env = None
-    RjRj_qt_cloud = None
-    RjRj_qt_env = None
