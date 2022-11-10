@@ -13,7 +13,7 @@ data_path = path20f+file20
 
 
 options = {
-    'return_fields': True,
+    'return_fields': False,
 
     'cloud_thres': 10 ** (-5),
 
