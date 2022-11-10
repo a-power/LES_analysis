@@ -202,6 +202,23 @@ plt.legend(fontsize=12, loc='upper right')
 plt.savefig(plotdir+'Cs_prof_scaled.png', pad_inches=0)
 plt.close()
 
+
+plt.figure(figsize=(6,7))
+plt.plot(Cs_beta_sq, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cs_sq_2, z/z_i, label = '$\\Delta = 40}m$')
+plt.plot(Cs_sq_4, z/z_i, label = '$\\Delta = 80}m$')
+plt.plot(Cs_sq_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cs_sq_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cs_sq_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cs_sq_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C^2_{s}$', fontsize=16)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cs_sq_prof_scaled.png', pad_inches=0)
+plt.close()
+
+
 #
 # plt.figure(figsize=(6,7))
 # plt.plot(Cq_beta, z, label = '$\\Delta = 20$m')
@@ -228,6 +245,23 @@ plt.legend(fontsize=12, loc='upper right')
 plt.savefig(plotdir+'Cqt_prof_scaled.png', pad_inches=0)
 plt.close()
 
+
+plt.figure(figsize=(6,7))
+plt.plot(Cq_beta_sq, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cq_sq_2, z/z_i, label = '$\\Delta = 40$m')
+plt.plot(Cq_sq_4, z/z_i, label = '$\\Delta = 80$m')
+plt.plot(Cq_sq_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cq_sq_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cq_sq_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cq_sq_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C^2_{qt}$', fontsize=14)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cqt_sq_prof_scaled.png', pad_inches=0)
+plt.close()
+
+
 #
 # plt.figure(figsize=(6,7))
 # plt.plot(Cth_beta, z, label = '$\\Delta = 20$m')
@@ -252,6 +286,22 @@ plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
 plt.savefig(plotdir+'Cth_prof_scaled.png', pad_inches=0)
+plt.close
+
+
+plt.figure(figsize=(6,7))
+plt.plot(Cth_beta_sq, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cth_sq_2, z/z_i, label = '$\\Delta = 40$m')
+plt.plot(Cth_sq_4, z/z_i, label = '$\\Delta = 80$m')
+plt.plot(Cth_sq_8, z/z_i, label = '$\\Delta = 160}m$')
+plt.plot(Cth_sq_16, z/z_i, label = '$\\Delta = 320}m$')
+plt.plot(Cth_sq_32, z/z_i, label = '$\\Delta = 640}m$')
+plt.plot(Cth_sq_64, z/z_i, label = '$\\Delta = 1280}m$')
+plt.xlabel('$C^2_{\\theta}$', fontsize=14)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cth_sq_prof_scaled.png', pad_inches=0)
 plt.close
 
 
