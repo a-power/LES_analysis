@@ -8,7 +8,7 @@ np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
 dir_data = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_cloud_v_env_'
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/plots/coarse_data/cloud_v_env/'
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/plots/coarse_data/'
 os.makedirs(plotdir, exist_ok = True)
 
 data_2D = xr.open_dataset(dir_data + '2D.nc')
@@ -521,7 +521,7 @@ monc_l_320 = dyn.l_mix_MONC(0.23, 320, z, k=0.4)
 monc_l_640 = dyn.l_mix_MONC(0.23, 640, z, k=0.4)
 monc_l_1280 = dyn.l_mix_MONC(0.23, 1280, z, k=0.4)
 
-# plt.figure(figsize=(6,7))
+
 # plt.plot(Cs_beta*(20), z, '.', markersize = 10, label = '$\\Delta = 20$m')
 # plt.plot(Cs_2*(40), z, '.', markersize = 10, label = '$\\Delta = 40$m')
 # plt.plot(Cs_4*(80), z, '.', markersize = 10, label = '$\\Delta = 80$m')
@@ -534,7 +534,7 @@ monc_l_1280 = dyn.l_mix_MONC(0.23, 1280, z, k=0.4)
 # #plt.xlim(1, 3)
 # plt.savefig(plotdir+'l_mix_w_MONC.png', pad_inches=0)
 
-
+plt.figure(figsize=(6,7))
 plt.plot(Cs_cloud_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
 plt.plot(Cs_cloud_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
 plt.plot(Cs_cloud_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
@@ -564,7 +564,7 @@ print('plotted l mix')
 
 
 
-
+plt.figure(figsize=(6,7))
 plt.plot(Cs_env_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
 plt.plot(Cs_env_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
 plt.plot(Cs_env_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
@@ -695,7 +695,7 @@ print('plotted l_th')
 # #plt.xlim(1, 3)
 # plt.savefig(plotdir+'l_qt_w_MONC.png', pad_inches=0)
 
-
+plt.figure(figsize=(6,7))
 plt.plot(Cqt_cloud_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
 plt.plot(Cqt_cloud_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
 plt.plot(Cqt_cloud_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
@@ -726,7 +726,7 @@ print('plotted l_qt')
 
 
 
-
+plt.figure(figsize=(6,7))
 plt.plot(Cqt_env_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
 plt.plot(Cqt_env_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
 plt.plot(Cqt_env_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
