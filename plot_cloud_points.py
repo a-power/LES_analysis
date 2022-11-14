@@ -19,11 +19,10 @@ def count_mask(mask_in):
     for nt in range(np.shape(mask_in)[0]):
         for i in range(np.shape(mask_in)[-1]):
 
-            mymask = mask_in[nt, :, :, i]
             it = 0
-            for j in len(mymask[:,0]):
-                for k in len(mymask[0, :]):
-                    if mymask[j,k] == False:
+            for j in range(np.shape(mask_in)[1]):
+                for k in range(np.shape(mask_in)[2]):
+                    if mask_in[nt, j, k, i] == False:
                         it += 1
             counter[nt, i] = it
 
@@ -43,6 +42,10 @@ z_i = 490
 #index of 0 at the start is to get rid of the dummy time index thats required to save the files
 
 Cth_cloud_2, env_mask = clo.cloud_vs_env_masks(data_2D)
+
+cloud_count_2 = count_mask(Cth_cloud_2)
+print('finished cloud count 2')
+
 Cth_cloud_4, env_mask = clo.cloud_vs_env_masks(data_4D)
 Cth_cloud_8, env_mask = clo.cloud_vs_env_masks(data_8D)
 Cth_cloud_16, env_mask = clo.cloud_vs_env_masks(data_16D)
@@ -54,8 +57,7 @@ Cth_cloud_64, env_mask = clo.cloud_vs_env_masks(data_64D)
 ################################################################
 
 
-cloud_count_2 = count_mask(Cth_cloud_2)
-print('finished cloud count 2')
+
 cloud_count_4 = count_mask(Cth_cloud_4)
 print('finished cloud count 4')
 cloud_count_8 = count_mask(Cth_cloud_8)
