@@ -18,7 +18,10 @@ def count_mask(mask_in):
 
     for nt in range(np.shape(mask_in)[0]):
         for i in range(np.shape(mask_in)[-1]):
-            counter[nt, i] = mask_in[nt, :, :, i].count
+
+            my_mask = np.ma.masked_array(mask_in[nt, :, :, i], mask_in[nt, :, :, i])
+
+            counter[nt, i] = my_mask.count
 
     return counter
 
