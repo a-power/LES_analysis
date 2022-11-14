@@ -5,7 +5,10 @@ import dynamic_functions as dyn
 
 def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5), res_counter=None):
 
-    data_in_new = data_in + f'ga0{res_counter}.nc'
+    if res_counter != None:
+        data_in_new = data_in + f'ga0{res_counter}.nc'
+    else:
+        data_in_new = data_in
 
     ds_in = xr.open_dataset(data_in_new)
 
