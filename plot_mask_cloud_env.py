@@ -551,7 +551,7 @@ plt.plot(Cs_cloud_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = 
 # plt.plot(monc_l_640, z/z_i, color ='tab:grey')
 # plt.plot(monc_l_1280, z/z_i, color ='tab:pink')
 
-plt.xlabel('$l_{mix} in cloud$', fontsize=16)
+plt.xlabel('$l_{mix}$ in cloud', fontsize=16)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
@@ -581,7 +581,7 @@ plt.plot(Cs_env_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$
 # plt.plot(monc_l_640, z/z_i, color ='tab:grey')
 # plt.plot(monc_l_1280, z/z_i, color ='tab:pink')
 
-plt.xlabel('$l_{mix} in env$', fontsize=16)
+plt.xlabel('$l_{mix}$ in env', fontsize=16)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
