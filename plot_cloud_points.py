@@ -20,7 +20,6 @@ def count_mask(mask_in):
         for i in range(np.shape(mask_in)[-1]):
 
             mymask = (mask_in[nt, :, :, i]).flatten
-            print(mymask[:20])
             it = 0
             for j in len(mymask):
                 if mymask[j] == False:
