@@ -202,6 +202,16 @@ plt.legend(fontsize=12, loc='upper right')
 plt.savefig(plotdir+'Cs_prof_scaled.png', pad_inches=0)
 plt.close()
 
+# def ktol(kz):
+#     l_over_z = (1/kz)
+#     return l_over_z
+#
+# def ltok(l_over_z):
+#     kz = (1/l_over_z)
+#     return kz
+# secax = ax.secondary_xaxis('top', functions=(ltok, ktol))
+# secax.set_xlabel('$\\lambda / z_i$', fontsize=14)
+
 
 plt.figure(figsize=(6,7))
 plt.plot(Cs_beta_sq, z/z_i, label = '$\\Delta = 20$m')

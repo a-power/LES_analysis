@@ -18,7 +18,7 @@ def count_mask(mask_in):
 
     for nt in range(np.shape(mask_in)[0]):
         for i in range(np.shape(mask_in)[-1]):
-            counter[nt, i] = mask_in[nt, :, :, i]
+            counter[nt, i] = mask_in[nt, :, :, i].count
 
     return counter
 
