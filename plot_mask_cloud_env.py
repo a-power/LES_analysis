@@ -13,7 +13,7 @@ os.makedirs(plotdir, exist_ok = True)
 
 def count_mask(mask_in):
 
-    counter = np.zeros(np.shape(mask_in)[0], np.shape(mask_in)[-1])
+    counter = np.zeros((np.shape(mask_in)[0], np.shape(mask_in)[-1]))
 
     for nt in range(np.shape(mask_in)[0]):
         for i in range(np.shape(mask_in)[-1]):
