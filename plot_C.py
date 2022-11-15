@@ -219,11 +219,11 @@ plt.savefig(plotdir+'Cs_sq_prof_scaled.png', pad_inches=0)
 plt.close()
 
 def get_C(Csq):
-    C = cm.sqrt(Csq)
+    C = cm.sqrt(Csq.astype(complex))
     return C
 
 def get_Csq(C):
-    Csq = C**2
+    Csq = (C**2).astype(np.float)
     return Csq
 
 
