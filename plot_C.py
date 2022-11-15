@@ -202,17 +202,6 @@ plt.legend(fontsize=12, loc='upper right')
 plt.savefig(plotdir+'Cs_prof_scaled.png', pad_inches=0)
 plt.close()
 
-# def ktol(kz):
-#     l_over_z = (1/kz)
-#     return l_over_z
-#
-# def ltok(l_over_z):
-#     kz = (1/l_over_z)
-#     return kz
-# secax = ax.secondary_xaxis('top', functions=(ltok, ktol))
-# secax.set_xlabel('$\\lambda / z_i$', fontsize=14)
-
-
 plt.figure(figsize=(6,7))
 plt.plot(Cs_beta_sq, z/z_i, label = '$\\Delta = 20$m')
 plt.plot(Cs_sq_2, z/z_i, label = '$\\Delta = 40}m$')
@@ -226,6 +215,41 @@ plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
 plt.savefig(plotdir+'Cs_sq_prof_scaled.png', pad_inches=0)
+plt.close()
+
+
+def get_Csq(C):
+    #illegal maths but its ok
+    if C > 0:
+        Csq = C**2
+    else:
+        Csq = -C**2
+    return Csq
+
+def get_C(Csq):
+    #ignore the illegal pls
+    if Csq > 0:
+        C = np.sqrt(Csq)
+    else:
+        C = -np.sqrt(-Csq)
+    return C
+
+
+fig, ax = plt.subplots(figsize=(6,7), constrained_layout=True)
+ax.plot(Cs_beta, z/z_i, label = '$\\Delta = 20$m')
+ax.plot(Cs_2, z/z_i, label = '$\\Delta = 40}m$')
+ax.plot(Cs_4, z/z_i, label = '$\\Delta = 80}m$')
+ax.plot(Cs_8, z/z_i, label = '$\\Delta = 160}m$')
+ax.plot(Cs_16, z/z_i, label = '$\\Delta = 320}m$')
+ax.plot(Cs_32, z/z_i, label = '$\\Delta = 640}m$')
+ax.plot(Cs_64, z/z_i, label = '$\\Delta = 1280}m$')
+ax.set_xlabel('$C_{s}^2$', fontsize=16)
+ax.set_ylabel("z/z$_{ML}$", fontsize=16)
+secax = ax.secondary_xaxis('top', functions=(get_Csq, get_C))
+secax.set_xlabel('$C_{s}$', fontsize=16)
+ax.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cs_and_Csq_prof_scaled.png', pad_inches=0)
 plt.close()
 
 
