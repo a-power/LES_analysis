@@ -53,7 +53,7 @@ plot_vars.append('wqt')
 plot_vars.extend(my_vars_filt)
 
 res_list1 = ['0020_g0800', '0040_g0400', '0080_g0200', '0160_g0100', '0320_g0050']
-res_list2 = ['0020_g0800', '0', '1', '2', '3', '4', '5']
+res_list2 = ['0', '1', '2', '3', '4', '5']
 
 for i, var in enumerate(plot_vars):
 
