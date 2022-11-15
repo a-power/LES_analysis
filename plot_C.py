@@ -219,11 +219,11 @@ plt.savefig(plotdir+'Cs_sq_prof_scaled.png', pad_inches=0)
 plt.close()
 
 def get_C(Csq):
-    C = cm.sqrt(Csq.astype(complex))
+    C = np.sqrt(Csq).dropna()
     return C
 
 def get_Csq(C):
-    Csq = (C**2).astype(np.float)
+    Csq = C**2
     return Csq
 
 
@@ -240,7 +240,6 @@ ax.set_xlabel('$C_{s}^2$', fontsize=16)
 ax.set_ylabel("z/z$_{ML}$", fontsize=16)
 secax = ax.secondary_xaxis('top', functions=(get_C, get_Csq))
 secax.set_xlabel('$C_{s}$', fontsize=16)
-#secax.set_xlim(0, 0.2)
 ax.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
 plt.savefig(plotdir+'Cs_and_Csq_prof_scaled.png', pad_inches=0)
