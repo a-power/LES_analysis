@@ -219,7 +219,7 @@ plt.savefig(plotdir+'Cs_sq_prof_scaled.png', pad_inches=0)
 plt.close()
 
 def get_C(Csq):
-    C = np.sqrt(Csq)
+    C = cm.sqrt(Csq)
     return C
 
 def get_Csq(C):
