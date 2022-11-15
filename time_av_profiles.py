@@ -45,16 +45,16 @@ def time_av_prof(vars, dx_list, time_in, indir, data='bomex_og'):
         np.save(f'files/{data}/{dx}_z', z)
 
         for j, var_in in enumerate(vars):
-            my_var = ds_in[f'{var_in}'][0, ...]
+            my_var = ds_in[f'{var_in}']
 
             if data == 'bomex_filt':
                 var_av = fn.mean_prof(my_var)
                 my_var = var_av
 
             if var_in=='wql_cn_mean':
-                wql = ds_in[f'{var_in}'][0,...]
+                wql = ds_in[f'{var_in}']
             if var_in=='wqv_cn_mean':
-                wqv = ds_in[f'{var_in}'][0,...]
+                wqv = ds_in[f'{var_in}']
             # av_var_data = np.zeros(len(z))
             # for k, time_stamp in enumerate(times):
             #     my_var = ds_in[f'{var_in}'][k,...]

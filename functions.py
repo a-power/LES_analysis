@@ -163,25 +163,18 @@ def mean_prof(var1_in, var2_in = None):
     also given then var1 is multiplied by var2 and the
     mean vertical profile of their product is computed. """
 
-    vert_points = len(var1_in[0,0,:])
-    
+    vert_points = np.shape(var1_in)[-1]
     var_out = np.zeros(vert_points)
-    var_mult = np.zeros_like(var1_in)
 
     for i in range(vert_points):
-    
         if type(var2_in) is np.ndarray:
-            for j in range(len(var1_in[:,0,0])):
-                for k in range(len(var1_in[0,:,0])):
-                      
-                    var_mult[j,k,i] = var1_in[j,k,i]*var2_in[j,k,i]
-                    
-            var_out[i] = np.mean(var_mult[:,:,i])
-                      
+
+            var_mult = var1_in * var2_in
+            var_out[i] = np.mean(var_mult[...,i])
+
         else:
-            var_out[i] = np.mean(var1_in[:,:,i])
-                      
-                      
+            var_out[i] = np.mean(var1_in[...,i])
+
     return var_out                 
                       
                       
