@@ -8,7 +8,7 @@ set_time = '14400'
 #set_time='13200'
 
 mydir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
-mydir_filt = '/work/scratch-pw/apower/20m_gauss_dyn_update_subfilt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+mydir_filt = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 #mydir='/storage/silver/scenario/si818415/phd/'
 
 model_res_list = ['0020_g0800', '0040_g0400', '0080_g0200', '0160_g0100', '0320_g0050']
