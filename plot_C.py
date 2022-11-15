@@ -220,11 +220,11 @@ plt.close()
 
 
 def get_Csq(C):
-    Csq = (C**2).real
+    Csq = C**2
     return Csq
 
 def get_C(Csq):
-    C = cm.sqrt(Csq)
+    C = np.sqrt(Csq)
     return C
 
 
