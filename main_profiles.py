@@ -210,4 +210,5 @@ for i, var in enumerate(plot_vars):
     figs.savefig(plot_dir+f'{var}_{set_time}_profile.png')
     print("Finished plotting profile for ", var, ",", \
           len(res_list)-(m+1), "variables remaining")
+    plt.close()
 
