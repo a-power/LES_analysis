@@ -218,14 +218,14 @@ plt.legend(fontsize=12, loc='upper right')
 plt.savefig(plotdir+'Cs_sq_prof_scaled.png', pad_inches=0)
 plt.close()
 
+def get_C(Csq):
+    C = np.sqrt(Csq)
+    return C
 
 def get_Csq(C):
     Csq = C**2
     return Csq
 
-def get_C(Csq):
-    C = np.sqrt(Csq)
-    return C
 
 
 fig, ax = plt.subplots(figsize=(6,7), constrained_layout=True)
@@ -238,7 +238,7 @@ ax.plot(Cs_sq_32, z/z_i, label = '$\\Delta = 640}m$')
 ax.plot(Cs_sq_64, z/z_i, label = '$\\Delta = 1280}m$')
 ax.set_xlabel('$C_{s}^2$', fontsize=16)
 ax.set_ylabel("z/z$_{ML}$", fontsize=16)
-secax = ax.secondary_xaxis('top', functions=(get_Csq, get_C))
+secax = ax.secondary_xaxis('top', functions=(get_C, get_Csq))
 secax.set_xlabel('$C_{s}$', fontsize=16)
 ax.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
