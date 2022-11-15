@@ -18,7 +18,7 @@ model_res_list = ['0020_g0800', '0040_g0400', '0080_g0200', '0160_g0100', '0320_
 model_res_list_int = np.array([20, 40, 80, 160, 320])
 
 filter_res_list = ['0', '1', '2', '3', '4', '5']
-filter_res_list_int = np.array([20, 40, 80, 160, 320, 640, 1280])
+filter_res_list_int = np.array([40, 80, 160, 320, 640, 1280])
 
 
 
@@ -176,30 +176,36 @@ for i, var in enumerate(plot_vars):
     plt.xlabel(f'{var_name}')
 
     for m, res in enumerate(res_list):
-        if mydata=='bomex_filt':
-            if m == 0:
-                if var == 'f(w_on_w.w_on_w)_r':
-                    var_out = 'ww_mean'
-                elif var == 'f(w_on_w.th_on_w)_r':
-                    var_out = 'wtheta_cn_mean'
-                elif var == 'f(w_on_w.q_total_on_w)_r':
-                    var_out = 'wqt'
-                else:
-                    print(var, 'not programed correctly')
-                var_plot = np.load(f'files/bomex_og/{res}_{var_out}.npy')
-        else:
-            var_plot = np.load(f'files/{mydata}/{res}_{var}.npy')
+        # if mydata=='bomex_filt':
+        #     if m == 0:
+        #         if var == 'f(w_on_w.w_on_w)_r':
+        #             var_out = 'ww_mean'
+        #         elif var == 'f(w_on_w.th_on_w)_r':
+        #             var_out = 'wtheta_cn_mean'
+        #         elif var == 'f(w_on_w.q_total_on_w)_r':
+        #             var_out = 'wqt'
+        #         else:
+        #             print(var, 'not programed correctly')
+        #         var_plot = np.load(f'files/bomex_og/{res}_{var_out}.npy')
+        # else:
+        var_plot = np.load(f'files/{mydata}/{res}_{var}.npy')
 
-        if mydata=='bomex_filt':
-            if m == 0:
-                z_plot = np.load(f'files/bomex_og/{res}_z.npy')
-        else:
-            z_plot = np.load(f'files/{mydata}/{res}_z.npy')
+        # if mydata=='bomex_filt':
+        #     if m == 0:
+        #         z_plot = np.load(f'files/bomex_og/{res}_z.npy')
+        # else:
+        z_plot = np.load(f'files/{mydata}/{res}_z.npy')
         if len(np.shape(var_plot)) != 1:
-            plt.plot(np.mean(var_plot, axis=0), z_plot, label=f'$\\Delta x$ = {str(model_res_list_int[m])} m')
+            if mydata == 'bomex_filt':
+                plt.plot(np.mean(var_plot, axis=0), z_plot, label=f'$\\Delta x$ = {str(filter_res_list_int[m])} m')
+            else:
+                plt.plot(np.mean(var_plot, axis=0), z_plot, label=f'$\\Delta x$ = {str(model_res_list_int[m])} m')
 
         else:
-            plt.plot(var_plot, z_plot, label=f'$\\Delta x$ = {str(model_res_list_int[m])} m')
+            if mydata == 'bomex_filt':
+                plt.plot(var_plot, z_plot, label=f'$\\Delta x$ = {str(filter_res_list_int[m])} m')
+            else:
+                plt.plot(var_plot, z_plot, label=f'$\\Delta x$ = {str(model_res_list_int[m])} m')
     plt.legend(fontsize=12)
     figs.savefig(plot_dir+f'{var}_{set_time}_profile.png')
     print("Finished plotting profile for ", var, ",", \
