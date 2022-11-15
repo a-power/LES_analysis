@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import xarray as xr
 import os
 import dynamic_functions as dyn
+import cmath as cm
 
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
@@ -219,19 +220,11 @@ plt.close()
 
 
 def get_Csq(C):
-    #illegal maths but its ok
-    if C > 0:
-        Csq = C**2
-    else:
-        Csq = -C**2
+    Csq = (C**2).real
     return Csq
 
 def get_C(Csq):
-    #ignore the illegal pls
-    if Csq > 0:
-        C = np.sqrt(Csq)
-    else:
-        C = -np.sqrt(-Csq)
+    C = cm.sqrt(Csq)
     return C
 
 
