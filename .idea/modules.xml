@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/LES_analysis.iml" filepath="$PROJECT_DIR$/.idea/LES_analysis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jasmin_notebooks/jas_home/.idea/jas_home.iml" filepath="$PROJECT_DIR$/../jasmin_notebooks/jas_home/.idea/jas_home.iml" />
     </modules>
   </component>
 </project>
