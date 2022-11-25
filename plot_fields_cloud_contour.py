@@ -133,7 +133,7 @@ Cqt_options = {'axis_set': my_axis,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
            }
 
-#%%
+
 def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
 
     deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
@@ -164,22 +164,25 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
         if x_or_y == 'x':
             plt.contourf(np.transpose(data_field[axis_set,:,:]))
             cb = plt.colorbar()
-            plt.contour(np.transpose(cloud_field[axis_set,:,:]), color='black', levels = [1e-5])
+            cb.set_label(f'{field}', size=16)
+
+            plt.contour(np.transpose(cloud_field[axis_set,:,:]), colors='black', levels = [1e-5])
             plt.xlabel(f'y (x = {axis_set})')
         elif x_or_y == 'y':
             plt.contourf(np.transpose(data_field[:,axis_set,:]))
             cb = plt.colorbar()
-            plt.contour(np.transpose(cloud_field[:,axis_set,:]), color='black', levels = [1e-5])
+            cb.set_label(f'{field}', size=16)
+
+            plt.contour(np.transpose(cloud_field[:,axis_set,:]), colors='black', levels = [1e-5])
             plt.xlabel(f'x (y = {axis_set})')
         else:
             print("axis_set must be 'x' or'y'.")
         plt.ylabel("z (height m)")
-        cb.set_label(f'{field}', size=16)
         #plt.xlim(0, 1)
         plt.savefig(plotdir+f'{field}_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
         plt.close()
 
-#%%
+
 plotfield(**LijMij_options)
 
 plotfield(**MijMij_options)
