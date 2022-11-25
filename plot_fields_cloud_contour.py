@@ -177,7 +177,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
             plt.xlabel(f'x (y = {axis_set})')
         else:
             print("axis_set must be 'x' or'y'.")
-        plt.ylabel("z (height m)")
+        plt.ylabel("z")
         #plt.xlim(0, 1)
         plt.savefig(plotdir+f'{field}_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
         plt.close()
