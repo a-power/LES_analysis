@@ -164,17 +164,17 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
         if x_or_y == 'x':
             plt.contourf(np.transpose(data_field[axis_set,:,:]))
             cb = plt.colorbar()
-            plt.contour(np.transpose(cloud_field[axis_set,:,:]), 'k', levels = [1e-5])
+            plt.contour(np.transpose(cloud_field[axis_set,:,:]), color='black', levels = [1e-5])
             plt.xlabel(f'y (x = {axis_set})')
         elif x_or_y == 'y':
             plt.contourf(np.transpose(data_field[:,axis_set,:]))
             cb = plt.colorbar()
-            plt.contour(np.transpose(cloud_field[:,axis_set,:]), 'k', levels = [1e-5])
+            plt.contour(np.transpose(cloud_field[:,axis_set,:]), color='black', levels = [1e-5])
             plt.xlabel(f'x (y = {axis_set})')
         else:
             print("axis_set must be 'x' or'y'.")
         plt.ylabel("z (height m)")
-        cb.set_label("$w'$", size=12)
+        cb.set_label(f'{field}', size=16)
         #plt.xlim(0, 1)
         plt.savefig(plotdir+f'{field}_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
         plt.close()
