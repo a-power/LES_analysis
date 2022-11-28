@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import xarray as xr
 import os
+import dynamic_functions as dyn
 
 
 homedir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/'
@@ -143,17 +144,20 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
         if field == 'Cs_field':
             LM_field = np.mean(data_field_list[i]['LM_field'].data[...], axis=0)
             MM_field = np.mean(data_field_list[i]['MM_field'].data[...], axis=0)
-            data_field = LM_field/MM_field
+            data_field_sq = LM_field/MM_field
+            data_field = dyn.get_Cs(data_field_sq)
 
         elif field == 'Cth_field':
             HR_field = np.mean(data_field_list[i]['HR_th_field'].data[...], axis=0)
             RR_field = np.mean(data_field_list[i]['RR_th_field'].data[...], axis=0)
-            data_field = HR_field/RR_field
+            data_field_sq = HR_field/RR_field
+            data_field = dyn.get_Cs(data_field_sq)
 
         elif field == 'Cqt_field':
             HR_field = np.mean(data_field_list[i]['HR_qt_field'].data[...], axis=0)
             RR_field = np.mean(data_field_list[i]['RR_qt_field'].data[...], axis=0)
-            data_field = HR_field/RR_field
+            data_field_sq = HR_field/RR_field
+            data_field = dyn.get_Cs(data_field_sq)
 
         else:
             data_field = np.mean(data_field_list[i][f'{field}'].data[...], axis = 0)
@@ -166,21 +170,46 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
             cb = plt.colorbar()
             cb.set_label(f'{field}', size=16)
 
-            plt.contour(np.transpose(cloud_field[axis_set,:,:]), colors='black', levels = [1e-5])
+            plt.contour(np.transpose(cloud_field[axis_set,:,:]), colors='black', linewidths=2.5, levels = [1e-5])
             plt.xlabel(f'y (x = {axis_set})')
+
         elif x_or_y == 'y':
             plt.contourf(np.transpose(data_field[:,axis_set,:]))
             cb = plt.colorbar()
             cb.set_label(f'{field}', size=16)
 
-            plt.contour(np.transpose(cloud_field[:,axis_set,:]), colors='black', levels = [1e-5])
+            plt.contour(np.transpose(cloud_field[:,axis_set,:]), colors='black', linewidths=2.5, levels = [1e-5])
             plt.xlabel(f'x (y = {axis_set})')
         else:
             print("axis_set must be 'x' or'y'.")
         plt.ylabel("z")
-        #plt.xlim(0, 1)
         plt.savefig(plotdir+f'{field}_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
-        plt.close()
+        plt.clf()
+
+        if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
+            plt.figure(figsize=(20, 7))
+            if x_or_y == 'x':
+                plt.contourf(np.transpose(data_field_sq[axis_set, :, :]))
+                cb = plt.colorbar()
+                cb.set_label(f'{field}$^2$', size=16)
+
+                plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2.5, levels=[1e-5])
+                plt.xlabel(f'y (x = {axis_set})')
+            elif x_or_y == 'y':
+                plt.contourf(np.transpose(data_field_sq[:, axis_set, :]))
+                cb = plt.colorbar()
+                cb.set_label(f'{field}$^2$', size=16)
+
+                plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='black', linewidths=2.5, levels=[1e-5])
+                plt.xlabel(f'x (y = {axis_set})')
+            else:
+                print("axis_set must be 'x' or 'y'.")
+            plt.ylabel("z")
+            # plt.xlim(0, 1)
+            plt.savefig(plotdir + f'{field}_sq_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
+            plt.clf()
+
+    plt.close('all')
 
 
 plotfield(**LijMij_options)
