@@ -209,6 +209,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
             plt.savefig(plotdir + f'{field}_sq_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
             plt.clf()
 
+        print(f'plotted fields for {field}')
+
     plt.close('all')
 
 
