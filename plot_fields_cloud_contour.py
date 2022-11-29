@@ -202,6 +202,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
 
         if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
             plt.figure(figsize=(20, 7))
+            plt.title(f'{field}$^2$')
             if x_or_y == 'x':
 
                 myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
@@ -211,7 +212,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
 
                 plt.contourf(np.transpose(data_field[axis_set, :, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
-                cb.set_label(f'{field}', size=16)
+                cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2.5, levels=[1e-5])
                 plt.xlabel(f'y (x = {axis_set})')
@@ -228,7 +229,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
                 cb.set_label(f'{field}', size=16)
 
                 plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='black', linewidths=2.5, levels=[1e-5])
-                plt.xlabel(f'x (y = {axis_set})')
+                plt.xlabel(f'x (y = {axis_set})$^2$')
             else:
                 print("axis_set must be 'x' or 'y'.")
             plt.ylabel("z")
