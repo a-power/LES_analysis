@@ -166,19 +166,31 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
 
         plt.figure(figsize=(20,7))
         if x_or_y == 'x':
-            plt.contourf(np.transpose(data_field[axis_set,:,:]))
+
+            myvmin = np.min(np.mean(data_field[axis_set, :, :], axis=1)[5:120])
+            myvmax = np.max(np.mean(data_field[axis_set, :, :], axis=1)[5:120])
+
+            mylevels = np.linspace(myvmin, myvmax, 9)
+
+            plt.contourf(np.transpose(data_field[axis_set, :, :]), levels=mylevels, extend='both')
             cb = plt.colorbar()
             cb.set_label(f'{field}', size=16)
 
-            plt.contour(np.transpose(cloud_field[axis_set,:,:]), colors='black', linewidths=2.5, levels = [1e-5])
+            plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2.5, levels=[1e-5])
             plt.xlabel(f'y (x = {axis_set})')
 
         elif x_or_y == 'y':
-            plt.contourf(np.transpose(data_field[:,axis_set,:]))
+
+            myvmin = np.min(np.mean(data_field[:, axis_set, :], axis=1)[5:120])
+            myvmax = np.max(np.mean(data_field[:, axis_set, :], axis=1)[5:120])
+
+            mylevels = np.linspace(myvmin, myvmax, 9)
+
+            plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
             cb = plt.colorbar()
             cb.set_label(f'{field}', size=16)
 
-            plt.contour(np.transpose(cloud_field[:,axis_set,:]), colors='black', linewidths=2.5, levels = [1e-5])
+            plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='black', linewidths=2.5, levels=[1e-5])
             plt.xlabel(f'x (y = {axis_set})')
         else:
             print("axis_set must be 'x' or'y'.")
@@ -189,16 +201,29 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
         if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
             plt.figure(figsize=(20, 7))
             if x_or_y == 'x':
-                plt.contourf(np.transpose(data_field_sq[axis_set, :, :]))
+
+                myvmin = np.min(np.mean(data_field[axis_set, :, :], axis=1)[5:120])
+                myvmax = np.max(np.mean(data_field[axis_set, :, :], axis=1)[5:120])
+
+                mylevels = np.linspace(myvmin, myvmax, 9)
+
+                plt.contourf(np.transpose(data_field[axis_set, :, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
-                cb.set_label(f'{field}$^2$', size=16)
+                cb.set_label(f'{field}', size=16)
 
                 plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2.5, levels=[1e-5])
                 plt.xlabel(f'y (x = {axis_set})')
+
             elif x_or_y == 'y':
-                plt.contourf(np.transpose(data_field_sq[:, axis_set, :]))
+
+                myvmin = np.min(np.mean(data_field[:, axis_set, :], axis=1)[5:120])
+                myvmax = np.max(np.mean(data_field[:, axis_set, :], axis=1)[5:120])
+
+                mylevels = np.linspace(myvmin, myvmax, 9)
+
+                plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
-                cb.set_label(f'{field}$^2$', size=16)
+                cb.set_label(f'{field}', size=16)
 
                 plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='black', linewidths=2.5, levels=[1e-5])
                 plt.xlabel(f'x (y = {axis_set})')
@@ -214,18 +239,18 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
     plt.close('all')
 
 
-# plotfield(**LijMij_options)
-#
-# plotfield(**MijMij_options)
-#
-# plotfield(**Cs_options)
-#
-#
-# plotfield(**HjRj_th_options)
-#
-# plotfield(**RjRj_th_options)
-#
-# plotfield(**Cth_options)
+plotfield(**LijMij_options)
+
+plotfield(**MijMij_options)
+
+plotfield(**Cs_options)
+
+
+plotfield(**HjRj_th_options)
+
+plotfield(**RjRj_th_options)
+
+plotfield(**Cth_options)
 
 
 plotfield(**HjRj_qt_options)
