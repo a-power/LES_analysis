@@ -115,14 +115,14 @@ Cth_options = {'axis_set': my_axis,
 
 HjRj_qt_options = {'axis_set': my_axis,
                    'x_or_y': my_x_y,
-           'field': 'HR_qt_field',
+           'field': 'HR_q_total_field',
            'data_field_list': data_qt_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
            }
 
 RjRj_qt_options = {'axis_set': my_axis,
                    'x_or_y': my_x_y,
-           'field': 'RR_qt_field',
+           'field': 'RR_q_total_field',
            'data_field_list': data_qt_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
            }
@@ -154,8 +154,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
             data_field = dyn.get_Cs(data_field_sq)
 
         elif field == 'Cqt_field':
-            HR_field = np.mean(data_field_list[i]['HR_qt_field'].data[...], axis=0)
-            RR_field = np.mean(data_field_list[i]['RR_qt_field'].data[...], axis=0)
+            HR_field = np.mean(data_field_list[i]['HR_q_total_field'].data[...], axis=0)
+            RR_field = np.mean(data_field_list[i]['RR_q_total_field'].data[...], axis=0)
             data_field_sq = HR_field/RR_field
             data_field = dyn.get_Cs(data_field_sq)
 
