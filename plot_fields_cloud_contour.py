@@ -167,8 +167,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
         plt.figure(figsize=(20,7))
         if x_or_y == 'x':
 
-            myvmin = np.min(np.mean(data_field[axis_set, :, :], axis=1)[5:120])
-            myvmax = np.max(np.mean(data_field[axis_set, :, :], axis=1)[5:120])
+            myvmin = np.percentile(np.mean(data_field[axis_set, :, :], axis=1)[5:120], 10)
+            myvmax = np.percentile(np.mean(data_field[axis_set, :, :], axis=1)[5:120], 90)
 
             mylevels = np.linspace(myvmin, myvmax, 9)
 
@@ -181,8 +181,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
 
         elif x_or_y == 'y':
 
-            myvmin = np.min(np.mean(data_field[:, axis_set, :], axis=1)[5:120])
-            myvmax = np.max(np.mean(data_field[:, axis_set, :], axis=1)[5:120])
+            myvmin = np.percentile(np.mean(data_field[:, axis_set, :], axis=1)[5:120], 10)
+            myvmax = np.percentile(np.mean(data_field[:, axis_set, :], axis=1)[5:120], 90)
 
             mylevels = np.linspace(myvmin, myvmax, 9)
 
@@ -202,8 +202,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
             plt.figure(figsize=(20, 7))
             if x_or_y == 'x':
 
-                myvmin = np.min(np.mean(data_field[axis_set, :, :], axis=1)[5:120])
-                myvmax = np.max(np.mean(data_field[axis_set, :, :], axis=1)[5:120])
+                myvmin = np.percentile(np.mean(data_field[axis_set, :, :], axis=1)[5:120], 10)
+                myvmax = np.percentile(np.mean(data_field[axis_set, :, :], axis=1)[5:120], 90)
 
                 mylevels = np.linspace(myvmin, myvmax, 9)
 
@@ -216,8 +216,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
 
             elif x_or_y == 'y':
 
-                myvmin = np.min(np.mean(data_field[:, axis_set, :], axis=1)[5:120])
-                myvmax = np.max(np.mean(data_field[:, axis_set, :], axis=1)[5:120])
+                myvmin = np.percentile(np.mean(data_field[:, axis_set, :], axis=1)[5:120], 10)
+                myvmax = np.percentile(np.mean(data_field[:, axis_set, :], axis=1)[5:120], 90)
 
                 mylevels = np.linspace(myvmin, myvmax, 9)
 
