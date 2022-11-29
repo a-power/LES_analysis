@@ -57,25 +57,38 @@ data_cl_list = [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
 #
 
 
-LijMij_options = {'axis_set': my_axis,
-                  'x_or_y': my_x_y,
-           'field': 'LM_field',
+LijMij_options = {'field': 'LM_field',
            'data_field_list': data_s_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
            }
 
-HjRj_th_options = {'axis_set': my_axis,
-                   'x_or_y': my_x_y,
-           'field': 'HR_th_field',
+HjRj_th_options = {'field': 'HR_th_field',
            'data_field_list': data_th_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
            }
 
-HjRj_qt_options = {'axis_set': my_axis,
-                   'x_or_y': my_x_y,
-           'field': 'HR_qt_field',
+HjRj_qt_options = {'field': 'HR_qt_field',
            'data_field_list': data_qt_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
            }
 
 ##Need to time average
+
+def negs_in_field(field, data_field_list, data_cl_list):
+    deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+
+    for i in range(len(data_field_list)):
+
+        data_field = np.mean(data_field_list[i][f'{field}'].data[...], axis=0)
+        counter = np.zeros(len(data_field[0,0,:]))
+        for j in range(len(data_field[0,0,:])):
+            counter[j] = np.count_nonzero(data_field[:,:,j] < 0)
+
+        plt.figure(figsize=(7, 6))
+        plt.hist(counter)
+        plt.savefig(plotdir + f'neg_vs_z_{field}_{deltas[i]}_field.png', pad_inches=0)
+        plt.clf()
+
+        print(f'plotted neg vs z for {field}')
+
+    plt.close('all')
