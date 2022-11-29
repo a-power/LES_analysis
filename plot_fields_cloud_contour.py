@@ -165,6 +165,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
         cloud_field = np.mean(data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[...], axis = 0)
 
         plt.figure(figsize=(20,7))
+        plt.title(f'{field} with $\\Delta$ = {deltas[i]}')
         if x_or_y == 'x':
 
             myvmin = np.min(np.mean(data_field[axis_set, :, :], axis=1)[5:120])
@@ -200,14 +201,15 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
 
         if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
             plt.figure(figsize=(20, 7))
+            plt.title(f'{field}$^2$ with $\\Delta$ = {deltas[i]}')
             if x_or_y == 'x':
 
-                myvmin = np.min(np.mean(data_field[axis_set, :, :], axis=1)[5:120])
-                myvmax = np.max(np.mean(data_field[axis_set, :, :], axis=1)[5:120])
+                myvmin = np.min(np.mean(data_field_sq[axis_set, :, :], axis=1)[5:120])
+                myvmax = np.max(np.mean(data_field_sq[axis_set, :, :], axis=1)[5:120])
 
                 mylevels = np.linspace(myvmin, myvmax, 9)
 
-                plt.contourf(np.transpose(data_field[axis_set, :, :]), levels=mylevels, extend='both')
+                plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
                 cb.set_label(f'{field}', size=16)
 
@@ -216,12 +218,12 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
 
             elif x_or_y == 'y':
 
-                myvmin = np.min(np.mean(data_field[:, axis_set, :], axis=1)[5:120])
-                myvmax = np.max(np.mean(data_field[:, axis_set, :], axis=1)[5:120])
+                myvmin = np.min(np.mean(data_field_sq[:, axis_set, :], axis=1)[5:120])
+                myvmax = np.max(np.mean(data_field_sq[:, axis_set, :], axis=1)[5:120])
 
                 mylevels = np.linspace(myvmin, myvmax, 9)
 
-                plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
+                plt.contourf(np.transpose(data_field_sq[:, axis_set, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
                 cb.set_label(f'{field}', size=16)
 
