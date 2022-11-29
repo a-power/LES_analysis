@@ -16,7 +16,7 @@ dir_s = mydir + 'LijMij_'
 dir_th = mydir + 'HjRj_th_'
 dir_qt = mydir + 'HjRj_qt_'
 
-set_percentile = [10,99]
+set_percentile = [10,90]
 
 
 data_s2 = xr.open_dataset(dir_s+'2D.nc')
