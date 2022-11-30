@@ -16,7 +16,8 @@ dir_s = mydir + 'LijMij_'
 dir_th = mydir + 'HjRj_th_'
 dir_qt = mydir + 'HjRj_qt_'
 
-set_percentile = [10,90]
+in_set_percentile = [10,90]
+in_set_percentile_C = [25,99]
 
 
 data_s2 = xr.open_dataset(dir_s+'2D.nc')
@@ -75,21 +76,24 @@ LijMij_options = {'axis_set': my_axis,
                   'x_or_y': my_x_y,
            'field': 'LM_field',
            'data_field_list': data_s_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+                  'set_percentile': in_set_percentile
            }
 
 MijMij_options = {'axis_set': my_axis,
                   'x_or_y': my_x_y,
            'field': 'MM_field',
            'data_field_list': data_s_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+                  'set_percentile': in_set_percentile
            }
 
 Cs_options = {'axis_set': my_axis,
                   'x_or_y': my_x_y,
            'field': 'Cs_field',
            'data_field_list': data_s_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+              'set_percentile': in_set_percentile_C
            }
 
 
@@ -97,21 +101,24 @@ HjRj_th_options = {'axis_set': my_axis,
                    'x_or_y': my_x_y,
            'field': 'HR_th_field',
            'data_field_list': data_th_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+                   'set_percentile': in_set_percentile
            }
 
 RjRj_th_options = {'axis_set': my_axis,
                    'x_or_y': my_x_y,
            'field': 'RR_th_field',
            'data_field_list': data_th_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+                   'set_percentile': in_set_percentile
            }
 
 Cth_options = {'axis_set': my_axis,
                   'x_or_y': my_x_y,
            'field': 'Cth_field',
            'data_field_list': data_th_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+               'set_percentile': in_set_percentile_C
            }
 
 
@@ -119,25 +126,28 @@ HjRj_qt_options = {'axis_set': my_axis,
                    'x_or_y': my_x_y,
            'field': 'HR_q_total_field',
            'data_field_list': data_qt_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+                   'set_percentile': in_set_percentile
            }
 
 RjRj_qt_options = {'axis_set': my_axis,
                    'x_or_y': my_x_y,
            'field': 'RR_q_total_field',
            'data_field_list': data_qt_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+                   'set_percentile': in_set_percentile
            }
 
 Cqt_options = {'axis_set': my_axis,
                   'x_or_y': my_x_y,
            'field': 'Cqt_field',
            'data_field_list': data_qt_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+               'set_percentile': in_set_percentile_C
            }
 
 
-def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
+def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_list):
 
     deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
@@ -232,8 +242,11 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
                 plt.xlabel(f'x (y = {axis_set})$^2$')
             else:
                 print("axis_set must be 'x' or 'y'.")
-            plt.ylabel("z")
-            # plt.xlim(0, 1)
+
+            plt.xticks(np.arange(len(np.arange(0, 16000, 20)))[::1000],np.arange(0, 16, 0.02)[::4000])
+            plt.yticks(np.arange(len(np.arange(0, 3000, 20)))[::500],np.arange(0, 3, 0.02)[::1000])
+            plt.ylabel("z (km)")
+            plt.xlabel(f"{axis_set} (km)")
             plt.savefig(plotdir + f'{field}_sq_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
             plt.clf()
 
