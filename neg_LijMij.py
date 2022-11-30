@@ -68,7 +68,7 @@ HjRj_th_options = {'field': 'HR_th_field',
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
            }
 
-HjRj_qt_options = {'field': 'HR_qt_field',
+HjRj_qt_options = {'field': 'HR_q_total_field',
            'data_field_list': data_qt_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
            }
