@@ -84,9 +84,12 @@ def negs_in_field(field, data_field_list, data_cl_list):
         cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_cl_list[i])
 
         data_field = data_field_list[i][f'{field}'].data[...]
+        print(np.shape(data_field[0,...]))
 
         data_field_cloud = np.mean(ma.masked_array(data_field, mask=cloud_only_mask), axis=0)
         data_field_env = np.mean(ma.masked_array(data_field, mask=env_only_mask), axis=0)
+
+        print(np.shape(data_field_env))
 
         counter_cloud = np.zeros(len(data_field_cloud[0,0,:]))
         for j in range(len(data_field_cloud[0,0,:])):
