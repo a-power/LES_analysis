@@ -16,8 +16,8 @@ dir_s = mydir + 'LijMij_'
 dir_th = mydir + 'HjRj_th_'
 dir_qt = mydir + 'HjRj_qt_'
 
-in_set_percentile = [10,95]
-in_set_percentile_C = [35,98]
+in_set_percentile = [15,98]
+in_set_percentile_C = [50,99]
 
 
 data_s2 = xr.open_dataset(dir_s+'2D.nc')
@@ -192,7 +192,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             cb = plt.colorbar()
             cb.set_label(f'{field}', size=16)
 
-            plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2.5, levels=[1e-5])
+            plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
             plt.xlabel(f'y (x = {axis_set}) (km)')
 
         elif x_or_y == 'y':
@@ -209,7 +209,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             cb = plt.colorbar()
             cb.set_label(f'{field}', size=16)
 
-            plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='black', linewidths=2.5, levels=[1e-5])
+            plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='red', linewidths=2, levels=[1e-5])
             plt.xlabel(f'x (y = {axis_set}) (km)')
         else:
             print("axis_set must be 'x' or'y'.")
@@ -227,29 +227,29 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             if x_or_y == 'x':
 
                 myvmin = 0 #np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
-                myvmax = np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
+                myvmax = np.percentile(data_field_sq[axis_set, :, 5:120], set_percentile[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 9)
 
-                plt.contourf(np.transpose(data_field[axis_set, :, :]), levels=mylevels, extend='both')
+                plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
                 cb.set_label(f'{field}$^2$', size=16)
 
-                plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2.5, levels=[1e-5])
+                plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
                 plt.xlabel(f'y (x = {axis_set}) (km)')
 
             elif x_or_y == 'y':
 
                 myvmin = 0 #np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
-                myvmax = np.percentile(data_field[:, axis_set, 5:120], set_percentile[1])
+                myvmax = np.percentile(data_field_sq[:, axis_set, 5:120], set_percentile[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 9)
 
-                plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
+                plt.contourf(np.transpose(data_field_sq[:, axis_set, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
                 cb.set_label(f'{field}$^2$', size=16)
 
-                plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='black', linewidths=2.5, levels=[1e-5])
+                plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='red', linewidths=2, levels=[1e-5])
                 plt.xlabel(f'x (y = {axis_set}) (km)')
             else:
                 print("axis_set must be 'x' or 'y'.")
