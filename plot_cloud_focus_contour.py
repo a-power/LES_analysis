@@ -189,7 +189,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
         cloud_field = np.mean(data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[:, x_range[0]:x_range[1], y_range[0]:y_range[1], z_range[0]:z_range[1]], axis = 0)
 
-        plt.figure(figsize=(20,7))
+        plt.figure(figsize=(10,7))
         plt.title(f'{field}')
 
         if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
@@ -231,7 +231,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
         plt.clf()
 
         if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
-            plt.figure(figsize=(20, 7))
+            plt.figure(figsize=(10, 7))
             plt.title(f'{field}$^2$')
 
             myvmin = 0 #np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
