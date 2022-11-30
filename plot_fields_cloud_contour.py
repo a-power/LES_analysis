@@ -233,7 +233,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
                 plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
-                cb.set_under('k')
+                #cb.set_under('k')
                 cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
@@ -248,7 +248,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
                 plt.contourf(np.transpose(data_field_sq[:, axis_set, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
-                cb.set_under('k')
+                #cb.set_under('k')
                 cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='red', linewidths=2, levels=[1e-5])
