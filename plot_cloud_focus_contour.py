@@ -19,13 +19,19 @@ dir_qt = mydir + 'HjRj_qt_'
 in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
 
-set_focus = {'my_x_y': 'y',
-            'my_axis': 299,
-             'x_range': [290, 340],
-            'y_range': [299, 299],
+set_focus = {'x_range': [290, 340],
+            'y_range': [299, 300],
             'z_range': [20, 80],
 }
 
+# set_focus = {'x_range': [55, 125],
+#             'y_range': [299, 300],
+#             'z_range': [20, 95],
+# }
+
+
+my_axis = 299
+my_x_y = 'y'
 
 
 
@@ -181,92 +187,56 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
         else:
             data_field = np.mean(data_field_list[i][f'{field}'].data[:, x_range[0]:x_range[1], y_range[0]:y_range[1], z_range[0]:z_range[1]], axis = 0)
 
-        cloud_field = np.mean(data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[...], axis = 0)
+        cloud_field = np.mean(data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[:, x_range[0]:x_range[1], y_range[0]:y_range[1], z_range[0]:z_range[1]], axis = 0)
 
         plt.figure(figsize=(20,7))
         plt.title(f'{field}')
-        if x_or_y == 'x':
 
-            if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
-                myvmin = 0
-            else:
-                myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
-            myvmax = np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
-
-            mylevels = np.linspace(myvmin, myvmax, 9)
-
-            plt.contourf(np.transpose(data_field[axis_set, :, :]), levels=mylevels, extend='both')
-            cb = plt.colorbar()
-            cb.set_label(f'{field}', size=16)
-
-            plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
-            plt.xlabel(f'y (x = {axis_set}) (km)')
-
-        elif x_or_y == 'y':
-
-            if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
-                myvmin = 0
-            else:
-                myvmin = np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
-            myvmax = np.percentile(data_field[:, axis_set, 5:120], set_percentile[1])
-
-            mylevels = np.linspace(myvmin, myvmax, 9)
-
-            plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
-            cb = plt.colorbar()
-            cb.set_label(f'{field}', size=16)
-
-            plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='red', linewidths=2, levels=[1e-5])
-            plt.xlabel(f'x (y = {axis_set}) (km)')
+        if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
+            myvmin = 0
         else:
-            print("axis_set must be 'x' or'y'.")
+            myvmin = np.percentile(data_field[...], set_percentile[0])
+        myvmax = np.percentile(data_field[...], set_percentile[1])
+
+        mylevels = np.linspace(myvmin, myvmax, 9)
+
+        plt.contourf(np.transpose(data_field[...]), levels=mylevels, extend='both')
+
+        cb = plt.colorbar()
+        cb.set_label(f'{field}', size=16)
+
+        plt.contour(np.transpose(cloud_field[...]), colors='red', linewidths=2, levels=[1e-5])
+        plt.xlabel(f'y (x = {axis_set}) (km)')
+
         plt.ylabel("z")
         og_xtic = plt.xticks()
-        plt.xticks(og_xtic[0], np.linspace(0, 16, len(og_xtic[0])))
+        plt.xticks(og_xtic[0], np.linspace((x_range[0])(20/1000), (x_range[1])(20/1000), len(og_xtic[0])))
         og_ytic = plt.yticks()
-        plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
+        plt.yticks(og_ytic[0], np.linspace((y_range[0])(20/1000), (y_range[1])(20/1000), len(og_xtic[0])))
         plt.savefig(plotdir+f'{field}_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
         plt.clf()
 
         if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
             plt.figure(figsize=(20, 7))
             plt.title(f'{field}$^2$')
-            if x_or_y == 'x':
 
-                myvmin = 0 #np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
-                myvmax = np.percentile(data_field_sq[axis_set, :, 5:120], set_percentile[1])
+            myvmin = 0 #np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
+            myvmax = np.percentile(data_field_sq[axis_set, :, 5:120], set_percentile[1])
 
-                mylevels = np.linspace(myvmin, myvmax, 9)
+            mylevels = np.linspace(myvmin, myvmax, 9)
 
-                plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), levels=mylevels, extend='both')
-                cb = plt.colorbar()
-                #cb.set_under('k')
-                cb.set_label(f'{field}$^2$', size=16)
+            plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), levels=mylevels, extend='both')
+            cb = plt.colorbar()
+            #cb.set_under('k')
+            cb.set_label(f'{field}$^2$', size=16)
 
-                plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
-                plt.xlabel(f'y (x = {axis_set}) (km)')
-
-            elif x_or_y == 'y':
-
-                myvmin = 0 #np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
-                myvmax = np.percentile(data_field_sq[:, axis_set, 5:120], set_percentile[1])
-
-                mylevels = np.linspace(myvmin, myvmax, 8)
-
-                plt.contourf(np.transpose(data_field_sq[:, axis_set, :]), levels=mylevels, extend='both')
-                cb = plt.colorbar()
-                #cb.set_under('k')
-                cb.set_label(f'{field}$^2$', size=16)
-
-                plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='red', linewidths=2, levels=[1e-5])
-                plt.xlabel(f'x (y = {axis_set}) (km)')
-            else:
-                print("axis_set must be 'x' or 'y'.")
+            plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
+            plt.xlabel(f'y (x = {axis_set}) (km)')
 
             og_xtic = plt.xticks()
-            plt.xticks(og_xtic[0],np.linspace(0, 16, len(og_xtic[0])))
+            plt.xticks(og_xtic[0], np.linspace((x_range[0])(20 / 1000), (x_range[1])(20 / 1000), len(og_xtic[0])))
             og_ytic = plt.yticks()
-            plt.yticks(np.linspace(0, 151, 7) ,np.linspace(0, 3, 7))
+            plt.yticks(og_ytic[0], np.linspace((y_range[0])(20 / 1000), (y_range[1])(20 / 1000), len(og_xtic[0])))
             plt.ylabel("z (km)")
             plt.savefig(plotdir + f'{field}_sq_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
             plt.clf()
