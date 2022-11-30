@@ -17,7 +17,7 @@ dir_th = mydir + 'HjRj_th_'
 dir_qt = mydir + 'HjRj_qt_'
 
 in_set_percentile = [10,95]
-in_set_percentile_C = [25,99]
+in_set_percentile_C = [35,98]
 
 
 data_s2 = xr.open_dataset(dir_s+'2D.nc')
@@ -215,9 +215,9 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             print("axis_set must be 'x' or'y'.")
         plt.ylabel("z")
         og_xtic = plt.xticks()
-        plt.xticks(np.arange(og_xtic, np.linspace(0, 16, len(og_xtic))))
+        plt.xticks(np.arange(og_xtic[0], np.linspace(0, 16, len(og_xtic[0]))))
         og_ytic = plt.yticks()
-        plt.yticks(np.arange(og_ytic, np.linspace(0, 3, len(og_ytic))))
+        plt.yticks(np.arange(og_ytic[0], np.linspace(0, 3, len(og_ytic[0]))))
         plt.savefig(plotdir+f'{field}_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
         plt.clf()
 
@@ -255,9 +255,9 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 print("axis_set must be 'x' or 'y'.")
 
             og_xtic = plt.xticks()
-            plt.xticks(np.arange(og_xtic,np.linspace(0, 16, len(og_xtic))))
+            plt.xticks(np.arange(og_xtic[0],np.linspace(0, 16, len(og_xtic[0]))))
             og_ytic = plt.yticks()
-            plt.yticks(np.arange(og_ytic,np.linspace(0, 3, len(og_ytic))))
+            plt.yticks(np.arange(og_ytic[0],np.linspace(0, 3, len(og_ytic[0]))))
             plt.ylabel("z (km)")
             plt.savefig(plotdir + f'{field}_sq_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
             plt.clf()
