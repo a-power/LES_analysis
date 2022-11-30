@@ -19,6 +19,8 @@ dir_qt = mydir + 'HjRj_qt_'
 in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
 
+my_axis = 299
+my_x_y = 'y'
 
 data_s2 = xr.open_dataset(dir_s+'2D.nc')
 data_s4 = xr.open_dataset(dir_s+'4D.nc')
@@ -69,8 +71,6 @@ data_cl_list = [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
 # cloud_field = data_cl_list['f(q_cloud_liquid_mass_on_w)_r'].data[...]
 #%%
 
-my_axis = 299
-my_x_y = 'y'
 
 LijMij_options = {'axis_set': my_axis,
                   'x_or_y': my_x_y,
@@ -186,7 +186,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
             myvmax = np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
 
-            mylevels = np.linspace(myvmin, myvmax, 9)
+            mylevels = np.linspace(myvmin, myvmax, 8)
 
             plt.contourf(np.transpose(data_field[axis_set, :, :]), levels=mylevels, extend='both')
             cb = plt.colorbar()
@@ -203,7 +203,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 myvmin = np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
             myvmax = np.percentile(data_field[:, axis_set, 5:120], set_percentile[1])
 
-            mylevels = np.linspace(myvmin, myvmax, 9)
+            mylevels = np.linspace(myvmin, myvmax, 8)
 
             plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
             cb = plt.colorbar()
@@ -229,7 +229,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 myvmin = 0 #np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
                 myvmax = np.percentile(data_field_sq[axis_set, :, 5:120], set_percentile[1])
 
-                mylevels = np.linspace(myvmin, myvmax, 9)
+                mylevels = np.linspace(myvmin, myvmax, 8)
 
                 plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
@@ -244,7 +244,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 myvmin = 0 #np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
                 myvmax = np.percentile(data_field_sq[:, axis_set, 5:120], set_percentile[1])
 
-                mylevels = np.linspace(myvmin, myvmax, 9)
+                mylevels = np.linspace(myvmin, myvmax, 8)
 
                 plt.contourf(np.transpose(data_field_sq[:, axis_set, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
