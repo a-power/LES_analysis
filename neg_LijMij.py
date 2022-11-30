@@ -10,7 +10,7 @@ homedir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/'
 mydir = homedir + 'LijMij_HjRj/BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 dir_cloud = homedir + 'q_l/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/plots/fields_cloud_contour/'
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/plots/neg_counter/'
 os.makedirs(plotdir, exist_ok = True)
 
 dir_s = mydir + 'LijMij_'
@@ -106,9 +106,13 @@ def negs_in_field(field, data_field_list, data_cl_list):
 
         plt.xlabel("z (km)", fontsize=16)
         plt.ylabel("number of negative values", fontsize=16)
-        plt.savefig(plotdir + f'neg_vs_z_{field}_{deltas[i]}_field.png', pad_inches=0)
+        plt.savefig(plotdir + f'neg_{field}_vs_z_{deltas[i]}.png', pad_inches=0)
         plt.clf()
 
         print(f'plotted neg vs z for {field}')
 
     plt.close('all')
+
+negs_in_field( **LijMij_options )
+negs_in_field( **HjRj_th_options )
+negs_in_field( **HjRj_qt_options )
