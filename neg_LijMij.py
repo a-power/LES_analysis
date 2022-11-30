@@ -97,7 +97,7 @@ def negs_in_field(field, data_field_list, data_cl_list):
             counter_env[j] = np.count_nonzero(data_field_env[:, :, j] < 0)
 
         plt.figure(figsize=(7, 6))
-        plt.hist([counter_env, counter_cloud], histtype='bar', stacked=True, labels=["environment", "in-cloud"])
+        plt.hist([counter_env, counter_cloud], histtype='bar', stacked=True, label=["environment", "in-cloud"])
         plt.legend()
 
         og_xtic = plt.xticks()
