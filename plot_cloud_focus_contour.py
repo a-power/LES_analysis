@@ -9,7 +9,7 @@ homedir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/'
 mydir = homedir + 'LijMij_HjRj/BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 dir_cloud = homedir + 'q_l/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/plots/fields_cloud_contour/cloud_focus/'
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/plots/fields_cloud_contour/cloud_focus/cloud2'
 os.makedirs(plotdir, exist_ok = True)
 
 dir_s = mydir + 'LijMij_'
@@ -19,17 +19,17 @@ dir_qt = mydir + 'HjRj_qt_'
 in_set_percentile = [25,99]
 in_set_percentile_C = [50,99]
 
-set_focus = {'x_range': [290, 340],
-            'y_range': [299, 300],
-            'z_range': [20, 80],
-             'name': 'x300y299z60'
-}
-
-# set_focus = {'x_range': [55, 125],
+# set_focus = {'x_range': [290, 340],
 #             'y_range': [299, 300],
-#             'z_range': [20, 95],
-#               'name': 'x100y299z60'
+#             'z_range': [20, 80],
+#              'name': 'x300y299z60'
 # }
+
+set_focus = {'x_range': [55, 125],
+            'y_range': [299, 300],
+            'z_range': [20, 95],
+              'name': 'x100y299z60'
+}
 
 
 my_axis = 299
@@ -279,18 +279,18 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
     plt.close('all')
 
 
-# plotfield(**LijMij_options, **set_focus)
-#
-# plotfield(**MijMij_options, **set_focus)
-#
-# plotfield(**Cs_options, **set_focus)
-#
-#
-# plotfield(**HjRj_th_options, **set_focus)
-#
-# plotfield(**RjRj_th_options, **set_focus)
-#
-# plotfield(**Cth_options, **set_focus)
+plotfield(**LijMij_options, **set_focus)
+
+plotfield(**MijMij_options, **set_focus)
+
+plotfield(**Cs_options, **set_focus)
+
+
+plotfield(**HjRj_th_options, **set_focus)
+
+plotfield(**RjRj_th_options, **set_focus)
+
+plotfield(**Cth_options, **set_focus)
 
 
 plotfield(**HjRj_qt_options, **set_focus)
