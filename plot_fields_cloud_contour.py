@@ -16,7 +16,7 @@ dir_s = mydir + 'LijMij_'
 dir_th = mydir + 'HjRj_th_'
 dir_qt = mydir + 'HjRj_qt_'
 
-in_set_percentile = [10,90]
+in_set_percentile = [10,95]
 in_set_percentile_C = [25,99]
 
 
@@ -193,7 +193,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             cb.set_label(f'{field}', size=16)
 
             plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2.5, levels=[1e-5])
-            plt.xlabel(f'y (x = {axis_set})')
+            plt.xlabel(f'y (x = {axis_set}) (km)')
 
         elif x_or_y == 'y':
 
@@ -210,10 +210,14 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             cb.set_label(f'{field}', size=16)
 
             plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='black', linewidths=2.5, levels=[1e-5])
-            plt.xlabel(f'x (y = {axis_set})')
+            plt.xlabel(f'x (y = {axis_set}) (km)')
         else:
             print("axis_set must be 'x' or'y'.")
         plt.ylabel("z")
+        og_xtic = plt.xticks()
+        plt.xticks(np.arange(og_xtic, np.linspace(0, 16, len(og_xtic))))
+        og_ytic = plt.yticks()
+        plt.yticks(np.arange(og_ytic, np.linspace(0, 3, len(og_ytic))))
         plt.savefig(plotdir+f'{field}_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
         plt.clf()
 
@@ -232,7 +236,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2.5, levels=[1e-5])
-                plt.xlabel(f'y (x = {axis_set})')
+                plt.xlabel(f'y (x = {axis_set}) (km)')
 
             elif x_or_y == 'y':
 
@@ -243,17 +247,18 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
                 plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
-                cb.set_label(f'{field}', size=16)
+                cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='black', linewidths=2.5, levels=[1e-5])
-                plt.xlabel(f'x (y = {axis_set})$^2$')
+                plt.xlabel(f'x (y = {axis_set}) (km)')
             else:
                 print("axis_set must be 'x' or 'y'.")
 
-            plt.xticks(np.arange(len(np.arange(0, 16000, 20)))[::1000],np.arange(0, 16, 0.02)[::4000])
-            plt.yticks(np.arange(len(np.arange(0, 3000, 20)))[::500],np.arange(0, 3, 0.02)[::1000])
+            og_xtic = plt.xticks()
+            plt.xticks(np.arange(og_xtic,np.linspace(0, 16, len(og_xtic))))
+            og_ytic = plt.yticks()
+            plt.yticks(np.arange(og_ytic,np.linspace(0, 3, len(og_ytic))))
             plt.ylabel("z (km)")
-            plt.xlabel(f"{axis_set} (km)")
             plt.savefig(plotdir + f'{field}_sq_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
             plt.clf()
 
