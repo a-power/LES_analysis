@@ -22,11 +22,13 @@ in_set_percentile_C = [50,99]
 set_focus = {'x_range': [290, 340],
             'y_range': [299, 300],
             'z_range': [20, 80],
+             'name': 'x300y299z60'
 }
 
 # set_focus = {'x_range': [55, 125],
 #             'y_range': [299, 300],
 #             'z_range': [20, 95],
+#               'name': 'x300y299z60'
 # }
 
 
@@ -160,7 +162,7 @@ Cqt_options = {'axis_set': my_axis,
            }
 
 
-def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_list, x_range, y_range, z_range):
+def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_list, name, x_range, y_range, z_range):
 
     deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
@@ -227,7 +229,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
         plt.ylabel("z")
         og_ytic = plt.yticks()
         plt.yticks(og_ytic[0], np.round(np.linspace((z_range[0])*(20/1000), (z_range[1])*(20/1000), len(og_ytic[0]))), 2)
-        plt.savefig(plotdir+f'{field}_{deltas[i]}_{x_or_y}={axis_set}.png', pad_inches=0)
+        plt.savefig(plotdir+f'{field}_{deltas[i]}_on_{x_or_y}_{name}.png', pad_inches=0)
         plt.clf()
 
         if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
@@ -269,7 +271,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             og_ytic = plt.yticks()
             plt.yticks(og_ytic[0], np.round(np.linspace((z_range[0])*(20 / 1000), (z_range[1])*(20 / 1000), len(og_ytic[0]))), 2)
             plt.ylabel("z (km)")
-            plt.savefig(plotdir + f'{field}_sq_{deltas[i]}_{x_or_y}={axis_set}.png', pad_inches=0)
+            plt.savefig(plotdir + f'{field}_sq_{deltas[i]}_on_{x_or_y}_{name}.png', pad_inches=0)
             plt.clf()
 
         print(f'plotted fields for {field}')
