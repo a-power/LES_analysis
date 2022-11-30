@@ -17,7 +17,7 @@ dir_th = mydir + 'HjRj_th_'
 dir_qt = mydir + 'HjRj_qt_'
 
 in_set_percentile = [25,99]
-in_set_percentile_C = [70,99]
+in_set_percentile_C = [50,99]
 
 set_focus = {'x_range': [290, 340],
             'y_range': [299, 300],
@@ -208,6 +208,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
             plt.contour(np.transpose(cloud_field[0, :, :]), colors='red', linewidths=2, levels=[1e-5])
             plt.xlabel(f'y (x = {axis_set}) (km)')
+            og_xtic = plt.xticks()
+            plt.xticks(og_xtic[0], np.linspace((x_range[0]) * (20 / 1000), (x_range[1]) * (20 / 1000), len(og_xtic[0])))
 
         elif x_or_y == 'y':
 
@@ -217,14 +219,14 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
             plt.contour(np.transpose(cloud_field[:, 0, :]), colors='red', linewidths=2, levels=[1e-5])
             plt.xlabel(f'x (y = {axis_set}) (km)')
+            og_xtic = plt.xticks()
+            plt.xticks(og_xtic[0], np.linspace((y_range[0]) * (20 / 1000), (y_range[1]) * (20 / 1000), len(og_xtic[0])))
         else:
             print("axis_set must be 'x' or'y'.")
 
         plt.ylabel("z")
-        og_xtic = plt.xticks()
-        plt.xticks(og_xtic[0], np.linspace((x_range[0])*(20/1000), (x_range[1])*(20/1000), len(og_xtic[0])))
         og_ytic = plt.yticks()
-        plt.yticks(og_ytic[0], np.linspace((y_range[0])*(20/1000), (y_range[1])*(20/1000), len(og_ytic[0])))
+        plt.yticks(og_ytic[0], np.linspace((y_range[0])*(20/1000), (z_range[1])*(20/1000), len(og_ytic[0])))
         plt.savefig(plotdir+f'{field}_{deltas[i]}_{x_or_y}={axis_set}.png', pad_inches=0)
         plt.clf()
 
@@ -241,24 +243,29 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
                 plt.contourf(np.transpose(data_field[0, :, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
-                cb.set_label(f'{field}', size=16)
+                cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[0, :, :]), colors='red', linewidths=2, levels=[1e-5])
                 plt.xlabel(f'y (x = {axis_set}) (km)')
+                og_xtic = plt.xticks()
+                plt.xticks(og_xtic[0],
+                           np.linspace((x_range[0]) * (20 / 1000), (x_range[1]) * (20 / 1000), len(og_xtic[0])))
 
             elif x_or_y == 'y':
 
                 plt.contourf(np.transpose(data_field[:, 0, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
-                cb.set_label(f'{field}', size=16)
+                cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[:, 0, :]), colors='red', linewidths=2, levels=[1e-5])
                 plt.xlabel(f'x (y = {axis_set}) (km)')
+                og_xtic = plt.xticks()
+                plt.xticks(og_xtic[0],
+                           np.linspace((y_range[0]) * (20 / 1000), (y_range[1]) * (20 / 1000), len(og_xtic[0])))
+
             else:
                 print("axis_set must be 'x' or'y'.")
 
-            og_xtic = plt.xticks()
-            plt.xticks(og_xtic[0], np.linspace((x_range[0])*(20 / 1000), (x_range[1])*(20 / 1000), len(og_xtic[0])))
             og_ytic = plt.yticks()
             plt.yticks(og_ytic[0], np.linspace((y_range[0])*(20 / 1000), (y_range[1])*(20 / 1000), len(og_ytic[0])))
             plt.ylabel("z (km)")
