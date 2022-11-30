@@ -198,15 +198,27 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             myvmin = np.percentile(data_field[...], set_percentile[0])
         myvmax = np.percentile(data_field[...], set_percentile[1])
 
-        mylevels = np.linspace(myvmin, myvmax, 9)
+        mylevels = np.linspace(myvmin, myvmax, 8)
 
-        plt.contourf(np.transpose(data_field[...]), levels=mylevels, extend='both')
+        if x_or_y == 'x':
 
-        cb = plt.colorbar()
-        cb.set_label(f'{field}', size=16)
+            plt.contourf(np.transpose(data_field[0, :, :]), levels=mylevels, extend='both')
+            cb = plt.colorbar()
+            cb.set_label(f'{field}', size=16)
 
-        plt.contour(np.transpose(cloud_field[...]), colors='red', linewidths=2, levels=[1e-5])
-        plt.xlabel(f'y (x = {axis_set}) (km)')
+            plt.contour(np.transpose(cloud_field[0, :, :]), colors='red', linewidths=2, levels=[1e-5])
+            plt.xlabel(f'y (x = {axis_set}) (km)')
+
+        elif x_or_y == 'y':
+
+            plt.contourf(np.transpose(data_field[:, 0, :]), levels=mylevels, extend='both')
+            cb = plt.colorbar()
+            cb.set_label(f'{field}', size=16)
+
+            plt.contour(np.transpose(cloud_field[:, 0, :]), colors='red', linewidths=2, levels=[1e-5])
+            plt.xlabel(f'x (y = {axis_set}) (km)')
+        else:
+            print("axis_set must be 'x' or'y'.")
 
         plt.ylabel("z")
         og_xtic = plt.xticks()
@@ -221,17 +233,29 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             plt.title(f'{field}$^2$')
 
             myvmin = 0 #np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
-            myvmax = np.percentile(data_field_sq[axis_set, :, 5:120], set_percentile[1])
+            myvmax = np.percentile(data_field_sq, set_percentile[1])
 
-            mylevels = np.linspace(myvmin, myvmax, 9)
+            mylevels = np.linspace(myvmin, myvmax, 8)
 
-            plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), levels=mylevels, extend='both')
-            cb = plt.colorbar()
-            #cb.set_under('k')
-            cb.set_label(f'{field}$^2$', size=16)
+            if x_or_y == 'x':
 
-            plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
-            plt.xlabel(f'y (x = {axis_set}) (km)')
+                plt.contourf(np.transpose(data_field[0, :, :]), levels=mylevels, extend='both')
+                cb = plt.colorbar()
+                cb.set_label(f'{field}', size=16)
+
+                plt.contour(np.transpose(cloud_field[0, :, :]), colors='red', linewidths=2, levels=[1e-5])
+                plt.xlabel(f'y (x = {axis_set}) (km)')
+
+            elif x_or_y == 'y':
+
+                plt.contourf(np.transpose(data_field[:, 0, :]), levels=mylevels, extend='both')
+                cb = plt.colorbar()
+                cb.set_label(f'{field}', size=16)
+
+                plt.contour(np.transpose(cloud_field[:, 0, :]), colors='red', linewidths=2, levels=[1e-5])
+                plt.xlabel(f'x (y = {axis_set}) (km)')
+            else:
+                print("axis_set must be 'x' or'y'.")
 
             og_xtic = plt.xticks()
             plt.xticks(og_xtic[0], np.linspace((x_range[0])(20 / 1000), (x_range[1])(20 / 1000), len(og_xtic[0])))
