@@ -85,7 +85,7 @@ def negs_in_field(field, data_field_list, data_cl_list):
             counter[j] = np.count_nonzero(data_field[:,:,j] < 0)
 
         plt.figure(figsize=(7, 6))
-        plt.hist(counter)
+        plt.hist(counter, histtype='bar', stacked=True)
         plt.savefig(plotdir + f'neg_vs_z_{field}_{deltas[i]}_field.png', pad_inches=0)
         plt.clf()
 

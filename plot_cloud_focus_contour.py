@@ -28,7 +28,7 @@ set_focus = {'x_range': [290, 340],
 # set_focus = {'x_range': [55, 125],
 #             'y_range': [299, 300],
 #             'z_range': [20, 95],
-#               'name': 'x300y299z60'
+#               'name': 'x100y299z60'
 # }
 
 
@@ -211,7 +211,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             plt.contour(np.transpose(cloud_field[0, :, :]), colors='red', linewidths=2, levels=[1e-5])
             plt.xlabel(f'y (x = {axis_set}) (km)')
             og_xtic = plt.xticks()
-            plt.xticks(og_xtic[0], np.linspace((x_range[0]) * (20 / 1000), (x_range[1]) * (20 / 1000), len(og_xtic[0])))
+            plt.xticks(og_xtic[0], np.round(np.linspace((x_range[0]) * (20 / 1000), (x_range[1]) * (20 / 1000), len(og_xtic[0])), 2))
 
         elif x_or_y == 'y':
 
@@ -222,13 +222,13 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             plt.contour(np.transpose(cloud_field[:, 0, :]), colors='red', linewidths=2, levels=[1e-5])
             plt.xlabel(f'x (y = {axis_set}) (km)')
             og_xtic = plt.xticks()
-            plt.xticks(og_xtic[0], np.linspace((y_range[0]) * (20 / 1000), (y_range[1]) * (20 / 1000), len(og_xtic[0])))
+            plt.xticks(og_xtic[0], np.round(np.linspace((y_range[0]) * (20 / 1000), (y_range[1]) * (20 / 1000), len(og_xtic[0])), 2))
         else:
             print("axis_set must be 'x' or'y'.")
 
         plt.ylabel("z")
         og_ytic = plt.yticks()
-        plt.yticks(og_ytic[0], np.round(np.linspace((z_range[0])*(20/1000), (z_range[1])*(20/1000), len(og_ytic[0]))), 2)
+        plt.yticks(og_ytic[0], np.round(np.linspace((z_range[0])*(20/1000), (z_range[1])*(20/1000), len(og_ytic[0])), 2) )
         plt.savefig(plotdir+f'{field}_{deltas[i]}_on_{x_or_y}_{name}.png', pad_inches=0)
         plt.clf()
 
@@ -251,7 +251,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 plt.xlabel(f'y (x = {axis_set}) (km)')
                 og_xtic = plt.xticks()
                 plt.xticks(og_xtic[0],
-                           np.linspace((x_range[0]) * (20 / 1000), (x_range[1]) * (20 / 1000), len(og_xtic[0])))
+                           np.round(np.linspace((x_range[0]) * (20 / 1000), (x_range[1]) * (20 / 1000), len(og_xtic[0])), 2))
 
             elif x_or_y == 'y':
 
@@ -263,13 +263,13 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 plt.xlabel(f'x (y = {axis_set}) (km)')
                 og_xtic = plt.xticks()
                 plt.xticks(og_xtic[0],
-                           np.linspace((y_range[0]) * (20 / 1000), (y_range[1]) * (20 / 1000), len(og_xtic[0])))
+                           np.round(np.linspace((y_range[0]) * (20 / 1000), (y_range[1]) * (20 / 1000), len(og_xtic[0])), 2))
 
             else:
                 print("axis_set must be 'x' or'y'.")
 
             og_ytic = plt.yticks()
-            plt.yticks(og_ytic[0], np.round(np.linspace((z_range[0])*(20 / 1000), (z_range[1])*(20 / 1000), len(og_ytic[0]))), 2)
+            plt.yticks(og_ytic[0], np.round(np.linspace((z_range[0])*(20 / 1000), (z_range[1])*(20 / 1000), len(og_ytic[0])), 2) )
             plt.ylabel("z (km)")
             plt.savefig(plotdir + f'{field}_sq_{deltas[i]}_on_{x_or_y}_{name}.png', pad_inches=0)
             plt.clf()
