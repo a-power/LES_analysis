@@ -39,12 +39,12 @@ data_qt16 = xr.open_dataset(dir_qt+'16D.nc')
 data_qt32 = xr.open_dataset(dir_qt+'32D.nc')
 data_qt64 = xr.open_dataset(dir_qt+'64D.nc')
 
-data_cl2 = xr.open_dataset(dir_cloud+'0.nc')
-data_cl4 = xr.open_dataset(dir_cloud+'1.nc')
-data_cl8 = xr.open_dataset(dir_cloud+'2.nc')
-data_cl16 = xr.open_dataset(dir_cloud+'3.nc')
-data_cl32 = xr.open_dataset(dir_cloud+'4.nc')
-data_cl64 = xr.open_dataset(dir_cloud+'5.nc')
+data_cl2 = dir_cloud+'0.nc'
+data_cl4 = dir_cloud+'1.nc'
+data_cl8 = dir_cloud+'2.nc'
+data_cl16 = dir_cloud+'3.nc'
+data_cl32 = dir_cloud+'4.nc'
+data_cl64 = dir_cloud+'5.nc'
 
 
 data_s_list = [data_s2, data_s4, data_s8, data_s16, data_s32, data_s64]
