@@ -16,6 +16,8 @@ dir_s = mydir + 'LijMij_'
 dir_th = mydir + 'HjRj_th_'
 dir_qt = mydir + 'HjRj_qt_'
 
+set_percentile = [10,90]
+
 
 data_s2 = xr.open_dataset(dir_s+'2D.nc')
 data_s4 = xr.open_dataset(dir_s+'4D.nc')
@@ -165,11 +167,10 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
         cloud_field = np.mean(data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[...], axis = 0)
 
         plt.figure(figsize=(20,7))
-        plt.title(f'{field} with $\\Delta$ = {deltas[i]}')
         if x_or_y == 'x':
 
-            myvmin = np.min(np.mean(data_field[axis_set, :, :], axis=1)[5:120])
-            myvmax = np.max(np.mean(data_field[axis_set, :, :], axis=1)[5:120])
+            myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
+            myvmax = np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
 
             mylevels = np.linspace(myvmin, myvmax, 9)
 
@@ -182,8 +183,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
 
         elif x_or_y == 'y':
 
-            myvmin = np.min(np.mean(data_field[:, axis_set, :], axis=1)[5:120])
-            myvmax = np.max(np.mean(data_field[:, axis_set, :], axis=1)[5:120])
+            myvmin = np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
+            myvmax = np.percentile(data_field[:, axis_set, 5:120], set_percentile[1])
 
             mylevels = np.linspace(myvmin, myvmax, 9)
 
@@ -201,34 +202,34 @@ def plotfield(field, x_or_y, axis_set, data_field_list, data_cl_list):
 
         if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
             plt.figure(figsize=(20, 7))
-            plt.title(f'{field}$^2$ with $\\Delta$ = {deltas[i]}')
+            plt.title(f'{field}$^2$')
             if x_or_y == 'x':
 
-                myvmin = np.min(np.mean(data_field_sq[axis_set, :, :], axis=1)[5:120])
-                myvmax = np.max(np.mean(data_field_sq[axis_set, :, :], axis=1)[5:120])
+                myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
+                myvmax = np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 9)
 
-                plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), levels=mylevels, extend='both')
+                plt.contourf(np.transpose(data_field[axis_set, :, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
-                cb.set_label(f'{field}', size=16)
+                cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2.5, levels=[1e-5])
                 plt.xlabel(f'y (x = {axis_set})')
 
             elif x_or_y == 'y':
 
-                myvmin = np.min(np.mean(data_field_sq[:, axis_set, :], axis=1)[5:120])
-                myvmax = np.max(np.mean(data_field_sq[:, axis_set, :], axis=1)[5:120])
+                myvmin = np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
+                myvmax = np.percentile(data_field[:, axis_set, 5:120], set_percentile[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 9)
 
-                plt.contourf(np.transpose(data_field_sq[:, axis_set, :]), levels=mylevels, extend='both')
+                plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
                 cb = plt.colorbar()
                 cb.set_label(f'{field}', size=16)
 
                 plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='black', linewidths=2.5, levels=[1e-5])
-                plt.xlabel(f'x (y = {axis_set})')
+                plt.xlabel(f'x (y = {axis_set})$^2$')
             else:
                 print("axis_set must be 'x' or 'y'.")
             plt.ylabel("z")
