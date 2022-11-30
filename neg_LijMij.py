@@ -91,12 +91,10 @@ def negs_in_field(field, data_field_list, data_cl_list):
 
         print(np.shape(data_field_env))
 
+        counter_env = np.zeros(len(data_field_env[0, 0, :]))
         counter_cloud = np.zeros(len(data_field_cloud[0,0,:]))
         for j in range(len(data_field_cloud[0,0,:])):
             counter_cloud[j] = np.count_nonzero(data_field_cloud[:,:,j] < 0)
-
-        counter_env = np.zeros(len(data_field_env[0, 0, :]))
-        for j in range(len(data_field_env[0, 0, :])):
             counter_env[j] = np.count_nonzero(data_field_env[:, :, j] < 0)
 
         plt.figure(figsize=(7, 6))
@@ -116,6 +114,6 @@ def negs_in_field(field, data_field_list, data_cl_list):
 
     plt.close('all')
 
-negs_in_field( **LijMij_options )
-negs_in_field( **HjRj_th_options )
+# negs_in_field( **LijMij_options )
+# negs_in_field( **HjRj_th_options )
 negs_in_field( **HjRj_qt_options )
