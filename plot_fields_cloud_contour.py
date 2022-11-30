@@ -213,7 +213,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             plt.xlabel(f'x (y = {axis_set}) (km)')
         else:
             print("axis_set must be 'x' or'y'.")
-        plt.ylabel("z")
+        plt.ylabel("z (km)")
         og_xtic = plt.xticks()
         plt.xticks(og_xtic[0], np.linspace(0, 16, len(og_xtic[0])))
         og_ytic = plt.yticks()
