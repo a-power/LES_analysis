@@ -177,9 +177,13 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
         cloud_field = np.mean(data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[...], axis = 0)
 
         plt.figure(figsize=(20,7))
+        plt.title(f'{field}')
         if x_or_y == 'x':
 
-            myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
+            if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
+                myvmin = 0
+            else:
+                myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
             myvmax = np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
 
             mylevels = np.linspace(myvmin, myvmax, 9)
@@ -193,7 +197,10 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
         elif x_or_y == 'y':
 
-            myvmin = np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
+            if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
+                myvmin = 0
+            else:
+                myvmin = np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
             myvmax = np.percentile(data_field[:, axis_set, 5:120], set_percentile[1])
 
             mylevels = np.linspace(myvmin, myvmax, 9)
@@ -215,7 +222,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             plt.title(f'{field}$^2$')
             if x_or_y == 'x':
 
-                myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
+                myvmin = 0 #np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
                 myvmax = np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 9)
@@ -229,7 +236,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
             elif x_or_y == 'y':
 
-                myvmin = np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
+                myvmin = 0 #np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
                 myvmax = np.percentile(data_field[:, axis_set, 5:120], set_percentile[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 9)
