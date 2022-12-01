@@ -4,6 +4,8 @@ import xarray as xr
 import os
 import dynamic_functions as dyn
 import mask_cloud_vs_env as clo
+import matplotlib.ticker as mtick
+
 
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
@@ -69,16 +71,18 @@ print('finished cloud count 32')
 cloud_count_64 = count_mask(Cth_cloud_64)
 print('finished cloud count 64')
 
+total_grid = 640000
+
 for t_in in range(3):
 
     plt.figure(figsize=(6,7))
     plt.plot(-26, -29)
-    plt.plot(cloud_count_2[t_in, :], z/z_i, label = '$\\Delta = 40}$m')
-    plt.plot(cloud_count_4[t_in, :], z/z_i, label = '$\\Delta = 80}$m')
-    plt.plot(cloud_count_8[t_in, :], z/z_i, label = '$\\Delta = 160}$m')
-    plt.plot(cloud_count_16[t_in, :], z/z_i, label = '$\\Delta = 320}$m')
-    plt.plot(cloud_count_32[t_in, :], z/z_i, label = '$\\Delta = 640}$m')
-    plt.plot(cloud_count_64[t_in, :], z/z_i, label = '$\\Delta = 1280}$m')
+    plt.plot(cloud_count_2[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 40}$m')
+    plt.plot(cloud_count_4[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 80}$m')
+    plt.plot(cloud_count_8[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 160}$m')
+    plt.plot(cloud_count_16[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 320}$m')
+    plt.plot(cloud_count_32[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 640}$m')
+    plt.plot(cloud_count_64[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 1280}$m')
     plt.xlabel(f"Number of Grid Points with 'Cloud', time = {t_in}", fontsize=16)
     plt.ylabel("z/z$_{ML}$", fontsize=16)
     plt.legend(fontsize=12, loc='upper right')
@@ -89,19 +93,22 @@ for t_in in range(3):
 
 print('finished cloud mask plot')
 
-plt.figure(figsize=(6,7))
-plt.plot(-26, -29)
-plt.plot(np.mean(cloud_count_2, axis=0), z/z_i, label = '$\\Delta = 40}$m')
-plt.plot(np.mean(cloud_count_4, axis=0), z/z_i, label = '$\\Delta = 80}$m')
-plt.plot(np.mean(cloud_count_8, axis=0), z/z_i, label = '$\\Delta = 160}$m')
-plt.plot(np.mean(cloud_count_16, axis=0), z/z_i, label = '$\\Delta = 320}$m')
-plt.plot(np.mean(cloud_count_32, axis=0), z/z_i, label = '$\\Delta = 640}$m')
-plt.plot(np.mean(cloud_count_64, axis=0), z/z_i, label = '$\\Delta = 1280}$m')
-plt.xlabel(f"Number of Grid Points with 'Cloud', time averaged", fontsize=16)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
-plt.legend(fontsize=12, loc='upper right')
-plt.xlim(left = 0)
-plt.ylim(bottom = 0)
+ax = plt.figure(figsize=(6,7))
+ax.plot(-26, -29)
+ax.plot(np.mean(cloud_count_2, axis=0)/total_grid, z/z_i, label = '$\\Delta = 40}$m')
+ax.plot(np.mean(cloud_count_4, axis=0)/total_grid, z/z_i, label = '$\\Delta = 80}$m')
+ax.plot(np.mean(cloud_count_8, axis=0)/total_grid, z/z_i, label = '$\\Delta = 160}$m')
+ax.plot(np.mean(cloud_count_16, axis=0)/total_grid, z/z_i, label = '$\\Delta = 320}$m')
+ax.plot(np.mean(cloud_count_32, axis=0)/total_grid, z/z_i, label = '$\\Delta = 640}$m')
+ax.plot(np.mean(cloud_count_64, axis=0)/total_grid, z/z_i, label = '$\\Delta = 1280}$m')
+
+ax.xaxis.set_major_formatter(mtick.PercentFormatter())
+
+ax.set_xlabel(f"Percentage of Grid Points with 'Cloud'", fontsize=16)
+ax.set_ylabel("z/z$_{ML}$", fontsize=16)
+ax.set_legend(fontsize=12, loc='upper right')
+ax.set_xlim(left = 0)
+ax.set_ylim(bottom = 0)
 plt.savefig(plotdir+f'cloud_count_prof_scaled_t_av.png', pad_inches=0)
 plt.close()
 
