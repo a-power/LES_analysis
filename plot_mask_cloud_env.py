@@ -59,39 +59,39 @@ Cqt_cloud_64 = data_64D['Cqt_cloud_prof'].data[0, ...]
 
 ################################################################
 
-
-cloud_count_2 = count_mask(Cth_cloud_2)
-print('finished cloud count 2')
-cloud_count_4 = count_mask(Cth_cloud_4)
-print('finished cloud count 4')
-cloud_count_8 = count_mask(Cth_cloud_8)
-print('finished cloud count 8')
-cloud_count_16 = count_mask(Cth_cloud_16)
-print('finished cloud count 16')
-cloud_count_32 = count_mask(Cth_cloud_32)
-print('finished cloud count 32')
-cloud_count_64 = count_mask(Cth_cloud_64)
-print('finished cloud count 64')
-
-
-
-plt.figure(figsize=(6,7))
-plt.plot(-26, -29, label = '$\\Delta = 20$m')
-plt.plot(cloud_count_2, z/z_i, label = '$\\Delta = 40}m$')
-plt.plot(cloud_count_4, z/z_i, label = '$\\Delta = 80}m$')
-plt.plot(cloud_count_8, z/z_i, label = '$\\Delta = 160}m$')
-plt.plot(cloud_count_16, z/z_i, label = '$\\Delta = 320}m$')
-plt.plot(cloud_count_32, z/z_i, label = '$\\Delta = 640}m$')
-plt.plot(cloud_count_64, z/z_i, label = '$\\Delta = 1280}m$')
-plt.xlabel("Number of Grid Points with 'Cloud'", fontsize=16)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
-plt.legend(fontsize=12, loc='upper right')
-plt.xlim(left = 0)
-plt.ylim(bottom = 0)
-plt.savefig(plotdir+'cloud_count_prof_scaled.png', pad_inches=0)
-plt.close()
-
-print('finished cloud mask plot')
+#
+# cloud_count_2 = count_mask(Cth_cloud_2)
+# print('finished cloud count 2')
+# cloud_count_4 = count_mask(Cth_cloud_4)
+# print('finished cloud count 4')
+# cloud_count_8 = count_mask(Cth_cloud_8)
+# print('finished cloud count 8')
+# cloud_count_16 = count_mask(Cth_cloud_16)
+# print('finished cloud count 16')
+# cloud_count_32 = count_mask(Cth_cloud_32)
+# print('finished cloud count 32')
+# cloud_count_64 = count_mask(Cth_cloud_64)
+# print('finished cloud count 64')
+#
+#
+#
+# plt.figure(figsize=(6,7))
+# plt.plot(-26, -29, label = '$\\Delta = 20$m')
+# plt.plot(cloud_count_2, z/z_i, label = '$\\Delta = 40}m$')
+# plt.plot(cloud_count_4, z/z_i, label = '$\\Delta = 80}m$')
+# plt.plot(cloud_count_8, z/z_i, label = '$\\Delta = 160}m$')
+# plt.plot(cloud_count_16, z/z_i, label = '$\\Delta = 320}m$')
+# plt.plot(cloud_count_32, z/z_i, label = '$\\Delta = 640}m$')
+# plt.plot(cloud_count_64, z/z_i, label = '$\\Delta = 1280}m$')
+# plt.xlabel("Number of Grid Points with 'Cloud'", fontsize=16)
+# plt.ylabel("z/z$_{ML}$", fontsize=16)
+# plt.legend(fontsize=12, loc='upper right')
+# plt.xlim(left = 0)
+# plt.ylim(bottom = 0)
+# plt.savefig(plotdir+'cloud_count_prof_scaled.png', pad_inches=0)
+# plt.close()
+#
+# print('finished cloud mask plot')
 
 
 ###############################################################
