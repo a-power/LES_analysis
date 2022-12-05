@@ -112,6 +112,7 @@ plt.close()
 
 
 
+
 mean_mask_2 = np.ma.masked_where(cloud_count_2==0 , cloud_count_2)
 mean_mask_4 = np.ma.masked_where(cloud_count_4==0 , cloud_count_4)
 mean_mask_8 = np.ma.masked_where(cloud_count_8==0 , cloud_count_8)
