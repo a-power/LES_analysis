@@ -106,7 +106,7 @@ plt.set_xlabel(f"Ratio of 'cloudy' vs 'non-cloudy' grid points", fontsize=16)
 plt.set_ylabel("z/z$_{ML}$", fontsize=16)
 plt.set_legend(fontsize=12, loc='upper right')
 plt.xlim(0, 0.5)
-plt.ylim(bottom=0)
+plt.ylim(0, 6)
 plt.savefig(plotdir+f'cloud_count_prof_scaled_t_av.png', pad_inches=0)
 plt.close()
 
