@@ -98,12 +98,12 @@ def negs_in_field(field, data_field_list, data_cl_list):
             counter_env[j] = np.count_nonzero(data_field_env[:, :, j] < 0)
 
         plt.figure(figsize=(7, 6))
-        plt.hist([counter_env, counter_cloud], histtype='bar', stacked=True, label=["environment", "in-cloud"])
+        plt.hist([counter_env, counter_cloud], bins=12, histtype='bar', stacked=True, label=["environment", "in-cloud"])
         plt.legend()
 
         og_xtic = plt.xticks()
         plt.xticks(og_xtic[0],
-                   np.round(np.linspace((0) * (20 / 1000), (151) * (20 / 1000), len(og_xtic[0])), 2))
+                   np.round(np.linspace((0) * (20 / 480), (151) * (20 / 480), len(og_xtic[0])), 1))
 
         plt.xlabel("z (km)", fontsize=16)
         plt.ylabel("number of negative values", fontsize=16)
@@ -114,6 +114,6 @@ def negs_in_field(field, data_field_list, data_cl_list):
 
     plt.close('all')
 
-# negs_in_field( **LijMij_options )
-# negs_in_field( **HjRj_th_options )
+negs_in_field( **LijMij_options )
+negs_in_field( **HjRj_th_options )
 negs_in_field( **HjRj_qt_options )
