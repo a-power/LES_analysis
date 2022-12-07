@@ -105,7 +105,7 @@ def negs_in_field(field, data_field_list, data_cl_list):
         plt.xticks(og_xtic[0],
                    np.round(np.linspace((0) * (20 / 480), (151) * (20 / 480), len(og_xtic[0])), 1))
 
-        plt.xlabel("z (km)", fontsize=16)
+        plt.xlabel("$z/z_{ML}$", fontsize=16)
         plt.ylabel("number of negative values", fontsize=16)
         plt.savefig(plotdir + f'neg_{field}_vs_z_{deltas[i]}.png', pad_inches=0)
         plt.clf()
