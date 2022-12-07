@@ -20,7 +20,7 @@ in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
 
 my_axis = 299
-my_x_y = 'y'
+my_x_y = 'x'
 
 data_s2 = xr.open_dataset(dir_s+'2D.nc')
 data_s4 = xr.open_dataset(dir_s+'4D.nc')
@@ -154,26 +154,31 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
     for i in range(len(data_field_list)):
 
         if field == 'Cs_field':
+            print('length of time array for LM is ', len(data_field_list[i]['LM_field'].data[:,0,0,0]))
             LM_field = np.mean(data_field_list[i]['LM_field'].data[...], axis=0)
             MM_field = np.mean(data_field_list[i]['MM_field'].data[...], axis=0)
             data_field_sq = LM_field/MM_field
             data_field = dyn.get_Cs(data_field_sq)
 
         elif field == 'Cth_field':
+            print('length of time array for HR_th is ', len(data_field_list[i]['HR_th_field'].data[:,0,0,0]))
             HR_field = np.mean(data_field_list[i]['HR_th_field'].data[...], axis=0)
             RR_field = np.mean(data_field_list[i]['RR_th_field'].data[...], axis=0)
             data_field_sq = HR_field/RR_field
             data_field = dyn.get_Cs(data_field_sq)
 
         elif field == 'Cqt_field':
+            print('length of time array for HR_qt is ', len(data_field_list[i]['HR_qt_field'].data[:,0,0,0]))
             HR_field = np.mean(data_field_list[i]['HR_q_total_field'].data[...], axis=0)
             RR_field = np.mean(data_field_list[i]['RR_q_total_field'].data[...], axis=0)
             data_field_sq = HR_field/RR_field
             data_field = dyn.get_Cs(data_field_sq)
 
         else:
+            print(f'length of time array for {field} is ', len(data_field_list[i][f'{field}'].data[:, 0, 0, 0]))
             data_field = np.mean(data_field_list[i][f'{field}'].data[...], axis = 0)
 
+        print('length of time array for cloud field is ', len(data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[:, 0, 0, 0]))
         cloud_field = np.mean(data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[...], axis = 0)
 
         plt.figure(figsize=(20,7))
