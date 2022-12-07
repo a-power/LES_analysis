@@ -241,7 +241,7 @@ Cqt_sq_cloud_4 = 0.5 * HjRj_qt_cloud_4 / RjRj_qt_cloud_4
 Cqt_sq_cloud_8 = 0.5 * HjRj_qt_cloud_8 / RjRj_qt_cloud_8
 Cqt_sq_cloud_16 = 0.5 * HjRj_qt_cloud_16 / RjRj_qt_cloud_16
 Cqt_sq_cloud_32 = 0.5 * HjRj_qt_cloud_32 / RjRj_qt_cloud_32
-Cqt_sq_cloud_64 = HjRj_qt_cloud_64 / RjRj_qt_cloud_64
+Cqt_sq_cloud_64 = 0.5 * HjRj_qt_cloud_64 / RjRj_qt_cloud_64
 ###############################################################
 
 
