@@ -222,49 +222,49 @@ HjRj_qt_env_64 = data_64D['HjRj_qt_env_prof'].data[0, ...]
 
 
 
-Cs_sq_cloud_2 = LijMij_cloud_2 / MijMij_cloud_2
-Cs_sq_cloud_4 = LijMij_cloud_4 / MijMij_cloud_4
-Cs_sq_cloud_8 = LijMij_cloud_8 / MijMij_cloud_8
-Cs_sq_cloud_16 = LijMij_cloud_16 / MijMij_cloud_16
-Cs_sq_cloud_32 = LijMij_cloud_32 / MijMij_cloud_32
-Cs_sq_cloud_64 = LijMij_cloud_64 / MijMij_cloud_64
+Cs_sq_cloud_2 = 0.5 * LijMij_cloud_2 / MijMij_cloud_2
+Cs_sq_cloud_4 = 0.5 * LijMij_cloud_4 / MijMij_cloud_4
+Cs_sq_cloud_8 = 0.5 * LijMij_cloud_8 / MijMij_cloud_8
+Cs_sq_cloud_16 = 0.5 * LijMij_cloud_16 / MijMij_cloud_16
+Cs_sq_cloud_32 = 0.5 * LijMij_cloud_32 / MijMij_cloud_32
+Cs_sq_cloud_64 = 0.5 * LijMij_cloud_64 / MijMij_cloud_64
 
-Cth_sq_cloud_2 = HjRj_th_cloud_2 / RjRj_th_cloud_2
-Cth_sq_cloud_4 = HjRj_th_cloud_4 / RjRj_th_cloud_4
-Cth_sq_cloud_8 = HjRj_th_cloud_8 / RjRj_th_cloud_8
-Cth_sq_cloud_16 = HjRj_th_cloud_16 / RjRj_th_cloud_16
-Cth_sq_cloud_32 = HjRj_th_cloud_32 / RjRj_th_cloud_32
-Cth_sq_cloud_64 = HjRj_th_cloud_64 / RjRj_th_cloud_64
+Cth_sq_cloud_2 = 0.5 * HjRj_th_cloud_2 / RjRj_th_cloud_2
+Cth_sq_cloud_4 = 0.5 * HjRj_th_cloud_4 / RjRj_th_cloud_4
+Cth_sq_cloud_8 = 0.5 * HjRj_th_cloud_8 / RjRj_th_cloud_8
+Cth_sq_cloud_16 = 0.5 * HjRj_th_cloud_16 / RjRj_th_cloud_16
+Cth_sq_cloud_32 = 0.5 * HjRj_th_cloud_32 / RjRj_th_cloud_32
+Cth_sq_cloud_64 = 0.5 * HjRj_th_cloud_64 / RjRj_th_cloud_64
 
-Cqt_sq_cloud_2 = HjRj_qt_cloud_2 / RjRj_qt_cloud_2
-Cqt_sq_cloud_4 = HjRj_qt_cloud_4 / RjRj_qt_cloud_4
-Cqt_sq_cloud_8 = HjRj_qt_cloud_8 / RjRj_qt_cloud_8
-Cqt_sq_cloud_16 = HjRj_qt_cloud_16 / RjRj_qt_cloud_16
-Cqt_sq_cloud_32 = HjRj_qt_cloud_32 / RjRj_qt_cloud_32
+Cqt_sq_cloud_2 = 0.5 * HjRj_qt_cloud_2 / RjRj_qt_cloud_2
+Cqt_sq_cloud_4 = 0.5 * HjRj_qt_cloud_4 / RjRj_qt_cloud_4
+Cqt_sq_cloud_8 = 0.5 * HjRj_qt_cloud_8 / RjRj_qt_cloud_8
+Cqt_sq_cloud_16 = 0.5 * HjRj_qt_cloud_16 / RjRj_qt_cloud_16
+Cqt_sq_cloud_32 = 0.5 * HjRj_qt_cloud_32 / RjRj_qt_cloud_32
 Cqt_sq_cloud_64 = HjRj_qt_cloud_64 / RjRj_qt_cloud_64
 ###############################################################
 
 
-Cs_sq_env_2 = LijMij_env_2 / MijMij_env_2
-Cs_sq_env_4 = LijMij_env_4 / MijMij_env_4
-Cs_sq_env_8 = LijMij_env_8 / MijMij_env_8
-Cs_sq_env_16 = LijMij_env_16 / MijMij_env_16
-Cs_sq_env_32 = LijMij_env_32 / MijMij_env_32
-Cs_sq_env_64 = LijMij_env_64 / MijMij_env_64
+Cs_sq_env_2 = 0.5 * LijMij_env_2 / MijMij_env_2
+Cs_sq_env_4 = 0.5 * LijMij_env_4 / MijMij_env_4
+Cs_sq_env_8 = 0.5 * LijMij_env_8 / MijMij_env_8
+Cs_sq_env_16 = 0.5 * LijMij_env_16 / MijMij_env_16
+Cs_sq_env_32 = 0.5 * LijMij_env_32 / MijMij_env_32
+Cs_sq_env_64 = 0.5 * LijMij_env_64 / MijMij_env_64
 
-Cth_sq_env_2 = HjRj_th_env_2 / RjRj_th_env_2
-Cth_sq_env_4 = HjRj_th_env_4 / RjRj_th_env_4
-Cth_sq_env_8 = HjRj_th_env_8 / RjRj_th_env_8
-Cth_sq_env_16 = HjRj_th_env_16 / RjRj_th_env_16
-Cth_sq_env_32 = HjRj_th_env_32 / RjRj_th_env_32
-Cth_sq_env_64 = HjRj_th_env_64 / RjRj_th_env_64
+Cth_sq_env_2 = 0.5 * HjRj_th_env_2 / RjRj_th_env_2
+Cth_sq_env_4 = 0.5 * HjRj_th_env_4 / RjRj_th_env_4
+Cth_sq_env_8 = 0.5 * HjRj_th_env_8 / RjRj_th_env_8
+Cth_sq_env_16 = 0.5 * HjRj_th_env_16 / RjRj_th_env_16
+Cth_sq_env_32 = 0.5 * HjRj_th_env_32 / RjRj_th_env_32
+Cth_sq_env_64 = 0.5 * HjRj_th_env_64 / RjRj_th_env_64
 
-Cqt_sq_env_2 = HjRj_qt_env_2 / RjRj_qt_env_2
-Cqt_sq_env_4 = HjRj_qt_env_4 / RjRj_qt_env_4
-Cqt_sq_env_8 = HjRj_qt_env_8 / RjRj_qt_env_8
-Cqt_sq_env_16 = HjRj_qt_env_16 / RjRj_qt_env_16
-Cqt_sq_env_32 = HjRj_qt_env_32 / RjRj_qt_env_32
-Cqt_sq_env_64 = HjRj_qt_env_64 / RjRj_qt_env_64
+Cqt_sq_env_2 = 0.5 * HjRj_qt_env_2 / RjRj_qt_env_2
+Cqt_sq_env_4 = 0.5 * HjRj_qt_env_4 / RjRj_qt_env_4
+Cqt_sq_env_8 = 0.5 * HjRj_qt_env_8 / RjRj_qt_env_8
+Cqt_sq_env_16 = 0.5 * HjRj_qt_env_16 / RjRj_qt_env_16
+Cqt_sq_env_32 = 0.5 * HjRj_qt_env_32 / RjRj_qt_env_32
+Cqt_sq_env_64 = 0.5 * HjRj_qt_env_64 / RjRj_qt_env_64
 
 
 ###################################################################################################
