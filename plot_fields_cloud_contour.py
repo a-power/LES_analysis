@@ -19,6 +19,8 @@ dir_qt = mydir + 'HjRj_qt_'
 in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
 
+time_av_or_not = 2 #'yes' #if not then give the time stamp you want to look at
+
 my_axis = 299
 my_x_y = 'x'
 
@@ -77,7 +79,8 @@ LijMij_options = {'axis_set': my_axis,
            'field': 'LM_field',
            'data_field_list': data_s_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-                  'set_percentile': in_set_percentile
+                  'set_percentile': in_set_percentile,
+                  't_av_or_not': time_av_or_not
            }
 
 MijMij_options = {'axis_set': my_axis,
@@ -85,7 +88,8 @@ MijMij_options = {'axis_set': my_axis,
            'field': 'MM_field',
            'data_field_list': data_s_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-                  'set_percentile': in_set_percentile
+                  'set_percentile': in_set_percentile,
+                  't_av_or_not': time_av_or_not
            }
 
 Cs_options = {'axis_set': my_axis,
@@ -93,7 +97,8 @@ Cs_options = {'axis_set': my_axis,
            'field': 'Cs_field',
            'data_field_list': data_s_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-              'set_percentile': in_set_percentile_C
+              'set_percentile': in_set_percentile_C,
+              't_av_or_not': time_av_or_not
            }
 
 
@@ -102,7 +107,8 @@ HjRj_th_options = {'axis_set': my_axis,
            'field': 'HR_th_field',
            'data_field_list': data_th_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-                   'set_percentile': in_set_percentile
+                   'set_percentile': in_set_percentile,
+                   't_av_or_not': time_av_or_not
            }
 
 RjRj_th_options = {'axis_set': my_axis,
@@ -110,7 +116,8 @@ RjRj_th_options = {'axis_set': my_axis,
            'field': 'RR_th_field',
            'data_field_list': data_th_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-                   'set_percentile': in_set_percentile
+                   'set_percentile': in_set_percentile,
+                   't_av_or_not': time_av_or_not
            }
 
 Cth_options = {'axis_set': my_axis,
@@ -118,7 +125,8 @@ Cth_options = {'axis_set': my_axis,
            'field': 'Cth_field',
            'data_field_list': data_th_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-               'set_percentile': in_set_percentile_C
+               'set_percentile': in_set_percentile_C,
+               't_av_or_not': time_av_or_not
            }
 
 
@@ -127,7 +135,8 @@ HjRj_qt_options = {'axis_set': my_axis,
            'field': 'HR_q_total_field',
            'data_field_list': data_qt_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-                   'set_percentile': in_set_percentile
+                   'set_percentile': in_set_percentile,
+                   't_av_or_not': time_av_or_not
            }
 
 RjRj_qt_options = {'axis_set': my_axis,
@@ -135,7 +144,8 @@ RjRj_qt_options = {'axis_set': my_axis,
            'field': 'RR_q_total_field',
            'data_field_list': data_qt_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-                   'set_percentile': in_set_percentile
+                   'set_percentile': in_set_percentile,
+                   't_av_or_not': time_av_or_not
            }
 
 Cqt_options = {'axis_set': my_axis,
@@ -143,11 +153,12 @@ Cqt_options = {'axis_set': my_axis,
            'field': 'Cqt_field',
            'data_field_list': data_qt_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-               'set_percentile': in_set_percentile_C
+               'set_percentile': in_set_percentile_C,
+               't_av_or_not': time_av_or_not
            }
 
 
-def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_list):
+def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_list, t_av_or_not):
 
     deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
@@ -155,31 +166,57 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
         if field == 'Cs_field':
             print('length of time array for LM is ', len(data_field_list[i]['LM_field'].data[:,0,0,0]))
-            LM_field = np.mean(data_field_list[i]['LM_field'].data[...], axis=0)
-            MM_field = np.mean(data_field_list[i]['MM_field'].data[...], axis=0)
-            data_field_sq = LM_field/MM_field
+            if t_av_or_not == 'yes':
+                LM_field = np.mean(data_field_list[i]['LM_field'].data[...], axis=0)
+                MM_field = np.mean(data_field_list[i]['MM_field'].data[...], axis=0)
+            else:
+                LM_field = data_field_list[i]['LM_field'].data[t_av_or_not,...]
+                MM_field = data_field_list[i]['MM_field'].data[t_av_or_not, ...]
+
+            data_field_sq = 0.5 * LM_field/MM_field
             data_field = dyn.get_Cs(data_field_sq)
 
         elif field == 'Cth_field':
             print('length of time array for HR_th is ', len(data_field_list[i]['HR_th_field'].data[:,0,0,0]))
-            HR_field = np.mean(data_field_list[i]['HR_th_field'].data[...], axis=0)
-            RR_field = np.mean(data_field_list[i]['RR_th_field'].data[...], axis=0)
-            data_field_sq = HR_field/RR_field
+            if t_av_or_not == 'yes':
+                HR_field = np.mean(data_field_list[i]['HR_th_field'].data[...], axis=0)
+                RR_field = np.mean(data_field_list[i]['RR_th_field'].data[...], axis=0)
+            else:
+                HR_field = data_field_list[i]['HR_th_field'].data[t_av_or_not, ...]
+                RR_field = data_field_list[i]['RR_th_field'].data[t_av_or_not, ...]
+
+            data_field_sq = 0.5*HR_field/RR_field
             data_field = dyn.get_Cs(data_field_sq)
 
         elif field == 'Cqt_field':
             print('length of time array for HR_qt is ', len(data_field_list[i]['HR_q_total_field'].data[:,0,0,0]))
-            HR_field = np.mean(data_field_list[i]['HR_q_total_field'].data[...], axis=0)
-            RR_field = np.mean(data_field_list[i]['RR_q_total_field'].data[...], axis=0)
-            data_field_sq = HR_field/RR_field
+            if t_av_or_not == 'yes':
+                HR_field = np.mean(data_field_list[i]['HR_q_total_field'].data[...], axis=0)
+                RR_field = np.mean(data_field_list[i]['RR_q_total_field'].data[...], axis=0)
+            else:
+                HR_field = data_field_list[i]['HR_q_total_field'].data[t_av_or_not, ...]
+                RR_field = data_field_list[i]['RR_q_total_field'].data[t_av_or_not, ...]
+
+            data_field_sq = 0.5*HR_field/RR_field
             data_field = dyn.get_Cs(data_field_sq)
 
         else:
             print(f'length of time array for {field} is ', len(data_field_list[i][f'{field}'].data[:, 0, 0, 0]))
-            data_field = np.mean(data_field_list[i][f'{field}'].data[...], axis = 0)
+            if t_av_or_not == 'yes':
+                data_field = np.mean(data_field_list[i][f'{field}'].data[...], axis = 0)
+            else:
+                data_field = data_field_list[i][f'{field}'].data[t_av_or_not,...]
+
 
         print('length of time array for cloud field is ', len(data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[:, 0, 0, 0]))
-        cloud_field = np.mean(data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[...], axis = 0)
+        if t_av_or_not == 'yes':
+            cloud_field = np.mean(data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[...], axis = 0)
+            mytime = 't_av'
+        else:
+            cloud_field = data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[t_av_or_not,...]
+            mytime = f't{t_av_or_not}'
+
+
 
         plt.figure(figsize=(20,7))
         plt.title(f'{field}')
@@ -198,7 +235,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             cb.set_label(f'{field}', size=16)
 
             plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
-            plt.xlabel(f'y (x = {axis_set}) (km)')
+            plt.xlabel(f'y ({mytime} cross section with x = {axis_set}) (km)')
 
         elif x_or_y == 'y':
 
@@ -215,7 +252,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             cb.set_label(f'{field}', size=16)
 
             plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='red', linewidths=2, levels=[1e-5])
-            plt.xlabel(f'x (y = {axis_set}) (km)')
+            plt.xlabel(f'x ({mytime} cross section with y = {axis_set}) (km)')
         else:
             print("axis_set must be 'x' or'y'.")
         plt.ylabel("z (km)")
@@ -223,7 +260,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
         plt.xticks(og_xtic[0], np.linspace(0, 16, len(og_xtic[0])))
         og_ytic = plt.yticks()
         plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
-        plt.savefig(plotdir+f'{field}_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
+        plt.savefig(plotdir+f'{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
         plt.clf()
 
         if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
@@ -242,7 +279,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
-                plt.xlabel(f'y (x = {axis_set}) (km)')
+                plt.xlabel(f'y ({mytime} cross section with x = {axis_set}) (km)')
 
             elif x_or_y == 'y':
 
@@ -257,7 +294,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='red', linewidths=2, levels=[1e-5])
-                plt.xlabel(f'x (y = {axis_set}) (km)')
+                plt.xlabel(f'x ({mytime} cross section with y = {axis_set}) (km)')
             else:
                 print("axis_set must be 'x' or 'y'.")
 
@@ -266,7 +303,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             og_ytic = plt.yticks()
             plt.yticks(np.linspace(0, 151, 7) ,np.linspace(0, 3, 7))
             plt.ylabel("z (km)")
-            plt.savefig(plotdir + f'{field}_sq_{deltas[i]}_field_{x_or_y}={axis_set}.png', pad_inches=0)
+            plt.savefig(plotdir + f'{field}_sq_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
             plt.clf()
 
         print(f'plotted fields for {field}')
