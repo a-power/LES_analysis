@@ -168,7 +168,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             data_field = dyn.get_Cs(data_field_sq)
 
         elif field == 'Cqt_field':
-            print('length of time array for HR_qt is ', len(data_field_list[i]['HR_qt_field'].data[:,0,0,0]))
+            print('length of time array for HR_qt is ', len(data_field_list[i]['HR_q_total_field'].data[:,0,0,0]))
             HR_field = np.mean(data_field_list[i]['HR_q_total_field'].data[...], axis=0)
             RR_field = np.mean(data_field_list[i]['RR_q_total_field'].data[...], axis=0)
             data_field_sq = HR_field/RR_field
