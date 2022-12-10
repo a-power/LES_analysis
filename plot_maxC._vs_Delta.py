@@ -109,9 +109,9 @@ Cq_beta = dyn.get_Cs(Cq_beta_sq)
 ###########################################################################################################
 
 Delta = [20, 40, 80, 160, 320, 640, 1280]
-Cs_list = [Cs_beta, Cs_sq_2, Cs_sq_4, Cs_sq_8, Cs_sq_16, Cs_sq_32, Cs_sq_64]
-Cth_list = [Cth_beta, Cth_sq_2, Cth_sq_4, Cth_sq_8, Cth_sq_16, Cth_sq_32, Cth_sq_64]
-Cq_list = [Cq_beta, Cq_sq_2, Cq_sq_4, Cq_sq_8, Cq_sq_16, Cq_sq_32, Cq_sq_64]
+Cs_list = [Cs_beta, Cs_2, Cs_4, Cs_8, Cs_16, Cs_32, Cs_64]
+Cth_list = [Cth_beta, Cth_2, Cth_4, Cth_8, Cth_16, Cth_32, Cth_64]
+Cq_list = [Cq_beta, Cq_2, Cq_4, Cq_8, Cq_16, Cq_32, Cq_64]
 
 z_cl_r = [50, 75]
 z_ml_r = [6, 20]
@@ -126,430 +126,338 @@ def cal_max_Cs(C_list, z_range):
 
 
 plt.figure(figsize=(6,6))
-plt.plot(Delta, cal_max_Cs(Cs_list, z_ml_r), label = 'Max $C_{s}$ in Mixed Layer')
-plt.plot(Delta, cal_max_Cs(Cs_list, z_cl_r), label = 'Max $C_{s}$ in Cloud Layer')
-plt.plot(Delta, cal_max_Cs(Cth_list, z_ml_r), label = 'Max $C_{\\theta}$ in Mixed Layer')
-plt.plot(Delta, cal_max_Cs(Cth_list, z_cl_r), label = 'Max $C_{\\theta}$ in Cloud Layer')
-plt.plot(Delta, cal_max_Cs(Cq_list, z_ml_r), label = 'Max $C_{qt}$ in Mixed Layer')
-plt.plot(Delta, cal_max_Cs(Cq_list, z_cl_r), label = 'Max $C_{qt}$ in Cloud Layer')
+plt.plot(Delta, cal_max_Cs(Cs_list, z_ml_r), 'k', label = 'Max $C_{s}$ in Mixed Layer')
+plt.plot(Delta, cal_max_Cs(Cs_list, z_cl_r), 'k—', label = 'Max $C_{s}$ in Cloud Layer')
+plt.plot(Delta, cal_max_Cs(Cth_list, z_ml_r), 'r', label = 'Max $C_{\\theta}$ in Mixed Layer')
+plt.plot(Delta, cal_max_Cs(Cth_list, z_cl_r), 'r—', label = 'Max $C_{\\theta}$ in Cloud Layer')
+plt.plot(Delta, cal_max_Cs(Cq_list, z_ml_r), 'b', label = 'Max $C_{qt}$ in Mixed Layer')
+plt.plot(Delta, cal_max_Cs(Cq_list, z_cl_r), 'b-', label = 'Max $C_{qt}$ in Cloud Layer')
 plt.xlabel('Grid spacing $\\Delta$ (m)', fontsize=16)
 plt.ylabel('Smagorinsky Parameter', fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 plt.savefig(plotdir+'C_max_prof_ML_vs_CL.png', pad_inches=0)
 plt.close()
 
-
-plt.figure(figsize=(6,7))
-plt.plot(Cs_beta_sq, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Cs_sq_2, z/z_i, label = '$\\Delta = 40}$m')
-plt.plot(Cs_sq_4, z/z_i, label = '$\\Delta = 80}$m')
-plt.plot(Cs_sq_8, z/z_i, label = '$\\Delta = 160}$m')
-plt.plot(Cs_sq_16, z/z_i, label = '$\\Delta = 320}$m')
-plt.plot(Cs_sq_32, z/z_i, label = '$\\Delta = 640}$m')
-plt.plot(Cs_sq_64, z/z_i, label = '$\\Delta = 1280}$m')
-plt.xlabel('$C^2_{s}$', fontsize=16)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.figure(figsize=(6,6))
+plt.plot(Delta, cal_max_Cs(Cs_list, z_ml_r)*Delta, 'k', label = 'Max $l_{s}$ in Mixed Layer')
+plt.plot(Delta, cal_max_Cs(Cs_list, z_cl_r)*Delta, 'k—', label = 'Max $l_{s}$ in Cloud Layer')
+plt.plot(Delta, cal_max_Cs(Cth_list, z_ml_r)*Delta, 'r', label = 'Max $l_{\\theta}$ in Mixed Layer')
+plt.plot(Delta, cal_max_Cs(Cth_list, z_cl_r)*Delta, 'r—', label = 'Max $l_{\\theta}$ in Cloud Layer')
+plt.plot(Delta, cal_max_Cs(Cq_list, z_ml_r)*Delta, 'b', label = 'Max $l_{qt}$ in Mixed Layer')
+plt.plot(Delta, cal_max_Cs(Cq_list, z_cl_r)*Delta, 'b-', label = 'Max $l_{qt}$ in Cloud Layer')
+plt.plot(Delta, 0.23*Delta, 'g-', label = 'Standard mixing length')
+plt.xlabel('Grid spacing $\\Delta$ (m)', fontsize=16)
+plt.ylabel('Mixing Length (m)', fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
-#plt.xlim(1, 3)
-plt.savefig(plotdir+'Cs_sq_prof_scaled.png', pad_inches=0)
+plt.savefig(plotdir+'l_mix_max_prof_ML_vs_CL_w_std.png', pad_inches=0)
 plt.close()
 
-def get_C(Csq):
-    C = np.ma.masked_invalid(np.sqrt(Csq))
-    return C
-
-def get_Csq(C):
-    Csq = C**2
-    return Csq
-
-
-
-fig, ax = plt.subplots(figsize=(6,7), constrained_layout=True)
-ax.plot(Cs_beta_sq, z/z_i, label = '$\\Delta = 20$m')
-ax.plot(Cs_sq_2, z/z_i, label = '$\\Delta = 40}$m')
-ax.plot(Cs_sq_4, z/z_i, label = '$\\Delta = 80}$m')
-ax.plot(Cs_sq_8, z/z_i, label = '$\\Delta = 160}$m')
-ax.plot(Cs_sq_16, z/z_i, label = '$\\Delta = 320}$m')
-ax.plot(Cs_sq_32, z/z_i, label = '$\\Delta = 640}$m')
-ax.plot(Cs_sq_64, z/z_i, label = '$\\Delta = 1280}$m')
-ax.set_xlabel('$C_{s}^2$', fontsize=16)
-ax.set_ylabel("z/z$_{ML}$", fontsize=16)
-# secax = ax.secondary_xaxis('top', functions=(get_C, get_Csq))
-# secax.set_xlabel('$C_{s}$', fontsize=16)
-ax.legend(fontsize=12, loc='upper right')
-#plt.xlim(1, 3)
-plt.savefig(plotdir+'Cs_and_Csq_prof_scaled.png', pad_inches=0)
-plt.close()
-
-
-#
-# plt.figure(figsize=(6,7))
-# plt.plot(Cq_beta, z, label = '$\\Delta = 20$m')
-# plt.plot(Cq_2, z, label = '$\\Delta = 40$m')
-# plt.plot(Cq_4, z, label = '$\\Delta = 80$m')
-# plt.xlabel('$C_{qt}$', fontsize=14)
-# plt.ylabel("z (m)")
-# plt.legend(fontsize=12, loc='upper right')
-# #plt.xlim(1, 3)
-# plt.savefig(plotdir+'Cqt_prof.png', pad_inches=0)
-
-plt.figure(figsize=(6,7))
-plt.plot(Cq_beta, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Cq_2, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Cq_4, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Cq_8, z/z_i, label = '$\\Delta = 160}$m')
-plt.plot(Cq_16, z/z_i, label = '$\\Delta = 320}$m')
-plt.plot(Cq_32, z/z_i, label = '$\\Delta = 640}$m')
-plt.plot(Cq_64, z/z_i, label = '$\\Delta = 1280}$m')
-plt.xlabel('$C_{qt}$', fontsize=14)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.figure(figsize=(6,6))
+plt.plot(Delta, cal_max_Cs(Cs_list, z_ml_r)*Delta, 'k', label = 'Max $l_{s}$ in Mixed Layer')
+plt.plot(Delta, cal_max_Cs(Cs_list, z_cl_r)*Delta, 'k—', label = 'Max $l_{s}$ in Cloud Layer')
+plt.plot(Delta, cal_max_Cs(Cth_list, z_ml_r)*Delta, 'r', label = 'Max $l_{\\theta}$ in Mixed Layer')
+plt.plot(Delta, cal_max_Cs(Cth_list, z_cl_r)*Delta, 'r—', label = 'Max $l_{\\theta}$ in Cloud Layer')
+plt.plot(Delta, cal_max_Cs(Cq_list, z_ml_r)*Delta, 'b', label = 'Max $l_{qt}$ in Mixed Layer')
+plt.plot(Delta, cal_max_Cs(Cq_list, z_cl_r)*Delta, 'b-', label = 'Max $l_{qt}$ in Cloud Layer')
+plt.xlabel('Grid spacing $\\Delta$ (m)', fontsize=16)
+plt.ylabel('Mixing Length (m)', fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
-#plt.xlim(1, 3)
-plt.savefig(plotdir+'Cqt_prof_scaled.png', pad_inches=0)
-plt.close()
-
-
-plt.figure(figsize=(6,7))
-plt.plot(Cq_beta_sq, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Cq_sq_2, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Cq_sq_4, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Cq_sq_8, z/z_i, label = '$\\Delta = 160}$m')
-plt.plot(Cq_sq_16, z/z_i, label = '$\\Delta = 320}$m')
-plt.plot(Cq_sq_32, z/z_i, label = '$\\Delta = 640}$m')
-plt.plot(Cq_sq_64, z/z_i, label = '$\\Delta = 1280}$m')
-plt.xlabel('$C^2_{qt}$', fontsize=14)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
-plt.legend(fontsize=12, loc='upper right')
-#plt.xlim(1, 3)
-plt.savefig(plotdir+'Cqt_sq_prof_scaled.png', pad_inches=0)
-plt.close()
-
-
-#
-# plt.figure(figsize=(6,7))
-# plt.plot(Cth_beta, z, label = '$\\Delta = 20$m')
-# plt.plot(Cth_2, z, label = '$\\Delta = 40$m')
-# plt.plot(Cth_4, z, label = '$\\Delta = 80$m')
-# plt.xlabel('$C_{\\theta}$', fontsize=14)
-# plt.ylabel("z (m)")
-# plt.legend(fontsize=12, loc='upper right')
-# #plt.xlim(1, 3)
-# plt.savefig(plotdir+'Cth_prof.png', pad_inches=0)
-
-plt.figure(figsize=(6,7))
-plt.plot(Cth_beta, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Cth_2, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Cth_4, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Cth_8, z/z_i, label = '$\\Delta = 160}$m')
-plt.plot(Cth_16, z/z_i, label = '$\\Delta = 320}$m')
-plt.plot(Cth_32, z/z_i, label = '$\\Delta = 640}$m')
-plt.plot(Cth_64, z/z_i, label = '$\\Delta = 1280}$m')
-plt.xlabel('$C_{\\theta}$', fontsize=14)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
-plt.legend(fontsize=12, loc='upper right')
-#plt.xlim(1, 3)
-plt.savefig(plotdir+'Cth_prof_scaled.png', pad_inches=0)
-plt.close
-
-
-plt.figure(figsize=(6,7))
-plt.plot(Cth_beta_sq, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Cth_sq_2, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Cth_sq_4, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Cth_sq_8, z/z_i, label = '$\\Delta = 160}$m')
-plt.plot(Cth_sq_16, z/z_i, label = '$\\Delta = 320}$m')
-plt.plot(Cth_sq_32, z/z_i, label = '$\\Delta = 640}$m')
-plt.plot(Cth_sq_64, z/z_i, label = '$\\Delta = 1280}$m')
-plt.xlabel('$C^2_{\\theta}$', fontsize=14)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
-plt.legend(fontsize=12, loc='upper right')
-#plt.xlim(1, 3)
-plt.savefig(plotdir+'Cth_sq_prof_scaled.png', pad_inches=0)
-plt.close
-
-
-#########################################################################################################################
-
-monc_l_20 = dyn.l_mix_MONC(0.23, 20, z, k=0.4)
-monc_l_40 = dyn.l_mix_MONC(0.23, 40, z, k=0.4)
-monc_l_80 = dyn.l_mix_MONC(0.23, 80, z, k=0.4)
-monc_l_160 = dyn.l_mix_MONC(0.23, 160, z, k=0.4)
-monc_l_320 = dyn.l_mix_MONC(0.23, 320, z, k=0.4)
-monc_l_640 = dyn.l_mix_MONC(0.23, 640, z, k=0.4)
-monc_l_1280 = dyn.l_mix_MONC(0.23, 1280, z, k=0.4)
-
-# plt.figure(figsize=(6,7))
-# plt.plot(Cs_beta*(20), z, '.', markersize = 10, label = '$\\Delta = 20$m')
-# plt.plot(Cs_2*(40), z, '.', markersize = 10, label = '$\\Delta = 40$m')
-# plt.plot(Cs_4*(80), z, '.', markersize = 10, label = '$\\Delta = 80$m')
-# plt.plot(monc_l_20, z, color ='tab:blue')
-# plt.plot(monc_l_40, z, color ='tab:orange')
-# plt.plot(monc_l_80, z, color ='tab:green')
-# plt.xlabel('$l_{mix}$', fontsize=16)
-# plt.ylabel("z (m)", fontsize=16)
-# plt.legend(fontsize=12, loc='upper right')
-# #plt.xlim(1, 3)
-# plt.savefig(plotdir+'l_mix_w_MONC.png', pad_inches=0)
-
-plt.figure(figsize=(6,7))
-
-plt.plot(Cs_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
-plt.plot(Cs_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
-plt.plot(Cs_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
-plt.plot(Cs_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
-plt.plot(Cs_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
-plt.plot(Cs_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
-plt.plot(Cs_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
-
-# plt.plot(monc_l_20, z/z_i, color ='tab:blue')
-# plt.plot(monc_l_40, z/z_i, color ='tab:orange')
-# plt.plot(monc_l_80, z/z_i, color ='tab:green')
-# plt.plot(monc_l_160, z/z_i, color ='tab:red')
-# plt.plot(monc_l_320, z/z_i, color ='tab:purple')
-# plt.plot(monc_l_640, z/z_i, color ='tab:grey')
-# plt.plot(monc_l_1280, z/z_i, color ='tab:pink')
-
-plt.xlabel('$l_{mix}$', fontsize=16)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
-plt.legend(fontsize=12, loc='upper right')
-#plt.xlim(1, 3)
-plt.savefig(plotdir+'l_mix_no_stan_w_MONC_scaled.png', pad_inches=0)
-plt.close()
-
-print('plotted l mix')
-
-#########################################################################################################################
-
-#scalars
-
-#########################################################################################################################
-
-C_scalar = np.sqrt((0.23*0.23)/0.7)
-
-monc_l_scalar_20 = dyn.l_mix_MONC(C_scalar, 20, z, k=0.4)
-monc_l_scalar_40 = dyn.l_mix_MONC(C_scalar, 40, z, k=0.4)
-monc_l_scalar_80 = dyn.l_mix_MONC(C_scalar, 80, z, k=0.4)
-monc_l_scalar_160 = dyn.l_mix_MONC(C_scalar, 160, z, k=0.4)
-monc_l_scalar_320 = dyn.l_mix_MONC(C_scalar, 320, z, k=0.4)
-monc_l_scalar_640 = dyn.l_mix_MONC(C_scalar, 640, z, k=0.4)
-monc_l_scalar_1280 = dyn.l_mix_MONC(C_scalar, 1280, z, k=0.4)
-
-# plt.figure(figsize=(6,7))
-# plt.plot(Cth_beta*(20), z, '.', markersize = 10, label = '$\\Delta = 20$m')
-# plt.plot(Cth_2*(40), z, '.', markersize = 10, label = '$\\Delta = 40$m')
-# plt.plot(Cth_4*(80), z, '.', markersize = 10, label = '$\\Delta = 80$m')
-# plt.plot(monc_l_scalar_20, z, color ='tab:blue')
-# plt.plot(monc_l_scalar_40, z, color ='tab:orange')
-# plt.plot(monc_l_scalar_80, z, color ='tab:green')
-# plt.xlabel('$l_{\\theta}$', fontsize=16)
-# plt.ylabel("z (m)", fontsize=16)
-# plt.legend(fontsize=12, loc='upper right')
-# #plt.xlim(1, 3)
-# plt.savefig(plotdir+'l_th_w_MONC.png', pad_inches=0)
-
-plt.figure(figsize=(6,7))
-plt.plot(Cth_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
-plt.plot(Cth_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
-plt.plot(Cth_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
-plt.plot(Cth_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
-plt.plot(Cth_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
-plt.plot(Cth_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
-plt.plot(Cth_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
-
-# plt.plot(monc_l_scalar_20, z/z_i, color ='tab:blue')
-# plt.plot(monc_l_scalar_40, z/z_i, color ='tab:orange')
-# plt.plot(monc_l_scalar_80, z/z_i, color ='tab:green')
-# plt.plot(monc_l_scalar_160, z/z_i, color ='tab:red')
-# plt.plot(monc_l_scalar_320, z/z_i, color ='tab:purple')
-# plt.plot(monc_l_scalar_640, z/z_i, color ='tab:grey')
-# plt.plot(monc_l_scalar_1280, z/z_i, color ='tab:pink')
-
-plt.xlabel('$l_{\\theta}$', fontsize=16)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
-plt.legend(fontsize=12, loc='upper right')
-#plt.xlim(1, 3)
-plt.savefig(plotdir+'l_th_no_stan_w_MONC_scaled.png', pad_inches=0)
-plt.close()
-
-print('plotted l_th')
-
-#########################################################################################################################
-
-
-
-#########################################################################################################################
-
-#
-# plt.figure(figsize=(6,7))
-# plt.plot(Cq_beta*(20), z, '.', markersize = 10, label = '$\\Delta = 20$m')
-# plt.plot(Cq_2*(40), z, '.', markersize = 10, label = '$\\Delta = 40$m')
-# plt.plot(Cq_4*(80), z, '.', markersize = 10, label = '$\\Delta = 80$m')
-# plt.plot(monc_l_scalar_20, z, color ='tab:blue')
-# plt.plot(monc_l_scalar_40, z, color ='tab:orange')
-# plt.plot(monc_l_scalar_80, z, color ='tab:green')
-# plt.xlabel('$l_{qt}$', fontsize=16)
-# plt.ylabel("z (m)", fontsize=16)
-# plt.legend(fontsize=12, loc='upper right')
-# #plt.xlim(1, 3)
-# plt.savefig(plotdir+'l_qt_w_MONC.png', pad_inches=0)
-
-plt.figure(figsize=(6,7))
-
-plt.plot(Cq_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
-plt.plot(Cq_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
-plt.plot(Cq_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
-plt.plot(Cq_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
-plt.plot(Cq_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
-plt.plot(Cq_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
-plt.plot(Cq_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
-
-# plt.plot(monc_l_scalar_20, z/z_i, color ='tab:blue')
-# plt.plot(monc_l_scalar_40, z/z_i, color ='tab:orange')
-# plt.plot(monc_l_scalar_80, z/z_i, color ='tab:green')
-# plt.plot(monc_l_scalar_160, z/z_i, color ='tab:red')
-# plt.plot(monc_l_scalar_320, z/z_i, color ='tab:purple')
-# plt.plot(monc_l_scalar_640, z/z_i, color ='tab:grey')
-# plt.plot(monc_l_scalar_1280, z/z_i, color ='tab:pink')
-
-plt.xlabel('$l_{qt}$', fontsize=16)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
-plt.legend(fontsize=12, loc='upper right')
-#plt.xlim(1, 3)
-plt.savefig(plotdir+'l_qt_no_stan_w_MONC_scaled.png', pad_inches=0)
-plt.close()
-
-print('plotted l_qt')
-
-#########################################################################################################################
-
-
-Pr_th_beta = dyn.Pr(Cs_beta_sq, Cth_beta_sq)
-Pr_th_2D = dyn.Pr(Cs_sq_2, Cth_sq_2)
-Pr_th_4D = dyn.Pr(Cs_sq_4, Cth_sq_4)
-Pr_th_8D = dyn.Pr(Cs_sq_8, Cth_sq_8)
-Pr_th_16D = dyn.Pr(Cs_sq_16, Cth_sq_16)
-Pr_th_32D = dyn.Pr(Cs_sq_32, Cth_sq_32)
-Pr_th_64D = dyn.Pr(Cs_sq_64, Cth_sq_64)
-
-# plt.figure(figsize=(6,7))
-# plt.plot(Pr_th_beta, z, label = '$\\Delta = 20$m')
-# plt.plot(Pr_th_2D, z, label = '$\\Delta = 40$m')
-# plt.plot(Pr_th_4D, z, label = '$\\Delta = 80$m')
-# plt.plot(Pr_th_8D, z, label = '$\\Delta = 160$m')
-# plt.plot(Pr_th_16D, z, label = '$\\Delta = 320$m')
-# plt.plot(Pr_th_32D, z, label = '$\\Delta = 640$m')
-# plt.plot(Pr_th_64D, z, label = '$\\Delta = 1280$m')
-# plt.xlabel('$Pr_{\\theta}$', fontsize=14)
-# plt.ylabel("z (m)")
-# plt.legend(fontsize=12, loc='upper right')
-# plt.vlines(0.7, 0, 3020, 'k', linestyles='dashed', label='')
-# #plt.xlim(-3, 7)
-# plt.savefig(plotdir+'Pr_th_prof.png', pad_inches=0)
-# plt.close()
-
-plt.figure(figsize=(6,7))
-plt.plot(Pr_th_beta, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Pr_th_2D, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Pr_th_4D, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Pr_th_8D, z/z_i, label = '$\\Delta = 160$m')
-plt.plot(Pr_th_16D, z/z_i, label = '$\\Delta = 320$m')
-plt.plot(Pr_th_32D, z/z_i, label = '$\\Delta = 640$m')
-plt.plot(Pr_th_64D, z/z_i, label = '$\\Delta = 1280$m')
-plt.xlabel('$Pr_{\\theta}$', fontsize=14)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
-plt.legend(fontsize=12, loc='upper right')
-plt.vlines(0.7, 0, 3020/z_i, 'k', linestyles='dashed', label='')
-plt.xlim(-3, 7)
-plt.savefig(plotdir+'Pr_th_prof_scaled1.png', pad_inches=0)
-plt.close()
-
-
-plt.figure(figsize=(6,7))
-plt.plot(Pr_th_beta, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Pr_th_2D, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Pr_th_4D, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Pr_th_8D, z/z_i, label = '$\\Delta = 160$m')
-plt.plot(Pr_th_16D, z/z_i, label = '$\\Delta = 320$m')
-plt.plot(Pr_th_32D, z/z_i, label = '$\\Delta = 640$m')
-plt.plot(Pr_th_64D, z/z_i, label = '$\\Delta = 1280$m')
-plt.xlabel('$Pr_{\\theta}$', fontsize=14)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
-plt.legend(fontsize=12, loc='upper right')
-plt.vlines(0.7, 0, 3020/z_i, 'k', linestyles='dashed', label='')
-plt.xlim(-3, 31)
-plt.savefig(plotdir+'Pr_th_prof_scaled2.png', pad_inches=0)
-plt.close()
-
-###############################################################################################
-
-Pr_q_beta = dyn.Pr(Cs_beta_sq, Cq_beta_sq)
-Pr_q_2D = dyn.Pr(Cs_sq_2, Cq_sq_2)
-Pr_q_4D = dyn.Pr(Cs_sq_4, Cq_sq_4)
-Pr_q_8D = dyn.Pr(Cs_sq_8, Cq_sq_8)
-Pr_q_16D = dyn.Pr(Cs_sq_16, Cq_sq_16)
-Pr_q_32D = dyn.Pr(Cs_sq_32, Cq_sq_32)
-Pr_q_64D = dyn.Pr(Cs_sq_64, Cq_sq_64)
-
-# plt.figure(figsize=(6,7))
-# plt.plot(Pr_q_beta, z, label = '$\\Delta = 20$m')
-# plt.plot(Pr_q_2D, z, label = '$\\Delta = 40$m')
-# plt.plot(Pr_q_4D, z, label = '$\\Delta = 80$m')
-# plt.plot(Pr_q_8D, z, label = '$\\Delta = 160$m')
-# plt.plot(Pr_q_16D, z, label = '$\\Delta = 320$m')
-# plt.plot(Pr_q_32D, z, label = '$\\Delta = 640$m')
-# plt.plot(Pr_q_64D, z, label = '$\\Delta = 1280$m')
-# plt.xlabel('$Pr_{qt}$', fontsize=14)
-# plt.ylabel("z (m)")
-# plt.legend(fontsize=12, loc='upper right')
-# plt.vlines(0.7, 0, 3020, 'k', linestyles='dashed', label='')
-# #plt.xlim(-3, 7)
-# plt.savefig(plotdir+'Pr_qt_prof.png', pad_inches=0)
-# plt.close()
-
-plt.figure(figsize=(6,7))
-plt.plot(Pr_q_beta, z/z_i, label = '$\\Delta = 20$m')
-plt.plot(Pr_q_2D, z/z_i, label = '$\\Delta = 40$m')
-plt.plot(Pr_q_4D, z/z_i, label = '$\\Delta = 80$m')
-plt.plot(Pr_q_8D, z/z_i, label = '$\\Delta = 160$m')
-plt.plot(Pr_q_16D, z/z_i, label = '$\\Delta = 320$m')
-plt.plot(Pr_q_32D, z/z_i, label = '$\\Delta = 640$m')
-plt.plot(Pr_th_64D, z/z_i, label = '$\\Delta = 1280$m')
-plt.xlabel('$Pr_{qt}$', fontsize=14)
-plt.ylabel("z/z$_{ML}$", fontsize=16)
-plt.legend(fontsize=12, loc='upper right')
-plt.vlines(0.7, 0, 3020/z_i, 'k', linestyles='dashed', label='')
-plt.xlim(-3, 7)
-plt.savefig(plotdir+'Pr_qt_prof_scaled.png', pad_inches=0)
+plt.savefig(plotdir+'l_mix_max_prof_ML_vs_CL.png', pad_inches=0)
 plt.close()
 
 
 
-# plt.figure(figsize=(6,7))
-# plt.plot(Pr_th_beta, z, label = '$Pr_{\\theta}:$ $\\Delta = 20$m')
-# plt.plot(Pr_th_2D, z, label = '$Pr_{\\theta}:$ $\\Delta = 40$m')
-# plt.plot(Pr_th_4D, z, label = '$Pr_{\\theta}:$ $\\Delta = 80$m')
-# plt.plot(Pr_q_beta, z, label = '$Pr_{qt}:$ $\\Delta = 20$m', color ='tab:blue', linestyle='dashdot')
-# plt.plot(Pr_q_2D, z, label = '$Pr_{qt}:$ $\\Delta = 40$m', color ='tab:orange', linestyle='dashdot')
-# plt.plot(Pr_q_4D, z, label = '$Pr_{qt}:$ $\\Delta = 80$m', color ='tab:green', linestyle='dashdot')
-# plt.xlabel('$Pr$', fontsize=14)
-# plt.ylabel("z (m)")
-# plt.legend(fontsize=12, loc='upper right')
-# plt.vlines(0.7, 0, 3020, 'k', linestyles='dashed', label='')
-# plt.xlim(-3, 7)
-# plt.savefig(plotdir+'Pr_all_prof.png', pad_inches=0)
-#
-# plt.figure(figsize=(6,7))
-# plt.plot(Pr_th_beta, z/z_i, label = '$Pr_{\\theta}:$ $\\Delta = 20$m')
-# plt.plot(Pr_th_2D, z/z_i, label = '$Pr_{\\theta}:$ $\\Delta = 40$m')
-# plt.plot(Pr_th_4D, z/z_i, label = '$Pr_{\\theta}:$ $\\Delta = 80$m')
-# plt.plot(Pr_q_beta, z/z_i, label = '$Pr_{qt}:$ $\\Delta = 20$m', color ='tab:blue', linestyle='dashdot')
-# plt.plot(Pr_q_2D, z/z_i, label = '$Pr_{qt}:$ $\\Delta = 40$m', color ='tab:orange', linestyle='dashdot')
-# plt.plot(Pr_q_4D, z/z_i, label = '$Pr_{qt}:$ $\\Delta = 80$m', color ='tab:green', linestyle='dashdot')
-# plt.xlabel('$Pr$', fontsize=14)
-# plt.ylabel("z/$_{ML}$")
-# plt.legend(fontsize=12, loc='upper right')
-# plt.vlines(0.7, 0, 3020/z_i, 'k', linestyles='dashed', label='')
-# plt.xlim(-3, 7)
-# plt.savefig(plotdir+'Pr_all_prof_scaled.png', pad_inches=0)
+
+
+dir_data = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_cloud_v_env_'
+os.makedirs(plotdir, exist_ok = True)
+
+
+data_2D = xr.open_dataset(dir_data + '2D.nc')
+data_4D = xr.open_dataset(dir_data + '4D.nc')
+data_8D = xr.open_dataset(dir_data + '8D.nc')
+data_16D = xr.open_dataset(dir_data + '16D.nc')
+data_32D = xr.open_dataset(dir_data + '32D.nc')
+data_64D = xr.open_dataset(dir_data + '64D.nc')
+
+
+#index of 0 at the start is to get rid of the dummy time index thats required to save the files
+
+Cs_cloud_2 = data_2D['Cs_cloud_prof'].data[0, ...]
+Cs_cloud_4 = data_4D['Cs_cloud_prof'].data[0, ...]
+Cs_cloud_8 = data_8D['Cs_cloud_prof'].data[0, ...]
+Cs_cloud_16 = data_16D['Cs_cloud_prof'].data[0, ...]
+Cs_cloud_32 = data_32D['Cs_cloud_prof'].data[0, ...]
+Cs_cloud_64 = data_64D['Cs_cloud_prof'].data[0, ...]
+
+Cth_cloud_2 = data_2D['Cth_cloud_prof'].data[0, ...]
+Cth_cloud_4 = data_4D['Cth_cloud_prof'].data[0, ...]
+Cth_cloud_8 = data_8D['Cth_cloud_prof'].data[0, ...]
+Cth_cloud_16 = data_16D['Cth_cloud_prof'].data[0, ...]
+Cth_cloud_32 = data_32D['Cth_cloud_prof'].data[0, ...]
+Cth_cloud_64 = data_64D['Cth_cloud_prof'].data[0, ...]
+
+Cqt_cloud_2 = data_2D['Cqt_cloud_prof'].data[0, ...]
+Cqt_cloud_4 = data_4D['Cqt_cloud_prof'].data[0, ...]
+Cqt_cloud_8 = data_8D['Cqt_cloud_prof'].data[0, ...]
+Cqt_cloud_16 = data_16D['Cqt_cloud_prof'].data[0, ...]
+Cqt_cloud_32 = data_32D['Cqt_cloud_prof'].data[0, ...]
+Cqt_cloud_64 = data_64D['Cqt_cloud_prof'].data[0, ...]
+
+
+
+Cs_env_2 = data_2D['Cs_env_prof'].data[0, ...]
+Cs_env_4 = data_4D['Cs_env_prof'].data[0, ...]
+Cs_env_8 = data_8D['Cs_env_prof'].data[0, ...]
+Cs_env_16 = data_16D['Cs_env_prof'].data[0, ...]
+Cs_env_32 = data_32D['Cs_env_prof'].data[0, ...]
+Cs_env_64 = data_64D['Cs_env_prof'].data[0, ...]
+
+Cth_env_2 = data_2D['Cth_env_prof'].data[0, ...]
+Cth_env_4 = data_4D['Cth_env_prof'].data[0, ...]
+Cth_env_8 = data_8D['Cth_env_prof'].data[0, ...]
+Cth_env_16 = data_16D['Cth_env_prof'].data[0, ...]
+Cth_env_32 = data_32D['Cth_env_prof'].data[0, ...]
+Cth_env_64 = data_64D['Cth_env_prof'].data[0, ...]
+
+Cqt_env_2 = data_2D['Cqt_env_prof'].data[0, ...]
+Cqt_env_4 = data_4D['Cqt_env_prof'].data[0, ...]
+Cqt_env_8 = data_8D['Cqt_env_prof'].data[0, ...]
+Cqt_env_16 = data_16D['Cqt_env_prof'].data[0, ...]
+Cqt_env_32 = data_32D['Cqt_env_prof'].data[0, ...]
+Cqt_env_64 = data_64D['Cqt_env_prof'].data[0, ...]
+
+
+########################################################################################################################
+
+
+LijMij_cloud_2 = data_2D['LijMij_cloud_prof'].data[0, ...]
+LijMij_cloud_4 = data_4D['LijMij_cloud_prof'].data[0, ...]
+LijMij_cloud_8 = data_8D['LijMij_cloud_prof'].data[0, ...]
+LijMij_cloud_16 = data_16D['LijMij_cloud_prof'].data[0, ...]
+LijMij_cloud_32 = data_32D['LijMij_cloud_prof'].data[0, ...]
+LijMij_cloud_64 = data_64D['LijMij_cloud_prof'].data[0, ...]
+
+HjRj_th_cloud_2 = data_2D['HjRj_th_cloud_prof'].data[0, ...]
+HjRj_th_cloud_4 = data_4D['HjRj_th_cloud_prof'].data[0, ...]
+HjRj_th_cloud_8 = data_8D['HjRj_th_cloud_prof'].data[0, ...]
+HjRj_th_cloud_16 = data_16D['HjRj_th_cloud_prof'].data[0, ...]
+HjRj_th_cloud_32 = data_32D['HjRj_th_cloud_prof'].data[0, ...]
+HjRj_th_cloud_64 = data_64D['HjRj_th_cloud_prof'].data[0, ...]
+
+HjRj_qt_cloud_2 = data_2D['HjRj_qt_cloud_prof'].data[0, ...]
+HjRj_qt_cloud_4 = data_4D['HjRj_qt_cloud_prof'].data[0, ...]
+HjRj_qt_cloud_8 = data_8D['HjRj_qt_cloud_prof'].data[0, ...]
+HjRj_qt_cloud_16 = data_16D['HjRj_qt_cloud_prof'].data[0, ...]
+HjRj_qt_cloud_32 = data_32D['HjRj_qt_cloud_prof'].data[0, ...]
+HjRj_qt_cloud_64 = data_64D['HjRj_qt_cloud_prof'].data[0, ...]
+
+###############################################################
+
+
+MijMij_cloud_2 = data_2D['MijMij_cloud_prof'].data[0, ...]
+MijMij_cloud_4 = data_4D['MijMij_cloud_prof'].data[0, ...]
+MijMij_cloud_8 = data_8D['MijMij_cloud_prof'].data[0, ...]
+MijMij_cloud_16 = data_16D['MijMij_cloud_prof'].data[0, ...]
+MijMij_cloud_32 = data_32D['MijMij_cloud_prof'].data[0, ...]
+MijMij_cloud_64 = data_64D['MijMij_cloud_prof'].data[0, ...]
+
+RjRj_th_cloud_2 = data_2D['RjRj_th_cloud_prof'].data[0, ...]
+RjRj_th_cloud_4 = data_4D['RjRj_th_cloud_prof'].data[0, ...]
+RjRj_th_cloud_8 = data_8D['RjRj_th_cloud_prof'].data[0, ...]
+RjRj_th_cloud_16 = data_16D['RjRj_th_cloud_prof'].data[0, ...]
+RjRj_th_cloud_32 = data_32D['RjRj_th_cloud_prof'].data[0, ...]
+RjRj_th_cloud_64 = data_64D['RjRj_th_cloud_prof'].data[0, ...]
+
+RjRj_qt_cloud_2 = data_2D['RjRj_qt_cloud_prof'].data[0, ...]
+RjRj_qt_cloud_4 = data_4D['RjRj_qt_cloud_prof'].data[0, ...]
+RjRj_qt_cloud_8 = data_8D['RjRj_qt_cloud_prof'].data[0, ...]
+RjRj_qt_cloud_16 = data_16D['RjRj_qt_cloud_prof'].data[0, ...]
+RjRj_qt_cloud_32 = data_32D['RjRj_qt_cloud_prof'].data[0, ...]
+RjRj_qt_cloud_64 = data_64D['RjRj_qt_cloud_prof'].data[0, ...]
+
+###############################################################
+
+
+MijMij_env_2 = data_2D['MijMij_env_prof'].data[0, ...]
+MijMij_env_4 = data_4D['MijMij_env_prof'].data[0, ...]
+MijMij_env_8 = data_8D['MijMij_env_prof'].data[0, ...]
+MijMij_env_16 = data_16D['MijMij_env_prof'].data[0, ...]
+MijMij_env_32 = data_32D['MijMij_env_prof'].data[0, ...]
+MijMij_env_64 = data_64D['MijMij_env_prof'].data[0, ...]
+
+RjRj_th_env_2 = data_2D['RjRj_th_env_prof'].data[0, ...]
+RjRj_th_env_4 = data_4D['RjRj_th_env_prof'].data[0, ...]
+RjRj_th_env_8 = data_8D['RjRj_th_env_prof'].data[0, ...]
+RjRj_th_env_16 = data_16D['RjRj_th_env_prof'].data[0, ...]
+RjRj_th_env_32 = data_32D['RjRj_th_env_prof'].data[0, ...]
+RjRj_th_env_64 = data_64D['RjRj_th_env_prof'].data[0, ...]
+
+RjRj_qt_env_2 = data_2D['RjRj_qt_env_prof'].data[0, ...]
+RjRj_qt_env_4 = data_4D['RjRj_qt_env_prof'].data[0, ...]
+RjRj_qt_env_8 = data_8D['RjRj_qt_env_prof'].data[0, ...]
+RjRj_qt_env_16 = data_16D['RjRj_qt_env_prof'].data[0, ...]
+RjRj_qt_env_32 = data_32D['RjRj_qt_env_prof'].data[0, ...]
+RjRj_qt_env_64 = data_64D['RjRj_qt_env_prof'].data[0, ...]
+
+
+
+################################################################
+
+
+LijMij_env_2 = data_2D['LijMij_env_prof'].data[0, ...]
+LijMij_env_4 = data_4D['LijMij_env_prof'].data[0, ...]
+LijMij_env_8 = data_8D['LijMij_env_prof'].data[0, ...]
+LijMij_env_16 = data_16D['LijMij_env_prof'].data[0, ...]
+LijMij_env_32 = data_32D['LijMij_env_prof'].data[0, ...]
+LijMij_env_64 = data_64D['LijMij_env_prof'].data[0, ...]
+
+HjRj_th_env_2 = data_2D['HjRj_th_env_prof'].data[0, ...]
+HjRj_th_env_4 = data_4D['HjRj_th_env_prof'].data[0, ...]
+HjRj_th_env_8 = data_8D['HjRj_th_env_prof'].data[0, ...]
+HjRj_th_env_16 = data_16D['HjRj_th_env_prof'].data[0, ...]
+HjRj_th_env_32 = data_32D['HjRj_th_env_prof'].data[0, ...]
+HjRj_th_env_64 = data_64D['HjRj_th_env_prof'].data[0, ...]
+
+HjRj_qt_env_2 = data_2D['HjRj_qt_env_prof'].data[0, ...]
+HjRj_qt_env_4 = data_4D['HjRj_qt_env_prof'].data[0, ...]
+HjRj_qt_env_8 = data_8D['HjRj_qt_env_prof'].data[0, ...]
+HjRj_qt_env_16 = data_16D['HjRj_qt_env_prof'].data[0, ...]
+HjRj_qt_env_32 = data_32D['HjRj_qt_env_prof'].data[0, ...]
+HjRj_qt_env_64 = data_64D['HjRj_qt_env_prof'].data[0, ...]
+
+
+########################################################################################################################
+
+
+
+Cs_sq_cloud_2 = 0.5 * LijMij_cloud_2 / MijMij_cloud_2
+Cs_sq_cloud_4 = 0.5 * LijMij_cloud_4 / MijMij_cloud_4
+Cs_sq_cloud_8 = 0.5 * LijMij_cloud_8 / MijMij_cloud_8
+Cs_sq_cloud_16 = 0.5 * LijMij_cloud_16 / MijMij_cloud_16
+Cs_sq_cloud_32 = 0.5 * LijMij_cloud_32 / MijMij_cloud_32
+Cs_sq_cloud_64 = 0.5 * LijMij_cloud_64 / MijMij_cloud_64
+
+Cth_sq_cloud_2 = 0.5 * HjRj_th_cloud_2 / RjRj_th_cloud_2
+Cth_sq_cloud_4 = 0.5 * HjRj_th_cloud_4 / RjRj_th_cloud_4
+Cth_sq_cloud_8 = 0.5 * HjRj_th_cloud_8 / RjRj_th_cloud_8
+Cth_sq_cloud_16 = 0.5 * HjRj_th_cloud_16 / RjRj_th_cloud_16
+Cth_sq_cloud_32 = 0.5 * HjRj_th_cloud_32 / RjRj_th_cloud_32
+Cth_sq_cloud_64 = 0.5 * HjRj_th_cloud_64 / RjRj_th_cloud_64
+
+Cqt_sq_cloud_2 = 0.5 * HjRj_qt_cloud_2 / RjRj_qt_cloud_2
+Cqt_sq_cloud_4 = 0.5 * HjRj_qt_cloud_4 / RjRj_qt_cloud_4
+Cqt_sq_cloud_8 = 0.5 * HjRj_qt_cloud_8 / RjRj_qt_cloud_8
+Cqt_sq_cloud_16 = 0.5 * HjRj_qt_cloud_16 / RjRj_qt_cloud_16
+Cqt_sq_cloud_32 = 0.5 * HjRj_qt_cloud_32 / RjRj_qt_cloud_32
+Cqt_sq_cloud_64 = 0.5 * HjRj_qt_cloud_64 / RjRj_qt_cloud_64
+###############################################################
+
+
+Cs_sq_env_2 = 0.5 * LijMij_env_2 / MijMij_env_2
+Cs_sq_env_4 = 0.5 * LijMij_env_4 / MijMij_env_4
+Cs_sq_env_8 = 0.5 * LijMij_env_8 / MijMij_env_8
+Cs_sq_env_16 = 0.5 * LijMij_env_16 / MijMij_env_16
+Cs_sq_env_32 = 0.5 * LijMij_env_32 / MijMij_env_32
+Cs_sq_env_64 = 0.5 * LijMij_env_64 / MijMij_env_64
+
+Cth_sq_env_2 = 0.5 * HjRj_th_env_2 / RjRj_th_env_2
+Cth_sq_env_4 = 0.5 * HjRj_th_env_4 / RjRj_th_env_4
+Cth_sq_env_8 = 0.5 * HjRj_th_env_8 / RjRj_th_env_8
+Cth_sq_env_16 = 0.5 * HjRj_th_env_16 / RjRj_th_env_16
+Cth_sq_env_32 = 0.5 * HjRj_th_env_32 / RjRj_th_env_32
+Cth_sq_env_64 = 0.5 * HjRj_th_env_64 / RjRj_th_env_64
+
+Cqt_sq_env_2 = 0.5 * HjRj_qt_env_2 / RjRj_qt_env_2
+Cqt_sq_env_4 = 0.5 * HjRj_qt_env_4 / RjRj_qt_env_4
+Cqt_sq_env_8 = 0.5 * HjRj_qt_env_8 / RjRj_qt_env_8
+Cqt_sq_env_16 = 0.5 * HjRj_qt_env_16 / RjRj_qt_env_16
+Cqt_sq_env_32 = 0.5 * HjRj_qt_env_32 / RjRj_qt_env_32
+Cqt_sq_env_64 = 0.5 * HjRj_qt_env_64 / RjRj_qt_env_64
+
+
+###################################################################################################
+
+beta_s_cloud = dyn.beta_calc(Cs_sq_cloud_2, Cs_sq_cloud_4)
+beta_th_cloud = dyn.beta_calc(Cth_sq_cloud_2, Cth_sq_cloud_4)
+beta_q_cloud = dyn.beta_calc(Cqt_sq_cloud_2, Cqt_sq_cloud_4)
+
+beta_s_env = dyn.beta_calc(Cs_sq_env_2, Cs_sq_env_4)
+beta_th_env = dyn.beta_calc(Cth_sq_env_2, Cth_sq_env_4)
+beta_q_env = dyn.beta_calc(Cqt_sq_env_2, Cqt_sq_env_4)
+
+
+
+###########################################################################################################
+
+
+Cs_cloud_beta_sq = Cs_sq_cloud_2/beta_s_cloud
+Cth_cloud_beta_sq = Cth_sq_cloud_2/beta_th_cloud
+Cqt_cloud_beta_sq = Cqt_sq_cloud_2/beta_q_cloud
+
+Cs_env_beta_sq = Cs_sq_env_2/beta_s_env
+Cth_env_beta_sq = Cth_sq_env_2/beta_th_env
+Cqt_env_beta_sq = Cqt_sq_env_2/beta_q_env
+
+Cs_cloud_beta = dyn.get_Cs(Cs_cloud_beta_sq)
+Cth_cloud_beta = dyn.get_Cs(Cth_cloud_beta_sq)
+Cqt_cloud_beta = dyn.get_Cs(Cqt_cloud_beta_sq)
+
+Cs_env_beta = dyn.get_Cs(Cs_env_beta_sq)
+Cth_env_beta = dyn.get_Cs(Cth_env_beta_sq)
+Cqt_env_beta = dyn.get_Cs(Cqt_env_beta_sq)
+
+
+
+Cs_cloud_list = [Cs_cloud_beta, Cs_cloud_2, Cs_cloud_4, Cs_cloud_8, Cs_cloud_16, Cs_cloud_32, Cs_cloud_64]
+Cth_cloud_list = [Cth_cloud_beta, Cth_cloud_2, Cth_cloud_4, Cth_cloud_8, Cth_cloud_16, Cth_cloud_32, Cth_cloud_64]
+Cqt_cloud_list = [Cqt_cloud_beta, Cqt_cloud_2, Cqt_cloud_4, Cqt_cloud_8, Cqt_cloud_16, Cqt_cloud_32, Cqt_cloud_64]
+
+Cs_env_list = [Cs_env_beta, Cs_env_2, Cs_env_4, Cs_env_8, Cs_env_16, Cs_env_32, Cs_env_64]
+Cth_env_list = [Cth_env_beta, Cth_env_2, Cth_env_4, Cth_env_8, Cth_env_16, Cth_env_32, Cth_env_64]
+Cqt_env_list = [Cqt_env_beta, Cqt_env_2, Cqt_env_4, Cqt_env_8, Cqt_env_16, Cqt_env_32, Cqt_env_64]
+
+
+
+plt.figure(figsize=(6,6))
+plt.plot(Delta, cal_max_Cs(Cs_cloud_list, z_ml_r), 'k', label = 'Max in-cloud $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cs_env_list, z_cl_r), 'k—', label = 'Max environment $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cth_cloud_list, z_ml_r), 'r', label = 'Max in-cloud $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cth_env_list, z_cl_r), 'r—', label = 'Max environment $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cqt_cloud_list, z_ml_r), 'b', label = 'Max in-cloud $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cqt_env_list, z_cl_r), 'b-', label = 'Max environment $C_{s}$ value')
+plt.xlabel('Grid spacing $\\Delta$ (m)', fontsize=16)
+plt.ylabel('Smagorinsky Parameter in the cloud layer', fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+plt.savefig(plotdir+'C_max_prof_Env_vs_CL.png', pad_inches=0)
+plt.close()
+
+plt.figure(figsize=(6,6))
+plt.plot(Delta, cal_max_Cs(Cs_cloud_list, z_ml_r)*Delta, 'k', label = 'Max in-cloud $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cs_env_list, z_cl_r)*Delta, 'k—', label = 'Max environment $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cth_cloud_list, z_ml_r)*Delta, 'r', label = 'Max in-cloud $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cth_env_list, z_cl_r)*Delta, 'r—', label = 'Max environment $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cqt_cloud_list, z_ml_r)*Delta, 'b', label = 'Max in-cloud $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cqt_env_list, z_cl_r)*Delta, 'b-', label = 'Max environment $C_{s}$ value')
+plt.plot(Delta, 0.23*Delta, 'g-', label = 'Standard mixing length')
+plt.xlabel('Grid spacing $\\Delta$ (m)', fontsize=16)
+plt.ylabel('Mixing Length (m) in the cloud layer', fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+plt.savefig(plotdir+'l_mix_max_prof_Env_vs_CL_w_std.png', pad_inches=0)
+plt.close()
+
+plt.figure(figsize=(6,6))
+plt.plot(Delta, cal_max_Cs(Cs_cloud_list, z_ml_r)*Delta, 'k', label = 'Max in-cloud $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cs_env_list, z_cl_r)*Delta, 'k—', label = 'Max environment $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cth_cloud_list, z_ml_r)*Delta, 'r', label = 'Max in-cloud $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cth_env_list, z_cl_r)*Delta, 'r—', label = 'Max environment $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cqt_cloud_list, z_ml_r)*Delta, 'b', label = 'Max in-cloud $C_{s}$ value')
+plt.plot(Delta, cal_max_Cs(Cqt_env_list, z_cl_r)*Delta, 'b-', label = 'Max environment $C_{s}$ value')
+plt.xlabel('Grid spacing $\\Delta$ (m)', fontsize=16)
+plt.ylabel('Mixing Length (m) in the cloud layer', fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+plt.savefig(plotdir+'l_mix_max_prof_Env_vs_CL.png', pad_inches=0)
+plt.close()
+
 
 
