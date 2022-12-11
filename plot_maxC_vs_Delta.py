@@ -125,7 +125,7 @@ def cal_max_Cs(C_list, z_range):
 
 
 
-plt.figure(figsize=(6,6))
+plt.figure(figsize=(8,6))
 plt.plot(Delta, cal_max_Cs(Cs_list, z_ml_r), 'k', label = 'Max $C_{s}$ in Mixed Layer')
 plt.plot(Delta, cal_max_Cs(Cs_list, z_cl_r), 'k-.', label = 'Max $C_{s}$ in Cloud Layer')
 plt.plot(Delta, cal_max_Cs(Cth_list, z_ml_r), 'r', label = 'Max $C_{\\theta}$ in Mixed Layer')
@@ -138,7 +138,7 @@ plt.legend(fontsize=12, loc='upper right')
 plt.savefig(plotdir+'C_max_prof_ML_vs_CL.png', pad_inches=0)
 plt.close()
 
-plt.figure(figsize=(6,6))
+plt.figure(figsize=(8,6))
 plt.plot(Delta, cal_max_Cs(Cs_list, z_ml_r)*Delta, 'k', label = 'Max $l_{s}$ in Mixed Layer')
 plt.plot(Delta, cal_max_Cs(Cs_list, z_cl_r)*Delta, 'k-.', label = 'Max $l_{s}$ in Cloud Layer')
 plt.plot(Delta, cal_max_Cs(Cth_list, z_ml_r)*Delta, 'r', label = 'Max $l_{\\theta}$ in Mixed Layer')
@@ -152,7 +152,7 @@ plt.legend(fontsize=12, loc='upper right')
 plt.savefig(plotdir+'l_mix_max_prof_ML_vs_CL_w_std.png', pad_inches=0)
 plt.close()
 
-plt.figure(figsize=(6,6))
+plt.figure(figsize=(8,6))
 plt.plot(Delta, cal_max_Cs(Cs_list, z_ml_r)*Delta, 'k', label = 'Max $l_{s}$ in Mixed Layer')
 plt.plot(Delta, cal_max_Cs(Cs_list, z_cl_r)*Delta, 'k-.', label = 'Max $l_{s}$ in Cloud Layer')
 plt.plot(Delta, cal_max_Cs(Cth_list, z_ml_r)*Delta, 'r', label = 'Max $l_{\\theta}$ in Mixed Layer')
@@ -419,7 +419,7 @@ Cqt_env_list = [Cqt_env_beta, Cqt_env_2, Cqt_env_4, Cqt_env_8, Cqt_env_16, Cqt_e
 
 
 
-plt.figure(figsize=(6,6))
+plt.figure(figsize=(8,6))
 plt.plot(Delta, cal_max_Cs(Cs_cloud_list, z_ml_r), 'k', label = 'Max in-cloud $C_{s}$ value')
 plt.plot(Delta, cal_max_Cs(Cs_env_list, z_cl_r), 'k-.', label = 'Max environment $C_{s}$ value')
 plt.plot(Delta, cal_max_Cs(Cth_cloud_list, z_ml_r), 'r', label = 'Max in-cloud $C_{s}$ value')
@@ -432,7 +432,7 @@ plt.legend(fontsize=12, loc='upper right')
 plt.savefig(plotdir+'C_max_prof_Env_vs_CL.png', pad_inches=0)
 plt.close()
 
-plt.figure(figsize=(6,6))
+plt.figure(figsize=(8,6))
 plt.plot(Delta, cal_max_Cs(Cs_cloud_list, z_ml_r)*Delta, 'k', label = 'Max in-cloud $C_{s}$ value')
 plt.plot(Delta, cal_max_Cs(Cs_env_list, z_cl_r)*Delta, 'k-.', label = 'Max environment $C_{s}$ value')
 plt.plot(Delta, cal_max_Cs(Cth_cloud_list, z_ml_r)*Delta, 'r', label = 'Max in-cloud $C_{s}$ value')
@@ -446,7 +446,7 @@ plt.legend(fontsize=12, loc='upper right')
 plt.savefig(plotdir+'l_mix_max_prof_Env_vs_CL_w_std.png', pad_inches=0)
 plt.close()
 
-plt.figure(figsize=(6,6))
+plt.figure(figsize=(8,6))
 plt.plot(Delta, cal_max_Cs(Cs_cloud_list, z_ml_r)*Delta, 'k', label = 'Max in-cloud $C_{s}$ value')
 plt.plot(Delta, cal_max_Cs(Cs_env_list, z_cl_r)*Delta, 'k-.', label = 'Max environment $C_{s}$ value')
 plt.plot(Delta, cal_max_Cs(Cth_cloud_list, z_ml_r)*Delta, 'r', label = 'Max in-cloud $C_{s}$ value')
