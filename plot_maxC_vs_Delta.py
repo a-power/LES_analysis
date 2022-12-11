@@ -108,7 +108,7 @@ Cq_beta = dyn.get_Cs(Cq_beta_sq)
 
 ###########################################################################################################
 
-Delta = [20, 40, 80, 160, 320, 640, 1280]
+Delta = np.array([20, 40, 80, 160, 320, 640, 1280])
 Cs_list = [Cs_beta, Cs_2, Cs_4, Cs_8, Cs_16, Cs_32, Cs_64]
 Cth_list = [Cth_beta, Cth_2, Cth_4, Cth_8, Cth_16, Cth_32, Cth_64]
 Cq_list = [Cq_beta, Cq_2, Cq_4, Cq_8, Cq_16, Cq_32, Cq_64]
