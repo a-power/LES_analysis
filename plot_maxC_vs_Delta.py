@@ -125,7 +125,7 @@ def cal_max_Cs(C_list, z_range):
 
 
 
-plt.figure(figsize=(8,6))
+plt.figure(figsize=(8,5))
 plt.plot(Delta, cal_max_Cs(Cs_list, z_ml_r), 'k', label = '$C_{s}$')
 plt.plot(Delta, cal_max_Cs(Cs_list, z_cl_r), 'k-.')
 plt.plot(Delta, cal_max_Cs(Cth_list, z_ml_r), 'r', label = '$C_{\\theta}$')
@@ -138,7 +138,7 @@ plt.legend(fontsize=12, loc='best')
 plt.savefig(plotdir+'C_max_prof_ML_vs_CL.png', pad_inches=0)
 plt.close()
 
-plt.figure(figsize=(8,6))
+plt.figure(figsize=(8,5))
 plt.plot(Delta, cal_max_Cs(Cs_list, z_ml_r)*Delta, 'k', label = '$l_{mix}$')
 plt.plot(Delta, cal_max_Cs(Cs_list, z_cl_r)*Delta, 'k-.')
 plt.plot(Delta, cal_max_Cs(Cth_list, z_ml_r)*Delta, 'r', label = '$l_{\\theta}$')
@@ -152,7 +152,7 @@ plt.legend(fontsize=12, loc='best')
 plt.savefig(plotdir+'l_mix_max_prof_ML_vs_CL_w_std.png', pad_inches=0)
 plt.close()
 
-plt.figure(figsize=(8,6))
+plt.figure(figsize=(8,5))
 plt.plot(Delta, cal_max_Cs(Cs_list, z_ml_r)*Delta, 'k', label = '$l_{mix}$')
 plt.plot(Delta, cal_max_Cs(Cs_list, z_cl_r)*Delta, 'k-.')
 plt.plot(Delta, cal_max_Cs(Cth_list, z_ml_r)*Delta, 'r', label = '$l_{\\theta}$')
@@ -419,7 +419,7 @@ Cqt_env_list = [Cqt_env_beta, Cqt_env_2, Cqt_env_4, Cqt_env_8, Cqt_env_16, Cqt_e
 
 
 
-plt.figure(figsize=(8,6))
+plt.figure(figsize=(8,5))
 plt.plot(Delta, cal_max_Cs(Cs_cloud_list, z_ml_r), 'k', label = '$C_{s}$')
 plt.plot(Delta, cal_max_Cs(Cs_env_list, z_cl_r), 'k-.')
 plt.plot(Delta, cal_max_Cs(Cth_cloud_list, z_ml_r), 'r', label = '$C_{\\theta}$')
@@ -432,7 +432,7 @@ plt.legend(fontsize=12, loc='best')
 plt.savefig(plotdir+'C_max_prof_Env_vs_CL.png', pad_inches=0)
 plt.close()
 
-plt.figure(figsize=(8,6))
+plt.figure(figsize=(8,5))
 plt.plot(Delta, cal_max_Cs(Cs_cloud_list, z_ml_r)*Delta, 'k', label = '$l_{mix}$')
 print(cal_max_Cs(Cs_cloud_list, z_ml_r)*Delta)
 plt.plot(Delta, cal_max_Cs(Cs_env_list, z_cl_r)*Delta, 'k-.')
@@ -449,7 +449,7 @@ plt.legend(fontsize=12, loc='best')
 plt.savefig(plotdir+'l_mix_max_prof_Env_vs_CL_w_std.png', pad_inches=0)
 plt.close()
 
-plt.figure(figsize=(8,6))
+plt.figure(figsize=(8,5))
 plt.plot(Delta, cal_max_Cs(Cs_cloud_list, z_ml_r)*Delta, 'k', label = '$l_{mix}$')
 plt.plot(Delta, cal_max_Cs(Cs_env_list, z_cl_r)*Delta, 'k-.')
 plt.plot(Delta, cal_max_Cs(Cth_cloud_list, z_ml_r)*Delta, 'r', label = '$l_{\\theta}$')
