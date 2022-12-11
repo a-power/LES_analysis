@@ -10,7 +10,7 @@ np.seterr(invalid='ignore')
 dir_data_Cs = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_Cs_'
 dir_data_C_th = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_th_'
 dir_data_Cq_tot = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_qt_'
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/plots/coarse_data/'
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/plots/coarse_data/'
 os.makedirs(plotdir, exist_ok = True)
 
 data_2D_s = xr.open_dataset(dir_data_Cs + '2D.nc')
