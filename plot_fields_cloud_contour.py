@@ -230,11 +230,11 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
             mylevels = np.linspace(myvmin, myvmax, 8)
 
-            plt.contourf(np.transpose(data_field[axis_set, :, :]), levels=mylevels, extend='both')
+            plt.contourf(np.transpose(data_field[axis_set, 100:350, 0:125]), levels=mylevels, extend='both')
             cb = plt.colorbar()
             cb.set_label(f'{field}', size=16)
 
-            plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
+            plt.contour(np.transpose(cloud_field[axis_set, 100:350, 0:125]), colors='red', linewidths=2, levels=[1e-5])
             plt.xlabel(f'y ({mytime} cross section with x = {axis_set}) (km)')
 
         elif x_or_y == 'y':
@@ -257,10 +257,10 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             print("axis_set must be 'x' or'y'.")
         plt.ylabel("z (km)")
         og_xtic = plt.xticks()
-        plt.xticks(og_xtic[0], np.linspace(0, 16, len(og_xtic[0])))
+        plt.xticks(og_xtic[0], np.linspace(2, 7, len(og_xtic[0]))) #0, 16
         og_ytic = plt.yticks()
-        plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
-        plt.savefig(plotdir+f'{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
+        plt.yticks(np.linspace(0, 125, 6) , np.linspace(0, 2.5, 6)) #0, 151, 7   (0, 3, 7)
+        plt.savefig(plotdir+f'zoomed_{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
         plt.clf()
 
         if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
