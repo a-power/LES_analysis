@@ -5,11 +5,11 @@ import os
 import dynamic_functions as dyn
 
 
-homedir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/'
+homedir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/'
 mydir = homedir + 'LijMij_HjRj/BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 dir_cloud = homedir + 'q_l/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/plots/fields_cloud_contour/new_percentiles/'
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/plots/fields_cloud_contour/new_percentiles/'
 os.makedirs(plotdir, exist_ok = True)
 
 dir_s = mydir + 'LijMij_'
