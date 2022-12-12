@@ -218,8 +218,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
 
 
-        plt.figure(figsize=(20,7))
-        plt.title(f'{field}')
+        plt.figure(figsize=(16,7))
+        plt.title('Field of $C_s$ values', fontsize=16)
         if x_or_y == 'x':
 
             if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
@@ -232,10 +232,10 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
             plt.contourf(np.transpose(data_field[axis_set, 100:350, 0:125]), levels=mylevels, extend='both')
             cb = plt.colorbar()
-            cb.set_label(f'{field}', size=16)
+            #cb.set_label(f'{field}', size=16)
 
             plt.contour(np.transpose(cloud_field[axis_set, 100:350, 0:125]), colors='red', linewidths=2, levels=[1e-5])
-            plt.xlabel(f'y ({mytime} cross section with x = {axis_set}) (km)')
+            plt.xlabel(f'y ({mytime} cross section with x = {axis_set}) (km)', fontsize=16)
 
         elif x_or_y == 'y':
 
@@ -255,7 +255,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             plt.xlabel(f'x ({mytime} cross section with y = {axis_set}) (km)')
         else:
             print("axis_set must be 'x' or'y'.")
-        plt.ylabel("z (km)")
+        plt.ylabel("z (km)", fontsize=16)
         og_xtic = plt.xticks()
         plt.xticks(og_xtic[0], np.linspace(2, 7, len(og_xtic[0]))) #0, 16
         og_ytic = plt.yticks()
