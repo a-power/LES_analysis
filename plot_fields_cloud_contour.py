@@ -19,7 +19,7 @@ dir_qt = mydir + 'HjRj_qt_'
 in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
 
-time_av_or_not = 2 #'yes' #if not then give the time stamp you want to look at
+time_av_or_not = 'yes' #'yes' #if not then give the time stamp you want to look at
 
 my_axis = 299
 my_x_y = 'x'
