@@ -31,19 +31,19 @@ data_s16 = xr.open_dataset(dir_s+'16D.nc')
 data_s32 = xr.open_dataset(dir_s+'32D.nc')
 data_s64 = xr.open_dataset(dir_s+'64D.nc')
 
-data_th2 = xr.open_dataset(dir_th+'2D.nc')
-data_th4 = xr.open_dataset(dir_th+'4D.nc')
-data_th8 = xr.open_dataset(dir_th+'8D.nc')
-data_th16 = xr.open_dataset(dir_th+'16D.nc')
-data_th32 = xr.open_dataset(dir_th+'32D.nc')
-data_th64 = xr.open_dataset(dir_th+'64D.nc')
-
-data_qt2 = xr.open_dataset(dir_qt+'2D.nc')
-data_qt4 = xr.open_dataset(dir_qt+'4D.nc')
-data_qt8 = xr.open_dataset(dir_qt+'8D.nc')
-data_qt16 = xr.open_dataset(dir_qt+'16D.nc')
-data_qt32 = xr.open_dataset(dir_qt+'32D.nc')
-data_qt64 = xr.open_dataset(dir_qt+'64D.nc')
+# data_th2 = xr.open_dataset(dir_th+'2D.nc')
+# data_th4 = xr.open_dataset(dir_th+'4D.nc')
+# data_th8 = xr.open_dataset(dir_th+'8D.nc')
+# data_th16 = xr.open_dataset(dir_th+'16D.nc')
+# data_th32 = xr.open_dataset(dir_th+'32D.nc')
+# data_th64 = xr.open_dataset(dir_th+'64D.nc')
+#
+# data_qt2 = xr.open_dataset(dir_qt+'2D.nc')
+# data_qt4 = xr.open_dataset(dir_qt+'4D.nc')
+# data_qt8 = xr.open_dataset(dir_qt+'8D.nc')
+# data_qt16 = xr.open_dataset(dir_qt+'16D.nc')
+# data_qt32 = xr.open_dataset(dir_qt+'32D.nc')
+# data_qt64 = xr.open_dataset(dir_qt+'64D.nc')
 
 data_cl2 = xr.open_dataset(dir_cloud+'0.nc')
 data_cl4 = xr.open_dataset(dir_cloud+'1.nc')
@@ -62,8 +62,8 @@ data_cl64 = xr.open_dataset(dir_cloud+'5.nc')
 #%%
 
 data_s_list = [data_s2, data_s4, data_s8, data_s16, data_s32, data_s64]
-data_th_list = [data_th2, data_th4, data_th8, data_th16, data_th32, data_th64]
-data_qt_list = [data_qt2, data_qt4, data_qt8, data_qt16, data_qt32, data_qt64]
+# data_th_list = [data_th2, data_th4, data_th8, data_th16, data_th32, data_th64]
+# data_qt_list = [data_qt2, data_qt4, data_qt8, data_qt16, data_qt32, data_qt64]
 
 data_cl_list = [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
 #%%
@@ -102,60 +102,60 @@ Cs_options = {'axis_set': my_axis,
            }
 
 
-HjRj_th_options = {'axis_set': my_axis,
-                   'x_or_y': my_x_y,
-           'field': 'HR_th_field',
-           'data_field_list': data_th_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-                   'set_percentile': in_set_percentile,
-                   't_av_or_not': time_av_or_not
-           }
-
-RjRj_th_options = {'axis_set': my_axis,
-                   'x_or_y': my_x_y,
-           'field': 'RR_th_field',
-           'data_field_list': data_th_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-                   'set_percentile': in_set_percentile,
-                   't_av_or_not': time_av_or_not
-           }
-
-Cth_options = {'axis_set': my_axis,
-                  'x_or_y': my_x_y,
-           'field': 'Cth_field',
-           'data_field_list': data_th_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-               'set_percentile': in_set_percentile_C,
-               't_av_or_not': time_av_or_not
-           }
-
-
-HjRj_qt_options = {'axis_set': my_axis,
-                   'x_or_y': my_x_y,
-           'field': 'HR_q_total_field',
-           'data_field_list': data_qt_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-                   'set_percentile': in_set_percentile,
-                   't_av_or_not': time_av_or_not
-           }
-
-RjRj_qt_options = {'axis_set': my_axis,
-                   'x_or_y': my_x_y,
-           'field': 'RR_q_total_field',
-           'data_field_list': data_qt_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-                   'set_percentile': in_set_percentile,
-                   't_av_or_not': time_av_or_not
-           }
-
-Cqt_options = {'axis_set': my_axis,
-                  'x_or_y': my_x_y,
-           'field': 'Cqt_field',
-           'data_field_list': data_qt_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-               'set_percentile': in_set_percentile_C,
-               't_av_or_not': time_av_or_not
-           }
+# HjRj_th_options = {'axis_set': my_axis,
+#                    'x_or_y': my_x_y,
+#            'field': 'HR_th_field',
+#            'data_field_list': data_th_list,
+#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+#                    'set_percentile': in_set_percentile,
+#                    't_av_or_not': time_av_or_not
+#            }
+#
+# RjRj_th_options = {'axis_set': my_axis,
+#                    'x_or_y': my_x_y,
+#            'field': 'RR_th_field',
+#            'data_field_list': data_th_list,
+#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+#                    'set_percentile': in_set_percentile,
+#                    't_av_or_not': time_av_or_not
+#            }
+#
+# Cth_options = {'axis_set': my_axis,
+#                   'x_or_y': my_x_y,
+#            'field': 'Cth_field',
+#            'data_field_list': data_th_list,
+#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+#                'set_percentile': in_set_percentile_C,
+#                't_av_or_not': time_av_or_not
+#            }
+#
+#
+# HjRj_qt_options = {'axis_set': my_axis,
+#                    'x_or_y': my_x_y,
+#            'field': 'HR_q_total_field',
+#            'data_field_list': data_qt_list,
+#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+#                    'set_percentile': in_set_percentile,
+#                    't_av_or_not': time_av_or_not
+#            }
+#
+# RjRj_qt_options = {'axis_set': my_axis,
+#                    'x_or_y': my_x_y,
+#            'field': 'RR_q_total_field',
+#            'data_field_list': data_qt_list,
+#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+#                    'set_percentile': in_set_percentile,
+#                    't_av_or_not': time_av_or_not
+#            }
+#
+# Cqt_options = {'axis_set': my_axis,
+#                   'x_or_y': my_x_y,
+#            'field': 'Cqt_field',
+#            'data_field_list': data_qt_list,
+#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+#                'set_percentile': in_set_percentile_C,
+#                't_av_or_not': time_av_or_not
+#            }
 
 
 def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_list, t_av_or_not):
@@ -318,15 +318,15 @@ plotfield(**MijMij_options)
 plotfield(**Cs_options)
 
 
-plotfield(**HjRj_th_options)
-
-plotfield(**RjRj_th_options)
-
-plotfield(**Cth_options)
-
-
-plotfield(**HjRj_qt_options)
-
-plotfield(**RjRj_qt_options)
-
-plotfield(**Cqt_options)
+# plotfield(**HjRj_th_options)
+#
+# plotfield(**RjRj_th_options)
+#
+# plotfield(**Cth_options)
+#
+#
+# plotfield(**HjRj_qt_options)
+#
+# plotfield(**RjRj_qt_options)
+#
+# plotfield(**Cqt_options)
