@@ -242,7 +242,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
                 myvmin = 0
             else:
-                myvmin = 0.10  # np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
+                myvmin = 0.09  # np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
             myvmax = 0.30  # np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
 
             mylevels = np.linspace(myvmin, myvmax, 8)
