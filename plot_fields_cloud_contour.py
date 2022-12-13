@@ -218,17 +218,17 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
 
 
-        plt.figure(figsize=(18,7))
+        plt.figure(figsize=(18,6))
         plt.title('Field of $C_s$ values', fontsize=16)
         if x_or_y == 'x':
 
             if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
                 myvmin = 0
             else:
-                myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
-            myvmax = np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
+                myvmin = 10#np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
+            myvmax = 30#np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
 
-            mylevels = np.linspace(myvmin, myvmax, 8)
+            mylevels = np.linspace(myvmin, myvmax, 7)
 
             plt.contourf(np.transpose(data_field[axis_set, :,:]), levels=mylevels, extend='both')
             cb = plt.colorbar()
@@ -247,19 +247,19 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
             mylevels = np.linspace(myvmin, myvmax, 8)
 
-            plt.contourf(np.transpose(data_field[50:350, axis_set, 0:100]), levels=mylevels, extend='both')
+            plt.contourf(np.transpose(data_field[50:351, axis_set, 0:101]), levels=mylevels, extend='both')
             cb = plt.colorbar()
             cb.set_label(f'{field}', size=16)
 
-            plt.contour(np.transpose(cloud_field[50:350, axis_set, 0:100]), colors='red', linewidths=2, levels=[1e-5])
-            plt.xlabel(f'x (cross section with y = {axis_set}) (km)')
+            plt.contour(np.transpose(cloud_field[50:351, axis_set, 0:101]), colors='red', linewidths=2, levels=[1e-5])
+            plt.xlabel(f'x (cross section with y = 6km) (km)', fontsize=16)
         else:
             print("axis_set must be 'x' or'y'.")
-        plt.ylabel("z (km)", fontsize=16)
+        plt.ylabel("$z/z_{ML}$", fontsize=16)
         og_xtic = plt.xticks()
         plt.xticks(og_xtic[0], np.linspace(1, 7, len(og_xtic[0]))) #0, 16
         og_ytic = plt.yticks()
-        plt.yticks(np.linspace(0, 100, 5) , np.linspace(0, 2, 5)) #0, 151, 7   (0, 3, 7)
+        plt.yticks(np.linspace(0, 100, 5) , np.linspace(0, 4, 5)) #0, 151, 7   (0, 3, 7)
         plt.savefig(plotdir+f'zoomed_{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
         plt.clf()
 
