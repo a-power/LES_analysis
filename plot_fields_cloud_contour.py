@@ -22,7 +22,7 @@ in_set_percentile_C = [70,99]
 time_av_or_not = 'yes' #'yes' #if not then give the time stamp you want to look at
 
 my_axis = 299
-my_x_y = 'x'
+my_x_y = 'y'
 
 data_s2 = xr.open_dataset(dir_s+'2D.nc')
 data_s4 = xr.open_dataset(dir_s+'4D.nc')
@@ -218,7 +218,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
 
 
-        plt.figure(figsize=(16,7))
+        plt.figure(figsize=(18,7))
         plt.title('Field of $C_s$ values', fontsize=16)
         if x_or_y == 'x':
 
@@ -230,11 +230,11 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
             mylevels = np.linspace(myvmin, myvmax, 8)
 
-            plt.contourf(np.transpose(data_field[axis_set, 100:350, 0:125]), levels=mylevels, extend='both')
+            plt.contourf(np.transpose(data_field[axis_set, :,:]), levels=mylevels, extend='both')
             cb = plt.colorbar()
             #cb.set_label(f'{field}', size=16)
 
-            plt.contour(np.transpose(cloud_field[axis_set, 100:350, 0:125]), colors='red', linewidths=2, levels=[1e-5])
+            plt.contour(np.transpose(cloud_field[axis_set, :,:]), colors='red', linewidths=2, levels=[1e-5])
             plt.xlabel(f'y ({mytime} cross section with x = {axis_set}) (km)', fontsize=16)
 
         elif x_or_y == 'y':
@@ -247,19 +247,19 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
             mylevels = np.linspace(myvmin, myvmax, 8)
 
-            plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
+            plt.contourf(np.transpose(data_field[50:350, axis_set, 0:100]), levels=mylevels, extend='both')
             cb = plt.colorbar()
             cb.set_label(f'{field}', size=16)
 
-            plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='red', linewidths=2, levels=[1e-5])
-            plt.xlabel(f'x ({mytime} cross section with y = {axis_set}) (km)')
+            plt.contour(np.transpose(cloud_field[50:350, axis_set, 0:100]), colors='red', linewidths=2, levels=[1e-5])
+            plt.xlabel(f'x (cross section with y = {axis_set}) (km)')
         else:
             print("axis_set must be 'x' or'y'.")
         plt.ylabel("z (km)", fontsize=16)
         og_xtic = plt.xticks()
-        plt.xticks(og_xtic[0], np.linspace(2, 7, len(og_xtic[0]))) #0, 16
+        plt.xticks(og_xtic[0], np.linspace(1, 7, len(og_xtic[0]))) #0, 16
         og_ytic = plt.yticks()
-        plt.yticks(np.linspace(0, 125, 6) , np.linspace(0, 2.5, 6)) #0, 151, 7   (0, 3, 7)
+        plt.yticks(np.linspace(0, 100, 5) , np.linspace(0, 2, 5)) #0, 151, 7   (0, 3, 7)
         plt.savefig(plotdir+f'zoomed_{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
         plt.clf()
 
