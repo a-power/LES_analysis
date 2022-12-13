@@ -245,7 +245,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 myvmin = 0.10  # np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
             myvmax = 0.30  # np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
 
-            mylevels = np.linspace(myvmin, myvmax, 7)
+            mylevels = np.linspace(myvmin, myvmax, 8)
 
             plt.contourf(np.transpose(data_field[50:351, axis_set, 0:101]), levels=mylevels, extend='both')
             cb = plt.colorbar()
