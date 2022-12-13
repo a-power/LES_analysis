@@ -365,9 +365,9 @@ plt.plot(Cs_4*(80), z/z_i, '.', color ='tab:green', markersize = 10, label = '$\
 # plt.plot(Cs_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
 # plt.plot(Cs_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
 
-plt.plot(monc_l_20, z/z_i, color ='tab:blue')
-plt.plot(monc_l_40, z/z_i, color ='tab:orange')
-plt.plot(monc_l_80, z/z_i, color ='tab:green')
+plt.plot(monc_l_20, z/z_i, linewidth=1.5, color ='tab:blue')
+plt.plot(monc_l_40, z/z_i, linewidth=1.5, color ='tab:orange')
+plt.plot(monc_l_80, z/z_i, linewidth=1.5, color ='tab:green')
 # plt.plot(monc_l_160, z/z_i, color ='tab:red')
 # plt.plot(monc_l_320, z/z_i, color ='tab:purple')
 # plt.plot(monc_l_640, z/z_i, color ='tab:grey')
