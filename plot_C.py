@@ -11,7 +11,7 @@ np.seterr(invalid='ignore')
 dir_data_Cs = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_Cs_'
 dir_data_C_th = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_th_'
 dir_data_Cq_tot = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_qt_'
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/plots/coarse_data/'
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/plots/coarse_data/'
 os.makedirs(plotdir, exist_ok = True)
 
 data_2D_s = xr.open_dataset(dir_data_Cs + '2D.nc')
@@ -357,9 +357,9 @@ monc_l_1280 = dyn.l_mix_MONC(0.23, 1280, z, k=0.4)
 
 plt.figure(figsize=(6,7))
 
-plt.plot(Cs_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
-plt.plot(Cs_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
-plt.plot(Cs_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
+plt.plot(Cs_beta*(20), z/z_i, '.', color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
+plt.plot(Cs_2*(40), z/z_i, '.', color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
+plt.plot(Cs_4*(80), z/z_i, '.', color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
 # plt.plot(Cs_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
 # plt.plot(Cs_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
 # plt.plot(Cs_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
@@ -375,8 +375,8 @@ plt.plot(monc_l_80, z/z_i, color ='tab:green')
 
 plt.xlabel('$l_{mix}$', fontsize=16)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
-plt.legend(fontsize=12, loc='upper right')
-plt.xlim(-3, 28)
+plt.legend(fontsize=16, loc='upper right')
+plt.xlim(-1, 22)
 plt.savefig(plotdir+'l_mix_3D_w_MONC_scaled.png', pad_inches=0)
 plt.close()
 
