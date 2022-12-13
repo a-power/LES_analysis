@@ -225,10 +225,10 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
                 myvmin = 0
             else:
-                myvmin = 10#np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
-            myvmax = 30#np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
+                myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
+            myvmax = np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
 
-            mylevels = np.linspace(myvmin, myvmax, 7)
+            mylevels = np.linspace(myvmin, myvmax, 8)
 
             plt.contourf(np.transpose(data_field[axis_set, :,:]), levels=mylevels, extend='both')
             cb = plt.colorbar()
@@ -242,10 +242,10 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
                 myvmin = 0
             else:
-                myvmin = np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
-            myvmax = np.percentile(data_field[:, axis_set, 5:120], set_percentile[1])
+                myvmin = 10  # np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
+            myvmax = 30  # np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
 
-            mylevels = np.linspace(myvmin, myvmax, 8)
+            mylevels = np.linspace(myvmin, myvmax, 7)
 
             plt.contourf(np.transpose(data_field[50:351, axis_set, 0:101]), levels=mylevels, extend='both')
             cb = plt.colorbar()
