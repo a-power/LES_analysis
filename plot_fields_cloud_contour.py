@@ -67,10 +67,6 @@ data_qt_list = [data_qt2, data_qt4, data_qt8, data_qt16, data_qt32, data_qt64]
 
 data_cl_list = [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
 
-LM_field = data_s_list['LM_field'].data[...]
-MM_field = data_s_list['MM_field'].data[...]
-
-cloud_field = data_cl_list['f(q_cloud_liquid_mass_on_w)_r'].data[...]
 
 
 LijMij_options = {'axis_set': my_axis,
