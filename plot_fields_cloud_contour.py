@@ -31,19 +31,19 @@ data_s16 = xr.open_dataset(dir_s+'16D.nc')
 data_s32 = xr.open_dataset(dir_s+'32D.nc')
 data_s64 = xr.open_dataset(dir_s+'64D.nc')
 
-# data_th2 = xr.open_dataset(dir_th+'2D.nc')
-# data_th4 = xr.open_dataset(dir_th+'4D.nc')
-# data_th8 = xr.open_dataset(dir_th+'8D.nc')
-# data_th16 = xr.open_dataset(dir_th+'16D.nc')
-# data_th32 = xr.open_dataset(dir_th+'32D.nc')
-# data_th64 = xr.open_dataset(dir_th+'64D.nc')
-#
-# data_qt2 = xr.open_dataset(dir_qt+'2D.nc')
-# data_qt4 = xr.open_dataset(dir_qt+'4D.nc')
-# data_qt8 = xr.open_dataset(dir_qt+'8D.nc')
-# data_qt16 = xr.open_dataset(dir_qt+'16D.nc')
-# data_qt32 = xr.open_dataset(dir_qt+'32D.nc')
-# data_qt64 = xr.open_dataset(dir_qt+'64D.nc')
+data_th2 = xr.open_dataset(dir_th+'2D.nc')
+data_th4 = xr.open_dataset(dir_th+'4D.nc')
+data_th8 = xr.open_dataset(dir_th+'8D.nc')
+data_th16 = xr.open_dataset(dir_th+'16D.nc')
+data_th32 = xr.open_dataset(dir_th+'32D.nc')
+data_th64 = xr.open_dataset(dir_th+'64D.nc')
+
+data_qt2 = xr.open_dataset(dir_qt+'2D.nc')
+data_qt4 = xr.open_dataset(dir_qt+'4D.nc')
+data_qt8 = xr.open_dataset(dir_qt+'8D.nc')
+data_qt16 = xr.open_dataset(dir_qt+'16D.nc')
+data_qt32 = xr.open_dataset(dir_qt+'32D.nc')
+data_qt64 = xr.open_dataset(dir_qt+'64D.nc')
 
 data_cl2 = xr.open_dataset(dir_cloud+'0.nc')
 data_cl4 = xr.open_dataset(dir_cloud+'1.nc')
@@ -52,7 +52,7 @@ data_cl16 = xr.open_dataset(dir_cloud+'3.nc')
 data_cl32 = xr.open_dataset(dir_cloud+'4.nc')
 data_cl64 = xr.open_dataset(dir_cloud+'5.nc')
 
-# data_cl64 = Dataset(dir_cloud+'5.nc', mode='r')
+
 #%%
 #print(data_s2.variables)
 #%%
@@ -62,16 +62,15 @@ data_cl64 = xr.open_dataset(dir_cloud+'5.nc')
 #%%
 
 data_s_list = [data_s2, data_s4, data_s8, data_s16, data_s32, data_s64]
-# data_th_list = [data_th2, data_th4, data_th8, data_th16, data_th32, data_th64]
-# data_qt_list = [data_qt2, data_qt4, data_qt8, data_qt16, data_qt32, data_qt64]
+data_th_list = [data_th2, data_th4, data_th8, data_th16, data_th32, data_th64]
+data_qt_list = [data_qt2, data_qt4, data_qt8, data_qt16, data_qt32, data_qt64]
 
 data_cl_list = [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
-#%%
-# LM_field = data_s_list['LM_field'].data[...]
-# MM_field = data_s_list['MM_field'].data[...]
-#
-# cloud_field = data_cl_list['f(q_cloud_liquid_mass_on_w)_r'].data[...]
-#%%
+
+LM_field = data_s_list['LM_field'].data[...]
+MM_field = data_s_list['MM_field'].data[...]
+
+cloud_field = data_cl_list['f(q_cloud_liquid_mass_on_w)_r'].data[...]
 
 
 LijMij_options = {'axis_set': my_axis,
@@ -102,60 +101,60 @@ Cs_options = {'axis_set': my_axis,
            }
 
 
-# HjRj_th_options = {'axis_set': my_axis,
-#                    'x_or_y': my_x_y,
-#            'field': 'HR_th_field',
-#            'data_field_list': data_th_list,
-#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-#                    'set_percentile': in_set_percentile,
-#                    't_av_or_not': time_av_or_not
-#            }
-#
-# RjRj_th_options = {'axis_set': my_axis,
-#                    'x_or_y': my_x_y,
-#            'field': 'RR_th_field',
-#            'data_field_list': data_th_list,
-#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-#                    'set_percentile': in_set_percentile,
-#                    't_av_or_not': time_av_or_not
-#            }
-#
-# Cth_options = {'axis_set': my_axis,
-#                   'x_or_y': my_x_y,
-#            'field': 'Cth_field',
-#            'data_field_list': data_th_list,
-#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-#                'set_percentile': in_set_percentile_C,
-#                't_av_or_not': time_av_or_not
-#            }
-#
-#
-# HjRj_qt_options = {'axis_set': my_axis,
-#                    'x_or_y': my_x_y,
-#            'field': 'HR_q_total_field',
-#            'data_field_list': data_qt_list,
-#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-#                    'set_percentile': in_set_percentile,
-#                    't_av_or_not': time_av_or_not
-#            }
-#
-# RjRj_qt_options = {'axis_set': my_axis,
-#                    'x_or_y': my_x_y,
-#            'field': 'RR_q_total_field',
-#            'data_field_list': data_qt_list,
-#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-#                    'set_percentile': in_set_percentile,
-#                    't_av_or_not': time_av_or_not
-#            }
-#
-# Cqt_options = {'axis_set': my_axis,
-#                   'x_or_y': my_x_y,
-#            'field': 'Cqt_field',
-#            'data_field_list': data_qt_list,
-#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-#                'set_percentile': in_set_percentile_C,
-#                't_av_or_not': time_av_or_not
-#            }
+HjRj_th_options = {'axis_set': my_axis,
+                   'x_or_y': my_x_y,
+           'field': 'HR_th_field',
+           'data_field_list': data_th_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+                   'set_percentile': in_set_percentile,
+                   't_av_or_not': time_av_or_not
+           }
+
+RjRj_th_options = {'axis_set': my_axis,
+                   'x_or_y': my_x_y,
+           'field': 'RR_th_field',
+           'data_field_list': data_th_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+                   'set_percentile': in_set_percentile,
+                   't_av_or_not': time_av_or_not
+           }
+
+Cth_options = {'axis_set': my_axis,
+                  'x_or_y': my_x_y,
+           'field': 'Cth_field',
+           'data_field_list': data_th_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+               'set_percentile': in_set_percentile_C,
+               't_av_or_not': time_av_or_not
+           }
+
+
+HjRj_qt_options = {'axis_set': my_axis,
+                   'x_or_y': my_x_y,
+           'field': 'HR_q_total_field',
+           'data_field_list': data_qt_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+                   'set_percentile': in_set_percentile,
+                   't_av_or_not': time_av_or_not
+           }
+
+RjRj_qt_options = {'axis_set': my_axis,
+                   'x_or_y': my_x_y,
+           'field': 'RR_q_total_field',
+           'data_field_list': data_qt_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+                   'set_percentile': in_set_percentile,
+                   't_av_or_not': time_av_or_not
+           }
+
+Cqt_options = {'axis_set': my_axis,
+                  'x_or_y': my_x_y,
+           'field': 'Cqt_field',
+           'data_field_list': data_qt_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+               'set_percentile': in_set_percentile_C,
+               't_av_or_not': time_av_or_not
+           }
 
 
 def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_list, t_av_or_not):
@@ -230,11 +229,11 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
             mylevels = np.linspace(myvmin, myvmax, 8)
 
-            plt.contourf(np.transpose(data_field[axis_set, 100:350, 0:125]), levels=mylevels, extend='both')
-            cb = plt.colorbar()
+            cb = plt.contourf(np.transpose(data_field[axis_set, :, :]), levels=mylevels, extend='both')
+            plt.colorbar(cb, format='%.2f')
             #cb.set_label(f'{field}', size=16)
 
-            plt.contour(np.transpose(cloud_field[axis_set, 100:350, 0:125]), colors='red', linewidths=2, levels=[1e-5])
+            plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
             plt.xlabel(f'y ({mytime} cross section with x = {axis_set}) (km)', fontsize=16)
 
         elif x_or_y == 'y':
@@ -247,8 +246,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
             mylevels = np.linspace(myvmin, myvmax, 8)
 
-            plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
-            cb = plt.colorbar()
+            cb = plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
+            plt.colorbar(cb, format='%.2f')
             cb.set_label(f'{field}', size=16)
 
             plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='red', linewidths=2, levels=[1e-5])
@@ -257,9 +256,9 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             print("axis_set must be 'x' or'y'.")
         plt.ylabel("z (km)", fontsize=16)
         og_xtic = plt.xticks()
-        plt.xticks(og_xtic[0], np.linspace(2, 7, len(og_xtic[0]))) #0, 16
+        plt.xticks(og_xtic[0], np.linspace(0, 16, len(og_xtic[0])))
         og_ytic = plt.yticks()
-        plt.yticks(np.linspace(0, 125, 6) , np.linspace(0, 2.5, 6)) #0, 151, 7   (0, 3, 7)
+        plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
         plt.savefig(plotdir+f'zoomed_{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
         plt.clf()
 
@@ -273,8 +272,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
-                plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), levels=mylevels, extend='both')
-                cb = plt.colorbar()
+                cb = plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), levels=mylevels, extend='both')
+                plt.colorbar(cb, format='%.2f')
                 #cb.set_under('k')
                 cb.set_label(f'{field}$^2$', size=16)
 
@@ -288,8 +287,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
-                plt.contourf(np.transpose(data_field_sq[:, axis_set, :]), levels=mylevels, extend='both')
-                cb = plt.colorbar()
+                cb = plt.contourf(np.transpose(data_field_sq[:, axis_set, :]), levels=mylevels, extend='both')
+                plt.colorbar(cb, format='%.2f')
                 #cb.set_under('k')
                 cb.set_label(f'{field}$^2$', size=16)
 
@@ -318,15 +317,15 @@ plotfield(**MijMij_options)
 plotfield(**Cs_options)
 
 
-# plotfield(**HjRj_th_options)
-#
-# plotfield(**RjRj_th_options)
-#
-# plotfield(**Cth_options)
-#
-#
-# plotfield(**HjRj_qt_options)
-#
-# plotfield(**RjRj_qt_options)
-#
-# plotfield(**Cqt_options)
+plotfield(**HjRj_th_options)
+
+plotfield(**RjRj_th_options)
+
+plotfield(**Cth_options)
+
+
+plotfield(**HjRj_qt_options)
+
+plotfield(**RjRj_qt_options)
+
+plotfield(**Cqt_options)
