@@ -11,7 +11,7 @@ np.seterr(invalid='ignore')
 dir_data_Cs = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_Cs_'
 dir_data_C_th = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_th_'
 dir_data_Cq_tot = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_qt_'
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/plots/coarse_data/'
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/plots/C_profiles/'
 os.makedirs(plotdir, exist_ok = True)
 
 data_2D_s = xr.open_dataset(dir_data_Cs + '2D.nc')
@@ -218,13 +218,7 @@ plt.legend(fontsize=12, loc='upper right')
 plt.savefig(plotdir+'Cs_sq_prof_scaled.png', pad_inches=0)
 plt.close()
 
-def get_C(Csq):
-    C = np.ma.masked_invalid(np.sqrt(Csq))
-    return C
 
-def get_Csq(C):
-    Csq = C**2
-    return Csq
 
 #
 #
@@ -257,36 +251,36 @@ def get_Csq(C):
 # # #plt.xlim(1, 3)
 # # plt.savefig(plotdir+'Cqt_prof.png', pad_inches=0)
 #
-# plt.figure(figsize=(6,7))
-# plt.plot(Cq_beta, z/z_i, label = '$\\Delta = 20$m')
-# plt.plot(Cq_2, z/z_i, label = '$\\Delta = 40$m')
-# plt.plot(Cq_4, z/z_i, label = '$\\Delta = 80$m')
-# plt.plot(Cq_8, z/z_i, label = '$\\Delta = 160}$m')
-# plt.plot(Cq_16, z/z_i, label = '$\\Delta = 320}$m')
-# plt.plot(Cq_32, z/z_i, label = '$\\Delta = 640}$m')
-# plt.plot(Cq_64, z/z_i, label = '$\\Delta = 1280}$m')
-# plt.xlabel('$C_{qt}$', fontsize=14)
-# plt.ylabel("z/z$_{ML}$", fontsize=16)
-# plt.legend(fontsize=12, loc='upper right')
-# #plt.xlim(1, 3)
-# plt.savefig(plotdir+'Cqt_prof_scaled.png', pad_inches=0)
-# plt.close()
+plt.figure(figsize=(6,7))
+plt.plot(Cq_beta, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cq_2, z/z_i, label = '$\\Delta = 40$m')
+plt.plot(Cq_4, z/z_i, label = '$\\Delta = 80$m')
+plt.plot(Cq_8, z/z_i, label = '$\\Delta = 160}$m')
+plt.plot(Cq_16, z/z_i, label = '$\\Delta = 320}$m')
+plt.plot(Cq_32, z/z_i, label = '$\\Delta = 640}$m')
+plt.plot(Cq_64, z/z_i, label = '$\\Delta = 1280}$m')
+plt.xlabel('$C_{qt}$', fontsize=14)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cqt_prof_scaled.png', pad_inches=0)
+plt.close()
 #
 #
-# plt.figure(figsize=(6,7))
-# plt.plot(Cq_beta_sq, z/z_i, label = '$\\Delta = 20$m')
-# plt.plot(Cq_sq_2, z/z_i, label = '$\\Delta = 40$m')
-# plt.plot(Cq_sq_4, z/z_i, label = '$\\Delta = 80$m')
-# plt.plot(Cq_sq_8, z/z_i, label = '$\\Delta = 160}$m')
-# plt.plot(Cq_sq_16, z/z_i, label = '$\\Delta = 320}$m')
-# plt.plot(Cq_sq_32, z/z_i, label = '$\\Delta = 640}$m')
-# plt.plot(Cq_sq_64, z/z_i, label = '$\\Delta = 1280}$m')
-# plt.xlabel('$C^2_{qt}$', fontsize=14)
-# plt.ylabel("z/z$_{ML}$", fontsize=16)
-# plt.legend(fontsize=12, loc='upper right')
-# #plt.xlim(1, 3)
-# plt.savefig(plotdir+'Cqt_sq_prof_scaled.png', pad_inches=0)
-# plt.close()
+plt.figure(figsize=(6,7))
+plt.plot(Cq_beta_sq, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cq_sq_2, z/z_i, label = '$\\Delta = 40$m')
+plt.plot(Cq_sq_4, z/z_i, label = '$\\Delta = 80$m')
+plt.plot(Cq_sq_8, z/z_i, label = '$\\Delta = 160}$m')
+plt.plot(Cq_sq_16, z/z_i, label = '$\\Delta = 320}$m')
+plt.plot(Cq_sq_32, z/z_i, label = '$\\Delta = 640}$m')
+plt.plot(Cq_sq_64, z/z_i, label = '$\\Delta = 1280}$m')
+plt.xlabel('$C^2_{qt}$', fontsize=14)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cqt_sq_prof_scaled.png', pad_inches=0)
+plt.close()
 #
 #
 # #
@@ -300,36 +294,36 @@ def get_Csq(C):
 # # #plt.xlim(1, 3)
 # # plt.savefig(plotdir+'Cth_prof.png', pad_inches=0)
 #
-# plt.figure(figsize=(6,7))
-# plt.plot(Cth_beta, z/z_i, label = '$\\Delta = 20$m')
-# plt.plot(Cth_2, z/z_i, label = '$\\Delta = 40$m')
-# plt.plot(Cth_4, z/z_i, label = '$\\Delta = 80$m')
-# plt.plot(Cth_8, z/z_i, label = '$\\Delta = 160}$m')
-# plt.plot(Cth_16, z/z_i, label = '$\\Delta = 320}$m')
-# plt.plot(Cth_32, z/z_i, label = '$\\Delta = 640}$m')
-# plt.plot(Cth_64, z/z_i, label = '$\\Delta = 1280}$m')
-# plt.xlabel('$C_{\\theta}$', fontsize=14)
-# plt.ylabel("z/z$_{ML}$", fontsize=16)
-# plt.legend(fontsize=12, loc='upper right')
-# #plt.xlim(1, 3)
-# plt.savefig(plotdir+'Cth_prof_scaled.png', pad_inches=0)
-# plt.close
+plt.figure(figsize=(6,7))
+plt.plot(Cth_beta, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cth_2, z/z_i, label = '$\\Delta = 40$m')
+plt.plot(Cth_4, z/z_i, label = '$\\Delta = 80$m')
+plt.plot(Cth_8, z/z_i, label = '$\\Delta = 160}$m')
+plt.plot(Cth_16, z/z_i, label = '$\\Delta = 320}$m')
+plt.plot(Cth_32, z/z_i, label = '$\\Delta = 640}$m')
+plt.plot(Cth_64, z/z_i, label = '$\\Delta = 1280}$m')
+plt.xlabel('$C_{\\theta}$', fontsize=14)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cth_prof_scaled.png', pad_inches=0)
+plt.close
 #
 #
-# plt.figure(figsize=(6,7))
-# plt.plot(Cth_beta_sq, z/z_i, label = '$\\Delta = 20$m')
-# plt.plot(Cth_sq_2, z/z_i, label = '$\\Delta = 40$m')
-# plt.plot(Cth_sq_4, z/z_i, label = '$\\Delta = 80$m')
-# plt.plot(Cth_sq_8, z/z_i, label = '$\\Delta = 160}$m')
-# plt.plot(Cth_sq_16, z/z_i, label = '$\\Delta = 320}$m')
-# plt.plot(Cth_sq_32, z/z_i, label = '$\\Delta = 640}$m')
-# plt.plot(Cth_sq_64, z/z_i, label = '$\\Delta = 1280}$m')
-# plt.xlabel('$C^2_{\\theta}$', fontsize=14)
-# plt.ylabel("z/z$_{ML}$", fontsize=16)
-# plt.legend(fontsize=12, loc='upper right')
-# #plt.xlim(1, 3)
-# plt.savefig(plotdir+'Cth_sq_prof_scaled.png', pad_inches=0)
-# plt.close
+plt.figure(figsize=(6,7))
+plt.plot(Cth_beta_sq, z/z_i, label = '$\\Delta = 20$m')
+plt.plot(Cth_sq_2, z/z_i, label = '$\\Delta = 40$m')
+plt.plot(Cth_sq_4, z/z_i, label = '$\\Delta = 80$m')
+plt.plot(Cth_sq_8, z/z_i, label = '$\\Delta = 160}$m')
+plt.plot(Cth_sq_16, z/z_i, label = '$\\Delta = 320}$m')
+plt.plot(Cth_sq_32, z/z_i, label = '$\\Delta = 640}$m')
+plt.plot(Cth_sq_64, z/z_i, label = '$\\Delta = 1280}$m')
+plt.xlabel('$C^2_{\\theta}$', fontsize=14)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'Cth_sq_prof_scaled.png', pad_inches=0)
+plt.close
 
 
 #########################################################################################################################
@@ -357,21 +351,21 @@ monc_l_1280 = dyn.l_mix_MONC(0.23, 1280, z, k=0.4)
 
 plt.figure(figsize=(6,7))
 
-plt.plot(Cs_beta*(20), z/z_i, '.', color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
-plt.plot(Cs_2*(40), z/z_i, '.', color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
-plt.plot(Cs_4*(80), z/z_i, '.', color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
-# plt.plot(Cs_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
-# plt.plot(Cs_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
-# plt.plot(Cs_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
-# plt.plot(Cs_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
+plt.plot(Cs_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
+plt.plot(Cs_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
+plt.plot(Cs_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
+plt.plot(Cs_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
+plt.plot(Cs_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
+plt.plot(Cs_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
+plt.plot(Cs_64*(1280), z/z_i, color ='tab:cyan', markersize = 10, label = '$\\Delta = 1280$m')
 
-plt.plot(monc_l_20, z/z_i, linewidth=1.5, color ='tab:blue')
-plt.plot(monc_l_40, z/z_i, linewidth=1.5, color ='tab:orange')
-plt.plot(monc_l_80, z/z_i, linewidth=1.5, color ='tab:green')
+# plt.plot(monc_l_20, z/z_i, linewidth=1.5, color ='tab:blue')
+# plt.plot(monc_l_40, z/z_i, linewidth=1.5, color ='tab:orange')
+# plt.plot(monc_l_80, z/z_i, linewidth=1.5, color ='tab:green')
 # plt.plot(monc_l_160, z/z_i, color ='tab:red')
 # plt.plot(monc_l_320, z/z_i, color ='tab:purple')
 # plt.plot(monc_l_640, z/z_i, color ='tab:grey')
-# plt.plot(monc_l_1280, z/z_i, color ='tab:pink')
+# plt.plot(monc_l_1280, z/z_i, color ='tab:cyan')
 
 plt.xlabel('$l_{mix}$', fontsize=16)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
@@ -411,31 +405,31 @@ print('plotted l mix')
 # # #plt.xlim(1, 3)
 # # plt.savefig(plotdir+'l_th_w_MONC.png', pad_inches=0)
 #
-# plt.figure(figsize=(6,7))
-# plt.plot(Cth_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
-# plt.plot(Cth_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
-# plt.plot(Cth_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
-# plt.plot(Cth_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
-# plt.plot(Cth_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
-# plt.plot(Cth_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
-# plt.plot(Cth_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
-#
-# # plt.plot(monc_l_scalar_20, z/z_i, color ='tab:blue')
-# # plt.plot(monc_l_scalar_40, z/z_i, color ='tab:orange')
-# # plt.plot(monc_l_scalar_80, z/z_i, color ='tab:green')
-# # plt.plot(monc_l_scalar_160, z/z_i, color ='tab:red')
-# # plt.plot(monc_l_scalar_320, z/z_i, color ='tab:purple')
-# # plt.plot(monc_l_scalar_640, z/z_i, color ='tab:grey')
-# # plt.plot(monc_l_scalar_1280, z/z_i, color ='tab:pink')
-#
-# plt.xlabel('$l_{\\theta}$', fontsize=16)
-# plt.ylabel("z/z$_{ML}$", fontsize=16)
-# plt.legend(fontsize=12, loc='upper right')
-# #plt.xlim(1, 3)
-# plt.savefig(plotdir+'l_th_no_stan_w_MONC_scaled.png', pad_inches=0)
-# plt.close()
-#
-# print('plotted l_th')
+plt.figure(figsize=(6,7))
+plt.plot(Cth_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
+plt.plot(Cth_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
+plt.plot(Cth_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
+plt.plot(Cth_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
+plt.plot(Cth_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
+plt.plot(Cth_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
+plt.plot(Cth_64*(1280), z/z_i, color ='tab:cyan', markersize = 10, label = '$\\Delta = 1280$m')
+
+# plt.plot(monc_l_scalar_20, z/z_i, color ='tab:blue')
+# plt.plot(monc_l_scalar_40, z/z_i, color ='tab:orange')
+# plt.plot(monc_l_scalar_80, z/z_i, color ='tab:green')
+# plt.plot(monc_l_scalar_160, z/z_i, color ='tab:red')
+# plt.plot(monc_l_scalar_320, z/z_i, color ='tab:purple')
+# plt.plot(monc_l_scalar_640, z/z_i, color ='tab:grey')
+# plt.plot(monc_l_scalar_1280, z/z_i, color ='tab:cyan')
+
+plt.xlabel('$l_{\\theta}$', fontsize=16)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'l_th_no_stan_w_MONC_scaled.png', pad_inches=0)
+plt.close()
+
+print('plotted l_th')
 #
 # #########################################################################################################################
 #
@@ -458,31 +452,31 @@ print('plotted l mix')
 # # plt.savefig(plotdir+'l_qt_w_MONC.png', pad_inches=0)
 #
 # plt.figure(figsize=(6,7))
-#
-# plt.plot(Cq_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
-# plt.plot(Cq_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
-# plt.plot(Cq_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
-# plt.plot(Cq_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
-# plt.plot(Cq_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
-# plt.plot(Cq_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
-# plt.plot(Cq_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\Delta = 1280$m')
-#
-# # plt.plot(monc_l_scalar_20, z/z_i, color ='tab:blue')
-# # plt.plot(monc_l_scalar_40, z/z_i, color ='tab:orange')
-# # plt.plot(monc_l_scalar_80, z/z_i, color ='tab:green')
-# # plt.plot(monc_l_scalar_160, z/z_i, color ='tab:red')
-# # plt.plot(monc_l_scalar_320, z/z_i, color ='tab:purple')
-# # plt.plot(monc_l_scalar_640, z/z_i, color ='tab:grey')
-# # plt.plot(monc_l_scalar_1280, z/z_i, color ='tab:pink')
-#
-# plt.xlabel('$l_{qt}$', fontsize=16)
-# plt.ylabel("z/z$_{ML}$", fontsize=16)
-# plt.legend(fontsize=12, loc='upper right')
-# #plt.xlim(1, 3)
-# plt.savefig(plotdir+'l_qt_no_stan_w_MONC_scaled.png', pad_inches=0)
-# plt.close()
-#
-# print('plotted l_qt')
+
+plt.plot(Cq_beta*(20), z/z_i, color ='tab:blue', markersize = 10, label = '$\\Delta = 20$m')
+plt.plot(Cq_2*(40), z/z_i, color ='tab:orange', markersize = 10, label = '$\\Delta = 40$m')
+plt.plot(Cq_4*(80), z/z_i, color ='tab:green', markersize = 10, label = '$\\Delta = 80$m')
+plt.plot(Cq_8*(160), z/z_i, color ='tab:red', markersize = 10, label = '$\\Delta = 160$m')
+plt.plot(Cq_16*(320), z/z_i, color ='tab:purple', markersize = 10, label = '$\\Delta = 320$m')
+plt.plot(Cq_32*(640), z/z_i, color ='tab:grey', markersize = 10, label = '$\\Delta = 640$m')
+plt.plot(Cq_64*(1280), z/z_i, color ='tab:cyan', markersize = 10, label = '$\\Delta = 1280$m')
+
+# plt.plot(monc_l_scalar_20, z/z_i, color ='tab:blue')
+# plt.plot(monc_l_scalar_40, z/z_i, color ='tab:orange')
+# plt.plot(monc_l_scalar_80, z/z_i, color ='tab:green')
+# plt.plot(monc_l_scalar_160, z/z_i, color ='tab:red')
+# plt.plot(monc_l_scalar_320, z/z_i, color ='tab:purple')
+# plt.plot(monc_l_scalar_640, z/z_i, color ='tab:grey')
+# plt.plot(monc_l_scalar_1280, z/z_i, color ='tab:cyan')
+
+plt.xlabel('$l_{qt}$', fontsize=16)
+plt.ylabel("z/z$_{ML}$", fontsize=16)
+plt.legend(fontsize=12, loc='upper right')
+#plt.xlim(1, 3)
+plt.savefig(plotdir+'l_qt_no_stan_w_MONC_scaled.png', pad_inches=0)
+plt.close()
+
+print('plotted l_qt')
 #
 # #########################################################################################################################
 #
