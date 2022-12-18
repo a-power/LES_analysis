@@ -237,25 +237,26 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
                 myvmin = 0
             else:
-                myvmin = np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
-            myvmax = np.percentile(data_field[:, axis_set, 5:120], set_percentile[1])
+                myvmin = np.percentile(data_field[50:351, axis_set, 5:120], set_percentile[0])
+            myvmax = np.percentile(data_field[50:351, axis_set, 5:120], set_percentile[1])
 
             mylevels = np.linspace(myvmin, myvmax, 8)
 
-            cf = plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
+            cf = plt.contourf(np.transpose(data_field[50:351, axis_set, 0:101]), levels=mylevels, extend='both')
             cb = plt.colorbar(cf, format='%.2f')
             cb.set_label(f'{field}', size=16)
 
-            plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='red', linewidths=2, levels=[1e-5])
+            plt.contour(np.transpose(cloud_field[50:351, axis_set, 0:101]), colors='red', linewidths=2, levels=[1e-5])
             plt.xlabel(f'x (cross section with y = {axis_set}) (km)')
         else:
             print("axis_set must be 'x' or'y'.")
         plt.ylabel("z (km)", fontsize=16)
         og_xtic = plt.xticks()
-        plt.xticks(og_xtic[0], np.linspace(0, 16, len(og_xtic[0])))
+        plt.xticks(og_xtic[0], np.linspace(1, 7, len(og_xtic[0])))
         og_ytic = plt.yticks()
-        plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
-        plt.savefig(plotdir+f'{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
+        plt.yticks(np.linspace(0, 101, 5) , np.linspace(0, 2, 5)) # plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
+
+        plt.savefig(plotdir+f'zoomed_{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
         plt.clf()
 
         if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
