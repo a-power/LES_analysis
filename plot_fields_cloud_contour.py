@@ -22,7 +22,7 @@ in_set_percentile_C = [70,99]
 time_av_or_not = 'yes' #'yes' #if not then give the time stamp you want to look at
 
 my_axis = 299
-my_x_y = 'x'
+my_x_y = 'y'
 
 data_s2 = xr.open_dataset(dir_s+'2D.nc')
 data_s4 = xr.open_dataset(dir_s+'4D.nc')
@@ -214,7 +214,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
 
         plt.figure(figsize=(16,7))
-        plt.title('Field of $C_s$ values', fontsize=16)
+        plt.title(f'{field}$^2$', fontsize=16)
         if x_or_y == 'x':
 
             if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
@@ -230,7 +230,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             #cb.set_label(f'{field}', size=16)
 
             plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
-            plt.xlabel(f'y ({mytime} cross section with x = {axis_set}) (km)', fontsize=16)
+            plt.xlabel(f'y (cross section with x = {axis_set}) (km)', fontsize=16)
 
         elif x_or_y == 'y':
 
@@ -247,7 +247,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             cb.set_label(f'{field}', size=16)
 
             plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='red', linewidths=2, levels=[1e-5])
-            plt.xlabel(f'x ({mytime} cross section with y = {axis_set}) (km)')
+            plt.xlabel(f'x (cross section with y = {axis_set}) (km)')
         else:
             print("axis_set must be 'x' or'y'.")
         plt.ylabel("z (km)", fontsize=16)
@@ -260,7 +260,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
         if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
             plt.figure(figsize=(20, 7))
-            plt.title(f'{field}$^2$')
+            plt.title(f'{field}$^2$', fontsize=16)
             if x_or_y == 'x':
 
                 myvmin = 0 #np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
@@ -274,7 +274,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
-                plt.xlabel(f'y ({mytime} cross section with x = {axis_set}) (km)')
+                plt.xlabel(f'y (cross section with x = {axis_set}) (km)')
 
             elif x_or_y == 'y':
 
@@ -289,7 +289,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='red', linewidths=2, levels=[1e-5])
-                plt.xlabel(f'x ({mytime} cross section with y = {axis_set}) (km)')
+                plt.xlabel(f'x (cross section with y = {axis_set}) (km)')
             else:
                 print("axis_set must be 'x' or 'y'.")
 
