@@ -214,7 +214,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
 
         plt.figure(figsize=(16,5))
-        plt.title(f'{field}$^2$', fontsize=16)
+        plt.title(f'{field}', fontsize=16)
         if x_or_y == 'x':
 
             if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
