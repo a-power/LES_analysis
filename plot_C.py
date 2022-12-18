@@ -307,7 +307,7 @@ plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
 plt.savefig(plotdir+'Cth_prof_scaled.png', pad_inches=0)
-plt.close
+plt.close()
 #
 #
 plt.figure(figsize=(6,7))
@@ -323,7 +323,7 @@ plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=12, loc='upper right')
 #plt.xlim(1, 3)
 plt.savefig(plotdir+'Cth_sq_prof_scaled.png', pad_inches=0)
-plt.close
+plt.close()
 
 
 #########################################################################################################################
