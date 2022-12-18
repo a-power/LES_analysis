@@ -213,7 +213,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
 
 
-        plt.figure(figsize=(16,7))
+        plt.figure(figsize=(16,5))
         plt.title(f'{field}$^2$', fontsize=16)
         if x_or_y == 'x':
 
@@ -260,7 +260,7 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
         plt.clf()
 
         if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
-            plt.figure(figsize=(20, 7))
+            plt.figure(figsize=(20, 5))
             plt.title(f'{field}$^2$', fontsize=16)
             if x_or_y == 'x':
 
