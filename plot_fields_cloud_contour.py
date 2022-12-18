@@ -225,8 +225,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
             mylevels = np.linspace(myvmin, myvmax, 8)
 
-            cb = plt.contourf(np.transpose(data_field[axis_set, :, :]), levels=mylevels, extend='both')
-            plt.colorbar(cb, format='%.2f')
+            cf = plt.contourf(np.transpose(data_field[axis_set, :, :]), levels=mylevels, extend='both')
+            cb = plt.colorbar(cf, format='%.2f')
             #cb.set_label(f'{field}', size=16)
 
             plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='red', linewidths=2, levels=[1e-5])
@@ -242,8 +242,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
             mylevels = np.linspace(myvmin, myvmax, 8)
 
-            cb = plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
-            plt.colorbar(cb, format='%.2f')
+            cf = plt.contourf(np.transpose(data_field[:, axis_set, :]), levels=mylevels, extend='both')
+            cb = plt.colorbar(cf, format='%.2f')
             cb.set_label(f'{field}', size=16)
 
             plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='red', linewidths=2, levels=[1e-5])
@@ -268,8 +268,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
-                cb = plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), levels=mylevels, extend='both')
-                plt.colorbar(cb, format='%.2f')
+                cf = plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), levels=mylevels, extend='both')
+                cb = plt.colorbar(cf, format='%.2f')
                 #cb.set_under('k')
                 cb.set_label(f'{field}$^2$', size=16)
 
@@ -283,8 +283,8 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
-                cb = plt.contourf(np.transpose(data_field_sq[:, axis_set, :]), levels=mylevels, extend='both')
-                plt.colorbar(cb, format='%.2f')
+                cf = plt.contourf(np.transpose(data_field_sq[:, axis_set, :]), levels=mylevels, extend='both')
+                cb = plt.colorbar(cf, format='%.2f')
                 #cb.set_under('k')
                 cb.set_label(f'{field}$^2$', size=16)
 
