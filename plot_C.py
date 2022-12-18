@@ -370,7 +370,7 @@ plt.plot(Cs_64*(1280), z/z_i, color ='tab:pink', markersize = 10, label = '$\\De
 plt.xlabel('$l_{mix}$', fontsize=16)
 plt.ylabel("z/z$_{ML}$", fontsize=16)
 plt.legend(fontsize=16, loc='upper right')
-plt.xlim(-1, 22)
+#plt.xlim(-1, 22)
 plt.savefig(plotdir+'l_mix_3D_w_MONC_scaled.png', pad_inches=0)
 plt.close()
 
