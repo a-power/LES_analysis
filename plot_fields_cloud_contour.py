@@ -307,14 +307,14 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
     plt.close('all')
 
 
-plotfield(**LijMij_options)
-
-plotfield(**MijMij_options)
-
-plotfield(**Cs_options)
-
-
-plotfield(**HjRj_th_options)
+# plotfield(**LijMij_options)
+#
+# plotfield(**MijMij_options)
+#
+# plotfield(**Cs_options)
+#
+#
+# plotfield(**HjRj_th_options)
 
 plotfield(**RjRj_th_options)
 
@@ -325,4 +325,4 @@ plotfield(**HjRj_qt_options)
 
 plotfield(**RjRj_qt_options)
 
-plotfield(**Cqt_options)
+# plotfield(**Cqt_options)
