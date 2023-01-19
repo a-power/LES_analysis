@@ -23,7 +23,7 @@ start=0
 #Note short serial queue on JASMIN times out after 3 filter scales
 #Sigma = hat(Delta)/2
 
-opgrid = 'w'
+opgrid = 'p'
 
 options = {
         'FFT_type': 'RFFT',
