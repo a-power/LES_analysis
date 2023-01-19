@@ -142,7 +142,7 @@ def cal_max_beta(beta_list, z_range):
 plt.figure(figsize=(8,5))
 plt.plot(Delta, cal_max_beta(beta_s_list, z_ml_r), 'k', label = '$\\beta_{s}$')
 plt.plot(Delta, cal_max_beta(beta_s_list, z_cl_r), 'k-.')
-plt.plot(Delta, cal_max_beta(beta_th_list, z_ml_r), 'r', label = '$\\beta_{\theta}$')
+plt.plot(Delta, cal_max_beta(beta_th_list, z_ml_r), 'r', label = '$\\beta_{\\theta}$')
 plt.plot(Delta, cal_max_beta(beta_th_list, z_cl_r), 'r-.')
 plt.plot(Delta, cal_max_beta(beta_q_list, z_ml_r), 'b', label = '$\\beta_{qt}$')
 plt.plot(Delta, cal_max_beta(beta_q_list, z_cl_r), 'b-.')
