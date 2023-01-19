@@ -124,7 +124,7 @@ plt.savefig(plotdir+'beta_qt_prof.png', pad_inches=0)
 
 
 
-Delta = np.array([20, 40, 80, 160, 320, 640, 1280])
+Delta = np.array([20, 40, 80, 160, 320])
 z_cl_r = [50, 75]
 z_ml_r = [6, 20]
 
