@@ -96,7 +96,7 @@ plt.plot(beta_s4, z/z_i, label='$16\\Delta \rightarrow 32\Delta$')
 plt.plot(beta_s5, z/z_i, label='$32\\Delta \rightarrow 64\Delta$')
 plt.xlabel('$\\beta_s$', fontsize=14)
 plt.ylabel("z/z$_{ML}$")
-#plt.xlim(0, 1)
+plt.xlim(0, 5)
 plt.savefig(plotdir+'betas_mom_prof.png', pad_inches=0)
 
 plt.figure(figsize=(6,7))
@@ -107,7 +107,7 @@ plt.plot(beta_th4, z/z_i, label='$16\\Delta \rightarrow 32\Delta$')
 plt.plot(beta_th5, z/z_i, label='$32\\Delta \rightarrow 64\Delta$')
 plt.xlabel('$\\beta_{\\theta}$', fontsize=14)
 plt.ylabel("z/z$_{ML}$")
-#plt.xlim(0, 1)
+plt.xlim(0, 5)
 plt.savefig(plotdir+'betas_th_prof.png', pad_inches=0)
 
 plt.figure(figsize=(6,7))
@@ -118,8 +118,8 @@ plt.plot(beta_q4, z/z_i, label='$16\\Delta \rightarrow 32\Delta$')
 plt.plot(beta_q5, z/z_i, label='$32\\Delta \rightarrow 64\Delta$')
 plt.xlabel('$\\beta_{qt}$', fontsize=14)
 plt.ylabel("z/z$_{ML}$")
-#plt.xlim(0, 1)
-plt.savefig(plotdir+'beta_qt_prof.png', pad_inches=0)
+plt.xlim(0, 5)
+plt.savefig(plotdir+'betas_qt_prof.png', pad_inches=0)
 
 
 
