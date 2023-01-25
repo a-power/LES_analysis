@@ -18,7 +18,7 @@ dir_cloud = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga00_running_me
 in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
 
-time_av_or_not = 2 #'yes' #'yes' #if not then give the time stamp index (integer) you want to look at (eg 0, 1, ..)
+time_av_or_not = 0 #'yes' #'yes' #if not then give the time stamp index (integer) you want to look at (eg 0, 1, ..)
 
 my_axis = 299
 my_x_y = 'y'
@@ -126,7 +126,7 @@ cl_list = [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64]
 
 HjRj_qt_options = {'axis_set': my_axis,
                    'x_or_y': my_x_y,
-           'field': 'HR_q_total_field',
+           'field': 'f(HR_q_total_field_on_w)_r',
            'data_field_list': qt_list,
            'data_cl_list': cl_list,
                    'set_percentile': in_set_percentile,
@@ -135,7 +135,7 @@ HjRj_qt_options = {'axis_set': my_axis,
 
 RjRj_qt_options = {'axis_set': my_axis,
                    'x_or_y': my_x_y,
-           'field': 'RR_q_total_field',
+           'field': 'f(RR_q_total_field_on_w)_r',
            'data_field_list': qt_list,
            'data_cl_list': cl_list,
                    'set_percentile': in_set_percentile,
@@ -183,13 +183,13 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
             data_field = dyn.get_Cs(data_field_sq)
 
         elif field == 'Cqt_field':
-            print('length of time array for HR_qt is ', len(data_field_list[i]['HR_q_total_field'].data[:,0,0,0]))
+            print('length of time array for HR_qt is ', len(data_field_list[i]['f(HR_q_total_field_on_w)_r'].data[:,0,0,0]))
             if t_av_or_not == 'yes':
-                HR_field = np.mean(data_field_list[i]['HR_q_total_field'].data[...], axis=0)
-                RR_field = np.mean(data_field_list[i]['RR_q_total_field'].data[...], axis=0)
+                HR_field = np.mean(data_field_list[i]['f(HR_q_total_field_on_w)_r'].data[...], axis=0)
+                RR_field = np.mean(data_field_list[i]['f(RR_q_total_field_on_w)_r'].data[...], axis=0)
             else:
-                HR_field = data_field_list[i]['HR_q_total_field'].data[t_av_or_not, ...]
-                RR_field = data_field_list[i]['RR_q_total_field'].data[t_av_or_not, ...]
+                HR_field = data_field_list[i]['f(HR_q_total_field_on_w)_r'].data[t_av_or_not, ...]
+                RR_field = data_field_list[i]['f(RR_q_total_field_on_w)_r'].data[t_av_or_not, ...]
 
             data_field_sq = 0.5*HR_field/RR_field
             data_field = dyn.get_Cs(data_field_sq)
@@ -202,12 +202,12 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
                 data_field = data_field_list[i][f'{field}'].data[t_av_or_not,...]
 
 
-        print('length of time array for cloud field is ', len(data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[:, 0, 0, 0]))
+        print('length of time array for cloud field is ', len(data_cl_list[i]['f(f(q_cloud_liquid_mass_on_w)_r_on_w)_r'].data[:, 0, 0, 0]))
         if t_av_or_not == 'yes':
-            cloud_field = np.mean(data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[...], axis = 0)
+            cloud_field = np.mean(data_cl_list[i]['f(f(q_cloud_liquid_mass_on_w)_r)_on_w)_r'].data[...], axis = 0)
             mytime = 't_av'
         else:
-            cloud_field = data_cl_list[i]['f(q_cloud_liquid_mass_on_w)_r'].data[t_av_or_not,...]
+            cloud_field = data_cl_list[i]['f(f(q_cloud_liquid_mass_on_w)_r_on_w)_r'].data[t_av_or_not,...]
             mytime = f't{t_av_or_not}'
 
 
