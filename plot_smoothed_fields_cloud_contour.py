@@ -128,7 +128,7 @@ HjRj_qt_options = {'axis_set': my_axis,
                    'x_or_y': my_x_y,
            'field': 'HR_q_total_field',
            'data_field_list': qt_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+           'data_cl_list': cl_list,
                    'set_percentile': in_set_percentile,
                    't_av_or_not': time_av_or_not
            }
