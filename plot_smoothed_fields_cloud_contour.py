@@ -18,7 +18,7 @@ dir_cloud = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga00_running_me
 in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
 
-time_av_or_not = 'yes' #'yes' #if not then give the time stamp index (integer) you want to look at (eg 0, 1, ..)
+time_av_or_not = 2 #'yes' #'yes' #if not then give the time stamp index (integer) you want to look at (eg 0, 1, ..)
 
 my_axis = 299
 my_x_y = 'y'
@@ -60,11 +60,11 @@ data_cl8 = xr.open_dataset(dir_cloud+'2.nc')
 #print(data_qt2.variables)
 #%%
 
-# data_s_list = [data_s2, data_s4, data_s8, data_s16, data_s32, data_s64]
-# data_th_list = [data_th2, data_th4, data_th8, data_th16, data_th32, data_th64]
-data_qt_list = [data_qt2, data_qt4, data_qt8, data_qt16, data_qt32, data_qt64]
+# s_list = [data_s2, data_s4, data_s8, data_s16, data_s32, data_s64]
+# th_list = [data_th2, data_th4, data_th8, data_th16, data_th32, data_th64]
+qt_list = [data_qt2, data_qt4, data_qt8]#, data_qt16, data_qt32, data_qt64]
 
-data_cl_list = [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
+cl_list = [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64]
 
 
 
@@ -127,7 +127,7 @@ data_cl_list = [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
 HjRj_qt_options = {'axis_set': my_axis,
                    'x_or_y': my_x_y,
            'field': 'HR_q_total_field',
-           'data_field_list': data_qt_list,
+           'data_field_list': qt_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
                    'set_percentile': in_set_percentile,
                    't_av_or_not': time_av_or_not
@@ -136,8 +136,8 @@ HjRj_qt_options = {'axis_set': my_axis,
 RjRj_qt_options = {'axis_set': my_axis,
                    'x_or_y': my_x_y,
            'field': 'RR_q_total_field',
-           'data_field_list': data_qt_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+           'data_field_list': qt_list,
+           'data_cl_list': cl_list,
                    'set_percentile': in_set_percentile,
                    't_av_or_not': time_av_or_not
            }
@@ -145,8 +145,8 @@ RjRj_qt_options = {'axis_set': my_axis,
 Cqt_options = {'axis_set': my_axis,
                   'x_or_y': my_x_y,
            'field': 'Cqt_field',
-           'data_field_list': data_qt_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
+           'data_field_list': qt_list,
+           'data_cl_list': cl_list,
                'set_percentile': in_set_percentile_C,
                't_av_or_not': time_av_or_not
            }
