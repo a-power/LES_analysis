@@ -4,7 +4,7 @@ import os
 
 
 set_time = ['14400'] # , '21600', '48600'
-in_dir = '/work/scratch-pw/apower/20m_gauss_dyn/BOMEX_m'
+in_dir = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m'
 model_res_list = ['0020_g0800']
 
 #use_filtered_data = 'ga00' #set in loop #set to string if you want to filter a previously filtered dataset,
@@ -36,11 +36,11 @@ options = {
         'dy': 20.0,
         'domain' : 16.0,
 
-        'aliases': {'u': ['f(u_on_p)_r'],
-                    'v': ['f(v_on_p)_r'],
-                    'w': ['f(w_on_p)_r'],
-                    'th': ['f(th_on_p)_r'],
-                    'q_total': ['f(q_total_on_p)_r']
+        'aliases': {'u': ['f(u_on_w)_r'],
+                    'v': ['f(v_on_w)_r'],
+                    'w': ['f(w_on_w)_r'],
+                    'th': ['f(th_on_w)_r'],
+                    'q_total': ['f(q_total_on_w)_r']
                     }
 
           }
