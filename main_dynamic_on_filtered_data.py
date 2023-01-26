@@ -49,4 +49,5 @@ for j in range(len(set_time)):
         for i, model_res in enumerate(model_res_list):
             for k in range(how_many_filters):
                 dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list*2**k, in_dir, outdir, options, \
-                            opgrid, start_point=start_point_filtering, filtered_data = f'ga0{k}', ref_file = None)
+                            opgrid, start_point=start_point_filtering, filtered_data = f'ga0{k}', ref_file = None, \
+                             time_name='time')
