@@ -26,7 +26,7 @@ how_many_filters = 6 #eg 6 = 0->5: ga00.nc -> ga05.nc
 #Note short serial queue on JASMIN times out after 3 filter scales
 #Sigma = hat(Delta)/2
 
-opgrid = 'w'
+opgrid = 'p'
 
 options = {
         'FFT_type': 'RFFT',
@@ -40,7 +40,7 @@ options = {
                     'v': ['f(v_on_w)_r'],
                     'w': ['f(w_on_w)_r'],
                     'th': ['f(th_on_w)_r'],
-                    'q_total': ['f(q_total_on_w)_r']
+                    'q_total_f': ['f(q_total_on_w)_r']
                     }
 
           }
@@ -48,6 +48,6 @@ options = {
 for j in range(len(set_time)):
         for i, model_res in enumerate(model_res_list):
             for k in range(how_many_filters):
-                dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list*2**k, in_dir, outdir, options, \
+                dy_s.run_dyn_on_filtered(model_res, set_time[j], filter_name, sigma_list*2**k, in_dir, outdir, options, \
                             opgrid, start_point=start_point_filtering, filtered_data = f'ga0{k}', ref_file = None, \
-                             time_name='time')
+                                         time_name='time')
