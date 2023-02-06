@@ -107,11 +107,14 @@ def M_ij(dx, dx_filt, S_filt, abs_S_filt, HAT_abs_S_Sij, beta=1):
     return M_ij
 
 
-def ds_dxi(scalar, source_dataset, ref_dataset, options, ingrid):
+def ds_dxi(scalar, source_dataset, ref_dataset, options, ingrid, filting_filted=False):
     # scalar can be either 'th' or "q_total"
 
     if scalar == 'q':
-        scalar = 'q_total'
+        if filting_filted == False:
+            scalar = 'q_total'
+        else:
+            scalar = 'q_total_f'
 
     s = get_data(source_dataset, ref_dataset, str(scalar), options)
 
