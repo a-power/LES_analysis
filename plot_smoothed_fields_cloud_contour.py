@@ -53,7 +53,7 @@ LijMij_options = {'axis_set': my_axis,
                   'x_or_y': my_x_y,
            'field': 'LM_field',
            'data_field_list': s_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64],
+           'data_cl_list': [data_cl2, data_cl4, data_cl8],# data_cl16, data_cl32, data_cl64],
                   'set_percentile': in_set_percentile,
                   't_av_or_not': time_av_or_not
            }
@@ -62,7 +62,7 @@ MijMij_options = {'axis_set': my_axis,
                   'x_or_y': my_x_y,
            'field': 'MM_field',
            'data_field_list': s_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64],
+           'data_cl_list': [data_cl2, data_cl4, data_cl8],# data_cl16, data_cl32, data_cl64],
                   'set_percentile': in_set_percentile,
                   't_av_or_not': time_av_or_not
            }
@@ -71,7 +71,7 @@ Cs_options = {'axis_set': my_axis,
                   'x_or_y': my_x_y,
            'field': 'Cs_field',
            'data_field_list': s_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64],
+           'data_cl_list': [data_cl2, data_cl4, data_cl8],# data_cl16, data_cl32, data_cl64],
               'set_percentile': in_set_percentile_C,
               't_av_or_not': time_av_or_not
            }
@@ -81,7 +81,7 @@ HjRj_th_options = {'axis_set': my_axis,
                    'x_or_y': my_x_y,
            'field': 'HR_th_field',
            'data_field_list': th_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64],
+           'data_cl_list': [data_cl2, data_cl4, data_cl8],# data_cl16, data_cl32, data_cl64],
                    'set_percentile': in_set_percentile,
                    't_av_or_not': time_av_or_not
            }
@@ -90,7 +90,7 @@ RjRj_th_options = {'axis_set': my_axis,
                    'x_or_y': my_x_y,
            'field': 'RR_th_field',
            'data_field_list': th_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64],
+           'data_cl_list': [data_cl2, data_cl4, data_cl8],# data_cl16, data_cl32, data_cl64],
                    'set_percentile': in_set_percentile,
                    't_av_or_not': time_av_or_not
            }
@@ -99,7 +99,7 @@ Cth_options = {'axis_set': my_axis,
                   'x_or_y': my_x_y,
            'field': 'Cth_field',
            'data_field_list': th_list,
-           'data_cl_list': [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64],
+           'data_cl_list': [data_cl2, data_cl4, data_cl8],# data_cl16, data_cl32, data_cl64],
                'set_percentile': in_set_percentile_C,
                't_av_or_not': time_av_or_not
            }
