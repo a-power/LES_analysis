@@ -152,6 +152,7 @@ def plotfield(plotdir, field, x_or_y, axis_set, data_field_list, set_percentile,
                 plt.clf()
 
         else:
+            print(t_av_or_not)
             for t in len(t_av_or_not):
 
                 plt.figure(figsize=(16, 5))
