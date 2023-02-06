@@ -346,7 +346,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         ["u", "q_total_f"],
                         ["v", "q_total_f"],
                         ["w", "q_total_f"],
-                        ["q_total", "q_total_f"]
+                        ["q_total_f", "q_total_f"]
                         ]
 
 
