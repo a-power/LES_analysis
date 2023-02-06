@@ -140,25 +140,25 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
     for i in range(len(data_field_list)):
 
         if field == 'Cs_field':
-            print('length of time array for LM is ', len(data_field_list[i]['LM_field'].data[:,0,0,0]))
+            print('length of time array for LM is ', len(data_field_list[i]['f(LM_field_on_w)_r'].data[:,0,0,0]))
             if t_av_or_not == 'yes':
-                LM_field = np.mean(data_field_list[i]['f(LM_field_on_w)_r '].data[...], axis=0)
-                MM_field = np.mean(data_field_list[i]['f(MM_field_on_w)_r '].data[...], axis=0)
+                LM_field = np.mean(data_field_list[i]['f(LM_field_on_w)_r'].data[...], axis=0)
+                MM_field = np.mean(data_field_list[i]['f(MM_field_on_w)_r'].data[...], axis=0)
             else:
-                LM_field = data_field_list[i]['f(LM_field_on_w)_r '].data[t_av_or_not,...]
-                MM_field = data_field_list[i]['f(MM_field_on_w)_r '].data[t_av_or_not, ...]
+                LM_field = data_field_list[i]['f(LM_field_on_w)_r'].data[t_av_or_not,...]
+                MM_field = data_field_list[i]['f(MM_field_on_w)_r'].data[t_av_or_not, ...]
 
             data_field_sq = 0.5 * LM_field/MM_field
             data_field = dyn.get_Cs(data_field_sq)
 
         elif field == 'Cth_field':
-            print('length of time array for HR_th is ', len(data_field_list[i]['HR_th_field'].data[:,0,0,0]))
+            print('length of time array for HR_th is ', len(data_field_list[i]['f(HR_th_field_on_w)_r'].data[:,0,0,0]))
             if t_av_or_not == 'yes':
                 HR_field = np.mean(data_field_list[i]['f(HR_th_field_on_w)_r '].data[...], axis=0)
-                RR_field = np.mean(data_field_list[i]['f(RR_th_field_on_w)_r '].data[...], axis=0)
+                RR_field = np.mean(data_field_list[i]['f(RR_th_field_on_w)_r'].data[...], axis=0)
             else:
-                HR_field = data_field_list[i]['f(HR_th_field_on_w)_r '].data[t_av_or_not, ...]
-                RR_field = data_field_list[i]['f(RR_th_field_on_w)_r '].data[t_av_or_not, ...]
+                HR_field = data_field_list[i]['f(HR_th_field_on_w)_r'].data[t_av_or_not, ...]
+                RR_field = data_field_list[i]['f(RR_th_field_on_w)_r'].data[t_av_or_not, ...]
 
             data_field_sq = 0.5*HR_field/RR_field
             data_field = dyn.get_Cs(data_field_sq)
