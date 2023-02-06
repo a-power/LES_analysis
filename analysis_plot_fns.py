@@ -153,7 +153,7 @@ def plotfield(plotdir, field, x_or_y, axis_set, data_field_list, set_percentile,
 
         else:
             print(t_av_or_not)
-            for t in range(t_av_or_not):
+            for t in range(len(t_av_or_not)):
 
                 plt.figure(figsize=(16, 5))
                 plt.title(f'{field}', fontsize=16)
