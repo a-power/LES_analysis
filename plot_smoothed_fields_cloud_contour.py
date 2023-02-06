@@ -7,11 +7,11 @@ import dynamic_functions as dyn
 
 mydir = '/work/scratch-pw2/apower/20m_gauss_dyn/filtered_LM_HR_fields/'
 
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/plots/beta_fields_cloud_contour/'
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/plots/smoothed_fields_cloud_contour/'
 os.makedirs(plotdir, exist_ok = True)
 
-# dir_s = mydir + 'LijMij_'
-# dir_th = mydir + 'HjRj_th_'
+dir_s = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_LijMij_2D_running_mean_filter_rm0'
+dir_th = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_HjRj_th_2D_running_mean_filter_rm0'
 dir_qt = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_HjRj_qt_2D_running_mean_filter_rm0'
 dir_cloud = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga00_running_mean_filter_rm0'
 
@@ -23,105 +23,86 @@ time_av_or_not = 0 #'yes' #'yes' #if not then give the time stamp index (integer
 my_axis = 299
 my_x_y = 'y'
 
-# data_s2 = xr.open_dataset(dir_s+'2D.nc')
-# data_s4 = xr.open_dataset(dir_s+'4D.nc')
-# data_s8 = xr.open_dataset(dir_s+'8D.nc')
-# data_s16 = xr.open_dataset(dir_s+'16D.nc')
-# data_s32 = xr.open_dataset(dir_s+'32D.nc')
-# data_s64 = xr.open_dataset(dir_s+'64D.nc')
-#
-# data_th2 = xr.open_dataset(dir_th+'2D.nc')
-# data_th4 = xr.open_dataset(dir_th+'4D.nc')
-# data_th8 = xr.open_dataset(dir_th+'8D.nc')
-# data_th16 = xr.open_dataset(dir_th+'16D.nc')
-# data_th32 = xr.open_dataset(dir_th+'32D.nc')
-# data_th64 = xr.open_dataset(dir_th+'64D.nc')
+data_s2 = xr.open_dataset(dir_s+'0.nc')
+data_s4 = xr.open_dataset(dir_s+'1.nc')
+data_s8 = xr.open_dataset(dir_s+'2.nc')
+
+data_th2 = xr.open_dataset(dir_th+'0.nc')
+data_th4 = xr.open_dataset(dir_th+'1.nc')
+data_th8 = xr.open_dataset(dir_th+'2.nc')
 
 data_qt2 = xr.open_dataset(dir_qt+'0.nc')
 data_qt4 = xr.open_dataset(dir_qt+'1.nc')
 data_qt8 = xr.open_dataset(dir_qt+'2.nc')
-# data_qt16 = xr.open_dataset(dir_qt+'3.nc')
-# data_qt32 = xr.open_dataset(dir_qt+'4.nc')
-# data_qt64 = xr.open_dataset(dir_qt+'5.nc')
 
 data_cl2 = xr.open_dataset(dir_cloud+'0.nc')
 data_cl4 = xr.open_dataset(dir_cloud+'1.nc')
 data_cl8 = xr.open_dataset(dir_cloud+'2.nc')
-# data_cl16 = xr.open_dataset(dir_cloud+'3.nc')
-# data_cl32 = xr.open_dataset(dir_cloud+'4.nc')
-# data_cl64 = xr.open_dataset(dir_cloud+'5.nc')
 
 
-#%%
-#print(data_s2.variables)
-#%%
-#print(data_th2.variables)
-#%%
-#print(data_qt2.variables)
-#%%
 
-# s_list = [data_s2, data_s4, data_s8, data_s16, data_s32, data_s64]
-# th_list = [data_th2, data_th4, data_th8, data_th16, data_th32, data_th64]
+s_list = [data_s2, data_s4, data_s8]#, data_s16, data_s32, data_s64]
+th_list = [data_th2, data_th4, data_th8]#, data_th16, data_th32, data_th64]
 qt_list = [data_qt2, data_qt4, data_qt8]#, data_qt16, data_qt32, data_qt64]
 
 cl_list = [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64]
 
 
 
-# LijMij_options = {'axis_set': my_axis,
-#                   'x_or_y': my_x_y,
-#            'field': 'LM_field',
-#            'data_field_list': data_s_list,
-#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-#                   'set_percentile': in_set_percentile,
-#                   't_av_or_not': time_av_or_not
-#            }
-#
-# MijMij_options = {'axis_set': my_axis,
-#                   'x_or_y': my_x_y,
-#            'field': 'MM_field',
-#            'data_field_list': data_s_list,
-#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-#                   'set_percentile': in_set_percentile,
-#                   't_av_or_not': time_av_or_not
-#            }
-#
-# Cs_options = {'axis_set': my_axis,
-#                   'x_or_y': my_x_y,
-#            'field': 'Cs_field',
-#            'data_field_list': data_s_list,
-#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-#               'set_percentile': in_set_percentile_C,
-#               't_av_or_not': time_av_or_not
-#            }
-#
-#
-# HjRj_th_options = {'axis_set': my_axis,
-#                    'x_or_y': my_x_y,
-#            'field': 'HR_th_field',
-#            'data_field_list': data_th_list,
-#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-#                    'set_percentile': in_set_percentile,
-#                    't_av_or_not': time_av_or_not
-#            }
-#
-# RjRj_th_options = {'axis_set': my_axis,
-#                    'x_or_y': my_x_y,
-#            'field': 'RR_th_field',
-#            'data_field_list': data_th_list,
-#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-#                    'set_percentile': in_set_percentile,
-#                    't_av_or_not': time_av_or_not
-#            }
-#
-# Cth_options = {'axis_set': my_axis,
-#                   'x_or_y': my_x_y,
-#            'field': 'Cth_field',
-#            'data_field_list': data_th_list,
-#            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64],
-#                'set_percentile': in_set_percentile_C,
-#                't_av_or_not': time_av_or_not
-#            }
+LijMij_options = {'axis_set': my_axis,
+                  'x_or_y': my_x_y,
+           'field': 'LM_field',
+           'data_field_list': s_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64],
+                  'set_percentile': in_set_percentile,
+                  't_av_or_not': time_av_or_not
+           }
+
+MijMij_options = {'axis_set': my_axis,
+                  'x_or_y': my_x_y,
+           'field': 'MM_field',
+           'data_field_list': s_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64],
+                  'set_percentile': in_set_percentile,
+                  't_av_or_not': time_av_or_not
+           }
+
+Cs_options = {'axis_set': my_axis,
+                  'x_or_y': my_x_y,
+           'field': 'Cs_field',
+           'data_field_list': s_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64],
+              'set_percentile': in_set_percentile_C,
+              't_av_or_not': time_av_or_not
+           }
+
+
+HjRj_th_options = {'axis_set': my_axis,
+                   'x_or_y': my_x_y,
+           'field': 'HR_th_field',
+           'data_field_list': th_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64],
+                   'set_percentile': in_set_percentile,
+                   't_av_or_not': time_av_or_not
+           }
+
+RjRj_th_options = {'axis_set': my_axis,
+                   'x_or_y': my_x_y,
+           'field': 'RR_th_field',
+           'data_field_list': th_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64],
+                   'set_percentile': in_set_percentile,
+                   't_av_or_not': time_av_or_not
+           }
+
+Cth_options = {'axis_set': my_axis,
+                  'x_or_y': my_x_y,
+           'field': 'Cth_field',
+           'data_field_list': th_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64],
+               'set_percentile': in_set_percentile_C,
+               't_av_or_not': time_av_or_not
+           }
 
 
 HjRj_qt_options = {'axis_set': my_axis,
@@ -309,19 +290,19 @@ def plotfield(field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_
 # plotfield(**LijMij_options)
 #
 # plotfield(**MijMij_options)
-#
-# plotfield(**Cs_options)
-#
-#
+
+plotfield(**Cs_options)
+
+
 # plotfield(**HjRj_th_options)
-
+#
 # plotfield(**RjRj_th_options)
-#
-# plotfield(**Cth_options)
-#
-#
-plotfield(**HjRj_qt_options)
 
-plotfield(**RjRj_qt_options)
+plotfield(**Cth_options)
+
+
+# plotfield(**HjRj_qt_options)
+#
+# plotfield(**RjRj_qt_options)
 
 plotfield(**Cqt_options)
