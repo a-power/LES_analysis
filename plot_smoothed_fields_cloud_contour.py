@@ -16,7 +16,7 @@ dir_cloud = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga00_running_me
 in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
 
-time_av_or_not = 0 #'yes' #'yes' #if not then give the time stamp index (integer) you want to look at (eg 0, 1, ..)
+time_av_or_not = [0, 1, 2] #'yes' #'yes' #if not then give the time stamp index (integer) you want to look at (eg 0, 1, ..)
 
 my_axis = 299
 my_x_y = 'y'
