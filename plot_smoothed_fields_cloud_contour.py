@@ -131,22 +131,22 @@ Cqt_options = {'axis_set': my_axis,
            }
 
 
-# plotfield(**LijMij_options)
+# plotfield(plotdir, **LijMij_options)
 #
-# plotfield(**MijMij_options)
+# plotfield(plotdir, **MijMij_options)
 
-apf.plotfield(**Cs_options)
+apf.plotfield(plotdir, **Cs_options)
 
 
-# apf.plotfield(**HjRj_th_options)
+# apf.plotfield(plotdir, **HjRj_th_options)
 #
-# apf.plotfield(**RjRj_th_options)
+# apf.plotfield(plotdir, **RjRj_th_options)
 
-apf.plotfield(**Cth_options)
+apf.plotfield(plotdir, **Cth_options)
 
 
-# apf.plotfield(**HjRj_qt_options)
+# apf.plotfield(plotdir, **HjRj_qt_options)
 #
-# apf.plotfield(**RjRj_qt_options)
+# apf.plotfield(plotdir, **RjRj_qt_options)
 
-apf.plotfield(**Cqt_options)
+apf.plotfield(plotdir, **Cqt_options)
