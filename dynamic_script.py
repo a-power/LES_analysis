@@ -161,61 +161,61 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
                                                            opt, new_filter,
                                                            var_list=var_list,
                                                            grid=ingrid)
-            deform = defm.deformation(dataset,
-                                    ref_dataset,
-                                    derived_data,
-                                    opt, ingrid)
+        deform = defm.deformation(dataset,
+                                ref_dataset,
+                                derived_data,
+                                opt, ingrid)
 
-            dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, opt, ingrid)
-            dth_dx.name = 'dth_dx'
-            dth_dx = re_chunk(dth_dx)
+        dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, opt, ingrid)
+        dth_dx.name = 'dth_dx'
+        dth_dx = re_chunk(dth_dx)
 
-            dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid)
-            dq_dx.name = 'dq_dx'
-            dq_dx = re_chunk(dq_dx)
+        dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid)
+        dq_dx.name = 'dq_dx'
+        dq_dx = re_chunk(dq_dx)
 
-            S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
+        S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
 
-            S_ij = 1 / 2 * S_ij_temp
-            S_ij.name = 'S_ij'
-            S_ij = re_chunk(S_ij)
+        S_ij = 1 / 2 * S_ij_temp
+        S_ij.name = 'S_ij'
+        S_ij = re_chunk(S_ij)
 
-            abs_S = np.sqrt(abs_S_temp)
-            abs_S.name = "abs_S"
-            abs_S = re_chunk(abs_S)
+        abs_S = np.sqrt(abs_S_temp)
+        abs_S.name = "abs_S"
+        abs_S = re_chunk(abs_S)
 
-            S_ij_filt = sf.filter_field(S_ij, filtered_data,
-                                        opt, new_filter)
+        S_ij_filt = sf.filter_field(S_ij, filtered_data,
+                                    opt, new_filter)
 
-            abs_S_filt = sf.filter_field(abs_S, filtered_data,
-                                         opt, new_filter)
+        abs_S_filt = sf.filter_field(abs_S, filtered_data,
+                                     opt, new_filter)
 
-            dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
-                                        opt, new_filter)
+        dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
+                                    opt, new_filter)
 
-            dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
-                                          opt, new_filter)
+        dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
+                                      opt, new_filter)
 
-            S_ij_abs_S = S_ij * abs_S
-            S_ij_abs_S.name = 'S_ij_abs_S'
-            S_ij_abs_S = re_chunk(S_ij_abs_S)
+        S_ij_abs_S = S_ij * abs_S
+        S_ij_abs_S.name = 'S_ij_abs_S'
+        S_ij_abs_S = re_chunk(S_ij_abs_S)
 
-            S_ij_abs_S_hat_filt = sf.filter_field(S_ij_abs_S, filtered_data,
-                                                  opt, new_filter)
+        S_ij_abs_S_hat_filt = sf.filter_field(S_ij_abs_S, filtered_data,
+                                              opt, new_filter)
 
-            abs_S_dth_dx = dth_dx * abs_S
-            abs_S_dth_dx.name = 'abs_S_dth_dx'
-            abs_S_dth_dx = re_chunk(abs_S_dth_dx)
+        abs_S_dth_dx = dth_dx * abs_S
+        abs_S_dth_dx.name = 'abs_S_dth_dx'
+        abs_S_dth_dx = re_chunk(abs_S_dth_dx)
 
-            abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
-                                                  opt, new_filter)
+        abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
+                                              opt, new_filter)
 
-            abs_S_dq_dx = dq_dx * abs_S
-            abs_S_dq_dx.name = 'abs_S_dq_dx'
-            abs_S_dq_dx = re_chunk(abs_S_dq_dx)
+        abs_S_dq_dx = dq_dx * abs_S
+        abs_S_dq_dx.name = 'abs_S_dq_dx'
+        abs_S_dq_dx = re_chunk(abs_S_dq_dx)
 
-            abs_S_dq_dx_filt = sf.filter_field(abs_S_dq_dx, filtered_data,
-                                                opt, new_filter)
+        abs_S_dq_dx_filt = sf.filter_field(abs_S_dq_dx, filtered_data,
+                                            opt, new_filter)
 
         filtered_data['ds'].close()
     derived_data['ds'].close()
