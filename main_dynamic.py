@@ -29,6 +29,7 @@ options = {
         'FFT_type': 'RFFT',
         'save_all': 'Yes',
         'th_ref': 300.0,
+        'override': True,
         'dx': 20.0,
         'dy': 20.0,
         'domain' : 16.0,
