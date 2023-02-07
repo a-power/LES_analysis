@@ -9,7 +9,7 @@ model_res_list = ['0020_g0800']
 
 
 
-outdir_og = '/work/scratch-pw/apower/'
+outdir_og = '/work/scratch-pw3/apower/'
 outdir = outdir_og + '20m_gauss_dyn' +'/on_p_grid/'
 plotdir = outdir_og+'plots/dyn/'
 
