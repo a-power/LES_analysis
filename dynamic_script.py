@@ -443,6 +443,9 @@ def Cs(indir, dx, dx_hat, ingrid, save_all=2, reaxes=False):
     z_data = ds_in['z']
     z_s = z_data.data
 
+    zn_data = ds_in['zn']
+    zn_s = zn_data.data
+
     ij_data = ds_in['i_j']
     ij_s = ij_data.data
 
@@ -480,6 +483,10 @@ def Cs(indir, dx, dx_hat, ingrid, save_all=2, reaxes=False):
     hat_Sij_abs_S = None
     hat_Sij = None
     hat_abs_S=None
+
+    zn_save = zn_s.copy()
+    xr.DataArray(zn_save[np.newaxis, ...], coords={'time': [nt], 'zn': zn_s},
+                              dims=['time', "zn"], name='zn_save')
 
     if save_all==1:
         Cs_sq_prof, Cs_prof, LM_prof, MM_prof = dyn.Cs_profiles(Lij, Mij, return_all=1)
