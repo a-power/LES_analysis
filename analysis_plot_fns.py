@@ -45,6 +45,46 @@ def negs_in_field(plotdir, field, data_field_list, data_cl_list):
     plt.close('all')
 
 
+def C_values(plotdir, field, data_field_list, data_cl_list):
+    deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+
+
+    for i in range(len(data_field_list)):
+
+        cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_cl_list[i])
+
+        data_field = data_field_list[i][f'{field}'].data[...]
+        print(np.shape(data_field[...]))
+
+        data_field_cloud = np.mean(ma.masked_array(data_field, mask=cloud_only_mask), axis=0)
+        data_field_env = np.mean(ma.masked_array(data_field, mask=env_only_mask), axis=0)
+
+        print(np.shape(data_field_env))
+
+        if field=='Cs':
+            scalar='s'
+        elif field == 'C_theta':
+            scalar = '$\\theta$'
+        elif field == 'C_q':
+            scalar = '$qt$'
+
+        plt.figure(figsize=(7, 6))
+        plt.hist([data_field_env[...,0:24], data_field_env[...,24:151], data_field_cloud[...]], \
+                 bins=12, histtype='bar', stacked=True, label=["ML", "CL: clear sky", "CL: cloudy"])
+        plt.legend()
+
+        og_xtic = plt.xticks()
+
+        plt.xlabel(f"$C_{scalar}$", fontsize=16)
+        plt.ylabel("number of value occurrences", fontsize=16)
+        plt.savefig(plotdir + f'C_{field}_values_{deltas[i]}.png', pad_inches=0)
+        plt.clf()
+
+        print(f'plotted neg vs z for {field}')
+
+    plt.close('all')
+
+
 
 def plotfield(plotdir, field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_list, t_av_or_not):
 
