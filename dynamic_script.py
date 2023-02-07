@@ -360,7 +360,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                     ref_dataset,
                                     derived_data,
                                     opt, ingrid,
-                                    uvw_names=['f(u_on_w)_r', 'f(v_on_w)_r', 'f(w_on_w)_r']
+                                    uvw_names=['f(u_on_w)_r', 'f(v_on_w)_r', 'f(w_on_w)_r'])
 
             dth_dx = dyn.ds_dxi('f(th_on_w)_r', dataset, ref_dataset, opt, ingrid)
             dth_dx.name = 'dth_dx'
