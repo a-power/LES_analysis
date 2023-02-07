@@ -1,10 +1,6 @@
-import numpy as np
-import matplotlib.pyplot as plt
 import xarray as xr
 import os
-import mask_cloud_vs_env as clo
-import numpy.ma as ma
-
+import analysis_plot_fns as apf
 
 homedir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/20m_gauss_dyn/'
 mydir = homedir + 'LijMij_HjRj/BOMEX_m0020_g0800_all_14400_gaussian_filter_'
@@ -58,62 +54,25 @@ data_cl_list = [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
 #
 
 
-LijMij_options = {'field': 'LM_field',
+LijMij_options = {'plotdir': plotdir,
+                  'field': 'LM_field',
            'data_field_list': data_s_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
            }
 
-HjRj_th_options = {'field': 'HR_th_field',
+HjRj_th_options = {'plotdir': plotdir,
+                   'field': 'HR_th_field',
            'data_field_list': data_th_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
            }
 
-HjRj_qt_options = {'field': 'HR_q_total_field',
+HjRj_qt_options = {'plotdir': plotdir,
+                   'field': 'HR_q_total_field',
            'data_field_list': data_qt_list,
            'data_cl_list': [data_cl2, data_cl4, data_cl8, data_cl16, data_cl32, data_cl64]
            }
 
-##Need to time average
 
-def negs_in_field(field, data_field_list, data_cl_list):
-    deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
-
-
-    for i in range(len(data_field_list)):
-
-        cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_cl_list[i])
-
-        data_field = data_field_list[i][f'{field}'].data[...]
-        print(np.shape(data_field[0,...]))
-
-        data_field_cloud = np.mean(ma.masked_array(data_field, mask=cloud_only_mask), axis=0)
-        data_field_env = np.mean(ma.masked_array(data_field, mask=env_only_mask), axis=0)
-
-        print(np.shape(data_field_env))
-
-        counter_env = np.zeros(len(data_field_env[0, 0, :]))
-        counter_cloud = np.zeros(len(data_field_cloud[0,0,:]))
-        for j in range(len(data_field_cloud[0,0,:])):
-            counter_cloud[j] = np.count_nonzero(data_field_cloud[:,:,j] < 0)
-            counter_env[j] = np.count_nonzero(data_field_env[:, :, j] < 0)
-
-        plt.figure(figsize=(7, 6))
-        plt.hist([counter_env, counter_cloud], bins=12, histtype='bar', stacked=True, label=["environment", "in-cloud"])
-        plt.legend()
-
-        og_xtic = plt.xticks()
-        plt.xticks(og_xtic[0],
-                   np.round(np.linspace((0) * (20 / 480), (151) * (20 / 480), len(og_xtic[0])), 1))
-
-        plt.xlabel("$z/z_{ML}$", fontsize=16)
-        plt.ylabel("number of negative values", fontsize=16)
-        plt.savefig(plotdir + f'neg_{field}_vs_z_{deltas[i]}.png', pad_inches=0)
-        plt.clf()
-
-        print(f'plotted neg vs z for {field}')
-
-    plt.close('all')
-
-negs_in_field( **LijMij_options )
-negs_in_field( **HjRj_th_options )
-negs_in_field( **HjRj_qt_options )
+apf.negs_in_field( **LijMij_options )
+apf.negs_in_field( **HjRj_th_options )
+apf.negs_in_field( **HjRj_qt_options )

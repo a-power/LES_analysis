@@ -31,6 +31,7 @@ opgrid = 'p'
 options = {
         'FFT_type': 'RFFT',
         'save_all': 'Yes',
+        'override': False,
         'th_ref': 300.0,
         'dx': 20.0,
         'dy': 20.0,

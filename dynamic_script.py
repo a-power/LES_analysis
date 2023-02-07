@@ -70,7 +70,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
 
     derived_data, exists = \
         sf.setup_derived_data_file(file_in, odir, fname,
-                                   opt, override=True)
+                                   opt)
 
     filter_list = list([])
 
@@ -110,7 +110,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
 
         filtered_data, exists = \
             sf.setup_filtered_data_file(file_in, odir, fname,
-                                        opt, new_filter, override=True)
+                                        opt, new_filter)
         if exists:
             print('Derived data file exists')
         else:
@@ -275,7 +275,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
 
     derived_data, exists = \
         sf.setup_derived_data_file(file_in, odir, fname,
-                                   opt, override=True)
+                                   opt)
 
     filter_list = list([])
 
@@ -315,7 +315,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
 
         filtered_data, exists = \
             sf.setup_filtered_data_file(file_in, odir, fname,
-                                        opt, new_filter, override=True)
+                                        opt, new_filter)
         if exists:
             print('Derived data file exists')
         else:
@@ -359,13 +359,14 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
             deform = defm.deformation(dataset,
                                     ref_dataset,
                                     derived_data,
-                                    opt, ingrid)
+                                    opt, ingrid,
+                                    uvw_names=['f(u_on_w)_r', 'f(v_on_w)_r', 'f(w_on_w)_r']
 
-            dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, opt, ingrid)
+            dth_dx = dyn.ds_dxi('f(th_on_w)_r', dataset, ref_dataset, opt, ingrid)
             dth_dx.name = 'dth_dx'
             dth_dx = re_chunk(dth_dx)
 
-            dq_dx = dyn.ds_dxi('q_total_f', dataset, ref_dataset, opt, ingrid)
+            dq_dx = dyn.ds_dxi('f(q_total_on_w)_r', dataset, ref_dataset, opt, ingrid)
             dq_dx.name = 'dq_dx'
             dq_dx = re_chunk(dq_dx)
 

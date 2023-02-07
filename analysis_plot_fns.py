@@ -1,6 +1,49 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import dynamic_functions as dyn
+import mask_cloud_vs_env as clo
+import numpy.ma as ma
+
+
+def negs_in_field(plotdir, field, data_field_list, data_cl_list):
+    deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+
+
+    for i in range(len(data_field_list)):
+
+        cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_cl_list[i])
+
+        data_field = data_field_list[i][f'{field}'].data[...]
+        print(np.shape(data_field[0,...]))
+
+        data_field_cloud = np.mean(ma.masked_array(data_field, mask=cloud_only_mask), axis=0)
+        data_field_env = np.mean(ma.masked_array(data_field, mask=env_only_mask), axis=0)
+
+        print(np.shape(data_field_env))
+
+        counter_env = np.zeros(len(data_field_env[0, 0, :]))
+        counter_cloud = np.zeros(len(data_field_cloud[0,0,:]))
+        for j in range(len(data_field_cloud[0,0,:])):
+            counter_cloud[j] = np.count_nonzero(data_field_cloud[:,:,j] < 0)
+            counter_env[j] = np.count_nonzero(data_field_env[:, :, j] < 0)
+
+        plt.figure(figsize=(7, 6))
+        plt.hist([counter_env, counter_cloud], bins=12, histtype='bar', stacked=True, label=["environment", "in-cloud"])
+        plt.legend()
+
+        og_xtic = plt.xticks()
+        plt.xticks(og_xtic[0],
+                   np.round(np.linspace((0) * (20 / 480), (151) * (20 / 480), len(og_xtic[0])), 1))
+
+        plt.xlabel("$z/z_{ML}$", fontsize=16)
+        plt.ylabel("number of negative values", fontsize=16)
+        plt.savefig(plotdir + f'neg_{field}_vs_z_{deltas[i]}.png', pad_inches=0)
+        plt.clf()
+
+        print(f'plotted neg vs z for {field}')
+
+    plt.close('all')
+
 
 
 def plotfield(plotdir, field, x_or_y, axis_set, data_field_list, set_percentile, data_cl_list, t_av_or_not):
