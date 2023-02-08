@@ -14,7 +14,7 @@ model_res_list = ['0020_g0800']
 start_point_filtering = 0 #for labelling output files: ie skiping ga00.nc and going straight to ga03.nc if set =3
 
 outdir_og = '/work/scratch-pw3/apower/'
-outdir = outdir_og + '20m_gauss_dyn/' + +'/on_p_grid/' + 'filtering_filtered' +'/'
+outdir = outdir_og + '20m_gauss_dyn/' + '/on_p_grid/' + 'filtering_filtered' +'/'
 plotdir = outdir_og+'plots/dyn/'
 
 os.makedirs(outdir, exist_ok = True)
