@@ -37,11 +37,11 @@ options = {
         'dy': 20.0,
         'domain' : 16.0,
 
-        'aliases': {'u': ['f(u_on_w)_r'],
-                    'v': ['f(v_on_w)_r'],
-                    'w': ['f(w_on_w)_r'],
-                    'th': ['f(th_on_w)_r'],
-                    'q_total_f': ['f(q_total_on_w)_r']
+        'aliases': {'u': [f'f(u_on_w{opgrid})_r'],
+                    'v': [f'f(v_on_w{opgrid})_r'],
+                    'w': [f'f(w_on_w{opgrid})_r'],
+                    'th': [f'f(th_on_{opgrid})_r'],
+                    'q_total_f': [f'f(q_total_on_{opgrid})_r']
                     }
 
           }
