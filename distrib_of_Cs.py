@@ -13,11 +13,6 @@ dir_th = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_HjRj_th_2D_running
 dir_qt = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_HjRj_qt_2D_running_mean_filter_rm0'
 dir_cloud = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga00_running_mean_filter_rm0'
 
-time_av_or_not = 0 #'yes' #'yes' #if not then give the time stamp index (integer) you want to look at (eg 0, 1, ..)
-
-my_axis = 299
-my_x_y = 'y'
-
 data_s2 = xr.open_dataset(dir_s+'0.nc')
 data_s4 = xr.open_dataset(dir_s+'1.nc')
 data_s8 = xr.open_dataset(dir_s+'2.nc')
