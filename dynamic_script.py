@@ -366,7 +366,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
         dth_dx.name = 'dth_dx'
         dth_dx = re_chunk(dth_dx)
 
-        dq_dx = dyn.ds_dxi(f'f(q_total_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid)
+        dq_dx = dyn.ds_dxi(f'f(q_total_f_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid)
         dq_dx.name = 'dq_dx'
         dq_dx = re_chunk(dq_dx)
 
