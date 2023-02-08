@@ -110,7 +110,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
 
         filtered_data, exists = \
             sf.setup_filtered_data_file(file_in, odir, fname,
-                                        opt, new_filter)
+                                        opt, new_filter, override=True)
         if exists:
             print('Derived data file exists')
         else:
@@ -315,7 +315,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
 
         filtered_data, exists = \
             sf.setup_filtered_data_file(file_in, odir, fname,
-                                        opt, new_filter)
+                                        opt, new_filter, override=True)
         if exists:
             print('Derived data file exists')
         else:
