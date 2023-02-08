@@ -70,7 +70,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
 
     derived_data, exists = \
         sf.setup_derived_data_file(file_in, odir, fname,
-                                   opt)
+                                   opt, override=True)
 
     filter_list = list([])
 
@@ -275,7 +275,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
 
     derived_data, exists = \
         sf.setup_derived_data_file(file_in, odir, fname,
-                                   opt)
+                                   opt, override=True)
 
     filter_list = list([])
 
