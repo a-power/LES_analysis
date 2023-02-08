@@ -5,7 +5,7 @@ import analysis_plot_fns as apf
 
 mydir = '/work/scratch-pw2/apower/20m_gauss_dyn/filtered_LM_HR_fields/'
 
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/plots/smoothed_fields_cloud_contour/'
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/plots/smoothed_fields_dist/'
 os.makedirs(plotdir, exist_ok = True)
 
 dir_s = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_LijMij_2D_running_mean_filter_rm0'
