@@ -4,7 +4,7 @@ import os
 
 
 set_time = ['14400'] # , '21600', '48600'
-in_dir = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m'
+in_dir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/BOMEX_m'
 model_res_list = ['0020_g0800']
 
 #use_filtered_data = 'ga00' #set in loop #set to string if you want to filter a previously filtered dataset,
