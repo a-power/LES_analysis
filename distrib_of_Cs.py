@@ -45,4 +45,24 @@ qt_list = [data_qt2, data_qt4, data_qt8]#, data_qt16, data_qt32, data_qt64]
 
 cl_list = [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64]
 
-C_values
+LijMij_options = {'plotdir': plotdir,
+                  'field': 'LM_field',
+           'data_field_list': s_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8]
+           }
+
+HjRj_th_options = {'plotdir': plotdir,
+                   'field': 'HR_th_field',
+           'data_field_list': th_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8]
+           }
+
+HjRj_qt_options = {'plotdir': plotdir,
+                   'field': 'HR_q_total_field',
+           'data_field_list': qt_list,
+           'data_cl_list': [data_cl2, data_cl4, data_cl8]
+           }
+
+apf.C_values(**LijMij_options)
+apf.C_values(**HjRj_th_options)
+apf.C_values(**HjRj_qt_options)

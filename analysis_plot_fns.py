@@ -46,7 +46,7 @@ def negs_in_field(plotdir, field, data_field_list, data_cl_list):
 
 
 def C_values(plotdir, field, data_field_list, data_cl_list):
-    deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+    deltas = ['2D', '4D', '8D']#, '16D', '32D', '64D']
 
 
     for i in range(len(data_field_list)):
@@ -75,12 +75,12 @@ def C_values(plotdir, field, data_field_list, data_cl_list):
 
         og_xtic = plt.xticks()
 
-        plt.xlabel(f"$C_{scalar}$", fontsize=16)
+        plt.xlabel(f"{scalar}", fontsize=16)
         plt.ylabel("number of value occurrences", fontsize=16)
-        plt.savefig(plotdir + f'C_{field}_values_{deltas[i]}.png', pad_inches=0)
+        plt.savefig(plotdir + f'{field}_values_{deltas[i]}.png', pad_inches=0)
         plt.clf()
 
-        print(f'plotted neg vs z for {field}')
+        print(f'plotted for {field}')
 
     plt.close('all')
 
