@@ -268,7 +268,6 @@ for i, scalar_in in enumerate(scalar):
 
     ds_64.close()
 
-
     C_sq_prof_64D = None
     C_prof_64D = None
     HR_prof_64D = None
