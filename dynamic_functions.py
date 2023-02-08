@@ -168,11 +168,11 @@ def index_sym(i,j, i_j_in):
     return index
 
 
-def C_s_sq(L_ij, M_ij):
+def C_s_sq(L_ij, M_ij, return_all=1, time_av=False):
 
     print('shape of Lij is', np.shape(L_ij))
 
-    C_s_sq = np.zeros_like(L_ij[0, ...])
+    C_s_sq = np.zeros_like(L_ij[0, ...]) #ij
     C_s_num = np.zeros_like(L_ij[0, ...])
     C_s_den = np.zeros_like(L_ij[0, ...])
 
@@ -186,7 +186,7 @@ def C_s_sq(L_ij, M_ij):
             C_s_num += 2*(L_ij[it, ...] * M_ij[it, ...])
             C_s_den += 2*M_ij[it, ...]**2
 
-    if len(M_ij.shape) == 5:
+    if time_av==True:
         print("number of times = ", (C_s_num.shape)[0])
 
         C_s_num_av = np.mean(C_s_num, 0)
@@ -198,14 +198,17 @@ def C_s_sq(L_ij, M_ij):
         C_s_sq = 0.5 * C_s_num_av / C_s_den_av
 
     else:
-        C_s_sq = 0.5 * C_s_num / C_s_den
+        C_s_sq = 0.5 * C_s_num / C_s_den #LM and MM
 
     print('shape of C_S_sq in function dyn.C_s_sq is', np.shape(C_s_sq))
 
-    return C_s_sq
+    if return_all==1:
+        return C_s_sq
+    else:
+        return C_s_sq, C_s_num, C_s_den
 
 
-def C_scalar_sq(Hj, Rj):
+def C_scalar_sq(Hj, Rj, time_av=False, return_all=1):
 
     C_th_num = np.zeros_like(Hj[0, ...])
     C_th_den = np.zeros_like(Hj[0, ...])
@@ -214,7 +217,7 @@ def C_scalar_sq(Hj, Rj):
         C_th_num += Hj[it, ...] * Rj[it, ...]
         C_th_den += Rj[it, ...] * Rj[it, ...]
 
-    if len(Hj.shape) == 5:
+    if time_av==True:
         print("number of times = ", (C_th_num.shape)[0])
 
         C_th_num_av = np.mean(C_th_num, 0)
@@ -228,7 +231,10 @@ def C_scalar_sq(Hj, Rj):
     else:
         C_th_sq = 0.5 * C_th_num / C_th_den
 
-    return C_th_sq
+    if return_all==1:
+        return C_th_sq
+    else:
+        return C_th_sq, C_th_num, C_th_den
 
 
 def get_Cs(Cs_sq):

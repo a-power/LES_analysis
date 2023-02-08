@@ -18,7 +18,7 @@ mydir = homedir + 'LijMij_HjRj/BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 dir_cloud = homedir + 'q_l/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
 dirs = [mydir]#, dir_cloud]
-res = ['2D']#, '4D', '8D', '16D', '32D', '64D']
+res = ['4D']#'2D', , '8D', '16D', '32D', '64D']
 vars = ['LijMij_', 'HjRj_th_', 'HjRj_qt_']
 
 

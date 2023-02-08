@@ -45,3 +45,4 @@ qt_list = [data_qt2, data_qt4, data_qt8]#, data_qt16, data_qt32, data_qt64]
 
 cl_list = [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64]
 
+C_values

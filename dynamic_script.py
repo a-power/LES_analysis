@@ -432,7 +432,7 @@ def Cs(indir, dx, dx_hat, ingrid, save_all=2, reaxes=False):
     time_data = ds_in['time']
     times = time_data.data
     nt = len(times)
-    print('lenght of the time array in Cs function is', nt)
+    print('length of the time array in Cs function is', nt)
 
     x_data = ds_in['x_p']
     x_s = x_data.data
