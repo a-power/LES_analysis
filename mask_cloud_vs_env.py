@@ -3,7 +3,7 @@ import numpy.ma as ma
 import xarray as xr
 import dynamic_functions as dyn
 
-def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5), res_counter=None):
+def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5), res_counter=None, grid='w'):
 
     if res_counter != None:
         data_in_new = data_in + f'ga0{res_counter}.nc'
@@ -12,8 +12,11 @@ def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5), res_counter=Non
 
     ds_in = xr.open_dataset(data_in_new)
 
-    if 'f(q_cloud_liquid_mass_on_w)_r' in ds_in:
-        q_in = ds_in['f(q_cloud_liquid_mass_on_w)_r']
+    if f'f(q_cloud_liquid_mass_on_{grid})_r' in ds_in:
+        q_in = ds_in[f'f(q_cloud_liquid_mass_on_{grid})_r']
+
+    elif f'f(f(q_cloud_liquid_mass_on_w)_r_on_{grid})_r' in ds_in:
+        q_in = ds_in[f'f(f(q_cloud_liquid_mass_on_w)_r_on_{grid})_r']
 
     elif 'q_cloud_liquid_mass' in ds_in:
         q_in = ds_in['q_cloud_liquid_mass']

@@ -62,22 +62,35 @@ def C_values(plotdir, field, data_field_list, data_cl_list):
         print(np.shape(data_field_env))
 
         if field=='Cs':
-            scalar='s'
+            name=field
+            scalar='$C_{s}$'
         elif field == 'C_theta':
-            scalar = '$\\theta$'
+            name=field
+            scalar = '$C_{\\theta}$'
         elif field == 'C_q':
-            scalar = '$qt$'
+            name=field
+            scalar = '$C_{qt}$'
+
+        elif field == 'f(LM_field_on_w)_r':
+            scalar = '$L_{ij}M_{ij}$'
+            name = 'LM'
+        elif field == 'f(HR_th_field_on_w)_r':
+            scalar = '$H_{j}R_{j \\theta}$'
+            name = 'HR_th'
+        elif field == 'f(HR_q_total_field_on_w)_r':
+            scalar = '$H_{j}R_{j qt}$'
+            name = 'HR_q_total'
 
         plt.figure(figsize=(7, 6))
         plt.hist([data_field_env[...,0:24], data_field_env[...,24:151], data_field_cloud[...]], \
                  bins=12, histtype='bar', stacked=True, label=["ML", "CL: clear sky", "CL: cloudy"])
         plt.legend()
 
-        og_xtic = plt.xticks()
+        # og_xtic = plt.xticks()
 
         plt.xlabel(f"{scalar}", fontsize=16)
         plt.ylabel("number of value occurrences", fontsize=16)
-        plt.savefig(plotdir + f'{field}_values_{deltas[i]}.png', pad_inches=0)
+        plt.savefig(plotdir + f'dist_of_{name}_values_{deltas[i]}.png', pad_inches=0)
         plt.clf()
 
         print(f'plotted for {field}')
