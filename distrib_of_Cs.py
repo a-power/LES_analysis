@@ -46,8 +46,7 @@ cl_list = [data_cl2, data_cl4, data_cl8]#, data_cl16, data_cl32, data_cl64]
 LijMij_options = {'plotdir': plotdir,
                   'field': 'f(LM_field_on_w)_r',
            'data_field_list': s_list,
-           'data_cl_list': cl_list,
-                  'filtered_cloud': True
+           'data_cl_list': cl_list
            }
 
 print('LijMij options done')
@@ -55,8 +54,7 @@ print('LijMij options done')
 HjRj_th_options = {'plotdir': plotdir,
                    'field': 'f(HR_th_field_on_w)_r',
            'data_field_list': th_list,
-           'data_cl_list': cl_list,
-                   'filtered_cloud': True
+           'data_cl_list': cl_list
            }
 
 print('HjRj_th options done')
@@ -64,8 +62,7 @@ print('HjRj_th options done')
 HjRj_qt_options = {'plotdir': plotdir,
                    'field': 'f(HR_q_total_field_on_w)_r',
            'data_field_list': qt_list,
-           'data_cl_list': cl_list,
-                   'filtered_cloud': True
+           'data_cl_list': cl_list
            }
 
 print('HjRj_qt options done')
