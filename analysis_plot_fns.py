@@ -45,7 +45,7 @@ def negs_in_field(plotdir, field, data_field_list, data_cl_list):
     plt.close('all')
 
 
-def C_values(plotdir, field, data_field_list, data_cl_list):
+def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
     deltas = ['2D', '4D', '8D']#, '16D', '32D', '64D']
 
 

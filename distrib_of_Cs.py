@@ -5,13 +5,19 @@ import analysis_plot_fns as apf
 
 mydir = '/work/scratch-pw2/apower/20m_gauss_dyn/filtered_LM_HR_fields/'
 
+print(mydir)
+
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/plots/smoothed_fields_distrib/'
 os.makedirs(plotdir, exist_ok = True)
+
+print(plotdir)
 
 dir_s = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_LijMij_2D_running_mean_filter_rm0'
 dir_th = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_HjRj_th_2D_running_mean_filter_rm0'
 dir_qt = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_HjRj_qt_2D_running_mean_filter_rm0'
 dir_cloud = mydir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga00_running_mean_filter_rm0'
+
+print(dir_cloud)
 
 data_s2 = xr.open_dataset(dir_s+'0.nc')
 data_s4 = xr.open_dataset(dir_s+'1.nc')
@@ -29,7 +35,7 @@ data_cl2 = xr.open_dataset(dir_cloud+'0.nc')
 data_cl4 = xr.open_dataset(dir_cloud+'1.nc')
 data_cl8 = xr.open_dataset(dir_cloud+'2.nc')
 
-
+print('opened all datasets')
 
 s_list = [data_s2, data_s4, data_s8]#, data_s16, data_s32, data_s64]
 th_list = [data_th2, data_th4, data_th8]#, data_th16, data_th32, data_th64]
@@ -44,12 +50,16 @@ LijMij_options = {'plotdir': plotdir,
                   'filtered_cloud': True
            }
 
+print('LijMij options done')
+
 HjRj_th_options = {'plotdir': plotdir,
                    'field': 'f(HR_th_field_on_w)_r',
            'data_field_list': th_list,
            'data_cl_list': cl_list,
                    'filtered_cloud': True
            }
+
+print('HjRj_th options done')
 
 HjRj_qt_options = {'plotdir': plotdir,
                    'field': 'f(HR_q_total_field_on_w)_r',
@@ -58,6 +68,13 @@ HjRj_qt_options = {'plotdir': plotdir,
                    'filtered_cloud': True
            }
 
+print('HjRj_qt options done')
+
 apf.C_values(**LijMij_options)
+print('LijMij options done')
+
 apf.C_values(**HjRj_th_options)
+print('HjRj_th options done')
+
 apf.C_values(**HjRj_qt_options)
+print('HjRj_qt options done')
