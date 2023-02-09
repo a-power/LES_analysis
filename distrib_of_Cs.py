@@ -31,9 +31,9 @@ data_qt2 = xr.open_dataset(dir_qt+'0.nc')
 data_qt4 = xr.open_dataset(dir_qt+'1.nc')
 data_qt8 = xr.open_dataset(dir_qt+'2.nc')
 
-data_cl2 = xr.open_dataset(dir_cloud+'0.nc')
-data_cl4 = xr.open_dataset(dir_cloud+'1.nc')
-data_cl8 = xr.open_dataset(dir_cloud+'2.nc')
+data_cl2 = dir_cloud+'0.nc'
+data_cl4 = dir_cloud+'1.nc'
+data_cl8 = dir_cloud+'2.nc'
 
 print('opened all datasets')
 
