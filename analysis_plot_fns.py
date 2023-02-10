@@ -56,8 +56,8 @@ def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
         data_field = data_field_list[i][f'{field}'].data[...]
         print(np.shape(data_field[...]))
 
-        data_field_cloud = np.mean(ma.masked_array(data_field, mask=cloud_only_mask), axis=0)
-        data_field_env = np.mean(ma.masked_array(data_field, mask=env_only_mask), axis=0)
+        data_field_cloud = ma.masked_array(data_field, mask=cloud_only_mask)
+        data_field_env = ma.masked_array(data_field, mask=env_only_mask)
 
         print(np.shape(data_field_env))
 
@@ -82,8 +82,8 @@ def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
             name = 'HR_q_total'
 
         plt.figure(figsize=(7, 6))
-        plt.hist([data_field_env[...,0:24], data_field_env[...,24:151], data_field_cloud[...]], \
-                 bins=12, histtype='bar', stacked=True, label=["ML", "CL: clear sky", "CL: cloudy"])
+        plt.hist([np.flatten(data_field_env[...,0:24]), np.flatten(data_field_env[...,24:151]), np.flatten(data_field_cloud[...])], \
+                 bins=20, histtype='bar', stacked=True, label=["ML", "CL: clear sky", "CL: cloudy"])
         plt.legend()
 
         # og_xtic = plt.xticks()

@@ -68,10 +68,10 @@ HjRj_qt_options = {'plotdir': plotdir,
 print('HjRj_qt options done')
 
 apf.C_values(**LijMij_options)
-print('LijMij options done')
+print('LijMij fn done')
 
 apf.C_values(**HjRj_th_options)
-print('HjRj_th options done')
+print('HjRj_th fn done')
 
 apf.C_values(**HjRj_qt_options)
-print('HjRj_qt options done')
+print('HjRj_qt fn done')
