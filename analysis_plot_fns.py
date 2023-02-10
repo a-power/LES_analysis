@@ -82,7 +82,7 @@ def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
             name = 'HR_q_total'
 
         plt.figure(figsize=(7, 6))
-        plt.hist([np.flatten(data_field_env[...,0:24]), np.flatten(data_field_env[...,24:151]), np.flatten(data_field_cloud[...])], \
+        plt.hist([data_field_env[...,0:24].flatten(), data_field_env[...,24:151].flatten(), data_field_cloud[...].flatten()], \
                  bins=20, histtype='bar', stacked=True, label=["ML", "CL: clear sky", "CL: cloudy"])
         plt.legend()
 
