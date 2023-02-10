@@ -85,12 +85,13 @@ def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
 
         plt.figure(figsize=(7, 6))
         plt.hist([data_field_env[...,0:24].flatten(), data_field_env[...,24:151].flatten(), data_field_cloud[...].flatten()], \
-                 bins=200, histtype='bar', stacked=True, label=["ML", "CL: clear sky", "CL: cloudy"])
+                 bins=800, histtype='bar', stacked=True, label=["ML", "CL: clear sky", "CL: cloudy"])
         plt.legend()
 
         # og_xtic = plt.xticks()
-        plt.xlim(-1,1)
+        #plt.xlim(-1,1)
         plt.xlabel(f"{scalar}", fontsize=16)
+        plt.yscale('log', nonposy='clip')
         plt.ylabel("number of value occurrences", fontsize=16)
         plt.savefig(plotdir + f'dist_of_{name}_values_{deltas[i]}.png', pad_inches=0)
         plt.clf()
