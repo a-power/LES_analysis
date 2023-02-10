@@ -81,9 +81,11 @@ def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
             scalar = '$H_{j}R_{j qt}$'
             name = 'HR_q_total'
 
+        #print('mean')
+
         plt.figure(figsize=(7, 6))
         plt.hist([data_field_env[...,0:24].flatten(), data_field_env[...,24:151].flatten(), data_field_cloud[...].flatten()], \
-                 bins=20, histtype='bar', stacked=True, label=["ML", "CL: clear sky", "CL: cloudy"])
+                 bins=200, histtype='bar', stacked=True, label=["ML", "CL: clear sky", "CL: cloudy"])
         plt.legend()
 
         # og_xtic = plt.xticks()
