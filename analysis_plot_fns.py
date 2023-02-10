@@ -87,7 +87,7 @@ def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
         plt.legend()
 
         # og_xtic = plt.xticks()
-
+        plt.xlim(-1,1)
         plt.xlabel(f"{scalar}", fontsize=16)
         plt.ylabel("number of value occurrences", fontsize=16)
         plt.savefig(plotdir + f'dist_of_{name}_values_{deltas[i]}.png', pad_inches=0)
