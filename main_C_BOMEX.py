@@ -4,7 +4,7 @@ import os
 import xarray as xr
 
 av_type = 'all'
-mygrid = 'w'
+mygrid = 'p'
 
 path20f = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/'
 file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_"
