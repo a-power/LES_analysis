@@ -85,7 +85,7 @@ def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
 
         plt.figure(figsize=(7, 6))
         plt.hist([data_field_env[...,0:24].flatten(), data_field_env[...,24:151].flatten(), data_field_cloud[...].flatten()], \
-                 bins=800, histtype='bar', stacked=True, label=["ML", "CL: clear sky", "CL: cloudy"])
+                 bins=800, histtype='step', stacked=False, label=["ML", "CL: clear sky", "CL: cloudy"])
         plt.legend()
 
         # og_xtic = plt.xticks()
