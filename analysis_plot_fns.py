@@ -84,9 +84,15 @@ def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
         #print('mean')
 
         plt.figure(figsize=(7, 6))
-        plt.hist([data_field_env[...,0:24].flatten(), data_field_env[...,24:151].flatten(), data_field_cloud[...].flatten()], \
-                 bins=500, histtype='step', stacked=False, label=["ML", "CL: clear sky", "CL: cloudy"], \
-                 linewidth = 2, linestyle='dashdot')
+        plt.hist(data_field_env[...,0:24].flatten(), \
+                 bins=500, histtype='step', stacked=False, label="ML", \
+                 linewidth = 2, linestyle='solid')
+        plt.hist(data_field_env[...,24:151].flatten(), \
+                 bins=500, histtype='step', stacked=False, label="CL: clear sky", \
+                 linewidth = 2, linestyle='dotted')
+        plt.hist(data_field_cloud[...].flatten(), \
+                 bins=500, histtype='step', stacked=False, label="CL: cloudy", \
+                 linewidth = 3, linestyle='dashed')
         plt.legend()
 
         # og_xtic = plt.xticks()
