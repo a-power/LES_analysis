@@ -92,7 +92,7 @@ def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
                  linewidth = 2, linestyle='dotted')
         plt.hist(data_field_cloud[...].flatten(), \
                  bins=500, histtype='step', stacked=False, label="CL: cloudy", \
-                 linewidth = 2, linestyle='dashed')
+                 linewidth = 2, linestyle='dotted')
         plt.legend()
 
         # og_xtic = plt.xticks()
