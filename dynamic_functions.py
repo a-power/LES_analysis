@@ -168,7 +168,7 @@ def index_sym(i,j, i_j_in):
     return index
 
 
-def C_s_sq(L_ij, M_ij, return_all=1, time_av=False):
+def C_s_sq(L_ij, M_ij, return_all=2, time_av=False):
 
     print('shape of Lij is', np.shape(L_ij))
 
@@ -208,7 +208,7 @@ def C_s_sq(L_ij, M_ij, return_all=1, time_av=False):
         return C_s_sq, C_s_num, C_s_den
 
 
-def C_scalar_sq(Hj, Rj, time_av=False, return_all=1):
+def C_scalar_sq(Hj, Rj, return_all=2, time_av=False):
 
     C_th_num = np.zeros_like(Hj[0, ...])
     C_th_den = np.zeros_like(Hj[0, ...])
