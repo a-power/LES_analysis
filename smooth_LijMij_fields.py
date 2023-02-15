@@ -17,8 +17,8 @@ homedir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/'
 mydir = homedir + 'LijMij_HjRj/BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 dir_cloud = homedir + 'q_l/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
-dirs = [mydir]#, dir_cloud]
-res = ['4D']#'2D', , '8D', '16D', '32D', '64D']
+dirs = [mydir, dir_cloud]
+res = ['2D', '4D', '8D', '16D', '32D', '64D']
 vars = ['LijMij_', 'HjRj_th_', 'HjRj_qt_']
 
 
@@ -27,7 +27,7 @@ outdir = outdir_og + '20m_gauss_dyn' +'/filtered_LM_HR_fields/'
 os.makedirs(outdir, exist_ok = True)
 
 filter_name = 'running_mean'
-width_list = np.array([2, 3, 4]) #dont forget CHANGE start time if youre short-serial filtering  #([20, 40, 80] ([160, 320, 640])
+width_list = np.array([2]) #dont forget CHANGE start time if youre short-serial filtering  #([20, 40, 80] ([160, 320, 640])
 
 start_point=0
 #Note short serial queue on JASMIN times out after 3 filter scales
