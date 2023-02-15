@@ -68,25 +68,25 @@ for i, scalar_in in enumerate(scalar):
     ds_in2 = {'file':dataset_name2[i], 'ds': ds_2}
 
     save_field(ds_in2, zn_save)
-    save_field(ds_in2, C_sq_prof_2D)
-    save_field(ds_in2, C_prof_2D)
+    #save_field(ds_in2, C_sq_prof_2D)
+    #save_field(ds_in2, C_prof_2D)
     save_field(ds_in2, HR_prof_2D)
     save_field(ds_in2, RR_prof_2D)
     save_field(ds_in2, HR_field_2D)
     save_field(ds_in2, RR_field_2D)
-    save_field(ds_in2, C_sq_field_2D)
+    #save_field(ds_in2, C_sq_field_2D)
     # save_field(ds_in2, Hj_2D)
     # save_field(ds_in2, Rj_2D)
 
     ds_2.close()
 
-    C_sq_prof_2D = None
-    C_prof_2D = None
+    #C_sq_prof_2D = None
+    #C_prof_2D = None
     HR_prof_2D = None
     RR_prof_2D = None
     HR_field_2D = None
     RR_field_2D = None
-    C_sq_field_2D = None
+    #C_sq_field_2D = None
     # Hj_2D = None
     # Rj_2D = None
 
@@ -112,7 +112,7 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in4, RR_prof_4D)
     save_field(ds_in4, HR_field_4D)
     save_field(ds_in4, RR_field_4D)
-    save_field(ds_in4, C_sq_field_4D)
+    #save_field(ds_in4, C_sq_field_4D)
     # save_field(ds_in4, Hj_4D)
     # save_field(ds_in4, Rj_4D)
 
@@ -152,7 +152,7 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in8, RR_prof_8D)
     save_field(ds_in8, HR_field_8D)
     save_field(ds_in8, RR_field_8D)
-    save_field(ds_in8, C_sq_field_8D)
+    #save_field(ds_in8, C_sq_field_8D)
     # save_field(ds_in8, Hj_8D)
     # save_field(ds_in8, Rj_8D)
 
@@ -189,7 +189,7 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in16, RR_prof_16D)
     save_field(ds_in16, HR_field_16D)
     save_field(ds_in16, RR_field_16D)
-    save_field(ds_in16, C_sq_field_16D)
+    #save_field(ds_in16, C_sq_field_16D)
     # save_field(ds_in16, Hj_16D)
     # save_field(ds_in16, Rj_16D)
 
@@ -201,7 +201,7 @@ for i, scalar_in in enumerate(scalar):
     RR_prof_16D = None
     HR_field_16D = None
     RR_field_16D = None
-    C_sq_field_16D = None
+    #C_sq_field_16D = None
     # Hj_16D = None
     # Rj_16D = None
 
@@ -262,7 +262,7 @@ for i, scalar_in in enumerate(scalar):
     save_field(ds_in64, RR_prof_64D)
     save_field(ds_in64, HR_field_64D)
     save_field(ds_in64, RR_field_64D)
-    save_field(ds_in64, C_sq_field_64D)
+    #save_field(ds_in64, C_sq_field_64D)
     # save_field(ds_in64, Hj_64D)
     # save_field(ds_in64, Rj_64D)
 
