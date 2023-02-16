@@ -68,8 +68,8 @@ for i, scalar_in in enumerate(scalar):
     ds_in2 = {'file':dataset_name2[i], 'ds': ds_2}
 
     save_field(ds_in2, zn_save)
-    #save_field(ds_in2, C_sq_prof_2D)
-    #save_field(ds_in2, C_prof_2D)
+    save_field(ds_in2, C_sq_prof_2D)
+    save_field(ds_in2, C_prof_2D)
     save_field(ds_in2, HR_prof_2D)
     save_field(ds_in2, RR_prof_2D)
     save_field(ds_in2, HR_field_2D)
@@ -80,8 +80,8 @@ for i, scalar_in in enumerate(scalar):
 
     ds_2.close()
 
-    #C_sq_prof_2D = None
-    #C_prof_2D = None
+    C_sq_prof_2D = None
+    C_prof_2D = None
     HR_prof_2D = None
     RR_prof_2D = None
     HR_field_2D = None

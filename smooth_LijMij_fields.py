@@ -13,17 +13,15 @@ import dynamic_functions as dyn
 import dask
 import subfilter
 
-homedir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/'
-mydir = homedir + 'LijMij_HjRj/BOMEX_m0020_g0800_all_14400_gaussian_filter_'
-dir_cloud = homedir + 'q_l/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/'
+mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
+dir_cloud = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
 dirs = [mydir, dir_cloud]
 res = ['2D', '4D', '8D', '16D', '32D', '64D']
-vars = ['LijMij_', 'HjRj_th_', 'HjRj_qt_']
+vars = ['Cs_', 'C_th_', 'C_qt_']
 
-
-outdir_og = '/work/scratch-pw2/apower/'
-outdir = outdir_og + '20m_gauss_dyn' +'/filtered_LM_HR_fields/'
+outdir = homedir +'filtered_LM_HR_fields/'
 os.makedirs(outdir, exist_ok = True)
 
 filter_name = 'running_mean'
@@ -49,13 +47,13 @@ for i, indir in enumerate(dirs):
             for k, var_in in enumerate(vars):
                 file_in = f'{indir}{var_in}{data_in_scale}.nc'
 
-                if var_in == 'LijMij_':
+                if var_in == 'Cs_':
                     var_names = ['LM_field', 'MM_field']
 
-                if var_in == 'HjRj_th_':
+                if var_in == 'C_th_':
                     var_names = ['HR_th_field', 'RR_th_field']
 
-                if var_in == 'HjRj_qt_':
+                if var_in == 'C_qt_':
                     var_names = ['HR_q_total_field', 'RR_q_total_field']
 
                 ds_in = xr.open_dataset(file_in)
@@ -151,7 +149,7 @@ for i, indir in enumerate(dirs):
                 dataset.close()
         else:
             file_in = f'{indir}{j}.nc'
-            var_names = ['f(q_cloud_liquid_mass_on_w)_r']
+            var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r']
 
             ds_in = xr.open_dataset(file_in)
             time_data = ds_in['time']
