@@ -485,7 +485,7 @@ def Cs(indir, dx, dx_hat, ingrid, save_all=2, reaxes=False):
     hat_abs_S=None
 
     zn_save = zn_s.copy()
-    xr.DataArray(zn_save[np.newaxis, ...], coords={'time': [nt], 'zn': zn_s},
+    zn_save = xr.DataArray(zn_save[np.newaxis, ...], coords={'time': [nt], 'zn': zn_s},
                               dims=['time', "zn"], name='zn_save')
 
     if save_all==1:
