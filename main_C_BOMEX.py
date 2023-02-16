@@ -56,11 +56,11 @@ for i, scalar_in in enumerate(scalar):
 ########################################################################
     #  = \ #, C_sq_field_2D, Hj_2D, Rj_2D = \
     if scalar_in == 'momentum':
-        zn_save, C_sq_prof_2D, C_prof_2D, HR_prof_2D, RR_prof_2D, HR_field_2D, RR_field_2D = \
+        z_save, zn_save, C_sq_prof_2D, C_prof_2D, HR_prof_2D, RR_prof_2D, HR_field_2D, RR_field_2D = \
          dy_s.Cs(dx=20, ingrid = mygrid, save_all = set_save_all, **DX_2D)
         # = \ #, C_sq_field_2D, Hj_2D, Rj_2D = \
     else:
-        zn_save, C_sq_prof_2D, C_prof_2D, HR_prof_2D, RR_prof_2D, HR_field_2D, RR_field_2D = \
+        z_save, zn_save, C_sq_prof_2D, C_prof_2D, HR_prof_2D, RR_prof_2D, HR_field_2D, RR_field_2D = \
             dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = set_save_all, **DX_2D)
 
     ds_2 = xr.Dataset()
@@ -93,11 +93,11 @@ for i, scalar_in in enumerate(scalar):
     ##########################################
     # = \ #, C_sq_field_4D, Hj_4D, Rj_4D = \
     if scalar_in == 'momentum':
-        zn_save, C_sq_prof_4D, C_prof_4D, HR_prof_4D, RR_prof_4D, HR_field_4D, RR_field_4D = \
+        z_save, zn_save, C_sq_prof_4D, C_prof_4D, HR_prof_4D, RR_prof_4D, HR_field_4D, RR_field_4D = \
             dy_s.Cs(dx=20, ingrid = mygrid, save_all = set_save_all, **DX_4D)
         # = \ #, C_sq_field_4D, Hj_4D, Rj_4D = \
     else:
-        zn_save, C_sq_prof_4D, C_prof_4D, HR_prof_4D, RR_prof_4D, HR_field_4D, RR_field_4D = \
+        z_save, zn_save, C_sq_prof_4D, C_prof_4D, HR_prof_4D, RR_prof_4D, HR_field_4D, RR_field_4D = \
             dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all = set_save_all, **DX_4D)
 
 
@@ -132,11 +132,11 @@ for i, scalar_in in enumerate(scalar):
     #########################################################################
     #  = \ #, C_sq_field_8D, Hj_8D, Rj_8D = \
     if scalar_in == 'momentum':
-        zn_save, C_sq_prof_8D, C_prof_8D, HR_prof_8D, RR_prof_8D, HR_field_8D, RR_field_8D = \
+        z_save, zn_save, C_sq_prof_8D, C_prof_8D, HR_prof_8D, RR_prof_8D, HR_field_8D, RR_field_8D = \
             dy_s.Cs(dx=20, ingrid=mygrid, save_all=set_save_all, **DX_8D)
         #  = \ #, C_sq_field_8D, Hj_8D, Rj_8D = \
     else:
-        zn_save, C_sq_prof_8D, C_prof_8D, HR_prof_8D, RR_prof_8D, HR_field_8D, RR_field_8D = \
+        z_save, zn_save, C_sq_prof_8D, C_prof_8D, HR_prof_8D, RR_prof_8D, HR_field_8D, RR_field_8D = \
             dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all=set_save_all, **DX_8D)
 
 
@@ -171,11 +171,11 @@ for i, scalar_in in enumerate(scalar):
     ##########################################
     # = \ #, C_sq_field_16D, Hj_16D, Rj_16D = \
     if scalar_in == 'momentum':
-        zn_save, C_sq_prof_16D, C_prof_16D, HR_prof_16D, RR_prof_16D, HR_field_16D, RR_field_16D = \
+        z_save, zn_save, C_sq_prof_16D, C_prof_16D, HR_prof_16D, RR_prof_16D, HR_field_16D, RR_field_16D = \
             dy_s.Cs(dx=20, ingrid=mygrid, save_all=set_save_all, **DX_16D)
         #  = \ #, C_sq_field_16D, Hj_16D, Rj_16D = \
     else:
-        zn_save, C_sq_prof_16D, C_prof_16D, HR_prof_16D, RR_prof_16D, HR_field_16D, RR_field_16D = \
+        z_save, zn_save, C_sq_prof_16D, C_prof_16D, HR_prof_16D, RR_prof_16D, HR_field_16D, RR_field_16D = \
             dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all=set_save_all, **DX_16D)
 
     ds_16 = xr.Dataset()
@@ -208,11 +208,11 @@ for i, scalar_in in enumerate(scalar):
 ##########################################
     #  = \ #, C_sq_field_32D, Hj_32D, Rj_32D = \
     if scalar_in == 'momentum':
-        zn_save, C_sq_prof_32D, C_prof_32D, HR_prof_32D, RR_prof_32D, HR_field_32D, RR_field_32D = \
+        z_save, zn_save, C_sq_prof_32D, C_prof_32D, HR_prof_32D, RR_prof_32D, HR_field_32D, RR_field_32D = \
             dy_s.Cs(dx=20, ingrid=mygrid, save_all=set_save_all, **DX_32D)
         #  = \ #, C_sq_field_32D, Hj_32D, Rj_32D = \
     else:
-        zn_save, C_sq_prof_32D, C_prof_32D, HR_prof_32D, RR_prof_32D, HR_field_32D, RR_field_32D = \
+        z_save, zn_save, C_sq_prof_32D, C_prof_32D, HR_prof_32D, RR_prof_32D, HR_field_32D, RR_field_32D = \
             dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all=set_save_all, **DX_32D)
 
     ds_32 = xr.Dataset()
@@ -244,11 +244,11 @@ for i, scalar_in in enumerate(scalar):
     ##########################################
     #  = \ #, C_sq_field_64D, Hj_64D, Rj_64D = \
     if scalar_in == 'momentum':
-        zn_save, C_sq_prof_64D, C_prof_64D, HR_prof_64D, RR_prof_64D, HR_field_64D, RR_field_64D = \
+        z_save, zn_save, C_sq_prof_64D, C_prof_64D, HR_prof_64D, RR_prof_64D, HR_field_64D, RR_field_64D = \
             dy_s.Cs(dx=20, ingrid=mygrid, save_all=set_save_all, **DX_64D)
         #  = \ #, C_sq_field_64D, Hj_64D, Rj_64D = \
     else:
-        zn_save, C_sq_prof_64D, C_prof_64D, HR_prof_64D, RR_prof_64D, HR_field_64D, RR_field_64D = \
+        z_save, zn_save, C_sq_prof_64D, C_prof_64D, HR_prof_64D, RR_prof_64D, HR_field_64D, RR_field_64D = \
             dy_s.C_scalar(scalar=scalar_in, dx=20, ingrid=mygrid, save_all=set_save_all, **DX_64D)
 
     ds_64 = xr.Dataset()

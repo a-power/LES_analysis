@@ -29,7 +29,8 @@ width_list = np.array([2]) #dont forget CHANGE start time if youre short-serial 
 
 start_point=0
 #Note short serial queue on JASMIN times out after 3 filter scales
-ingrid = 'w'
+ingrid = 'w' #its on p but saved with the z coord saying z rather than zn woops
+cloud_grid = 'p'
 
 opt = {
         'FFT_type': 'RFFT',
@@ -149,7 +150,7 @@ for i, indir in enumerate(dirs):
                 dataset.close()
         else:
             file_in = f'{indir}{j}.nc'
-            var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r']
+            var_names = [f'f(q_cloud_liquid_mass_on_{cloud_grid})_r']
 
             ds_in = xr.open_dataset(file_in)
             time_data = ds_in['time']
