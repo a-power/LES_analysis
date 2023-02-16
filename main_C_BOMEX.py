@@ -67,6 +67,7 @@ for i, scalar_in in enumerate(scalar):
     ds_2.to_netcdf(dataset_name2[i], mode='w')
     ds_in2 = {'file':dataset_name2[i], 'ds': ds_2}
 
+    save_field(ds_in2, z_save)
     save_field(ds_in2, zn_save)
     save_field(ds_in2, C_sq_prof_2D)
     save_field(ds_in2, C_prof_2D)
@@ -105,6 +106,7 @@ for i, scalar_in in enumerate(scalar):
     ds_4.to_netcdf(dataset_name4[i], mode='w')
     ds_in4 = {'file':dataset_name4[i], 'ds': ds_4}
 
+    save_field(ds_in4, z_save)
     save_field(ds_in4, zn_save)
     save_field(ds_in4, C_sq_prof_4D)
     save_field(ds_in4, C_prof_4D)
@@ -145,6 +147,7 @@ for i, scalar_in in enumerate(scalar):
     ds_8.to_netcdf(dataset_name8[i], mode='w')
     ds_in8 = {'file':dataset_name8[i], 'ds': ds_8}
 
+    save_field(ds_in8, z_save)
     save_field(ds_in8, zn_save)
     save_field(ds_in8, C_sq_prof_8D)
     save_field(ds_in8, C_prof_8D)
@@ -182,6 +185,7 @@ for i, scalar_in in enumerate(scalar):
     ds_16.to_netcdf(dataset_name16[i], mode='w')
     ds_in16 = {'file':dataset_name16[i], 'ds': ds_16}
 
+    save_field(ds_in16, z_save)
     save_field(ds_in16, zn_save)
     save_field(ds_in16, C_sq_prof_16D)
     save_field(ds_in16, C_prof_16D)
@@ -219,6 +223,8 @@ for i, scalar_in in enumerate(scalar):
     ds_32.to_netcdf(dataset_name32[i], mode='w')
     ds_in32 = {'file': dataset_name32[i], 'ds': ds_32}
 
+    save_field(ds_in32, z_save)
+    save_field(ds_in32, zn_save)
     save_field(ds_in32, C_sq_prof_32D)
     save_field(ds_in32, C_prof_32D)
     save_field(ds_in32, HR_prof_32D)
@@ -255,6 +261,7 @@ for i, scalar_in in enumerate(scalar):
     ds_64.to_netcdf(dataset_name64[i], mode='w')
     ds_in64 = {'file': dataset_name64[i], 'ds': ds_64}
 
+    save_field(ds_in64, z_save)
     save_field(ds_in64, zn_save)
     save_field(ds_in64, C_sq_prof_64D)
     save_field(ds_in64, C_prof_64D)

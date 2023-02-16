@@ -29,8 +29,7 @@ width_list = np.array([2]) #dont forget CHANGE start time if youre short-serial 
 
 start_point=0
 #Note short serial queue on JASMIN times out after 3 filter scales
-ingrid = 'w' #its on p but saved with the z coord saying z rather than zn woops
-cloud_grid = 'p'
+ingrid = 'p' #its on p but saved with the z coord saying z rather than zn woops
 
 opt = {
         'FFT_type': 'RFFT',
@@ -70,7 +69,7 @@ for i, indir in enumerate(dirs):
                 sigma = 1
 
                 dask.config.set({"array.slicing.split_large_chunks": True})
-                [itime, iix, iiy, iiz] = ut.string_utils.get_string_index(ds_in.dims, ['time', 'x', 'y', 'z'])
+                [itime, iix, iiy, iiz] = ut.string_utils.get_string_index(ds_in.dims, ['time', 'x', 'y', 'zn'])
                 timevar = list(ds_in.dims)[itime]
                 xvar = list(ds_in.dims)[iix]
                 yvar = list(ds_in.dims)[iiy]
@@ -150,7 +149,7 @@ for i, indir in enumerate(dirs):
                 dataset.close()
         else:
             file_in = f'{indir}{j}.nc'
-            var_names = [f'f(q_cloud_liquid_mass_on_{cloud_grid})_r']
+            var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r']
 
             ds_in = xr.open_dataset(file_in)
             time_data = ds_in['time']
@@ -165,7 +164,7 @@ for i, indir in enumerate(dirs):
             sigma = 1
 
             dask.config.set({"array.slicing.split_large_chunks": True})
-            [itime, iix, iiy, iiz] = ut.string_utils.get_string_index(ds_in.dims, ['time', 'x', 'y', 'z'])
+            [itime, iix, iiy, iiz] = ut.string_utils.get_string_index(ds_in.dims, ['time', 'x', 'y', 'zn'])
             timevar = list(ds_in.dims)[itime]
             xvar = list(ds_in.dims)[iix]
             yvar = list(ds_in.dims)[iiy]
