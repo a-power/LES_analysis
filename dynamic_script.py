@@ -821,6 +821,7 @@ def LijMij_fields(scalar, indir, dx, dx_hat, ingrid):
     ds_in = xr.open_dataset(file_in)
     time_data = ds_in['time']
     times = time_data.data
+    nt = len(times)
     print('time array is', times)
 
     x_data = ds_in['x_p']

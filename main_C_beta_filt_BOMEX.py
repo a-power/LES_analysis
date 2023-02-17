@@ -140,3 +140,5 @@ for j in range(len(dict_list)):
         HR_field = None
         RR_field = None
 
+        print('ran for ', scalar, 'dictionary = ', dict_list[j])
+
