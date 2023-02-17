@@ -805,8 +805,8 @@ def LijMij_fields(scalar, indir, dx, dx_hat, ingrid):
 
     if scalar == 'q_total':
         scalar_name = 'q'
-        if scalar == 'q_total_f':
-            scalar_name = 'q'
+    if scalar == 'q_total_f':
+        scalar_name = 'q'
     elif scalar == 'q_cloud_liquid_mass':
         scalar_name = 'q_l'
     elif scalar == 'q_vapour':
