@@ -17,11 +17,11 @@ homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/'
 mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 dir_cloud = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
-dirs = [mydir, dir_cloud]
+dirs = [dir_cloud]
 res = ['2D', '4D', '8D', '16D', '32D', '64D']
-vars = ['Cs_', 'C_th_', 'C_qt_']
+# vars = ['Cs_', 'C_th_', 'C_qt_']
 
-outdir = homedir +'filtered_LM_HR_fields/'
+outdir = homedir +'smoothed_LM_HR_fields/'
 os.makedirs(outdir, exist_ok = True)
 
 filter_name = 'running_mean'
@@ -149,7 +149,9 @@ for i, indir in enumerate(dirs):
                 dataset.close()
         else:
             file_in = f'{indir}{j}.nc'
-            var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r']
+            var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r', f'f(th_v_on_{ingrid})_r', f'f(w_on_{ingrid})_r', \
+                         f'f(w_on_{ingrid}.w_on_{ingrid})_r', f'f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r', \
+                         f'f(w_on_{ingrid}.th_on_{ingrid})_r', f'f(w_on_{ingrid}.q_total_on_{ingrid})_r']
 
             ds_in = xr.open_dataset(file_in)
             time_data = ds_in['time']
