@@ -26,7 +26,7 @@ if beta == True:
 else:
     res = ['2D', '4D', '8D', '16D', '32D', '64D']
     num_filts = ['0']
-# vars = ['Cs_', 'C_th_', 'C_qt_']
+vars = ['Cs_', 'C_th_', 'C_qt_']
 
 outdir = homedir +'smoothed_LM_HR_fields/'
 os.makedirs(outdir, exist_ok = True)
@@ -50,7 +50,6 @@ opt = {
 for i, indir in enumerate(dirs):
     for j, data_in_scale in enumerate(res):
         for l, filt_2nd in enumerate(num_filts):
-
             if indir == mydir:
                 for k, var_in in enumerate(vars):
                     if beta == True:
