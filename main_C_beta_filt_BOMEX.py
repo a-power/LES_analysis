@@ -9,7 +9,7 @@ mygrid = 'p'
 path20f = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
 file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_"
 
-# scalar = ['momentum', 'th', 'q_total_f']
+scalar = ['momentum', 'th', 'q_total_f']
 set_save_all = 2
 
 data_2D = path20f+file20+str('ga00_gaussian_filter_ga0')
