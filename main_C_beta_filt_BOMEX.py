@@ -9,7 +9,8 @@ mygrid = 'p'
 path20f = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
 file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_"
 
-scalar = ['momentum', 'th', 'q_total_f']
+# scalar = ['momentum', 'th', 'q_total_f']
+scalar = ['q_total_f']
 set_save_all = 2
 
 data_2D = path20f+file20+str('ga00_gaussian_filter_ga0')
@@ -34,11 +35,14 @@ dataset_name3_1= [path20f+file20+'Cs_3_1.nc', path20f+file20+'C_th_3_1.nc', path
 dataset_name4_0= [path20f+file20+'Cs_4_0.nc', path20f+file20+'C_th_4_0.nc', path20f+file20+'C_qt_4_0.nc']
 dataset_name4_1= [path20f+file20+'Cs_4_1.nc', path20f+file20+'C_th_4_1.nc', path20f+file20+'C_qt_4_1.nc']
 
-dataset_name5_0= [path20f+file20+'Cs_5_0.nc', path20f+file20+'C_th_5_0.nc', path20f+file20+'C_qt_5_1.nc']
+dataset_name5_0= [path20f+file20+'Cs_5_0.nc', path20f+file20+'C_th_5_0.nc', path20f+file20+'C_qt_5_0.nc']
 dataset_name5_1= [path20f+file20+'Cs_5_1.nc', path20f+file20+'C_th_5_1.nc', path20f+file20+'C_qt_5_1.nc']
 
-dataset_list = [dataset_name0_0, dataset_name0_1, dataset_name1_0, dataset_name1_1, dataset_name2_0, dataset_name2_1, \
-                dataset_name3_0, dataset_name3_1, dataset_name4_0, dataset_name4_1, dataset_name5_0, dataset_name5_1]
+# dataset_list = [dataset_name0_0, dataset_name0_1, dataset_name1_0, dataset_name1_1, dataset_name2_0, dataset_name2_1, \
+#                 dataset_name3_0, dataset_name3_1, dataset_name4_0, dataset_name4_1, dataset_name5_0, dataset_name5_1]
+
+dataset_list = [dataset_name5_0, dataset_name5_1]
+
 
 
 DX_20_0 = {
@@ -114,8 +118,10 @@ DX_640_1 = {
     'dx_hat': 2560
 }
 
-dict_list = [DX_20_0, DX_20_1, DX_40_0, DX_40_1, DX_80_0, DX_80_1, \
-                DX_160_0, DX_160_1, DX_320_0, DX_320_1, DX_640_0, DX_640_1]
+dict_list = [DX_640_0, DX_640_1]
+
+# dict_list = [DX_20_0, DX_20_1, DX_40_0, DX_40_1, DX_80_0, DX_80_1, \
+#                 DX_160_0, DX_160_1, DX_320_0, DX_320_1, DX_640_0, DX_640_1]
 
 
 for j in range(len(dict_list)):
