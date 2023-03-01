@@ -64,7 +64,10 @@ for i, indir in enumerate(dirs):
                         var_names = ['HR_th_field', 'RR_th_field']
 
                     if var_in == 'C_qt_':
-                        var_names = ['HR_q_total_field', 'RR_q_total_field']
+                        if beta==True:
+                            var_names = ['HR_q_total_f_field', 'RR_q_total_f_field']
+                        else:
+                            var_names = ['HR_q_total_field', 'RR_q_total_field']
 
                     ds_in = xr.open_dataset(file_in)
                     time_data = ds_in['time']
