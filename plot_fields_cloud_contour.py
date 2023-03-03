@@ -7,16 +7,16 @@ from matplotlib import cm
 from matplotlib.colors import DivergingNorm
 
 
-homedir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/'
-mydir = homedir + 'LijMij_HjRj/BOMEX_m0020_g0800_all_14400_gaussian_filter_'
-dir_cloud = homedir + 'q_l/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+homedir = '/work/scratch-pw/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
+mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
+contour_data = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/fields_contour/'
 os.makedirs(plotdir, exist_ok = True)
 
-dir_s = mydir + 'LijMij_'
-dir_th = mydir + 'HjRj_th_'
-dir_qt = mydir + 'HjRj_qt_'
+dir_s = mydir + 'Cs_'
+dir_th = mydir + 'C_th_'
+dir_qt = mydir + 'C_qt_'
 
 in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
@@ -33,7 +33,8 @@ LijMij_options = {'axis_set': my_axis,
                    'field': 'LM_field',
                    'data_field_in': dir_s,
                   'set_percentile': in_set_percentile,
-                  't_av_or_not': time_av_or_not
+                  't_av_or_not': time_av_or_not,
+                  'contour_field_in': contour_data
            }
 
 MijMij_options = {'axis_set': my_axis,
@@ -41,7 +42,8 @@ MijMij_options = {'axis_set': my_axis,
                    'field': 'MM_field',
                    'data_field_in': dir_s,
                   'set_percentile': in_set_percentile,
-                  't_av_or_not': time_av_or_not
+                  't_av_or_not': time_av_or_not,
+                  'contour_field_in': contour_data
            }
 
 Cs_options = {'axis_set': my_axis,
@@ -49,7 +51,8 @@ Cs_options = {'axis_set': my_axis,
                'field': 'Cs_field',
                'data_field_in': dir_s,
               'set_percentile': in_set_percentile_C,
-              't_av_or_not': time_av_or_not
+              't_av_or_not': time_av_or_not,
+              'contour_field_in': contour_data
            }
 
 
@@ -58,7 +61,8 @@ HjRj_th_options = {'axis_set': my_axis,
                    'field': 'HR_th_field',
                    'data_field_in': dir_th,
                    'set_percentile': in_set_percentile,
-                   't_av_or_not': time_av_or_not
+                   't_av_or_not': time_av_or_not,
+                   'contour_field_in': contour_data
            }
 
 RjRj_th_options = {'axis_set': my_axis,
@@ -66,7 +70,8 @@ RjRj_th_options = {'axis_set': my_axis,
                    'field': 'RR_th_field',
                    'data_field_in': dir_th,
                    'set_percentile': in_set_percentile,
-                   't_av_or_not': time_av_or_not
+                   't_av_or_not': time_av_or_not,
+                   'contour_field_in': contour_data
            }
 
 Cth_options = {'axis_set': my_axis,
@@ -74,7 +79,8 @@ Cth_options = {'axis_set': my_axis,
                'field': 'Cth_field',
                'data_field_in': dir_th,
                'set_percentile': in_set_percentile_C,
-               't_av_or_not': time_av_or_not
+               't_av_or_not': time_av_or_not,
+               'contour_field_in': contour_data
            }
 
 
@@ -83,7 +89,8 @@ HjRj_qt_options = {'axis_set': my_axis,
                    'field': 'HR_q_total_field',
                    'data_field_in': dir_qt,
                    'set_percentile': in_set_percentile,
-                   't_av_or_not': time_av_or_not
+                   't_av_or_not': time_av_or_not,
+                   'contour_field_in': contour_data
            }
 
 RjRj_qt_options = {'axis_set': my_axis,
@@ -91,7 +98,8 @@ RjRj_qt_options = {'axis_set': my_axis,
                    'field': 'RR_q_total_field',
                    'data_field_in': dir_qt,
                    'set_percentile': in_set_percentile,
-                   't_av_or_not': time_av_or_not
+                   't_av_or_not': time_av_or_not,
+                   'contour_field_in': contour_data
            }
 
 Cqt_options = {'axis_set': my_axis,
@@ -99,7 +107,8 @@ Cqt_options = {'axis_set': my_axis,
                'field': 'Cqt_field',
                'data_field_in': dir_qt,
                'set_percentile': in_set_percentile_C,
-               't_av_or_not': time_av_or_not
+               't_av_or_not': time_av_or_not,
+               'contour_field_in': contour_data
            }
 
 
