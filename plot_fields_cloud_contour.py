@@ -7,7 +7,7 @@ from matplotlib import cm
 from matplotlib.colors import TwoSlopeNorm
 
 
-homedir = '/work/scratch-pw/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
+homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
 mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 contour_data = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
