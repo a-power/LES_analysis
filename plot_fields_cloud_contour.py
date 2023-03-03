@@ -4,7 +4,7 @@ import xarray as xr
 import os
 import dynamic_functions as dyn
 from matplotlib import cm
-from matplotlib.colors import TwoslopeNorm
+from matplotlib.colors import TwoSlopeNorm
 
 
 homedir = '/work/scratch-pw/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
@@ -251,7 +251,7 @@ def plotfield(field, x_or_y, axis_set, data_field_in, set_percentile, contour_fi
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
-                cf = plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), cmap=cm.bwr, norm=TwoslopeNorm(0),
+                cf = plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
                                   levels=mylevels, extend='both')
                 cb = plt.colorbar(cf, format='%.2f')
                 #cb.set_under('k')
@@ -272,7 +272,7 @@ def plotfield(field, x_or_y, axis_set, data_field_in, set_percentile, contour_fi
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
-                cf = plt.contourf(np.transpose(data_field_sq[:, axis_set, :]), cmap=cm.bwr, norm=TwoslopeNorm(0),
+                cf = plt.contourf(np.transpose(data_field_sq[:, axis_set, :]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
                                   levels=mylevels, extend='both')
                 cb = plt.colorbar(cf, format='%.2f')
                 #cb.set_under('k')
