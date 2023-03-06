@@ -168,7 +168,7 @@ def plotfield(field, x_or_y, axis_set, data_field_in, set_percentile, contour_fi
 
         contour_set = xr.open_dataset(contour_field_in + f'{i}_running_mean_filter_rm00.nc')
 
-        print('length of time array for cloud field is ', len(contour_set['f(f(q_cloud_liquid_mass_on_w)_r_on_p)_r'].data[:, 0, 0, 0]))
+        print('length of time array for cloud field is ', len(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, 0, 0, 0]))
         if t_av_or_not == 'yes':
             cloud_field = np.mean(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[...], axis = 0)
             w_field = np.mean(contour_set['f(f(w_on_p)_r_on_p)_r'].data[...], axis=0)
@@ -176,7 +176,7 @@ def plotfield(field, x_or_y, axis_set, data_field_in, set_percentile, contour_fi
             th_v_field = np.mean(contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[...], axis=0)
             mytime = 't_av'
         else:
-            cloud_field = contour_set['f(f(q_cloud_liquid_mass_on_w)_r_on_p)_r'].data[t_av_or_not,...]
+            cloud_field = contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_av_or_not,...]
             w_field = contour_set['f(f(w_on_p)_r_on_p)_r'].data[t_av_or_not,...]
             w2_field = contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_av_or_not,...]
             th_v_field = contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[t_av_or_not,...]
