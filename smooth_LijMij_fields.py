@@ -13,11 +13,16 @@ import dynamic_functions as dyn
 import dask
 import subfilter
 
-homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
+beta=False
+
+if beta==True:
+    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
+else:
+    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
+
 mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 #dir_cloud = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
-beta=False
 
 dirs = [mydir]#, dir_cloud]
 if beta == True:
