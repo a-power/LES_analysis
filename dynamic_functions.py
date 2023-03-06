@@ -296,13 +296,13 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
     # C_s_num = None
     # C_s_den = None
 
-    LM_av = np.zeros(z_num)
-    MM_av = np.zeros(z_num)
+    LM_av = np.zeros((num_times, z_num))
+    MM_av = np.zeros((num_times, z_num))
 
     for k in range(z_num):
 
-        LM_av[k] = np.sum(LM_flat[:,k])/total_num
-        MM_av[k] = np.sum(MM_flat[:,k])/total_num
+        LM_av[0, k] = np.sum(LM_flat[:,k])/total_num
+        MM_av[0, k] = np.sum(MM_flat[:,k])/total_num
 
 
     Cs_av_sq = (0.5*(LM_av / MM_av))
@@ -361,12 +361,12 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
     # C_th_num = None
     # C_th_den = None
 
-    HR_av = np.zeros(z_num)
-    RR_av = np.zeros(z_num)
+    HR_av = np.zeros((num_times, z_num))
+    RR_av = np.zeros((num_times, z_num))
 
     for k in range(z_num):
-        HR_av[k] = np.sum(HR_flat[:, k]) / total_num
-        RR_av[k] = np.sum(RR_flat[:, k]) / total_num
+        HR_av[0, k] = np.sum(HR_flat[:, k]) / total_num
+        RR_av[0, k] = np.sum(RR_flat[:, k]) / total_num
 
     C_th_av_sq = (0.5 * (HR_av / RR_av))
 
