@@ -304,18 +304,18 @@ def plotfield(field, x_or_y, axis_set, data_field_in, set_percentile, contour_fi
 #
 # plotfield(**MijMij_options)
 #
-# plotfield(**Cs_options)
+plotfield(**Cs_options)
 #
 #
 # plotfield(**HjRj_th_options)
 
 # plotfield(**RjRj_th_options)
 #
-# plotfield(**Cth_options)
+plotfield(**Cth_options)
 #
 #
 # plotfield(**HjRj_qt_options)
 
-plotfield(**RjRj_qt_options)
+# plotfield(**RjRj_qt_options)
 
 plotfield(**Cqt_options)
