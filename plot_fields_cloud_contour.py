@@ -158,13 +158,14 @@ def plotfield(field, x_or_y, axis_set, data_field_in, set_percentile, contour_fi
             data_field = dyn.get_Cs(data_field_sq)
 
         else:
-            print(f'length of time array for {field} is ', len(data_set[f'{field}'].data[:, 0, 0, 0]))
+            print(f'length of time array for {field} is ', len(data_set[f'f({field}_on_p)_r'].data[:, 0, 0, 0]))
             if t_av_or_not == 'yes':
-                data_field = np.mean(data_set[f'{field}'].data[...], axis = 0)
+                data_field = np.mean(data_set[f'f({field}_on_p)_r'].data[...], axis = 0)
             else:
-                data_field = data_set[f'{field}'].data[t_av_or_not,...]
+                data_field = data_set[f'f({field}_on_p)_r'].data[t_av_or_not,...]
 
         data_set.close()
+
         contour_set = xr.open_dataset(contour_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
 
         print('length of time array for cloud field is ', len(contour_set['f(f(q_cloud_liquid_mass_on_w)_r_on_p)_r'].data[:, 0, 0, 0]))
