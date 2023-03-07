@@ -116,7 +116,7 @@ def plotfield(field, x_or_y, axis_set, data_field_in, set_percentile, contour_fi
 
     deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
-    for i in range(len(data_field_in)):
+    for i in range(len(deltas)):
 
         data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
 
