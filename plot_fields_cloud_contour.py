@@ -203,8 +203,8 @@ def plotfield(field, x_or_y, axis_set, data_field_in, set_percentile, contour_fi
             #cb.set_label(f'{field}', size=16)
 
             plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2, levels=[1e-5])
-            plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyle='dashed', linewidths=1,
-                        levels=[0, 1, 2])
+            plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyle='dashed', linewidths=1)#,
+                        #levels=[0, 1, 2])
             plt.contour(np.transpose(w_field[axis_set, :, :]), colors='blue', linestyle='dashed', linewidths=1,
                         levels=[0, 0.5, 1])
             # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='blue', linewidths=1, levels=[0])
@@ -225,8 +225,8 @@ def plotfield(field, x_or_y, axis_set, data_field_in, set_percentile, contour_fi
             cb.set_label(f'{field}', size=16)
 
             plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2, levels=[1e-5])
-            plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyle='dashed', linewidths=1,
-                        levels=[0, 1, 2])
+            plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyle='dashed', linewidths=1)#,
+                        #levels=[0, 1, 2])
             plt.contour(np.transpose(w_field[axis_set, :, :]), colors='blue', linestyle='dashed', linewidths=1,
                         levels=[0, 0.5, 1])
             # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='blue', linewidths=1, levels=[0])
@@ -259,8 +259,8 @@ def plotfield(field, x_or_y, axis_set, data_field_in, set_percentile, contour_fi
                 cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2, levels=[1e-5])
-                plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyle='dashed', linewidths=1,
-                            levels=[0, 1, 2])
+                plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyle='dashed', linewidths=1)#,
+                            #levels=[0, 1, 2])
                 plt.contour(np.transpose(w_field[axis_set, :, :]), colors='gray', linestyle='dashed', linewidths=1,
                             levels=[0, 0.5, 1])
                 # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='blue', linewidths=1, levels=[0])
@@ -280,7 +280,7 @@ def plotfield(field, x_or_y, axis_set, data_field_in, set_percentile, contour_fi
                 cb.set_label(f'{field}$^2$', size=16)
 
                 plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2, levels=[1e-5])
-                plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyle='dashed', linewidths=1, levels=[0, 1, 2])
+                plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyle='dashed', linewidths=1)#, levels=[0, 1, 2])
                 plt.contour(np.transpose(w_field[axis_set, :, :]), colors='gray', linestyle='dashed', linewidths=1, levels=[0, 0.5, 1])
                 # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='blue', linewidths=1, levels=[0])
                 plt.xlabel(f'x (cross section with y = {axis_set}) (km)')
