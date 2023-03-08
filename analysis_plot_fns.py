@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib as mpl
+import dynamic_functions as dyn
 import mask_cloud_vs_env as clo
 import numpy.ma as ma
 import dynamic_functions as dyn
@@ -280,11 +280,9 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             mycmap = plt.get_cmap('YlOrRd').copy()
             mycmap.set_extremes(under='white', over='maroon')
 
-            my_norm = mpl.colors.Normalize(vmin=myvmin, vmax=myvmax)
-            cf = plt.contourf(np.transpose(data_field[start_grid:end_grid, 0:101]), cmap=mycmap, extend='both')
-                             # levels=mylevels)
-
-            cb = plt.colorbar(cf, norm=my_norm, format='%.2f')
+            cf = plt.contourf(np.transpose(data_field[start_grid:end_grid, 0:101]), cmap=mycmap, levels=mylevels,
+                              extend='both')
+            cb = plt.colorbar(cf, format='%.2f')
             cb.set_label(f'{field_name}', size=16)
 
             cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, 0:101]), colors='black', linewidths=2, levels=[1e-5])
@@ -314,7 +312,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
                 if set_percentile_C2[0] == 'min':
                     myvmin_temp = np.min(data_field_sq[start_grid:end_grid, 5:120])
-                    myvmin = myvmin_temp + abs(0.5*myvmin_temp)
+                    myvmin = myvmin_temp + abs(0.6*myvmin_temp)
                 else:
                     myvmin = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[0])
                 myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[1])
@@ -322,8 +320,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
                 cf = plt.contourf(np.transpose(data_field_sq[start_grid:end_grid, 0:101]), cmap=cm.bwr,
-                                  norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax), extend='both')
-                                  #levels=mylevels)
+                                  norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
+                                  levels=mylevels, extend='both')
                 cb = plt.colorbar(cf, format='%.2f')
                 # cb.set_under('k')
                 cb.set_label(f'{field_name_sq}', size=16)
