@@ -7,6 +7,7 @@ import dynamic_functions as dyn
 from matplotlib import cm
 from matplotlib.colors import TwoSlopeNorm
 import xarray as xr
+from matplotlib.ticker import FormatStrFormatter
 
 def negs_in_field(plotdir, field, data_field_list, data_cl_list):
     deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
@@ -313,7 +314,9 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 print("axis_set must be 'x' or'y'.")
             plt.ylabel("z (km)", fontsize=16)
             og_xtic = plt.xticks()
-            plt.xticks(og_xtic[0], np.linspace(start, end, len(og_xtic[0])), format='%.2f')
+            plt.xticks(og_xtic[0], np.linspace(start, end, len(og_xtic[0])))
+            ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+
             og_ytic = plt.yticks()
             plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))  # plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
 
@@ -374,7 +377,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                     print("axis_set must be 'x' or 'y'.")
 
                 og_xtic = plt.xticks()
-                plt.xticks(og_xtic[0], np.linspace(start, end, len(og_xtic[0])), format='%.2f')
+                plt.xticks(og_xtic[0], np.linspace(start, end, len(og_xtic[0])))
+                ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
                 # og_ytic = plt.yticks()
                 plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))#plt.yticks(np.linspace(0, 151, 7), np.linspace(0, 3, 7))
                 plt.ylabel("z (km)", fontsize=16)
