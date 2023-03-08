@@ -277,41 +277,21 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
             mylevels = np.linspace(myvmin, myvmax, 8)
 
-            if x_or_y == 'x':
+            cf = plt.contourf(np.transpose(data_field[start_grid:end_grid, 0:101]), cmap=cm.hot_r, levels=mylevels,
+                              extend='both')
+            cb = plt.colorbar(cf, format='%.2f')
+            cb.set_label(f'{field_name}', size=16)
 
-                cf = plt.contourf(np.transpose(data_field[start_grid:end_grid, 0:101]), cmap=cm.hot_r, levels=mylevels,
-                                  extend='both')
-                cb = plt.colorbar(cf, format='%.2f')
-                cb.set_label(f'{field_name}', size=16)
+            cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, 0:101]), colors='black', linewidths=2, levels=[1e-5])
+            th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, 0:101]), colors='black', linestyles='dashed',
+                        linewidths=1)  # , levels=[0.1, 1, 2])
+            ax.clabel(th_v_c, inline=True, fontsize=10)
+            w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1,
+                        levels=[0.1, 0.5, 1])
+            ax.clabel(w_c, inline=True, fontsize=10)
+            # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0.1])
+            plt.xlabel(f'x (cross section with {x_or_y} = {axis_set*20/1000}) (km)', fontsize=16)
 
-                cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, 0:101]), colors='black', linewidths=2, levels=[1e-5])
-                th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, 0:101]), colors='black', linestyles='dashed',
-                            linewidths=1)  # , levels=[0.1, 1, 2])
-                ax.clabel(th_v_c, inline=True, fontsize=10)
-                w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1,
-                            levels=[0.1, 0.5, 1])
-                ax.clabel(w_c, inline=True, fontsize=10)
-                # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0.1])
-                plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)', fontsize=16)
-
-            elif x_or_y == 'y':
-
-                cf = plt.contourf(np.transpose(data_field[start_grid:end_grid, 0:101]), cmap=cm.hot_r, levels=mylevels,
-                                  extend='both')
-                cb = plt.colorbar(cf, format='%.2f')
-                cb.set_label(f'{field_name}', size=16)
-
-                cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, 0:101]), colors='black', linewidths=2, levels=[1e-5])
-                th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, 0:101]), colors='black', linestyles='dashed',
-                                     linewidths=1)  # , levels=[0.1, 1, 2])
-                ax.clabel(th_v_c, inline=True, fontsize=10)
-                w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1,
-                                  levels=[0.1, 0.5, 1])
-                ax.clabel(w_c, inline=True, fontsize=10)
-                # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0.1])
-                plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)', fontsize=16)
-            else:
-                print("axis_set must be 'x' or'y'.")
             plt.ylabel("z (km)", fontsize=16)
             og_xtic = plt.xticks()
             plt.xticks(og_xtic[0], np.linspace(start, end, len(og_xtic[0])))
@@ -336,45 +316,23 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
-                if x_or_y == 'x':
+                cf = plt.contourf(np.transpose(data_field_sq[start_grid:end_grid, 0:101]), cmap=cm.bwr,
+                                  norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
+                                  levels=mylevels, extend='both')
+                cb = plt.colorbar(cf, format='%.2f')
+                # cb.set_under('k')
+                cb.set_label(f'{field_name_sq}', size=16)
 
-                    cf = plt.contourf(np.transpose(data_field_sq[start_grid:end_grid, 0:101]), cmap=cm.seismic, norm=TwoSlopeNorm(0),
-                                      levels=mylevels, extend='both')
-                    cb = plt.colorbar(cf, format='%.2f')
-                    # cb.set_under('k')
-                    cb.set_label(f'{field_name_sq}', size=16)
-
-                    cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, 0:101]), colors='black', linewidths=2,
-                                       levels=[1e-5])
-                    th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, 0:101]), colors='black', linestyles='dashed',
-                                         linewidths=2)  # , levels=[0.1, 1, 2])
-                    ax.clabel(th_v_c, inline=True, fontsize=10)
-                    w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='dimgrey', linestyles='dashed',
-                                      linewidths=2, levels=[0.1, 0.5, 1])
-                    ax.clabel(w_c, inline=True, fontsize=10)
-                    # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0.1])
-                    plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)', fontsize=16)
-
-                elif x_or_y == 'y':
-
-                    cf = plt.contourf(np.transpose(data_field_sq[start_grid:end_grid, 0:101]), cmap=cm.seismic, norm=TwoSlopeNorm(0),
-                                      levels=mylevels, extend='both')
-                    cb = plt.colorbar(cf, format='%.2f')
-                    # cb.set_under('k')
-                    cb.set_label(f'{field_name_sq}', size=16)
-
-                    cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, 0:101]), colors='black', linewidths=2,
-                                       levels=[1e-5])
-                    th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, 0:101]), colors='black', linestyles='dashed',
-                                         linewidths=2)  # , levels=[0.1, 1, 2])
-                    ax.clabel(th_v_c, inline=True, fontsize=10)
-                    w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=2,
-                                      linestyles='dashed', levels=[0.1, 0.5, 1])
-                    ax.clabel(w_c, inline=True, fontsize=10)
-                    # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0.1])
-                    plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)', fontsize=16)
-                else:
-                    print("axis_set must be 'x' or 'y'.")
+                cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, 0:101]), colors='black', linewidths=2,
+                                   levels=[1e-5])
+                th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, 0:101]), colors='black', linestyles='dashed',
+                                     linewidths=2)  # , levels=[0.1, 1, 2])
+                ax.clabel(th_v_c, inline=True, fontsize=10)
+                w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='dimgrey', linestyles='dashed',
+                                  linewidths=2, levels=[0.1, 0.5, 1])
+                ax.clabel(w_c, inline=True, fontsize=10)
+                # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0.1])
+                plt.xlabel(f'y (cross section with {x_or_y} = {axis_set*20/1000}) (km)', fontsize=16)
 
                 og_xtic = plt.xticks()
                 plt.xticks(og_xtic[0], np.linspace(start, end, len(og_xtic[0])))
