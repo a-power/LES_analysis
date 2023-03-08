@@ -325,7 +325,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 plt.title(f'{field_name_sq} for time {mytime}', fontsize=16)
 
                 if set_percentile_C2[0] == 'min':
-                    myvmin = np.min(data_field_sq[start_grid:end_grid, 5:120])
+                    myvmin_temp = np.min(data_field_sq[start_grid:end_grid, 5:120])
+                    myvmin = myvmin_temp + abs(0.5*myvmin_temp)
                 else:
                     myvmin = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[0])
                 myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[1])
@@ -334,7 +335,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
                 if x_or_y == 'x':
 
-                    cf = plt.contourf(np.transpose(data_field_sq[start_grid:end_grid, 0:101]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
+                    cf = plt.contourf(np.transpose(data_field_sq[start_grid:end_grid, 0:101]), cmap=cm.seismic, norm=TwoSlopeNorm(0),
                                       levels=mylevels, extend='both')
                     cb = plt.colorbar(cf, format='%.2f')
                     # cb.set_under('k')
@@ -353,7 +354,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
                 elif x_or_y == 'y':
 
-                    cf = plt.contourf(np.transpose(data_field_sq[start_grid:end_grid, 0:101]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
+                    cf = plt.contourf(np.transpose(data_field_sq[start_grid:end_grid, 0:101]), cmap=cm.seismic, norm=TwoSlopeNorm(0),
                                       levels=mylevels, extend='both')
                     cb = plt.colorbar(cf, format='%.2f')
                     # cb.set_under('k')
