@@ -115,22 +115,22 @@ Cqt_options = {'axis_set': my_axis,
 
 
 
-# apf.plotfield(plotdir, x_axis_start_end, **LijMij_options)
+# apf.plotfield(plotdir, start_end=x_axis_start_end, **LijMij_options)
 #
-# apf.plotfield(plotdir, x_axis_start_end, **MijMij_options)
+# apf.plotfield(plotdir, start_end=x_axis_start_end, **MijMij_options)
 #
-apf.plotfield(plotdir, x_axis_start_end, **Cs_options)
+apf.plotfield(plotdir, start_end=x_axis_start_end, **Cs_options)
 #
 #
-# apf.plotfield(plotdir, x_axis_start_end, **HjRj_th_options)
+# apf.plotfield(plotdir, start_end=x_axis_start_end, **HjRj_th_options)
 
-# apf.plotfield(plotdir, x_axis_start_end, **RjRj_th_options)
+# apf.plotfield(plotdir, start_end=x_axis_start_end, **RjRj_th_options)
 #
-apf.plotfield(plotdir, x_axis_start_end, **Cth_options)
+apf.plotfield(plotdir, start_end=x_axis_start_end, **Cth_options)
 #
 #
-# apf.plotfield(plotdir, x_axis_start_end, **HjRj_qt_options)
+# apf.plotfield(plotdir, start_end=x_axis_start_end, **HjRj_qt_options)
 
-# apf.plotfield(plotdir, x_axis_start_end, **RjRj_qt_options)
+# apf.plotfield(plotdir, start_end=x_axis_start_end, **RjRj_qt_options)
 
-apf.plotfield(plotdir, x_axis_start_end, **Cqt_options)
+apf.plotfield(plotdir, start_end=x_axis_start_end, **Cqt_options)
