@@ -309,7 +309,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                                   levels=[0, 0.5, 1])
                 ax.clabel(w_c, inline=True, fontsize=10)
                 # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
-                plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)')
+                plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)', fontsize=16)
             else:
                 print("axis_set must be 'x' or'y'.")
             plt.ylabel("z (km)", fontsize=16)
@@ -346,7 +346,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                                       linewidths=2, levels=[0.5, 1])
                     ax.clabel(w_c, inline=True, fontsize=10)
                     # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
-                    plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)')
+                    plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)', fontsize=16)
 
                 elif x_or_y == 'y':
 
@@ -370,7 +370,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                                       linestyles='dashed', levels=[0.5, 1])
                     ax.clabel(w_c, inline=True, fontsize=10)
                     # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
-                    plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)')
+                    plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)', fontsize=16)
                 else:
                     print("axis_set must be 'x' or 'y'.")
 
@@ -378,7 +378,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 plt.xticks(og_xtic[0], np.linspace(0, 16, len(og_xtic[0])))
                 # og_ytic = plt.yticks()
                 plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))#plt.yticks(np.linspace(0, 151, 7), np.linspace(0, 3, 7))
-                plt.ylabel("z (km)")
+                plt.ylabel("z (km)", fontsize=16)
                 plt.savefig(plot_dir + f'{field}_sq_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
                 plt.clf()
 
