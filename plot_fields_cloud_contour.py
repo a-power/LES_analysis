@@ -17,6 +17,8 @@ in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
 in_set_percentile_C2 = [1,99]
 
+x_axis_start_end = [0, 3.5] #start and end points in km
+
 time_av_or_not = np.array([0, 1, 2]) #'yes' #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
 
 my_axis = 299
@@ -113,22 +115,22 @@ Cqt_options = {'axis_set': my_axis,
 
 
 
-# apf.plotfield(plotdir, **LijMij_options)
+# apf.plotfield(plotdir, x_axis_start_end, **LijMij_options)
 #
-# apf.plotfield(plotdir, **MijMij_options)
+# apf.plotfield(plotdir, x_axis_start_end, **MijMij_options)
 #
-apf.plotfield(plotdir, **Cs_options)
+apf.plotfield(plotdir, x_axis_start_end, **Cs_options)
 #
 #
-# apf.plotfield(plotdir, **HjRj_th_options)
+# apf.plotfield(plotdir, x_axis_start_end, **HjRj_th_options)
 
-# apf.plotfield(plotdir, **RjRj_th_options)
+# apf.plotfield(plotdir, x_axis_start_end, **RjRj_th_options)
 #
-apf.plotfield(plotdir, **Cth_options)
+apf.plotfield(plotdir, x_axis_start_end, **Cth_options)
 #
 #
-# apf.plotfield(plotdir, **HjRj_qt_options)
+# apf.plotfield(plotdir, x_axis_start_end, **HjRj_qt_options)
 
-# apf.plotfield(plotdir, **RjRj_qt_options)
+# apf.plotfield(plotdir, x_axis_start_end, **RjRj_qt_options)
 
-apf.plotfield(plotdir, **Cqt_options)
+apf.plotfield(plotdir, x_axis_start_end, **Cqt_options)

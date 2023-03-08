@@ -111,9 +111,16 @@ def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
     plt.close('all')
 
 
-def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, contour_field_in, t_av_or_not, set_percentile_C2=None)\
+def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, contour_field_in, t_av_or_not,
+              start_end, set_percentile_C2=None)\
         :
     deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+
+    start = start_end[0]
+    start_grid = start/0.02 # going from km to grid spacing co-ords (20m grid)
+    end = start_end[1]
+    end_grid = end/0.02 # going from km to grid spacing co-ords (20m grid)
+
 
     if field == 'Cs_field':
         field_name = '$C_s$'
@@ -266,24 +273,24 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 # if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
                 #     myvmin = 0
                 # else:
-                myvmin = np.percentile(data_field[..., 5:120], set_percentile[0])
-                myvmax = np.percentile(data_field[..., 5:120], set_percentile[1])
+                myvmin = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[0])
+                myvmax = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
-                cf = plt.contourf(np.transpose(data_field[..., 0:101]), cmap=cm.hot_r, levels=mylevels,
+                cf = plt.contourf(np.transpose(data_field[start_grid:end_grid, 0:101]), cmap=cm.hot_r, levels=mylevels,
                                   extend='both')
                 cb = plt.colorbar(cf, format='%.2f')
                 cb.set_label(f'{field_name}', size=16)
 
-                cl_c = plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2, levels=[1e-5])
-                th_v_c = plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
+                cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, 0:101]), colors='black', linewidths=2, levels=[1e-5])
+                th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, 0:101]), colors='black', linestyles='dashed',
                             linewidths=1)  # , levels=[0, 1, 2])
                 ax.clabel(th_v_c, inline=True, fontsize=10)
-                w_c = plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
+                w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1,
                             levels=[0.5, 1])
                 ax.clabel(w_c, inline=True, fontsize=10)
-                # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
+                # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0])
                 plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)', fontsize=16)
 
             elif x_or_y == 'y':
@@ -291,34 +298,34 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 # if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
                 #     myvmin = 0
                 # else:
-                myvmin = np.percentile(data_field[..., 5:120], set_percentile[0])
-                myvmax = np.percentile(data_field[..., 5:120], set_percentile[1])
+                myvmin = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[0])
+                myvmax = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
-                cf = plt.contourf(np.transpose(data_field[..., 0:101]), cmap=cm.hot_r, levels=mylevels,
+                cf = plt.contourf(np.transpose(data_field[start_grid:end_grid, 0:101]), cmap=cm.hot_r, levels=mylevels,
                                   extend='both')
                 cb = plt.colorbar(cf, format='%.2f')
                 cb.set_label(f'{field_name}', size=16)
 
-                cl_c = plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2, levels=[1e-5])
-                th_v_c = plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
+                cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, 0:101]), colors='black', linewidths=2, levels=[1e-5])
+                th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, 0:101]), colors='black', linestyles='dashed',
                                      linewidths=1)  # , levels=[0, 1, 2])
                 ax.clabel(th_v_c, inline=True, fontsize=10)
-                w_c = plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
+                w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1,
                                   levels=[0.5, 1])
                 ax.clabel(w_c, inline=True, fontsize=10)
-                # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
+                # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0])
                 plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)', fontsize=16)
             else:
                 print("axis_set must be 'x' or'y'.")
             plt.ylabel("z (km)", fontsize=16)
             og_xtic = plt.xticks()
-            plt.xticks(og_xtic[0], np.linspace(1, 7, len(og_xtic[0])))
+            plt.xticks(og_xtic[0], np.linspace(start, end, len(og_xtic[0])))
             og_ytic = plt.yticks()
             plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))  # plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
 
-            plt.savefig(plot_dir + f'{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
+            plt.savefig(plot_dir + f'{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}_start_{start}_end_{end}.png', pad_inches=0)
             plt.clf()
 
             if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
@@ -326,60 +333,60 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 plt.title(f'{field_name_sq} for time {mytime}', fontsize=16)
                 if x_or_y == 'x':
 
-                    myvmin = np.percentile(data_field_sq[..., 5:120], set_percentile_C2[0])
-                    myvmax = np.percentile(data_field_sq[..., 5:120], set_percentile_C2[1])
+                    myvmin = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[0])
+                    myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[1])
 
                     mylevels = np.linspace(myvmin, myvmax, 8)
 
-                    cf = plt.contourf(np.transpose(data_field_sq[..., 0:101]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
+                    cf = plt.contourf(np.transpose(data_field_sq[start_grid:end_grid, 0:101]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
                                       levels=mylevels, extend='both')
                     cb = plt.colorbar(cf, format='%.2f')
                     # cb.set_under('k')
                     cb.set_label(f'{field_name_sq}', size=16)
 
-                    cl_c = plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2,
+                    cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, 0:101]), colors='black', linewidths=2,
                                        levels=[1e-5])
-                    th_v_c = plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
+                    th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, 0:101]), colors='black', linestyles='dashed',
                                          linewidths=2)  # , levels=[0, 1, 2])
                     ax.clabel(th_v_c, inline=True, fontsize=10)
-                    w_c = plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linestyles='dashed',
+                    w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='dimgrey', linestyles='dashed',
                                       linewidths=2, levels=[0.5, 1])
                     ax.clabel(w_c, inline=True, fontsize=10)
-                    # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
+                    # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0])
                     plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)', fontsize=16)
 
                 elif x_or_y == 'y':
 
-                    myvmin = np.percentile(data_field_sq[..., 5:120], set_percentile[0])
-                    myvmax = np.percentile(data_field_sq[..., 5:120], set_percentile[1])
+                    myvmin = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile[0])
+                    myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile[1])
 
                     mylevels = np.linspace(myvmin, myvmax, 8)
 
-                    cf = plt.contourf(np.transpose(data_field_sq[..., 0:101]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
+                    cf = plt.contourf(np.transpose(data_field_sq[start_grid:end_grid, 0:101]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
                                       levels=mylevels, extend='both')
                     cb = plt.colorbar(cf, format='%.2f')
                     # cb.set_under('k')
                     cb.set_label(f'{field_name_sq}', size=16)
 
-                    cl_c = plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2,
+                    cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, 0:101]), colors='black', linewidths=2,
                                        levels=[1e-5])
-                    th_v_c = plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
+                    th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, 0:101]), colors='black', linestyles='dashed',
                                          linewidths=2)  # , levels=[0, 1, 2])
                     ax.clabel(th_v_c, inline=True, fontsize=10)
-                    w_c = plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=2,
+                    w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=2,
                                       linestyles='dashed', levels=[0.5, 1])
                     ax.clabel(w_c, inline=True, fontsize=10)
-                    # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
+                    # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0])
                     plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)', fontsize=16)
                 else:
                     print("axis_set must be 'x' or 'y'.")
 
                 og_xtic = plt.xticks()
-                plt.xticks(og_xtic[0], np.linspace(0, 16, len(og_xtic[0])))
+                plt.xticks(og_xtic[0], np.linspace(start, end, len(og_xtic[0])))
                 # og_ytic = plt.yticks()
                 plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))#plt.yticks(np.linspace(0, 151, 7), np.linspace(0, 3, 7))
                 plt.ylabel("z (km)", fontsize=16)
-                plt.savefig(plot_dir + f'{field}_sq_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
+                plt.savefig(plot_dir + f'{field}_sq_{deltas[i]}_{mytime}_{x_or_y}={axis_set}_start_{start}_end_{end}.png', pad_inches=0)
                 plt.clf()
 
             print(f'plotted fields for {field} {mytime}')
