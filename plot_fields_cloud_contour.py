@@ -15,7 +15,7 @@ dir_qt = mydir + 'C_qt_'
 
 in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
-in_set_percentile_C2 = ['min',95] #note that the first entry of this can be 'min' or a number representing the percentile
+in_set_percentile_C2 = ['min',99] #note that the first entry of this can be 'min' or a number representing the percentile
 
 x_axis_start_end = [0, 5] #start and end points in km
 
