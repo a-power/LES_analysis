@@ -268,15 +268,15 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             fig, ax = plt.subplots(figsize=(16, 5))
             plt.title(f'{field_name} for time {mytime}', fontsize=16)
 
+            # if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
+            #     myvmin = 0
+            # else:
+            myvmin = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[0])
+            myvmax = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[1])
+
+            mylevels = np.linspace(myvmin, myvmax, 8)
+
             if x_or_y == 'x':
-
-                # if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
-                #     myvmin = 0
-                # else:
-                myvmin = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[0])
-                myvmax = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[1])
-
-                mylevels = np.linspace(myvmin, myvmax, 8)
 
                 cf = plt.contourf(np.transpose(data_field[start_grid:end_grid, 0:101]), cmap=cm.hot_r, levels=mylevels,
                                   extend='both')
@@ -294,14 +294,6 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)', fontsize=16)
 
             elif x_or_y == 'y':
-
-                # if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
-                #     myvmin = 0
-                # else:
-                myvmin = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[0])
-                myvmax = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[1])
-
-                mylevels = np.linspace(myvmin, myvmax, 8)
 
                 cf = plt.contourf(np.transpose(data_field[start_grid:end_grid, 0:101]), cmap=cm.hot_r, levels=mylevels,
                                   extend='both')
@@ -331,12 +323,16 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
                 plt.figure(figsize=(20, 5))
                 plt.title(f'{field_name_sq} for time {mytime}', fontsize=16)
-                if x_or_y == 'x':
 
+                if set_percentile_C2[0] == 'min':
+                    myvmin = np.min(data_field_sq[start_grid:end_grid, 5:120])
+                else:
                     myvmin = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[0])
-                    myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[1])
+                myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[1])
 
-                    mylevels = np.linspace(myvmin, myvmax, 8)
+                mylevels = np.linspace(myvmin, myvmax, 8)
+
+                if x_or_y == 'x':
 
                     cf = plt.contourf(np.transpose(data_field_sq[start_grid:end_grid, 0:101]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
                                       levels=mylevels, extend='both')
@@ -356,11 +352,6 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                     plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)', fontsize=16)
 
                 elif x_or_y == 'y':
-
-                    myvmin = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile[0])
-                    myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile[1])
-
-                    mylevels = np.linspace(myvmin, myvmax, 8)
 
                     cf = plt.contourf(np.transpose(data_field_sq[start_grid:end_grid, 0:101]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
                                       levels=mylevels, extend='both')
