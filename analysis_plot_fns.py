@@ -6,6 +6,7 @@ import numpy.ma as ma
 import dynamic_functions as dyn
 from matplotlib import cm
 from matplotlib.colors import TwoSlopeNorm
+import xarray as xr
 
 def negs_in_field(plotdir, field, data_field_list, data_cl_list):
     deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
@@ -48,7 +49,7 @@ def negs_in_field(plotdir, field, data_field_list, data_cl_list):
 
 
 def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
-    deltas = ['2D', '4D', '8D']#, '16D', '32D', '64D']
+    deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
 
     for i in range(len(data_field_list)):
@@ -110,8 +111,33 @@ def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
     plt.close('all')
 
 
-def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, contour_field_in, t_av_or_not):
+def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, contour_field_in, t_av_or_not, set_percentile_C2=None)\
+        :
     deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+
+    if field == 'Cs_field':
+        field_name = '$C_s$'
+        field_name_sq = '$C_s^2$'
+    if field == 'Cth_field':
+        field_name = '$C_{\\theta}$'
+        field_name_sq = '$C_{\\theta}^2$'
+    if field == 'Cqt_field':
+        field_name = '$C_{qt}$'
+        field_name_sq = '$C_{qt}^2$'
+
+    if field == 'LM_field':
+        field_name = '$LM$'
+    if field == 'HR_th_field':
+        field_name = '$HR_{\\theta}$'
+    if field == 'HR_qt_field':
+        field_name = '$HR_{qt}$'
+    if field == 'MM_field':
+        field_name = '$MM$'
+    if field == 'RR_th_field':
+        field_name = '$RR_{\\theta}$'
+    if field == 'RR_qt_field':
+        field_name = '$RR_{qt}$'
+
 
     for i in range(len(deltas)):
 
@@ -185,14 +211,14 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             contour_set.close()
 
             plt.figure(figsize=(16, 5))
-            plt.title(f'{field}', fontsize=16)
+            plt.title(f'{field_name} for time {mytime}', fontsize=16)
 
             if x_or_y == 'x':
 
-                if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
-                    myvmin = 0
-                else:
-                    myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
+                # if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
+                #     myvmin = 0
+                # else:
+                myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
                 myvmax = np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
@@ -200,59 +226,58 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 cf = plt.contourf(np.transpose(data_field[axis_set, :, :]), cmap=cm.hot_r, levels=mylevels,
                                   extend='both')
                 cb = plt.colorbar(cf, format='%.2f')
-                # cb.set_label(f'{field}', size=16)
+                cb.set_label(f'{field_name}', size=16)
 
                 plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2, levels=[1e-5])
-                plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyle='dashed',
+                plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyles='dashed',
                             linewidths=1)  # ,
                 # levels=[0, 1, 2])
-                plt.contour(np.transpose(w_field[axis_set, :, :]), colors='blue', linestyle='dashed', linewidths=1,
+                plt.contour(np.transpose(w_field[axis_set, :, :]), colors='dimgrey', linewidths=1,
                             levels=[0, 0.5, 1])
-                # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='blue', linewidths=1, levels=[0])
+                # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='dimgrey', linewidths=1, levels=[0])
                 plt.xlabel(f'y (cross section with x = {axis_set}) (km)', fontsize=16)
 
             elif x_or_y == 'y':
 
-                if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
-                    myvmin = 0
-                else:
-                    myvmin = np.percentile(data_field[50:351, axis_set, 5:120], set_percentile[0])
-                myvmax = np.percentile(data_field[50:351, axis_set, 5:120], set_percentile[1])
+                # if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
+                #     myvmin = 0
+                # else:
+                myvmin = np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
+                myvmax = np.percentile(data_field[:, axis_set, 5:120], set_percentile[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
-                cf = plt.contourf(np.transpose(data_field[50:351, axis_set, 0:101]), cmap=cm.hot_r, levels=mylevels,
+                cf = plt.contourf(np.transpose(data_field[:, axis_set, 0:101]), cmap=cm.hot_r, levels=mylevels,
                                   extend='both')
                 cb = plt.colorbar(cf, format='%.2f')
-                cb.set_label(f'{field}', size=16)
+                cb.set_label(f'{field_name}', size=16)
 
-                plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2, levels=[1e-5])
-                plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyle='dashed',
+                plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='black', linewidths=2, levels=[1e-5])
+                plt.contour(np.transpose(th_v_field[:, axis_set, :]), colors='black', linestyles='dashed',
                             linewidths=1)  # ,
                 # levels=[0, 1, 2])
-                plt.contour(np.transpose(w_field[axis_set, :, :]), colors='blue', linestyle='dashed', linewidths=1,
+                plt.contour(np.transpose(w_field[:, axis_set, :]), colors='dimgrey', linewidths=1,
                             levels=[0, 0.5, 1])
-                # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='blue', linewidths=1, levels=[0])
+                # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='dimgrey', linewidths=1, levels=[0])
                 plt.xlabel(f'x (cross section with y = {axis_set}) (km)')
             else:
                 print("axis_set must be 'x' or'y'.")
             plt.ylabel("z (km)", fontsize=16)
-            og_xtic = plt.xticks()
-            plt.xticks(og_xtic[0], np.linspace(1, 7, len(og_xtic[0])))
+            #og_xtic = plt.xticks()
+            #plt.xticks(og_xtic[0], np.linspace(1, 7, len(og_xtic[0])))
             og_ytic = plt.yticks()
-            plt.yticks(np.linspace(0, 101, 5),
-                       np.linspace(0, 2, 5))  # plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
+            plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))  # plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
 
-            plt.savefig(plot_dir + f'zoomed_{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
+            plt.savefig(plot_dir + f'{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
             plt.clf()
 
             if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
                 plt.figure(figsize=(20, 5))
-                plt.title(f'{field}$^2$', fontsize=16)
+                plt.title(f'{field_name_sq} for time {mytime}', fontsize=16)
                 if x_or_y == 'x':
 
-                    myvmin = 0  # np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
-                    myvmax = np.percentile(data_field_sq[axis_set, :, 5:120], set_percentile[1])
+                    myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile_C2[0])
+                    myvmax = np.percentile(data_field_sq[axis_set, :, 5:120], set_percentile_C2[1])
 
                     mylevels = np.linspace(myvmin, myvmax, 8)
 
@@ -260,20 +285,20 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                                       levels=mylevels, extend='both')
                     cb = plt.colorbar(cf, format='%.2f')
                     # cb.set_under('k')
-                    cb.set_label(f'{field}$^2$', size=16)
+                    cb.set_label(f'{field_name_sq}', size=16)
 
                     plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2, levels=[1e-5])
-                    plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyle='dashed',
+                    plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyles='dashed',
                                 linewidths=1)  # ,
                     # levels=[0, 1, 2])
-                    plt.contour(np.transpose(w_field[axis_set, :, :]), colors='gray', linestyle='dashed', linewidths=1,
+                    plt.contour(np.transpose(w_field[axis_set, :, :]), colors='dimgrey', linewidths=1,
                                 levels=[0, 0.5, 1])
-                    # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='blue', linewidths=1, levels=[0])
+                    # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='dimgrey', linewidths=1, levels=[0])
                     plt.xlabel(f'y (cross section with x = {axis_set}) (km)')
 
                 elif x_or_y == 'y':
 
-                    myvmin = 0  # np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
+                    myvmin = np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
                     myvmax = np.percentile(data_field_sq[:, axis_set, 5:120], set_percentile[1])
 
                     mylevels = np.linspace(myvmin, myvmax, 8)
@@ -282,21 +307,21 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                                       levels=mylevels, extend='both')
                     cb = plt.colorbar(cf, format='%.2f')
                     # cb.set_under('k')
-                    cb.set_label(f'{field}$^2$', size=16)
+                    cb.set_label(f'{field_name_sq}', size=16)
 
                     plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2, levels=[1e-5])
-                    plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyle='dashed',
+                    plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyles='dashed',
                                 linewidths=1)  # , levels=[0, 1, 2])
-                    plt.contour(np.transpose(w_field[axis_set, :, :]), colors='gray', linestyle='dashed', linewidths=1,
+                    plt.contour(np.transpose(w_field[axis_set, :, :]), colors='dimgrey', linewidths=1,
                                 levels=[0, 0.5, 1])
-                    # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='blue', linewidths=1, levels=[0])
+                    # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='dimgrey', linewidths=1, levels=[0])
                     plt.xlabel(f'x (cross section with y = {axis_set}) (km)')
                 else:
                     print("axis_set must be 'x' or 'y'.")
 
-                og_xtic = plt.xticks()
-                plt.xticks(og_xtic[0], np.linspace(0, 16, len(og_xtic[0])))
-                og_ytic = plt.yticks()
+                # og_xtic = plt.xticks()
+                # plt.xticks(og_xtic[0], np.linspace(0, 16, len(og_xtic[0])))
+                # og_ytic = plt.yticks()
                 plt.yticks(np.linspace(0, 151, 7), np.linspace(0, 3, 7))
                 plt.ylabel("z (km)")
                 plt.savefig(plot_dir + f'{field}_sq_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)

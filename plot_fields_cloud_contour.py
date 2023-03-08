@@ -46,6 +46,7 @@ Cs_options = {'axis_set': my_axis,
                'field': 'Cs_field',
                'data_field_in': dir_s,
               'set_percentile': in_set_percentile_C,
+              'set_percentile_C2': in_set_percentile,
               't_av_or_not': time_av_or_not,
               'contour_field_in': contour_data
            }
@@ -74,6 +75,7 @@ Cth_options = {'axis_set': my_axis,
                'field': 'Cth_field',
                'data_field_in': dir_th,
                'set_percentile': in_set_percentile_C,
+               'set_percentile_C2': in_set_percentile,
                't_av_or_not': time_av_or_not,
                'contour_field_in': contour_data
            }
@@ -102,6 +104,7 @@ Cqt_options = {'axis_set': my_axis,
                'field': 'Cqt_field',
                'data_field_in': dir_qt,
                'set_percentile': in_set_percentile_C,
+               'set_percentile_C2': in_set_percentile,
                't_av_or_not': time_av_or_not,
                'contour_field_in': contour_data
            }
