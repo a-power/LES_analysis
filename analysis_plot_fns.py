@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import dynamic_functions as dyn
+import matplotlib as mpl
 import mask_cloud_vs_env as clo
 import numpy.ma as ma
 import dynamic_functions as dyn
@@ -280,7 +280,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             mycmap = plt.get_cmap('YlOrRd').copy()
             mycmap.set_extremes(under='white', over='maroon')
 
-            my_norm = plt.colors.Normalize(vmin=myvmin, vmax=myvmax)
+            my_norm = mpl.colors.Normalize(vmin=myvmin, vmax=myvmax)
             cf = plt.contourf(np.transpose(data_field[start_grid:end_grid, 0:101]), cmap=mycmap, extend='both')
                              # levels=mylevels)
 
