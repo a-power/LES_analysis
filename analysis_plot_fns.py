@@ -258,7 +258,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
             contour_set.close()
 
-            plt.figure(figsize=(16, 5))
+            fig, ax = plt.subplots(figsize=(16, 5))
             plt.title(f'{field_name} for time {mytime}', fontsize=16)
 
             if x_or_y == 'x':
@@ -276,12 +276,13 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 cb = plt.colorbar(cf, format='%.2f')
                 cb.set_label(f'{field_name}', size=16)
 
-                plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2, levels=[1e-5])
-                plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
-                            linewidths=1)  # ,
-                # levels=[0, 1, 2])
-                plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
+                cl_c = plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2, levels=[1e-5])
+                th_v_c = plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
+                            linewidths=1)  # , levels=[0, 1, 2])
+                ax.clabel(th_v_c, inline=True, fontsize=10)
+                w_c = plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
                             levels=[0, 0.5, 1])
+                ax.clabel(w_c, inline=True, fontsize=10)
                 # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
                 plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)', fontsize=16)
 
@@ -300,12 +301,13 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 cb = plt.colorbar(cf, format='%.2f')
                 cb.set_label(f'{field_name}', size=16)
 
-                plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2, levels=[1e-5])
-                plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
-                            linewidths=1)  # ,
-                # levels=[0, 1, 2])
-                plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
-                            levels=[0, 0.5, 1])
+                cl_c = plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2, levels=[1e-5])
+                th_v_c = plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
+                                     linewidths=1)  # , levels=[0, 1, 2])
+                ax.clabel(th_v_c, inline=True, fontsize=10)
+                w_c = plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
+                                  levels=[0, 0.5, 1])
+                ax.clabel(w_c, inline=True, fontsize=10)
                 # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
                 plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)')
             else:
@@ -335,12 +337,14 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                     # cb.set_under('k')
                     cb.set_label(f'{field_name_sq}', size=16)
 
-                    plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2, levels=[1e-5])
-                    plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
-                                linewidths=1)  # ,
-                    # levels=[0, 1, 2])
-                    plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
-                                levels=[0, 0.5, 1])
+                    cl_c = plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2,
+                                       levels=[1e-5])
+                    th_v_c = plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
+                                         linewidths=1)  # , levels=[0, 1, 2])
+                    ax.clabel(th_v_c, inline=True, fontsize=10)
+                    w_c = plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
+                                      levels=[0, 0.5, 1])
+                    ax.clabel(w_c, inline=True, fontsize=10)
                     # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
                     plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)')
 
@@ -357,11 +361,14 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                     # cb.set_under('k')
                     cb.set_label(f'{field_name_sq}', size=16)
 
-                    plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2, levels=[1e-5])
-                    plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
-                                linewidths=1)  # , levels=[0, 1, 2])
-                    plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
-                                levels=[0, 0.5, 1])
+                    cl_c = plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2,
+                                       levels=[1e-5])
+                    th_v_c = plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
+                                         linewidths=1)  # , levels=[0, 1, 2])
+                    ax.clabel(th_v_c, inline=True, fontsize=10)
+                    w_c = plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
+                                      levels=[0, 0.5, 1])
+                    ax.clabel(w_c, inline=True, fontsize=10)
                     # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
                     plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)')
                 else:
