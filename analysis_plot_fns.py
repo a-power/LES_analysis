@@ -291,7 +291,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                             levels=[0.5, 1])
                 ax.clabel(w_c, inline=True, fontsize=10)
                 # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0])
-                plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)', fontsize=16)
+                plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)', fontsize=16, format='%.2f')
 
             elif x_or_y == 'y':
 
@@ -308,7 +308,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                                   levels=[0.5, 1])
                 ax.clabel(w_c, inline=True, fontsize=10)
                 # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0])
-                plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)', fontsize=16)
+                plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)', fontsize=16, format='%.2f')
             else:
                 print("axis_set must be 'x' or'y'.")
             plt.ylabel("z (km)", fontsize=16)
@@ -350,7 +350,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                                       linewidths=2, levels=[0.5, 1])
                     ax.clabel(w_c, inline=True, fontsize=10)
                     # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0])
-                    plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)', fontsize=16)
+                    plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)', fontsize=16, format='%.2f')
 
                 elif x_or_y == 'y':
 
@@ -369,7 +369,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                                       linestyles='dashed', levels=[0.5, 1])
                     ax.clabel(w_c, inline=True, fontsize=10)
                     # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='dimgrey', linewidths=1, levels=[0])
-                    plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)', fontsize=16)
+                    plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)', fontsize=16, format='%.2f')
                 else:
                     print("axis_set must be 'x' or 'y'.")
 
