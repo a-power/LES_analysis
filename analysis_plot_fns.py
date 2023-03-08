@@ -277,7 +277,10 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
             mylevels = np.linspace(myvmin, myvmax, 8)
 
-            cf = plt.contourf(np.transpose(data_field[start_grid:end_grid, 0:101]), cmap=cm.hot_r, levels=mylevels,
+            cmap = plt.get_cmap('YlOrRd').copy()
+            cmap.set_extremes(under='white', over='brown')
+
+            cf = plt.contourf(np.transpose(data_field[start_grid:end_grid, 0:101]), cmap=mycmap, levels=mylevels,
                               extend='both')
             cb = plt.colorbar(cf, format='%.2f')
             cb.set_label(f'{field_name}', size=16)
