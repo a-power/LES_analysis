@@ -324,7 +324,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 plt.title(f'{field_name_sq} for time {mytime}', fontsize=16)
                 if x_or_y == 'x':
 
-                    myvmin = np.percentile(data_field[..., 5:120], set_percentile_C2[0])
+                    myvmin = np.percentile(data_field_sq[..., 5:120], set_percentile_C2[0])
                     myvmax = np.percentile(data_field_sq[..., 5:120], set_percentile_C2[1])
 
                     mylevels = np.linspace(myvmin, myvmax, 8)
@@ -346,7 +346,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
                 elif x_or_y == 'y':
 
-                    myvmin = np.percentile(data_field[..., 5:120], set_percentile[0])
+                    myvmin = np.percentile(data_field_sq[..., 5:120], set_percentile[0])
                     myvmax = np.percentile(data_field_sq[..., 5:120], set_percentile[1])
 
                     mylevels = np.linspace(myvmin, myvmax, 8)
