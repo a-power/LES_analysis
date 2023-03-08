@@ -147,11 +147,19 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             if field == 'Cs_field':
                 print('length of time array for LM is ', len(data_set['f(LM_field_on_p)_r'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
-                    LM_field = np.mean(data_set['f(LM_field_on_p)_r'].data[...], axis=0)
-                    MM_field = np.mean(data_set['f(MM_field_on_p)_r'].data[...], axis=0)
+                    if x_or_y == 'x':
+                        LM_field = np.mean(data_set['f(LM_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                        MM_field = np.mean(data_set['f(MM_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                    elif x_or_y == 'y':
+                        LM_field = np.mean(data_set['f(LM_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                        MM_field = np.mean(data_set['f(MM_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
                 else:
-                    LM_field = data_set['f(LM_field_on_p)_r'].data[t_set, ...]
-                    MM_field = data_set['f(MM_field_on_p)_r'].data[t_set, ...]
+                    if x_or_y == 'x':
+                        LM_field = data_set['f(LM_field_on_p)_r'].data[t_set, axis_set, ...]
+                        MM_field = data_set['f(MM_field_on_p)_r'].data[t_set, axis_set, ...]
+                    elif x_or_y == 'y':
+                        LM_field = data_set['f(LM_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                        MM_field = data_set['f(MM_field_on_p)_r'].data[t_set, :, axis_set, ...]
 
                 data_field_sq = 0.5 * LM_field / MM_field
                 data_field = dyn.get_Cs(data_field_sq)
@@ -160,11 +168,19 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
                 print('length of time array for HR_th is ', len(data_set['f(HR_th_field_on_p)_r'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
-                    HR_field = np.mean(data_set['f(HR_th_field_on_p)_r'].data[...], axis=0)
-                    RR_field = np.mean(data_set['f(RR_th_field_on_p)_r'].data[...], axis=0)
+                    if x_or_y == 'x':
+                        HR_field = np.mean(data_set['f(HR_th_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['f(RR_th_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                    elif x_or_y == 'y':
+                        HR_field = np.mean(data_set['f(HR_th_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['f(RR_th_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
                 else:
-                    HR_field = data_set['f(HR_th_field_on_p)_r'].data[t_set, ...]
-                    RR_field = data_set['f(RR_th_field_on_p)_r'].data[t_set, ...]
+                    if x_or_y == 'x':
+                        HR_field = data_set['f(HR_th_field_on_p)_r'].data[t_set, axis_set, ...]
+                        RR_field = data_set['f(RR_th_field_on_p)_r'].data[t_set, axis_set, ...]
+                    elif x_or_y == 'y':
+                        HR_field = data_set['f(HR_th_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                        RR_field = data_set['f(RR_th_field_on_p)_r'].data[t_set, :, axis_set, ...]
 
                 data_field_sq = 0.5 * HR_field / RR_field
                 data_field = dyn.get_Cs(data_field_sq)
@@ -173,11 +189,21 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 print('length of time array for HR_qt is ',
                       len(data_set['f(HR_q_total_field_on_p)_r'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
-                    HR_field = np.mean(data_set['f(HR_q_total_field_on_p)_r'].data[...], axis=0)
-                    RR_field = np.mean(data_set['f(RR_q_total_field_on_p)_r'].data[...], axis=0)
+                    if x_or_y == 'x':
+                        HR_field = np.mean(data_set['f(HR_q_total_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['f(RR_q_total_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+
+                    elif x_or_y == 'y':
+                        HR_field = np.mean(data_set['f(HR_q_total_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['f(RR_q_total_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
                 else:
-                    HR_field = data_set['f(HR_q_total_field_on_p)_r'].data[t_set, ...]
-                    RR_field = data_set['f(RR_q_total_field_on_p)_r'].data[t_set, ...]
+                    if x_or_y == 'x':
+                        HR_field = data_set['f(HR_q_total_field_on_p)_r'].data[t_set, axis_set, ...]
+                        RR_field = data_set['f(RR_q_total_field_on_p)_r'].data[t_set, axis_set, ...]
+
+                    elif x_or_y == 'y':
+                        HR_field = data_set['f(HR_q_total_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                        RR_field = data_set['f(RR_q_total_field_on_p)_r'].data[t_set, :, axis_set, ...]
 
                 data_field_sq = 0.5 * HR_field / RR_field
                 data_field = dyn.get_Cs(data_field_sq)
@@ -185,9 +211,15 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             else:
                 print(f'length of time array for {field} is ', len(data_set[f'f({field}_on_p)_r'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
-                    data_field = np.mean(data_set[f'f({field}_on_p)_r'].data[...], axis=0)
+                    if x_or_y == 'x':
+                        data_field = np.mean(data_set[f'f({field}_on_p)_r'].data[:, axis_set, ...], axis=0)
+                    elif x_or_y == 'y':
+                        data_field = np.mean(data_set[f'f({field}_on_p)_r'].data[:, :, axis_set, ...], axis=0)
                 else:
-                    data_field = data_set[f'f({field}_on_p)_r'].data[t_set, ...]
+                    if x_or_y == 'x':
+                        data_field = data_set[f'f({field}_on_p)_r'].data[t_set, axis_set, ...]
+                    elif x_or_y == 'y':
+                        data_field = data_set[f'f({field}_on_p)_r'].data[t_set, :, axis_set, ...]
 
             data_set.close()
 
@@ -196,16 +228,32 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             print('length of time array for cloud field is ',
                   len(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, 0, 0, 0]))
             if t_av_or_not == 'yes':
-                cloud_field = np.mean(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[...], axis=0)
-                w_field = np.mean(contour_set['f(f(w_on_p)_r_on_p)_r'].data[...], axis=0)
-                w2_field = np.mean(contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[...], axis=0)
-                th_v_field = np.mean(contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[...], axis=0)
+                if x_or_y == 'x':
+                    cloud_field = np.mean(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, axis_set, ...], axis=0)
+                    w_field = np.mean(contour_set['f(f(w_on_p)_r_on_p)_r'].data[:, axis_set, ...], axis=0)
+                    w2_field = np.mean(contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[:, axis_set, ...], axis=0)
+                    th_v_field = np.mean(contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[:, axis_set, ...], axis=0)
+
+                elif x_or_y == 'y':
+                    cloud_field = np.mean(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                    w_field = np.mean(contour_set['f(f(w_on_p)_r_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                    w2_field = np.mean(contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                    th_v_field = np.mean(contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+
                 mytime = 't_av'
             else:
-                cloud_field = contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_set, ...]
-                w_field = contour_set['f(f(w_on_p)_r_on_p)_r'].data[t_set, ...]
-                w2_field = contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, ...]
-                th_v_field = contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[t_set, ...]
+                if x_or_y == 'x':
+                    cloud_field = contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+                    w_field = contour_set['f(f(w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+                    w2_field = contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+                    th_v_field = contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+
+                elif x_or_y == 'y':
+                    cloud_field = contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+                    w_field = contour_set['f(f(w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+                    w2_field = contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+                    th_v_field = contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+
                 mytime = f't{t_set}'
 
             contour_set.close()
@@ -218,48 +266,48 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 # if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
                 #     myvmin = 0
                 # else:
-                myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile[0])
-                myvmax = np.percentile(data_field[axis_set, :, 5:120], set_percentile[1])
+                myvmin = np.percentile(data_field[..., 5:120], set_percentile[0])
+                myvmax = np.percentile(data_field[..., 5:120], set_percentile[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
-                cf = plt.contourf(np.transpose(data_field[axis_set, :, :]), cmap=cm.hot_r, levels=mylevels,
+                cf = plt.contourf(np.transpose(data_field[..., 0:101]), cmap=cm.hot_r, levels=mylevels,
                                   extend='both')
                 cb = plt.colorbar(cf, format='%.2f')
                 cb.set_label(f'{field_name}', size=16)
 
-                plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2, levels=[1e-5])
-                plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyles='dashed',
+                plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2, levels=[1e-5])
+                plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
                             linewidths=1)  # ,
                 # levels=[0, 1, 2])
-                plt.contour(np.transpose(w_field[axis_set, :, :]), colors='dimgrey', linewidths=1,
+                plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
                             levels=[0, 0.5, 1])
-                # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='dimgrey', linewidths=1, levels=[0])
-                plt.xlabel(f'y (cross section with x = {axis_set}) (km)', fontsize=16)
+                # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
+                plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)', fontsize=16)
 
             elif x_or_y == 'y':
 
                 # if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
                 #     myvmin = 0
                 # else:
-                myvmin = np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
-                myvmax = np.percentile(data_field[:, axis_set, 5:120], set_percentile[1])
+                myvmin = np.percentile(data_field[..., 5:120], set_percentile[0])
+                myvmax = np.percentile(data_field[..., 5:120], set_percentile[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
-                cf = plt.contourf(np.transpose(data_field[:, axis_set, 0:101]), cmap=cm.hot_r, levels=mylevels,
+                cf = plt.contourf(np.transpose(data_field[..., 0:101]), cmap=cm.hot_r, levels=mylevels,
                                   extend='both')
                 cb = plt.colorbar(cf, format='%.2f')
                 cb.set_label(f'{field_name}', size=16)
 
-                plt.contour(np.transpose(cloud_field[:, axis_set, :]), colors='black', linewidths=2, levels=[1e-5])
-                plt.contour(np.transpose(th_v_field[:, axis_set, :]), colors='black', linestyles='dashed',
+                plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2, levels=[1e-5])
+                plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
                             linewidths=1)  # ,
                 # levels=[0, 1, 2])
-                plt.contour(np.transpose(w_field[:, axis_set, :]), colors='dimgrey', linewidths=1,
+                plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
                             levels=[0, 0.5, 1])
-                # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='dimgrey', linewidths=1, levels=[0])
-                plt.xlabel(f'x (cross section with y = {axis_set}) (km)')
+                # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
+                plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)')
             else:
                 print("axis_set must be 'x' or'y'.")
             plt.ylabel("z (km)", fontsize=16)
@@ -276,46 +324,46 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 plt.title(f'{field_name_sq} for time {mytime}', fontsize=16)
                 if x_or_y == 'x':
 
-                    myvmin = np.percentile(data_field[axis_set, :, 5:120], set_percentile_C2[0])
-                    myvmax = np.percentile(data_field_sq[axis_set, :, 5:120], set_percentile_C2[1])
+                    myvmin = np.percentile(data_field[..., 5:120], set_percentile_C2[0])
+                    myvmax = np.percentile(data_field_sq[..., 5:120], set_percentile_C2[1])
 
                     mylevels = np.linspace(myvmin, myvmax, 8)
 
-                    cf = plt.contourf(np.transpose(data_field_sq[axis_set, :, :]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
+                    cf = plt.contourf(np.transpose(data_field_sq[..., 0:101]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
                                       levels=mylevels, extend='both')
                     cb = plt.colorbar(cf, format='%.2f')
                     # cb.set_under('k')
                     cb.set_label(f'{field_name_sq}', size=16)
 
-                    plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2, levels=[1e-5])
-                    plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyles='dashed',
+                    plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2, levels=[1e-5])
+                    plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
                                 linewidths=1)  # ,
                     # levels=[0, 1, 2])
-                    plt.contour(np.transpose(w_field[axis_set, :, :]), colors='dimgrey', linewidths=1,
+                    plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
                                 levels=[0, 0.5, 1])
-                    # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='dimgrey', linewidths=1, levels=[0])
-                    plt.xlabel(f'y (cross section with x = {axis_set}) (km)')
+                    # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
+                    plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)')
 
                 elif x_or_y == 'y':
 
-                    myvmin = np.percentile(data_field[:, axis_set, 5:120], set_percentile[0])
-                    myvmax = np.percentile(data_field_sq[:, axis_set, 5:120], set_percentile[1])
+                    myvmin = np.percentile(data_field[..., 5:120], set_percentile[0])
+                    myvmax = np.percentile(data_field_sq[..., 5:120], set_percentile[1])
 
                     mylevels = np.linspace(myvmin, myvmax, 8)
 
-                    cf = plt.contourf(np.transpose(data_field_sq[:, axis_set, :]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
+                    cf = plt.contourf(np.transpose(data_field_sq[..., 0:101]), cmap=cm.bwr, norm=TwoSlopeNorm(0),
                                       levels=mylevels, extend='both')
                     cb = plt.colorbar(cf, format='%.2f')
                     # cb.set_under('k')
                     cb.set_label(f'{field_name_sq}', size=16)
 
-                    plt.contour(np.transpose(cloud_field[axis_set, :, :]), colors='black', linewidths=2, levels=[1e-5])
-                    plt.contour(np.transpose(th_v_field[axis_set, :, :]), colors='black', linestyles='dashed',
+                    plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2, levels=[1e-5])
+                    plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
                                 linewidths=1)  # , levels=[0, 1, 2])
-                    plt.contour(np.transpose(w_field[axis_set, :, :]), colors='dimgrey', linewidths=1,
+                    plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
                                 levels=[0, 0.5, 1])
-                    # plt.contour(np.transpose(w2_field[axis_set, :, :]), colors='dimgrey', linewidths=1, levels=[0])
-                    plt.xlabel(f'x (cross section with y = {axis_set}) (km)')
+                    # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
+                    plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)')
                 else:
                     print("axis_set must be 'x' or 'y'.")
 
