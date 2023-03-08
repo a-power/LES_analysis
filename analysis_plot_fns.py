@@ -287,8 +287,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                         linewidths=1)  # , levels=[0.1, 1, 2])
             ax.clabel(th_v_c, inline=True, fontsize=10)
             w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1,
-                        levels=[0.1, 0.5, 1])
-            ax.clabel(w_c, inline=True, fontsize=10)
+                        levels=[0.1, 0.5])
+            ax.clabel(w_c, inline=True, fontsize=8)
             # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1, levels=[0.1])
             plt.xlabel(f'x (cross section with {x_or_y} = {axis_set*20/1000}) (km)', fontsize=16)
 
@@ -329,8 +329,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                                      linewidths=2)  # , levels=[0.1, 1, 2])
                 ax.clabel(th_v_c, inline=True, fontsize=10)
                 w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linestyles='dashed',
-                                  linewidths=2, levels=[0.1, 0.5, 1])
-                ax.clabel(w_c, inline=True, fontsize=10)
+                                  linewidths=2, levels=[0.1, 0.5])
+                ax.clabel(w_c, inline=True, fontsize=8)
                 # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1, levels=[0.1])
                 plt.xlabel(f'y (cross section with {x_or_y} = {axis_set*20/1000}) (km)', fontsize=16)
 
