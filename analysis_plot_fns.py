@@ -277,8 +277,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
             mylevels = np.linspace(myvmin, myvmax, 8)
 
-            cmap = plt.get_cmap('YlOrRd').copy()
-            cmap.set_extremes(under='white', over='brown')
+            mycmap = plt.get_cmap('YlOrRd').copy()
+            mycmap.set_extremes(under='white', over='brown')
 
             cf = plt.contourf(np.transpose(data_field[start_grid:end_grid, 0:101]), cmap=mycmap, levels=mylevels,
                               extend='both')
