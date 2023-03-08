@@ -15,7 +15,7 @@ dir_qt = mydir + 'C_qt_'
 
 in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
-in_set_percentile_C2 = [1,99]
+in_set_percentile_C2 = [1,90]
 
 x_axis_start_end = [0, 3.5] #start and end points in km
 
