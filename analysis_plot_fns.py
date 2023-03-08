@@ -312,7 +312,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
                 if set_percentile_C2[0] == 'min':
                     myvmin_temp = np.min(data_field_sq[start_grid:end_grid, 5:120])
-                    myvmin = myvmin_temp + abs(0.5*myvmin_temp)
+                    myvmin = myvmin_temp + abs(0.6*myvmin_temp)
                 else:
                     myvmin = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[0])
                 myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[1])
