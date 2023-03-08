@@ -313,8 +313,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             else:
                 print("axis_set must be 'x' or'y'.")
             plt.ylabel("z (km)", fontsize=16)
-            #og_xtic = plt.xticks()
-            #plt.xticks(og_xtic[0], np.linspace(1, 7, len(og_xtic[0])))
+            og_xtic = plt.xticks()
+            plt.xticks(og_xtic[0], np.linspace(1, 7, len(og_xtic[0])))
             og_ytic = plt.yticks()
             plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))  # plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
 
@@ -340,10 +340,10 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                     cl_c = plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2,
                                        levels=[1e-5])
                     th_v_c = plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
-                                         linewidths=1)  # , levels=[0, 1, 2])
+                                         linewidths=2)  # , levels=[0, 1, 2])
                     ax.clabel(th_v_c, inline=True, fontsize=10)
-                    w_c = plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
-                                      levels=[0, 0.5, 1])
+                    w_c = plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linestyles='dashed',
+                                      linewidths=2, levels=[0.5, 1])
                     ax.clabel(w_c, inline=True, fontsize=10)
                     # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
                     plt.xlabel(f'y (cross section with x = {axis_set*20/1000}) (km)')
@@ -364,20 +364,20 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                     cl_c = plt.contour(np.transpose(cloud_field[..., 0:101]), colors='black', linewidths=2,
                                        levels=[1e-5])
                     th_v_c = plt.contour(np.transpose(th_v_field[..., 0:101]), colors='black', linestyles='dashed',
-                                         linewidths=1)  # , levels=[0, 1, 2])
+                                         linewidths=2)  # , levels=[0, 1, 2])
                     ax.clabel(th_v_c, inline=True, fontsize=10)
-                    w_c = plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=1,
-                                      levels=[0, 0.5, 1])
+                    w_c = plt.contour(np.transpose(w_field[..., 0:101]), colors='dimgrey', linewidths=2,
+                                      linestyles='dashed', levels=[0.5, 1])
                     ax.clabel(w_c, inline=True, fontsize=10)
                     # plt.contour(np.transpose(w2_field[..., 0:101]), colors='dimgrey', linewidths=1, levels=[0])
                     plt.xlabel(f'x (cross section with y = {axis_set*20/1000}) (km)')
                 else:
                     print("axis_set must be 'x' or 'y'.")
 
-                # og_xtic = plt.xticks()
-                # plt.xticks(og_xtic[0], np.linspace(0, 16, len(og_xtic[0])))
+                og_xtic = plt.xticks()
+                plt.xticks(og_xtic[0], np.linspace(0, 16, len(og_xtic[0])))
                 # og_ytic = plt.yticks()
-                plt.yticks(np.linspace(0, 151, 7), np.linspace(0, 3, 7))
+                plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))#plt.yticks(np.linspace(0, 151, 7), np.linspace(0, 3, 7))
                 plt.ylabel("z (km)")
                 plt.savefig(plot_dir + f'{field}_sq_{deltas[i]}_{mytime}_{x_or_y}={axis_set}.png', pad_inches=0)
                 plt.clf()
