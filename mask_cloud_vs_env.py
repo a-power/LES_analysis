@@ -118,25 +118,125 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater_threas='less', and
 
 #
 
-def get_masked_fields(dataset_in, delta, res_count = None, return_fields=True, cloud_thres = 10**(-5), other_var_choice = False, \
-                      other_var_thres=False, less_greater='greater', my_and_or = 'and', return_all_masks=False):
+def get_masked_fields(dataset_in, field, res_count = None, return_fields=True, cloud_thres = 10**(-5), other_var_choice = False, \
+                      other_var_thres=False, less_greater='less', my_and_or = 'and', return_all_masks=False):
 
-    data_s = xr.open_dataset(dataset_in + f'LijMij_{delta}.nc')
-    LijMij = data_s['LM_field'].data[...]
-    MijMij = data_s['MM_field'].data[...]
-    data_s.close()
+    if field == 'Cs_field':
+        print('length of time array for LM is ', len(data_set['f(LM_field_on_p)_r'].data[:, 0, 0, 0]))
+        if t_av_or_not == 'yes':
+            if x_or_y == 'x':
+                LM_field = np.mean(data_set['f(LM_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                MM_field = np.mean(data_set['f(MM_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+            elif x_or_y == 'y':
+                LM_field = np.mean(data_set['f(LM_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                MM_field = np.mean(data_set['f(MM_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+        else:
+            if x_or_y == 'x':
+                LM_field = data_set['f(LM_field_on_p)_r'].data[t_set, axis_set, ...]
+                MM_field = data_set['f(MM_field_on_p)_r'].data[t_set, axis_set, ...]
+            elif x_or_y == 'y':
+                LM_field = data_set['f(LM_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                MM_field = data_set['f(MM_field_on_p)_r'].data[t_set, :, axis_set, ...]
 
-    data_th = xr.open_dataset(dataset_in + f'HjRj_th_{delta}.nc')
-    HjRj_th = data_th['HR_th_field'].data[...]
-    RjRj_th = data_th['RR_th_field'].data[...]
-    data_th.close()
+        data_field_sq = 0.5 * LM_field / MM_field
+        data_field = dyn.get_Cs(data_field_sq)
 
-    data_qtot = xr.open_dataset(dataset_in + f'HjRj_qt_{delta}.nc')
-    HjRj_qt = data_qtot['HR_q_total_field'].data[...]
-    RjRj_qt = data_qtot['RR_q_total_field'].data[...]
+    elif field == 'Cth_field':
+
+        print('length of time array for HR_th is ', len(data_set['f(HR_th_field_on_p)_r'].data[:, 0, 0, 0]))
+        if t_av_or_not == 'yes':
+            if x_or_y == 'x':
+                HR_field = np.mean(data_set['f(HR_th_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                RR_field = np.mean(data_set['f(RR_th_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+            elif x_or_y == 'y':
+                HR_field = np.mean(data_set['f(HR_th_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                RR_field = np.mean(data_set['f(RR_th_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+        else:
+            if x_or_y == 'x':
+                HR_field = data_set['f(HR_th_field_on_p)_r'].data[t_set, axis_set, ...]
+                RR_field = data_set['f(RR_th_field_on_p)_r'].data[t_set, axis_set, ...]
+            elif x_or_y == 'y':
+                HR_field = data_set['f(HR_th_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                RR_field = data_set['f(RR_th_field_on_p)_r'].data[t_set, :, axis_set, ...]
+
+        data_field_sq = 0.5 * HR_field / RR_field
+        data_field = dyn.get_Cs(data_field_sq)
+
+    elif field == 'Cqt_field':
+        print('length of time array for HR_qt is ',
+              len(data_set['f(HR_q_total_field_on_p)_r'].data[:, 0, 0, 0]))
+        if t_av_or_not == 'yes':
+            if x_or_y == 'x':
+                HR_field = np.mean(data_set['f(HR_q_total_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                RR_field = np.mean(data_set['f(RR_q_total_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+
+            elif x_or_y == 'y':
+                HR_field = np.mean(data_set['f(HR_q_total_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                RR_field = np.mean(data_set['f(RR_q_total_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+        else:
+            if x_or_y == 'x':
+                HR_field = data_set['f(HR_q_total_field_on_p)_r'].data[t_set, axis_set, ...]
+                RR_field = data_set['f(RR_q_total_field_on_p)_r'].data[t_set, axis_set, ...]
+
+            elif x_or_y == 'y':
+                HR_field = data_set['f(HR_q_total_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                RR_field = data_set['f(RR_q_total_field_on_p)_r'].data[t_set, :, axis_set, ...]
+
+        data_field_sq = 0.5 * HR_field / RR_field
+        data_field = dyn.get_Cs(data_field_sq)
+
+    else:
+        print(f'length of time array for {field} is ', len(data_set[f'f({field}_on_p)_r'].data[:, 0, 0, 0]))
+        if t_av_or_not == 'yes':
+            if x_or_y == 'x':
+                data_field = np.mean(data_set[f'f({field}_on_p)_r'].data[:, axis_set, ...], axis=0)
+            elif x_or_y == 'y':
+                data_field = np.mean(data_set[f'f({field}_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+        else:
+            if x_or_y == 'x':
+                data_field = data_set[f'f({field}_on_p)_r'].data[t_set, axis_set, ...]
+            elif x_or_y == 'y':
+                data_field = data_set[f'f({field}_on_p)_r'].data[t_set, :, axis_set, ...]
+
+    data_set.close()
+
+    contour_set = xr.open_dataset(contour_field_in + f'{i}_running_mean_filter_rm00.nc')
+
+    print('length of time array for cloud field is ',
+          len(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, 0, 0, 0]))
+    if t_av_or_not == 'yes':
+        if x_or_y == 'x':
+            cloud_field = np.mean(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, axis_set, ...], axis=0)
+            w_field = np.mean(contour_set['f(f(w_on_p)_r_on_p)_r'].data[:, axis_set, ...], axis=0)
+            w2_field = np.mean(contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[:, axis_set, ...], axis=0)
+            th_v_field = np.mean(contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[:, axis_set, ...], axis=0)
+
+        elif x_or_y == 'y':
+            cloud_field = np.mean(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, :, axis_set, ...],
+                                  axis=0)
+            w_field = np.mean(contour_set['f(f(w_on_p)_r_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+            w2_field = np.mean(contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+            th_v_field = np.mean(contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+
+        mytime = 't_av'
+    else:
+        if x_or_y == 'x':
+            cloud_field = contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+            w_field = contour_set['f(f(w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+            w2_field = contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+            th_v_field = contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+
+        elif x_or_y == 'y':
+            cloud_field = contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+            w_field = contour_set['f(f(w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+            w2_field = contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+            th_v_field = contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+
+        mytime = f't{t_set}'
 
 
-    print('shape of LijMij is = ', np.shape(LijMij), 'and the shape of HjRj_th is = ', np.shape(HjRj_th))
+
+
 
     time_data = data_qtot['time']
     times = time_data.data
