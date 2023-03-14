@@ -307,7 +307,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             plt.clf()
 
             if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
-                fig2, ax2 = plt.figure(figsize=(20, 5))
+                fig2, ax2 = plt.subplots(figsize=(16, 5))
                 plt.title(f'{field_name_sq} with $\\Delta = $ {deltas[i]}', fontsize=16)
 
                 if set_percentile_C2[0] == 'min':
