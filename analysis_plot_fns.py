@@ -118,9 +118,9 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
     deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
     start = start_end[0]
-    start_grid = int(start/0.02) # going from km to grid spacing co-ords (20m grid)
+    start_grid = int(start.copy()/0.02) # going from km to grid spacing co-ords (20m grid)
     end = start_end[1]
-    end_grid = int(end/0.02) # going from km to grid spacing co-ords (20m grid)
+    end_grid = int(end.copy()/0.02) # going from km to grid spacing co-ords (20m grid)
 
 
     if field == 'Cs_field':
