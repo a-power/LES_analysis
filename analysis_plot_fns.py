@@ -266,7 +266,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
             contour_set.close()
 
-            fig, ax = plt.subplots(figsize=(16, 5))
+            fig1, ax1 = plt.subplots(figsize=(16, 5))
             plt.title(f'{field_name} with $\\Delta = $ {deltas[i]}', fontsize=16)
 
             # if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
@@ -288,17 +288,17 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, 0:101]), colors='black', linewidths=2, levels=[1e-5])
             th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, 0:101]), colors='black', linestyles='dashed',
                         linewidths=1)  # , levels=[0.1, 1, 2])
-            ax.clabel(th_v_c, inline=True, fontsize=10)
+            ax1.clabel(th_v_c, inline=True, fontsize=10)
             w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1,
                         levels=[0.1, 0.5])
-            ax.clabel(w_c, inline=True, fontsize=8)
+            ax1.clabel(w_c, inline=True, fontsize=8)
             # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1, levels=[0.1])
             plt.xlabel(f'x (cross section with {x_or_y} = {axis_set*20/1000}) (km)', fontsize=16)
 
             plt.ylabel("z (km)", fontsize=16)
             og_xtic = plt.xticks()
             plt.xticks(og_xtic[0], np.linspace(start, end, len(og_xtic[0])))
-            ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+            ax1.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 
             og_ytic = plt.yticks()
             plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))  # plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
@@ -307,7 +307,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             plt.clf()
 
             if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
-                plt.figure(figsize=(20, 5))
+                fig2, ax2 = plt.figure(figsize=(20, 5))
                 plt.title(f'{field_name_sq} with $\\Delta = $ {deltas[i]}', fontsize=16)
 
                 if set_percentile_C2[0] == 'min':
@@ -330,16 +330,16 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                                    levels=[1e-5])
                 th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, 0:101]), colors='black', linestyles='dashed',
                                      linewidths=1)  # , levels=[0.1, 1, 2])
-                ax.clabel(th_v_c, inline=True, fontsize=10)
+                ax2.clabel(th_v_c, inline=True, fontsize=10)
                 w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, 0:101]), colors='darkslategrey',
                                   linewidths=1, levels=[0.1, 0.5])
-                ax.clabel(w_c, inline=True, fontsize=8)
+                ax2.clabel(w_c, inline=True, fontsize=8)
                 # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1, levels=[0.1])
                 plt.xlabel(f'y (cross section with {x_or_y} = {axis_set*20/1000}) (km)', fontsize=16)
 
                 og_xtic = plt.xticks()
                 plt.xticks(og_xtic[0], np.linspace(start, end, len(og_xtic[0])))
-                ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+                ax2.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
                 # og_ytic = plt.yticks()
                 plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))#plt.yticks(np.linspace(0, 151, 7), np.linspace(0, 3, 7))
                 plt.ylabel("z (km)", fontsize=16)
