@@ -15,6 +15,11 @@ dir_s = mydir + 'Cs_'
 dir_th = mydir + 'C_th_'
 dir_qt = mydir + 'C_qt_'
 
+cloud_field = f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r'
+w_field = f'f(f(w_on_{grid})_r_on_{grid})_r'
+w2_field = f'f(f(w_on_{grid}.w_on_{grid})_r_on_{grid})_r'
+th_v_field = f'f(f(th_v_on_{grid})_r_on_{grid})_r'
+
 all_times_or_not = np.array([0, 1, 2])
 
 
@@ -42,11 +47,11 @@ HjRj_qt_options = {'plotdir': plotdir,
 
 print('HjRj_qt options done')
 
-apf.C_values(**LijMij_options)
+apf.C_values(**LijMij_options, times=all_times_or_not)
 print('LijMij fn done')
 
-apf.C_values(**HjRj_th_options)
+apf.C_values(**HjRj_th_options, times=all_times_or_not)
 print('HjRj_th fn done')
 
-apf.C_values(**HjRj_qt_options)
+apf.C_values(**HjRj_qt_options, times=all_times_or_not)
 print('HjRj_qt fn done')

@@ -49,7 +49,7 @@ def negs_in_field(plotdir, field, data_field_list, data_cl_list):
     plt.close('all')
 
 
-def C_values(plotdir, field, data_field_list, data_cl_list, deltas=None, **kwargs):
+def C_values(plotdir, field, data_field_list, data_cl_list, deltas=None, times='av' **kwargs):
     if deltas==None:
         deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
@@ -87,28 +87,50 @@ def C_values(plotdir, field, data_field_list, data_cl_list, deltas=None, **kwarg
             name = 'HR_q_total'
 
         #print('mean')
+        if times != 'av':
+            for time_set in range(times):
+                plt.figure(figsize=(7, 6))
+                plt.hist(data_field_env[time_set,...,0:24].flatten(), \
+                         bins=500, histtype='step', stacked=False, label="ML", \
+                         linewidth = 2, linestyle='solid')
+                plt.hist(data_field_env[time_set,...,24:151].flatten(), \
+                         bins=500, histtype='step', stacked=False, label="CL: clear sky", \
+                         linewidth = 2, linestyle='dotted')
+                plt.hist(data_field_cloud[time_set,...].flatten(), \
+                         bins=500, histtype='step', stacked=False, label="CL: cloudy", \
+                         linewidth = 2, linestyle='dotted')
+                plt.legend()
 
-        plt.figure(figsize=(7, 6))
-        plt.hist(data_field_env[...,0:24].flatten(), \
-                 bins=500, histtype='step', stacked=False, label="ML", \
-                 linewidth = 2, linestyle='solid')
-        plt.hist(data_field_env[...,24:151].flatten(), \
-                 bins=500, histtype='step', stacked=False, label="CL: clear sky", \
-                 linewidth = 2, linestyle='dotted')
-        plt.hist(data_field_cloud[...].flatten(), \
-                 bins=500, histtype='step', stacked=False, label="CL: cloudy", \
-                 linewidth = 2, linestyle='dotted')
-        plt.legend()
+                # og_xtic = plt.xticks()
+                #plt.xlim(-1,1)
+                plt.xlabel(f"{scalar} at time {time_set}", fontsize=16)
+                plt.yscale('log', nonposy='clip')
+                plt.ylabel("number of value occurrences", fontsize=16)
+                plt.savefig(plotdir + f'dist_of_{name}_values_{deltas[i]}_time_{time_set}.png', pad_inches=0)
+                plt.clf()
 
-        # og_xtic = plt.xticks()
-        #plt.xlim(-1,1)
-        plt.xlabel(f"{scalar}", fontsize=16)
-        plt.yscale('log', nonposy='clip')
-        plt.ylabel("number of value occurrences", fontsize=16)
-        plt.savefig(plotdir + f'dist_of_{name}_values_{deltas[i]}.png', pad_inches=0)
-        plt.clf()
+                print(f'plotted for time {time_set} {field} {deltas[i]}')
 
-        print(f'plotted for {field} {deltas[i]}')
+        else:
+
+            plt.figure(figsize=(7, 6))
+            plt.hist(data_field_env[..., 0:24].flatten(), bins=500, histtype='step', stacked=False,
+                     label="ML", linewidth=2, linestyle='solid')
+            plt.hist(data_field_env[..., 24:151].flatten(), bins=500, histtype='step', stacked=False,
+                     label="CL: clear sky", linewidth=2, linestyle='dotted')
+            plt.hist(data_field_cloud[...].flatten(), bins=500, histtype='step', stacked=False,
+                     label="CL: cloudy", linewidth=2, linestyle='dotted')
+            plt.legend()
+
+            # og_xtic = plt.xticks()
+            # plt.xlim(-1,1)
+            plt.xlabel(f"{scalar} all time", fontsize=16)
+            plt.yscale('log', nonposy='clip')
+            plt.ylabel("number of value occurrences", fontsize=16)
+            plt.savefig(plotdir + f'dist_of_{name}_values_{deltas[i]}_all_time.png', pad_inches=0)
+            plt.clf()
+
+            print(f'plotted for time {field} {deltas[i]}')
 
     plt.close('all')
 
