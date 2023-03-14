@@ -297,7 +297,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
             plt.ylabel("z (km)", fontsize=16)
             og_xtic = plt.xticks()
-            ax1.set_xticks(og_xtic[0], np.linspace(start, end, len(og_xtic[0])))
+            ax1.set_xticks(np.linspace(start, end, len(og_xtic[0]))) #og_xtic[0],
             ax1.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 
             og_ytic = plt.yticks()
@@ -338,7 +338,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 plt.xlabel(f'y (cross section with {x_or_y} = {axis_set*20/1000}) (km)', fontsize=16)
 
                 og_xtic = plt.xticks()
-                ax2.set_xticks(og_xtic[0], np.linspace(start, end, len(og_xtic[0])))
+                ax2.set_xticks(np.linspace(start, end, len(og_xtic[0]))) #og_xtic[0],
                 ax2.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
                 # og_ytic = plt.yticks()
                 plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))#plt.yticks(np.linspace(0, 151, 7), np.linspace(0, 3, 7))
