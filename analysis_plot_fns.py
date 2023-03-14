@@ -267,7 +267,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             contour_set.close()
 
             fig, ax = plt.subplots(figsize=(16, 5))
-            plt.title(f'{field_name} for time {mytime}', fontsize=16)
+            plt.title(f'{field_name} with $\\Delta = $ {deltas[i]}', fontsize=16)
 
             # if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
             #     myvmin = 0
@@ -308,7 +308,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
             if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
                 plt.figure(figsize=(20, 5))
-                plt.title(f'{field_name_sq} for time {mytime}', fontsize=16)
+                plt.title(f'{field_name_sq} with $\\Delta = $ {deltas[i]}', fontsize=16)
 
                 if set_percentile_C2[0] == 'min':
                     myvmin_temp = np.min(data_field_sq[start_grid:end_grid, 5:120])
