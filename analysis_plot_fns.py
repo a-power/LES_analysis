@@ -49,11 +49,12 @@ def negs_in_field(plotdir, field, data_field_list, data_cl_list):
     plt.close('all')
 
 
-def C_values(plotdir, field, data_field_list, data_cl_list, **kwargs):
-    deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+def C_values(plotdir, field, data_field_list, data_cl_list, deltas=None, **kwargs):
+    if deltas==None:
+        deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
 
-    for i in range(len(data_field_list)):
+    for i in range(len(deltas)):
 
         cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_cl_list[i])
 
