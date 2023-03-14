@@ -116,7 +116,7 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater_threas='less', and
         else:
             return new_out_mask, cloud_mask, var_mask, extra_var_mask
 
-
+#
 
 def get_masked_fields(dataset_in, delta, res_count = None, return_fields=True, cloud_thres = 10**(-5), other_var_choice = False, \
                       other_var_thres=False, less_greater='greater', my_and_or = 'and', return_all_masks=False):
