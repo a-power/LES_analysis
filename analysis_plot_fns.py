@@ -27,6 +27,7 @@ def negs_in_field(plotdir, field, data_field_list, data_cl_list):
 
         counter_env = np.zeros(len(data_field_env[0, 0, :]))
         counter_cloud = np.zeros(len(data_field_cloud[0,0,:]))
+
         for j in range(len(data_field_cloud[0,0,:])):
             counter_cloud[j] = np.count_nonzero(data_field_cloud[:,:,j] < 0)
             counter_env[j] = np.count_nonzero(data_field_env[:, :, j] < 0)
@@ -49,17 +50,43 @@ def negs_in_field(plotdir, field, data_field_list, data_cl_list):
     plt.close('all')
 
 
-def C_values(plotdir, field, data_field_list, data_cl_list, deltas=None, times='av' **kwargs):
+def C_values(plotdir, field, data_field_list, data_cl_list, deltas=None, times='av', grid='p', **kwargs):
     if deltas==None:
         deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
-
 
     for i in range(len(deltas)):
 
         cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_cl_list[i])
 
-        data_field = data_field_list[i][f'{field}'].data[...]
-        print(np.shape(data_field[...]))
+
+        if field == 'Cs_field':
+            print('length of time array for LM is ', len(data_field_list[i][f'f(LM_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            num_field = data_field_list[i][f'f(LM_field_on_{grid})_r'].data[...]
+            den_field = data_field_list[i][f'f(MM_field_on_{grid})_r'].data[...]
+
+            data_field_sq = 0.5 * num_field / den_field
+            data_field = dyn.get_Cs(data_field_sq)
+
+        elif field == 'Cth_field':
+            print('length of time array for HR_th is ', len(data_field_list[i][f'f(HR_th_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            num_field = data_field_list[i][f'f(HR_th_field_on_{grid})_r'].data[...]
+            den_field = data_field_list[i][f'f(RR_th_field_on_{grid})_r'].data[...]
+
+            data_field_sq = 0.5 * num_field / den_field
+            data_field = dyn.get_Cs(data_field_sq)
+
+        elif field == 'Cqt_field':
+            print('length of time array for HR_qt is ',
+                  len(data_field_list[i][f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            num_field = data_field_list[i][f'f(HR_q_total_field_on_{grid})_r'].data[...]
+            den_field = data_field_list[i][f'f(RR_q_total_field_on_{grid})_r'].data[...]
+
+            data_field_sq = 0.5 * num_field / den_field
+            data_field = dyn.get_Cs(data_field_sq)
+
+        else:
+            data_field = data_field_list[i][f'{field}'].data[...]
+            print(np.shape(data_field[...]))
 
         data_field_cloud = ma.masked_array(data_field, mask=cloud_only_mask)
         data_field_env = ma.masked_array(data_field, mask=env_only_mask)
@@ -88,7 +115,7 @@ def C_values(plotdir, field, data_field_list, data_cl_list, deltas=None, times='
 
         #print('mean')
         if times != 'av':
-            for time_set in range(times):
+            for time_set in times:
                 plt.figure(figsize=(7, 6))
                 plt.hist(data_field_env[time_set,...,0:24].flatten(), \
                          bins=500, histtype='step', stacked=False, label="ML", \
