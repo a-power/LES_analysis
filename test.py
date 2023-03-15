@@ -1,12 +1,11 @@
-import numpy as np
-import xarray as xr
+grid = 'p'
 
-path20f = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/'
-file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_ga00.nc"
-indir = path20f+file20
+cloud_field = f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r'
 
-file_in = f'{indir}'
-ds_in = xr.open_dataset(file_in)
-time_data = ds_in['time']
-times = time_data.data
-print('time array is', times)
+print(f'{cloud_field}')
+
+hi = [0]
+hello = [0,1]
+
+if len(hello)>1:
+    print('yes')

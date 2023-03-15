@@ -50,39 +50,147 @@ def negs_in_field(plotdir, field, data_field_list, data_cl_list):
     plt.close('all')
 
 
-def C_values(plotdir, field, data_field_list, data_cl_list, deltas=None, times='av', grid='p', **kwargs):
+def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, data_names):
+
+    if field_in == 'Cs_field':
+        name = field_in
+        scalar = '$C_{s}$'
+    elif field_in == 'Cth_field':
+        name = field_in
+        scalar = '$C_{\\theta}$'
+    elif field_in == 'Cqt_field':
+        name = field_in
+        scalar = '$C_{qt}$'
+
+    if field_in == 'Cs_sq_field':
+        name = field_in
+        scalar = '$C_{s}^2$'
+    elif field_in == 'Cth_sq_field':
+        name = field_in
+        scalar = '$C_{\\theta}^2$'
+    elif field_in == 'Cqt_sq_field':
+        name = field_in
+        scalar = '$C_{qt}^2$'
+
+    elif field_in == 'f(LM_field_in_on_w)_r':
+        scalar = '$L_{ij}M_{ij}$'
+        name = 'LM'
+    elif field_in == 'f(HR_th_field_in_on_w)_r':
+        scalar = '$H_{j}R_{j \\theta}$'
+        name = 'HR_th'
+    elif field_in == 'f(HR_q_total_field_in_on_w)_r':
+        scalar = '$H_{j}R_{j qt}$'
+        name = 'HR_q_total'
+
+    plt.figure(figsize=(7, 6))
+    plt.hist(data1.flatten(), \
+             bins=500, histtype='step', stacked=False, label=data_names[0], \
+             linewidth=2, linestyle='dotted')
+    plt.hist(data2.flatten(), \
+             bins=500, histtype='step', stacked=False, label=data_names[1], \
+             linewidth=2, linestyle='dotted')
+    plt.hist(data3.flatten(), \
+             bins=500, histtype='step', stacked=False, label=data_names[2], \
+             linewidth=2, linestyle='dotted')
+    plt.legend()
+
+    # og_xtic = plt.xticks()
+    # plt.xlim(-1,1)
+    plt.xlabel(f"{scalar} at time {time_set_in}", fontsize=16)
+    plt.yscale('log', nonposy='clip')
+    plt.ylabel("number of value occurrences", fontsize=16)
+    plt.savefig(plotdir_in + f'dist_of_{name}_values_{delta}_time_{time_set_in}.png', pad_inches=0)
+    plt.clf()
+
+    print(f'plotted for time {time_set_in} {field_in} {delta}')
+
+
+def C_values_dist(plotdir, field, data_field_list, data_contour, deltas=None, times='av', grid='p', other_vars=None,
+                  other_var_thres=None, less_greater_in=['less'], and_or_in = ['and'], cloud_liquid_threshold_in=10**(-5),
+                  res_counter_in=None, return_all_in = False, grid_in='p', **kwargs):
+
     if deltas==None:
         deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
     for i in range(len(deltas)):
+        cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_contour+f'{i}_running_mean_filter_rm00.nc')
 
-        cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_cl_list[i])
+        if other_vars!=None:
+            if return_all_in == False:
+                if len(other_vars) == 1:
+                    combo2_out_mask = clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
+                                                               other_var=other_vars, var_thres=other_var_thres,
+                                                               less_greater=less_greater_in, and_or = and_or_in,
+                                                               cloud_liquid_threshold=cloud_liquid_threshold_in,
+                                                               res_counter=res_counter_in, return_all = return_all_in,
+                                                               grid=grid_in)
+                else:
+                    combo2_out_mask, combo3_out_mask = clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
+                                                               other_var=other_vars, var_thres=other_var_thres,
+                                                               less_greater=less_greater_in, and_or = and_or_in,
+                                                               cloud_liquid_threshold=cloud_liquid_threshold_in,
+                                                               res_counter=res_counter_in, return_all = return_all_in,
+                                                               grid=grid_in)
+            else:
+                if len(other_vars) == 1:
+                    combo2_out_mask, cloud_mask, var_mask = clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
+                                                               other_var=other_vars, var_thres=other_var_thres,
+                                                               less_greater=less_greater_in, and_or = and_or_in,
+                                                               cloud_liquid_threshold=cloud_liquid_threshold_in,
+                                                               res_counter=res_counter_in, return_all = return_all_in,
+                                                               grid=grid_in)
+                else:
+                    combo2_out_mask, combo3_out_mask, cloud_mask, var_mask, extra_var_mask = clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
+                                                               other_var=other_vars, var_thres=other_var_thres,
+                                                               less_greater=less_greater_in, and_or = and_or_in,
+                                                               cloud_liquid_threshold=cloud_liquid_threshold_in,
+                                                               res_counter=res_counter_in, return_all = return_all_in,
+                                                               grid=grid_in)
 
-
-        if field == 'Cs_field':
+        if field == 'Cs_field' or 'Cs_sq_field':
             print('length of time array for LM is ', len(data_field_list[i][f'f(LM_field_on_{grid})_r'].data[:, 0, 0, 0]))
             num_field = data_field_list[i][f'f(LM_field_on_{grid})_r'].data[...]
             den_field = data_field_list[i][f'f(MM_field_on_{grid})_r'].data[...]
 
             data_field_sq = 0.5 * num_field / den_field
-            data_field = dyn.get_Cs(data_field_sq)
+            data_field_C = dyn.get_Cs(data_field_sq)
+            if field == 'Cs_field':
+                data_field = data_field_C
+            else:
+                data_field = data_field_sq
+            data_field_sq = None
+            data_field_C = None
 
-        elif field == 'Cth_field':
+        elif field == 'Cth_field' or 'Cth_sq_field':
             print('length of time array for HR_th is ', len(data_field_list[i][f'f(HR_th_field_on_{grid})_r'].data[:, 0, 0, 0]))
             num_field = data_field_list[i][f'f(HR_th_field_on_{grid})_r'].data[...]
             den_field = data_field_list[i][f'f(RR_th_field_on_{grid})_r'].data[...]
 
             data_field_sq = 0.5 * num_field / den_field
-            data_field = dyn.get_Cs(data_field_sq)
+            data_field_C = dyn.get_Cs(data_field_sq)
+            if field == 'Cth_field':
+                data_field = data_field_C
+            else:
+                data_field = data_field_sq
+            data_field_sq = None
+            data_field_C = None
 
-        elif field == 'Cqt_field':
+        elif field == 'Cqt_field' or 'Cqt_sq_field':
             print('length of time array for HR_qt is ',
                   len(data_field_list[i][f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
             num_field = data_field_list[i][f'f(HR_q_total_field_on_{grid})_r'].data[...]
             den_field = data_field_list[i][f'f(RR_q_total_field_on_{grid})_r'].data[...]
 
             data_field_sq = 0.5 * num_field / den_field
-            data_field = dyn.get_Cs(data_field_sq)
+            data_field_C = dyn.get_Cs(data_field_sq)
+            if field == 'Cqt_field':
+                data_field = data_field_C
+            else:
+                data_field = data_field_sq
+            data_field_sq = None
+            data_field_C = None
+
+
 
         else:
             data_field = data_field_list[i][f'{field}'].data[...]
@@ -91,73 +199,46 @@ def C_values(plotdir, field, data_field_list, data_cl_list, deltas=None, times='
         data_field_cloud = ma.masked_array(data_field, mask=cloud_only_mask)
         data_field_env = ma.masked_array(data_field, mask=env_only_mask)
 
+        if len(other_vars) == 2:
+            data_field_cloud_up = ma.masked_array(data_field, mask=combo2_out_mask)
+            data_field_cloud_core = ma.masked_array(data_field, mask=combo3_out_mask)
+
         print(np.shape(data_field_env))
 
-        if field=='Cs':
-            name=field
-            scalar='$C_{s}$'
-        elif field == 'C_theta':
-            name=field
-            scalar = '$C_{\\theta}$'
-        elif field == 'C_q':
-            name=field
-            scalar = '$C_{qt}$'
 
-        elif field == 'f(LM_field_on_w)_r':
-            scalar = '$L_{ij}M_{ij}$'
-            name = 'LM'
-        elif field == 'f(HR_th_field_on_w)_r':
-            scalar = '$H_{j}R_{j \\theta}$'
-            name = 'HR_th'
-        elif field == 'f(HR_q_total_field_on_w)_r':
-            scalar = '$H_{j}R_{j qt}$'
-            name = 'HR_q_total'
-
-        #print('mean')
         if times != 'av':
             for time_set in times:
-                plt.figure(figsize=(7, 6))
-                plt.hist(data_field_env[time_set,...,0:24].flatten(), \
-                         bins=500, histtype='step', stacked=False, label="ML", \
-                         linewidth = 2, linestyle='solid')
-                plt.hist(data_field_env[time_set,...,24:151].flatten(), \
-                         bins=500, histtype='step', stacked=False, label="CL: clear sky", \
-                         linewidth = 2, linestyle='dotted')
-                plt.hist(data_field_cloud[time_set,...].flatten(), \
-                         bins=500, histtype='step', stacked=False, label="CL: cloudy", \
-                         linewidth = 2, linestyle='dotted')
-                plt.legend()
+                plot_hist(plotdir, field, time_set, deltas[i],
+                         data_field_env[time_set,...,0:24],
+                          data_field_env[time_set,...,24:151],
+                          data_field_cloud[time_set,...],
+                          data_names=["ML", "CL: cloud-free", "CL: cloudy"])
 
-                # og_xtic = plt.xticks()
-                #plt.xlim(-1,1)
-                plt.xlabel(f"{scalar} at time {time_set}", fontsize=16)
-                plt.yscale('log', nonposy='clip')
-                plt.ylabel("number of value occurrences", fontsize=16)
-                plt.savefig(plotdir + f'dist_of_{name}_values_{deltas[i]}_time_{time_set}.png', pad_inches=0)
-                plt.clf()
 
-                print(f'plotted for time {time_set} {field} {deltas[i]}')
+                if len(other_vars) == 2:
+                    plot_hist(plotdir, field, time_set, deltas[i],
+                              data_field_cloud[time_set,...],
+                              data_field_cloud_up[time_set,...],
+                              data_field_cloud_core[time_set,...],
+                              data_names=["Cloud", "Cloud updraft", "Cloud core"])
+
 
         else:
 
-            plt.figure(figsize=(7, 6))
-            plt.hist(data_field_env[..., 0:24].flatten(), bins=500, histtype='step', stacked=False,
-                     label="ML", linewidth=2, linestyle='solid')
-            plt.hist(data_field_env[..., 24:151].flatten(), bins=500, histtype='step', stacked=False,
-                     label="CL: clear sky", linewidth=2, linestyle='dotted')
-            plt.hist(data_field_cloud[...].flatten(), bins=500, histtype='step', stacked=False,
-                     label="CL: cloudy", linewidth=2, linestyle='dotted')
-            plt.legend()
+            plot_hist(plotdir, field, 'av', deltas[i],
+                      data_field_env[..., 0:24],
+                      data_field_env[..., 24:151],
+                      data_field_cloud[...],
+                      data_names=["ML", "CL: cloud-free", "CL: cloudy"])
 
-            # og_xtic = plt.xticks()
-            # plt.xlim(-1,1)
-            plt.xlabel(f"{scalar} all time", fontsize=16)
-            plt.yscale('log', nonposy='clip')
-            plt.ylabel("number of value occurrences", fontsize=16)
-            plt.savefig(plotdir + f'dist_of_{name}_values_{deltas[i]}_all_time.png', pad_inches=0)
-            plt.clf()
+            if other_vars!=None:
+                if len(other_vars) == 2:
+                    plot_hist(plotdir, field, 'av', deltas[i],
+                              data_field_cloud[...],
+                              data_field_cloud_up[...],
+                              data_field_cloud_core[...],
+                              data_names = ["Cloud", "Cloud updraft", "Cloud core"])
 
-            print(f'plotted for time {field} {deltas[i]}')
 
     plt.close('all')
 

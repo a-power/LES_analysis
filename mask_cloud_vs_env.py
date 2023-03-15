@@ -9,18 +9,16 @@ def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5), res_counter=Non
         data_in_new = data_in + f'ga0{res_counter}.nc'
     else:
         data_in_new = data_in
-
     ds_in = xr.open_dataset(data_in_new)
+
+
 
     if f'f(q_cloud_liquid_mass_on_{grid})_r' in ds_in:
         q_in = ds_in[f'f(q_cloud_liquid_mass_on_{grid})_r']
-
     elif f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r' in ds_in:
         q_in = ds_in[f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r']
-
     elif 'q_cloud_liquid_mass' in ds_in:
         q_in = ds_in['q_cloud_liquid_mass']
-
     else:
         ds_in2 = xr.open_dataset(f'/work/scratch-pw/apower/20m_gauss_dyn/q_l/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0{res_counter}.nc')
         q_in = ds_in2['f(q_cloud_liquid_mass_on_w)_r']
@@ -40,11 +38,8 @@ def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5), res_counter=Non
 
 
 
-def cloudy_and_or(data_in, other_var, var_thres, less_greater_threas='less', and_or = 'and', \
-                  cloud_liquid_threshold=10**(-5), res_counter=None, return_all = False, grid='p',
-                  extra_var=None, extra_var_threashold=None, extra_v_less_greater='less'):
-
-    ds_in = xr.open_dataset(data_in)
+def cloudy_and_or(data_in, other_var, var_thres, less_greater=['less'], and_or = ['and'], \
+                  cloud_liquid_threshold=10**(-5), res_counter=None, return_all = False, grid='p'):
 
     if res_counter != None:
 
@@ -52,25 +47,30 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater_threas='less', and
         q_in = ds_in2[f'f(q_cloud_liquid_mass_on_{grid})_r']
 
     else:
+        ds_in = xr.open_dataset(data_in)
+
         if 'f(q_cloud_liquid_mass_on_w)_r' in ds_in:
             q_in = ds_in[f'f(q_cloud_liquid_mass_on_{grid})_r']
+        elif f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r' in ds_in:
+            q_in = ds_in[f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r']
         else:
             q_in = ds_in['q_cloud_liquid_mass']
 
     q_cloud = q_in.data
+    masked_q_cloud = ma.masked_less(q_cloud, cloud_liquid_threshold)
 
-    if f'f({other_var}_on_{grid})_r' in ds_in:
-        var_in = ds_in[f'f({other_var}_on_{grid})_r']
+    if f'f({other_var[0]}_on_{grid})_r' in ds_in:
+        var_in = ds_in[f'f({other_var[0]}_on_{grid})_r']
+    elif f'f(f({other_var[0]}_on_{grid})_r_on_{grid})_r' in ds_in:
+        var_in = ds_in[f'f({other_var[0]}_on_{grid})_r']
     else:
-        var_in = ds_in[f'{other_var}']
+        var_in = ds_in[f'{other_var[0]}']
 
     var_data = var_in.data
 
-    masked_q_cloud = ma.masked_less(q_cloud, cloud_liquid_threshold)
-
-    if less_greater_threas=='less':
+    if less_greater[0]=='less':
         masked_var = ma.masked_less(var_data, var_thres)
-    elif less_greater_threas=='greater':
+    elif less_greater[0]=='greater':
         masked_var = ma.masked_greater_equal(var_data, var_thres)
     else:
         print("must pick 'less' (values lower than threshold are masked/EXCLUDED) or 'greater' (values higher than threshold are masked/EXCLUDED).")
@@ -78,43 +78,43 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater_threas='less', and
     cloud_mask = ma.getmaskarray(masked_q_cloud)
     var_mask = ma.getmaskarray(masked_var)
 
-    if and_or == 'and':
+    if and_or[0] == 'and':
         out_mask = ma.mask_or(cloud_mask, var_mask) #masks work opposite
-
-    elif and_or == 'or':
+    elif and_or[0] == 'or':
         temp_mask = (cloud_mask == False) & (var_mask == False)
-
     else:
         print('must pick and or or')
 
-    if extra_var != None:
-        if f'f({extra_var}_on_{grid})_r' in ds_in:
-            extra_var_in = ds_in[f'f({extra_var}_on_{grid})_r']
+    if len(other_var) > 1:
+        if f'f({other_var[1]}_on_{grid})_r' in ds_in:
+            extra_var_in = ds_in[f'f({other_var[1]}_on_{grid})_r']
+        if f'f({other_var[1]}_on_{grid})_r' in ds_in:
+                extra_var_in = ds_in[f'f({other_var[1]}_on_{grid})_r']
         else:
-            extra_var_in = ds_in[f'{extra_var}']
+            extra_var_in = ds_in[f'{other_var[1]}']
         extra_var_data = extra_var_in.data
 
-        if extra_v_less_greater == 'less':
-            extra_masked_var = ma.masked_less(extra_var_data, extra_var_threashold)
-        elif extra_v_less_greater == 'greater':
-            extra_masked_var = ma.masked_greater_equal(extra_var_data, extra_var_threashold)
+        if less_greater[1] == 'less':
+            extra_masked_var = ma.masked_less(extra_var_data, var_thres[1])
+        elif less_greater[1] == 'greater':
+            extra_masked_var = ma.masked_greater_equal(extra_var_data, var_thres[1])
         extra_var_mask = ma.getmaskarray(extra_masked_var)
 
-        if and_or == 'and':
+        if and_or[1] == 'and':
             new_out_mask = ma.mask_or(out_mask, extra_var_mask)  # masks work opposite
-        elif and_or == 'or':
+        elif and_or[1] == 'or':
             new_temp_mask = (out_mask == False) & (extra_var_mask == False)
 
     if return_all == False:
-        if extra_var == None:
+        if len(other_var) == 1:
             return out_mask
         else:
-            return new_out_mask
+            return out_mask, new_out_mask
     else:
-        if extra_var == None:
+        if len(other_var) == 1:
             return out_mask, cloud_mask, var_mask
         else:
-            return new_out_mask, cloud_mask, var_mask, extra_var_mask
+            return out_mask, new_out_mask, cloud_mask, var_mask, extra_var_mask
 
 #
 
