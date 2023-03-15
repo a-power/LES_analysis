@@ -115,6 +115,9 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, deltas=None, ti
     for i in range(len(deltas)):
         cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_contour+f'{i}_running_mean_filter_rm00.nc')
 
+        data_field = data_field_list+f'{deltas[i]}_running_mean_filter_rm00.nc'
+        data_field_in = xr.open_dataset(data_field)
+
         if other_vars!=None:
             if return_all_in == False:
                 if len(other_vars) == 1:
@@ -149,9 +152,9 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, deltas=None, ti
                                                                grid=grid_in)
 
         if field == 'Cs_field' or 'Cs_sq_field':
-            print('length of time array for LM is ', len(data_field_list[i][f'f(LM_field_on_{grid})_r'].data[:, 0, 0, 0]))
-            num_field = data_field_list[i][f'f(LM_field_on_{grid})_r'].data[...]
-            den_field = data_field_list[i][f'f(MM_field_on_{grid})_r'].data[...]
+            print('length of time array for LM is ', len(data_field_in[f'f(LM_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            num_field = data_field_in[f'f(LM_field_on_{grid})_r'].data[...]
+            den_field = data_field_in[f'f(MM_field_on_{grid})_r'].data[...]
 
             data_field_sq = 0.5 * num_field / den_field
             data_field_C = dyn.get_Cs(data_field_sq)
@@ -163,9 +166,9 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, deltas=None, ti
             data_field_C = None
 
         elif field == 'Cth_field' or 'Cth_sq_field':
-            print('length of time array for HR_th is ', len(data_field_list[i][f'f(HR_th_field_on_{grid})_r'].data[:, 0, 0, 0]))
-            num_field = data_field_list[i][f'f(HR_th_field_on_{grid})_r'].data[...]
-            den_field = data_field_list[i][f'f(RR_th_field_on_{grid})_r'].data[...]
+            print('length of time array for HR_th is ', len(data_field_in[f'f(HR_th_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            num_field = data_field_in[f'f(HR_th_field_on_{grid})_r'].data[...]
+            den_field = data_field_in[f'f(RR_th_field_on_{grid})_r'].data[...]
 
             data_field_sq = 0.5 * num_field / den_field
             data_field_C = dyn.get_Cs(data_field_sq)
@@ -178,9 +181,9 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, deltas=None, ti
 
         elif field == 'Cqt_field' or 'Cqt_sq_field':
             print('length of time array for HR_qt is ',
-                  len(data_field_list[i][f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
-            num_field = data_field_list[i][f'f(HR_q_total_field_on_{grid})_r'].data[...]
-            den_field = data_field_list[i][f'f(RR_q_total_field_on_{grid})_r'].data[...]
+                  len(data_field_in[f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            num_field = data_field_in[f'f(HR_q_total_field_on_{grid})_r'].data[...]
+            den_field = data_field_in[f'f(RR_q_total_field_on_{grid})_r'].data[...]
 
             data_field_sq = 0.5 * num_field / den_field
             data_field_C = dyn.get_Cs(data_field_sq)
@@ -194,7 +197,7 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, deltas=None, ti
 
 
         else:
-            data_field = data_field_list[i][f'{field}'].data[...]
+            data_field = data_field_in[f'{field}'].data[...]
             print(np.shape(data_field[...]))
 
         data_field_cloud = ma.masked_array(data_field, mask=cloud_only_mask)
