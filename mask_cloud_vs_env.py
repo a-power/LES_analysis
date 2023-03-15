@@ -3,6 +3,32 @@ import numpy.ma as ma
 import xarray as xr
 import dynamic_functions as dyn
 
+
+def get_th_v_prime(th_v):
+    nt = len(th_v[:,0,0,0])
+    z_num = len(th_v[0, 0, 0, :])
+    horiz_num_temp = len(th_v[0,:,0,0])
+    horiz_num = horiz_num_temp * horiz_num_temp
+
+    th_v_flat = th_v.reshape(nt, horiz_num, z_num)
+    th_v_prof = np.zeros(nt, z_num)
+
+    for t in range(nt):
+        for k in range(z_num):
+            th_v_prof[nt, k] = np.sum(th_v_flat[t, :, k]) / horiz_num
+
+    th_v_prime_temp = th_v_flat - th_v_prof
+    th_v_flat = None
+    th_v_prof = None
+    print('shape of th_v_prime before reshape is:', np.shape(th_v_prime_temp))
+    th_v_prime = th_v_prime_temp.reshape(nt, horiz_num_temp, horiz_num_temp, z_num)
+    th_v_prime_temp = None
+
+    return th_v_prime
+
+
+
+
 def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5), res_counter=None, grid='p'):
 
     if res_counter != None:
@@ -66,7 +92,11 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater=['less'], and_or =
     else:
         var_in = ds_in[f'{other_var[0]}']
 
-    var_data = var_in.data
+    if other_var[0] == f'f(f(th_v_on_{grid})_r_on_{grid})_r':
+        var_temp = var_in.data
+        var_data = get_th_v_prime(var_temp)
+    else:
+        var_data = var_in.data
 
     if less_greater[0]=='less':
         masked_var = ma.masked_less(var_data, var_thres)
@@ -89,10 +119,15 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater=['less'], and_or =
         if f'f({other_var[1]}_on_{grid})_r' in ds_in:
             extra_var_in = ds_in[f'f({other_var[1]}_on_{grid})_r']
         if f'f({other_var[1]}_on_{grid})_r' in ds_in:
-                extra_var_in = ds_in[f'f({other_var[1]}_on_{grid})_r']
+            extra_var_in = ds_in[f'f({other_var[1]}_on_{grid})_r']
         else:
             extra_var_in = ds_in[f'{other_var[1]}']
-        extra_var_data = extra_var_in.data
+
+        if other_var[1] == f'f(f(th_v_on_{grid})_r_on_{grid})_r':
+            extra_var_temp = extra_var_in.data
+            extra_var_data = get_th_v_prime(extra_var_temp)
+        else:
+            extra_var_data = var_in.data
 
         if less_greater[1] == 'less':
             extra_masked_var = ma.masked_less(extra_var_data, var_thres[1])

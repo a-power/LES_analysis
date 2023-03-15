@@ -99,7 +99,7 @@ def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, dat
     plt.xlabel(f"{scalar} at time {time_set_in}", fontsize=16)
     plt.yscale('log', nonposy='clip')
     plt.ylabel("number of value occurrences", fontsize=16)
-    plt.savefig(plotdir_in + f'dist_of_{name}_values_{delta}_time_{time_set_in}.png', pad_inches=0)
+    plt.savefig(plotdir_in + f'hist_of_{name}_values_{delta}_time_{time_set_in}_vars_{data_names[0]}.png', pad_inches=0)
     plt.clf()
 
     print(f'plotted for time {time_set_in} {field_in} {delta}')
@@ -140,7 +140,8 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, deltas=None, ti
                                                                res_counter=res_counter_in, return_all = return_all_in,
                                                                grid=grid_in)
                 else:
-                    combo2_out_mask, combo3_out_mask, cloud_mask, var_mask, extra_var_mask = clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
+                    combo2_out_mask, combo3_out_mask, cloud_mask, var_mask, extra_var_mask = \
+                        clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
                                                                other_var=other_vars, var_thres=other_var_thres,
                                                                less_greater=less_greater_in, and_or = and_or_in,
                                                                cloud_liquid_threshold=cloud_liquid_threshold_in,
@@ -231,13 +232,12 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, deltas=None, ti
                       data_field_cloud[...],
                       data_names=["ML", "CL: cloud-free", "CL: cloudy"])
 
-            if other_vars!=None:
-                if len(other_vars) == 2:
-                    plot_hist(plotdir, field, 'av', deltas[i],
-                              data_field_cloud[...],
-                              data_field_cloud_up[...],
-                              data_field_cloud_core[...],
-                              data_names = ["Cloud", "Cloud updraft", "Cloud core"])
+            if len(other_vars) == 2:
+                plot_hist(plotdir, field, 'av', deltas[i],
+                          data_field_cloud[...],
+                          data_field_cloud_up[...],
+                          data_field_cloud_core[...],
+                          data_names = ["Cloud", "Cloud updraft", "Cloud core"])
 
 
     plt.close('all')
