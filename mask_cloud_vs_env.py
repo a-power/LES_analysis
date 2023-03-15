@@ -100,9 +100,9 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater=['less'], and_or =
     print('loaded other var:', other_var[0])
 
     if less_greater[0]=='less':
-        masked_var = ma.masked_less(var_data, var_thres)
+        masked_var = ma.masked_less(var_data, var_thres[0])
     elif less_greater[0]=='greater':
-        masked_var = ma.masked_greater_equal(var_data, var_thres)
+        masked_var = ma.masked_greater_equal(var_data, var_thres[0])
     else:
         print("must pick 'less' (values lower than threshold are masked/EXCLUDED) or 'greater' (values higher than threshold are masked/EXCLUDED).")
     print('masked other var:', other_var[0])
