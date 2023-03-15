@@ -24,6 +24,7 @@ time_av_or_not = np.array([0, 1, 2]) #'yes' #if not then give the time stamp ind
 my_axis = 299
 my_x_y = 'y'
 
+Deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
 
 LijMij_options = {'axis_set': my_axis,
@@ -119,18 +120,18 @@ Cqt_options = {'axis_set': my_axis,
 #
 # apf.plotfield(plotdir, start_end=x_axis_start_end, **MijMij_options)
 #
-apf.plotfield(plotdir, start_end=x_axis_start_end, **Cs_options)
+apf.plotfield(plotdir, start_end=x_axis_start_end, deltas=Deltas, **Cs_options)
 #
 #
 # apf.plotfield(plotdir, start_end=x_axis_start_end, **HjRj_th_options)
 
 # apf.plotfield(plotdir, start_end=x_axis_start_end, **RjRj_th_options)
 #
-apf.plotfield(plotdir, start_end=x_axis_start_end, **Cth_options)
+apf.plotfield(plotdir, start_end=x_axis_start_end, deltas=Deltas, **Cth_options)
 #
 #
 # apf.plotfield(plotdir, start_end=x_axis_start_end, **HjRj_qt_options)
 
 # apf.plotfield(plotdir, start_end=x_axis_start_end, **RjRj_qt_options)
 
-apf.plotfield(plotdir, start_end=x_axis_start_end, **Cqt_options)
+apf.plotfield(plotdir, start_end=x_axis_start_end, deltas=Deltas, **Cqt_options)
