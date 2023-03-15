@@ -11,13 +11,14 @@ def get_th_v_prime(th_v):
     horiz_num = horiz_num_temp * horiz_num_temp
 
     th_v_flat = th_v.reshape(nt, horiz_num, z_num)
+    th_v_prime_temp = th_v.reshape(nt, horiz_num, z_num)
     th_v_prof = np.zeros((nt, z_num))
 
     for t in range(nt):
         for k in range(z_num):
             th_v_prof[t, k] = np.sum(th_v_flat[t, :, k]) / horiz_num
+            th_v_prime_temp[t, :, k] = th_v_flat[t, :, k] - th_v_prof[t, k]
 
-    th_v_prime_temp = th_v_flat - th_v_prof
     th_v_flat = None
     th_v_prof = None
     print('shape of th_v_prime before reshape is:', np.shape(th_v_prime_temp))
