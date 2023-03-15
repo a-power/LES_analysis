@@ -11,7 +11,7 @@ def get_th_v_prime(th_v):
     horiz_num = horiz_num_temp * horiz_num_temp
 
     th_v_flat = th_v.reshape(nt, horiz_num, z_num)
-    th_v_prof = np.zeros(nt, z_num)
+    th_v_prof = np.zeros((nt, z_num))
 
     for t in range(nt):
         for k in range(z_num):
