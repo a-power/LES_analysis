@@ -105,6 +105,7 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater=['less'], and_or =
         masked_var = ma.masked_greater_equal(var_data, var_thres)
     else:
         print("must pick 'less' (values lower than threshold are masked/EXCLUDED) or 'greater' (values higher than threshold are masked/EXCLUDED).")
+    print('masked other var:', other_var[0])
 
     cloud_mask = ma.getmaskarray(masked_q_cloud)
     var_mask = ma.getmaskarray(masked_var)
@@ -136,6 +137,7 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater=['less'], and_or =
         elif less_greater[1] == 'greater':
             extra_masked_var = ma.masked_greater_equal(extra_var_data, var_thres[1])
         extra_var_mask = ma.getmaskarray(extra_masked_var)
+        print('masked other var:', other_var[0])
 
         if and_or[1] == 'and':
             new_out_mask = ma.mask_or(out_mask, extra_var_mask)  # masks work opposite
