@@ -15,7 +15,7 @@ def get_th_v_prime(th_v):
 
     for t in range(nt):
         for k in range(z_num):
-            th_v_prof[nt, k] = np.sum(th_v_flat[t, :, k]) / horiz_num
+            th_v_prof[t, k] = np.sum(th_v_flat[t, :, k]) / horiz_num
 
     th_v_prime_temp = th_v_flat - th_v_prof
     th_v_flat = None
@@ -97,6 +97,7 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater=['less'], and_or =
         var_data = get_th_v_prime(var_temp)
     else:
         var_data = var_in.data
+    print('loaded other var:', other_var[0])
 
     if less_greater[0]=='less':
         masked_var = ma.masked_less(var_data, var_thres)
@@ -128,6 +129,7 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater=['less'], and_or =
             extra_var_data = get_th_v_prime(extra_var_temp)
         else:
             extra_var_data = var_in.data
+        print('loaded other var:', other_var[1])
 
         if less_greater[1] == 'less':
             extra_masked_var = ma.masked_less(extra_var_data, var_thres[1])
