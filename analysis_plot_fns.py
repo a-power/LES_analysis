@@ -84,14 +84,14 @@ def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, dat
 
     plt.figure(figsize=(5, 6))
     plt.hist(data1.flatten(), \
-             bins=bins_in, histtype='step', stacked=False, label=data_names[0], \
-             linewidth=1, linestyle='dotted')
+             bins=bins_in, histtype='step', stacked=False, label=data_names[0]) #, \
+             #linewidth=1, linestyle='dotted')
     plt.hist(data2.flatten(), \
-             bins=bins_in, histtype='step', stacked=False, label=data_names[1], \
-             linewidth=1, linestyle='dotted')
+             bins=bins_in, histtype='step', stacked=False, label=data_names[1]) #, \
+             #linewidth=1, linestyle='dotted')
     plt.hist(data3.flatten(), \
-             bins=bins_in, histtype='step', stacked=False, label=data_names[2], \
-             linewidth=1, linestyle='dotted')
+             bins=bins_in, histtype='step', stacked=False, label=data_names[2]) #, \
+             #linewidth=1, linestyle='dotted')
     plt.legend()
 
     # og_xtic = plt.xticks()
