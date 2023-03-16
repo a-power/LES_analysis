@@ -97,7 +97,7 @@ def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, dat
     plt.legend()
     plt.vlines(0, ymin=0, ymax=((1e9)), linestyles='dashed', colors='black', linewidths=0.5)
     plt.yscale('log', nonposy='clip')
-    plt.ylim(bottom_set, top_set+(top_set/12))
+    plt.ylim(bottom_set, (top_set+(top_set/10)))
     plt.xlabel(f"{scalar} at time {time_set_in}", fontsize=16)
     plt.ylabel("number of value occurrences", fontsize=16)
     plt.savefig(plotdir_in + f'hist_of_{name}_values_{delta}_time_{time_set_in}_vars_{data_names[0]}.png', pad_inches=0)
