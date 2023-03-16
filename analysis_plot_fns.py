@@ -93,7 +93,7 @@ def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, dat
              bins=bins_in, histtype='step', stacked=False, label=data_names[2]) #, \
              #linewidth=1, linestyle='dotted')
     plt.legend()
-
+    plt.vline(0, ymin=0, ymax=(1e8-1000))
     # og_xtic = plt.xticks()
     # plt.xlim(-1,1)
     plt.xlabel(f"{scalar} at time {time_set_in}", fontsize=16)
