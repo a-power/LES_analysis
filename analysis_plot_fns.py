@@ -92,10 +92,10 @@ def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, dat
     plt.hist(data3.flatten(), \
              bins=bins_in, histtype='step', stacked=False, label=data_names[2]) #, \
              #linewidth=1, linestyle='dotted')
+    bottom_set, top_set = plt.ylim()
     plt.legend()
-    top, bottom = plt.ylim()
     plt.vlines(0, ymin=0, ymax=(1e9), linestyles='dashed', colors='black', linewidths=0.5)
-    plt.ylim(top, bottom)
+    plt.ylim(bottom_set, top_set)
     plt.xlabel(f"{scalar} at time {time_set_in}", fontsize=16)
     plt.yscale('log', nonposy='clip')
     plt.ylabel("number of value occurrences", fontsize=16)
