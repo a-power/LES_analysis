@@ -50,7 +50,7 @@ def negs_in_field(plotdir, field, data_field_list, data_cl_list):
     plt.close('all')
 
 
-def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, data_names):
+def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, data_names, bins_in):
 
     if field_in == 'Cs_field':
         name = field_in
@@ -82,16 +82,16 @@ def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, dat
         scalar = '$H_{j}R_{j qt}$'
         name = 'HR_q_total'
 
-    plt.figure(figsize=(7, 6))
+    plt.figure(figsize=(5, 6))
     plt.hist(data1.flatten(), \
-             bins=500, histtype='step', stacked=False, label=data_names[0], \
-             linewidth=2, linestyle='dotted')
+             bins=bins_in, histtype='step', stacked=False, label=data_names[0], \
+             linewidth=1, linestyle='dotted')
     plt.hist(data2.flatten(), \
-             bins=500, histtype='step', stacked=False, label=data_names[1], \
-             linewidth=2, linestyle='dotted')
+             bins=bins_in, histtype='step', stacked=False, label=data_names[1], \
+             linewidth=1, linestyle='dotted')
     plt.hist(data3.flatten(), \
-             bins=500, histtype='step', stacked=False, label=data_names[2], \
-             linewidth=2, linestyle='dotted')
+             bins=bins_in, histtype='step', stacked=False, label=data_names[2], \
+             linewidth=1, linestyle='dotted')
     plt.legend()
 
     # og_xtic = plt.xticks()
@@ -105,7 +105,7 @@ def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, dat
     print(f'plotted for time {time_set_in} {field_in} {delta}')
 
 
-def C_values_dist(plotdir, field, data_field_list, data_contour, deltas=None, times='av', grid='p', other_vars=None,
+def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, deltas=None, times='av', grid='p', other_vars=None,
                   other_var_thres=None, less_greater_in=['less'], and_or_in = ['and'], cloud_liquid_threshold_in=10**(-5),
                   res_counter_in=None, return_all_in = False, grid_in='p', **kwargs):
 
@@ -216,7 +216,8 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, deltas=None, ti
                          data_field_env[time_set,...,0:24],
                           data_field_env[time_set,...,24:151],
                           data_field_cloud[time_set,...],
-                          data_names=["ML", "CL: cloud-free", "CL: cloudy"])
+                          data_names=["ML", "CL: cloud-free", "CL: cloudy"],
+                          bins_in=set_bins)
 
 
                 if len(other_vars) == 2:
@@ -224,7 +225,8 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, deltas=None, ti
                               data_field_cloud[time_set,...],
                               data_field_cloud_up[time_set,...],
                               data_field_cloud_core[time_set,...],
-                              data_names=["Cloud", "Cloud updraft", "Cloud core"])
+                              data_names=["Cloud", "Cloud updraft", "Cloud core"],
+                              bins_in=set_bins)
 
 
         else:
@@ -233,14 +235,16 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, deltas=None, ti
                       data_field_env[..., 0:24],
                       data_field_env[..., 24:151],
                       data_field_cloud[...],
-                      data_names=["ML", "CL: cloud-free", "CL: cloudy"])
+                      data_names=["ML", "CL: cloud-free", "CL: cloudy"],
+                      bins_in=set_bins)
 
             if len(other_vars) == 2:
                 plot_hist(plotdir, field, 'av', deltas[i],
                           data_field_cloud[...],
                           data_field_cloud_up[...],
                           data_field_cloud_core[...],
-                          data_names = ["Cloud", "Cloud updraft", "Cloud core"])
+                          data_names = ["Cloud", "Cloud updraft", "Cloud core"],
+                          bins_in=set_bins)
 
 
     plt.close('all')

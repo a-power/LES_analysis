@@ -35,7 +35,8 @@ gen_options = {'plotdir': plotdir,
             'and_or_in': ['and', 'and'],
             'times': all_times_or_not,
             'grid': mygrid,
-            'return_all_in': False
+            'return_all_in': False,
+            'set_bins':100
             }
 
 
