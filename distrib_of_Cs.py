@@ -16,7 +16,7 @@ dir_th = mydir + 'C_th_'
 dir_qt = mydir + 'C_qt_'
 
 mygrid = 'p'
-all_times_or_not = np.array([0, 1, 2])
+all_times_or_not = 'av' #np.array([0, 1, 2])
 
 cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
 w_field = f'f(f(w_on_{mygrid})_r_on_{mygrid})_r'

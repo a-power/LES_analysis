@@ -541,24 +541,15 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, res_count = No
         num_field = data_set[f'f(LM_field_on_{grid})_r'].data[...]
         den_field = data_set[f'f(MM_field_on_{grid})_r'].data[...]
 
-        data_field_sq = 0.5 * num_field / den_field
-        data_field = dyn.get_Cs(data_field_sq)
-
     elif field == 'Cth_field' or 'Cth_sq_field':
         print('length of time array for HR_th is ', len(data_set[f'f(HR_th_field_on_{grid})_r'].data[:, 0, 0, 0]))
         num_field = data_set[f'f(HR_th_field_on_{grid})_r'].data[...]
         den_field = data_set[f'f(RR_th_field_on_{grid})_r'].data[...]
 
-        data_field_sq = 0.5 * num_field / den_field
-        data_field = dyn.get_Cs(data_field_sq)
-
     elif field == 'Cqt_field' or 'Cqt_sq_field':
         print('length of time array for HR_qt is ', len(data_set[f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
         num_field = data_set[f'f(HR_q_total_field_on_{grid})_r'].data[...]
         den_field = data_set[f'f(RR_q_total_field_on_{grid})_r'].data[...]
-
-        data_field_sq = 0.5 * num_field / den_field
-        data_field = dyn.get_Cs(data_field_sq)
 
     else:
         print(f'length of time array for {field} is ', len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
