@@ -97,7 +97,7 @@ def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, dat
     plt.legend()
     plt.vlines(0, ymin=0, ymax=((1e9)), linestyles='dashed', colors='black', linewidths=0.5)
     plt.yscale('log', nonposy='clip')
-    plt.ylim(bottom_set, top_set+(top_set/80))
+    plt.ylim(bottom_set, top_set+(top_set/12))
     plt.xlabel(f"{scalar} at time {time_set_in}", fontsize=16)
     plt.ylabel("number of value occurrences", fontsize=16)
     plt.savefig(plotdir_in + f'hist_of_{name}_values_{delta}_time_{time_set_in}_vars_{data_names[0]}.png', pad_inches=0)
@@ -489,3 +489,283 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             print(f'plotted fields for {field} {mytime}')
 
     plt.close('all')
+
+
+
+
+
+def get_conditional_profiles(dataset_in, contour_field_in, field, res_count = None, return_fields=True,
+                      cloud_thres = 10**(-5), other_var_choice = False, horiz_av=False, \
+                      other_var_thres=False, less_greater='less', my_and_or = 'and', return_all_masks=False, grid='p'):
+
+    if field == 'Cs_field':
+        field_name = '$C_s$'
+        field_name_sq = '$C_s^2$'
+    if field == 'Cth_field':
+        field_name = '$C_{\\theta}$'
+        field_name_sq = '$C_{\\theta}^2$'
+    if field == 'Cqt_field':
+        field_name = '$C_{qt}$'
+        field_name_sq = '$C_{qt}^2$'
+
+    if field == 'LM_field':
+        field_name = '$LM$'
+    if field == 'HR_th_field':
+        field_name = '$HR_{\\theta}$'
+    if field == 'HR_qt_field':
+        field_name = '$HR_{qt}$'
+    if field == 'MM_field':
+        field_name = '$MM$'
+    if field == 'RR_th_field':
+        field_name = '$RR_{\\theta}$'
+    if field == 'RR_qt_field':
+        field_name = '$RR_{qt}$'
+
+
+    data_set = xr.open_dataset(dataset_in)
+
+    time_data = data_set['time']
+    times = time_data.data
+    nt = len(times)
+    x_data = data_set['x_p']
+    x_s = x_data.data
+    y_data = data_set['y_p']
+    y_s = y_data.data
+    z_data = data_set['z']
+    z_s = z_data.data
+    zn_data = data_set['zn']
+    zn_s = zn_data.data
+
+    if field == 'Cs_field' or 'Cs_sq_field':
+        print('length of time array for LM is ', len(data_set[f'f(LM_field_on_{grid})_r'].data[:, 0, 0, 0]))
+        num_field = data_set[f'f(LM_field_on_{grid})_r'].data[...]
+        den_field = data_set[f'f(MM_field_on_{grid})_r'].data[...]
+
+        data_field_sq = 0.5 * num_field / den_field
+        data_field = dyn.get_Cs(data_field_sq)
+
+    elif field == 'Cth_field' or 'Cth_sq_field':
+        print('length of time array for HR_th is ', len(data_set[f'f(HR_th_field_on_{grid})_r'].data[:, 0, 0, 0]))
+        num_field = data_set[f'f(HR_th_field_on_{grid})_r'].data[...]
+        den_field = data_set[f'f(RR_th_field_on_{grid})_r'].data[...]
+
+        data_field_sq = 0.5 * num_field / den_field
+        data_field = dyn.get_Cs(data_field_sq)
+
+    elif field == 'Cqt_field' or 'Cqt_sq_field':
+        print('length of time array for HR_qt is ', len(data_set[f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
+        num_field = data_set[f'f(HR_q_total_field_on_{grid})_r'].data[...]
+        den_field = data_set[f'f(RR_q_total_field_on_{grid})_r'].data[...]
+
+        data_field_sq = 0.5 * num_field / den_field
+        data_field = dyn.get_Cs(data_field_sq)
+
+    else:
+        print(f'length of time array for {field} is ', len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
+        data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
+
+    data_set.close()
+
+
+    if other_var_choice == False:
+
+        cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(contour_field_in, cloud_liquid_threshold=cloud_thres)
+
+        num_field_cloud = ma.masked_array(num_field, mask=cloud_only_mask)
+        num_field_env = ma.masked_array(num_field, mask=env_only_mask)
+        den_field_cloud = ma.masked_array(den_field, mask=cloud_only_mask)
+        den_field_env = ma.masked_array(den_field, mask=env_only_mask)
+
+        data_field_cloud = ma.masked_array(data_field, mask=cloud_only_mask)
+        data_field_env = ma.masked_array(data_field, mask=env_only_mask)
+        data_field_sq_cloud = ma.masked_array(data_field_sq, mask=cloud_only_mask)
+        data_field_sq_env = ma.masked_array(data_field_sq, mask=env_only_mask)
+
+        if horiz_av == True:
+
+            z_num = len(z_s)
+            horiz_num_temp = len(y_s)
+            horiz_num = horiz_num_temp * horiz_num_temp
+
+            if nt == 4:
+                total_num = nt * horiz_num
+
+                LM_flat_cloud = LijMij_cloud.reshape(total_num, z_num)
+                LM_flat_env = LijMij_env.reshape(total_num, z_num)
+                MM_flat_cloud = MijMij_cloud.reshape(total_num, z_num)
+                MM_flat_env = MijMij_env.reshape(total_num, z_num)
+
+                HR_th_flat_cloud = HjRj_th_cloud.reshape(total_num, z_num)
+                HR_th_flat_env = HjRj_th_env.reshape(total_num, z_num)
+                RR_th_flat_cloud = RjRj_th_cloud.reshape(total_num, z_num)
+                RR_th_flat_env = RjRj_th_env.reshape(total_num, z_num)
+
+                HR_qt_flat_cloud = HjRj_qt_cloud.reshape(total_num, z_num)
+                HR_qt_flat_env = HjRj_qt_env.reshape(total_num, z_num)
+                RR_qt_flat_cloud = RjRj_qt_cloud.reshape(total_num, z_num)
+                RR_qt_flat_env = RjRj_qt_env.reshape(total_num, z_num)
+
+            else:
+                RjRj_qt = None
+                LM_flat_cloud = LijMij_cloud.reshape(horiz_num, z_num)
+                LM_flat_env = LijMij_env.reshape(horiz_num, z_num)
+                MM_flat_cloud = MijMij_cloud.reshape(horiz_num, z_num)
+                MM_flat_env = MijMij_env.reshape(horiz_num, z_num)
+
+                HR_th_flat_cloud = HjRj_th_cloud.reshape(horiz_num, z_num)
+                HR_th_flat_env = HjRj_th_env.reshape(horiz_num, z_num)
+                RR_th_flat_cloud = RjRj_th_cloud.reshape(horiz_num, z_num)
+                RR_th_flat_env = RjRj_th_env.reshape(horiz_num, z_num)
+
+                HR_qt_flat_cloud = HjRj_qt_cloud.reshape(horiz_num, z_num)
+                HR_qt_flat_env = HjRj_qt_env.reshape(horiz_num, z_num)
+                RR_qt_flat_cloud = RjRj_qt_cloud.reshape(horiz_num, z_num)
+                RR_qt_flat_env = RjRj_qt_env.reshape(horiz_num, z_num)
+
+                total_num = horiz_num
+
+            LM_cloud_av = np.zeros(z_num)
+            LM_env_av = np.zeros(z_num)
+            MM_cloud_av = np.zeros(z_num)
+            MM_env_av = np.zeros(z_num)
+
+            HR_th_cloud_av = np.zeros(z_num)
+            HR_th_env_av = np.zeros(z_num)
+            RR_th_cloud_av = np.zeros(z_num)
+            RR_th_env_av = np.zeros(z_num)
+
+            HR_qt_cloud_av = np.zeros(z_num)
+            HR_qt_env_av = np.zeros(z_num)
+            RR_qt_cloud_av = np.zeros(z_num)
+            RR_qt_env_av = np.zeros(z_num)
+
+            for k in range(z_num):
+
+                LM_cloud_av[k] = np.sum(LM_flat_cloud[:, k]) / total_num
+                LM_env_av[k] = np.sum(LM_flat_env[:, k]) / total_num
+                MM_cloud_av[k] = np.sum(MM_flat_cloud[:, k]) / total_num
+                MM_env_av[k] = np.sum(MM_flat_env[:, k]) / total_num
+
+                HR_th_cloud_av[k] = np.sum( HR_th_flat_cloud[:, k] ) / total_num
+                HR_th_env_av[k] = np.sum( HR_th_flat_env[:, k] ) / total_num
+                RR_th_cloud_av[k] = np.sum( RR_th_flat_cloud[:, k] ) / total_num
+                RR_th_env_av[k] = np.sum( RR_th_flat_env[:, k] ) / total_num
+
+                HR_qt_cloud_av[k] = np.sum( HR_qt_flat_cloud[:, k] ) / total_num
+                HR_qt_env_av[k] = np.sum( HR_qt_flat_env[:, k] ) / total_num
+                RR_qt_cloud_av[k] = np.sum( RR_qt_flat_cloud[:, k] ) / total_num
+                RR_qt_env_av[k] = np.sum( RR_qt_flat_env[:, k] ) / total_num
+
+            LM_flat_cloud = None
+            LM_flat_env = None
+            MM_flat_cloud = None
+            MM_flat_env = None
+
+            HR_th_flat_cloud = None
+            HR_th_flat_env = None
+            RR_th_flat_cloud = None
+            RR_th_flat_env = None
+
+            HR_qt_flat_cloud = None
+            HR_qt_flat_env = None
+            RR_qt_flat_cloud = None
+            RR_qt_flat_env = None
+
+
+            Cs_cloud_av_sq = (0.5 * (LM_cloud_av / MM_cloud_av))
+            Cs_env_av_sq = (0.5 * (LM_env_av / MM_env_av))
+
+            C_th_cloud_av_sq = (0.5 * (HR_th_cloud_av / RR_th_cloud_av))
+            C_th_env_av_sq = (0.5 * (HR_th_env_av / RR_th_env_av))
+
+            C_qt_cloud_av_sq = (0.5 * (HR_qt_cloud_av / RR_qt_cloud_av))
+            C_qt_env_av_sq = (0.5 * (HR_qt_env_av / RR_qt_env_av))
+
+
+            Cs_cloud_prof = dyn.get_Cs(Cs_cloud_av_sq)
+            Cs_env_prof = dyn.get_Cs(Cs_env_av_sq)
+            Cth_cloud_prof = dyn.get_Cs(C_th_cloud_av_sq)
+            Cth_env_prof = dyn.get_Cs(C_th_env_av_sq)
+            Cqt_cloud_prof = dyn.get_Cs(C_qt_cloud_av_sq)
+            Cqt_env_prof = dyn.get_Cs(C_qt_env_av_sq)
+
+
+            Cs_cloud_prof_out = xr.DataArray(Cs_cloud_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='Cs_cloud_prof')
+            Cs_env_prof_out = xr.DataArray(Cs_env_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='Cs_env_prof')
+            Cth_cloud_prof_out = xr.DataArray(Cth_cloud_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='Cth_cloud_prof')
+            Cth_env_prof_out = xr.DataArray(Cth_env_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='Cth_env_prof')
+            Cqt_cloud_prof_out = xr.DataArray(Cqt_cloud_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='Cqt_cloud_prof')
+            Cqt_env_prof_out = xr.DataArray(Cqt_env_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='Cqt_env_prof')
+
+
+
+            LM_cloud_av = xr.DataArray(LM_cloud_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='LijMij_cloud_prof')
+            LM_env_av = xr.DataArray(LM_env_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='LijMij_env_prof')
+            MM_cloud_av = xr.DataArray(MM_cloud_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='MijMij_cloud_prof')
+            MM_env_av = xr.DataArray(MM_env_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='MijMij_env_prof')
+
+            HR_th_cloud_av = xr.DataArray(HR_th_cloud_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='HjRj_th_cloud_prof')
+            HR_th_env_av = xr.DataArray(HR_th_env_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='HjRj_th_env_prof')
+            RR_th_cloud_av = xr.DataArray(RR_th_cloud_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='RjRj_th_cloud_prof')
+            RR_th_env_av = xr.DataArray(RR_th_env_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='RjRj_th_env_prof')
+
+            HR_qt_cloud_av = xr.DataArray(HR_qt_cloud_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='HjRj_qt_cloud_prof')
+            HR_qt_env_av = xr.DataArray(HR_qt_env_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='HjRj_qt_env_prof')
+            RR_qt_cloud_av = xr.DataArray(RR_qt_cloud_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='RjRj_qt_cloud_prof')
+            RR_qt_env_av = xr.DataArray(RR_qt_env_av[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
+                                         dims=['time', "z"], name='RjRj_qt_env_prof')
+
+
+            if return_fields == False:
+
+                return Cs_cloud_prof_out, Cs_env_prof_out, Cth_cloud_prof_out, Cth_env_prof_out, Cqt_cloud_prof_out, Cqt_env_prof_out, \
+                       LM_cloud_av, LM_env_av, MM_cloud_av, MM_env_av, \
+                       HR_th_cloud_av, HR_th_env_av, RR_th_cloud_av, RR_th_env_av, \
+                       HR_qt_cloud_av, HR_qt_env_av, RR_qt_cloud_av, RR_qt_env_av
+
+        else:
+
+            num_field_cloud = xr.DataArray(num_field_cloud,
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='LijMij_cloud_field')
+            num_field_env = xr.DataArray(num_field_env,
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='LijMij_env_field')
+            den_field_cloud = xr.DataArray(den_field_cloud,
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='MijMij_cloud_field')
+            den_field_env = xr.DataArray(den_field_env,
+                                             coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
+                                             dims=["time", "x_p", "y_p", "z"], name='MijMij_env_field')
+
+            data_field_cloud
+            data_field_env
+            data_field_sq_cloud
+            data_field_sq_env
+
+
+
+        mask = cloudy_and_or(data_in = dataset_in, other_var = other_var_choice, var_thres=other_var_thres, \
+                             less_greater_threas='greater', and_or='and', cloud_liquid_threshold=10 ** (-5), \
+                             res_counter=res_count, return_all=return_all_masks)
+
+
+
+
