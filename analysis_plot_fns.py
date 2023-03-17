@@ -252,9 +252,10 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
 
 
 def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, contour_field_in, t_av_or_not,
-              start_end, set_percentile_C2=None)\
-        :
-    deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+              start_end, set_percentile_C2=None, deltas=None):
+
+    if deltas==None:
+        deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
     start = start_end[0]
     start_grid = int(start/0.02) # going from km to grid spacing co-ords (20m grid)
@@ -494,7 +495,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
 
 
-def get_conditional_profiles(dataset_in, contour_field_in, field, res_count = None,
+def get_conditional_profiles(dataset_in, contour_field_in, field, res_count = None, deltas=None,
                       cloud_thres = 10**(-5), other_vars = False, other_var_thres=False,
                              less_greater_in='less', and_or_in = 'and', grid='p'):
 
@@ -521,134 +522,144 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, res_count = No
     if field == 'RR_qt_field':
         field_name = '$RR_{qt}$'
 
-
-    cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(contour_field_in, cloud_liquid_threshold=cloud_thres)
-
-    if other_vars != None:
-        if len(other_vars) == 1:
-            combo2_out_mask = clo.cloudy_and_or(contour_field_in + f'{i}_running_mean_filter_rm00.nc',
-                                                other_var=other_vars, var_thres=other_var_thres,
-                                                less_greater=less_greater_in, and_or=and_or_in,
-                                                cloud_liquid_threshold=cloud_thres, grid=grid)
-        else:
-            combo2_out_mask, combo3_out_mask = clo.cloudy_and_or(contour_field_in + f'{i}_running_mean_filter_rm00.nc',
-                                                                 other_var=other_vars, var_thres=other_var_thres,
-                                                                 less_greater=less_greater_in, and_or=and_or_in,
-                                                                 cloud_liquid_threshold=cloud_thres, grid=grid)
-
-
-    data_set = xr.open_dataset(dataset_in)
-
-    time_data = data_set['time']
-    times = time_data.data
-    nt = len(times)
-    x_data = data_set['x_p']
-    x_s = x_data.data
-    y_data = data_set['y_p']
-    y_s = y_data.data
-    z_data = data_set['z']
-    z_s = z_data.data
-    zn_data = data_set['zn']
-    zn_s = zn_data.data
-
-    if field == 'Cs_field' or 'Cs_sq_field':
-        print('length of time array for LM is ', len(data_set[f'f(LM_field_on_{grid})_r'].data[:, 0, 0, 0]))
-        num_field = data_set[f'f(LM_field_on_{grid})_r'].data[...]
-        den_field = data_set[f'f(MM_field_on_{grid})_r'].data[...]
-        C=True
-
-    elif field == 'Cth_field' or 'Cth_sq_field':
-        print('length of time array for HR_th is ', len(data_set[f'f(HR_th_field_on_{grid})_r'].data[:, 0, 0, 0]))
-        num_field = data_set[f'f(HR_th_field_on_{grid})_r'].data[...]
-        den_field = data_set[f'f(RR_th_field_on_{grid})_r'].data[...]
-        C=True
-
-    elif field == 'Cqt_field' or 'Cqt_sq_field':
-        print('length of time array for HR_qt is ', len(data_set[f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
-        num_field = data_set[f'f(HR_q_total_field_on_{grid})_r'].data[...]
-        den_field = data_set[f'f(RR_q_total_field_on_{grid})_r'].data[...]
-        C=True
-
-    else:
-        print(f'length of time array for {field} is ', len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
-        data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
-        C=False
-
-    data_set.close()
-
-    z_num = len(z_s)
-
-
-    if C==True:
-        num_field_cloud = ma.masked_array(num_field, mask=cloud_only_mask)
-        num_field_env = ma.masked_array(num_field, mask=env_only_mask)
-        den_field_cloud = ma.masked_array(den_field, mask=cloud_only_mask)
-        den_field_env = ma.masked_array(den_field, mask=env_only_mask)
+    for i in range(len(deltas)):
+        cloud_only_mask, env_only_mask = \
+            clo.cloud_vs_env_masks(contour_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc', \
+                                   cloud_liquid_threshold=cloud_thres)
 
         if other_vars != None:
-            num_field_combo2 = ma.masked_array(num_field, mask=combo2_out_mask)
-            den_field_combo2 = ma.masked_array(den_field, mask=combo2_out_mask)
-            if len(other_vars) > 1:
-                num_field_combo3 = ma.masked_array(num_field, mask=combo3_out_mask)
-                den_field_combo3 = ma.masked_array(den_field, mask=combo3_out_mask)
+            if len(other_vars) == 1:
+                combo2_out_mask = clo.cloudy_and_or(contour_field_in + f'{i}_running_mean_filter_rm00.nc',
+                                                    other_var=other_vars, var_thres=other_var_thres,
+                                                    less_greater=less_greater_in, and_or=and_or_in,
+                                                    cloud_liquid_threshold=cloud_thres, grid=grid)
+            else:
+                combo2_out_mask, combo3_out_mask = clo.cloudy_and_or(contour_field_in + f'{i}_running_mean_filter_rm00.nc',
+                                                                     other_var=other_vars, var_thres=other_var_thres,
+                                                                     less_greater=less_greater_in, and_or=and_or_in,
+                                                                     cloud_liquid_threshold=cloud_thres, grid=grid)
 
 
-        num_cloud_prof = np.zeros(z_num)
-        num_env_prof = np.zeros(z_num)
-        num_combo2_prof = np.zeros(z_num)
-        num_combo3_prof = np.zeros(z_num)
-        den_cloud_prof = np.zeros(z_num)
-        den_env_prof = np.zeros(z_num)
-        den_combo2_prof = np.zeros(z_num)
-        den_combo3_prof = np.zeros(z_num)
+        data_set = xr.open_dataset(dataset_in)
 
-        for k in range(z_num):
+        time_data = data_set['time']
+        times = time_data.data
+        nt = len(times)
+        x_data = data_set['x_p']
+        x_s = x_data.data
+        y_data = data_set['y_p']
+        y_s = y_data.data
+        z_data = data_set['z']
+        z_s = z_data.data
+        zn_data = data_set['zn']
+        zn_s = zn_data.data
 
-            num_cloud_prof[k] = np.mean(num_field_cloud[..., k])
-            num_env_prof[k] = np.mean(num_field_env[..., k])
-            den_cloud_prof[k] = np.mean(den_field_cloud[..., k])
-            den_env_prof[k] = np.mean(den_field_env[..., k])
+        if field == 'Cs_field' or 'Cs_sq_field':
+            print('length of time array for LM is ', len(data_set[f'f(LM_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            num_field = data_set[f'f(LM_field_on_{grid})_r'].data[...]
+            den_field = data_set[f'f(MM_field_on_{grid})_r'].data[...]
+            C=True
+
+        elif field == 'Cth_field' or 'Cth_sq_field':
+            print('length of time array for HR_th is ', len(data_set[f'f(HR_th_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            num_field = data_set[f'f(HR_th_field_on_{grid})_r'].data[...]
+            den_field = data_set[f'f(RR_th_field_on_{grid})_r'].data[...]
+            C=True
+
+        elif field == 'Cqt_field' or 'Cqt_sq_field':
+            print('length of time array for HR_qt is ', len(data_set[f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            num_field = data_set[f'f(HR_q_total_field_on_{grid})_r'].data[...]
+            den_field = data_set[f'f(RR_q_total_field_on_{grid})_r'].data[...]
+            C=True
+
+        else:
+            print(f'length of time array for {field} is ', len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
+            data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
+            C=False
+
+        data_set.close()
+
+        z_num = len(z_s)
+
+
+        if C==True:
+            num_field_cloud = ma.masked_array(num_field, mask=cloud_only_mask)
+            num_field_env = ma.masked_array(num_field, mask=env_only_mask)
+            den_field_cloud = ma.masked_array(den_field, mask=cloud_only_mask)
+            den_field_env = ma.masked_array(den_field, mask=env_only_mask)
 
             if other_vars != None:
-                num_combo2_prof[k] = np.mean(num_field_combo2[..., k])
-                den_combo2_prof[k] = np.mean(den_field_combo2[..., k])
+                num_field_combo2 = ma.masked_array(num_field, mask=combo2_out_mask)
+                den_field_combo2 = ma.masked_array(den_field, mask=combo2_out_mask)
                 if len(other_vars) > 1:
-                    num_combo3_prof[k] = np.mean(num_field_combo3[..., k])
-                    den_combo3_prof[k] = np.mean(den_field_combo3[..., k])
+                    num_field_combo3 = ma.masked_array(num_field, mask=combo3_out_mask)
+                    den_field_combo3 = ma.masked_array(den_field, mask=combo3_out_mask)
 
 
-        C_sq_cloud_prof = (0.5 * (num_cloud_prof / den_cloud_prof))
-        C_sq_env_prof = (0.5 * (num_env_prof / den_env_prof))
+            num_cloud_prof = np.zeros(z_num)
+            num_env_prof = np.zeros(z_num)
+            num_combo2_prof = np.zeros(z_num)
+            num_combo3_prof = np.zeros(z_num)
+            den_cloud_prof = np.zeros(z_num)
+            den_env_prof = np.zeros(z_num)
+            den_combo2_prof = np.zeros(z_num)
+            den_combo3_prof = np.zeros(z_num)
 
-        Cs_cloud_prof = dyn.get_Cs(C_sq_cloud_prof)
-        Cs_env_prof = dyn.get_Cs(C_sq_env_prof)
+            for k in range(z_num):
 
+                num_cloud_prof[k] = np.mean(num_field_cloud[..., k])
+                num_env_prof[k] = np.mean(num_field_env[..., k])
+                den_cloud_prof[k] = np.mean(den_field_cloud[..., k])
+                den_env_prof[k] = np.mean(den_field_env[..., k])
 
-
-
-
-    else:
-
-        print('need to finish coding for vars other than C')
-        data_field_cloud = ma.masked_array(data_field, mask=cloud_only_mask)
-        data_field_env = ma.masked_array(data_field, mask=env_only_mask)
-
-        if other_vars != None:
-            data_field_combo2 = ma.masked_array(data_field, mask=combo2_out_mask)
-            if len(other_vars) > 1:
-                data_field_combo3 = ma.masked_array(data_field, mask=combo3_out_mask)
-
-
-
-
+                if other_vars != None:
+                    num_combo2_prof[k] = np.mean(num_field_combo2[..., k])
+                    den_combo2_prof[k] = np.mean(den_field_combo2[..., k])
+                    if len(other_vars) > 1:
+                        num_combo3_prof[k] = np.mean(num_field_combo3[..., k])
+                        den_combo3_prof[k] = np.mean(den_field_combo3[..., k])
 
 
+            C_sq_cloud_prof = (0.5 * (num_cloud_prof / den_cloud_prof))
+            C_sq_env_prof = (0.5 * (num_env_prof / den_env_prof))
 
+            C_cloud_prof = dyn.get_Cs(C_sq_cloud_prof)
+            C_env_prof = dyn.get_Cs(C_sq_env_prof)
 
+            if other_vars != None:
+                C_sq_combo2_prof = (0.5 * (num_combo2_prof / den_combo2_prof))
+                C_combo2_prof = dyn.get_Cs(C_sq_combo2_prof)
+                if len(other_vars) > 1:
+                    C_sq_combo3_prof = (0.5 * (num_combo3_prof / den_combo3_prof))
+                    C_combo3_prof = dyn.get_Cs(C_sq_combo3_prof)
+
+            if other_vars == None:
+                return C_sq_env_prof, C_env_prof, C_sq_cloud_prof, C_cloud_prof, \
+            else:
+                if len(other_vars) == 1:
+                    return C_sq_env_prof, C_env_prof, C_sq_cloud_prof, C_cloud_prof,\
+                               C_sq_combo2_prof, C_combo2_prof
+                else:
+                    return C_sq_env_prof, C_env_prof, C_sq_cloud_prof, C_cloud_prof, \
+                           C_sq_combo2_prof, C_combo2_prof, C_sq_combo3_prof, C_combo3_prof
+
+        else:
+
+            print('need to finish coding for vars other than C')
+            data_field_cloud = ma.masked_array(data_field, mask=cloud_only_mask)
+            data_field_env = ma.masked_array(data_field, mask=env_only_mask)
+
+            # if other_vars != None:
+            #     data_field_combo2 = ma.masked_array(data_field, mask=combo2_out_mask)
+            #     if len(other_vars) > 1:
+            #         data_field_combo3 = ma.masked_array(data_field, mask=combo3_out_mask)
 
 #
 # Cs_cloud_prof_out = xr.DataArray(Cs_cloud_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
 #                              dims=['time', "z"], name='Cs_cloud_prof')
+
+def l_mix_vs_delta(C_sq_env_prof, C_env_prof, C_sq_cloud_prof, C_cloud_prof, \
+                           C_sq_combo2_prof=None, C_combo2_prof=None, C_sq_combo3_prof=None, C_combo3_prof=None):
 
 
 
