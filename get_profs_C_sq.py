@@ -49,7 +49,7 @@ gen_opts = {'data_contour': dir_contour,
             'grid': mygrid,
                }
 
-for j in len(dataset_name):
+for j in range(len(dataset_name)):
 
     ds = xr.Dataset()
     ds.to_netcdf(dataset_name[j], mode='w')
