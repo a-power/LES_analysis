@@ -495,9 +495,11 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
 
 
-def get_conditional_profiles(dataset_in, contour_field_in, field, res_count = None, deltas=None,
+def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
                       cloud_thres = 10**(-5), other_vars = False, other_var_thres=False,
                              less_greater_in='less', and_or_in = 'and', grid='p'):
+    if deltas==None:
+        deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
     if field == 'Cs_field':
         field_name = '$C_s$'
@@ -623,43 +625,57 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, res_count = No
             C_sq_cloud_prof = (0.5 * (num_cloud_prof / den_cloud_prof))
             C_sq_env_prof = (0.5 * (num_env_prof / den_env_prof))
 
-            C_cloud_prof = dyn.get_Cs(C_sq_cloud_prof)
-            C_env_prof = dyn.get_Cs(C_sq_env_prof)
+            # C_cloud_prof = dyn.get_Cs(C_sq_cloud_prof)
+            # C_env_prof = dyn.get_Cs(C_sq_env_prof)
+
+            C_sq_cloud_prof_nc = xr.DataArray(C_sq_cloud_prof[...], coords={'time': [nt], 'zn': zn_s},
+                                    dims=['time', "zn"], name=f'{field_name}_cloud_prof')
+
+            C_sq_env_prof_nc = xr.DataArray(C_sq_env_prof[...], coords={'time': [nt], 'zn': zn_s},
+                                 dims=['time', "zn"], name=f'{field_name}_env_prof')
+
+
 
             if other_vars != None:
                 C_sq_combo2_prof = (0.5 * (num_combo2_prof / den_combo2_prof))
-                C_combo2_prof = dyn.get_Cs(C_sq_combo2_prof)
+                #C_combo2_prof = dyn.get_Cs(C_sq_combo2_prof)
+
+                C_sq_combo2_prof_nc = xr.DataArray(C_sq_combo2_prof[...], coords={'time': [nt], 'zn': zn_s},
+                                                  dims=['time', "zn"], name=f'{field_name}_{other_vars[0]}_prof')
+
+
                 if len(other_vars) > 1:
                     C_sq_combo3_prof = (0.5 * (num_combo3_prof / den_combo3_prof))
-                    C_combo3_prof = dyn.get_Cs(C_sq_combo3_prof)
+                    #C_combo3_prof = dyn.get_Cs(C_sq_combo3_prof)
+
+                    C_sq_combo3_prof_nc = xr.DataArray(C_sq_combo3_prof[...], coords={'time': [nt], 'zn': zn_s},
+                                                       dims=['time', "zn"],
+                                                       name=f'{field_name}_{other_vars[0]}_{other_vars[1]}_prof')
+
+
 
             if other_vars == None:
-                return C_sq_env_prof, C_env_prof, C_sq_cloud_prof, C_cloud_prof, \
+                return C_sq_env_prof_nc, C_sq_cloud_prof_nc
             else:
                 if len(other_vars) == 1:
-                    return C_sq_env_prof, C_env_prof, C_sq_cloud_prof, C_cloud_prof,\
-                               C_sq_combo2_prof, C_combo2_prof
+                    return C_sq_env_prof_nc, C_sq_cloud_prof_nc, C_sq_combo2_prof_nc
                 else:
-                    return C_sq_env_prof, C_env_prof, C_sq_cloud_prof, C_cloud_prof, \
-                           C_sq_combo2_prof, C_combo2_prof, C_sq_combo3_prof, C_combo3_prof
+                    return C_sq_env_prof_nc, C_sq_cloud_prof_nc, C_sq_combo2_prof_nc, C_sq_combo3_prof_nc
+
 
         else:
 
             print('need to finish coding for vars other than C')
-            data_field_cloud = ma.masked_array(data_field, mask=cloud_only_mask)
-            data_field_env = ma.masked_array(data_field, mask=env_only_mask)
+            # data_field_cloud = ma.masked_array(data_field, mask=cloud_only_mask)
+            # data_field_env = ma.masked_array(data_field, mask=env_only_mask)
 
             # if other_vars != None:
             #     data_field_combo2 = ma.masked_array(data_field, mask=combo2_out_mask)
             #     if len(other_vars) > 1:
             #         data_field_combo3 = ma.masked_array(data_field, mask=combo3_out_mask)
 
-#
-# Cs_cloud_prof_out = xr.DataArray(Cs_cloud_prof[np.newaxis, ...], coords={'time': [nt], 'z': z_s},
-#                              dims=['time', "z"], name='Cs_cloud_prof')
 
-def l_mix_vs_delta(C_sq_env_prof, C_env_prof, C_sq_cloud_prof, C_cloud_prof, \
-                           C_sq_combo2_prof=None, C_combo2_prof=None, C_sq_combo3_prof=None, C_combo3_prof=None):
+
 
 
 
