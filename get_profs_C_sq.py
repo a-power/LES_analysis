@@ -39,7 +39,7 @@ w_field = f'f(f(w_on_{mygrid})_r_on_{mygrid})_r'
 w2_field = f'f(f(w_on_{mygrid}.w_on_{mygrid})_r_on_{mygrid})_r'
 th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
 
-gen_opts = {'data_contour': dir_contour,
+gen_opts = {'contour_field_in': dir_contour,
             'deltas': None,
             'other_vars': [w_field, th_v_field],
             'cloud_liquid_threshold_in': 10**(-5),
