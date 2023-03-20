@@ -608,20 +608,24 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
                     num_field_combo3 = ma.masked_array(num_field, mask=combo3_out_mask)
                     den_field_combo3 = ma.masked_array(den_field, mask=combo3_out_mask)
 
-
+            num_prof = np.zeros(z_num)
             num_cloud_prof = np.zeros(z_num)
             num_env_prof = np.zeros(z_num)
             num_combo2_prof = np.zeros(z_num)
             num_combo3_prof = np.zeros(z_num)
+
+            den_prof = np.zeros(z_num)
             den_cloud_prof = np.zeros(z_num)
             den_env_prof = np.zeros(z_num)
             den_combo2_prof = np.zeros(z_num)
             den_combo3_prof = np.zeros(z_num)
 
             for k in range(z_num):
-
+                num_prof[k] = np.mean(num_field[..., k])
                 num_cloud_prof[k] = np.mean(num_field_cloud[..., k])
                 num_env_prof[k] = np.mean(num_field_env[..., k])
+
+                den_prof[k] = np.mean(den_field[..., k])
                 den_cloud_prof[k] = np.mean(den_field_cloud[..., k])
                 den_env_prof[k] = np.mean(den_field_env[..., k])
 
@@ -632,17 +636,20 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
                         num_combo3_prof[k] = np.mean(num_field_combo3[..., k])
                         den_combo3_prof[k] = np.mean(den_field_combo3[..., k])
 
-
+            C_sq_prof = (0.5 * (num_prof / den_prof))
             C_sq_cloud_prof = (0.5 * (num_cloud_prof / den_cloud_prof))
             C_sq_env_prof = (0.5 * (num_env_prof / den_env_prof))
 
             # C_cloud_prof = dyn.get_Cs(C_sq_cloud_prof)
             # C_env_prof = dyn.get_Cs(C_sq_env_prof)
 
-            C_sq_cloud_prof_nc = xr.DataArray(C_sq_cloud_prof[...], coords={'time': [nt], 'zn': zn_s},
+            C_sq_prof_nc = xr.DataArray(C_sq_prof[np.newaxis, ...], coords={'time': [nt], 'zn': zn_s},
+                                    dims=['time', "zn"], name=f'{save_name}_prof')
+
+            C_sq_cloud_prof_nc = xr.DataArray(C_sq_cloud_prof[np.newaxis, ...], coords={'time': [nt], 'zn': zn_s},
                                     dims=['time', "zn"], name=f'{save_name}_cloud_prof')
 
-            C_sq_env_prof_nc = xr.DataArray(C_sq_env_prof[...], coords={'time': [nt], 'zn': zn_s},
+            C_sq_env_prof_nc = xr.DataArray(C_sq_env_prof[np.newaxis,...], coords={'time': [nt], 'zn': zn_s},
                                  dims=['time', "zn"], name=f'{save_name}_env_prof')
 
 
@@ -651,7 +658,7 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
                 C_sq_combo2_prof = (0.5 * (num_combo2_prof / den_combo2_prof))
                 #C_combo2_prof = dyn.get_Cs(C_sq_combo2_prof)
 
-                C_sq_combo2_prof_nc = xr.DataArray(C_sq_combo2_prof[...], coords={'time': [nt], 'zn': zn_s},
+                C_sq_combo2_prof_nc = xr.DataArray(C_sq_combo2_prof[np.newaxis,...], coords={'time': [nt], 'zn': zn_s},
                                                   dims=['time', "zn"], name=f'{save_name}_{other_vars[0]}_prof')
 
 
@@ -659,7 +666,7 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
                     C_sq_combo3_prof = (0.5 * (num_combo3_prof / den_combo3_prof))
                     #C_combo3_prof = dyn.get_Cs(C_sq_combo3_prof)
 
-                    C_sq_combo3_prof_nc = xr.DataArray(C_sq_combo3_prof[...], coords={'time': [nt], 'zn': zn_s},
+                    C_sq_combo3_prof_nc = xr.DataArray(C_sq_combo3_prof[np.newaxis,...], coords={'time': [nt], 'zn': zn_s},
                                                        dims=['time', "zn"],
                                                        name=f'{save_name}_{other_vars[0]}_{other_vars[1]}_prof')
 
