@@ -42,7 +42,7 @@ th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
 gen_opts = {'contour_field_in': dir_contour,
             'deltas': None,
             'other_vars': [w_field, th_v_field],
-            'cloud_liquid_threshold_in': 10**(-5),
+            'cloud_thres': 10**(-5),
             'other_var_thres': [0.5, 0],
             'less_greater_in': ['less', 'less'],
             'and_or_in': ['and', 'and'],
