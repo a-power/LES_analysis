@@ -526,7 +526,7 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
 
     for i in range(len(deltas)):
         cloud_only_mask, env_only_mask = \
-            clo.cloud_vs_env_masks(contour_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc', \
+            clo.cloud_vs_env_masks(contour_field_in + f'{i}_running_mean_filter_rm00.nc', \
                                    cloud_liquid_threshold=cloud_thres)
 
         if other_vars != None:
