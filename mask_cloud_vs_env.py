@@ -121,7 +121,7 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater=['less'], and_or =
     if len(other_var) > 1:
         if f'f({other_var[1]}_on_{grid})_r' in ds_in:
             extra_var_in = ds_in[f'f({other_var[1]}_on_{grid})_r']
-        if f'f({other_var[1]}_on_{grid})_r' in ds_in:
+        elif f'f(f({other_var[1]}_on_{grid})_r_on_{grid})_r' in ds_in:
             extra_var_in = ds_in[f'f({other_var[1]}_on_{grid})_r']
         else:
             extra_var_in = ds_in[f'{other_var[1]}']
@@ -129,8 +129,9 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater=['less'], and_or =
         if other_var[1] == f'f(f(th_v_on_{grid})_r_on_{grid})_r':
             extra_var_temp = extra_var_in.data
             extra_var_data = get_th_v_prime(extra_var_temp)
+            print('got theta prime')
         else:
-            extra_var_data = var_in.data
+            extra_var_data = extra_var_in.data
         print('loaded other var:', other_var[1])
 
         if less_greater[1] == 'less':
