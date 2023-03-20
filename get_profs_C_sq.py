@@ -60,11 +60,11 @@ for j in range(len(dataset_name)):
 
     for i, field_in in enumerate(fields):
 
-        C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
+        C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
             apf.get_conditional_profiles(field=field_in, **gen_opts, \
                     dataset_in = path20f+file20+str(f'{field_dir[i]}_{deltas[j]}_running_mean_filter_rm00.nc'))
 
-
+        save_field(ds_in, C_sq_prof)
         save_field(ds_in, C_sq_env_prof)
         save_field(ds_in, C_sq_cloud_prof)
         save_field(ds_in, C_sq_combo2_prof)

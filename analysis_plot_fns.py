@@ -604,9 +604,18 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
             if other_vars != None:
                 num_field_combo2 = ma.masked_array(num_field, mask=combo2_out_mask)
                 den_field_combo2 = ma.masked_array(den_field, mask=combo2_out_mask)
+                if other_vars[0] == 'f(f(w_on_p)_r_on_p)_r':
+                    othervar1 = 'w'
+                elif other_vars[0] == 'f(f(th_v_on_p)_r_on_p)_r':
+                    othervar1 = 'th'
+
                 if len(other_vars) > 1:
                     num_field_combo3 = ma.masked_array(num_field, mask=combo3_out_mask)
                     den_field_combo3 = ma.masked_array(den_field, mask=combo3_out_mask)
+                    if other_vars[1] == 'f(f(w_on_p)_r_on_p)_r':
+                        othervar2 = 'w'
+                    elif other_vars[1] == 'f(f(th_v_on_p)_r_on_p)_r':
+                        othervar2 = 'th'
 
             num_prof = np.zeros(z_num)
             num_cloud_prof = np.zeros(z_num)
@@ -659,7 +668,7 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
                 #C_combo2_prof = dyn.get_Cs(C_sq_combo2_prof)
 
                 C_sq_combo2_prof_nc = xr.DataArray(C_sq_combo2_prof[np.newaxis,...], coords={'time': [nt], 'zn': zn_s},
-                                                  dims=['time', "zn"], name=f'{save_name}_{other_vars[0]}_prof')
+                                                  dims=['time', "zn"], name=f'{save_name}_{othervar1}_prof')
 
 
                 if len(other_vars) > 1:
@@ -668,17 +677,17 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
 
                     C_sq_combo3_prof_nc = xr.DataArray(C_sq_combo3_prof[np.newaxis,...], coords={'time': [nt], 'zn': zn_s},
                                                        dims=['time', "zn"],
-                                                       name=f'{save_name}_{other_vars[0]}_{other_vars[1]}_prof')
+                                                       name=f'{save_name}_{othervar1}_{othervar2}_prof')
 
 
 
             if other_vars == None:
-                return C_sq_env_prof_nc, C_sq_cloud_prof_nc
+                return C_sq_prof_nc, C_sq_env_prof_nc, C_sq_cloud_prof_nc
             else:
                 if len(other_vars) == 1:
-                    return C_sq_env_prof_nc, C_sq_cloud_prof_nc, C_sq_combo2_prof_nc
+                    return C_sq_prof_nc, C_sq_env_prof_nc, C_sq_cloud_prof_nc, C_sq_combo2_prof_nc
                 else:
-                    return C_sq_env_prof_nc, C_sq_cloud_prof_nc, C_sq_combo2_prof_nc, C_sq_combo3_prof_nc
+                    return C_sq_prof_nc, C_sq_env_prof_nc, C_sq_cloud_prof_nc, C_sq_combo2_prof_nc, C_sq_combo3_prof_nc
 
 
         else:
