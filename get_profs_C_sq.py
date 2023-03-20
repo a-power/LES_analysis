@@ -33,7 +33,7 @@ dataset_name = [outdir+file20+'C_2D.nc', outdir+file20+'C_4D.nc', outdir+file20+
 # 'field': 'f(HR_q_total_field_on_w)_r'
 # 'field': 'Cqt_field'
 
-field = ['Cs_sq_field', 'Cth_sq_field', 'Cqt_sq_field']
+fields = ['Cs_sq_field', 'Cth_sq_field', 'Cqt_sq_field']
 field_dir = ['Cs', 'C_th', 'C_qt']
 
 
@@ -58,7 +58,7 @@ for j in range(len(dataset_name)):
     ds.to_netcdf(dataset_name[j], mode='w')
     ds_in = {'file': dataset_name[j], 'ds': ds}
 
-    for i, field_in in enumerate(field):
+    for i, field_in in enumerate(fields):
 
         C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
             apf.get_conditional_profiles(field=field_in, **gen_opts, \

@@ -503,16 +503,22 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
 
     if field == 'Cs_field':
         field_name = '$C_s$'
+        save_name = 'Cs'
     if field == 'Cs_sq_field':
         field_name_sq = '$C_s^2$'
-    if field == 'Cth_sq_field':
-        field_name = '$C_{\\theta}$'
+        save_name = 'Cs_sq'
     if field == 'Cth_field':
+        field_name = '$C_{\\theta}$'
+        save_name = 'Cth'
+    if field == 'Cth_sq_field':
         field_name_sq = '$C_{\\theta}^2$'
-    if field == 'Cqt_sq_field':
+        save_name = 'Cth_sq'
+    if field == 'Cqt_field':
         field_name = '$C_{qt}$'
+        save_name = 'Cqt'
     if field == 'Cqt_sq_field':
         field_name_sq = '$C_{qt}^2$'
+        save_name = 'Cqt_sq'
 
     if field == 'LM_field':
         field_name = '$LM$'
@@ -632,10 +638,10 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
             # C_env_prof = dyn.get_Cs(C_sq_env_prof)
 
             C_sq_cloud_prof_nc = xr.DataArray(C_sq_cloud_prof[...], coords={'time': [nt], 'zn': zn_s},
-                                    dims=['time', "zn"], name=f'{field_name}_cloud_prof')
+                                    dims=['time', "zn"], name=f'{save_name}_cloud_prof')
 
             C_sq_env_prof_nc = xr.DataArray(C_sq_env_prof[...], coords={'time': [nt], 'zn': zn_s},
-                                 dims=['time', "zn"], name=f'{field_name}_env_prof')
+                                 dims=['time', "zn"], name=f'{save_name}_env_prof')
 
 
 
@@ -644,7 +650,7 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
                 #C_combo2_prof = dyn.get_Cs(C_sq_combo2_prof)
 
                 C_sq_combo2_prof_nc = xr.DataArray(C_sq_combo2_prof[...], coords={'time': [nt], 'zn': zn_s},
-                                                  dims=['time', "zn"], name=f'{field_name}_{other_vars[0]}_prof')
+                                                  dims=['time', "zn"], name=f'{save_name}_{other_vars[0]}_prof')
 
 
                 if len(other_vars) > 1:
@@ -653,7 +659,7 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
 
                     C_sq_combo3_prof_nc = xr.DataArray(C_sq_combo3_prof[...], coords={'time': [nt], 'zn': zn_s},
                                                        dims=['time', "zn"],
-                                                       name=f'{field_name}_{other_vars[0]}_{other_vars[1]}_prof')
+                                                       name=f'{save_name}_{other_vars[0]}_{other_vars[1]}_prof')
 
 
 
