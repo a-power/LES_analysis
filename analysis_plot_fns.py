@@ -567,19 +567,21 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
         zn_data = data_set['zn']
         zn_s = zn_data.data
 
-        if field == 'Cs_field' or 'Cs_sq_field':
+        print('current field = ', field)
+
+        if field == 'Cs_field' or field == 'Cs_sq_field':
             print('length of time array for LM is ', len(data_set[f'f(LM_field_on_{grid})_r'].data[:, 0, 0, 0]))
             num_field = data_set[f'f(LM_field_on_{grid})_r'].data[...]
             den_field = data_set[f'f(MM_field_on_{grid})_r'].data[...]
             C=True
 
-        elif field == 'Cth_field' or 'Cth_sq_field':
+        elif field == 'Cth_field' or field == 'Cth_sq_field':
             print('length of time array for HR_th is ', len(data_set[f'f(HR_th_field_on_{grid})_r'].data[:, 0, 0, 0]))
             num_field = data_set[f'f(HR_th_field_on_{grid})_r'].data[...]
             den_field = data_set[f'f(RR_th_field_on_{grid})_r'].data[...]
             C=True
 
-        elif field == 'Cqt_field' or 'Cqt_sq_field':
+        elif field == 'Cqt_field' or field == 'Cqt_sq_field':
             print('length of time array for HR_qt is ', len(data_set[f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
             num_field = data_set[f'f(HR_q_total_field_on_{grid})_r'].data[...]
             den_field = data_set[f'f(RR_q_total_field_on_{grid})_r'].data[...]
