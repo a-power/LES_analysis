@@ -503,12 +503,15 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
 
     if field == 'Cs_field':
         field_name = '$C_s$'
+    if field == 'Cs_sq_field':
         field_name_sq = '$C_s^2$'
-    if field == 'Cth_field':
+    if field == 'Cth_sq_field':
         field_name = '$C_{\\theta}$'
+    if field == 'Cth_field':
         field_name_sq = '$C_{\\theta}^2$'
-    if field == 'Cqt_field':
+    if field == 'Cqt_sq_field':
         field_name = '$C_{qt}$'
+    if field == 'Cqt_sq_field':
         field_name_sq = '$C_{qt}^2$'
 
     if field == 'LM_field':
