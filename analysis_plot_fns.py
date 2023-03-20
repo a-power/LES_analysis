@@ -504,34 +504,36 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
     if field == 'Cs_field':
         field_name = '$C_s$'
         save_name = 'Cs'
-    if field == 'Cs_sq_field':
+    elif field == 'Cs_sq_field':
         field_name_sq = '$C_s^2$'
         save_name = 'Cs_sq'
-    if field == 'Cth_field':
+    elif field == 'Cth_field':
         field_name = '$C_{\\theta}$'
         save_name = 'Cth'
-    if field == 'Cth_sq_field':
+    elif field == 'Cth_sq_field':
         field_name_sq = '$C_{\\theta}^2$'
         save_name = 'Cth_sq'
-    if field == 'Cqt_field':
+    elif field == 'Cqt_field':
         field_name = '$C_{qt}$'
         save_name = 'Cqt'
-    if field == 'Cqt_sq_field':
+    elif field == 'Cqt_sq_field':
         field_name_sq = '$C_{qt}^2$'
         save_name = 'Cqt_sq'
 
-    if field == 'LM_field':
+    elif field == 'LM_field':
         field_name = '$LM$'
-    if field == 'HR_th_field':
+    elif field == 'HR_th_field':
         field_name = '$HR_{\\theta}$'
-    if field == 'HR_qt_field':
+    elif field == 'HR_qt_field':
         field_name = '$HR_{qt}$'
-    if field == 'MM_field':
+    elif field == 'MM_field':
         field_name = '$MM$'
-    if field == 'RR_th_field':
+    elif field == 'RR_th_field':
         field_name = '$RR_{\\theta}$'
-    if field == 'RR_qt_field':
+    elif field == 'RR_qt_field':
         field_name = '$RR_{qt}$'
+    else:
+        print('field not found')
 
     for i in range(len(deltas)):
         cloud_only_mask, env_only_mask = \
