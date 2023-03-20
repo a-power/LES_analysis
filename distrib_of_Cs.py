@@ -40,7 +40,7 @@ gen_options = {'plotdir': plotdir,
             }
 
 
-LijMij_options = {'field': 'f(LM_field_on_w)_r',
+LijMij_options = {'field': f'f(LM_field_on_{mygrid})_r',
            'data_field_list': dir_s
            }
 Cs_options = {'field': 'Cs_field',
@@ -51,7 +51,7 @@ Cs_sq_options = {'field': 'Cs_sq_field',
            }
 
 
-HjRj_th_options = {'field': 'f(HR_th_field_on_w)_r',
+HjRj_th_options = {'field': f'f(HR_th_field_on_{mygrid})_r',
            'data_field_list': dir_th
            }
 Cth_options = {'field': 'Cth_field',
@@ -62,7 +62,7 @@ Cth_sq_options = {'field': 'Cth_sq_field',
            }
 
 
-HjRj_qt_options = {'field': 'f(HR_q_total_field_on_w)_r',
+HjRj_qt_options = {'field': f'f(HR_q_total_field_on_{mygrid})_r',
            'data_field_list': dir_qt
            }
 Cqt_options = {'field': 'Cqt_field',

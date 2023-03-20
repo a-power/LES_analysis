@@ -21,6 +21,8 @@ file20 = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 outdir = path20f+'C_profs/'
 os.makedirs(outdir, exist_ok = True)
 
+deltas=['2D', '4D', '8D', '16D', '32D', '64D']
+
 dataset_name = [outdir+file20+'C_2D.nc', outdir+file20+'C_4D.nc', outdir+file20+'C_8D.nc',
                 outdir+file20+'C_16D.nc', outdir+file20+'C_32D.nc', outdir+file20+'C_64D.nc']
 
@@ -32,6 +34,7 @@ dataset_name = [outdir+file20+'C_2D.nc', outdir+file20+'C_4D.nc', outdir+file20+
 # 'field': 'Cqt_field'
 
 field = ['Cs_sq_field', 'Cth_sq_field', 'Cqt_sq_field']
+field_dir = ['Cs', 'C_th', 'C_qt']
 
 
 cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
@@ -58,8 +61,8 @@ for j in range(len(dataset_name)):
     for i, field_in in enumerate(field):
 
         C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
-            apf.get_conditional_profiles(field=field_in, **gen_opts,
-                                         dataset_in = path20f+file20+str(f'ga0{j}_running_mean_filter_rm00.nc') )
+            apf.get_conditional_profiles(field=field_in, **gen_opts, \
+                    dataset_in = path20f+file20+str(f'{field_dir[i]}_{deltas[j]}_running_mean_filter_rm00.nc'))
 
 
         save_field(ds_in, C_sq_env_prof)
