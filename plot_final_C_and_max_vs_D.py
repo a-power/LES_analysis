@@ -100,11 +100,25 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
         ax[0].plot(Cs[it,:], z/z_i, color=colours[it])
         ax[1].plot(Cth[it, :], z/z_i, color=colours[it])
         ax[2].plot(Cqt[it, :], z/z_i, color=colours[it], label='$\\Delta = $'+labels_in[it])
-
-    ax[0].set_xlabel('$C^2_{s}$', fontsize=16)
-    ax[1].set_xlabel('$C^2_{\\theta}$', fontsize=16)
-    ax[2].set_xlabel('$C^2_{qt}$', fontsize=16)
+    if C_sq_to_C == True:
+        ax[0].set_xlabel('$C_{s}$', fontsize=16)
+        ax[1].set_xlabel('$C_{\\theta}$', fontsize=16)
+        ax[2].set_xlabel('$C_{qt}$', fontsize=16)
+    else:
+        ax[0].set_xlabel('$C^2_{s}$', fontsize=16)
+        ax[1].set_xlabel('$C^2_{\\theta}$', fontsize=16)
+        ax[2].set_xlabel('$C^2_{qt}$', fontsize=16)
     ax[2].legend(fontsize=12, loc='upper right')
+
+    left0, right0 = ax[0].set_xlim()
+    left1, right1 = ax[1].set_xlim()
+    left2, right2 = ax[2].set_xlim()
+
+    set_right = np.max(right0, right1, right2)
+
+    ax[0].set_xlim(right = set_right)
+    ax[1].set_xlim(right = set_right)
+    ax[2].set_xlim(right = set_right)
 
     if interp==True:
         ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
