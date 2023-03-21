@@ -114,7 +114,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
     left1, right1 = ax[1].set_xlim()
     left2, right2 = ax[2].set_xlim()
 
-    set_right = np.max(right0, right1, right2)
+    set_right = max(right0, right1, right2)
 
     ax[0].set_xlim(right = set_right)
     ax[1].set_xlim(right = set_right)
