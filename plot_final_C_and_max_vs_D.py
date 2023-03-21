@@ -96,7 +96,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
     for it in range(len(Cs)):
         ax[0].plot(Cs[it,:], z/z_i, color=colours[it])
         ax[1].plot(Cth[it, :], z/z_i, color=colours[it])
-        ax[2].plot(Cqt[it, :], z/z_i, color=colours[it], labels='$\\Delta = $'+labels_in[it])
+        ax[2].plot(Cqt[it, :], z/z_i, color=colours[it], label='$\\Delta = $'+labels_in[it])
 
     ax[0].set_xlabel('$C^2_{s}$', fontsize=16)
     ax[1].set_xlabel('$C^2_{\\theta}$', fontsize=16)
