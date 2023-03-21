@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import xarray as xr
 import os
 import dynamic_functions as dyn
-import cmath as cm
 
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
@@ -28,21 +27,21 @@ z_ML = 490
 
 #index of 0 at the start is to get rid of the dummy time index thats required to save the files
 
-Cs_sq = np.zeros((len(data_list), len(zn)))
-Cth_sq = np.zeros((len(data_list), len(zn)))
-Cqt_sq = np.zeros((len(data_list), len(zn)))
-Cs_env_sq = np.zeros((len(data_list), len(zn)))
-Cth_env_sq = np.zeros((len(data_list), len(zn)))
-Cqt_env_sq = np.zeros((len(data_list), len(zn)))
-Cs_cloud_sq = np.zeros((len(data_list), len(zn)))
-Cth_cloud_sq = np.zeros((len(data_list), len(zn)))
-Cqt_cloud_sq = np.zeros((len(data_list), len(zn)))
-Cs_w_sq = np.zeros((len(data_list), len(zn)))
-Cth_w_sq = np.zeros((len(data_list), len(zn)))
-Cqt_w_sq = np.zeros((len(data_list), len(zn)))
-Cs_w_th_sq = np.zeros((len(data_list), len(zn)))
-Cth_w_th_sq = np.zeros((len(data_list), len(zn)))
-Cqt_w_th_sq = np.zeros((len(data_list), len(zn)))
+Cs_sq = np.zeros((len(data_list), len(zn_set)))
+Cth_sq = np.zeros((len(data_list), len(zn_set)))
+Cqt_sq = np.zeros((len(data_list), len(zn_set)))
+Cs_env_sq = np.zeros((len(data_list), len(zn_set)))
+Cth_env_sq = np.zeros((len(data_list), len(zn_set)))
+Cqt_env_sq = np.zeros((len(data_list), len(zn_set)))
+Cs_cloud_sq = np.zeros((len(data_list), len(zn_set)))
+Cth_cloud_sq = np.zeros((len(data_list), len(zn_set)))
+Cqt_cloud_sq = np.zeros((len(data_list), len(zn_set)))
+Cs_w_sq = np.zeros((len(data_list), len(zn_set)))
+Cth_w_sq = np.zeros((len(data_list), len(zn_set)))
+Cqt_w_sq = np.zeros((len(data_list), len(zn_set)))
+Cs_w_th_sq = np.zeros((len(data_list), len(zn_set)))
+Cth_w_th_sq = np.zeros((len(data_list), len(zn_set)))
+Cqt_w_th_sq = np.zeros((len(data_list), len(zn_set)))
 
 for i in range(len(data_list)):
 
