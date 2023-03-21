@@ -96,7 +96,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
 
     fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22,7))
 
-    for it in range(len(Cs)):
+    for it in range(len(Cs[:,0])):
         ax[0].plot(Cs[it,:], z/z_i, color=colours[it])
         ax[1].plot(Cth[it, :], z/z_i, color=colours[it])
         ax[2].plot(Cqt[it, :], z/z_i, color=colours[it], label='$\\Delta = $'+labels_in[it])
@@ -134,6 +134,77 @@ plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML)
 
 plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, z_set, z_ML, interp=True, C_sq_to_C = False)
 plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, C_sq_to_C = False)
+
+
+
+#################################################################################
+
+
+Cs_sq_cond = [Cs_sq, Cs_env_sq, Cs_cloud_sq, Cs_w_sq, Cs_w_th_sq]
+Cth_sq_cond = [Cth_sq, Cth_env_sq, Cth_cloud_sq, Cth_w_sq, Cth_w_th_sq]
+Cqt_sq_cond = [Cqt_sq, Cqt_env_sq, Cqt_cloud_sq, Cqt_w_sq, Cqt_w_th_sq]
+
+def plot_cond_C_each_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
+                      labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
+                            deltas = ['2D', '4D', '8D', '16D', '32D', '64D']):
+
+    colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
+               'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
+
+    for it in range(len(Cs[0, :, 0])):
+
+        if interp==True:
+            Cs = interp_z(Cs[:,it, :])
+            Cth = interp_z(Cth[:,it, :])
+            Cqt = interp_z(Cqt[:,it, :])
+        if C_sq_to_C == True:
+            Cs = dyn.get_Cs(Cs[:,it, :])
+            Cth = dyn.get_Cs(Cth[:,it, :])
+            Cqt = dyn.get_Cs(Cqt[:,it, :])
+            name='_sq_'
+        else:
+            name='_'
+
+        fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22,7))
+
+        for nt in range(len(Cs[:,0,0])):
+            ax[0].plot(Cs[nt, it,:], z/z_i, color=colours[nt])
+            ax[1].plot(Cth[nt, it, :], z/z_i, color=colours[nt])
+            ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
+        if C_sq_to_C == True:
+            ax[0].set_xlabel('$C_{s}$ for $\\Delta = $'+deltas[it], fontsize=16)
+            ax[1].set_xlabel('$C_{\\theta}$ for $\\Delta = $'+deltas[it], fontsize=16)
+            ax[2].set_xlabel('$C_{qt}$ for $\\Delta = $'+deltas[it], fontsize=16)
+        else:
+            ax[0].set_xlabel('$C^2_{s}$ for $\\Delta = $'+deltas[it], fontsize=16)
+            ax[1].set_xlabel('$C^2_{\\theta}$ for $\\Delta = $'+deltas[it], fontsize=16)
+            ax[2].set_xlabel('$C^2_{qt}$ for $\\Delta = $'+deltas[it], fontsize=16)
+        ax[2].legend(fontsize=12, loc='upper right')
+
+        left0, right0 = ax[0].set_xlim()
+        left1, right1 = ax[1].set_xlim()
+        left2, right2 = ax[2].set_xlim()
+
+        set_right = max(right0, right1, right2)
+
+        ax[0].set_xlim(right = set_right)
+        ax[1].set_xlim(right = set_right)
+        ax[2].set_xlim(right = set_right)
+
+        if interp==True:
+            ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
+            plt.savefig(plotdir + f'C{name}condit_prof_D={deltas[it]}_scaled_interp_z.png', pad_inches=0)
+        else:
+            ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
+            plt.savefig(plotdir + f'C{name}condit_prof_D={deltas[it]}_scaled_zn.png', pad_inches=0)
+        plt.close()
+
+
+plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True)
+plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML)
+
+plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = False)
+plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML, C_sq_to_C = False)
 
 
 # #########################################################################################################################
