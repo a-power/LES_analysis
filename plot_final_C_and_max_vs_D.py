@@ -167,7 +167,7 @@ def plot_cond_C_each_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = Fals
 
         fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22,7))
 
-        for nt in range(len(Cs[:,0,0])):
+        for nt in range(len(deltas)):
             ax[0].plot(Cs[nt, it,:], z/z_i, color=colours[nt])
             ax[1].plot(Cth[nt, it, :], z/z_i, color=colours[nt])
             ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
