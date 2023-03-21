@@ -150,7 +150,7 @@ def plot_cond_C_each_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = Fals
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
-
+    print(np.shape(Cs))
     for it in range(len(Cs[0, :, 0])):
 
         if interp==True:
