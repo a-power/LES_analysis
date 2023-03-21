@@ -90,6 +90,9 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
         Cs = dyn.get_Cs(Cs)
         Cth = dyn.get_Cs(Cth)
         Cqt = dyn.get_Cs(Cqt)
+        name='_sq_'
+    else:
+        name='_'
 
     fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22,7))
 
@@ -108,7 +111,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
         plt.savefig(plotdir + 'C_sq_prof_scaled_interp_z.png', pad_inches=0)
     else:
         ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
-        plt.savefig(plotdir + 'C_sq_prof_scaled_zn.png', pad_inches=0)
+        plt.savefig(plotdir + f'C{name}prof_scaled_zn.png', pad_inches=0)
     plt.close()
 
 
