@@ -71,7 +71,7 @@ for i in range(len(data_list)):
 def interp_z(var_in, z_from=zn_set, z_to=z_set):
     interp_var = np.zeros_like(var_in)
     for k in range(len(z_from)-1):
-        interp_var[k] = var_in[k] + (z_to[k] - z_from[k]) ( (var_in[k+1] - var_in[k]) / (z_from[k+1] - z_from[k]) )
+        interp_var[k] = var_in[k] + (z_to[k] - z_from[k])*( (var_in[k+1] - var_in[k]) / (z_from[k+1] - z_from[k]) )
     return interp_var
 
 
