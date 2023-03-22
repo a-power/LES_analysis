@@ -148,28 +148,45 @@ Cs_sq_cond = np.reshape(Cs_sq_cond, ( np.shape(Cs_sq_cond)[0], np.shape(Cs_sq_co
 Cth_sq_cond = np.reshape(Cth_sq_cond, ( np.shape(Cth_sq_cond)[0], np.shape(Cth_sq_cond)[1], np.shape(Cth_sq_cond)[2] ))
 Cqt_sq_cond = np.reshape(Cqt_sq_cond, ( np.shape(Cqt_sq_cond)[0], np.shape(Cqt_sq_cond)[1], np.shape(Cqt_sq_cond)[2] ))
 
-def plot_cond_C_each_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
+def plot_cond_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, interp=False, C_sq_to_C = True,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
                             deltas = ['2D', '4D', '8D', '16D', '32D', '64D']):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
-    print('np.shape(Cs) = ', np.shape(Cs)) # C shape is [conditionals, Delta, z]
 
-    for it in range(np.shape(Cs)[1]):
+    print('np.shape(Cs) = ', np.shape(Cs_in)) # C shape is [conditionals, Delta, z]
+
+    for it in range(np.shape(Cs_in)[1]):
         print('it = ', it)
 
         if interp==True:
-            Cs[:,it, :] = interp_z(Cs[:,it, :])
-            Cth[:,it, :] = interp_z(Cth[:,it, :])
-            Cqt[:,it, :] = interp_z(Cqt[:,it, :])
+            Cs_temp[:,it, :] = interp_z(Cs_in[:,it, :])
+            Cth_temp[:,it, :] = interp_z(Cth_in[:,it, :])
+            Cqt_temp[:,it, :] = interp_z(Cqt_in[:,it, :])
+        else:
+            Cs_temp = Cs_in.copy()
+            Cth_temp = Cth_in.copy()
+            Cqt_temp = Cqt_in.copy()
+
+        Cs_in = None
+        Cth_in = None
+        Cqt_in = None
+
         if C_sq_to_C == True:
-            Cs[:,it, :] = dyn.get_Cs(Cs[:,it, :])
-            Cth[:,it, :] = dyn.get_Cs(Cth[:,it, :])
-            Cqt[:,it, :] = dyn.get_Cs(Cqt[:,it, :])
+            Cs[:,it, :] = dyn.get_Cs(Cs_temp[:,it, :])
+            Cth[:,it, :] = dyn.get_Cs(Cth_temp[:,it, :])
+            Cqt[:,it, :] = dyn.get_Cs(Cqt_temp[:,it, :])
             name='_'
         else:
             name='_sq_'
+            Cs = Cs_temp.copy()
+            Cth = Cth_temp.copy()
+            Cqt = Cqt_temp.copy()
+
+        Cs_temp = None
+        Cth_temp = None
+        Cqt_temp = None
 
         fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22,7))
         print('np.shape(Cs) = ', np.shape(Cs))
@@ -206,11 +223,11 @@ def plot_cond_C_each_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = Fals
         plt.close()
 
 
-plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True)
-plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML)
+plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = False)
+plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML, interp=False, C_sq_to_C = False)
 
 plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = True)
-plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML, C_sq_to_C = True)
+plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML, interp=False, C_sq_to_C = True)
 
 
 ##################################################################################################################
@@ -221,7 +238,10 @@ z_ml_r = [6, 20]
 
 def cal_max_Cs(C_list):
 
+    print('when calc the max values, shape of C list is ', np.shape(C_list))
+
     max_C = np.zeros((np.shape(C_list)[0]+1, np.shape(C_list)[1]))
+
     for i in range(np.shape(C_list)[0]):
         for nD in range(np.shape(C_list)[1]):
             print('nD = ', nD)
@@ -257,22 +277,22 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
     labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
 
-    colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
-               'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
+    colours = ['k', 'tab:blue', 'tab:red', 'tab:green', 'tab:gray', 'tab:purple',
+               'tab:cyan', 'tab:orange', 'tab:olive', 'tab:pink', 'tab:brown']
     Delta = ['2D', '4D', '8D', '16D', '32D', '64D']
 
     if y_ax == 'C':
         y_labels = ['$C_{s}$', '$C_{\\theta}$', '$C_{qt}$']
     else:
-        y_labels = ['$l_{s}$', '$l_{\\theta}$', '$l_{qt}$']
+        y_labels = ['$l_{s}$ (m)', '$l_{\\theta}$ (m)', '$l_{qt}$ (m)']
 
-    fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22, 5))
+    fig, ax = plt.subplots(nrows=1, ncols=3, sharey=False, figsize=(20, 7))
     for it in range(np.shape(Cs_max_in)[0]):
         ax[0].plot(Delta, Cs_max_in[it,...], color=colours[it], linestyle=my_lines[it])
         ax[1].plot(Delta, Cth_max_in[it,...], color=colours[it], linestyle=my_lines[it])
         ax[2].plot(Delta, Cqt_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
 
-    ax[2].legend(fontsize=12, loc='upper right')
+    ax[2].legend(fontsize=12, loc='best')
     bottom0, top0 = ax[0].set_ylim()
     bottom1, top1 = ax[1].set_ylim()
     bottom2, top2 = ax[2].set_ylim()
@@ -283,9 +303,9 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
     ax[1].set_ylim(top=set_top)
     ax[2].set_ylim(top=set_top)
 
-    ax[0].set_ylabel(y_labels[0])
-    ax[1].set_ylabel(y_labels[1])
-    ax[2].set_ylabel(y_labels[2])
+    ax[0].set_ylabel(y_labels[0], fontsize=16)
+    ax[1].set_ylabel(y_labels[1], fontsize=16)
+    ax[2].set_ylabel(y_labels[2], fontsize=16)
 
     plt.xlabel('Filter scale $\\Delta$', fontsize=16)
     plt.savefig(plotdir+f'max_{y_ax}_prof.png', pad_inches=0)
