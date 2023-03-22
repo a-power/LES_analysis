@@ -157,6 +157,13 @@ def plot_cond_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, interp=False, C_sq_to
 
     print('np.shape(Cs) = ', np.shape(Cs_in)) # C shape is [conditionals, Delta, z]
 
+    Cs_temp = np.zeros_like(Cs_in)
+    Cth_temp = np.zeros_like(Cs_in)
+    Cqt_temp = np.zeros_like(Cs_in)
+    Cs = np.zeros_like(Cs_in)
+    Cth = np.zeros_like(Cs_in)
+    Cqt = np.zeros_like(Cs_in)
+
     for it in range(np.shape(Cs_in)[1]):
         print('it = ', it)
 
