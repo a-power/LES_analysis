@@ -241,7 +241,7 @@ max_Cs_cond = dyn.get_Cs(max_Cs_sq_cond)
 max_Cth_cond = dyn.get_Cs(max_Cth_sq_cond)
 max_Cqt_cond = dyn.get_Cs(max_Cqt_sq_cond)
 
-def get_max_l_from_C(max_C_cond)
+def get_max_l_from_C(max_C_cond):
     Delta_res = np.array([2*20, 4*20, 8*20, 16*20, 32*20, 64*20])
     max_l_cond = np.zeros_like(max_C_cond)
     for it in range(np.shape(max_C_cond)[1]):
