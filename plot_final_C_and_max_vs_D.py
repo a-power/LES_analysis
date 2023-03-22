@@ -243,7 +243,7 @@ def get_max_l_from_C(max_C_cond):
     Delta_res = np.array([2*20, 4*20, 8*20, 16*20, 32*20, 64*20])
     max_l_cond = np.zeros_like(max_C_cond)
     for it in range(np.shape(max_C_cond)[1]):
-        max_l_cond = max_C_cond[:,it,:] * Delta_res[it]
+        max_l_cond = max_C_cond[:,it] * Delta_res[it]
     return max_l_cond
 
 #Cs_sq in ML, Cs_sq in CL, Cs_env_sq, Cs_cloud_sq, Cs_w_sq, Cs_w_th_sq
