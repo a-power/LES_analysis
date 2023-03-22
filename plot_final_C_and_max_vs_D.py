@@ -13,8 +13,6 @@ mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_'
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles/'
 os.makedirs(plotdir, exist_ok = True)
 
-Delta = np.array([20, 40, 80, 160, 320, 640, 1280])
-
 data_2D = xr.open_dataset(mydir + '2D.nc')
 data_4D = xr.open_dataset(mydir + '4D.nc')
 data_8D = xr.open_dataset(mydir + '8D.nc')
@@ -257,6 +255,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
+    Delta = ['2D', '4D', '8D', '16D', '32D', '64D']
 
     if y_ax == 'C':
         y_labels = ['$C_{s}$', '$C_{\\theta}$', '$C_{qt}$']
