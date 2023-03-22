@@ -277,8 +277,8 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
     labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
 
-    colours = ['k', 'tab:red', 'tab:green', 'tab:red', 'tab:cyan', 'tab:purple',
-               'tab:grey', 'tab:orange', 'tab:olive', 'tab:pink', 'tab:brown']
+    colours = ['k', 'tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
+               'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
     Delta = ['2D', '4D', '8D', '16D', '32D', '64D']
 
     if y_ax == 'C':
