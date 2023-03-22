@@ -90,9 +90,9 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
         Cs = dyn.get_Cs(Cs)
         Cth = dyn.get_Cs(Cth)
         Cqt = dyn.get_Cs(Cqt)
-        name='_sq_'
-    else:
         name='_'
+    else:
+        name='_sq_'
 
     fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22,7))
 
@@ -167,9 +167,9 @@ def plot_cond_C_each_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = Fals
             Cs[:,it, :] = dyn.get_Cs(Cs[:,it, :])
             Cth[:,it, :] = dyn.get_Cs(Cth[:,it, :])
             Cqt[:,it, :] = dyn.get_Cs(Cqt[:,it, :])
-            name='_sq_'
-        else:
             name='_'
+        else:
+            name='_sq_'
 
         fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22,7))
         print('np.shape(Cs) = ', np.shape(Cs))
