@@ -285,7 +285,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
     ax[2].set_ylabel(y_labels[2])
 
     plt.xlabel('Filter scale $\\Delta$', fontsize=16)
-    plt.savefig(plotdir+f'{y_ax}_max_prof.png', pad_inches=0)
+    plt.savefig(plotdir+f'max_{y_ax}_prof.png', pad_inches=0)
     plt.close()
 
 
