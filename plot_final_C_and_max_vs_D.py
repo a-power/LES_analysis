@@ -264,9 +264,9 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
 
     fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22, 5))
     for it in range(np.shape(Cs_max_in)[0]):
-        ax[0].plot(Delta, Cs_max_in[it,...], color=colours[it], linestyles=my_lines[it])
-        ax[1].plot(Delta, Cth_max_in[it,...], color=colours[it], linestyles=my_lines[it])
-        ax[2].plot(Delta, Cqt_max_in[it,...], color=colours[it], linestyles=my_lines[it], label=labels[it])
+        ax[0].plot(Delta, Cs_max_in[it,...], color=colours[it], linestyle=my_lines[it])
+        ax[1].plot(Delta, Cth_max_in[it,...], color=colours[it], linestyle=my_lines[it])
+        ax[2].plot(Delta, Cqt_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
 
     ax[2].legend(fontsize=12, loc='upper right')
     bottom0, top0 = ax[0].set_ylim()
