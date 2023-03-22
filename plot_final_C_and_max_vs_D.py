@@ -150,8 +150,8 @@ def plot_cond_C_each_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = Fals
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
-    print('len(Cs[0, :, 0]) = ', len(Cs[0, :, 0]))
-    for it in range(len(deltas)):
+    print('np.shape(Cs) = ', np.shape(Cs)) # C shape is [conditionals, Delta, z]
+    for it in range(np.shape(Cs)[1]):
 
         if interp==True:
             Cs = interp_z(Cs[:,it, :])
@@ -166,8 +166,8 @@ def plot_cond_C_each_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = Fals
             name='_'
 
         fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22,7))
-        print('len(Cs[:,0,0]) = ', len(Cs[:,0,0]))
-        for nt in range(len(Cs[:,0,0])):
+        print('np.shape(Cs)[0] = ', np.shape(Cs)[0])
+        for nt in range(np.shape(Cs)[0]):
             ax[0].plot(Cs[nt, it,:], z/z_i, color=colours[nt])
             ax[1].plot(Cth[nt, it, :], z/z_i, color=colours[nt])
             ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
