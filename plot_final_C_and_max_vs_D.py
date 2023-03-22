@@ -144,6 +144,10 @@ Cs_sq_cond = [Cs_sq, Cs_env_sq, Cs_cloud_sq, Cs_w_sq, Cs_w_th_sq]
 Cth_sq_cond = [Cth_sq, Cth_env_sq, Cth_cloud_sq, Cth_w_sq, Cth_w_th_sq]
 Cqt_sq_cond = [Cqt_sq, Cqt_env_sq, Cqt_cloud_sq, Cqt_w_sq, Cqt_w_th_sq]
 
+Cs_sq_cond = np.reshape(Cs_sq_cond, ( np.shape(Cs_sq_cond)[0], np.shape(Cs_sq_cond)[1], np.shape(Cs_sq_cond)[2] ))
+Cth_sq_cond = np.reshape(Cth_sq_cond, ( np.shape(Cth_sq_cond)[0], np.shape(Cth_sq_cond)[1], np.shape(Cth_sq_cond)[2] ))
+Cqt_sq_cond = np.reshape(Cqt_sq_cond, ( np.shape(Cqt_sq_cond)[0], np.shape(Cqt_sq_cond)[1], np.shape(Cqt_sq_cond)[2] ))
+
 def plot_cond_C_each_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
                             deltas = ['2D', '4D', '8D', '16D', '32D', '64D']):
@@ -155,13 +159,13 @@ def plot_cond_C_each_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = Fals
         print('it = ', it)
 
         if interp==True:
-            Cs = interp_z(Cs[:][it, :])
-            Cth = interp_z(Cth[:][it, :])
-            Cqt = interp_z(Cqt[:][it, :])
+            Cs = interp_z(Cs[:,it, :])
+            Cth = interp_z(Cth[:,it, :])
+            Cqt = interp_z(Cqt[:,it, :])
         if C_sq_to_C == True:
-            Cs = dyn.get_Cs(Cs[:][it, :])
-            Cth = dyn.get_Cs(Cth[:][it, :])
-            Cqt = dyn.get_Cs(Cqt[:][it, :])
+            Cs = dyn.get_Cs(Cs[:,it, :])
+            Cth = dyn.get_Cs(Cth[:,it, :])
+            Cqt = dyn.get_Cs(Cqt[:,it, :])
             name='_sq_'
         else:
             name='_'
@@ -169,9 +173,9 @@ def plot_cond_C_each_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = Fals
         fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22,7))
         print('np.shape(Cs)[0] = ', np.shape(Cs)[0])
         for nt in range(np.shape(Cs)[0]):
-            ax[0].plot(Cs[nt][it,:], z/z_i, color=colours[nt])
-            ax[1].plot(Cth[nt][it, :], z/z_i, color=colours[nt])
-            ax[2].plot(Cqt[nt][it, :], z/z_i, color=colours[nt], label=labels_in[nt])
+            ax[0].plot(Cs[nt, it,:], z/z_i, color=colours[nt])
+            ax[1].plot(Cth[nt, it, :], z/z_i, color=colours[nt])
+            ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
         if C_sq_to_C == True:
             ax[0].set_xlabel('$C_{s}$ for $\\Delta = $'+deltas[it], fontsize=16)
             ax[1].set_xlabel('$C_{\\theta}$ for $\\Delta = $'+deltas[it], fontsize=16)
