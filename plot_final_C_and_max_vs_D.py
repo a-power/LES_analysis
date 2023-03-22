@@ -224,11 +224,14 @@ def cal_max_Cs(C_list):
     max_C = np.zeros((np.shape(C_list)[0]+1, np.shape(C_list)[1]))
     for i in range(np.shape(C_list)[0]):
         for nD in range(np.shape(C_list)[1]):
+            print('nD = ', nD)
             if i == 0:
                 max_C[i, nD] = np.max(C_list[i, nD, z_ml_r[0]:z_ml_r[1]])
                 max_C[i+1, nD] = np.max(C_list[i, nD, z_cl_r[0]:z_cl_r[1]])
             else:
                 max_C[i+1, nD] = np.max(C_list[i, nD, z_cl_r[0]:z_cl_r[1]])
+
+    print('shape of max C is ', np.shape(max_C))
     return max_C
 
 max_Cs_sq_cond = cal_max_Cs(Cs_sq_cond)
@@ -244,6 +247,7 @@ def get_max_l_from_C(max_C_cond):
     max_l_cond = np.zeros_like(max_C_cond)
     for it in range(np.shape(max_C_cond)[1]):
         max_l_cond = max_C_cond[:,it] * Delta_res[it]
+    print('shape of max l is ', np.shape(max_l_cond))
     return max_l_cond
 
 #Cs_sq in ML, Cs_sq in CL, Cs_env_sq, Cs_cloud_sq, Cs_w_sq, Cs_w_th_sq
