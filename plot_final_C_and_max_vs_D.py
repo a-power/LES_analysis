@@ -241,6 +241,13 @@ max_Cs_cond = dyn.get_Cs(max_Cs_sq_cond)
 max_Cth_cond = dyn.get_Cs(max_Cth_sq_cond)
 max_Cqt_cond = dyn.get_Cs(max_Cqt_sq_cond)
 
+def get_max_l_from_C(max_C_cond)
+    Delta_res = np.array([2*20, 4*20, 8*20, 16*20, 32*20, 64*20])
+    max_l_cond = np.zeros_like(max_C_cond)
+    for it in range(np.shape(max_C_cond)[1]):
+        max_l_cond = max_C_cond[:,it,:] * Delta_res[it]
+    return max_l_cond
+
 #Cs_sq in ML, Cs_sq in CL, Cs_env_sq, Cs_cloud_sq, Cs_w_sq, Cs_w_th_sq
 
 def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
@@ -280,6 +287,13 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
     plt.xlabel('Filter scale $\\Delta$', fontsize=16)
     plt.savefig(plotdir+f'{y_ax}_max_prof.png', pad_inches=0)
     plt.close()
+
+
+
+
+plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, y_ax = 'C')
+plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond), get_max_l_from_C(max_Cth_cond), get_max_l_from_C(max_Cqt_cond), y_ax = 'C')
+
 
 
 # #########################################################################################################################
