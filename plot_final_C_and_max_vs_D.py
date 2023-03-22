@@ -155,25 +155,26 @@ def plot_cond_C_each_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = Fals
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
     print('np.shape(Cs) = ', np.shape(Cs)) # C shape is [conditionals, Delta, z]
+
     for it in range(np.shape(Cs)[1]):
         print('it = ', it)
 
         if interp==True:
-            Cs = interp_z(Cs[:,it, :])
-            Cth = interp_z(Cth[:,it, :])
-            Cqt = interp_z(Cqt[:,it, :])
+            Cs[:,it, :] = interp_z(Cs[:,it, :])
+            Cth[:,it, :] = interp_z(Cth[:,it, :])
+            Cqt[:,it, :] = interp_z(Cqt[:,it, :])
         if C_sq_to_C == True:
-            Cs = dyn.get_Cs(Cs[:,it, :])
-            Cth = dyn.get_Cs(Cth[:,it, :])
-            Cqt = dyn.get_Cs(Cqt[:,it, :])
+            Cs[:,it, :] = dyn.get_Cs(Cs[:,it, :])
+            Cth[:,it, :] = dyn.get_Cs(Cth[:,it, :])
+            Cqt[:,it, :] = dyn.get_Cs(Cqt[:,it, :])
             name='_sq_'
         else:
             name='_'
 
         fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22,7))
-        print('np.shape(Cs)[0] = ', np.shape(Cs)[0])
+        print('np.shape(Cs) = ', np.shape(Cs))
         for nt in range(np.shape(Cs)[0]):
-            ax[0].plot(Cs[nt, it,:], z/z_i, color=colours[nt])
+            ax[0].plot(Cs[nt, it, :], z/z_i, color=colours[nt])
             ax[1].plot(Cth[nt, it, :], z/z_i, color=colours[nt])
             ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
         if C_sq_to_C == True:
