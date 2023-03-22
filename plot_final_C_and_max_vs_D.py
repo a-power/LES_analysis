@@ -13,6 +13,8 @@ mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_'
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles/'
 os.makedirs(plotdir, exist_ok = True)
 
+Delta = np.array([20, 40, 80, 160, 320, 640, 1280])
+
 data_2D = xr.open_dataset(mydir + '2D.nc')
 data_4D = xr.open_dataset(mydir + '4D.nc')
 data_8D = xr.open_dataset(mydir + '8D.nc')
@@ -22,8 +24,8 @@ data_64D = xr.open_dataset(mydir + '64D.nc')
 
 data_list = [data_2D, data_4D, data_8D, data_16D, data_32D, data_64D]
 
-z_set = np.arange(0, 3020, 20)
-zn_set = np.arange(-10, 3010, 20)
+zn_set = np.arange(0, 3020, 20)
+z_set = np.arange(-10, 3010, 20)
 z_ML = 490
 
 #index of 0 at the start is to get rid of the dummy time index thats required to save the files
@@ -68,7 +70,7 @@ for i in range(len(data_list)):
 
 ########################################################################################################################
 
-def interp_z(var_in, z_from=zn_set, z_to=z_set):
+def interp_z(var_in, z_from=z_set, z_to=zn_set):
     interp_var = np.zeros_like(var_in)
     for n in range(len(var_in[:,0])):
         for k in range(len(z_from)-1):
@@ -211,6 +213,73 @@ plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML)
 
 plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = True)
 plot_cond_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML, C_sq_to_C = True)
+
+
+##################################################################################################################
+
+
+z_cl_r = [50, 75]
+z_ml_r = [6, 20]
+
+def cal_max_Cs(C_list):
+
+    max_C = np.zeros((np.shape(C_list)[0]+1, np.shape(C_list)[1]))
+    for i in range(np.shape(C_list)[0]):
+        for nD in range(np.shape(C_list)[1]):
+            if i == 0:
+                max_C[i, nD] = np.max(C_list[i, nD, z_ml_r[0]:z_ml_r[1]])
+                max_C[i+1, nD] = np.max(C_list[i, nD, z_cl_r[0]:z_cl_r[1]])
+            else:
+                max_C[i+1, nD] = np.max(C_list[i, nD, z_cl_r[0]:z_cl_r[1]])
+    return max_C
+
+max_Cs_sq_cond = cal_max_Cs(Cs_sq_cond)
+max_Cth_sq_cond = cal_max_Cs(Cth_sq_cond)
+max_Cqt_sq_cond = cal_max_Cs(Cqt_sq_cond)
+
+max_Cs_cond = dyn.get_Cs(max_Cs_sq_cond)
+max_Cth_cond = dyn.get_Cs(max_Cth_sq_cond)
+max_Cqt_cond = dyn.get_Cs(max_Cqt_sq_cond)
+
+#Cs_sq in ML, Cs_sq in CL, Cs_env_sq, Cs_cloud_sq, Cs_w_sq, Cs_w_th_sq
+
+def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
+
+    my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
+    labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
+
+    colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
+               'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
+
+    if y_ax == 'C':
+        y_labels = ['$C_{s}$', '$C_{\\theta}$', '$C_{qt}$']
+    else:
+        y_labels = ['$l_{s}$', '$l_{\\theta}$', '$l_{qt}$']
+
+    fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22, 5))
+    for it in range(np.shape(Cs_max_in)[0]):
+        ax[0].plot(Delta, Cs_max_in[it,...], color=colours[it], linestyles=my_lines[it])
+        ax[1].plot(Delta, Cth_max_in[it,...], color=colours[it], linestyles=my_lines[it])
+        ax[2].plot(Delta, Cqt_max_in[it,...], color=colours[it], linestyles=my_lines[it], label=labels[it])
+
+    ax[2].legend(fontsize=12, loc='upper right')
+    bottom0, top0 = ax[0].set_ylim()
+    bottom1, top1 = ax[1].set_ylim()
+    bottom2, top2 = ax[2].set_ylim()
+
+    set_top = max(top0, top1, top2)
+
+    ax[0].set_ylim(top=set_top)
+    ax[1].set_ylim(top=set_top)
+    ax[2].set_ylim(top=set_top)
+
+    ax[0].set_ylabel(y_labels[0])
+    ax[1].set_ylabel(y_labels[1])
+    ax[2].set_ylabel(y_labels[2])
+
+    plt.xlabel('Filter scale $\\Delta$', fontsize=16)
+    plt.savefig(plotdir+f'{y_ax}_max_prof.png', pad_inches=0)
+    plt.close()
 
 
 # #########################################################################################################################
