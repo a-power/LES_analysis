@@ -176,10 +176,6 @@ def plot_cond_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, interp=False, C_sq_to
             Cth_temp = Cth_in.copy()
             Cqt_temp = Cqt_in.copy()
 
-        Cs_in = None
-        Cth_in = None
-        Cqt_in = None
-
         if C_sq_to_C == True:
             Cs[:,it, :] = dyn.get_Cs(Cs_temp[:,it, :])
             Cth[:,it, :] = dyn.get_Cs(Cth_temp[:,it, :])
@@ -191,9 +187,6 @@ def plot_cond_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, interp=False, C_sq_to
             Cth = Cth_temp.copy()
             Cqt = Cqt_temp.copy()
 
-        Cs_temp = None
-        Cth_temp = None
-        Cqt_temp = None
 
         fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22,7))
         print('np.shape(Cs) = ', np.shape(Cs))
