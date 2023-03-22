@@ -132,8 +132,8 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
 plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, z_set, z_ML, interp=True)
 plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML)
 
-plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, z_set, z_ML, interp=True, C_sq_to_C = False)
-plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, C_sq_to_C = False)
+plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, z_set, z_ML, interp=True, C_sq_to_C = True)
+plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, C_sq_to_C = True)
 
 
 
