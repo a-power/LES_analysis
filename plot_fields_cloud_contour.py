@@ -21,7 +21,7 @@ x_axis_start_end = [0, 4] #start and end points in km
 
 time_av_or_not = np.array([2]) #, 1, 2 #'yes' #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
 
-my_axis = 299
+my_axis = 300
 my_x_y = 'y' # must be y due to direction of wind
 
 Deltas = ['2D']#, '4D', '8D', '16D', '32D', '64D']
