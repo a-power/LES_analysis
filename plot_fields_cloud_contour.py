@@ -17,11 +17,11 @@ in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
 in_set_percentile_C2 = ['min',99] #note that the first entry of this can be 'min' or a number representing the percentile
 
-x_axis_start_end = [0, 16] #start and end points in km
+x_axis_start_end = [00, 15] #start and end points in km
 
-time_av_or_not = np.array([0, 1, 2]) #'yes' #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
+time_av_or_not = np.array([0]) #, 1, 2 #'yes' #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
 
-my_axis = 400
+my_axis = 570
 my_x_y = 'y' # must be y due to direction of wind
 
 Deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
