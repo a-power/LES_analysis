@@ -407,7 +407,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
             contour_set.close()
 
-            fig1, ax1 = plt.subplots(figsize=(16, 5))
+            fig1, ax1 = plt.subplots(figsize=(20, 5))
             plt.title(f'{field_name} with $\\Delta = $ {deltas[i]}', fontsize=16)
 
             # if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
