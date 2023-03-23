@@ -122,10 +122,10 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
 
     if interp==True:
         ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
-        plt.savefig(plotdir + f'C{name}prof_scaled_interp_z.png', pad_inches=0)
+        plt.savefig(plotdir + f'C{name}prof_scaled_interp_z.png', bbox_inches='tight')
     else:
         ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
-        plt.savefig(plotdir + f'C{name}prof_scaled_zn.png', pad_inches=0)
+        plt.savefig(plotdir + f'C{name}prof_scaled_zn.png', bbox_inches='tight')
     plt.close()
 
 
@@ -216,10 +216,10 @@ def plot_cond_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, interp=False, C_sq_to
 
         if interp==True:
             ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
-            plt.savefig(plotdir + f'C{name}condit_prof_D={deltas[it]}_scaled_interp_z.png', pad_inches=0)
+            plt.savefig(plotdir + f'C{name}condit_prof_D={deltas[it]}_scaled_interp_z.png', bbox_inches='tight')
         else:
             ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
-            plt.savefig(plotdir + f'C{name}condit_prof_D={deltas[it]}_scaled_zn.png', pad_inches=0)
+            plt.savefig(plotdir + f'C{name}condit_prof_D={deltas[it]}_scaled_zn.png', bbox_inches='tight')
         plt.close()
 
 
@@ -308,7 +308,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
     ax[2].set_ylabel(y_labels[2], fontsize=16)
 
     plt.xlabel('Filter scale $\\Delta$', fontsize=16)
-    plt.savefig(plotdir+f'max_{y_ax}_prof.png', pad_inches=0)
+    plt.savefig(plotdir+f'max_{y_ax}_prof.png', bbox_inches='tight')
     plt.close()
 
 

@@ -42,7 +42,7 @@ def negs_in_field(plotdir, field, data_field_list, data_cl_list):
 
         plt.xlabel("$z/z_{ML}$", fontsize=16)
         plt.ylabel("number of negative values", fontsize=16)
-        plt.savefig(plotdir + f'neg_{field}_vs_z_{deltas[i]}.png', pad_inches=0)
+        plt.savefig(plotdir + f'neg_{field}_vs_z_{deltas[i]}.png', bbox_inches='tight')
         plt.clf()
 
         print(f'plotted neg vs z for {field}')
@@ -100,7 +100,7 @@ def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, dat
     plt.ylim(bottom_set, (top_set+(top_set/10)))
     plt.xlabel(f"{scalar} at time {time_set_in}", fontsize=16)
     plt.ylabel("number of value occurrences", fontsize=16)
-    plt.savefig(plotdir_in + f'hist_of_{name}_values_{delta}_time_{time_set_in}_vars_{data_names[0]}.png', pad_inches=0)
+    plt.savefig(plotdir_in + f'hist_of_{name}_values_{delta}_time_{time_set_in}_vars_{data_names[0]}.png', bbox_inches='tight')
     plt.clf()
 
     print(f'plotted for time {time_set_in} {field_in} {delta}')
@@ -443,7 +443,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             og_ytic = plt.yticks()
             plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))  # plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
 
-            plt.savefig(plot_dir + f'{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}_start_{start}_end_{end}.png', pad_inches=0)
+            plt.savefig(plot_dir + f'{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}_start_{start}_end_{end}.png',
+                        bbox_inches='tight')
             plt.clf()
 
             if field == 'Cqt_field' or field == 'Cth_field' or field == 'Cs_field':
@@ -484,7 +485,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 # og_ytic = plt.yticks()
                 plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))#plt.yticks(np.linspace(0, 151, 7), np.linspace(0, 3, 7))
                 plt.ylabel("z (km)", fontsize=16)
-                plt.savefig(plot_dir + f'{field}_sq_{deltas[i]}_{mytime}_{x_or_y}={axis_set}_start_{start}_end_{end}.png', pad_inches=0)
+                plt.savefig(plot_dir + f'{field}_sq_{deltas[i]}_{mytime}_{x_or_y}={axis_set}_start_{start}_end_{end}.png',
+                            bbox_inches='tight')
                 plt.clf()
 
             print(f'plotted fields for {field} {mytime}')
