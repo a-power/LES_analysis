@@ -292,7 +292,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
         data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
 
-        for t_set in range(len(t_av_or_not)):
+        for t_set in t_av_or_not:
             if field == 'Cs_field':
                 print('length of time array for LM is ', len(data_set['f(LM_field_on_p)_r'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
