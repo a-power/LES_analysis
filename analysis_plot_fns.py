@@ -153,7 +153,7 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
                                                                res_counter=res_counter_in, return_all = return_all_in,
                                                                grid=grid_in)
 
-        if field == 'Cs_field' or 'Cs_sq_field':
+        if field == 'Cs_field' or field == 'Cs_sq_field':
             print('length of time array for LM is ', len(data_field_in[f'f(LM_field_on_{grid})_r'].data[:, 0, 0, 0]))
             num_field = data_field_in[f'f(LM_field_on_{grid})_r'].data[...]
             den_field = data_field_in[f'f(MM_field_on_{grid})_r'].data[...]
@@ -167,7 +167,7 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
             data_field_sq = None
             data_field_C = None
 
-        elif field == 'Cth_field' or 'Cth_sq_field':
+        elif field == 'Cth_field' or field == 'Cth_sq_field':
             print('length of time array for HR_th is ', len(data_field_in[f'f(HR_th_field_on_{grid})_r'].data[:, 0, 0, 0]))
             num_field = data_field_in[f'f(HR_th_field_on_{grid})_r'].data[...]
             den_field = data_field_in[f'f(RR_th_field_on_{grid})_r'].data[...]
@@ -181,7 +181,7 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
             data_field_sq = None
             data_field_C = None
 
-        elif field == 'Cqt_field' or 'Cqt_sq_field':
+        elif field == 'Cqt_field' or field == 'Cqt_sq_field':
             print('length of time array for HR_qt is ',
                   len(data_field_in[f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
             num_field = data_field_in[f'f(HR_q_total_field_on_{grid})_r'].data[...]
