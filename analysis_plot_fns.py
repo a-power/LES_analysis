@@ -253,7 +253,13 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
 
 
 def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, contour_field_in, t_av_or_not,
-              start_end, set_percentile_C2=None, deltas=None):
+              start_end, set_percentile_C2=None, deltas=None, set_cb=[[None, None], [None, None]]):
+
+    myvmin_C = set_cb[0][0]
+    myvmax_C = set_cb[0][1]
+
+    myvmin_C_sq = set_cb[1][0]
+    myvmax_C_sq = set_cb[1][1]
 
     if deltas==None:
         deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
@@ -410,11 +416,12 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             fig1, ax1 = plt.subplots(figsize=(20, 5))
             plt.title(f'{field_name} with $\\Delta = $ {deltas[i]}', fontsize=16)
 
-            # if field == 'LM_field' or field == 'HR_th_field' or field == 'HR_qt_field':
-            #     myvmin = 0
-            # else:
-            myvmin = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[0])
-            myvmax = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[1])
+            if myvmin_C != None:
+                 myvmin = myvmin_C
+                 myvmax = myvmax_C
+            else:
+                myvmin = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[0])
+                myvmax = np.percentile(data_field[start_grid:end_grid, 5:120], set_percentile[1])
 
             mylevels = np.linspace(myvmin, myvmax, 8)
 
@@ -452,12 +459,16 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 fig2, ax2 = plt.subplots(figsize=(20, 5))
                 plt.title(f'{field_name_sq} with $\\Delta = $ {deltas[i]}', fontsize=16)
 
-                if set_percentile_C2[0] == 'min':
-                    myvmin_temp = np.min(data_field_sq[start_grid:end_grid, 5:120])
-                    myvmin = myvmin_temp + abs(0.6*myvmin_temp)
+                if myvmin_C_sq != None:
+                    myvmin = myvmin_C_sq
+                    myvmax = myvmax_C_sq
                 else:
-                    myvmin = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[0])
-                myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[1])
+                    if set_percentile_C2[0] == 'min':
+                        myvmin_temp = np.min(data_field_sq[start_grid:end_grid, 5:120])
+                        myvmin = myvmin_temp + abs(0.6*myvmin_temp)
+                    else:
+                        myvmin = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[0])
+                    myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:120], set_percentile_C2[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 
