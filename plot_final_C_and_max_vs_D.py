@@ -96,7 +96,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
     else:
         name='_sq_'
 
-    fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(18,7))
+    fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(15,7))
 
     fig.tight_layout(pad=0.5)
 
@@ -192,7 +192,7 @@ def plot_cond_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, interp=False, C_sq_to
             Cqt = Cqt_temp.copy()
 
 
-        fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(18,7))
+        fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(15,7))
         print('np.shape(Cs) = ', np.shape(Cs))
 
         fig.tight_layout(pad=0.5)
