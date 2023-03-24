@@ -24,7 +24,7 @@ time_av_or_not = np.array([2]) #, 1, 2 #'yes' #if not then give the time stamp i
 my_axis = 300
 my_x_y = 'y' # must be y due to direction of wind
 
-Deltas = ['2D']#, '4D', '8D', '16D', '32D', '64D']
+Deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
 
 LijMij_options = {'axis_set': my_axis,
