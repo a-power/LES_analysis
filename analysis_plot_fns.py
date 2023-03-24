@@ -441,7 +441,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                         levels=[0.1, 0.5])
             ax1.clabel(w_c, inline=True, fontsize=8)
             # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1, levels=[0.1])
-            #plt.xlabel(f'x (cross section with {x_or_y} = {axis_set*20/1000}km) (km)', fontsize=16)
+            plt.xlabel(f'x (cross section with {x_or_y} = {axis_set*20/1000}km) (km)', fontsize=16)
 
             plt.ylabel("z (km)", fontsize=16)
             og_xtic = plt.xticks()
@@ -488,7 +488,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                                   linewidths=1, levels=[0.1, 0.5])
                 ax2.clabel(w_c, inline=True, fontsize=8)
                 # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1, levels=[0.1])
-                #plt.xlabel(f'y (cross section with {x_or_y} = {axis_set*20/1000}km) (km)', fontsize=16)
+                plt.xlabel(f'y (cross section with {x_or_y} = {axis_set*20/1000}km) (km)', fontsize=16)
 
                 og_xtic = plt.xticks()
                 plt.xticks(og_xtic[0], np.round(np.linspace(start, end, len(og_xtic[0])), 1))
