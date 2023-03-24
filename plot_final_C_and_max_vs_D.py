@@ -294,7 +294,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
     else:
         y_labels = ['$l_{s}$ (m)', '$l_{\\theta}$ (m)', '$l_{qt}$ (m)']
 
-    fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(15, 6))
+    fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(15, 5))
     fig.tight_layout(pad=0.5)
 
     for it in range(np.shape(Cs_max_in)[0]):
