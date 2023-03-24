@@ -26,7 +26,7 @@ time_av_or_not = np.array([2]) #, 1, 2 #'yes' (in the array) #if not then give t
 my_axis = 300
 my_x_y = 'y' # must be y due to direction of wind
 
-Deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+Deltas = ['2D']#, '4D', '8D', '16D', '32D', '64D']
 
 
 general_options = {'set_cb': set_cb_in,
