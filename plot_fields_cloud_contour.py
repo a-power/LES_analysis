@@ -6,8 +6,8 @@ homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_field
 mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 contour_data = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/fields_contour/standard_cb/'
-os.makedirs(plotdir, exist_ok = True)
+plotdir_in = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/fields_contour/standard_cb/'
+os.makedirs(plotdir_in, exist_ok = True)
 
 dir_s = mydir + 'Cs_'
 dir_th = mydir + 'C_th_'
@@ -34,7 +34,7 @@ general_options = {'set_cb': set_cb_in,
                     'x_or_y': my_x_y,
                     't_av_or_not': time_av_or_not,
                     'contour_field_in': contour_data,
-                    'plotdir': plotdir,
+                    'plot_dir': plotdir_in,
                     'start_end': x_axis_start_end,
                     'deltas': Deltas
                     }
