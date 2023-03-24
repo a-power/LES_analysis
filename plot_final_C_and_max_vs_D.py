@@ -103,7 +103,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
     for it in range(len(Cs[:,0])):
         ax[0].plot(Cs[it,:], z/z_i, color=colours[it])
         ax[1].plot(Cth[it, :], z/z_i, color=colours[it])
-        ax[2].plot(Cqt[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta} = $'+labels_in[it])
+        ax[2].plot(Cqt[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
     if C_sq_to_C == True:
         ax[0].set_xlabel('$C_{s}$', fontsize=16)
         ax[1].set_xlabel('$C_{\\theta}$', fontsize=16)
@@ -203,13 +203,13 @@ def plot_cond_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, interp=False, C_sq_to
             ax[1].plot(Cth[nt, it, :], z/z_i, color=colours[nt])
             ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
         if C_sq_to_C == True:
-            ax[0].set_xlabel('$C_{s}$ for $\\widehat{\\bar{\\Delta} = $'+delta_label[it], fontsize=16)
-            ax[1].set_xlabel('$C_{\\theta}$ for $\\widehat{\\bar{\\Delta} = $'+delta_label[it], fontsize=16)
-            ax[2].set_xlabel('$C_{qt}$ for $\\widehat{\\bar{\\Delta} = $'+delta_label[it], fontsize=16)
+            ax[0].set_xlabel('$C_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
+            ax[1].set_xlabel('$C_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
+            ax[2].set_xlabel('$C_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
         else:
-            ax[0].set_xlabel('$C^2_{s}$ for $\\widehat{\\bar{\\Delta} = $'+delta_label[it], fontsize=16)
-            ax[1].set_xlabel('$C^2_{\\theta}$ for $\\widehat{\\bar{\\Delta} = $'+delta_label[it], fontsize=16)
-            ax[2].set_xlabel('$C^2_{qt}$ for $\\widehat{\\bar{\\Delta} = $'+delta_label[it], fontsize=16)
+            ax[0].set_xlabel('$C^2_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
+            ax[1].set_xlabel('$C^2_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
+            ax[2].set_xlabel('$C^2_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
         ax[2].legend(fontsize=16, loc='upper right')
 
         left0, right0 = ax[0].set_xlim()
