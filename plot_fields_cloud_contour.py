@@ -32,7 +32,6 @@ Deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 general_options = {'set_cb': set_cb_in,
                     'axis_set': my_axis,
                     'x_or_y': my_x_y,
-                    'set_percentile': in_set_percentile,
                     't_av_or_not': time_av_or_not,
                     'contour_field_in': contour_data,
                     'plotdir': plotdir,
@@ -41,11 +40,13 @@ general_options = {'set_cb': set_cb_in,
                     }
 
 LijMij_options = {'field': 'LM_field',
-                   'data_field_in': dir_s
+                   'data_field_in': dir_s,
+                    'set_percentile': in_set_percentile
                   }
 
 MijMij_options = {'field': 'MM_field',
-                   'data_field_in': dir_s
+                   'data_field_in': dir_s,
+                    'set_percentile': in_set_percentile
            }
 
 Cs_options = {'field': 'Cs_field',
@@ -56,11 +57,13 @@ Cs_options = {'field': 'Cs_field',
 
 
 HjRj_th_options = {'field': 'HR_th_field',
-                   'data_field_in': dir_th
+                   'data_field_in': dir_th,
+                    'set_percentile': in_set_percentile
            }
 
 RjRj_th_options = {'field': 'RR_th_field',
-                   'data_field_in': dir_th
+                   'data_field_in': dir_th,
+                    'set_percentile': in_set_percentile
            }
 
 Cth_options = {'field': 'Cth_field',
@@ -71,11 +74,13 @@ Cth_options = {'field': 'Cth_field',
 
 
 HjRj_qt_options = {'field': 'HR_q_total_field',
-                   'data_field_in': dir_qt
+                   'data_field_in': dir_qt,
+                    'set_percentile': in_set_percentile
            }
 
 RjRj_qt_options = {'field': 'RR_q_total_field',
-                   'data_field_in': dir_qt
+                   'data_field_in': dir_qt,
+                    'set_percentile': in_set_percentile
            }
 
 Cqt_options = {'field': 'Cqt_field',
