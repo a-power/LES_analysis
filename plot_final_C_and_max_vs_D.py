@@ -98,6 +98,8 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
 
     fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22,7))
 
+    fig.tight_layout(pad=0.5)
+
     for it in range(len(Cs[:,0])):
         ax[0].plot(Cs[it,:], z/z_i, color=colours[it])
         ax[1].plot(Cth[it, :], z/z_i, color=colours[it])
@@ -192,6 +194,9 @@ def plot_cond_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, interp=False, C_sq_to
 
         fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(22,7))
         print('np.shape(Cs) = ', np.shape(Cs))
+
+        fig.tight_layout(pad=0.5)
+
         for nt in range(np.shape(Cs)[0]):
             ax[0].plot(Cs[nt, it, :], z/z_i, color=colours[nt])
             ax[1].plot(Cth[nt, it, :], z/z_i, color=colours[nt])
@@ -289,7 +294,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
         y_labels = ['$l_{s}$ (m)', '$l_{\\theta}$ (m)', '$l_{qt}$ (m)']
 
     fig, ax = plt.subplots(nrows=1, ncols=3, sharey=False, figsize=(20, 7))
-    fig.tight_layout(pad=0.5)
+
     for it in range(np.shape(Cs_max_in)[0]):
         ax[0].plot(Delta, Cs_max_in[it,...], color=colours[it], linestyle=my_lines[it])
         ax[1].plot(Delta, Cth_max_in[it,...], color=colours[it], linestyle=my_lines[it])
