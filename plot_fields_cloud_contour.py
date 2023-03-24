@@ -19,7 +19,7 @@ in_set_percentile_C2 = ['min',99] #note that the first entry of this can be 'min
 
 x_axis_start_end = [0, 4] #start and end points in km
 
-set_cb_in = [[0.15, 0.30], [-0.1, 0.1]] #C_min, C_max, C^2_min, C^2_max = [[None, None], [None, None]]
+set_cb_in = [[0.16, 0.30], [-0.1, 0.1]] #C_min, C_max, C^2_min, C^2_max = [[None, None], [None, None]]
 
 time_av_or_not = np.array([2]) #, 1, 2 #'yes' (in the array) #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
 
