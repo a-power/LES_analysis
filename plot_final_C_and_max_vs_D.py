@@ -26,6 +26,8 @@ zn_set = np.arange(0, 3020, 20)
 z_set = np.arange(-10, 3010, 20)
 z_ML = 490
 
+##################################################################################################################
+
 #index of 0 at the start is to get rid of the dummy time index thats required to save the files
 
 Cs_sq = np.zeros((len(data_list), len(zn_set)))
@@ -287,6 +289,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
         y_labels = ['$l_{s}$ (m)', '$l_{\\theta}$ (m)', '$l_{qt}$ (m)']
 
     fig, ax = plt.subplots(nrows=1, ncols=3, sharey=False, figsize=(20, 7))
+    fig.tight_layout(pad=0.5)
     for it in range(np.shape(Cs_max_in)[0]):
         ax[0].plot(Delta, Cs_max_in[it,...], color=colours[it], linestyle=my_lines[it])
         ax[1].plot(Delta, Cth_max_in[it,...], color=colours[it], linestyle=my_lines[it])
