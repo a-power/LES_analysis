@@ -509,9 +509,9 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
 
 
-def get_conditional_profiles(dataset_in, contour_field_in, field, deltas=None,
-                      cloud_thres = 10**(-5), other_vars = False, other_var_thres=False,
-                             less_greater_in='less', and_or_in = 'and', grid='p'):
+def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
+                      cloud_thres, other_vars, other_var_thres,
+                             less_greater_in, and_or_in, grid):
     if deltas==None:
         deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 

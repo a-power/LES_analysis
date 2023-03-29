@@ -30,7 +30,7 @@ def get_th_v_prime(th_v):
 
 
 
-def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5), res_counter=None, grid='p'):
+def cloud_vs_env_masks(data_in, cloud_liquid_threshold, res_counter=None, grid='p'):
 
     if res_counter != None:
         data_in_new = data_in + f'ga0{res_counter}.nc'
@@ -65,8 +65,8 @@ def cloud_vs_env_masks(data_in, cloud_liquid_threshold=10**(-5), res_counter=Non
 
 
 
-def cloudy_and_or(data_in, other_var, var_thres, less_greater=['less'], and_or = ['and'], \
-                  cloud_liquid_threshold=10**(-5), res_counter=None, return_all = False, grid='p'):
+def cloudy_and_or(data_in, other_var, var_thres, less_greater, and_or, \
+                  cloud_liquid_threshold, res_counter=None, return_all = False, grid='p'):
 
     if res_counter != None:
 
