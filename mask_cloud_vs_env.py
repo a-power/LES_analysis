@@ -21,6 +21,7 @@ def get_th_v_prime(th_v):
 
     th_v_flat = None
     th_v_prof = None
+    print('th_v_prof = ', th_v_prof)
     print('shape of th_v_prime before reshape is:', np.shape(th_v_prime_temp))
     th_v_prime = th_v_prime_temp.reshape(nt, horiz_num_temp, horiz_num_temp, z_num)
     th_v_prime_temp = None
@@ -139,7 +140,7 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater, and_or, \
         elif less_greater[1] == 'greater':
             extra_masked_var = ma.masked_greater_equal(extra_var_data, var_thres[1])
         extra_var_mask = ma.getmaskarray(extra_masked_var)
-        print('masked other var:', other_var[0])
+        print('masked other var:', other_var[1])
 
         if and_or[1] == 'and':
             new_out_mask = ma.mask_or(out_mask, extra_var_mask)  # masks work opposite
