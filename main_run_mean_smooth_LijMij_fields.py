@@ -13,7 +13,7 @@ import dynamic_functions as dyn
 import dask
 import subfilter
 
-beta=False
+beta=True
 
 if beta==True:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
@@ -29,9 +29,9 @@ if beta == True:
     res = ['0', '1', '2', '3', '4', '5']
     num_filts = ['0', '1']
 else:
-    res = ['2D']#, '4D', '8D', '16D', '32D', '64D']
+    res = ['2D', '4D', '8D', '16D', '32D', '64D']
     num_filts = ['0']
-vars = ['C_th_']#['Cs_', 'C_th_', 'C_qt_']
+vars = ['Cs_', 'C_th_', 'C_qt_']
 
 outdir = homedir +'smoothed_LM_HR_fields/'
 os.makedirs(outdir, exist_ok = True)
