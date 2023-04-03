@@ -85,7 +85,10 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater, and_or, \
             q_in = ds_in['q_cloud_liquid_mass']
 
     q_cloud = q_in.data
-    masked_q_cloud = ma.masked_less(q_cloud, cloud_liquid_threshold)
+    if cloud_liquid_threshold==0:
+        masked_q_cloud = ma.masked_less_equal(q_cloud, cloud_liquid_threshold)
+    else:
+        masked_q_cloud = ma.masked_less(q_cloud, cloud_liquid_threshold)
 
     if f'f({other_var[0]}_on_{grid})_r' in ds_in:
         var_in = ds_in[f'f({other_var[0]}_on_{grid})_r']
