@@ -37,12 +37,12 @@ def count_mask(mask_in):
     return counter
 
 
-data_2D = dir_data + 'ga00.nc'
-data_4D = dir_data + 'ga01.nc'
-data_8D = dir_data + 'ga02.nc'
-data_16D = dir_data + 'ga03.nc'
-data_32D = dir_data + 'ga04.nc'
-data_64D = dir_data + 'ga05.nc'
+data_2D = dir_contour + 'ga00.nc'
+data_4D = dir_contour + 'ga01.nc'
+data_8D = dir_contour + 'ga02.nc'
+data_16D = dir_contour + 'ga03.nc'
+data_32D = dir_contour + 'ga04.nc'
+data_64D = dir_contour + 'ga05.nc'
 
 z = np.arange(0, 3020, 20)
 z_i = 490
