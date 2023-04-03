@@ -114,6 +114,23 @@ for iters in range(len(cloud_thres)):
     plt.legend(fontsize=12, loc='upper right')
     plt.xlim(0, 0.5)
     plt.ylim(0, 6)
+    plt.savefig(plotdir+f'cloudy_vs_env_ratio_prof_cloud={cloud_thres}_t_av.png', pad_inches=0)
+    plt.close()
+
+    plt.figure(figsize=(6,7))
+    plt.plot(-26, -29)
+    plt.plot(np.mean(cloud_count_2, axis=0), z/z_i, label = '$\\Delta = 40}$m')
+    plt.plot(np.mean(cloud_count_4, axis=0), z/z_i, label = '$\\Delta = 80}$m')
+    plt.plot(np.mean(cloud_count_8, axis=0), z/z_i, label = '$\\Delta = 160}$m')
+    plt.plot(np.mean(cloud_count_16, axis=0), z/z_i, label = '$\\Delta = 320}$m')
+    plt.plot(np.mean(cloud_count_32, axis=0), z/z_i, label = '$\\Delta = 640}$m')
+    plt.plot(np.mean(cloud_count_64, axis=0), z/z_i, label = '$\\Delta = 1280}$m')
+
+    plt.xlabel(f"number of 'cloudy' grid points", fontsize=16)
+    plt.ylabel("z/z$_{ML}$", fontsize=16)
+    plt.legend(fontsize=12, loc='upper right')
+    plt.xlim(0, 0.5)
+    plt.ylim(0, 6)
     plt.savefig(plotdir+f'cloud_count_prof_cloud={cloud_thres}_t_av.png', pad_inches=0)
     plt.close()
 
