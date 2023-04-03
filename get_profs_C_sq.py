@@ -5,7 +5,7 @@ import numpy as np
 
 
 homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
-mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
+myfile = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
 from subfilter.io.dataout import save_field
@@ -15,16 +15,13 @@ import xarray as xr
 av_type = 'all'
 mygrid = 'p'
 
-path20f = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
-file20 = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
-
-outdir = path20f+'C_profs_cloud_0/'
+outdir = homedir+'C_profs_cloud_0/'
 os.makedirs(outdir, exist_ok = True)
 
 deltas=['2D', '4D', '8D', '16D', '32D', '64D']
 
-dataset_name = [outdir+file20+'C_2D.nc', outdir+file20+'C_4D.nc', outdir+file20+'C_8D.nc',
-                outdir+file20+'C_16D.nc', outdir+file20+'C_32D.nc', outdir+file20+'C_64D.nc']
+dataset_name = [outdir+myfile+'C_2D.nc', outdir+myfile+'C_4D.nc', outdir+myfile+'C_8D.nc',
+                outdir+myfile+'C_16D.nc', outdir+myfile+'C_32D.nc', outdir+myfile+'C_64D.nc']
 
 # 'field': 'f(LM_field_on_w)_r'
 # 'field': 'Cs_field'
@@ -62,7 +59,7 @@ for j in range(len(dataset_name)):
 
         C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
             apf.get_conditional_profiles(field=field_in, **gen_opts, \
-                    dataset_in = path20f+file20+str(f'{field_dir[i]}_{deltas[j]}_running_mean_filter_rm00.nc'))
+                    dataset_in = homedir+myfile+str(f'{field_dir[i]}_{deltas[j]}_running_mean_filter_rm00.nc'))
 
         save_field(ds_in, C_sq_prof)
         save_field(ds_in, C_sq_env_prof)

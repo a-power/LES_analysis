@@ -53,8 +53,12 @@ def cloud_vs_env_masks(data_in, cloud_liquid_threshold, res_counter=None, grid='
 
     q_cloud = q_in.data
 
-    masked_q_cloud = ma.masked_less(q_cloud, cloud_liquid_threshold) #masking lower values
-    masked_q_env = ma.masked_greater_equal(q_cloud, cloud_liquid_threshold) #masking larger values
+    if cloud_liquid_threshold == 0:
+        masked_q_cloud = ma.masked_less_equal(q_cloud, cloud_liquid_threshold)  # masking lower values
+        masked_q_env = ma.masked_greater(q_cloud, cloud_liquid_threshold)
+    else:
+        masked_q_cloud = ma.masked_less(q_cloud, cloud_liquid_threshold) #masking lower values
+        masked_q_env = ma.masked_greater_equal(q_cloud, cloud_liquid_threshold) #masking larger values
 
     cloud_only_mask = ma.getmaskarray(masked_q_cloud)
     env_only_mask = ma.getmaskarray(masked_q_env)
