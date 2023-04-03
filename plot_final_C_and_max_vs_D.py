@@ -10,7 +10,7 @@ np.seterr(invalid='ignore')
 homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_0/'
 mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_'
 
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles/'
+plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_0/'
 os.makedirs(plotdir, exist_ok = True)
 
 data_2D = xr.open_dataset(mydir + '2D.nc')
