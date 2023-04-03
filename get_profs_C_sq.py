@@ -15,7 +15,7 @@ import xarray as xr
 av_type = 'all'
 mygrid = 'p'
 
-outdir = homedir+'C_profs_cloud_0/'
+outdir = homedir+'C_profs_cloud_1e-7/'
 os.makedirs(outdir, exist_ok = True)
 
 deltas=['2D', '4D', '8D', '16D', '32D', '64D']
@@ -42,7 +42,7 @@ th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
 gen_opts = {'contour_field_in': dir_contour,
             'deltas': None,
             'other_vars': [w_field, th_v_field],
-            'cloud_thres': 0,
+            'cloud_thres': 1e-7,
             'other_var_thres': [0.5, 0],
             'less_greater_in': ['less', 'less'],
             'and_or_in': ['and', 'and'],
