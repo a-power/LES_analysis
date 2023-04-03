@@ -7,7 +7,7 @@ import dynamic_functions as dyn
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
-homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs/'
+homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_0/'
 mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_'
 
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles/'
@@ -79,7 +79,8 @@ def interp_z(var_in, z_from=z_set, z_to=zn_set):
 
 
 def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
-                      labels_in = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$', '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']):
+                      labels_in = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$', '16$\\Delta$',
+                                   '32$\\Delta$', '64$\\Delta$']):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -155,7 +156,8 @@ Cqt_sq_cond = np.reshape(Cqt_sq_cond, ( np.shape(Cqt_sq_cond)[0], np.shape(Cqt_s
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, interp=False, C_sq_to_C = True,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
                             deltas = ['2D', '4D', '8D', '16D', '32D', '64D'],
-                            delta_label = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$', '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']):
+                            delta_label = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$', '16$\\Delta$',
+                                           '32$\\Delta$', '64$\\Delta$']):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -342,126 +344,6 @@ plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond), get_max_l_from_C(max_Cth_co
 # Pr_th_16D = dyn.Pr(Cs_sq_16, Cth_sq_16)
 # Pr_th_32D = dyn.Pr(Cs_sq_32, Cth_sq_32)
 # Pr_th_64D = dyn.Pr(Cs_sq_64, Cth_sq_64)
-#
-# # plt.figure(figsize=(6,7))
-# # plt.plot(Pr_th_beta, z, label = '$\\Delta = 20$m')
-# # plt.plot(Pr_th_2D, z, label = '$\\Delta = 40$m')
-# # plt.plot(Pr_th_4D, z, label = '$\\Delta = 80$m')
-# # plt.plot(Pr_th_8D, z, label = '$\\Delta = 160$m')
-# # plt.plot(Pr_th_16D, z, label = '$\\Delta = 320$m')
-# # plt.plot(Pr_th_32D, z, label = '$\\Delta = 640$m')
-# # plt.plot(Pr_th_64D, z, label = '$\\Delta = 1280$m')
-# # plt.xlabel('$Pr_{\\theta}$', fontsize=14)
-# # plt.ylabel("z (m)")
-# # plt.legend(fontsize=12, loc='upper right')
-# # plt.vlines(0.7, 0, 3020, 'k', linestyles='dashed', label='')
-# # #plt.xlim(-3, 7)
-# # plt.savefig(plotdir+'Pr_th_prof.png', pad_inches=0)
-# # plt.close()
-#
-# plt.figure(figsize=(6,7))
-# plt.plot(Pr_th_beta, z/z_i, label = '$\\Delta = 20$m')
-# plt.plot(Pr_th_2D, z/z_i, label = '$\\Delta = 40$m')
-# plt.plot(Pr_th_4D, z/z_i, label = '$\\Delta = 80$m')
-# plt.plot(Pr_th_8D, z/z_i, label = '$\\Delta = 160$m')
-# plt.plot(Pr_th_16D, z/z_i, label = '$\\Delta = 320$m')
-# plt.plot(Pr_th_32D, z/z_i, label = '$\\Delta = 640$m')
-# plt.plot(Pr_th_64D, z/z_i, label = '$\\Delta = 1280$m')
-# plt.xlabel('$Pr_{\\theta}$', fontsize=14)
-# plt.ylabel("z/z$_{ML}$", fontsize=16)
-# plt.legend(fontsize=12, loc='upper right')
-# plt.vlines(0.7, 0, 3020/z_i, 'k', linestyles='dashed', label='')
-# plt.xlim(-3, 7)
-# plt.savefig(plotdir+'Pr_th_prof_scaled1.png', pad_inches=0)
-# plt.close()
-#
-#
-# plt.figure(figsize=(6,7))
-# plt.plot(Pr_th_beta, z/z_i, label = '$\\Delta = 20$m')
-# plt.plot(Pr_th_2D, z/z_i, label = '$\\Delta = 40$m')
-# plt.plot(Pr_th_4D, z/z_i, label = '$\\Delta = 80$m')
-# plt.plot(Pr_th_8D, z/z_i, label = '$\\Delta = 160$m')
-# plt.plot(Pr_th_16D, z/z_i, label = '$\\Delta = 320$m')
-# plt.plot(Pr_th_32D, z/z_i, label = '$\\Delta = 640$m')
-# plt.plot(Pr_th_64D, z/z_i, label = '$\\Delta = 1280$m')
-# plt.xlabel('$Pr_{\\theta}$', fontsize=14)
-# plt.ylabel("z/z$_{ML}$", fontsize=16)
-# plt.legend(fontsize=12, loc='upper right')
-# plt.vlines(0.7, 0, 3020/z_i, 'k', linestyles='dashed', label='')
-# plt.xlim(-3, 31)
-# plt.savefig(plotdir+'Pr_th_prof_scaled2.png', pad_inches=0)
-# plt.close()
-#
-# ###############################################################################################
-#
-# Pr_q_beta = dyn.Pr(Cs_beta_sq, Cq_beta_sq)
-# Pr_q_2D = dyn.Pr(Cs_sq_2, Cq_sq_2)
-# Pr_q_4D = dyn.Pr(Cs_sq_4, Cq_sq_4)
-# Pr_q_8D = dyn.Pr(Cs_sq_8, Cq_sq_8)
-# Pr_q_16D = dyn.Pr(Cs_sq_16, Cq_sq_16)
-# Pr_q_32D = dyn.Pr(Cs_sq_32, Cq_sq_32)
-# Pr_q_64D = dyn.Pr(Cs_sq_64, Cq_sq_64)
-#
-# # plt.figure(figsize=(6,7))
-# # plt.plot(Pr_q_beta, z, label = '$\\Delta = 20$m')
-# # plt.plot(Pr_q_2D, z, label = '$\\Delta = 40$m')
-# # plt.plot(Pr_q_4D, z, label = '$\\Delta = 80$m')
-# # plt.plot(Pr_q_8D, z, label = '$\\Delta = 160$m')
-# # plt.plot(Pr_q_16D, z, label = '$\\Delta = 320$m')
-# # plt.plot(Pr_q_32D, z, label = '$\\Delta = 640$m')
-# # plt.plot(Pr_q_64D, z, label = '$\\Delta = 1280$m')
-# # plt.xlabel('$Pr_{qt}$', fontsize=14)
-# # plt.ylabel("z (m)")
-# # plt.legend(fontsize=12, loc='upper right')
-# # plt.vlines(0.7, 0, 3020, 'k', linestyles='dashed', label='')
-# # #plt.xlim(-3, 7)
-# # plt.savefig(plotdir+'Pr_qt_prof.png', pad_inches=0)
-# # plt.close()
-#
-# plt.figure(figsize=(6,7))
-# plt.plot(Pr_q_beta, z/z_i, label = '$\\Delta = 20$m')
-# plt.plot(Pr_q_2D, z/z_i, label = '$\\Delta = 40$m')
-# plt.plot(Pr_q_4D, z/z_i, label = '$\\Delta = 80$m')
-# plt.plot(Pr_q_8D, z/z_i, label = '$\\Delta = 160$m')
-# plt.plot(Pr_q_16D, z/z_i, label = '$\\Delta = 320$m')
-# plt.plot(Pr_q_32D, z/z_i, label = '$\\Delta = 640$m')
-# plt.plot(Pr_th_64D, z/z_i, label = '$\\Delta = 1280$m')
-# plt.xlabel('$Pr_{qt}$', fontsize=14)
-# plt.ylabel("z/z$_{ML}$", fontsize=16)
-# plt.legend(fontsize=12, loc='upper right')
-# plt.vlines(0.7, 0, 3020/z_i, 'k', linestyles='dashed', label='')
-# plt.xlim(-3, 7)
-# plt.savefig(plotdir+'Pr_qt_prof_scaled.png', pad_inches=0)
-# plt.close()
-#
-#
-#
-# # plt.figure(figsize=(6,7))
-# # plt.plot(Pr_th_beta, z, label = '$Pr_{\\theta}:$ $\\Delta = 20$m')
-# # plt.plot(Pr_th_2D, z, label = '$Pr_{\\theta}:$ $\\Delta = 40$m')
-# # plt.plot(Pr_th_4D, z, label = '$Pr_{\\theta}:$ $\\Delta = 80$m')
-# # plt.plot(Pr_q_beta, z, label = '$Pr_{qt}:$ $\\Delta = 20$m', color ='tab:blue', linestyle='dashdot')
-# # plt.plot(Pr_q_2D, z, label = '$Pr_{qt}:$ $\\Delta = 40$m', color ='tab:orange', linestyle='dashdot')
-# # plt.plot(Pr_q_4D, z, label = '$Pr_{qt}:$ $\\Delta = 80$m', color ='tab:green', linestyle='dashdot')
-# # plt.xlabel('$Pr$', fontsize=14)
-# # plt.ylabel("z (m)")
-# # plt.legend(fontsize=12, loc='upper right')
-# # plt.vlines(0.7, 0, 3020, 'k', linestyles='dashed', label='')
-# # plt.xlim(-3, 7)
-# # plt.savefig(plotdir+'Pr_all_prof.png', pad_inches=0)
-# #
-# # plt.figure(figsize=(6,7))
-# # plt.plot(Pr_th_beta, z/z_i, label = '$Pr_{\\theta}:$ $\\Delta = 20$m')
-# # plt.plot(Pr_th_2D, z/z_i, label = '$Pr_{\\theta}:$ $\\Delta = 40$m')
-# # plt.plot(Pr_th_4D, z/z_i, label = '$Pr_{\\theta}:$ $\\Delta = 80$m')
-# # plt.plot(Pr_q_beta, z/z_i, label = '$Pr_{qt}:$ $\\Delta = 20$m', color ='tab:blue', linestyle='dashdot')
-# # plt.plot(Pr_q_2D, z/z_i, label = '$Pr_{qt}:$ $\\Delta = 40$m', color ='tab:orange', linestyle='dashdot')
-# # plt.plot(Pr_q_4D, z/z_i, label = '$Pr_{qt}:$ $\\Delta = 80$m', color ='tab:green', linestyle='dashdot')
-# # plt.xlabel('$Pr$', fontsize=14)
-# # plt.ylabel("z/$_{ML}$")
-# # plt.legend(fontsize=12, loc='upper right')
-# # plt.vlines(0.7, 0, 3020/z_i, 'k', linestyles='dashed', label='')
-# # plt.xlim(-3, 7)
-# # plt.savefig(plotdir+'Pr_all_prof_scaled.png', pad_inches=0)
+
 
 
