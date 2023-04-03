@@ -17,7 +17,7 @@ dir_contour = dir_data + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/cloud_count/'
 os.makedirs(plotdir, exist_ok = True)
 
-cloud_thres = [0, 1e-5]
+cloud_thres = [0, 1e-5, 1e-7, 1e-9]
 
 
 def count_mask(mask_in):
@@ -114,7 +114,7 @@ for iters in range(len(cloud_thres)):
     plt.legend(fontsize=12, loc='upper right')
     plt.xlim(0, 0.5)
     plt.ylim(0, 6)
-    plt.savefig(plotdir+f'cloudy_vs_env_ratio_prof_cloud={cloud_thres}_t_av.png', pad_inches=0)
+    plt.savefig(plotdir+f'cloudy_vs_env_ratio_prof_cloud={cloud_thres[iters]}_t_av.png', pad_inches=0)
     plt.close()
 
     plt.figure(figsize=(6,7))
@@ -131,7 +131,7 @@ for iters in range(len(cloud_thres)):
     plt.legend(fontsize=12, loc='upper right')
     plt.xlim(0, 0.5)
     plt.ylim(0, 6)
-    plt.savefig(plotdir+f'cloud_count_prof_cloud={cloud_thres}_t_av.png', pad_inches=0)
+    plt.savefig(plotdir+f'cloud_count_prof_cloud={cloud_thres[iters]}_t_av.png', pad_inches=0)
     plt.close()
 
 
