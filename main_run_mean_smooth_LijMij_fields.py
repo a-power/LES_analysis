@@ -29,9 +29,9 @@ if beta == True:
     res = ['0', '1', '2', '3', '4', '5']
     num_filts = ['0', '1']
 else:
-    res = ['2D', '4D', '8D', '16D', '32D', '64D']
+    res = ['2D']#, '4D', '8D', '16D', '32D', '64D']
     num_filts = ['0']
-vars = ['Cs_', 'C_th_', 'C_qt_']
+vars = ['C_th_']#['Cs_', 'C_th_', 'C_qt_']
 
 outdir = homedir +'smoothed_LM_HR_fields/'
 os.makedirs(outdir, exist_ok = True)
