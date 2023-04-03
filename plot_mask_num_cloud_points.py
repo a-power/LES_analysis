@@ -50,7 +50,7 @@ z_i = 490
 #index of 0 at the start is to get rid of the dummy time index thats required to save the files
 for iters in range(len(cloud_thres)):
 
-    Cth_cloud_2, env_mask = clo.cloud_vs_env_masks(data_2D)
+    Cth_cloud_2, env_mask = clo.cloud_vs_env_masks(data_2D, cloud_liquid_threshold=cloud_thres[0])
 
     cloud_count_2 = count_mask(Cth_cloud_2)
     print('finished cloud count 2')
