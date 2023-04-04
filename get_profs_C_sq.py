@@ -27,8 +27,9 @@ os.makedirs(outdir, exist_ok = True)
 deltas=['2D', '4D', '8D', '16D', '32D', '64D']
 
 if beta==True:
-    dataset_name = [outdir+myfile+'C_2D_ga00.nc', outdir+myfile+'C_4D_ga00.nc', outdir+myfile+'C_8D_ga00.nc',
-                outdir+myfile+'C_16D_ga00.nc', outdir+myfile+'C_32D_ga00.nc', outdir+myfile+'C_64D_ga00.nc']
+    dataset_name = [outdir+myfile+'C_2D_', outdir+myfile+'C_4D_', outdir+myfile+'C_8D_',
+                outdir+myfile+'C_16D_', outdir+myfile+'C_32D_', outdir+myfile+'C_64D_']
+    extra_filter = ['0', '1']
 else:
     dataset_name = [outdir+myfile+'C_2D.nc', outdir+myfile+'C_4D.nc', outdir+myfile+'C_8D.nc',
                     outdir+myfile+'C_16D.nc', outdir+myfile+'C_32D.nc', outdir+myfile+'C_64D.nc']
@@ -49,8 +50,7 @@ w_field = f'f(f(f(w_on_{mygrid})_r_on_{mygrid})_r_on_{mygrid})_r'
 w2_field = f'f(f(f(w_on_{mygrid}.w_on_{mygrid})_r_on_{mygrid})_r_on_{mygrid})_r'
 th_v_field = f'f(f(f(th_v_on_{mygrid})_r_on_{mygrid})_r_on_{mygrid})_r'
 
-gen_opts = {'contour_field_in': dir_contour,
-            'deltas': None,
+gen_opts = {'deltas': None,
             'other_vars': [w_field, th_v_field],
             'cloud_thres': 1e-7,
             'other_var_thres': [0.5, 0],
@@ -67,15 +67,36 @@ for j in range(len(dataset_name)):
 
     for i, field_in in enumerate(fields):
 
-        C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
-            apf.get_conditional_profiles(field=field_in, **gen_opts, \
-                    dataset_in = homedir+myfile+str(f'{field_dir[i]}_{deltas[j]}_running_mean_filter_rm00.nc'))
+        if beta == True:
+            for k in range(len(extra_filter)):
 
-        save_field(ds_in, C_sq_prof)
-        save_field(ds_in, C_sq_env_prof)
-        save_field(ds_in, C_sq_cloud_prof)
-        save_field(ds_in, C_sq_combo2_prof)
-        save_field(ds_in, C_sq_combo3_prof)
+                mydataset = homedir + myfile + \
+                            str(f'{field_dir[i]}_{deltas[j]}_{str(k)}_running_mean_filter_rm00.nc')
+                mydir_contour = dir_contour + f'{j}_gaussian_filter_ga0{k}_running_mean_filter_rm00.nc'
+
+                C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
+                    apf.get_conditional_profiles(field=field_in, **gen_opts, dataset_in = mydataset,
+                                                 contour_field_in = mydir_contour)
+
+                save_field(ds_in, C_sq_prof)
+                save_field(ds_in, C_sq_env_prof)
+                save_field(ds_in, C_sq_cloud_prof)
+                save_field(ds_in, C_sq_combo2_prof)
+                save_field(ds_in, C_sq_combo3_prof)
+
+        else:
+            mydataset = homedir + myfile + str(f'{field_dir[i]}_{deltas[j]}_running_mean_filter_rm00.nc')
+            mydir_contour = dir_contour + f'{j}_running_mean_filter_rm00.nc'
+
+            C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
+                apf.get_conditional_profiles(field=field_in, **gen_opts, dataset_in = mydataset,
+                                             contour_field_in = mydir_contour + f'{i}_running_mean_filter_rm00.nc')
+
+            save_field(ds_in, C_sq_prof)
+            save_field(ds_in, C_sq_env_prof)
+            save_field(ds_in, C_sq_cloud_prof)
+            save_field(ds_in, C_sq_combo2_prof)
+            save_field(ds_in, C_sq_combo3_prof)
 
 
     ds.close()
