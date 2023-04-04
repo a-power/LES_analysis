@@ -51,7 +51,7 @@ for j in range(len(set_time)):
         for i, model_res in enumerate(model_res_list):
             for k in range(how_many_filters-filters_start):
                 dy_s.run_dyn_on_filtered_for_beta_contour(model_res, set_time[j], filter_name,
-                                                          sigma_list*2**(k+filters_start), in_dir, outdir, options, \
-                            opgrid, start_point=start_point_filtering, filtered_data = f'ga0{str(k+filters_start)}',
-                                                          ref_file = None, \
-                                         time_name='time')
+                                                          sigma_list*2**(k+filters_start), in_dir, outdir, options,
+                                                          opgrid, start_point=start_point_filtering,
+                                                          filtered_data = f'ga0{str(k+filters_start)}',
+                                                          ref_file = None, time_name='time')
