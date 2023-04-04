@@ -21,10 +21,10 @@ else:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/'
 
 mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
-#dir_cloud = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+dir_cloud = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
 
-dirs = [mydir]#, dir_cloud]
+dirs = [dir_cloud]#mydir]#,
 if beta == True:
     res = ['0', '1', '2', '3', '4', '5']
     num_filts = ['0', '1']

@@ -17,7 +17,8 @@ os.makedirs(outdir, exist_ok = True)
 os.makedirs(plotdir, exist_ok = True)
 
 filter_name = 'gaussian'  # "wave_cutoff"
-sigma_list = np.array([320, 640]) #dont forget CHANGE start time if youre short-serial filtering  #([20, 40, 80] ([160, 320, 640])
+sigma_list = np.array([320, 640]) #dont forget CHANGE start time if youre short-serial filtering
+# #([20, 40, 80] ([160, 320, 640])
 
 start=4
 #Note short serial queue on JASMIN times out after 3 filter scales

@@ -146,6 +146,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
                         ["v", "q_total"],
                         ["w", "q_total"],
                         ["w", "th_L"],
+                        ["w", "th_v"],
                         ["w", "q_vapour"],
                         ["w", "q_cloud_liquid_mass"],
                         ["th_L", "th_L"],
@@ -325,7 +326,9 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         "v",
                         "w",
                         "th",
-                        "q_total_f"
+                        "q_total_f",
+                        "th_v",
+                        "q_cloud_liquid_mass"
                         ]
 
             field_list = sf.filter_variable_list(dataset, ref_dataset,
@@ -343,6 +346,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         ["u", "th"],
                         ["v", "th"],
                         ["w", "th"],
+                        ["w", "th_v"],
                         ["u", "q_total_f"],
                         ["v", "q_total_f"],
                         ["w", "q_total_f"],
@@ -417,6 +421,142 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
     derived_data['ds'].close()
     dataset.close()
     return
+
+
+
+
+def run_dyn_on_filtered_for_beta_contour(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, filtered_data, start_point=0,
+            ref_file = None, time_name = 'time_series_600_600'):
+
+    """ function takes in:
+     dx: the grid spacing and number of grid points in the format:  """
+
+    file_in = f'{indir}{res_in}_all_{time_in}_gaussian_filter_{filtered_data}.nc'
+
+    ds_in = xr.open_dataset(file_in)
+    time_data = ds_in[time_name]
+    times = time_data.data
+    nt = len(times)
+
+    dx_in = float(opt['dx'])
+    domain_in = float(opt['domain'])
+    N = int((domain_in*(1000))/dx_in)
+
+    filter_name = filt_in
+    width = -1
+    cutoff = 0.000001
+
+    dask.config.set({"array.slicing.split_large_chunks": True})
+    [itime, iix, iiy, iiz] = ut.string_utils.get_string_index(ds_in.dims, ['time', 'x', 'y', 'z'])
+    timevar = list(ds_in.dims)[itime]
+    xvar = list(ds_in.dims)[iix]
+    yvar = list(ds_in.dims)[iiy]
+    zvar = list(ds_in.dims)[iiz]
+    max_ch = subfilter.global_config['chunk_size']
+
+    # This is a rough way to estimate chunck size
+    nch = np.min([int(ds_in.dims[xvar] / (2 ** int(np.log(ds_in.dims[xvar]
+                                                            * ds_in.dims[yvar]
+                                                            * ds_in.dims[zvar]
+                                                            / max_ch) / np.log(2) / 2))),
+                                                            ds_in.dims[xvar]])
+
+    ds_in.close()
+
+    dataset = xr.open_dataset(file_in, chunks={timevar: 1,
+                                                      xvar: nch, yvar: nch,
+                                                      'z': 'auto', 'zn': 'auto'}) #preprocess: check versions
+
+    if ref_file is not None:
+        ref_dataset = xr.open_dataset(indir + ref_file)
+    else:
+        ref_dataset = None
+
+
+    fname = filter_name
+
+    derived_data, exists = \
+        sf.setup_derived_data_file(file_in, odir, fname,
+                                   opt, override=True)
+
+    filter_list = list([])
+
+    for i, filt_set in enumerate(filt_scale):
+        print(filt_set)
+        if filter_name == 'gaussian':
+            filter_id = 'filter_ga{:02d}'.format(i+start_point)
+            twod_filter = filt.Filter(filter_id,
+                                      filter_name, npoints=N,
+                                      sigma=filt_set, width=width,
+                                      delta_x=dx_in, cutoff=cutoff)
+        elif filter_name == 'wave_cutoff':
+            filter_id = 'filter_wc{:02d}'.format(i+start_point)
+            twod_filter = filt.Filter(filter_id, filter_name,
+                                      wavenumber=filt_set,
+                                      width=width, npoints=N,
+                                      delta_x=dx_in)
+        elif filter_name == 'running_mean':
+            filter_id = 'filter_rm{:02d}'.format(i+start_point)
+            twod_filter = filt.Filter(filter_id,
+                                      filter_name,
+                                      width=filt_set,
+                                      npoints=N,
+                                      delta_x=dx_in)
+        else:
+            print('Filter name not defined')
+            break
+
+        filter_list.append(twod_filter)
+
+
+    print(filter_list)
+
+    for j, new_filter in enumerate(filter_list):
+        print("Processing using filter: ")
+        print(new_filter)
+
+        filtered_data, exists = \
+            sf.setup_filtered_data_file(file_in, odir, fname,
+                                        opt, new_filter, override=True)
+        if exists:
+            print('Derived data file exists')
+        else:
+
+            var_list = [
+                        "w",
+                        "th",
+                        "q_total_f",
+                        "th_v",
+                        "q_cloud_liquid_mass"
+                        ]
+
+            field_list = sf.filter_variable_list(dataset, ref_dataset,
+                                                 derived_data, filtered_data,
+                                                 opt, new_filter,
+                                                 var_list=var_list,
+                                                 grid=ingrid)
+
+            var_list = [["u", "u"],
+                        ["v", "v"],
+                        ["w", "w"],
+                        ["w", "th_v"]
+                        ]
+
+
+            quad_field_list = sf.filter_variable_pair_list(dataset,
+                                                           ref_dataset,
+                                                           derived_data, filtered_data,
+                                                           opt, new_filter,
+                                                           var_list=var_list,
+                                                           grid=ingrid)
+
+
+
+        filtered_data['ds'].close()
+    derived_data['ds'].close()
+    dataset.close()
+    return
+
 
 
 

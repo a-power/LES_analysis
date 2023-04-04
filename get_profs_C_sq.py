@@ -4,7 +4,7 @@ import analysis_plot_fns as apf
 import numpy as np
 
 
-homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
+homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
 myfile = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
@@ -15,7 +15,7 @@ import xarray as xr
 av_type = 'all'
 mygrid = 'p'
 
-outdir = homedir+'C_profs_cloud_1e-7/'
+outdir = homedir+'C_profs_cloud_1e-5/'
 os.makedirs(outdir, exist_ok = True)
 
 deltas=['2D', '4D', '8D', '16D', '32D', '64D']
