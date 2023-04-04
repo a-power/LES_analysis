@@ -3,10 +3,16 @@ import os
 import analysis_plot_fns as apf
 import numpy as np
 
+beta=True
 
-homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
+if beta==True:
+    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
+    dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+else:
+    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
+    dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+
 myfile = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
-dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
 from subfilter.io.dataout import save_field
 import os
@@ -15,13 +21,17 @@ import xarray as xr
 av_type = 'all'
 mygrid = 'p'
 
-outdir = homedir+'C_profs_cloud_1e-5/'
+outdir = homedir+'C_profs/'
 os.makedirs(outdir, exist_ok = True)
 
 deltas=['2D', '4D', '8D', '16D', '32D', '64D']
 
-dataset_name = [outdir+myfile+'C_2D.nc', outdir+myfile+'C_4D.nc', outdir+myfile+'C_8D.nc',
-                outdir+myfile+'C_16D.nc', outdir+myfile+'C_32D.nc', outdir+myfile+'C_64D.nc']
+if beta==True:
+    dataset_name = [outdir+myfile+'C_2D_ga00.nc', outdir+myfile+'C_4D_ga00.nc', outdir+myfile+'C_8D_ga00.nc',
+                outdir+myfile+'C_16D_ga00.nc', outdir+myfile+'C_32D_ga00.nc', outdir+myfile+'C_64D_ga00.nc']
+else:
+    dataset_name = [outdir+myfile+'C_2D.nc', outdir+myfile+'C_4D.nc', outdir+myfile+'C_8D.nc',
+                    outdir+myfile+'C_16D.nc', outdir+myfile+'C_32D.nc', outdir+myfile+'C_64D.nc']
 
 # 'field': 'f(LM_field_on_w)_r'
 # 'field': 'Cs_field'
@@ -34,10 +44,10 @@ fields = ['Cs_sq_field', 'Cth_sq_field', 'Cqt_sq_field']
 field_dir = ['Cs', 'C_th', 'C_qt']
 
 
-cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
-w_field = f'f(f(w_on_{mygrid})_r_on_{mygrid})_r'
-w2_field = f'f(f(w_on_{mygrid}.w_on_{mygrid})_r_on_{mygrid})_r'
-th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
+cloud_field = f'f(f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r_on_{mygrid})_r'
+w_field = f'f(f(f(w_on_{mygrid})_r_on_{mygrid})_r_on_{mygrid})_r'
+w2_field = f'f(f(f(w_on_{mygrid}.w_on_{mygrid})_r_on_{mygrid})_r_on_{mygrid})_r'
+th_v_field = f'f(f(f(th_v_on_{mygrid})_r_on_{mygrid})_r_on_{mygrid})_r'
 
 gen_opts = {'contour_field_in': dir_contour,
             'deltas': None,
