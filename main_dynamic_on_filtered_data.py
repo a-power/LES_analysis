@@ -42,7 +42,9 @@ options = {
                     'v': [f'f(v_on_{opgrid})_r'],
                     'w': [f'f(w_on_{opgrid})_r'],
                     'th': [f'f(th_on_{opgrid})_r'],
-                    'q_total_f': [f'f(q_total_on_{opgrid})_r']
+                    'q_total_f': [f'f(q_total_on_{opgrid})_r'],
+                    'th_v': [f'f(th_v_on_{opgrid})_r'],
+                    'q_cloud_liquid_mass': [f'f(q_cloud_liquid_mass_on_{opgrid})_r']
                     }
 
           }
