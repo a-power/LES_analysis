@@ -191,7 +191,7 @@ for i, indir in enumerate(dirs):
                              f'f(u_on_{ingrid}.u_on_{ingrid})_r',
                              f'f(v_on_{ingrid}.v_on_{ingrid})_r',
                              f'f(w_on_{ingrid}.w_on_{ingrid})_r',
-                             f'f(f(w_on_{ingrid}.th_v_on_{ingrid})_r_on_{ingrid})_r'
+                             f'f(w_on_{ingrid}.th_v_on_{ingrid})_r'
                              ]
                                  #
                                  # f'f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r',
