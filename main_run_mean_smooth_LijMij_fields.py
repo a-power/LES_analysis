@@ -1,4 +1,3 @@
-
 import numpy as np
 import os
 import xarray as xr
@@ -13,18 +12,23 @@ import dynamic_functions as dyn
 import dask
 import subfilter
 
+
 beta=True
+
 
 if beta==True:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
+    dir_cloud = homedir + 'contours/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 else:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/'
+    dir_cloud = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+
 
 mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
-dir_cloud = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
 
 dirs = [dir_cloud]#mydir]#,
+
 if beta == True:
     res = ['0', '1', '2', '3', '4', '5']
     num_filts = ['0', '1']
@@ -166,10 +170,21 @@ for i, indir in enumerate(dirs):
                     derived_data['ds'].close()
                     dataset.close()
             else:
-                file_in = f'{indir}{j}.nc'
-                var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r', f'f(th_v_on_{ingrid})_r', f'f(w_on_{ingrid})_r', \
-                             f'f(w_on_{ingrid}.w_on_{ingrid})_r', f'f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r', \
-                             f'f(w_on_{ingrid}.th_on_{ingrid})_r', f'f(w_on_{ingrid}.q_total_on_{ingrid})_r']
+
+                if beta == True:
+                    file_in = f'{indir}{j}_gaussian_filter_ga0{l}.nc'
+                    var_names = [f'f(f(q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
+                                 f'f(f(th_v_on_{ingrid})_r_on_{ingrid})_r',
+                                 f'f(f(w_on_{ingrid})_r_on_{ingrid})_r',
+                                 f'f(f(w_on_{ingrid}.w_on_{ingrid})_r_on_{ingrid})_r',
+                                 f'f(f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
+                                 f'f(f(w_on_{ingrid}.th_on_{ingrid})_r_on_{ingrid})_r',
+                                 f'f(f(w_on_{ingrid}.q_total_on_{ingrid})_r_on_{ingrid})_r']
+                else:
+                    file_in = f'{indir}{j}.nc'
+                    var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r', f'f(th_v_on_{ingrid})_r', f'f(w_on_{ingrid})_r', \
+                                 f'f(w_on_{ingrid}.w_on_{ingrid})_r', f'f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r', \
+                                 f'f(w_on_{ingrid}.th_on_{ingrid})_r', f'f(w_on_{ingrid}.q_total_on_{ingrid})_r']
 
                 ds_in = xr.open_dataset(file_in)
                 time_data = ds_in['time']
