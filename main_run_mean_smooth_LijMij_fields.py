@@ -12,7 +12,6 @@ import dynamic_functions as dyn
 import dask
 import subfilter
 
-
 beta=True
 
 
@@ -179,12 +178,22 @@ for i, indir in enumerate(dirs):
                                  f'f(f(w_on_{ingrid}.w_on_{ingrid})_r_on_{ingrid})_r',
                                  f'f(f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
                                  f'f(f(w_on_{ingrid}.th_on_{ingrid})_r_on_{ingrid})_r',
-                                 f'f(f(w_on_{ingrid}.q_total_on_{ingrid})_r_on_{ingrid})_r']
+                                 f'f(f(w_on_{ingrid}.th_v_on_{ingrid})_r_on_{ingrid})_r',
+                                 f'f(f(u_on_{ingrid}.u_on_{ingrid})_r_on_{ingrid})_r',
+                                 f'f(f(v_on_{ingrid}.v_on_{ingrid})_r_on_{ingrid})_r',
+                                 f'f(f(w_on_{ingrid}.w_on_{ingrid})_r_on_{ingrid})_r'
+                                 ]
                 else:
                     file_in = f'{indir}{j}.nc'
-                    var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r', f'f(th_v_on_{ingrid})_r', f'f(w_on_{ingrid})_r', \
-                                 f'f(w_on_{ingrid}.w_on_{ingrid})_r', f'f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r', \
-                                 f'f(w_on_{ingrid}.th_on_{ingrid})_r', f'f(w_on_{ingrid}.q_total_on_{ingrid})_r']
+                    var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r', f'f(th_v_on_{ingrid})_r',
+                                 f'f(w_on_{ingrid})_r', f'f(w_on_{ingrid}.w_on_{ingrid})_r',
+                                 f'f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r',
+                                 f'f(w_on_{ingrid}.th_on_{ingrid})_r', f'f(w_on_{ingrid}.q_total_on_{ingrid})_r',
+                                 f'f(f(w_on_{ingrid}.th_v_on_{ingrid})_r_on_{ingrid})_r',
+                                 f'f(u_on_{ingrid}.u_on_{ingrid})_r',
+                                 f'f(v_on_{ingrid}.v_on_{ingrid})_r',
+                                 f'f(w_on_{ingrid}.w_on_{ingrid})_r'
+                                 ]
 
                 ds_in = xr.open_dataset(file_in)
                 time_data = ds_in['time']
