@@ -29,7 +29,7 @@ deltas=['2D', '4D', '8D', '16D', '32D', '64D']
 if beta==True:
     dataset_name = [outdir+myfile+'C_2D_', outdir+myfile+'C_4D_', outdir+myfile+'C_8D_',
                 outdir+myfile+'C_16D_', outdir+myfile+'C_32D_', outdir+myfile+'C_64D_']
-    extra_filter = ['0']#, '1']
+    extra_filter = ['1']#, '1']
 else:
     dataset_name = [outdir+myfile+'C_2D.nc', outdir+myfile+'C_4D.nc', outdir+myfile+'C_8D.nc',
                     outdir+myfile+'C_16D.nc', outdir+myfile+'C_32D.nc', outdir+myfile+'C_64D.nc']
@@ -62,8 +62,8 @@ gen_opts = {'deltas': None,
 for j, delta_in in enumerate(deltas):
 
     ds = xr.Dataset()
-    ds.to_netcdf(dataset_name[j]+str(0), mode='w')
-    ds_in = {'file': dataset_name[j]+str(0), 'ds': ds}
+    ds.to_netcdf(dataset_name[j]+str(1)+'.nc', mode='w')
+    ds_in = {'file': dataset_name[j]+str(1)+'.nc', 'ds': ds}
 
     ########### need to fix this, fo now only do one 2nd filt at a time
 
