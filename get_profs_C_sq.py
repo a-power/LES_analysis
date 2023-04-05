@@ -59,7 +59,7 @@ gen_opts = {'deltas': None,
             'grid': mygrid,
                }
 
-for j in range(len(dataset_name)):
+for j, delta_in in enumerate(len(deltas)):
 
     ds = xr.Dataset()
     ds.to_netcdf(dataset_name[j], mode='w')
@@ -68,11 +68,11 @@ for j in range(len(dataset_name)):
     for i, field_in in enumerate(fields):
 
         if beta == True:
-            for k in range(len(extra_filter)):
+            for k, name_2_gauss in enumerate(len(extra_filter)):
 
                 mydataset = homedir + myfile + \
-                            str(f'{field_dir[i]}_{deltas[j]}_{str(k)}_running_mean_filter_rm00.nc')
-                mydir_contour = dir_contour + f'{j}_gaussian_filter_ga0{k}_running_mean_filter_rm00.nc'
+                            str(f'{field_dir[i]}_{delta_in}_{name_2_gauss}_running_mean_filter_rm00.nc')
+                mydir_contour = dir_contour + f'{j}_gaussian_filter_ga0{name_2_gauss}_running_mean_filter_rm00.nc'
 
                 C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
                     apf.get_conditional_profiles(field=field_in, **gen_opts, dataset_in = mydataset,
