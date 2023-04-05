@@ -62,8 +62,8 @@ gen_opts = {'deltas': None,
 for j, delta_in in enumerate(deltas):
 
     ds = xr.Dataset()
-    ds.to_netcdf(dataset_name[j], mode='w')
-    ds_in = {'file': dataset_name[j], 'ds': ds}
+    ds.to_netcdf(dataset_name[j]+str(0), mode='w')
+    ds_in = {'file': dataset_name[j]+str(0), 'ds': ds}
 
     ########### need to fix this, fo now only do one 2nd filt at a time
 
@@ -73,7 +73,7 @@ for j, delta_in in enumerate(deltas):
             for k, name_2_gauss in enumerate(extra_filter):
 
                 mydataset = homedir + myfile + \
-                            str(f'{field_dir[i]}_{delta_in}_{name_2_gauss}_running_mean_filter_rm00.nc')
+                            str(f'{field_dir[i]}_{j}_{name_2_gauss}_running_mean_filter_rm00.nc')
                 mydir_contour = dir_contour + f'{j}_gaussian_filter_ga0{name_2_gauss}_running_mean_filter_rm00.nc'
 
                 C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
