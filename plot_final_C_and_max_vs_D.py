@@ -8,7 +8,7 @@ np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
 beta=True
-what_plotting='_beta'
+what_plotting='_0'
 
 if beta == True:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
