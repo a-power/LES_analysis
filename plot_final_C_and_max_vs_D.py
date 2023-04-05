@@ -403,7 +403,11 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
         ax[1].plot(Delta, Cth_max_in[it,...], color=colours[it], linestyle=my_lines[it])
         ax[2].plot(Delta, Cqt_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
 
-    ax[2].legend(fontsize=13, loc='best')
+    if y_ax == 'C':
+        ax[2].legend(fontsize=13, loc='upper right')
+    else:
+        ax[2].legend(fontsize=13, loc='best')
+
     bottom0, top0 = ax[0].set_ylim()
     bottom1, top1 = ax[1].set_ylim()
     bottom2, top2 = ax[2].set_ylim()
