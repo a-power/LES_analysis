@@ -511,7 +511,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
 def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
                       cloud_thres, other_vars, other_var_thres,
-                             less_greater_in, and_or_in, grid):
+                             less_greater_in, and_or_in, grid, beta):
     if deltas==None:
         deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
@@ -596,9 +596,14 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
         C=True
 
     elif field == 'Cqt_field' or field == 'Cqt_sq_field':
-        print('length of time array for HR_qt is ', len(data_set[f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
-        num_field = data_set[f'f(HR_q_total_field_on_{grid})_r'].data[...]
-        den_field = data_set[f'f(RR_q_total_field_on_{grid})_r'].data[...]
+        if beta=True:
+            print('length of time array for HR_qt is ', len(data_set[f'f(HR_q_total_f_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            num_field = data_set[f'f(HR_q_total_f_field_on_{grid})_r'].data[...]
+            den_field = data_set[f'f(RR_q_total_f_field_on_{grid})_r'].data[...]
+        else:
+            print('length of time array for HR_qt is ', len(data_set[f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            num_field = data_set[f'f(HR_q_total_field_on_{grid})_r'].data[...]
+            den_field = data_set[f'f(RR_q_total_field_on_{grid})_r'].data[...]
         C=True
 
     else:

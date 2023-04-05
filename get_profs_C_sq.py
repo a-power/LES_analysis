@@ -78,7 +78,7 @@ for j, delta_in in enumerate(deltas):
 
                 C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
                     apf.get_conditional_profiles(field=field_in, **gen_opts, dataset_in = mydataset,
-                                                 contour_field_in = mydir_contour)
+                                                 contour_field_in = mydir_contour, beta=True)
 
                 save_field(ds_in, C_sq_prof)
                 save_field(ds_in, C_sq_env_prof)
@@ -92,7 +92,7 @@ for j, delta_in in enumerate(deltas):
 
             C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
                 apf.get_conditional_profiles(field=field_in, **gen_opts, dataset_in = mydataset,
-                                             contour_field_in = mydir_contour + f'{i}_running_mean_filter_rm00.nc')
+                                             contour_field_in = mydir_contour, beta=False)
 
             save_field(ds_in, C_sq_prof)
             save_field(ds_in, C_sq_env_prof)
