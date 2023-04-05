@@ -596,7 +596,7 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
         C=True
 
     elif field == 'Cqt_field' or field == 'Cqt_sq_field':
-        if beta=True:
+        if beta==True:
             print('length of time array for HR_qt is ', len(data_set[f'f(HR_q_total_f_field_on_{grid})_r'].data[:, 0, 0, 0]))
             num_field = data_set[f'f(HR_q_total_f_field_on_{grid})_r'].data[...]
             den_field = data_set[f'f(RR_q_total_f_field_on_{grid})_r'].data[...]
