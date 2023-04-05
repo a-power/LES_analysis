@@ -76,8 +76,15 @@ if what_plotting=='_beta':
     Cth_w_th_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
     Cqt_w_th_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
 
+    print('shape of initialised C_temps = ', np.shape(Cs_sq_temp))
+    print('shape of data_list = ', np.shape(data_list))
+
     for j in range(len(data_list[0])):
         for i in range(len(data_list[1])):
+            print('j = ', j)
+            print('i = ', i)
+
+            print('shape of C data being imported =', np.shape(data_list[j][i]['Cs_sq_prof'].data))
 
             Cs_sq_temp[j, i, :] = data_list[j][i]['Cs_sq_prof'].data[0, ...]
             Cth_sq_temp[j, i, :] = data_list[j][i]['Cth_sq_prof'].data[0, ...]
