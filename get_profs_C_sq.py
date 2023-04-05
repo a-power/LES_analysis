@@ -45,10 +45,10 @@ fields = ['Cs_sq_field', 'Cth_sq_field', 'Cqt_sq_field']
 field_dir = ['Cs', 'C_th', 'C_qt']
 
 
-cloud_field = f'f(f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r_on_{mygrid})_r'
-w_field = f'f(f(f(w_on_{mygrid})_r_on_{mygrid})_r_on_{mygrid})_r'
-w2_field = f'f(f(f(w_on_{mygrid}.w_on_{mygrid})_r_on_{mygrid})_r_on_{mygrid})_r'
-th_v_field = f'f(f(f(th_v_on_{mygrid})_r_on_{mygrid})_r_on_{mygrid})_r'
+cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
+w_field = f'f(f(w_on_{mygrid})_r_on_{mygrid})_r'
+w2_field = f'f(f(w_on_{mygrid}.w_on_{mygrid})_r_on_{mygrid})_r'
+th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
 
 gen_opts = {'deltas': None,
             'other_vars': [w_field, th_v_field],
@@ -64,6 +64,8 @@ for j, delta_in in enumerate(deltas):
     ds = xr.Dataset()
     ds.to_netcdf(dataset_name[j], mode='w')
     ds_in = {'file': dataset_name[j], 'ds': ds}
+
+    ########### need to fix this, fo now only do one 2nd filt at a time
 
     for i, field_in in enumerate(fields):
 
