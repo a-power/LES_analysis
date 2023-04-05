@@ -60,26 +60,26 @@ z_ML = 490
 
 #index of 0 at the start is to get rid of the dummy time index thats required to save the files
 if what_plotting=='_beta':
-    Cs_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cth_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cqt_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cs_env_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cth_env_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cqt_env_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cs_cloud_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cth_cloud_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cqt_cloud_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cs_w_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cth_w_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cqt_w_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cs_w_th_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cth_w_th_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
-    Cqt_w_th_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cs_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cth_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cqt_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cs_env_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cth_env_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cqt_env_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cs_cloud_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cth_cloud_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cqt_cloud_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cs_w_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cth_w_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cqt_w_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cs_w_th_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cth_w_th_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
+    Cqt_w_th_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
 
     print('shape of initialised C_temps = ', np.shape(Cs_sq_temp))
-    print('shape of data_list = ', np.shape(data_list))
+    print('shape of data_list = ', data_list.shape())
 
-    for j in range(len(data_list[0])):
+    for j in range(2):
         for i in range(len(data_list[1])):
             print('j = ', j)
             print('i = ', i)
