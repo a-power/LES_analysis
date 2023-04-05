@@ -23,7 +23,7 @@ mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_'
 
 os.makedirs(plotdir, exist_ok = True)
 
-if what_plotting == beta:
+if what_plotting == '_beta':
     data_2D_0 = xr.open_dataset(mydir + f'2D_0.nc')
     data_4D_0 = xr.open_dataset(mydir + f'4D_0.nc')
     data_8D_0 = xr.open_dataset(mydir + f'8D_0.nc')
@@ -59,7 +59,7 @@ z_ML = 490
 ##################################################################################################################
 
 #index of 0 at the start is to get rid of the dummy time index thats required to save the files
-if what_plotting==beta:
+if what_plotting=='_beta':
     Cs_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
     Cth_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
     Cqt_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
