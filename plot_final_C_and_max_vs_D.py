@@ -11,7 +11,7 @@ beta=True
 what_plotting='_0'
 
 if beta == True:
-    homedir = '/work/scratch-pw/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
+    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/on_p_grid/scale_dep_plots/C_beta_profiles/'
 
 else:
