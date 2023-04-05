@@ -59,7 +59,7 @@ gen_opts = {'deltas': None,
             'grid': mygrid,
                }
 
-for j, delta_in in enumerate(len(deltas)):
+for j, delta_in in enumerate(deltas):
 
     ds = xr.Dataset()
     ds.to_netcdf(dataset_name[j], mode='w')
@@ -68,7 +68,7 @@ for j, delta_in in enumerate(len(deltas)):
     for i, field_in in enumerate(fields):
 
         if beta == True:
-            for k, name_2_gauss in enumerate(len(extra_filter)):
+            for k, name_2_gauss in enumerate(extra_filter):
 
                 mydataset = homedir + myfile + \
                             str(f'{field_dir[i]}_{delta_in}_{name_2_gauss}_running_mean_filter_rm00.nc')
