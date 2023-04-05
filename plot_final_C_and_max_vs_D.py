@@ -8,7 +8,7 @@ np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
 beta=True
-what_plotting='_1'
+what_plotting='_beta'
 
 if beta == True:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
@@ -23,14 +23,34 @@ mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_'
 
 os.makedirs(plotdir, exist_ok = True)
 
-data_2D = xr.open_dataset(mydir + f'2D{what_plotting}.nc')
-data_4D = xr.open_dataset(mydir + f'4D{what_plotting}.nc')
-data_8D = xr.open_dataset(mydir + f'8D{what_plotting}.nc')
-data_16D = xr.open_dataset(mydir + f'16D{what_plotting}.nc')
-data_32D = xr.open_dataset(mydir + f'32D{what_plotting}.nc')
-data_64D = xr.open_dataset(mydir + f'64D{what_plotting}.nc')
+if what_plotting == beta:
+    data_2D_0 = xr.open_dataset(mydir + f'2D_0.nc')
+    data_4D_0 = xr.open_dataset(mydir + f'4D_0.nc')
+    data_8D_0 = xr.open_dataset(mydir + f'8D_0.nc')
+    data_16D_0 = xr.open_dataset(mydir + f'16D_0.nc')
+    data_32D_0 = xr.open_dataset(mydir + f'32D_0.nc')
+    data_64D_0 = xr.open_dataset(mydir + f'64D_0.nc')
 
-data_list = [data_2D, data_4D, data_8D, data_16D, data_32D, data_64D]
+    data_2D_1 = xr.open_dataset(mydir + f'2D_1.nc')
+    data_4D_1 = xr.open_dataset(mydir + f'4D_1.nc')
+    data_8D_1 = xr.open_dataset(mydir + f'8D_1.nc')
+    data_16D_1 = xr.open_dataset(mydir + f'16D_1.nc')
+    data_32D_1 = xr.open_dataset(mydir + f'32D_1.nc')
+    data_64D_1 = xr.open_dataset(mydir + f'64D_1.nc')
+
+    data_list = [[data_2D_0, data_4D_0, data_8D_0, data_16D_0, data_32D_0, data_64D_0],
+                [data_2D_1, data_4D_1, data_8D_1, data_16D_1, data_32D_1, data_64D_1]]
+
+
+else:
+    data_2D = xr.open_dataset(mydir + f'2D{what_plotting}.nc')
+    data_4D = xr.open_dataset(mydir + f'4D{what_plotting}.nc')
+    data_8D = xr.open_dataset(mydir + f'8D{what_plotting}.nc')
+    data_16D = xr.open_dataset(mydir + f'16D{what_plotting}.nc')
+    data_32D = xr.open_dataset(mydir + f'32D{what_plotting}.nc')
+    data_64D = xr.open_dataset(mydir + f'64D{what_plotting}.nc')
+
+    data_list = [data_2D, data_4D, data_8D, data_16D, data_32D, data_64D]
 
 zn_set = np.arange(0, 3020, 20)
 z_set = np.arange(-10, 3010, 20)
@@ -39,44 +59,105 @@ z_ML = 490
 ##################################################################################################################
 
 #index of 0 at the start is to get rid of the dummy time index thats required to save the files
+if what_plotting==beta:
+    Cs_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cth_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cqt_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cs_env_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cth_env_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cqt_env_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cs_cloud_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cth_cloud_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cqt_cloud_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cs_w_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cth_w_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cqt_w_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cs_w_th_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cth_w_th_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
+    Cqt_w_th_sq_temp = np.zeros((len(data_list[0]), len(data_list[1]), len(zn_set)))
 
-Cs_sq = np.zeros((len(data_list), len(zn_set)))
-Cth_sq = np.zeros((len(data_list), len(zn_set)))
-Cqt_sq = np.zeros((len(data_list), len(zn_set)))
-Cs_env_sq = np.zeros((len(data_list), len(zn_set)))
-Cth_env_sq = np.zeros((len(data_list), len(zn_set)))
-Cqt_env_sq = np.zeros((len(data_list), len(zn_set)))
-Cs_cloud_sq = np.zeros((len(data_list), len(zn_set)))
-Cth_cloud_sq = np.zeros((len(data_list), len(zn_set)))
-Cqt_cloud_sq = np.zeros((len(data_list), len(zn_set)))
-Cs_w_sq = np.zeros((len(data_list), len(zn_set)))
-Cth_w_sq = np.zeros((len(data_list), len(zn_set)))
-Cqt_w_sq = np.zeros((len(data_list), len(zn_set)))
-Cs_w_th_sq = np.zeros((len(data_list), len(zn_set)))
-Cth_w_th_sq = np.zeros((len(data_list), len(zn_set)))
-Cqt_w_th_sq = np.zeros((len(data_list), len(zn_set)))
+    for j in range(len(data_list[0])):
+        for i in range(len(data_list[1])):
 
-for i in range(len(data_list)):
+            Cs_sq_temp[j, i, :] = data_list[j][i]['Cs_sq_prof'].data[0, ...]
+            Cth_sq_temp[j, i, :] = data_list[j][i]['Cth_sq_prof'].data[0, ...]
+            Cqt_sq_temp[j, i, :] = data_list[j][i]['Cqt_sq_prof'].data[0, ...]
 
-    Cs_sq[i,:] = data_list[i]['Cs_sq_prof'].data[0, ...]
-    Cth_sq[i,:] = data_list[i]['Cth_sq_prof'].data[0, ...]
-    Cqt_sq[i,:] = data_list[i]['Cqt_sq_prof'].data[0, ...]
+            Cs_env_sq_temp[j, i, :] = data_list[j][i]['Cs_sq_env_prof'].data[0, ...]
+            Cth_env_sq_temp[j, i, :] = data_list[j][i]['Cth_sq_env_prof'].data[0, ...]
+            Cqt_env_sq_temp[j, i, :] = data_list[j][i]['Cqt_sq_env_prof'].data[0, ...]
 
-    Cs_env_sq[i,:] = data_list[i]['Cs_sq_env_prof'].data[0, ...]
-    Cth_env_sq[i,:] = data_list[i]['Cth_sq_env_prof'].data[0, ...]
-    Cqt_env_sq[i,:] = data_list[i]['Cqt_sq_env_prof'].data[0, ...]
+            Cs_cloud_sq_temp[j, i, :] = data_list[j][i]['Cs_sq_cloud_prof'].data[0, ...]
+            Cth_cloud_sq_temp[j, i, :] = data_list[j][i]['Cth_sq_cloud_prof'].data[0, ...]
+            Cqt_cloud_sq_temp[j, i, :] = data_list[j][i]['Cqt_sq_cloud_prof'].data[0, ...]
 
-    Cs_cloud_sq[i,:] = data_list[i]['Cs_sq_cloud_prof'].data[0, ...]
-    Cth_cloud_sq[i,:] = data_list[i]['Cth_sq_cloud_prof'].data[0, ...]
-    Cqt_cloud_sq[i,:] = data_list[i]['Cqt_sq_cloud_prof'].data[0, ...]
+            Cs_w_sq_temp[j, i, :] = data_list[j][i]['Cs_sq_w_prof'].data[0, ...]
+            Cth_w_sq_temp[j, i, :] = data_list[j][i]['Cth_sq_w_prof'].data[0, ...]
+            Cqt_w_sq_temp[j, i, :] = data_list[j][i]['Cqt_sq_w_prof'].data[0, ...]
 
-    Cs_w_sq[i,:] = data_list[i]['Cs_sq_w_prof'].data[0, ...]
-    Cth_w_sq[i,:] = data_list[i]['Cth_sq_w_prof'].data[0, ...]
-    Cqt_w_sq[i,:] = data_list[i]['Cqt_sq_w_prof'].data[0, ...]
+            Cs_w_th_sq_temp[j, i, :] = data_list[j][i]['Cs_sq_w_th_prof'].data[0, ...]
+            Cth_w_th_sq_temp[j, i, :] = data_list[j][i]['Cth_sq_w_th_prof'].data[0, ...]
+            Cqt_w_th_sq_temp[j, i, :] = data_list[j][i]['Cqt_sq_w_th_prof'].data[0, ...]
 
-    Cs_w_th_sq[i,:] = data_list[i]['Cs_sq_w_th_prof'].data[0, ...]
-    Cth_w_th_sq[i,:] = data_list[i]['Cth_sq_w_th_prof'].data[0, ...]
-    Cqt_w_th_sq[i,:] = data_list[i]['Cqt_sq_w_th_prof'].data[0, ...]
+    Cs_sq = Cs_sq_temp[0,...] / dyn.beta_calc(Cs_sq_temp[0,...], Cs_sq_temp[1,...])
+    Cth_sq = Cth_sq_temp[0, ...] / dyn.beta_calc(Cth_sq_temp[0, ...], Cth_sq_temp[1, ...])
+    Cqt_sq = Cqt_sq_temp[0, ...] / dyn.beta_calc(Cqt_sq_temp[0, ...], Cqt_sq_temp[1, ...])
+
+    Cs_env_sq = Cs_env_sq_temp[0, ...] / dyn.beta_calc(Cs_env_sq_temp[0, ...], Cs_env_sq_temp[1, ...])
+    Cth_env_sq = Cth_env_sq_temp[0, ...] / dyn.beta_calc(Cth_env_sq_temp[0, ...], Cth_env_sq_temp[1, ...])
+    Cqt_env_sq = Cqt_env_sq_temp[0, ...] / dyn.beta_calc(Cqt_env_sq_temp[0, ...], Cqt_env_sq_temp[1, ...])
+
+    Cs_cloud_sq = Cs_cloud_sq_temp[0, ...] / dyn.beta_calc(Cs_cloud_sq_temp[0, ...], Cs_cloud_sq_temp[1, ...])
+    Cth_cloud_sq = Cth_cloud_sq_temp[0, ...] / dyn.beta_calc(Cth_cloud_sq_temp[0, ...], Cth_cloud_sq_temp[1, ...])
+    Cqt_cloud_sq = Cqt_cloud_sq_temp[0, ...] / dyn.beta_calc(Cqt_cloud_sq_temp[0, ...], Cqt_cloud_sq_temp[1, ...])
+
+    Cs_w_sq = Cs_w_sq_temp[0, ...] / dyn.beta_calc(Cs_w_sq_temp[0, ...], Cs_w_sq_temp[1, ...])
+    Cth_w_sq = Cth_w_sq_temp[0, ...] / dyn.beta_calc(Cth_w_sq_temp[0, ...], Cth_w_sq_temp[1, ...])
+    Cqt_w_sq = Cqt_w_sq_temp[0, ...] / dyn.beta_calc(Cqt_w_sq_temp[0, ...], Cqt_w_sq_temp[1, ...])
+
+    Cs_w_th_sq = Cs_w_th_sq_temp[0, ...]  / dyn.beta_calc(Cs_w_th_sq_temp[0, ...], Cs_w_th_sq_temp[1, ...])
+    Cth_w_th_sq = Cth_w_th_sq_temp[0, ...] / dyn.beta_calc(Cth_w_th_sq_temp[0, ...], Cth_w_th_sq_temp[1, ...])
+    Cqt_w_th_sq = Cqt_w_th_sq_temp[0, ...] / dyn.beta_calc(Cqt_w_th_sq_temp[0, ...], Cqt_w_th_sq_temp[1, ...])
+
+
+else:
+    Cs_sq = np.zeros((len(data_list), len(zn_set)))
+    Cth_sq = np.zeros((len(data_list), len(zn_set)))
+    Cqt_sq = np.zeros((len(data_list), len(zn_set)))
+    Cs_env_sq = np.zeros((len(data_list), len(zn_set)))
+    Cth_env_sq = np.zeros((len(data_list), len(zn_set)))
+    Cqt_env_sq = np.zeros((len(data_list), len(zn_set)))
+    Cs_cloud_sq = np.zeros((len(data_list), len(zn_set)))
+    Cth_cloud_sq = np.zeros((len(data_list), len(zn_set)))
+    Cqt_cloud_sq = np.zeros((len(data_list), len(zn_set)))
+    Cs_w_sq = np.zeros((len(data_list), len(zn_set)))
+    Cth_w_sq = np.zeros((len(data_list), len(zn_set)))
+    Cqt_w_sq = np.zeros((len(data_list), len(zn_set)))
+    Cs_w_th_sq = np.zeros((len(data_list), len(zn_set)))
+    Cth_w_th_sq = np.zeros((len(data_list), len(zn_set)))
+    Cqt_w_th_sq = np.zeros((len(data_list), len(zn_set)))
+
+    for i in range(len(data_list)):
+
+        Cs_sq[i,:] = data_list[i]['Cs_sq_prof'].data[0, ...]
+        Cth_sq[i,:] = data_list[i]['Cth_sq_prof'].data[0, ...]
+        Cqt_sq[i,:] = data_list[i]['Cqt_sq_prof'].data[0, ...]
+
+        Cs_env_sq[i,:] = data_list[i]['Cs_sq_env_prof'].data[0, ...]
+        Cth_env_sq[i,:] = data_list[i]['Cth_sq_env_prof'].data[0, ...]
+        Cqt_env_sq[i,:] = data_list[i]['Cqt_sq_env_prof'].data[0, ...]
+
+        Cs_cloud_sq[i,:] = data_list[i]['Cs_sq_cloud_prof'].data[0, ...]
+        Cth_cloud_sq[i,:] = data_list[i]['Cth_sq_cloud_prof'].data[0, ...]
+        Cqt_cloud_sq[i,:] = data_list[i]['Cqt_sq_cloud_prof'].data[0, ...]
+
+        Cs_w_sq[i,:] = data_list[i]['Cs_sq_w_prof'].data[0, ...]
+        Cth_w_sq[i,:] = data_list[i]['Cth_sq_w_prof'].data[0, ...]
+        Cqt_w_sq[i,:] = data_list[i]['Cqt_sq_w_prof'].data[0, ...]
+
+        Cs_w_th_sq[i,:] = data_list[i]['Cs_sq_w_th_prof'].data[0, ...]
+        Cth_w_th_sq[i,:] = data_list[i]['Cth_sq_w_th_prof'].data[0, ...]
+        Cqt_w_th_sq[i,:] = data_list[i]['Cqt_sq_w_th_prof'].data[0, ...]
 
 ########################################################################################################################
 
