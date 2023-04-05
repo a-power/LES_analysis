@@ -184,7 +184,7 @@ for i, indir in enumerate(dirs):
                     #              f'f(f(w_on_{ingrid}.w_on_{ingrid})_r_on_{ingrid})_r'
                     #              ]
                 else:
-                    file_in = f'{indir}{j}.nc'
+                    file_in = f'{indir}{data_in_scale}.nc'
 
                 var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r', f'f(th_v_on_{ingrid})_r',
                                  f'f(w_on_{ingrid})_r',
