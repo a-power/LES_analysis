@@ -150,6 +150,8 @@ plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML)
 #plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, interp=True, C_sq_to_C = True)
 plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, C_sq_to_C = True)
 
+print('saved C plots to ', plotdir)
+
 
 
 #################################################################################
