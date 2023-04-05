@@ -119,22 +119,22 @@ for i, indir in enumerate(dirs):
 
                     filter_list = list([])
 
-                    for i, filt_set in enumerate(width_list):
+                    for ni, filt_set in enumerate(width_list):
                         print(filt_set)
                         if filter_name == 'gaussian':
-                            filter_id = 'filter_ga{:02d}'.format(i + start_point)
+                            filter_id = 'filter_ga{:02d}'.format(ni + start_point)
                             twod_filter = filt.Filter(filter_id,
                                                       filter_name, npoints=N,
                                                       sigma=filt_set, width=-1,
                                                       delta_x=dx_in, cutoff=cutoff)
                         elif filter_name == 'wave_cutoff':
-                            filter_id = 'filter_wc{:02d}'.format(i + start_point)
+                            filter_id = 'filter_wc{:02d}'.format(ni + start_point)
                             twod_filter = filt.Filter(filter_id, filter_name,
                                                       wavenumber=filt_set,
                                                       width=-1, npoints=N,
                                                       delta_x=dx_in)
                         elif filter_name == 'running_mean':
-                            filter_id = 'filter_rm{:02d}'.format(i + start_point)
+                            filter_id = 'filter_rm{:02d}'.format(ni + start_point)
                             twod_filter = filt.Filter(filter_id,
                                                       filter_name,
                                                       width=filt_set,
@@ -148,7 +148,7 @@ for i, indir in enumerate(dirs):
 
                     print(filter_list)
 
-                    for j, new_filter in enumerate(filter_list):
+                    for nj, new_filter in enumerate(filter_list):
                         print("Processing using filter: ")
                         print(new_filter)
 
