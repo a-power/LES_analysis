@@ -7,18 +7,28 @@ import dynamic_functions as dyn
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
-homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
+beta=True
+what_plotting='0'
+
+if beta == True:
+    homedir = '/work/scratch-pw/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/on_p_grid/scale_dep_plots/C_beta_profiles/'
+
+else:
+    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_1e-7/'
+
 mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_'
 
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_1e-7/'
+
 os.makedirs(plotdir, exist_ok = True)
 
-data_2D = xr.open_dataset(mydir + '2D.nc')
-data_4D = xr.open_dataset(mydir + '4D.nc')
-data_8D = xr.open_dataset(mydir + '8D.nc')
-data_16D = xr.open_dataset(mydir + '16D.nc')
-data_32D = xr.open_dataset(mydir + '32D.nc')
-data_64D = xr.open_dataset(mydir + '64D.nc')
+data_2D = xr.open_dataset(mydir + f'2D{what_plotting}.nc')
+data_4D = xr.open_dataset(mydir + f'4D{what_plotting}.nc')
+data_8D = xr.open_dataset(mydir + f'8D{what_plotting}.nc')
+data_16D = xr.open_dataset(mydir + f'16D{what_plotting}.nc')
+data_32D = xr.open_dataset(mydir + f'32D{what_plotting}.nc')
+data_64D = xr.open_dataset(mydir + f'64D{what_plotting}.nc')
 
 data_list = [data_2D, data_4D, data_8D, data_16D, data_32D, data_64D]
 

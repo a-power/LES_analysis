@@ -7,32 +7,43 @@ import dynamic_functions as dyn
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
-dir_data_Cs = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_Cs_'
-dir_data_C_th = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_th_'
-dir_data_Cq_tot = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_qt_'
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/plots/C_beta_profiles/'
+beta=True
+what_plotting='0'
+
+if beta == True:
+    indir = '/work/scratch-pw/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
+    dir_data_Cs = indir+'BOMEX_m0020_g0800_all_14400_gaussian_filter_Cs_'
+    dir_data_C_th = indir+'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_th_'
+    dir_data_Cq_tot = indir+'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_qt_'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/on_p_grid/scale_dep_plots/C_beta_profiles/'
+
+else:
+    dir_data_Cs = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_Cs_'
+    dir_data_C_th = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_th_'
+    dir_data_Cq_tot = '/work/scratch-pw/apower/20m_gauss_dyn/corrected_fields/BOMEX_m0020_g0800_all_14400_gaussian_filter_C_qt_'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/20m_gauss_dyn/plots/C_beta_profiles/'
 os.makedirs(plotdir, exist_ok = True)
 
-data_2D_s = xr.open_dataset(dir_data_Cs + '2D.nc')
-data_4D_s = xr.open_dataset(dir_data_Cs + '4D.nc')
-data_8D_s = xr.open_dataset(dir_data_Cs + '8D.nc')
-data_16D_s = xr.open_dataset(dir_data_Cs + '16D.nc')
-data_32D_s = xr.open_dataset(dir_data_Cs + '32D.nc')
-data_64D_s = xr.open_dataset(dir_data_Cs + '64D.nc')
+data_2D_s = xr.open_dataset(dir_data_Cs + f'2D{what_plotting}.nc')
+data_4D_s = xr.open_dataset(dir_data_Cs + f'4D{what_plotting}.nc')
+data_8D_s = xr.open_dataset(dir_data_Cs + f'8D{what_plotting}.nc')
+data_16D_s = xr.open_dataset(dir_data_Cs + f'16D{what_plotting}.nc')
+data_32D_s = xr.open_dataset(dir_data_Cs + f'32D{what_plotting}.nc')
+data_64D_s = xr.open_dataset(dir_data_Cs + f'64D{what_plotting}.nc')
 
-data_2D_th = xr.open_dataset(dir_data_C_th + '2D.nc')
-data_4D_th = xr.open_dataset(dir_data_C_th + '4D.nc')
-data_8D_th = xr.open_dataset(dir_data_C_th + '8D.nc')
-data_16D_th = xr.open_dataset(dir_data_C_th + '16D.nc')
-data_32D_th = xr.open_dataset(dir_data_C_th + '32D.nc')
-data_64D_th = xr.open_dataset(dir_data_C_th + '64D.nc')
+data_2D_th = xr.open_dataset(dir_data_C_th + f'2D{what_plotting}.nc')
+data_4D_th = xr.open_dataset(dir_data_C_th + f'4D{what_plotting}.nc')
+data_8D_th = xr.open_dataset(dir_data_C_th + f'8D{what_plotting}.nc')
+data_16D_th = xr.open_dataset(dir_data_C_th + f'16D{what_plotting}.nc')
+data_32D_th = xr.open_dataset(dir_data_C_th + f'32D{what_plotting}.nc')
+data_64D_th = xr.open_dataset(dir_data_C_th + f'64D{what_plotting}.nc')
 
-data_2D_qtot = xr.open_dataset(dir_data_Cq_tot + '2D.nc')
-data_4D_qtot = xr.open_dataset(dir_data_Cq_tot + '4D.nc')
-data_8D_qtot = xr.open_dataset(dir_data_Cq_tot + '8D.nc')
-data_16D_qtot = xr.open_dataset(dir_data_Cq_tot + '16D.nc')
-data_32D_qtot = xr.open_dataset(dir_data_Cq_tot + '32D.nc')
-data_64D_qtot = xr.open_dataset(dir_data_Cq_tot + '64D.nc')
+data_2D_qtot = xr.open_dataset(dir_data_Cq_tot + f'2D{what_plotting}.nc')
+data_4D_qtot = xr.open_dataset(dir_data_Cq_tot + f'4D{what_plotting}.nc')
+data_8D_qtot = xr.open_dataset(dir_data_Cq_tot + f'8D{what_plotting}.nc')
+data_16D_qtot = xr.open_dataset(dir_data_Cq_tot + f'16D{what_plotting}.nc')
+data_32D_qtot = xr.open_dataset(dir_data_Cq_tot + f'32D{what_plotting}.nc')
+data_64D_qtot = xr.open_dataset(dir_data_Cq_tot + f'64D{what_plotting}.nc')
 
 
 z = np.arange(0, 3020, 20)
