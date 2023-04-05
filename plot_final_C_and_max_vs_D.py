@@ -77,7 +77,6 @@ if what_plotting=='_beta':
     Cqt_w_th_sq_temp = np.zeros((2, len(data_list[1]), len(zn_set)))
 
     print('shape of initialised C_temps = ', np.shape(Cs_sq_temp))
-    print('shape of data_list = ', data_list.shape())
 
     for j in range(2):
         for i in range(len(data_list[1])):
