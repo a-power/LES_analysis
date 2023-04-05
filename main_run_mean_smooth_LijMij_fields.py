@@ -30,7 +30,7 @@ dirs = [dir_cloud]#mydir]#,
 
 if beta == True:
     res = ['0', '1', '2', '3', '4', '5']
-    num_filts = ['0', '1']
+    num_filts = ['1']
 else:
     res = ['2D', '4D', '8D', '16D', '32D', '64D']
     num_filts = ['0']
@@ -171,7 +171,7 @@ for i, indir in enumerate(dirs):
             else:
 
                 if beta == True:
-                    file_in = f'{indir}{j}_gaussian_filter_ga0{l}.nc'
+                    file_in = f'{indir}{data_in_scale}_gaussian_filter_ga0{filt_2nd}.nc'
                     # var_names = [f'f(f(q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
                     #              f'f(f(th_v_on_{ingrid})_r_on_{ingrid})_r',
                     #              f'f(f(w_on_{ingrid})_r_on_{ingrid})_r',
