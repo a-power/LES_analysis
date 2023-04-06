@@ -276,9 +276,7 @@ Cqt_sq_cond = np.reshape(Cqt_sq_cond, ( np.shape(Cqt_sq_cond)[0], np.shape(Cqt_s
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, interp=False, C_sq_to_C = True,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
-                            deltas = ['2D', '4D', '8D', '16D', '32D', '64D'],
-                            delta_label = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$', '16$\\Delta$',
-                                           '32$\\Delta$', '64$\\Delta$']):
+                            deltas, delta_label):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -292,6 +290,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, interp=False, C_sq_
     Cth = np.zeros_like(Cs_in)
     Cqt = np.zeros_like(Cs_in)
 
+    print('np.shape(Cs_in)[1] = ', np.shape(Cs_in)[1])
     for it in range(np.shape(Cs_in)[1]):
         print('it = ', it)
 
@@ -344,6 +343,8 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, interp=False, C_sq_
         ax[0].set_xlim(right = set_right)
         ax[1].set_xlim(right = set_right)
         ax[2].set_xlim(right = set_right)
+
+        print('deltas[it] =', deltas[it])
 
         if interp==True:
             ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
@@ -407,7 +408,7 @@ def get_max_l_from_C(max_C_cond, deltas_num):
 
 #Cs_sq in ML, Cs_sq in CL, Cs_env_sq, Cs_cloud_sq, Cs_w_sq, Cs_w_th_sq
 
-def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Deltas, y_ax):
+def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax):
 
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
     labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
@@ -456,9 +457,9 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Deltas, y_ax):
 
 
 
-plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Deltas = set_labels, y_ax = 'C')
+plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Delta = set_labels, y_ax = 'C')
 plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond, delta_numbers), get_max_l_from_C(max_Cth_cond, delta_numbers),
-                      get_max_l_from_C(max_Cqt_cond, delta_numbers), Deltas = set_labels, y_ax = 'l')
+                      get_max_l_from_C(max_Cqt_cond, delta_numbers), Delta = set_labels, y_ax = 'l')
 
 
 
