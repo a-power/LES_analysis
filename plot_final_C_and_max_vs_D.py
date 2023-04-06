@@ -456,9 +456,9 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax):
 
 
 
-plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Delta = set_labels, y_ax = 'C')
-plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond), get_max_l_from_C(max_Cth_cond),
-                      get_max_l_from_C(max_Cqt_cond), Delta = set_labels, y_ax = 'l')
+plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Deltas = set_labels, y_ax = 'C')
+plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond, delta_numbers), get_max_l_from_C(max_Cth_cond, delta_numbers),
+                      get_max_l_from_C(max_Cqt_cond, delta_numbers), Deltas = set_labels, y_ax = 'l')
 
 
 
