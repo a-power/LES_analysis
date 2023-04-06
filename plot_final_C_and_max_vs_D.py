@@ -60,7 +60,7 @@ if beta == True:
                 [data_4D, data_2D_1, data_4D_1, data_8D_1, data_16D_1, data_32D_1, data_64D_1]]
         set_labels = ['$\\Delta$', '2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
                       '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']
-        deltas_in = ['D' '2D', '4D', '8D', '16D', '32D', '64D']
+        deltas_in = ['D' '2D', '4D', '8D', '16D', '32D', '64D', '128D']
         delta_numbers = np.array((1, 2, 4, 8, 16, 32, 64))
 
 
