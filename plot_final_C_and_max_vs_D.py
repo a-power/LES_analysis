@@ -11,6 +11,7 @@ beta=True
 what_plotting='_0'
 
 if beta == True:
+    scale_invar_dir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/'
 
@@ -18,12 +19,16 @@ else:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_1e-7/'
 
-mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_'
+file_name = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_'
+mydir = homedir + file_name
 
 
 os.makedirs(plotdir, exist_ok = True)
 
-if what_plotting == '_beta':
+if beta == True:
+    data_2D = xr.open_dataset(scale_invar_dir + file_name + f'2D.nc')
+    data_4D = xr.open_dataset(scale_invar_dir + file_name + f'4D.nc')
+
     data_2D_0 = xr.open_dataset(mydir + f'2D_0.nc')
     data_4D_0 = xr.open_dataset(mydir + f'4D_0.nc')
     data_8D_0 = xr.open_dataset(mydir + f'8D_0.nc')
@@ -38,19 +43,38 @@ if what_plotting == '_beta':
     data_32D_1 = xr.open_dataset(mydir + f'32D_1.nc')
     data_64D_1 = xr.open_dataset(mydir + f'64D_1.nc')
 
-    data_list = [[data_2D_0, data_4D_0, data_8D_0, data_16D_0, data_32D_0, data_64D_0],
-                [data_2D_1, data_4D_1, data_8D_1, data_16D_1, data_32D_1, data_64D_1]]
+    if what_plotting == '_0':
+        data_list = [data_2D, data_2D_0, data_4D_0, data_8D_0, data_16D_0, data_32D_0, data_64D_0]
+        set_labels = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
+                      '16$\\Delta$', '32$\\Delta$', '64$\\Delta$', '$128\\Delta$']
+        deltas_in = ['2D', '4D', '8D', '16D', '32D', '64D', '128D']
+        delta_numbers = np.array((2, 4, 8, 16, 32, 64, 128))
+    elif what_plotting == '_1':
+        data_list = [data_4D, data_2D_1, data_4D_1, data_8D_1, data_16D_1, data_32D_1, data_64D_1]
+        set_labels = ['4$\\Delta$', '8$\\Delta$', '16$\\Delta$',
+                      '32$\\Delta$', '64$\\Delta$', '$128\\Delta$', '$256\\Delta$']
+        deltas_in = ['4D', '8D', '16D', '32D', '64D', '128D', '256D']
+        delta_numbers = np.array((4, 8, 16, 32, 64, 128, 256))
+    else:
+        data_list = [[data_2D, data_2D_0, data_4D_0, data_8D_0, data_16D_0, data_32D_0, data_64D_0],
+                [data_4D, data_2D_1, data_4D_1, data_8D_1, data_16D_1, data_32D_1, data_64D_1]]
+        set_labels = ['$\\Delta$', '2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
+                      '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']
+        deltas_in = ['D' '2D', '4D', '8D', '16D', '32D', '64D']
+        delta_numbers = np.array((1, 2, 4, 8, 16, 32, 64))
 
 
 else:
-    data_2D = xr.open_dataset(mydir + f'2D{what_plotting}.nc')
-    data_4D = xr.open_dataset(mydir + f'4D{what_plotting}.nc')
-    data_8D = xr.open_dataset(mydir + f'8D{what_plotting}.nc')
-    data_16D = xr.open_dataset(mydir + f'16D{what_plotting}.nc')
-    data_32D = xr.open_dataset(mydir + f'32D{what_plotting}.nc')
-    data_64D = xr.open_dataset(mydir + f'64D{what_plotting}.nc')
+    data_2D = xr.open_dataset(mydir + f'2D.nc')
+    data_4D = xr.open_dataset(mydir + f'4D.nc')
+    data_8D = xr.open_dataset(mydir + f'8D.nc')
+    data_16D = xr.open_dataset(mydir + f'16D.nc')
+    data_32D = xr.open_dataset(mydir + f'32D.nc')
+    data_64D = xr.open_dataset(mydir + f'64D.nc')
 
     data_list = [data_2D, data_4D, data_8D, data_16D, data_32D, data_64D]
+    set_labels = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
+                  '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']
 
 zn_set = np.arange(0, 3020, 20)
 z_set = np.arange(-10, 3010, 20)
@@ -175,9 +199,7 @@ def interp_z(var_in, z_from=z_set, z_to=zn_set):
     return interp_var
 
 
-def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
-                      labels_in = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$', '16$\\Delta$',
-                                   '32$\\Delta$', '64$\\Delta$']):
+def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C = False):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -224,18 +246,18 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, interp=False, C_sq_to_C = False,
 
     if interp==True:
         ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
-        plt.savefig(plotdir + f'C{name}{what_plotting}prof_scaled_interp_z.png', bbox_inches='tight')
+        plt.savefig(plotdir + f'C{what_plotting}{name}prof_scaled_interp_z.png', bbox_inches='tight')
     else:
         ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
-        plt.savefig(plotdir + f'C{name}{what_plotting}prof_scaled_zn.png', bbox_inches='tight')
+        plt.savefig(plotdir + f'C{what_plotting}{name}prof_scaled_zn.png', bbox_inches='tight')
     plt.close()
 
 
 #plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, interp=True)
-plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML)
+plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels)
 
 #plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, interp=True, C_sq_to_C = True)
-plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, C_sq_to_C = True)
+plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels, C_sq_to_C = True)
 
 print('saved C plots to ', plotdir)
 
@@ -325,18 +347,22 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, interp=False, C_sq_
 
         if interp==True:
             ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
-            plt.savefig(plotdir + f'C{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_interp_z.png', bbox_inches='tight')
+            plt.savefig(plotdir + f'C{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_interp_z.png',
+                        bbox_inches='tight')
         else:
             ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
-            plt.savefig(plotdir + f'C{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_zn.png', bbox_inches='tight')
+            plt.savefig(plotdir + f'C{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_zn.png',
+                        bbox_inches='tight')
         plt.close()
 
 
 #plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = False)
-plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML, interp=False, C_sq_to_C = False)
+plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
+                          deltas = deltas_in, delta_label = set_labels, interp=False, C_sq_to_C = False)
 
 #plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = True)
-plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML, interp=False, C_sq_to_C = True)
+plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
+                          deltas = deltas_in, delta_label = set_labels, interp=False, C_sq_to_C = True)
 
 
 ##################################################################################################################
@@ -371,8 +397,8 @@ max_Cs_cond = dyn.get_Cs(max_Cs_sq_cond)
 max_Cth_cond = dyn.get_Cs(max_Cth_sq_cond)
 max_Cqt_cond = dyn.get_Cs(max_Cqt_sq_cond)
 
-def get_max_l_from_C(max_C_cond):
-    Delta_res = np.array([2*20, 4*20, 8*20, 16*20, 32*20, 64*20])
+def get_max_l_from_C(max_C_cond, deltas_num):
+    Delta_res = deltas_num*20
     max_l_cond = np.zeros_like(max_C_cond)
     for it in range(np.shape(max_C_cond)[1]):
         max_l_cond[:,it] = max_C_cond[:,it] * Delta_res[it]
@@ -381,14 +407,13 @@ def get_max_l_from_C(max_C_cond):
 
 #Cs_sq in ML, Cs_sq in CL, Cs_env_sq, Cs_cloud_sq, Cs_w_sq, Cs_w_th_sq
 
-def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
+def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax):
 
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
     labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
 
     colours = ['k', 'tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
-    Delta = ['2D', '4D', '8D', '16D', '32D', '64D']
 
     if y_ax == 'C':
         y_labels = ['$C_{s}$', '$C_{\\theta}$', '$C_{qt}$']
@@ -431,9 +456,9 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, y_ax):
 
 
 
-plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, y_ax = 'C')
+plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Delta = set_labels, y_ax = 'C')
 plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond), get_max_l_from_C(max_Cth_cond),
-                      get_max_l_from_C(max_Cqt_cond), y_ax = 'l')
+                      get_max_l_from_C(max_Cqt_cond), Delta = set_labels, y_ax = 'l')
 
 
 
