@@ -8,7 +8,7 @@ np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
 beta=True
-what_plotting='_0'
+what_plotting='_beta'
 
 if beta == True:
     scale_invar_dir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
@@ -407,7 +407,7 @@ def get_max_l_from_C(max_C_cond, deltas_num):
 
 #Cs_sq in ML, Cs_sq in CL, Cs_env_sq, Cs_cloud_sq, Cs_w_sq, Cs_w_th_sq
 
-def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax):
+def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Deltas, y_ax):
 
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
     labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
