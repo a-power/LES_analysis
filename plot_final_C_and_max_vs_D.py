@@ -443,7 +443,10 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax):
     ax[1].set_ylim(top=set_top)
     ax[2].set_ylim(top=set_top)
 
-    ax[0].set_ylabel('Smagorinsky Parameter', fontsize=14)
+    if y_ax == 'C':
+        ax[0].set_ylabel('Smagorinsky Parameter', fontsize=14)
+    else:
+        ax[0].set_ylabel('Mixing Length', fontsize=14)
 
     ax[0].set_title(y_labels[0], fontsize=16)
     ax[1].set_title(y_labels[1], fontsize=16)
