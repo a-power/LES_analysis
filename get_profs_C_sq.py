@@ -3,7 +3,7 @@ import os
 import analysis_plot_fns as apf
 import numpy as np
 
-beta=True
+beta=False
 
 if beta==True:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
@@ -27,12 +27,15 @@ os.makedirs(outdir, exist_ok = True)
 deltas=['2D', '4D', '8D', '16D', '32D', '64D']
 
 if beta==True:
-    dataset_name = [outdir+myfile+'C_2D_', outdir+myfile+'C_4D_', outdir+myfile+'C_8D_',
-                outdir+myfile+'C_16D_', outdir+myfile+'C_32D_', outdir+myfile+'C_64D_']
+    # dataset_name = [outdir+myfile+'C_2D_', outdir+myfile+'C_4D_', outdir+myfile+'C_8D_',
+    #             outdir+myfile+'C_16D_', outdir+myfile+'C_32D_', outdir+myfile+'C_64D_']
     extra_filter = ['1']#, '1']
 else:
-    dataset_name = [outdir+myfile+'C_2D.nc', outdir+myfile+'C_4D.nc', outdir+myfile+'C_8D.nc',
-                    outdir+myfile+'C_16D.nc', outdir+myfile+'C_32D.nc', outdir+myfile+'C_64D.nc']
+    # dataset_name = [outdir+myfile+'C_2D.nc', outdir+myfile+'C_4D.nc', outdir+myfile+'C_8D.nc',
+    #                 outdir+myfile+'C_16D.nc', outdir+myfile+'C_32D.nc', outdir+myfile+'C_64D.nc']
+
+    dataset_name = [outdir + myfile + 'LM_2D.nc', outdir + myfile + 'LM_4D.nc', outdir + myfile + 'LM_8D.nc',
+                    outdir + myfile + 'LM_16D.nc', outdir + myfile + 'LM_32D.nc', outdir + myfile + 'LM_64D.nc']
 
 # 'field': 'f(LM_field_on_w)_r'
 # 'field': 'Cs_field'
@@ -41,7 +44,13 @@ else:
 # 'field': 'f(HR_q_total_field_on_w)_r'
 # 'field': 'Cqt_field'
 
-fields = ['Cs_sq_field', 'Cth_sq_field', 'Cqt_sq_field']
+# fields = ['Cs_sq_field', 'Cth_sq_field', 'Cqt_sq_field']
+# field_dir = ['Cs', 'C_th', 'C_qt']
+
+if beta==True:
+    fields = ['LM_field', 'HR_th_field', 'HR_q_total_f_field', 'MM_field', 'RR_th_field', 'RR_q_total_f_field']
+else:
+    fields = ['LM_field', 'HR_th_field', 'HR_q_total_field', 'MM_field', 'RR_th_field', 'RR_q_total_field']
 field_dir = ['Cs', 'C_th', 'C_qt']
 
 

@@ -536,16 +536,22 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
 
     elif field == 'LM_field':
         field_name = '$LM$'
+        save_name = 'LM'
     elif field == 'HR_th_field':
         field_name = '$HR_{\\theta}$'
-    elif field == 'HR_qt_field':
+        save_name = 'HR_th'
+    elif field == 'HR_q_total_field':
         field_name = '$HR_{qt}$'
+        save_name = 'HR_qt'
     elif field == 'MM_field':
         field_name = '$MM$'
+        save_name = 'MM'
     elif field == 'RR_th_field':
         field_name = '$RR_{\\theta}$'
-    elif field == 'RR_qt_field':
+        save_name = 'RR_th'
+    elif field == 'RR_q_total_field':
         field_name = '$RR_{qt}$'
+        save_name = 'RR_qt'
     else:
         print('field not found')
 
@@ -607,8 +613,15 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
         C=True
 
     else:
-        print(f'length of time array for {field} is ', len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
-        data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
+
+        if beta==True:
+            print(f'length of time array for {field} is ',
+                  len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
+            data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
+        else:
+            print('length of time array for HR_qt is ', len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
+            data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
+
         C=False
 
     data_set.close()
@@ -713,16 +726,72 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
 
     else:
 
-        print('need to finish coding for vars other than C')
-        # data_field_cloud = ma.masked_array(data_field, mask=cloud_only_mask)
-        # data_field_env = ma.masked_array(data_field, mask=env_only_mask)
-
-        # if other_vars != None:
-        #     data_field_combo2 = ma.masked_array(data_field, mask=combo2_out_mask)
-        #     if len(other_vars) > 1:
-        #         data_field_combo3 = ma.masked_array(data_field, mask=combo3_out_mask)
+        data_field_cloud = ma.masked_array(data_field, mask=cloud_only_mask)
+        data_field_env = ma.masked_array(data_field, mask=env_only_mask)
 
 
+        if other_vars != None:
+            data_field_combo2 = ma.masked_array(data_field, mask=combo2_out_mask)
+
+            if other_vars[0] == 'f(f(w_on_p)_r_on_p)_r':
+                othervar1 = 'w'
+            elif other_vars[0] == 'f(f(th_v_on_p)_r_on_p)_r':
+                othervar1 = 'th'
+
+            if len(other_vars) > 1:
+                data_field_combo3 = ma.masked_array(data_field, mask=combo3_out_mask)
+
+                if other_vars[1] == 'f(f(w_on_p)_r_on_p)_r':
+                    othervar2 = 'w'
+                elif other_vars[1] == 'f(f(th_v_on_p)_r_on_p)_r':
+                    othervar2 = 'th'
+
+        data_prof = np.zeros(z_num)
+        data_cloud_prof = np.zeros(z_num)
+        data_env_prof = np.zeros(z_num)
+        data_combo2_prof = np.zeros(z_num)
+        data_combo3_prof = np.zeros(z_num)
+
+        for k in range(z_num):
+            data_prof[k] = np.mean(data_field[..., k])
+            data_cloud_prof[k] = np.mean(data_field_cloud[..., k])
+            data_env_prof[k] = np.mean(data_field_env[..., k])
+
+
+            if other_vars != None:
+                data_combo2_prof[k] = np.mean(data_field_combo2[..., k])
+
+                if len(other_vars) > 1:
+                    data_combo3_prof[k] = np.mean(data_field_combo3[..., k])
+
+
+        data_prof_nc = xr.DataArray(data_prof[np.newaxis, ...], coords={'time': [nt], 'zn': zn_s},
+                                    dims=['time', "zn"], name=f'{save_name}_prof')
+
+        data_cloud_prof_nc = xr.DataArray(data_cloud_prof[np.newaxis, ...], coords={'time': [nt], 'zn': zn_s},
+                                          dims=['time', "zn"], name=f'{save_name}_cloud_prof')
+
+        data_env_prof_nc = xr.DataArray(data_env_prof[np.newaxis, ...], coords={'time': [nt], 'zn': zn_s},
+                                        dims=['time', "zn"], name=f'{save_name}_env_prof')
+
+        if other_vars != None:
+
+            data_combo2_prof_nc = xr.DataArray(data_combo2_prof[np.newaxis, ...], coords={'time': [nt], 'zn': zn_s},
+                                               dims=['time', "zn"], name=f'{save_name}_{othervar1}_prof')
+
+            if len(other_vars) > 1:
+
+                data_combo3_prof_nc = xr.DataArray(data_combo3_prof[np.newaxis, ...], coords={'time': [nt], 'zn': zn_s},
+                                                   dims=['time', "zn"],
+                                                   name=f'{save_name}_{othervar1}_{othervar2}_prof')
+
+        if other_vars == None:
+            return data_prof_nc, data_env_prof_nc, data_cloud_prof_nc
+        else:
+            if len(other_vars) == 1:
+                return data_prof_nc, data_env_prof_nc, data_cloud_prof_nc, data_combo2_prof_nc
+            else:
+                return data_prof_nc, data_env_prof_nc, data_cloud_prof_nc, data_combo2_prof_nc, data_combo3_prof_nc
 
 
 
