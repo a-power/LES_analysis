@@ -3,7 +3,7 @@ import os
 import analysis_plot_fns as apf
 import numpy as np
 
-beta=False
+beta=True
 
 if beta==True:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
