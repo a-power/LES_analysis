@@ -540,16 +540,17 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
     elif field == 'HR_th_field':
         field_name = '$HR_{\\theta}$'
         save_name = 'HR_th'
-    elif field == 'HR_q_total_field':
+    elif field == 'HR_q_total_field' or field == 'HR_q_total_f_field':
         field_name = '$HR_{qt}$'
         save_name = 'HR_qt'
+
     elif field == 'MM_field':
         field_name = '$MM$'
         save_name = 'MM'
     elif field == 'RR_th_field':
         field_name = '$RR_{\\theta}$'
         save_name = 'RR_th'
-    elif field == 'RR_q_total_field':
+    elif field == 'RR_q_total_field'  or field == 'RR_q_total_f_field':
         field_name = '$RR_{qt}$'
         save_name = 'RR_qt'
     else:
