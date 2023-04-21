@@ -72,16 +72,16 @@ gen_opts = {'deltas': None,
 
 for j, delta_in in enumerate(deltas):
 
-    ds = xr.Dataset()
-    ds.to_netcdf(dataset_name[j]+str(1)+'.nc', mode='w')
-    ds_in = {'file': dataset_name[j]+str(1)+'.nc', 'ds': ds}
+    if beta == True:
+        for k, name_2_gauss in enumerate(extra_filter):
+
+            ds = xr.Dataset()
+            ds.to_netcdf(dataset_name[j]+f'{name_2_gauss}'+'.nc', mode='w')
+            ds_in = {'file': dataset_name[j]+ f'{name_2_gauss}'+'.nc', 'ds': ds}
 
     ########### need to fix this, fo now only do one 2nd filt at a time
 
-    for i, field_in in enumerate(fields):
-
-        if beta == True:
-            for k, name_2_gauss in enumerate(extra_filter):
+            for i, field_in in enumerate(fields):
 
                 mydataset = homedir + myfile + \
                             str(f'{field_dir[i]}_{j}_{name_2_gauss}_running_mean_filter_rm00.nc')
@@ -97,7 +97,12 @@ for j, delta_in in enumerate(deltas):
                 save_field(ds_in, C_sq_combo2_prof)
                 save_field(ds_in, C_sq_combo3_prof)
 
-        else:
+    else:
+        ds = xr.Dataset()
+        ds.to_netcdf(dataset_name[j] + f'{name_2_gauss}' + '.nc', mode='w')
+        ds_in = {'file': dataset_name[j] + f'{name_2_gauss}' + '.nc', 'ds': ds}
+
+        for i, field_in in enumerate(fields):
             mydataset = homedir + myfile + str(f'{field_dir[i]}_{deltas[j]}_running_mean_filter_rm00.nc')
             mydir_contour = dir_contour + f'{j}_running_mean_filter_rm00.nc'
 
