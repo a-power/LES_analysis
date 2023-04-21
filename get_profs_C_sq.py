@@ -53,7 +53,7 @@ if beta==True:
     fields = ['LM_field', 'HR_th_field', 'HR_q_total_f_field', 'MM_field', 'RR_th_field', 'RR_q_total_f_field']
 else:
     fields = ['LM_field', 'HR_th_field', 'HR_q_total_field', 'MM_field', 'RR_th_field', 'RR_q_total_field']
-field_dir = ['Cs', 'C_th', 'C_qt']
+field_dir = ['Cs', 'C_th', 'C_qt', 'Cs', 'C_th', 'C_qt']
 
 
 cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
