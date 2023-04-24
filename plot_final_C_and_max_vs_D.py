@@ -276,9 +276,9 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         x_ax_max_Cth = np.amax(Cth[:, 10:80])
         x_ax_max_Cqt = np.amax(Cqt[:, 10:80])
 
-        x_ax_min_Cs = np.amax(Cs)
-        x_ax_min_Cth = np.amax(Cth)
-        x_ax_min_Cqt = np.amax(Cqt)
+        x_ax_min_Cs = np.amin(Cs)
+        x_ax_min_Cth = np.amin(Cth)
+        x_ax_min_Cqt = np.amin(Cqt)
 
         set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
         set_left = min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
@@ -402,9 +402,9 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             x_ax_max_Cth = np.amax(Cth[:, it, 10:80])
             x_ax_max_Cqt = np.amax(Cqt[:, it, 10:80])
 
-            x_ax_min_Cs = np.amax(Cs)
-            x_ax_min_Cth = np.amax(Cth)
-            x_ax_min_Cqt = np.amax(Cqt)
+            x_ax_min_Cs = np.amin(Cs)
+            x_ax_min_Cth = np.amin(Cth)
+            x_ax_min_Cqt = np.amin(Cqt)
 
             set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
             set_left = min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
