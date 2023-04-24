@@ -15,7 +15,6 @@ if beta == True:
     if C_or_LM == 'C':
         scale_invar_dir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
     else:
-        scale_invar_dir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/'
 
@@ -209,6 +208,7 @@ else:
         Cs_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_w_th_prof'].data[0, ...]
         Cth_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_w_th_prof'].data[0, ...]
         Cqt_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[2]}_w_th_prof'].data[0, ...]
+    print('shape of Cs_sq = ', np.shape(Cs_sq))
 
 ########################################################################################################################
 
