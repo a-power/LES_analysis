@@ -261,19 +261,19 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         ax[2].set_xlabel('$C^2_{qt}$', fontsize=16)
     ax[2].legend(fontsize=13, loc='best')
 
-    if C_or_LM == 'C':
-        left0, right0 = ax[0].set_xlim()
-        left1, right1 = ax[1].set_xlim()
-        left2, right2 = ax[2].set_xlim()
+    # if C_or_LM == 'C':
+    left0, right0 = ax[0].set_xlim()
+    left1, right1 = ax[1].set_xlim()
+    left2, right2 = ax[2].set_xlim()
 
-        set_right = max(right0, right1, right2)
-    else:
-        print(np.shape(Cs))
-        x_ax_max_Cs = np.amax(Cs[:, 10:80])
-        x_ax_max_Cth = np.amax(Cth[:, 10:80])
-        x_ax_max_Cqt = np.amax(Cqt[:, 10:80])
-
-        set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
+    set_right = max(right0, right1, right2)
+    # else:
+    #     print(np.shape(Cs))
+    #     x_ax_max_Cs = np.amax(Cs[:, 10:80])
+    #     x_ax_max_Cth = np.amax(Cth[:, 10:80])
+    #     x_ax_max_Cqt = np.amax(Cqt[:, 10:80])
+    #
+    #     set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
 
 
     ax[0].set_xlim(right = set_right)
