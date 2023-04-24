@@ -269,6 +269,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
 
         set_right = max(right0, right1, right2)
     else:
+        print(Cs)
         x_ax_max_Cs = np.amax(Cs[:, 10:80])
         x_ax_max_Cth = np.amax(Cth[:, 10:80])
         x_ax_max_Cqt = np.amax(Cqt[:, 10:80])
