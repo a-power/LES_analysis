@@ -283,7 +283,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
         set_left = min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
 
-    print('for condit profs, min is = ', set_left, 'max is =', set_right)
+    print('for all Delta profs, min is = ', set_left, 'max is =', set_right)
 
     ax[0].set_xlim(right = set_right, left = set_left)
     ax[1].set_xlim(right = set_right, left = set_left)
