@@ -269,9 +269,9 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
 
         set_right = max(right0, right1, right2)
     else:
-        x_ax_max_Cs = max(Cs[:, 10:80].flatten())
-        x_ax_max_Cth = max(Cth[:, 10:80].flatten())
-        x_ax_max_Cqt = max(Cqt[:, 10:80].flatten())
+        x_ax_max_Cs = np.amax(Cs[:, 10:80])
+        x_ax_max_Cth = np.amax(Cth[:, 10:80])
+        x_ax_max_Cqt = np.amax(Cqt[:, 10:80])
 
         set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
 
@@ -383,9 +383,9 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
             set_right = max(right0, right1, right2)
         else:
-            x_ax_max_Cs = max(Cs[:, 10:80].flatten())
-            x_ax_max_Cth = max(Cth[:, 10:80].flatten())
-            x_ax_max_Cqt = max(Cqt[:, 10:80].flatten())
+            x_ax_max_Cs = np.amax(Cs[:, 10:80])
+            x_ax_max_Cth = np.amax(Cth[:, 10:80])
+            x_ax_max_Cqt = np.amax(Cqt[:, 10:80])
 
             set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
 
