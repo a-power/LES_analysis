@@ -339,9 +339,10 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             Cqt_temp = Cqt_in.copy()
 
         if C_sq_to_C == True:
-            Cs[:,it, :] = dyn.get_Cs(Cs_temp[:,it, :])
-            Cth[:,it, :] = dyn.get_Cs(Cth_temp[:,it, :])
-            Cqt[:,it, :] = dyn.get_Cs(Cqt_temp[:,it, :])
+            if C_or_LM == 'C':
+                Cs[:,it, :] = dyn.get_Cs(Cs_temp[:,it, :])
+                Cth[:,it, :] = dyn.get_Cs(Cth_temp[:,it, :])
+                Cqt[:,it, :] = dyn.get_Cs(Cqt_temp[:,it, :])
             name='_'
         else:
             if C_or_LM == 'C':
@@ -383,9 +384,9 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
             set_right = max(right0, right1, right2)
         else:
-            x_ax_max_Cs = np.amax(Cs[:, 10:80])
-            x_ax_max_Cth = np.amax(Cth[:, 10:80])
-            x_ax_max_Cqt = np.amax(Cqt[:, 10:80])
+            x_ax_max_Cs = np.amax(Cs[:, it, 10:80])
+            x_ax_max_Cth = np.amax(Cth[:, it, 10:80])
+            x_ax_max_Cqt = np.amax(Cqt[:, it, 10:80])
 
             set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
 
