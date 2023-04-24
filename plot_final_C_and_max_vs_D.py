@@ -244,7 +244,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         else:
             ax[0].set_xlabel(f'${C_or_LM_profs}$', fontsize=16)
         ax[1].set_xlabel(f'${C_or_LM_profs}$'+'$_{\\theta}$', fontsize=16)
-        ax[2]f.sfet_xlabel(f'${C_or_LM_profs}$'+'$_{qt}$', fontsize=16)
+        ax[2].set_xlabel(f'${C_or_LM_profs}$'+'$_{qt}$', fontsize=16)
     else:
         ax[0].set_xlabel('$C^2_{s}$', fontsize=16)
         ax[1].set_xlabel('$C^2_{\\theta}$', fontsize=16)
