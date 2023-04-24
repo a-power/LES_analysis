@@ -9,6 +9,7 @@ np.seterr(invalid='ignore')
 
 beta=True
 what_plotting='_0'
+C_or_LM = 'LM' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 
 if beta == True:
     scale_invar_dir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
@@ -19,8 +20,18 @@ else:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_1e-7/'
 
-file_name = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_'
+file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_{C_or_LM}_'
 mydir = homedir + file_name
+
+if C_or_LM == 'C':
+    C_or_LM_profs = ['Cs_sq', 'Cth_sq', 'Cqt_sq']
+elif C_or_LM == 'LM':
+    C_or_LM_profs = ['LM', 'HR_th', 'HR_qt']
+elif C_or_LM == 'MM':
+    C_or_LM_profs = ['MM', 'RR_th', 'RR_qt']
+else:
+    print("C_or_LM must equal 'C', 'LM', or 'MM', case sensitive with quote marks, not", C_or_LM,
+          "as is curtrently being specified")
 
 
 os.makedirs(plotdir, exist_ok = True)
@@ -107,27 +118,27 @@ if what_plotting=='_beta':
             print('j = ', j)
             print('i = ', i)
 
-            print('shape of C data being imported =', np.shape(data_list[j][i]['Cs_sq_prof'].data))
+            print('shape of C data being imported =', np.shape(data_list[i]['Cs_sq_prof'].data))
 
-            Cs_sq_temp[j, i, :] = data_list[j][i]['Cs_sq_prof'].data[0, ...]
-            Cth_sq_temp[j, i, :] = data_list[j][i]['Cth_sq_prof'].data[0, ...]
-            Cqt_sq_temp[j, i, :] = data_list[j][i]['Cqt_sq_prof'].data[0, ...]
+            Cs_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[0]}_prof'].data[0, ...]
+            Cth_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[1]}_prof'].data[0, ...]
+            Cqt_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[2]}_prof'].data[0, ...]
 
-            Cs_env_sq_temp[j, i, :] = data_list[j][i]['Cs_sq_env_prof'].data[0, ...]
-            Cth_env_sq_temp[j, i, :] = data_list[j][i]['Cth_sq_env_prof'].data[0, ...]
-            Cqt_env_sq_temp[j, i, :] = data_list[j][i]['Cqt_sq_env_prof'].data[0, ...]
+            Cs_env_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[0]}_env_prof'].data[0, ...]
+            Cth_env_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[1]}_env_prof'].data[0, ...]
+            Cqt_env_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[2]}_env_prof'].data[0, ...]
 
-            Cs_cloud_sq_temp[j, i, :] = data_list[j][i]['Cs_sq_cloud_prof'].data[0, ...]
-            Cth_cloud_sq_temp[j, i, :] = data_list[j][i]['Cth_sq_cloud_prof'].data[0, ...]
-            Cqt_cloud_sq_temp[j, i, :] = data_list[j][i]['Cqt_sq_cloud_prof'].data[0, ...]
+            Cs_cloud_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[0]}_cloud_prof'].data[0, ...]
+            Cth_cloud_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[1]}_cloud_prof'].data[0, ...]
+            Cqt_cloud_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[2]}_cloud_prof'].data[0, ...]
 
-            Cs_w_sq_temp[j, i, :] = data_list[j][i]['Cs_sq_w_prof'].data[0, ...]
-            Cth_w_sq_temp[j, i, :] = data_list[j][i]['Cth_sq_w_prof'].data[0, ...]
-            Cqt_w_sq_temp[j, i, :] = data_list[j][i]['Cqt_sq_w_prof'].data[0, ...]
+            Cs_w_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[0]}_w_prof'].data[0, ...]
+            Cth_w_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[1]}_w_prof'].data[0, ...]
+            Cqt_w_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[2]}_w_prof'].data[0, ...]
 
-            Cs_w_th_sq_temp[j, i, :] = data_list[j][i]['Cs_sq_w_th_prof'].data[0, ...]
-            Cth_w_th_sq_temp[j, i, :] = data_list[j][i]['Cth_sq_w_th_prof'].data[0, ...]
-            Cqt_w_th_sq_temp[j, i, :] = data_list[j][i]['Cqt_sq_w_th_prof'].data[0, ...]
+            Cs_w_th_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[0]}_w_th_prof'].data[0, ...]
+            Cth_w_th_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[1]}_w_th_prof'].data[0, ...]
+            Cqt_w_th_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[2]}_w_th_prof'].data[0, ...]
 
     Cs_sq = Cs_sq_temp[0,...] / dyn.beta_calc(Cs_sq_temp[0,...], Cs_sq_temp[1,...])
     Cth_sq = Cth_sq_temp[0, ...] / dyn.beta_calc(Cth_sq_temp[0, ...], Cth_sq_temp[1, ...])
@@ -168,26 +179,25 @@ else:
     Cqt_w_th_sq = np.zeros((len(data_list), len(zn_set)))
 
     for i in range(len(data_list)):
+        Cs_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_prof'].data[0, ...]
+        Cth_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_prof'].data[0, ...]
+        Cqt_sq[i, :] = data_list[i][f'{C_or_LM_profs[2]}_prof'].data[0, ...]
 
-        Cs_sq[i,:] = data_list[i]['Cs_sq_prof'].data[0, ...]
-        Cth_sq[i,:] = data_list[i]['Cth_sq_prof'].data[0, ...]
-        Cqt_sq[i,:] = data_list[i]['Cqt_sq_prof'].data[0, ...]
+        Cs_env_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_env_prof'].data[0, ...]
+        Cth_env_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_env_prof'].data[0, ...]
+        Cqt_env_sq[i, :] = data_list[i][f'{C_or_LM_profs[2]}_env_prof'].data[0, ...]
 
-        Cs_env_sq[i,:] = data_list[i]['Cs_sq_env_prof'].data[0, ...]
-        Cth_env_sq[i,:] = data_list[i]['Cth_sq_env_prof'].data[0, ...]
-        Cqt_env_sq[i,:] = data_list[i]['Cqt_sq_env_prof'].data[0, ...]
+        Cs_cloud_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_cloud_prof'].data[0, ...]
+        Cth_cloud_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_cloud_prof'].data[0, ...]
+        Cqt_cloud_sq[i, :] = data_list[i][f'{C_or_LM_profs[2]}_cloud_prof'].data[0, ...]
 
-        Cs_cloud_sq[i,:] = data_list[i]['Cs_sq_cloud_prof'].data[0, ...]
-        Cth_cloud_sq[i,:] = data_list[i]['Cth_sq_cloud_prof'].data[0, ...]
-        Cqt_cloud_sq[i,:] = data_list[i]['Cqt_sq_cloud_prof'].data[0, ...]
+        Cs_w_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_w_prof'].data[0, ...]
+        Cth_w_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_w_prof'].data[0, ...]
+        Cqt_w_sq[i, :] = data_list[i][f'{C_or_LM_profs[2]}_w_prof'].data[0, ...]
 
-        Cs_w_sq[i,:] = data_list[i]['Cs_sq_w_prof'].data[0, ...]
-        Cth_w_sq[i,:] = data_list[i]['Cth_sq_w_prof'].data[0, ...]
-        Cqt_w_sq[i,:] = data_list[i]['Cqt_sq_w_prof'].data[0, ...]
-
-        Cs_w_th_sq[i,:] = data_list[i]['Cs_sq_w_th_prof'].data[0, ...]
-        Cth_w_th_sq[i,:] = data_list[i]['Cth_sq_w_th_prof'].data[0, ...]
-        Cqt_w_th_sq[i,:] = data_list[i]['Cqt_sq_w_th_prof'].data[0, ...]
+        Cs_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_w_th_prof'].data[0, ...]
+        Cth_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_w_th_prof'].data[0, ...]
+        Cqt_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[2]}_w_th_prof'].data[0, ...]
 
 ########################################################################################################################
 
@@ -209,12 +219,16 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         Cth = interp_z(Cth)
         Cqt = interp_z(Cqt)
     if C_sq_to_C == True:
-        Cs = dyn.get_Cs(Cs)
-        Cth = dyn.get_Cs(Cth)
-        Cqt = dyn.get_Cs(Cqt)
+        if C_or_LM == 'C':
+            Cs = dyn.get_Cs(Cs)
+            Cth = dyn.get_Cs(Cth)
+            Cqt = dyn.get_Cs(Cqt)
         name='_'
     else:
-        name='_sq_'
+        if C_or_LM == 'C':
+            name='_sq_'
+        else:
+            name = '_'
 
     fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(15,6))
 
@@ -225,20 +239,31 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         ax[1].plot(Cth[it, :], z/z_i, color=colours[it])
         ax[2].plot(Cqt[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
     if C_sq_to_C == True:
-        ax[0].set_xlabel('$C_{s}$', fontsize=16)
-        ax[1].set_xlabel('$C_{\\theta}$', fontsize=16)
-        ax[2].set_xlabel('$C_{qt}$', fontsize=16)
+        if C_or_LM == 'C':
+            ax[0].set_xlabel(f'${C_or_LM_profs}$'+'$_{s}$', fontsize=16)
+        else:
+            ax[0].set_xlabel(f'${C_or_LM_profs}$', fontsize=16)
+        ax[1].set_xlabel(f'${C_or_LM_profs}$'+'$_{\\theta}$', fontsize=16)
+        ax[2]f.sfet_xlabel(f'${C_or_LM_profs}$'+'$_{qt}$', fontsize=16)
     else:
         ax[0].set_xlabel('$C^2_{s}$', fontsize=16)
         ax[1].set_xlabel('$C^2_{\\theta}$', fontsize=16)
         ax[2].set_xlabel('$C^2_{qt}$', fontsize=16)
     ax[2].legend(fontsize=13, loc='best')
 
-    left0, right0 = ax[0].set_xlim()
-    left1, right1 = ax[1].set_xlim()
-    left2, right2 = ax[2].set_xlim()
+    if C_or_LM == 'C':
+        left0, right0 = ax[0].set_xlim()
+        left1, right1 = ax[1].set_xlim()
+        left2, right2 = ax[2].set_xlim()
 
-    set_right = max(right0, right1, right2)
+        set_right = max(right0, right1, right2)
+    else:
+        x_ax_max_Cs = max(Cs[:, 10:80])
+        x_ax_max_Cth = max(Cth[:, 10:80])
+        x_ax_max_Cqt = max(Cqt[:, 10:80])
+
+        set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
+
 
     ax[0].set_xlim(right = set_right)
     ax[1].set_xlim(right = set_right)
@@ -246,15 +271,15 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
 
     if interp==True:
         ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
-        plt.savefig(plotdir + f'C{what_plotting}{name}prof_scaled_interp_z.png', bbox_inches='tight')
+        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}prof_scaled_interp_z.png', bbox_inches='tight')
     else:
         ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
-        plt.savefig(plotdir + f'C{what_plotting}{name}prof_scaled_zn.png', bbox_inches='tight')
+        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}prof_scaled_zn.png', bbox_inches='tight')
     plt.close()
 
 
 #plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, interp=True)
-plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels)
+#plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels)
 
 #plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, interp=True, C_sq_to_C = True)
 plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels, C_sq_to_C = True)
@@ -308,7 +333,10 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             Cqt[:,it, :] = dyn.get_Cs(Cqt_temp[:,it, :])
             name='_'
         else:
-            name='_sq_'
+            if C_or_LM == 'C':
+                name = '_sq_'
+            else:
+                name='_'
             Cs = Cs_temp.copy()
             Cth = Cth_temp.copy()
             Cqt = Cqt_temp.copy()
@@ -324,20 +352,31 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             ax[1].plot(Cth[nt, it, :], z/z_i, color=colours[nt])
             ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
         if C_sq_to_C == True:
-            ax[0].set_xlabel('$C_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
-            ax[1].set_xlabel('$C_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
-            ax[2].set_xlabel('$C_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
+            if C_or_LM == 'C':
+                ax[0].set_xlabel(f'${C_or_LM}$'+'$_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
+            else:
+                ax[0].set_xlabel(f'${C_or_LM}$' + ' for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it],
+                                 fontsize=16)
+            ax[1].set_xlabel(f'${C_or_LM}$'+'$_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
+            ax[2].set_xlabel(f'${C_or_LM}$'+'$_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
         else:
             ax[0].set_xlabel('$C^2_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
             ax[1].set_xlabel('$C^2_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
             ax[2].set_xlabel('$C^2_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
         ax[2].legend(fontsize=13, loc='upper right')
 
-        left0, right0 = ax[0].set_xlim()
-        left1, right1 = ax[1].set_xlim()
-        left2, right2 = ax[2].set_xlim()
+        if C_or_LM == 'C':
+            left0, right0 = ax[0].set_xlim()
+            left1, right1 = ax[1].set_xlim()
+            left2, right2 = ax[2].set_xlim()
 
-        set_right = max(right0, right1, right2)
+            set_right = max(right0, right1, right2)
+        else:
+            x_ax_max_Cs = max(Cs[:, 10:80])
+            x_ax_max_Cth = max(Cth[:, 10:80])
+            x_ax_max_Cqt = max(Cqt[:, 10:80])
+
+            set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
 
         ax[0].set_xlim(right = set_right)
         ax[1].set_xlim(right = set_right)
@@ -347,18 +386,18 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
         if interp==True:
             ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
-            plt.savefig(plotdir + f'C{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_interp_z.png',
+            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_interp_z.png',
                         bbox_inches='tight')
         else:
             ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
-            plt.savefig(plotdir + f'C{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_zn.png',
+            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_zn.png',
                         bbox_inches='tight')
         plt.close()
 
 
 #plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = False)
-plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
-                          deltas = deltas_in, delta_label = set_labels, interp=False, C_sq_to_C = False)
+# plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
+#                           deltas = deltas_in, delta_label = set_labels, interp=False, C_sq_to_C = False)
 
 #plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = True)
 plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
@@ -459,9 +498,9 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax):
 
 
 
-plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Delta = set_labels, y_ax = 'C')
-plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond, delta_numbers), get_max_l_from_C(max_Cth_cond, delta_numbers),
-                      get_max_l_from_C(max_Cqt_cond, delta_numbers), Delta = set_labels, y_ax = 'l')
+# plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Delta = set_labels, y_ax = 'C')
+# plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond, delta_numbers), get_max_l_from_C(max_Cth_cond, delta_numbers),
+#                       get_max_l_from_C(max_Cqt_cond, delta_numbers), Delta = set_labels, y_ax = 'l')
 
 
 
