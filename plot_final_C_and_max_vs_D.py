@@ -14,7 +14,6 @@ C_or_LM = 'LM' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 if beta == True:
     if C_or_LM == 'C':
         scale_invar_dir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
-    else:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/'
 
