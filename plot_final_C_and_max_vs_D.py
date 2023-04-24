@@ -250,35 +250,43 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         ax[2].plot(Cqt[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
     if C_sq_to_C == True:
         if C_or_LM == 'C':
-            ax[0].set_xlabel(f'${C_or_LM_profs}$'+'$_{s}$', fontsize=16)
+            ax[0].set_xlabel('$C_{s}$', fontsize=16)
+            ax[1].set_xlabel('$C_{\\theta}$', fontsize=16)
+            ax[2].set_xlabel('$C_{qt}$', fontsize=16)
         else:
-            ax[0].set_xlabel(f'${C_or_LM_profs}$', fontsize=16)
-        ax[1].set_xlabel(f'${C_or_LM_profs}$'+'$_{\\theta}$', fontsize=16)
-        ax[2].set_xlabel(f'${C_or_LM_profs}$'+'$_{qt}$', fontsize=16)
+            ax[0].set_xlabel(f'$LM$', fontsize=16)
+            ax[1].set_xlabel('$HR_{\\theta}$', fontsize=16)
+            ax[2].set_xlabel('$HR_{qt}$', fontsize=16)
     else:
         ax[0].set_xlabel('$C^2_{s}$', fontsize=16)
         ax[1].set_xlabel('$C^2_{\\theta}$', fontsize=16)
         ax[2].set_xlabel('$C^2_{qt}$', fontsize=16)
     ax[2].legend(fontsize=13, loc='best')
 
-    # if C_or_LM == 'C':
-    left0, right0 = ax[0].set_xlim()
-    left1, right1 = ax[1].set_xlim()
-    left2, right2 = ax[2].set_xlim()
+    if C_or_LM == 'C':
+        left0, right0 = ax[0].set_xlim()
+        left1, right1 = ax[1].set_xlim()
+        left2, right2 = ax[2].set_xlim()
 
-    set_right = max(right0, right1, right2)
-    # else:
-    #     print(np.shape(Cs))
-    #     x_ax_max_Cs = np.amax(Cs[:, 10:80])
-    #     x_ax_max_Cth = np.amax(Cth[:, 10:80])
-    #     x_ax_max_Cqt = np.amax(Cqt[:, 10:80])
-    #
-    #     set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
+        set_right = max(right0, right1, right2)
+        set_left = left0
+    else:
+        print(np.shape(Cs))
+        x_ax_max_Cs = np.amax(Cs[:, 10:80])
+        x_ax_max_Cth = np.amax(Cth[:, 10:80])
+        x_ax_max_Cqt = np.amax(Cqt[:, 10:80])
+
+        x_ax_min_Cs = np.amax(Cs)
+        x_ax_min_Cth = np.amax(Cth)
+        x_ax_min_Cqt = np.amax(Cqt)
+
+        set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
+        set_left = min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
 
 
-    ax[0].set_xlim(right = set_right)
-    ax[1].set_xlim(right = set_right)
-    ax[2].set_xlim(right = set_right)
+    ax[0].set_xlim(right = set_right, left = set_left)
+    ax[1].set_xlim(right = set_right, left = set_left)
+    ax[2].set_xlim(right = set_right, left = set_left)
 
     if interp==True:
         ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
@@ -366,12 +374,16 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
         if C_sq_to_C == True:
             if C_or_LM == 'C':
-                ax[0].set_xlabel(f'${C_or_LM}$'+'$_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
-            else:
-                ax[0].set_xlabel(f'${C_or_LM}$' + ' for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it],
+                ax[0].set_xlabel('$C_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
+                ax[1].set_xlabel('$C_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it],
                                  fontsize=16)
-            ax[1].set_xlabel(f'${C_or_LM}$'+'$_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
-            ax[2].set_xlabel(f'${C_or_LM}$'+'$_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
+                ax[2].set_xlabel('$C_{qt}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it],
+                                 fontsize=16)
+            else:
+                ax[0].set_xlabel('$LM$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it],
+                                 fontsize=16)
+                ax[1].set_xlabel('$HR_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
+                ax[2].set_xlabel('$HR_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
         else:
             ax[0].set_xlabel('$C^2_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
             ax[1].set_xlabel('$C^2_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
@@ -383,17 +395,23 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             left1, right1 = ax[1].set_xlim()
             left2, right2 = ax[2].set_xlim()
 
-            set_right = max(right0, right1, right2)
+            set_left = left0
         else:
+            print(np.shape(Cs))
             x_ax_max_Cs = np.amax(Cs[:, it, 10:80])
             x_ax_max_Cth = np.amax(Cth[:, it, 10:80])
             x_ax_max_Cqt = np.amax(Cqt[:, it, 10:80])
 
-            set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
+            x_ax_min_Cs = np.amax(Cs)
+            x_ax_min_Cth = np.amax(Cth)
+            x_ax_min_Cqt = np.amax(Cqt)
 
-        ax[0].set_xlim(right = set_right)
-        ax[1].set_xlim(right = set_right)
-        ax[2].set_xlim(right = set_right)
+            set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
+            set_left = min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
+
+        ax[0].set_xlim(right=set_right, left=set_left)
+        ax[1].set_xlim(right=set_right, left=set_left)
+        ax[2].set_xlim(right=set_right, left=set_left)
 
         print('deltas[it] =', deltas[it])
 
