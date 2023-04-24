@@ -449,7 +449,6 @@ def cal_max_Cs(C_list):
 
     for i in range(np.shape(C_list)[0]):
         for nD in range(np.shape(C_list)[1]):
-            print('nD = ', nD)
             if i == 0:
                 max_C[i, nD] = np.max(C_list[i, nD, z_ml_r[0]:z_ml_r[1]])
                 max_C[i+1, nD] = np.max(C_list[i, nD, z_cl_r[0]:z_cl_r[1]])
