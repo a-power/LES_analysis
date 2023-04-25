@@ -9,7 +9,7 @@ np.seterr(invalid='ignore')
 
 beta=True
 what_plotting='_0'
-C_or_LM = 'LM' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
+C_or_LM = 'MM' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 
 if beta == True:
     if C_or_LM == 'C':
