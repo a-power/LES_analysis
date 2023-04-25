@@ -390,10 +390,12 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
                 ax[2].set_xlabel('$C_{qt}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it],
                                  fontsize=16)
             else:
-                ax[0].set_xlabel('$LM$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it],
+                ax[0].set_xlabel(f'${C_or_LM}$'+' for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it],
                                  fontsize=16)
-                ax[1].set_xlabel('$HR_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
-                ax[2].set_xlabel('$HR_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
+                ax[1].set_xlabel(f'${C_or_LM}$'+'$_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it],
+                                 fontsize=16)
+                ax[2].set_xlabel(f'${C_or_LM}$'+'$_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it],
+                                   fontsize=16)
         else:
             ax[0].set_xlabel('$C^2_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
             ax[1].set_xlabel('$C^2_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
