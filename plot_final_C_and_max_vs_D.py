@@ -255,10 +255,16 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
             ax[0].set_xlabel('$C_{s}$', fontsize=16)
             ax[1].set_xlabel('$C_{\\theta}$', fontsize=16)
             ax[2].set_xlabel('$C_{qt}$', fontsize=16)
-        else:
+        elif C_or_LM == 'LM':
             ax[0].set_xlabel(f'$LM$', fontsize=16)
             ax[1].set_xlabel('$HR_{\\theta}$', fontsize=16)
             ax[2].set_xlabel('$HR_{qt}$', fontsize=16)
+        elif C_or_LM == 'MM':
+            ax[0].set_xlabel(f'$MM$', fontsize=16)
+            ax[1].set_xlabel('$RR_{\\theta}$', fontsize=16)
+            ax[2].set_xlabel('$RR_{qt}$', fontsize=16)
+        else:
+            print('not a recognised LM/MM/C')
     else:
         ax[0].set_xlabel('$C^2_{s}$', fontsize=16)
         ax[1].set_xlabel('$C^2_{\\theta}$', fontsize=16)
