@@ -20,8 +20,10 @@ if beta == True:
 else:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_1e-7/'
-
-file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_{C_or_LM}_'
+if C_or_LM == 'MM':
+    file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
+else:
+    file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_{C_or_LM}_'
 mydir = homedir + file_name
 
 if C_or_LM == 'C':
