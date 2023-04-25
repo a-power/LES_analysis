@@ -404,12 +404,14 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             x_ax_max_Cth = np.amax(Cth[:, it, 10:80])
             x_ax_max_Cqt = np.amax(Cqt[:, it, 10:80])
 
-            x_ax_min_Cs = np.amin(Cs[:, it, :])
-            x_ax_min_Cth = np.amin(Cth[:, it, :])
-            x_ax_min_Cqt = np.amin(Cqt[:, it, :])
+            x_ax_min_Cs = np.amin(Cs[:, it, 10:80])
+            x_ax_min_Cth = np.amin(Cth[:, it, 10:80])
+            x_ax_min_Cqt = np.amin(Cqt[:, it, 10:80])
 
             set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
             set_left = min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
+
+            print('For it (Delta)  =', it, 'min = ', set_left, 'max = ', set_right)
 
         print('for condit profs, min is = ', set_left, 'max is =', set_right)
 
