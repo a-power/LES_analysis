@@ -344,21 +344,22 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             Cth_temp[:,it, :] = interp_z(Cth_in[:,it, :])
             Cqt_temp[:,it, :] = interp_z(Cqt_in[:,it, :])
         else:
-            Cs_temp = Cs_in.copy()
-            Cth_temp = Cth_in.copy()
-            Cqt_temp = Cqt_in.copy()
+            Cs_temp[:,it, :] = Cs_in[:,it, :].copy()
+            Cth_temp[:,it, :] = Cth_in[:,it, :].copy()
+            Cqt_temp[:,it, :] = Cqt_in[:,it, :].copy()
 
         if C_sq_to_C == True:
             if C_or_LM == 'C':
                 Cs[:,it, :] = dyn.get_Cs(Cs_temp[:,it, :])
                 Cth[:,it, :] = dyn.get_Cs(Cth_temp[:,it, :])
                 Cqt[:,it, :] = dyn.get_Cs(Cqt_temp[:,it, :])
+            else:
+                Cs[:, it, :] = Cs_temp[:, it, :]
+                Cth[:, it, :] = Cth_temp[:, it, :]
+                Cqt[:, it, :] = Cqt_temp[:, it, :]
             name='_'
         else:
-            if C_or_LM == 'C':
-                name = '_sq_'
-            else:
-                name='_'
+            name = '_sq_'
             Cs = Cs_temp.copy()
             Cth = Cth_temp.copy()
             Cqt = Cqt_temp.copy()
