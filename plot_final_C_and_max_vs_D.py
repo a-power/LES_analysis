@@ -408,8 +408,8 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             x_ax_min_Cth = np.amin(Cth[:, it, 10:80])
             x_ax_min_Cqt = np.amin(Cqt[:, it, 10:80])
 
-            set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
-            set_left = min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
+            set_right = np.nanmax(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
+            set_left = np.nanmin(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
 
             print('For it (Delta)  =', it, 'min = ', set_left, 'max = ', set_right)
 
