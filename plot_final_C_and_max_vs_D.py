@@ -430,6 +430,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             left1, right1 = ax[1].set_xlim()
             left2, right2 = ax[2].set_xlim()
 
+            set_right = max(right0, right1, right2)
             set_left = left0
         else:
             print(np.shape(Cs))
