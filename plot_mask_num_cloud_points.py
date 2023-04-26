@@ -24,7 +24,7 @@ else:
 os.makedirs(plotdir, exist_ok = True)
 
 cloud_thres = [0, 1e-5, 1e-7]
-
+deltas=['2D', '4D', '8D', '16D', '32D', '64D']
 
 def count_mask(mask_in):
 
@@ -167,7 +167,7 @@ for n_data in range(len(data_list)):
         plt.semilogx(new_q[:, i], [z[i]]*len(new_q[:, i]) )
     plt.xlabel(f"cloud liquid water content", fontsize=16)
     plt.ylabel("z$", fontsize=16)
-    plt.savefig(plotdir + f'cloud_value_scatter.png', pad_inches=0)
+    plt.savefig(plotdir + f'cloud_value_scatter_for{deltas[n_data]}.png', pad_inches=0)
     plt.close()
 
 
