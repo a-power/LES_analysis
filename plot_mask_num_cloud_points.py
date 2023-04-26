@@ -10,14 +10,20 @@ import matplotlib.ticker as mtick
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
+beta=True
 
-dir_data = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
-dir_contour = dir_data + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
+if beta==True:
+    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
+    dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+else:
+    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
+    dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+
 
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/cloud_count/'
 os.makedirs(plotdir, exist_ok = True)
 
-cloud_thres = [0, 1e-5, 1e-7, 1e-9]
+cloud_thres = [0, 1e-5, 1e-7]
 
 
 def count_mask(mask_in):
@@ -25,14 +31,14 @@ def count_mask(mask_in):
     counter = np.zeros((np.shape(mask_in)[0], np.shape(mask_in)[-1]))
 
     for nt in range(np.shape(mask_in)[0]):
-        for i in range(np.shape(mask_in)[-1]):
+        for z in range(np.shape(mask_in)[-1]):
 
             it = 0
             for j in range(np.shape(mask_in)[1]):
                 for k in range(np.shape(mask_in)[2]):
-                    if mask_in[nt, j, k, i] == False:
+                    if mask_in[nt, j, k, z] == False:
                         it += 1
-            counter[nt, i] = it
+            counter[nt, z] = it
 
     return counter
 
