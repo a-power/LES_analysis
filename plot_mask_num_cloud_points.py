@@ -164,7 +164,7 @@ for n_data in range(len(data_list)):
 
     plt.figure(figsize=(6,7))
     for i in range(len(z)):
-        plt.semilogx(new_q[:, i], [z[i]]*len((new_q[:, i]))
+        plt.semilogx(new_q[:, i], [z[i]]*len(new_q[:, i]) )
     plt.xlabel(f"cloud liquid water content", fontsize=16)
     plt.ylabel("z$", fontsize=16)
     plt.savefig(plotdir + f'cloud_value_scatter.png', pad_inches=0)
