@@ -150,7 +150,7 @@ data_list = [data_2D, data_4D, data_8D, data_16D, data_32D, data_64D]
 print('len(data_list) = ', len(data_list))
 
 for n_data in range(len(data_list)):
-    ds_in = xr.open_dataset(data_list[i])
+    ds_in = xr.open_dataset(data_list[n_data])
 
     if f'f(q_cloud_liquid_mass_on_{grid})_r' in ds_in:
         q_in = ds_in[f'f(q_cloud_liquid_mass_on_{grid})_r'].data[0, ...]
