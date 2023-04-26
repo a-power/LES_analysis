@@ -42,13 +42,20 @@ def count_mask(mask_in):
 
     return counter
 
-
-data_2D = dir_contour + 'ga00_running_mean_filter_rm00.nc'
-data_4D = dir_contour + 'ga01_running_mean_filter_rm00.nc'
-data_8D = dir_contour + 'ga02_running_mean_filter_rm00.nc'
-data_16D = dir_contour + 'ga03_running_mean_filter_rm00.nc'
-data_32D = dir_contour + 'ga04_running_mean_filter_rm00.nc'
-data_64D = dir_contour + 'ga05_running_mean_filter_rm00.nc'
+if beta==True:
+    data_2D = dir_contour + 'ga00_gaussian_filter_ga00_running_mean_filter_rm00.nc'
+    data_4D = dir_contour + 'ga01_gaussian_filter_ga00_running_mean_filter_rm00.nc'
+    data_8D = dir_contour + 'ga02_gaussian_filter_ga00_running_mean_filter_rm00.nc'
+    data_16D = dir_contour + 'ga03_gaussian_filter_ga00_running_mean_filter_rm00.nc'
+    data_32D = dir_contour + 'ga04_gaussian_filter_ga00_running_mean_filter_rm00.nc'
+    data_64D = dir_contour + 'ga05_gaussian_filter_ga00_running_mean_filter_rm00.nc'
+else:
+    data_2D = dir_contour + 'ga00_running_mean_filter_rm00.nc'
+    data_4D = dir_contour + 'ga01_running_mean_filter_rm00.nc'
+    data_8D = dir_contour + 'ga02_running_mean_filter_rm00.nc'
+    data_16D = dir_contour + 'ga03_running_mean_filter_rm00.nc'
+    data_32D = dir_contour + 'ga04_running_mean_filter_rm00.nc'
+    data_64D = dir_contour + 'ga05_running_mean_filter_rm00.nc'
 
 z = np.arange(0, 3020, 20)
 z_i = 490
