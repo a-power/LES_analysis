@@ -139,7 +139,29 @@ for iters in range(len(cloud_thres)):
     plt.savefig(plotdir+f'cloud_count_prof_cloud={cloud_thres[iters]}_t_av.png', pad_inches=0)
     plt.close()
 
+data_list = [data_2D, data_4D, data_8D, data_16D, data_32D, data_64D]
+print('len(data_list) = ', len(data_list))
 
+for n_data in len(data_list):
+    ds_in = xr.open_dataset(data_list[i])
+
+    if f'f(q_cloud_liquid_mass_on_{grid})_r' in ds_in:
+        q_in = ds_in[f'f(q_cloud_liquid_mass_on_{grid})_r'].data[0, ...]
+    elif f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r' in ds_in:
+        q_in = ds_in[f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r'].data[0, ...]
+    elif 'q_cloud_liquid_mass' in ds_in:
+        q_in = ds_in['q_cloud_liquid_mass'].data[0, ...]
+
+    new_q = q_in.reshape(-1, q_in.shape[-1])
+    print('shape of new_q = ', new_q.shape())
+
+    plt.figure(figsize=(6,7))
+    for i in range(len(z)):
+        plt.semilogx(new_q[:, i], z[i])
+    plt.xlabel(f"cloud liquid water content", fontsize=16)
+    plt.ylabel("z$", fontsize=16)
+    plt.savefig(plotdir + f'cloud_value_scatter.png', pad_inches=0)
+    plt.close()
 
 
 # mean_mask_2 = np.ma.masked_where(cloud_count_2==0 , cloud_count_2)
