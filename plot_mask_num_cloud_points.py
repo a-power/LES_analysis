@@ -164,7 +164,7 @@ for n_data in range(len(data_list)):
 
     plt.figure(figsize=(6,7))
     for i in range(len(z)):
-        plt.scatter(new_q[:, i], [z[i]]*len(new_q[:, i]) )
+        plt.plot(new_q[:, i], [z[i]]*len(new_q[:, i]), '.')
     plt.xlabel(f"cloud liquid water content", fontsize=16)
     plt.ylabel("z$", fontsize=16)
     plt.savefig(plotdir + f'cloud_value_scatter_for{deltas[n_data]}.png', pad_inches=0)
