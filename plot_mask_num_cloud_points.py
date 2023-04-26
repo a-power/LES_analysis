@@ -160,7 +160,7 @@ for n_data in range(len(data_list)):
         q_in = ds_in['q_cloud_liquid_mass'].data[0, ...]
 
     new_q = q_in.reshape(-1, q_in.shape[-1])
-    print('shape of new_q = ', new_q.shape())
+    print('shape of new_q = ', np.shape(new_q))
 
     plt.figure(figsize=(6,7))
     for i in range(len(z)):
