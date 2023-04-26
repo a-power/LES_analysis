@@ -15,12 +15,11 @@ beta=True
 if beta==True:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
     dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/cloud_count/'
 else:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
     dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
-
-
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/cloud_count/'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/cloud_count/'
 os.makedirs(plotdir, exist_ok = True)
 
 cloud_thres = [0, 1e-5, 1e-7]
