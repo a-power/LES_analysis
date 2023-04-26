@@ -11,6 +11,7 @@ np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
 beta=True
+grid = 'p'
 
 if beta==True:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
@@ -60,90 +61,90 @@ z = np.arange(0, 3020, 20)
 z_i = 490
 
 #index of 0 at the start is to get rid of the dummy time index thats required to save the files
-for iters in range(len(cloud_thres)):
-
-    Cth_cloud_2, env_mask = clo.cloud_vs_env_masks(data_2D, cloud_liquid_threshold=cloud_thres[0])
-
-    cloud_count_2 = count_mask(Cth_cloud_2)
-    print('finished cloud count 2')
-
-    Cth_cloud_4, env_mask = clo.cloud_vs_env_masks(data_4D, cloud_liquid_threshold=cloud_thres[0])
-    Cth_cloud_8, env_mask = clo.cloud_vs_env_masks(data_8D, cloud_liquid_threshold=cloud_thres[0])
-    Cth_cloud_16, env_mask = clo.cloud_vs_env_masks(data_16D, cloud_liquid_threshold=cloud_thres[0])
-    Cth_cloud_32, env_mask = clo.cloud_vs_env_masks(data_32D, cloud_liquid_threshold=cloud_thres[0])
-    Cth_cloud_64, env_mask = clo.cloud_vs_env_masks(data_64D, cloud_liquid_threshold=cloud_thres[0])
-
-
-
-    ################################################################
-
-
-
-    cloud_count_4 = count_mask(Cth_cloud_4)
-    print('finished cloud count 4')
-    cloud_count_8 = count_mask(Cth_cloud_8)
-    print('finished cloud count 8')
-    cloud_count_16 = count_mask(Cth_cloud_16)
-    print('finished cloud count 16')
-    cloud_count_32 = count_mask(Cth_cloud_32)
-    print('finished cloud count 32')
-    cloud_count_64 = count_mask(Cth_cloud_64)
-    print('finished cloud count 64')
-
-    total_grid = 640000
-
-    # for t_in in range(3):
-    #
-    #     plt.figure(figsize=(6,7))
-    #     plt.plot(-26, -29)
-    #     plt.plot(cloud_count_2[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 40}$m')
-    #     plt.plot(cloud_count_4[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 80}$m')
-    #     plt.plot(cloud_count_8[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 160}$m')
-    #     plt.plot(cloud_count_16[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 320}$m')
-    #     plt.plot(cloud_count_32[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 640}$m')
-    #     plt.plot(cloud_count_64[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 1280}$m')
-    #     plt.xlabel(f"Ratio of 'cloudy' vs 'non-cloudy' grid points, time = {t_in}", fontsize=16)
-    #     plt.ylabel("z/z$_{ML}$", fontsize=16)
-    #     plt.legend(fontsize=12, loc='upper right')
-    #     plt.xlim(0, 0.5)
-    #     plt.ylim(bottom = 0)
-    #     plt.savefig(plotdir+f'cloud_count_prof_scaled_t{t_in}.png', pad_inches=0)
-    #     plt.close()
-    #
-    # print('finished cloud mask plot')
-
-    plt.figure(figsize=(6,7))
-    plt.plot(-26, -29)
-    plt.plot(np.mean(cloud_count_2, axis=0)/total_grid, z/z_i, label = '$\\Delta = 40}$m')
-    plt.plot(np.mean(cloud_count_4, axis=0)/total_grid, z/z_i, label = '$\\Delta = 80}$m')
-    plt.plot(np.mean(cloud_count_8, axis=0)/total_grid, z/z_i, label = '$\\Delta = 160}$m')
-    plt.plot(np.mean(cloud_count_16, axis=0)/total_grid, z/z_i, label = '$\\Delta = 320}$m')
-    plt.plot(np.mean(cloud_count_32, axis=0)/total_grid, z/z_i, label = '$\\Delta = 640}$m')
-    plt.plot(np.mean(cloud_count_64, axis=0)/total_grid, z/z_i, label = '$\\Delta = 1280}$m')
-
-    plt.xlabel(f"Ratio of 'cloudy' vs 'non-cloudy' grid points", fontsize=16)
-    plt.ylabel("z/z$_{ML}$", fontsize=16)
-    plt.legend(fontsize=12, loc='upper right')
-    plt.xlim(0, 1)
-    plt.ylim(0, 6)
-    plt.savefig(plotdir+f'cloudy_vs_env_ratio_prof_cloud={cloud_thres[iters]}_t_av.png', pad_inches=0)
-    plt.close()
-
-    plt.figure(figsize=(6,7))
-    plt.plot(-26, -29)
-    plt.plot(np.mean(cloud_count_2, axis=0), z/z_i, label = '$\\Delta = 40}$m')
-    plt.plot(np.mean(cloud_count_4, axis=0), z/z_i, label = '$\\Delta = 80}$m')
-    plt.plot(np.mean(cloud_count_8, axis=0), z/z_i, label = '$\\Delta = 160}$m')
-    plt.plot(np.mean(cloud_count_16, axis=0), z/z_i, label = '$\\Delta = 320}$m')
-    plt.plot(np.mean(cloud_count_32, axis=0), z/z_i, label = '$\\Delta = 640}$m')
-    plt.plot(np.mean(cloud_count_64, axis=0), z/z_i, label = '$\\Delta = 1280}$m')
-
-    plt.xlabel(f"number of 'cloudy' grid points", fontsize=16)
-    plt.ylabel("z/z$_{ML}$", fontsize=16)
-    plt.legend(fontsize=12, loc='upper right')
-    plt.ylim(0, 6)
-    plt.savefig(plotdir+f'cloud_count_prof_cloud={cloud_thres[iters]}_t_av.png', pad_inches=0)
-    plt.close()
+# for iters in range(len(cloud_thres)):
+#
+#     Cth_cloud_2, env_mask = clo.cloud_vs_env_masks(data_2D, cloud_liquid_threshold=cloud_thres[0])
+#
+#     cloud_count_2 = count_mask(Cth_cloud_2)
+#     print('finished cloud count 2')
+#
+#     Cth_cloud_4, env_mask = clo.cloud_vs_env_masks(data_4D, cloud_liquid_threshold=cloud_thres[0])
+#     Cth_cloud_8, env_mask = clo.cloud_vs_env_masks(data_8D, cloud_liquid_threshold=cloud_thres[0])
+#     Cth_cloud_16, env_mask = clo.cloud_vs_env_masks(data_16D, cloud_liquid_threshold=cloud_thres[0])
+#     Cth_cloud_32, env_mask = clo.cloud_vs_env_masks(data_32D, cloud_liquid_threshold=cloud_thres[0])
+#     Cth_cloud_64, env_mask = clo.cloud_vs_env_masks(data_64D, cloud_liquid_threshold=cloud_thres[0])
+#
+#
+#
+#     ################################################################
+#
+#
+#
+#     cloud_count_4 = count_mask(Cth_cloud_4)
+#     print('finished cloud count 4')
+#     cloud_count_8 = count_mask(Cth_cloud_8)
+#     print('finished cloud count 8')
+#     cloud_count_16 = count_mask(Cth_cloud_16)
+#     print('finished cloud count 16')
+#     cloud_count_32 = count_mask(Cth_cloud_32)
+#     print('finished cloud count 32')
+#     cloud_count_64 = count_mask(Cth_cloud_64)
+#     print('finished cloud count 64')
+#
+#     total_grid = 640000
+#
+#     # for t_in in range(3):
+#     #
+#     #     plt.figure(figsize=(6,7))
+#     #     plt.plot(-26, -29)
+#     #     plt.plot(cloud_count_2[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 40}$m')
+#     #     plt.plot(cloud_count_4[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 80}$m')
+#     #     plt.plot(cloud_count_8[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 160}$m')
+#     #     plt.plot(cloud_count_16[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 320}$m')
+#     #     plt.plot(cloud_count_32[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 640}$m')
+#     #     plt.plot(cloud_count_64[t_in, :]/total_grid, z/z_i, label = '$\\Delta = 1280}$m')
+#     #     plt.xlabel(f"Ratio of 'cloudy' vs 'non-cloudy' grid points, time = {t_in}", fontsize=16)
+#     #     plt.ylabel("z/z$_{ML}$", fontsize=16)
+#     #     plt.legend(fontsize=12, loc='upper right')
+#     #     plt.xlim(0, 0.5)
+#     #     plt.ylim(bottom = 0)
+#     #     plt.savefig(plotdir+f'cloud_count_prof_scaled_t{t_in}.png', pad_inches=0)
+#     #     plt.close()
+#     #
+#     # print('finished cloud mask plot')
+#
+#     plt.figure(figsize=(6,7))
+#     plt.plot(-26, -29)
+#     plt.plot(np.mean(cloud_count_2, axis=0)/total_grid, z/z_i, label = '$\\Delta = 40}$m')
+#     plt.plot(np.mean(cloud_count_4, axis=0)/total_grid, z/z_i, label = '$\\Delta = 80}$m')
+#     plt.plot(np.mean(cloud_count_8, axis=0)/total_grid, z/z_i, label = '$\\Delta = 160}$m')
+#     plt.plot(np.mean(cloud_count_16, axis=0)/total_grid, z/z_i, label = '$\\Delta = 320}$m')
+#     plt.plot(np.mean(cloud_count_32, axis=0)/total_grid, z/z_i, label = '$\\Delta = 640}$m')
+#     plt.plot(np.mean(cloud_count_64, axis=0)/total_grid, z/z_i, label = '$\\Delta = 1280}$m')
+#
+#     plt.xlabel(f"Ratio of 'cloudy' vs 'non-cloudy' grid points", fontsize=16)
+#     plt.ylabel("z/z$_{ML}$", fontsize=16)
+#     plt.legend(fontsize=12, loc='upper right')
+#     plt.xlim(0, 1)
+#     plt.ylim(0, 6)
+#     plt.savefig(plotdir+f'cloudy_vs_env_ratio_prof_cloud={cloud_thres[iters]}_t_av.png', pad_inches=0)
+#     plt.close()
+#
+#     plt.figure(figsize=(6,7))
+#     plt.plot(-26, -29)
+#     plt.plot(np.mean(cloud_count_2, axis=0), z/z_i, label = '$\\Delta = 40}$m')
+#     plt.plot(np.mean(cloud_count_4, axis=0), z/z_i, label = '$\\Delta = 80}$m')
+#     plt.plot(np.mean(cloud_count_8, axis=0), z/z_i, label = '$\\Delta = 160}$m')
+#     plt.plot(np.mean(cloud_count_16, axis=0), z/z_i, label = '$\\Delta = 320}$m')
+#     plt.plot(np.mean(cloud_count_32, axis=0), z/z_i, label = '$\\Delta = 640}$m')
+#     plt.plot(np.mean(cloud_count_64, axis=0), z/z_i, label = '$\\Delta = 1280}$m')
+#
+#     plt.xlabel(f"number of 'cloudy' grid points", fontsize=16)
+#     plt.ylabel("z/z$_{ML}$", fontsize=16)
+#     plt.legend(fontsize=12, loc='upper right')
+#     plt.ylim(0, 6)
+#     plt.savefig(plotdir+f'cloud_count_prof_cloud={cloud_thres[iters]}_t_av.png', pad_inches=0)
+#     plt.close()
 
 data_list = [data_2D, data_4D, data_8D, data_16D, data_32D, data_64D]
 print('len(data_list) = ', len(data_list))
