@@ -9,7 +9,7 @@ np.seterr(invalid='ignore')
 
 beta=True
 what_plotting='_0'
-C_or_LM = 'LM' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
+C_or_LM = 'MM' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 
 if beta == True:
     if C_or_LM == 'C':
@@ -312,7 +312,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         x_ax_min_Cqt = np.amin(Cqt[:, 10:80])
 
         set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
-        set_left = -0.025 #min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
+        set_left = -1 #min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
 
     print('for all Delta profs, min is = ', set_left, 'max is =', set_right)
 
@@ -443,7 +443,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             x_ax_min_Cqt = np.nanmin(Cqt[:, it, 10:80])
 
             set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
-            set_left = -0.025 #min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
+            set_left = -1 #min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
 
             print('For it (Delta)  =', it, 'min = ', set_left, 'max = ', set_right)
 
