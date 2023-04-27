@@ -136,12 +136,12 @@ for iters in range(len(cloud_thres)):
 
     plt.figure(figsize=(6,7))
     plt.plot(-26, -29)
-    plt.plot(np.mean(cloud_count_2, axis=0), z/z_i, label = '$\\Delta = 40}$m')
-    plt.plot(np.mean(cloud_count_4, axis=0), z/z_i, label = '$\\Delta = 80}$m')
-    plt.plot(np.mean(cloud_count_8, axis=0), z/z_i, label = '$\\Delta = 160}$m')
-    plt.plot(np.mean(cloud_count_16, axis=0), z/z_i, label = '$\\Delta = 320}$m')
-    plt.plot(np.mean(cloud_count_32, axis=0), z/z_i, label = '$\\Delta = 640}$m')
-    plt.plot(np.mean(cloud_count_64, axis=0), z/z_i, label = '$\\Delta = 1280}$m')
+    plt.plot(np.mean(cloud_count_2, axis=0), z/z_i, label = '$2\\Delta}$m')
+    plt.plot(np.mean(cloud_count_4, axis=0), z/z_i, label = '$4\\Delta}$m')
+    plt.plot(np.mean(cloud_count_8, axis=0), z/z_i, label = '$8\\Delta}$m')
+    plt.plot(np.mean(cloud_count_16, axis=0), z/z_i, label = '$16\\Delta}$m')
+    plt.plot(np.mean(cloud_count_32, axis=0), z/z_i, label = '$32\\Delta}$m')
+    plt.plot(np.mean(cloud_count_64, axis=0), z/z_i, label = '$64\\Delta}$m')
 
     plt.xlabel(f"number of 'cloudy' grid points", fontsize=16)
     plt.ylabel("z/z$_{ML}$", fontsize=16)
