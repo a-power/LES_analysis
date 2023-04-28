@@ -95,7 +95,7 @@ for iters in range(len(cloud_thres)):
     total_grid_calc = np.shape( Cth_cloud_2.reshape(-1, Cth_cloud_2.shape[-1]) )[0]
     print('total grid calc = ', total_grid_calc)
 
-    total_grid = 1920000
+    total_grid = total_grid_calc #1920000
 
 
     # for t_in in range(3):
