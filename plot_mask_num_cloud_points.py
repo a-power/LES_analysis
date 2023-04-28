@@ -28,18 +28,17 @@ deltas=['2D', '4D', '8D', '16D', '32D', '64D']
 
 def count_mask(mask_in):
 
-    counter = np.zeros((np.shape(mask_in)[0], np.shape(mask_in)[-1]))
+    counter = np.zeros((np.shape(mask_in)[-1]))
     print('shape of mask in cloud_mask function is ', np.shape(mask_in))
 
-    for nt in range(np.shape(mask_in)[0]):
-        for z in range(np.shape(mask_in)[-1]):
-
-            it = 0
+    for z in range(np.shape(mask_in)[-1]):
+        it = 0
+        for nt in range(np.shape(mask_in)[0]):
             for j in range(np.shape(mask_in)[1]):
                 for k in range(np.shape(mask_in)[2]):
                     if mask_in[nt, j, k, z] == False:
                         it += 1
-            counter[nt, z] = it
+        counter[z] = it
 
     return counter
 
@@ -137,12 +136,12 @@ for iters in range(len(cloud_thres)):
 
     plt.figure(figsize=(6,7))
     plt.plot(-26, -29)
-    plt.plot(np.mean(cloud_count_2, axis=0), z/z_i, label = '$2\\Delta}$m')
-    plt.plot(np.mean(cloud_count_4, axis=0), z/z_i, label = '$4\\Delta}$m')
-    plt.plot(np.mean(cloud_count_8, axis=0), z/z_i, label = '$8\\Delta}$m')
-    plt.plot(np.mean(cloud_count_16, axis=0), z/z_i, label = '$16\\Delta}$m')
-    plt.plot(np.mean(cloud_count_32, axis=0), z/z_i, label = '$32\\Delta}$m')
-    plt.plot(np.mean(cloud_count_64, axis=0), z/z_i, label = '$64\\Delta}$m')
+    plt.plot(cloud_count_2, z/z_i, label = '$2\\Delta}$m')
+    plt.plot(cloud_count_4, z/z_i, label = '$4\\Delta}$m')
+    plt.plot(cloud_count_8, z/z_i, label = '$8\\Delta}$m')
+    plt.plot(cloud_count_16, z/z_i, label = '$16\\Delta}$m')
+    plt.plot(cloud_count_32, z/z_i, label = '$32\\Delta}$m')
+    plt.plot(cloud_count_64, z/z_i, label = '$64\\Delta}$m')
 
     plt.xlabel(f"number of 'cloudy' grid points", fontsize=16)
     plt.ylabel("z/z$_{ML}$", fontsize=16)
