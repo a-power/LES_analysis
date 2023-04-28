@@ -29,6 +29,7 @@ deltas=['2D', '4D', '8D', '16D', '32D', '64D']
 def count_mask(mask_in):
 
     counter = np.zeros((np.shape(mask_in)[0], np.shape(mask_in)[-1]))
+    print('shape of mask in cloud_mask function is ', np.shape(mask_in))
 
     for nt in range(np.shape(mask_in)[0]):
         for z in range(np.shape(mask_in)[-1]):
@@ -68,11 +69,11 @@ for iters in range(len(cloud_thres)):
     cloud_count_2 = count_mask(Cth_cloud_2)
     print('finished cloud count 2')
 
-    Cth_cloud_4, env_mask = clo.cloud_vs_env_masks(data_4D, cloud_liquid_threshold=cloud_thres[iters])
-    Cth_cloud_8, env_mask = clo.cloud_vs_env_masks(data_8D, cloud_liquid_threshold=cloud_thres[iters])
-    Cth_cloud_16, env_mask = clo.cloud_vs_env_masks(data_16D, cloud_liquid_threshold=cloud_thres[iters])
-    Cth_cloud_32, env_mask = clo.cloud_vs_env_masks(data_32D, cloud_liquid_threshold=cloud_thres[iters])
-    Cth_cloud_64, env_mask = clo.cloud_vs_env_masks(data_64D, cloud_liquid_threshold=cloud_thres[iters])
+    Cth_cloud_4, env_mask4 = clo.cloud_vs_env_masks(data_4D, cloud_liquid_threshold=cloud_thres[iters])
+    Cth_cloud_8, env_mask8 = clo.cloud_vs_env_masks(data_8D, cloud_liquid_threshold=cloud_thres[iters])
+    Cth_cloud_16, env_mask16 = clo.cloud_vs_env_masks(data_16D, cloud_liquid_threshold=cloud_thres[iters])
+    Cth_cloud_32, env_mask32 = clo.cloud_vs_env_masks(data_32D, cloud_liquid_threshold=cloud_thres[iters])
+    Cth_cloud_64, env_mask64 = clo.cloud_vs_env_masks(data_64D, cloud_liquid_threshold=cloud_thres[iters])
 
 
 
@@ -119,19 +120,19 @@ for iters in range(len(cloud_thres)):
 
     plt.figure(figsize=(6,7))
     plt.plot(-26, -29)
-    plt.plot(np.mean(cloud_count_2, axis=0)/total_grid, z/z_i, label = '$\\Delta = 40}$m')
-    plt.plot(np.mean(cloud_count_4, axis=0)/total_grid, z/z_i, label = '$\\Delta = 80}$m')
-    plt.plot(np.mean(cloud_count_8, axis=0)/total_grid, z/z_i, label = '$\\Delta = 160}$m')
-    plt.plot(np.mean(cloud_count_16, axis=0)/total_grid, z/z_i, label = '$\\Delta = 320}$m')
-    plt.plot(np.mean(cloud_count_32, axis=0)/total_grid, z/z_i, label = '$\\Delta = 640}$m')
-    plt.plot(np.mean(cloud_count_64, axis=0)/total_grid, z/z_i, label = '$\\Delta = 1280}$m')
+    plt.plot(cloud_count_2/total_grid, z/z_i, label = '$\\Delta = 40}$m')
+    plt.plot(cloud_count_4/total_grid, z/z_i, label = '$\\Delta = 80}$m')
+    plt.plot(cloud_count_8/total_grid, z/z_i, label = '$\\Delta = 160}$m')
+    plt.plot(cloud_count_16/total_grid, z/z_i, label = '$\\Delta = 320}$m')
+    plt.plot(cloud_count_32/total_grid, z/z_i, label = '$\\Delta = 640}$m')
+    plt.plot(cloud_count_64/total_grid, z/z_i, label = '$\\Delta = 1280}$m')
 
-    plt.xlabel(f"Ratio of 'cloudy' to total grid points", fontsize=16)
+    plt.xlabel(f"Cloud Cover", fontsize=16)
     plt.ylabel("z/z$_{ML}$", fontsize=16)
     plt.legend(fontsize=12, loc='upper right')
-    #plt.xlim(0, 1)
+    plt.xlim(-0.1, 1.1)
     plt.ylim(0, 6)
-    plt.savefig(plotdir+f'cloudy_vs_env_ratio_prof_cloud={cloud_thres[iters]}_t_av.png', pad_inches=0)
+    plt.savefig(plotdir+f'cloud_cover_prof_cloud={cloud_thres[iters]}_t_av.png', pad_inches=0)
     plt.close()
 
     plt.figure(figsize=(6,7))
@@ -150,29 +151,29 @@ for iters in range(len(cloud_thres)):
     plt.savefig(plotdir+f'cloud_count_prof_cloud={cloud_thres[iters]}_t_av.png', pad_inches=0)
     plt.close()
 
-data_list = [data_2D, data_4D, data_8D, data_16D, data_32D, data_64D]
-print('len(data_list) = ', len(data_list))
-
-for n_data in range(len(data_list)):
-    ds_in = xr.open_dataset(data_list[n_data])
-
-    if f'f(q_cloud_liquid_mass_on_{grid})_r' in ds_in:
-        q_in = ds_in[f'f(q_cloud_liquid_mass_on_{grid})_r'].data[0, ...]
-    elif f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r' in ds_in:
-        q_in = ds_in[f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r'].data[0, ...]
-    elif 'q_cloud_liquid_mass' in ds_in:
-        q_in = ds_in['q_cloud_liquid_mass'].data[0, ...]
-
-    new_q = q_in.reshape(-1, q_in.shape[-1])
-    print('shape of new_q = ', np.shape(new_q))
-
-    plt.figure(figsize=(6,7))
-    for i in range(len(z)):
-        plt.plot(new_q[:, i], [z[i]]*len(new_q[:, i]), '.')
-    plt.xlabel(f"cloud liquid water content", fontsize=16)
-    plt.ylabel("z$", fontsize=16)
-    plt.savefig(plotdir + f'cloud_value_scatter_for{deltas[n_data]}.png', pad_inches=0)
-    plt.close()
+# data_list = [data_2D, data_4D, data_8D, data_16D, data_32D, data_64D]
+# print('len(data_list) = ', len(data_list))
+#
+# for n_data in range(len(data_list)):
+#     ds_in = xr.open_dataset(data_list[n_data])
+#
+#     if f'f(q_cloud_liquid_mass_on_{grid})_r' in ds_in:
+#         q_in = ds_in[f'f(q_cloud_liquid_mass_on_{grid})_r'].data[0, ...]
+#     elif f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r' in ds_in:
+#         q_in = ds_in[f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r'].data[0, ...]
+#     elif 'q_cloud_liquid_mass' in ds_in:
+#         q_in = ds_in['q_cloud_liquid_mass'].data[0, ...]
+#
+#     new_q = q_in.reshape(-1, q_in.shape[-1])
+#     print('shape of new_q = ', np.shape(new_q))
+#
+#     plt.figure(figsize=(6,7))
+#     for i in range(len(z)):
+#         plt.plot(new_q[:, i], [z[i]]*len(new_q[:, i]), '.')
+#     plt.xlabel(f"cloud liquid water content", fontsize=16)
+#     plt.ylabel("z$", fontsize=16)
+#     plt.savefig(plotdir + f'cloud_value_scatter_for{deltas[n_data]}.png', pad_inches=0)
+#     plt.close()
 
 
 # mean_mask_2 = np.ma.masked_where(cloud_count_2==0 , cloud_count_2)
