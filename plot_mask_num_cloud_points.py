@@ -10,39 +10,52 @@ import matplotlib.ticker as mtick
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
+beta=True
+grid = 'p'
 
-dir_data = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
-dir_contour = dir_data + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
-
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/cloud_count/'
+if beta==True:
+    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
+    dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/cloud_count/'
+else:
+    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
+    dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/cloud_count/'
 os.makedirs(plotdir, exist_ok = True)
 
-cloud_thres = [0, 1e-5, 1e-7, 1e-9]
-
+cloud_thres = [1e-7]
+deltas=['2D', '4D', '8D', '16D', '32D', '64D']
 
 def count_mask(mask_in):
 
-    counter = np.zeros((np.shape(mask_in)[0], np.shape(mask_in)[-1]))
+    counter = np.zeros((np.shape(mask_in)[-1]))
+    print('shape of mask in cloud_mask function is ', np.shape(mask_in))
 
-    for nt in range(np.shape(mask_in)[0]):
-        for i in range(np.shape(mask_in)[-1]):
-
-            it = 0
+    for z in range(np.shape(mask_in)[-1]):
+        it = 0
+        for nt in range(np.shape(mask_in)[0]):
             for j in range(np.shape(mask_in)[1]):
                 for k in range(np.shape(mask_in)[2]):
-                    if mask_in[nt, j, k, i] == False:
+                    if mask_in[nt, j, k, z] == False:
                         it += 1
-            counter[nt, i] = it
+        counter[z] = it
 
     return counter
 
-
-data_2D = dir_contour + 'ga00_running_mean_filter_rm00.nc'
-data_4D = dir_contour + 'ga01_running_mean_filter_rm00.nc'
-data_8D = dir_contour + 'ga02_running_mean_filter_rm00.nc'
-data_16D = dir_contour + 'ga03_running_mean_filter_rm00.nc'
-data_32D = dir_contour + 'ga04_running_mean_filter_rm00.nc'
-data_64D = dir_contour + 'ga05_running_mean_filter_rm00.nc'
+if beta==True:
+    data_2D = dir_contour + 'ga00_gaussian_filter_ga00_running_mean_filter_rm00.nc'
+    data_4D = dir_contour + 'ga01_gaussian_filter_ga00_running_mean_filter_rm00.nc'
+    data_8D = dir_contour + 'ga02_gaussian_filter_ga00_running_mean_filter_rm00.nc'
+    data_16D = dir_contour + 'ga03_gaussian_filter_ga00_running_mean_filter_rm00.nc'
+    data_32D = dir_contour + 'ga04_gaussian_filter_ga00_running_mean_filter_rm00.nc'
+    data_64D = dir_contour + 'ga05_gaussian_filter_ga00_running_mean_filter_rm00.nc'
+else:
+    data_2D = dir_contour + 'ga00_running_mean_filter_rm00.nc'
+    data_4D = dir_contour + 'ga01_running_mean_filter_rm00.nc'
+    data_8D = dir_contour + 'ga02_running_mean_filter_rm00.nc'
+    data_16D = dir_contour + 'ga03_running_mean_filter_rm00.nc'
+    data_32D = dir_contour + 'ga04_running_mean_filter_rm00.nc'
+    data_64D = dir_contour + 'ga05_running_mean_filter_rm00.nc'
 
 z = np.arange(0, 3020, 20)
 z_i = 490
@@ -50,16 +63,16 @@ z_i = 490
 #index of 0 at the start is to get rid of the dummy time index thats required to save the files
 for iters in range(len(cloud_thres)):
 
-    Cth_cloud_2, env_mask = clo.cloud_vs_env_masks(data_2D, cloud_liquid_threshold=cloud_thres[0])
+    Cth_cloud_2, env_mask = clo.cloud_vs_env_masks(data_2D, cloud_liquid_threshold=cloud_thres[iters])
 
     cloud_count_2 = count_mask(Cth_cloud_2)
     print('finished cloud count 2')
 
-    Cth_cloud_4, env_mask = clo.cloud_vs_env_masks(data_4D, cloud_liquid_threshold=cloud_thres[0])
-    Cth_cloud_8, env_mask = clo.cloud_vs_env_masks(data_8D, cloud_liquid_threshold=cloud_thres[0])
-    Cth_cloud_16, env_mask = clo.cloud_vs_env_masks(data_16D, cloud_liquid_threshold=cloud_thres[0])
-    Cth_cloud_32, env_mask = clo.cloud_vs_env_masks(data_32D, cloud_liquid_threshold=cloud_thres[0])
-    Cth_cloud_64, env_mask = clo.cloud_vs_env_masks(data_64D, cloud_liquid_threshold=cloud_thres[0])
+    Cth_cloud_4, env_mask4 = clo.cloud_vs_env_masks(data_4D, cloud_liquid_threshold=cloud_thres[iters])
+    Cth_cloud_8, env_mask8 = clo.cloud_vs_env_masks(data_8D, cloud_liquid_threshold=cloud_thres[iters])
+    Cth_cloud_16, env_mask16 = clo.cloud_vs_env_masks(data_16D, cloud_liquid_threshold=cloud_thres[iters])
+    Cth_cloud_32, env_mask32 = clo.cloud_vs_env_masks(data_32D, cloud_liquid_threshold=cloud_thres[iters])
+    Cth_cloud_64, env_mask64 = clo.cloud_vs_env_masks(data_64D, cloud_liquid_threshold=cloud_thres[iters])
 
 
 
@@ -78,7 +91,11 @@ for iters in range(len(cloud_thres)):
     cloud_count_64 = count_mask(Cth_cloud_64)
     print('finished cloud count 64')
 
-    total_grid = 640000
+    total_grid_calc = np.shape( Cth_cloud_2.reshape(-1, Cth_cloud_2.shape[-1]) )[0]
+    print('total grid calc = ', total_grid_calc)
+
+    total_grid = total_grid_calc #1920000
+
 
     # for t_in in range(3):
     #
@@ -102,29 +119,29 @@ for iters in range(len(cloud_thres)):
 
     plt.figure(figsize=(6,7))
     plt.plot(-26, -29)
-    plt.plot(np.mean(cloud_count_2, axis=0)/total_grid, z/z_i, label = '$\\Delta = 40}$m')
-    plt.plot(np.mean(cloud_count_4, axis=0)/total_grid, z/z_i, label = '$\\Delta = 80}$m')
-    plt.plot(np.mean(cloud_count_8, axis=0)/total_grid, z/z_i, label = '$\\Delta = 160}$m')
-    plt.plot(np.mean(cloud_count_16, axis=0)/total_grid, z/z_i, label = '$\\Delta = 320}$m')
-    plt.plot(np.mean(cloud_count_32, axis=0)/total_grid, z/z_i, label = '$\\Delta = 640}$m')
-    plt.plot(np.mean(cloud_count_64, axis=0)/total_grid, z/z_i, label = '$\\Delta = 1280}$m')
+    plt.plot(cloud_count_2/total_grid, z/z_i, label = '$2\\Delta$m')
+    plt.plot(cloud_count_4/total_grid, z/z_i, label = '$4\\Delta$m')
+    plt.plot(cloud_count_8/total_grid, z/z_i, label = '$8\\Delta$m')
+    plt.plot(cloud_count_16/total_grid, z/z_i, label = '$16\\Delta$m')
+    plt.plot(cloud_count_32/total_grid, z/z_i, label = '$32\\Delta$m')
+    plt.plot(cloud_count_64/total_grid, z/z_i, label = '$64\\Delta$m')
 
-    plt.xlabel(f"Ratio of 'cloudy' vs 'non-cloudy' grid points", fontsize=16)
+    plt.xlabel(f"Cloud Cover", fontsize=16)
     plt.ylabel("z/z$_{ML}$", fontsize=16)
     plt.legend(fontsize=12, loc='upper right')
-    plt.xlim(0, 1)
+    plt.xlim(-0.1, 1.1)
     plt.ylim(0, 6)
-    plt.savefig(plotdir+f'cloudy_vs_env_ratio_prof_cloud={cloud_thres[iters]}_t_av.png', pad_inches=0)
+    plt.savefig(plotdir+f'cloud_cover_prof_cloud={cloud_thres[iters]}_t_av.png', pad_inches=0)
     plt.close()
 
     plt.figure(figsize=(6,7))
     plt.plot(-26, -29)
-    plt.plot(np.mean(cloud_count_2, axis=0), z/z_i, label = '$\\Delta = 40}$m')
-    plt.plot(np.mean(cloud_count_4, axis=0), z/z_i, label = '$\\Delta = 80}$m')
-    plt.plot(np.mean(cloud_count_8, axis=0), z/z_i, label = '$\\Delta = 160}$m')
-    plt.plot(np.mean(cloud_count_16, axis=0), z/z_i, label = '$\\Delta = 320}$m')
-    plt.plot(np.mean(cloud_count_32, axis=0), z/z_i, label = '$\\Delta = 640}$m')
-    plt.plot(np.mean(cloud_count_64, axis=0), z/z_i, label = '$\\Delta = 1280}$m')
+    plt.plot(cloud_count_2, z/z_i, label = '$2\\Delta$m')
+    plt.plot(cloud_count_4, z/z_i, label = '$4\\Delta$m')
+    plt.plot(cloud_count_8, z/z_i, label = '$8\\Delta$m')
+    plt.plot(cloud_count_16, z/z_i, label = '$16\\Delta$m')
+    plt.plot(cloud_count_32, z/z_i, label = '$32\\Delta$m')
+    plt.plot(cloud_count_64, z/z_i, label = '$64\\Delta$m')
 
     plt.xlabel(f"number of 'cloudy' grid points", fontsize=16)
     plt.ylabel("z/z$_{ML}$", fontsize=16)
@@ -133,7 +150,29 @@ for iters in range(len(cloud_thres)):
     plt.savefig(plotdir+f'cloud_count_prof_cloud={cloud_thres[iters]}_t_av.png', pad_inches=0)
     plt.close()
 
-
+# data_list = [data_2D, data_4D, data_8D, data_16D, data_32D, data_64D]
+# print('len(data_list) = ', len(data_list))
+#
+# for n_data in range(len(data_list)):
+#     ds_in = xr.open_dataset(data_list[n_data])
+#
+#     if f'f(q_cloud_liquid_mass_on_{grid})_r' in ds_in:
+#         q_in = ds_in[f'f(q_cloud_liquid_mass_on_{grid})_r'].data[0, ...]
+#     elif f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r' in ds_in:
+#         q_in = ds_in[f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r'].data[0, ...]
+#     elif 'q_cloud_liquid_mass' in ds_in:
+#         q_in = ds_in['q_cloud_liquid_mass'].data[0, ...]
+#
+#     new_q = q_in.reshape(-1, q_in.shape[-1])
+#     print('shape of new_q = ', np.shape(new_q))
+#
+#     plt.figure(figsize=(6,7))
+#     for i in range(len(z)):
+#         plt.plot(new_q[:, i], [z[i]]*len(new_q[:, i]), '.')
+#     plt.xlabel(f"cloud liquid water content", fontsize=16)
+#     plt.ylabel("z$", fontsize=16)
+#     plt.savefig(plotdir + f'cloud_value_scatter_for{deltas[n_data]}.png', pad_inches=0)
+#     plt.close()
 
 
 # mean_mask_2 = np.ma.masked_where(cloud_count_2==0 , cloud_count_2)
