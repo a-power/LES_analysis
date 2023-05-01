@@ -16,6 +16,7 @@ elif case=='ARM':
         in_dir = '/work/scratch-pw3/apower/ARM/'
         outdir = in_dir + f'on_{opgrid}_grid/'
         plotdir = outdir + 'plots/dyn/'
+        model_res_list = [None]
 
 
 os.makedirs(outdir, exist_ok = True)
