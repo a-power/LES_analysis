@@ -23,8 +23,10 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
 
-
-    file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
+    if res_in != None:
+        file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
+    else:
+        file_in = f'{indir}/MONC_out/diagnostics_3d_ts_{time_in}.nc'
 
     ds_in = xr.open_dataset(file_in)
     time_data = ds_in[time_name]
@@ -145,14 +147,14 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
                         ["u", "q_total"],
                         ["v", "q_total"],
                         ["w", "q_total"],
-                        ["w", "th_L"],
+                        ["u", "th_v"],
+                        ["v", "th_v"],
                         ["w", "th_v"],
+                        ["w", "th_L"],
+                        ["th_v", "q_total"],
                         ["w", "q_vapour"],
                         ["w", "q_cloud_liquid_mass"],
-                        ["th_L", "th_L"],
-                        ["th_L", "q_total"],
                         ["q_total", "q_total"],
-                        ["th_L", "q_vapour"],
                         ["th_L", "q_cloud_liquid_mass"]
                         ]
 

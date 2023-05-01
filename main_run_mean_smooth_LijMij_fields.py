@@ -13,6 +13,7 @@ import dask
 import subfilter
 
 beta=True
+case = 'ARM' # 'BOMEX',
 
 
 if beta==True:
