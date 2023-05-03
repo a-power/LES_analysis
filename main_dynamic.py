@@ -3,8 +3,16 @@ import numpy as np
 import os
 
 case='ARM'
-set_time = ['3600', '7200', '10800', '14400', '18000', '21600', '25200'] # ,'12600', '16200', '18000'
+set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
 opgrid = 'p'
+
+filter_name = 'gaussian'  # "wave_cutoff"
+#Sigma = hat(Delta)/2
+sigma_list = np.array([20, 40, 80, 160, 320, 640]) #dont forget CHANGE start time if youre short-serial filtering
+# #([20, 40, 80] ([160, 320, 640])
+
+start=0
+
 
 if case=='BOMEX':
         in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
@@ -21,14 +29,6 @@ elif case=='ARM':
 
 os.makedirs(outdir, exist_ok = True)
 os.makedirs(plotdir, exist_ok = True)
-
-filter_name = 'gaussian'  # "wave_cutoff"
-sigma_list = np.array([20, 40, 80, 160, 320, 640]) #dont forget CHANGE start time if youre short-serial filtering
-# #([20, 40, 80] ([160, 320, 640])
-
-start=0
-
-#Sigma = hat(Delta)/2
 
 options = {
         'FFT_type': 'RFFT',
