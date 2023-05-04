@@ -1,9 +1,16 @@
 import dynamic_script as dy_s #dot to get folder outside
 import numpy as np
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--times', type=str, default='14400')
+
+args = parser.parse_args()
+set_time = [ args.times ]
 
 case='ARM'
-set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
+#set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
 opgrid = 'p'
 
 filter_name = 'gaussian'  # "wave_cutoff"
