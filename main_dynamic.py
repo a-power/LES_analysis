@@ -17,7 +17,7 @@ opgrid = 'p'
 
 filter_name = 'gaussian'  # "wave_cutoff"
 #Sigma = hat(Delta)/2
-sigma_list = np.array([20, 40, 80, 160, 320, 640]) #dont forget CHANGE start time if youre short-serial filtering
+sigma_list = np.array([160, 320, 640]) #dont forget CHANGE start time if youre short-serial filtering
 # #([20, 40, 80] ([160, 320, 640])
 
 
