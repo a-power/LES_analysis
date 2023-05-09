@@ -5,9 +5,11 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--times', type=str, default='14400')
+parser.add_argument('--start_in', type=int, default=0)
 
 args = parser.parse_args()
 set_time = [ args.times ]
+start = [ args.start_in ]
 
 case='ARM'
 #set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
@@ -18,7 +20,6 @@ filter_name = 'gaussian'  # "wave_cutoff"
 sigma_list = np.array([20, 40, 80, 160, 320, 640]) #dont forget CHANGE start time if youre short-serial filtering
 # #([20, 40, 80] ([160, 320, 640])
 
-start=0
 
 
 if case=='BOMEX':
