@@ -10,6 +10,7 @@ parser.add_argument('--start_in', type=int, default=0)
 args = parser.parse_args()
 set_time = [ args.times ]
 start = [ args.start_in ]
+print('start type = ', type(start))
 
 case='ARM'
 #set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
