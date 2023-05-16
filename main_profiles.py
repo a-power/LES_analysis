@@ -30,8 +30,10 @@ filter_res_list_int = np.array([40, 80, 160, 320, 640, 1280])
 #           'liquid_mmr_mean','wtheta_ad_mean','wtheta_cn_mean','wql_ad_mean','wql_cn_mean',\
 #           'wqv_ad_mean', 'wqv_cn_mean', 'total_cloud_fraction']
 
-myvars = ['w_wind_mean','ww_mean','theta_mean', 'wtheta_cn_mean', 'wql_cn_mean', 'vapour_mmr_mean', \
-           'liquid_mmr_mean', 'wqv_cn_mean', 'total_cloud_fraction']
+# myvars = ['w_wind_mean','ww_mean','theta_mean', 'wtheta_cn_mean', 'wql_cn_mean', 'vapour_mmr_mean', \
+#            'liquid_mmr_mean', 'wqv_cn_mean', 'total_cloud_fraction']
+
+myvars = ['theta_mean', 'wtheta_cn_mean', 'total_cloud_fraction']
 
 #avp.time_av_prof(myvars, model_res_list, set_time, mydir, 'bomex_og')
 
