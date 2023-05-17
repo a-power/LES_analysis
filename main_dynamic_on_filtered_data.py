@@ -36,28 +36,7 @@ if case_in=='BOMEX':
         outdir = outdir_og + f'/20m_gauss_dyn/on_{opgrid}_grid/filtering_filtered/'
         plotdir = outdir_og + 'plots/dyn/'
 
-elif case_in=='ARM':
-        in_dir = f'/work/scratch-pw3/apower/ARM/on_{opgrid}_grid/'
-        outdir = in_dir + 'filtering_filtered/'
-        plotdir = outdir + 'plots/dyn/'
-        model_res_list = [None]
-        plotdir = outdir + 'plots/dyn/'
-
-
-################################
-
-
-os.makedirs(outdir, exist_ok = True)
-os.makedirs(plotdir, exist_ok = True)
-
-filter_name = 'gaussian'  # "wave_cutoff"
-
-#Note short serial queue on JASMIN times out after 3 filter scales
-#Sigma = hat(Delta)/2
-
-opgrid = 'p'
-
-options = {
+        options = {
         'FFT_type': 'RFFT',
         'save_all': 'Yes',
         'override': True,
@@ -76,6 +55,51 @@ options = {
                     }
 
           }
+
+elif case_in=='ARM':
+        in_dir = f'/work/scratch-pw3/apower/ARM/on_{opgrid}_grid/'
+        outdir = in_dir + 'filtering_filtered/'
+        plotdir = outdir + 'plots/dyn/'
+        model_res_list = [None]
+        plotdir = outdir + 'plots/dyn/'
+
+        options = {
+        'FFT_type': 'RFFT',
+        'save_all': 'Yes',
+        'override': True,
+        'th_ref': 300.0,
+        'dx': 25.0,
+        'dy': 25.0,
+        'domain' : 19.2,
+
+        'aliases': {'u': [f'f(u_on_{opgrid})_r'],
+                    'v': [f'f(v_on_{opgrid})_r'],
+                    'w': [f'f(w_on_{opgrid})_r'],
+                    'th': [f'f(th_on_{opgrid})_r'],
+                    'q_total_f': [f'f(q_total_on_{opgrid})_r'],
+                    'th_v': [f'f(th_v_on_{opgrid})_r'],
+                    'q_cloud_liquid_mass': [f'f(q_cloud_liquid_mass_on_{opgrid})_r']
+                    }
+
+          }
+
+else:
+    print(case_in, ": case isn't coded for yet")
+
+
+################################
+
+
+os.makedirs(outdir, exist_ok = True)
+os.makedirs(plotdir, exist_ok = True)
+
+filter_name = 'gaussian'  # "wave_cutoff"
+
+#Note short serial queue on JASMIN times out after 3 filter scales
+#Sigma = hat(Delta)/2
+
+opgrid = 'p'
+
 
 for j in range(len(set_time)):
         for i, model_res in enumerate(model_res_list):

@@ -267,8 +267,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
 
     ds_in.close()
 
-    dataset = xr.open_dataset(file_in, chunks={timevar: 1,
-                                                      xvar: nch, yvar: nch,
+    dataset = xr.open_dataset(file_in, chunks={timevar: 1, xvar: nch, yvar: nch,
                                                       'z': 'auto', 'zn': 'auto'}) #preprocess: check versions
 
     if ref_file is not None:
@@ -326,8 +325,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
             print('Derived data file exists')
         else:
 
-            var_list = [
-                        "u",
+            var_list = ["u",
                         "v",
                         "w",
                         "th",
