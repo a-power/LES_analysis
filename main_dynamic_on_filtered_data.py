@@ -15,7 +15,7 @@ start = args.start_in
 filters_start = args.start_filt
 how_many_filters = args.n_filts #eg 6 = 0->5: ga00.nc -> ga05.nc
 
-case='ARM'
+case_in='ARM'
 #set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
 opgrid = 'p'
 
@@ -29,14 +29,14 @@ else:
         print('need to set up the sigma list for start = ', start)
 
 
-if case=='BOMEX':
+if case_in=='BOMEX':
         in_dir = f'/work/scratch-pw3/apower/20m_gauss_dyn/on_{opgrid}_grid/BOMEX_m'
         model_res_list = ['0020_g0800']
         outdir_og = '/work/scratch-pw3/apower/'
         outdir = outdir_og + f'/20m_gauss_dyn/on_{opgrid}_grid/filtering_filtered/'
         plotdir = outdir_og + 'plots/dyn/'
 
-elif case=='ARM':
+elif case_in=='ARM':
         in_dir = f'/work/scratch-pw3/apower/ARM/on_{opgrid}_grid/'
         outdir = in_dir + 'filtering_filtered/'
         plotdir = outdir + 'plots/dyn/'
@@ -82,4 +82,4 @@ for j in range(len(set_time)):
             for k in range(how_many_filters - filters_start):
                 dy_s.run_dyn_on_filtered(model_res, set_time[j], filter_name, sigma_list*2**(k+filters_start), in_dir,
                                          outdir, options, opgrid, start_point=start, filtered_data =
-                                         f'ga0{str(k+filters_start)}', ref_file = None, time_name='time')
+                                         f'ga0{str(k+filters_start)}', ref_file = None, time_name='time', case=case_in)
