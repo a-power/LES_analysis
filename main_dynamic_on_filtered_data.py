@@ -1,29 +1,57 @@
 import dynamic_script as dy_s #dot to get folder outside
 import numpy as np
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--times', type=str, default='14400')
+parser.add_argument('--start_in', type=int, default=0)
+parser.add_argument('--start_filt', type=int, default=0)
+parser.add_argument('--n_filts', type=int, default=6)
+
+args = parser.parse_args()
+set_time = [ args.times ]
+start = args.start_in
+filters_start = args.start_filt
+how_many_filters = args.n_filts #eg 6 = 0->5: ga00.nc -> ga05.nc
+
+case='ARM'
+#set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
+opgrid = 'p'
+
+filter_name = 'gaussian'  # "wave_cutoff"
+#Sigma = hat(Delta)/2
+if start == 0:
+        sigma_list = np.array([20, 40]) #dont forget CHANGE start time if youre short-serial filtering
+elif start == 1:
+        sigma_list = np.array([40])
+else:
+        print('need to set up the sigma list for start = ', start)
 
 
-set_time = ['14400'] # , '21600', '48600'
-in_dir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/BOMEX_m'
-model_res_list = ['0020_g0800']
+if case=='BOMEX':
+        in_dir = f'/work/scratch-pw3/apower/20m_gauss_dyn/on_{opgrid}_grid/BOMEX_m'
+        model_res_list = ['0020_g0800']
+        outdir_og = '/work/scratch-pw3/apower/'
+        outdir = outdir_og + f'/20m_gauss_dyn/on_{opgrid}_grid/filtering_filtered/'
+        plotdir = outdir_og + 'plots/dyn/'
 
-#use_filtered_data = 'ga00' #set in loop #set to string if you want to filter a previously filtered dataset,
-# and give 'ga00' or whatever, if want to filter LES data set to an int 0 or something
+elif case=='ARM':
+        in_dir = f'/work/scratch-pw3/apower/ARM/on_{opgrid}_grid/'
+        outdir = in_dir + 'filtering_filtered/'
+        plotdir = outdir + 'plots/dyn/'
+        model_res_list = [None]
+        plotdir = outdir + 'plots/dyn/'
 
-#dont forget to change dx and dy in options
-start_point_filtering = 0 #for labelling output files: ie skiping ga00.nc and going straight to ga03.nc if set =3
 
-outdir_og = '/work/scratch-pw3/apower/'
-outdir = outdir_og + '20m_gauss_dyn' + '/on_p_grid/' + 'filtering_filtered' +'/'
-plotdir = outdir_og+'plots/dyn/'
+################################
+
 
 os.makedirs(outdir, exist_ok = True)
 os.makedirs(plotdir, exist_ok = True)
 
 filter_name = 'gaussian'  # "wave_cutoff"
-sigma_list = np.array([20, 40])
-how_many_filters = 6 #eg 6 = 0->5: ga00.nc -> ga05.nc
-filters_start=4
+
 #Note short serial queue on JASMIN times out after 3 filter scales
 #Sigma = hat(Delta)/2
 
@@ -51,7 +79,7 @@ options = {
 
 for j in range(len(set_time)):
         for i, model_res in enumerate(model_res_list):
-            for k in range(how_many_filters-filters_start):
-                dy_s.run_dyn_on_filtered(model_res, set_time[j], filter_name, sigma_list*2**(k+filters_start), in_dir, outdir, options, \
-                            opgrid, start_point=start_point_filtering, filtered_data = f'ga0{str(k+filters_start)}', ref_file = None, \
-                                         time_name='time')
+            for k in range(how_many_filters - filters_start):
+                dy_s.run_dyn_on_filtered(model_res, set_time[j], filter_name, sigma_list*2**(k+filters_start), in_dir,
+                                         outdir, options, opgrid, start_point=start, filtered_data =
+                                         f'ga0{str(k+filters_start)}', ref_file = None, time_name='time')

@@ -228,12 +228,14 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
 
 
 def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, filtered_data, start_point=0,
-            ref_file = None, time_name = 'time_series_600_600'):
+            ref_file = None, time_name = 'time_series_600_600', case='ARM'):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
-
-    file_in = f'{indir}{res_in}_all_{time_in}_gaussian_filter_{filtered_data}.nc'
+    if case=='BOMEX':
+        file_in = f'{indir}{res_in}_all_{time_in}_gaussian_filter_{filtered_data}.nc'
+    elif case=='ARM':
+        file_in = f'{indir}/diagnostics_3d_ts_{time_in}_gaussian_filter_{filtered_data}.nc'
 
     ds_in = xr.open_dataset(file_in)
     time_data = ds_in[time_name]
@@ -349,13 +351,17 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         ["u", "th"],
                         ["v", "th"],
                         ["w", "th"],
+                        ["u", "th_v"],
+                        ["v", "th_v"],
                         ["w", "th_v"],
                         ["u", "q_total_f"],
                         ["v", "q_total_f"],
                         ["w", "q_total_f"],
+                        ["w", "q_vapour"],
+                        ["w", "q_cloud_liquid_mass"],
+                        ["th_v", "q_total"],
                         ["q_total_f", "q_total_f"]
                         ]
-
 
             quad_field_list = sf.filter_variable_pair_list(dataset,
                                                            ref_dataset,
