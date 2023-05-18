@@ -355,9 +355,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         ["u", "q_total_f"],
                         ["v", "q_total_f"],
                         ["w", "q_total_f"],
-                        ["w", "q_vapour"],
-                        ["w", "q_cloud_liquid_mass"],
-                        ["th_v", "q_total"],
+                        ["th_v", "q_total_f"],
                         ["q_total_f", "q_total_f"]
                         ]
 
