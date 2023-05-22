@@ -15,7 +15,7 @@ if beta == True:
     if C_or_LM == 'C':
         scale_invar_dir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
-    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/diff_C_calc/'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/fitting_relations/'
 
 else:
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
@@ -27,7 +27,7 @@ file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
 mydir = homedir + file_name
 
 if C_or_LM == 'C':
-    #C_or_LM_profs = ['Cs_sq', 'Cth_sq', 'Cqt_sq']
+    C_or_LM_profs_inv = ['Cs_sq', 'Cth_sq', 'Cqt_sq']
     C_or_LM_profs = [['LM', 'HR_th', 'HR_qt'],
                      ['MM', 'RR_th', 'RR_qt']]
 elif C_or_LM == 'LM':
@@ -42,9 +42,9 @@ else:
 os.makedirs(plotdir, exist_ok = True)
 
 if beta == True:
-    # if C_or_LM == 'C':
-    #     data_2D = xr.open_dataset(scale_invar_dir + file_name + f'2D.nc')
-    #     data_4D = xr.open_dataset(scale_invar_dir + file_name + f'4D.nc')
+    if C_or_LM == 'C':
+        data_2D = xr.open_dataset(scale_invar_dir + file_name + f'2D.nc')
+        data_4D = xr.open_dataset(scale_invar_dir + file_name + f'4D.nc')
 
     data_2D_0 = xr.open_dataset(mydir + f'2D_0.nc')
     data_4D_0 = xr.open_dataset(mydir + f'4D_0.nc')
@@ -60,32 +60,32 @@ if beta == True:
     data_32D_1 = xr.open_dataset(mydir + f'32D_1.nc')
     data_64D_1 = xr.open_dataset(mydir + f'64D_1.nc')
 
-    # if C_or_LM == 'C':
-    #     if what_plotting == '_0':
-    #         data_list = [data_2D, data_2D_0, data_4D_0, data_8D_0, data_16D_0, data_32D_0, data_64D_0]
-    #         set_labels = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
-    #                       '16$\\Delta$', '32$\\Delta$', '64$\\Delta$', '$128\\Delta$']
-    #         deltas_in = ['2D', '4D', '8D', '16D', '32D', '64D', '128D']
-    #         delta_numbers = np.array((2, 4, 8, 16, 32, 64, 128))
-    #     elif what_plotting == '_1':
-    #         data_list = [data_4D, data_2D_1, data_4D_1, data_8D_1, data_16D_1, data_32D_1, data_64D_1]
-    #         set_labels = ['4$\\Delta$', '8$\\Delta$', '16$\\Delta$',
-    #                       '32$\\Delta$', '64$\\Delta$', '$128\\Delta$', '$256\\Delta$']
-    #         deltas_in = ['4D', '8D', '16D', '32D', '64D', '128D', '256D']
-    #         delta_numbers = np.array((4, 8, 16, 32, 64, 128, 256))
-    #     else:
-    #         data_list = [[data_2D, data_2D_0, data_4D_0, data_8D_0, data_16D_0, data_32D_0, data_64D_0],
-    #                 [data_4D, data_2D_1, data_4D_1, data_8D_1, data_16D_1, data_32D_1, data_64D_1]]
-    #         set_labels = ['$\\Delta$', '2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
-    #                       '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']
-    #         deltas_in = ['D' '2D', '4D', '8D', '16D', '32D', '64D', '128D']
-    #         delta_numbers = np.array((1, 2, 4, 8, 16, 32, 64))
-    #else:
-    data_list = [data_2D_0, data_4D_0, data_8D_0, data_16D_0, data_32D_0, data_64D_0]
-    set_labels = ['4$\\Delta$', '8$\\Delta$', '16$\\Delta$',
-                  '32$\\Delta$', '64$\\Delta$', '$128\\Delta$']
-    deltas_in = ['4D', '8D', '16D', '32D', '64D', '128D']
-    delta_numbers = np.array((4, 8, 16, 32, 64, 128))
+    if C_or_LM == 'C':
+        if what_plotting == '_0':
+            data_list = [data_2D, data_2D_0, data_4D_0, data_8D_0, data_16D_0, data_32D_0, data_64D_0]
+            set_labels = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
+                          '16$\\Delta$', '32$\\Delta$', '64$\\Delta$', '$128\\Delta$']
+            deltas_in = ['2D', '4D', '8D', '16D', '32D', '64D', '128D']
+            delta_numbers = np.array((2, 4, 8, 16, 32, 64, 128))
+        elif what_plotting == '_1':
+            data_list = [data_4D, data_2D_1, data_4D_1, data_8D_1, data_16D_1, data_32D_1, data_64D_1]
+            set_labels = ['4$\\Delta$', '8$\\Delta$', '16$\\Delta$',
+                          '32$\\Delta$', '64$\\Delta$', '$128\\Delta$', '$256\\Delta$']
+            deltas_in = ['4D', '8D', '16D', '32D', '64D', '128D', '256D']
+            delta_numbers = np.array((4, 8, 16, 32, 64, 128, 256))
+        else:
+            data_list = [[data_2D, data_2D_0, data_4D_0, data_8D_0, data_16D_0, data_32D_0, data_64D_0],
+                    [data_4D, data_2D_1, data_4D_1, data_8D_1, data_16D_1, data_32D_1, data_64D_1]]
+            set_labels = ['$\\Delta$', '2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
+                          '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']
+            deltas_in = ['D' '2D', '4D', '8D', '16D', '32D', '64D', '128D']
+            delta_numbers = np.array((1, 2, 4, 8, 16, 32, 64))
+    else:
+        data_list = [data_2D_0, data_4D_0, data_8D_0, data_16D_0, data_32D_0, data_64D_0]
+        set_labels = ['4$\\Delta$', '8$\\Delta$', '16$\\Delta$',
+                      '32$\\Delta$', '64$\\Delta$', '$128\\Delta$']
+        deltas_in = ['4D', '8D', '16D', '32D', '64D', '128D']
+        delta_numbers = np.array((4, 8, 16, 32, 64, 128))
 
 
 else:
@@ -131,27 +131,32 @@ if what_plotting=='_beta':
             print('j = ', j)
             print('i = ', i)
 
+            if i == 0:
+                my_C_or_LM_profs = C_or_LM_profs_inv
+            else:
+                my_C_or_LM_profs = C_or_LM_profs
+
             print('shape of C data being imported =', np.shape(data_list[i]['Cs_sq_prof'].data))
 
-            Cs_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[0]}_prof'].data[0, ...]
-            Cth_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[1]}_prof'].data[0, ...]
-            Cqt_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[2]}_prof'].data[0, ...]
+            Cs_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[0]}_prof'].data[0, ...]
+            Cth_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[1]}_prof'].data[0, ...]
+            Cqt_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[2]}_prof'].data[0, ...]
 
-            Cs_env_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[0]}_env_prof'].data[0, ...]
-            Cth_env_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[1]}_env_prof'].data[0, ...]
-            Cqt_env_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[2]}_env_prof'].data[0, ...]
+            Cs_env_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[0]}_env_prof'].data[0, ...]
+            Cth_env_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[1]}_env_prof'].data[0, ...]
+            Cqt_env_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[2]}_env_prof'].data[0, ...]
 
-            Cs_cloud_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[0]}_cloud_prof'].data[0, ...]
-            Cth_cloud_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[1]}_cloud_prof'].data[0, ...]
-            Cqt_cloud_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[2]}_cloud_prof'].data[0, ...]
+            Cs_cloud_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[0]}_cloud_prof'].data[0, ...]
+            Cth_cloud_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[1]}_cloud_prof'].data[0, ...]
+            Cqt_cloud_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[2]}_cloud_prof'].data[0, ...]
 
-            Cs_w_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[0]}_w_prof'].data[0, ...]
-            Cth_w_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[1]}_w_prof'].data[0, ...]
-            Cqt_w_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[2]}_w_prof'].data[0, ...]
+            Cs_w_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[0]}_w_prof'].data[0, ...]
+            Cth_w_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[1]}_w_prof'].data[0, ...]
+            Cqt_w_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[2]}_w_prof'].data[0, ...]
 
-            Cs_w_th_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[0]}_w_th_prof'].data[0, ...]
-            Cth_w_th_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[1]}_w_th_prof'].data[0, ...]
-            Cqt_w_th_sq_temp[j, i, :] = data_list[i][f'{C_or_LM_profs[2]}_w_th_prof'].data[0, ...]
+            Cs_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[0]}_w_th_prof'].data[0, ...]
+            Cth_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[1]}_w_th_prof'].data[0, ...]
+            Cqt_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[2]}_w_th_prof'].data[0, ...]
 
     Cs_sq = Cs_sq_temp[0,...] / dyn.beta_calc(Cs_sq_temp[0,...], Cs_sq_temp[1,...])
     Cth_sq = Cth_sq_temp[0, ...] / dyn.beta_calc(Cth_sq_temp[0, ...], Cth_sq_temp[1, ...])
@@ -193,25 +198,50 @@ else:
 
     for i in range(len(data_list)):
         if C_or_LM == 'C':
-            Cs_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_prof'].data[0, ...] )
-            Cth_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_prof'].data[0, ...] )
-            Cqt_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_prof'].data[0, ...] )
 
-            Cs_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_env_prof'].data[0, ...] )
-            Cth_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_env_prof'].data[0, ...] )
-            Cqt_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_env_prof'].data[0, ...] )
+            if i == 0:
 
-            Cs_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_cloud_prof'].data[0, ...] )
-            Cth_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_cloud_prof'].data[0, ...] )
-            Cqt_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_cloud_prof'].data[0, ...] )
+                Cs_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[0]}_prof'].data[0, ...]
+                Cth_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[1]}_prof'].data[0, ...]
+                Cqt_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[2]}_prof'].data[0, ...]
 
-            Cs_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_prof'].data[0, ...] )
-            Cth_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_prof'].data[0, ...] )
-            Cqt_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_prof'].data[0, ...] )
+                Cs_env_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[0]}_env_prof'].data[0, ...]
+                Cth_env_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[1]}_env_prof'].data[0, ...]
+                Cqt_env_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[2]}_env_prof'].data[0, ...]
 
-            Cs_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_th_prof'].data[0, ...] )
-            Cth_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_th_prof'].data[0, ...] )
-            Cqt_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_th_prof'].data[0, ...] )
+                Cs_cloud_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[0]}_cloud_prof'].data[0, ...]
+                Cth_cloud_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[1]}_cloud_prof'].data[0, ...]
+                Cqt_cloud_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[2]}_cloud_prof'].data[0, ...]
+
+                Cs_w_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[0]}_w_prof'].data[0, ...]
+                Cth_w_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[1]}_w_prof'].data[0, ...]
+                Cqt_w_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[2]}_w_prof'].data[0, ...]
+
+                Cs_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[0]}_w_th_prof'].data[0, ...]
+                Cth_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[1]}_w_th_prof'].data[0, ...]
+                Cqt_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[2]}_w_th_prof'].data[0, ...]
+
+            else:
+
+                Cs_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_prof'].data[0, ...] )
+                Cth_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_prof'].data[0, ...] )
+                Cqt_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_prof'].data[0, ...] )
+
+                Cs_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_env_prof'].data[0, ...] )
+                Cth_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_env_prof'].data[0, ...] )
+                Cqt_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_env_prof'].data[0, ...] )
+
+                Cs_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_cloud_prof'].data[0, ...] )
+                Cth_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_cloud_prof'].data[0, ...] )
+                Cqt_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_cloud_prof'].data[0, ...] )
+
+                Cs_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_prof'].data[0, ...] )
+                Cth_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_prof'].data[0, ...] )
+                Cqt_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_prof'].data[0, ...] )
+
+                Cs_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_th_prof'].data[0, ...] )
+                Cth_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_th_prof'].data[0, ...] )
+                Cqt_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_th_prof'].data[0, ...] )
         else:
             Cs_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_prof'].data[0, ...]
             Cth_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_prof'].data[0, ...]
