@@ -15,6 +15,7 @@ start = args.start_in
 filters_start = args.start_filt
 how_many_filters = args.n_filts #eg 6 = 0->5: ga00.nc -> ga05.nc
 
+
 case_in='ARM'
 #set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
 opgrid = 'p'
