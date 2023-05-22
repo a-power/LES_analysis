@@ -101,10 +101,17 @@ filter_name = 'gaussian'  # "wave_cutoff"
 
 opgrid = 'p'
 
+if start==0:
+    for j in range(len(set_time)):
+            for i, model_res in enumerate(model_res_list):
+                for k in range(how_many_filters - filters_start):
+                    dy_s.run_dyn_on_filtered(model_res, set_time[j], filter_name, sigma_list*2**(k+filters_start), in_dir,
+                                             outdir, options, opgrid, start_point=start, filtered_data =
+                                             f'ga0{str(k+filters_start)}', ref_file = None, time_name='time', case=case_in)
 
-for j in range(len(set_time)):
+elif start == 1:
+    for j in range(len(set_time)):
         for i, model_res in enumerate(model_res_list):
-            for k in range(how_many_filters - filters_start):
-                dy_s.run_dyn_on_filtered(model_res, set_time[j], filter_name, sigma_list*2**(k+filters_start), in_dir,
-                                         outdir, options, opgrid, start_point=start, filtered_data =
-                                         f'ga0{str(k+filters_start)}', ref_file = None, time_name='time', case=case_in)
+            dy_s.run_dyn_on_filtered(model_res, set_time[j], filter_name, sigma_list * 2 ** (filters_start),
+                                         in_dir, outdir, options, opgrid, start_point=start, filtered_data=
+                                         f'ga0{str(filters_start)}', ref_file=None, time_name='time', case=case_in)
