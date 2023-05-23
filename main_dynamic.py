@@ -18,8 +18,16 @@ opgrid = 'p'
 
 filter_name = 'gaussian'  # "wave_cutoff"
 #Sigma = hat(Delta)/2
+
+###################################
+#                                 #
+#   NEEDS TO CHANGE BASED ON DX   #
+#                                 #
+###################################
+
+
 if start == 0:
-        sigma_list = np.array([20, 40, 80, 160, 320, 640]) #dont forget CHANGE start time if youre short-serial filtering
+        sigma_list = np.array([20, 40, 80, 160, 320, 640])
 elif start == 1:
         sigma_list = np.array([40, 80, 160, 320, 640])
 elif start == 2:
@@ -52,7 +60,7 @@ elif case=='ARM':
 os.makedirs(outdir, exist_ok = True)
 os.makedirs(plotdir, exist_ok = True)
 
-options = {
+options_ARM = {
         'FFT_type': 'RFFT',
         'save_all': 'Yes',
         'th_ref': 300.0,
@@ -75,5 +83,5 @@ options_BOMEX = {
 
 for j in range(len(set_time)):
         for i, model_res in enumerate(model_res_list):
-                dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, options, \
+                dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, options_ARM, \
                             opgrid, start_point=start, ref_file = None)
