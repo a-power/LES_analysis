@@ -78,7 +78,7 @@ if beta == True:
                     [data_4D, data_2D_1, data_4D_1, data_8D_1, data_16D_1, data_32D_1, data_64D_1]]
             set_labels = ['$\\Delta$', '2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
                           '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']
-            deltas_in = ['D' '2D', '4D', '8D', '16D', '32D', '64D', '128D']
+            deltas_in = ['D' '2D', '4D', '8D', '16D', '32D', '64D']
             delta_numbers = np.array((1, 2, 4, 8, 16, 32, 64))
     else:
         data_list = [data_2D_0, data_4D_0, data_8D_0, data_16D_0, data_32D_0, data_64D_0]
@@ -380,6 +380,10 @@ Cqt_sq_cond = [Cqt_sq, Cqt_env_sq, Cqt_cloud_sq, Cqt_w_sq, Cqt_w_th_sq]
 Cs_sq_cond = np.reshape(Cs_sq_cond, ( np.shape(Cs_sq_cond)[0], np.shape(Cs_sq_cond)[1], np.shape(Cs_sq_cond)[2] ))
 Cth_sq_cond = np.reshape(Cth_sq_cond, ( np.shape(Cth_sq_cond)[0], np.shape(Cth_sq_cond)[1], np.shape(Cth_sq_cond)[2] ))
 Cqt_sq_cond = np.reshape(Cqt_sq_cond, ( np.shape(Cqt_sq_cond)[0], np.shape(Cqt_sq_cond)[1], np.shape(Cqt_sq_cond)[2] ))
+
+np.save('Cs_sq_cond.npy', Cs_sq_cond)
+np.save('Cth_sq_cond.npy', Cth_sq_cond)
+np.save('Cqt_sq_cond.npy', Cqt_sq_cond)
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, interp=False, C_sq_to_C = True,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core']):
