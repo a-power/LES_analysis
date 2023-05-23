@@ -43,8 +43,8 @@ os.makedirs(plotdir, exist_ok = True)
 
 if beta == True:
     if C_or_LM == 'C':
-        data_2D = xr.open_dataset(scale_invar_dir + file_name + f'2D.nc')
-        data_4D = xr.open_dataset(scale_invar_dir + file_name + f'4D.nc')
+        data_2D = xr.open_dataset(scale_invar_dir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_' + f'2D.nc')
+        data_4D = xr.open_dataset(scale_invar_dir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_C_' + f'4D.nc')
 
     data_2D_0 = xr.open_dataset(mydir + f'2D_0.nc')
     data_4D_0 = xr.open_dataset(mydir + f'4D_0.nc')
