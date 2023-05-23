@@ -26,7 +26,6 @@ file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
 mydir = homedir + file_name
 
 if C_or_LM == 'C':
-    C_or_LM_profs_inv = ['Cs_sq', 'Cth_sq', 'Cqt_sq']
     C_or_LM_profs = [['LM', 'HR_th', 'HR_qt'],
                      ['MM', 'RR_th', 'RR_qt']]
 elif C_or_LM == 'LM':
@@ -195,49 +194,26 @@ else:
     for i in range(len(data_list)):
         if C_or_LM == 'C':
 
-            if i == 0:
 
-                Cs_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[0]}_prof'].data[0, ...]
-                Cth_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[1]}_prof'].data[0, ...]
-                Cqt_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[2]}_prof'].data[0, ...]
+            Cs_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_prof'].data[0, ...] )
+            Cth_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_prof'].data[0, ...] )
+            Cqt_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_prof'].data[0, ...] )
 
-                Cs_env_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[0]}_env_prof'].data[0, ...]
-                Cth_env_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[1]}_env_prof'].data[0, ...]
-                Cqt_env_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[2]}_env_prof'].data[0, ...]
+            Cs_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_env_prof'].data[0, ...] )
+            Cth_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_env_prof'].data[0, ...] )
+            Cqt_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_env_prof'].data[0, ...] )
 
-                Cs_cloud_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[0]}_cloud_prof'].data[0, ...]
-                Cth_cloud_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[1]}_cloud_prof'].data[0, ...]
-                Cqt_cloud_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[2]}_cloud_prof'].data[0, ...]
+            Cs_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_cloud_prof'].data[0, ...] )
+            Cth_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_cloud_prof'].data[0, ...] )
+            Cqt_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_cloud_prof'].data[0, ...] )
 
-                Cs_w_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[0]}_w_prof'].data[0, ...]
-                Cth_w_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[1]}_w_prof'].data[0, ...]
-                Cqt_w_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[2]}_w_prof'].data[0, ...]
+            Cs_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_prof'].data[0, ...] )
+            Cth_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_prof'].data[0, ...] )
+            Cqt_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_prof'].data[0, ...] )
 
-                Cs_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[0]}_w_th_prof'].data[0, ...]
-                Cth_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[1]}_w_th_prof'].data[0, ...]
-                Cqt_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs_inv[2]}_w_th_prof'].data[0, ...]
-
-            else:
-
-                Cs_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_prof'].data[0, ...] )
-                Cth_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_prof'].data[0, ...] )
-                Cqt_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_prof'].data[0, ...] )
-
-                Cs_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_env_prof'].data[0, ...] )
-                Cth_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_env_prof'].data[0, ...] )
-                Cqt_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_env_prof'].data[0, ...] )
-
-                Cs_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_cloud_prof'].data[0, ...] )
-                Cth_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_cloud_prof'].data[0, ...] )
-                Cqt_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_cloud_prof'].data[0, ...] )
-
-                Cs_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_prof'].data[0, ...] )
-                Cth_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_prof'].data[0, ...] )
-                Cqt_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_prof'].data[0, ...] )
-
-                Cs_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_th_prof'].data[0, ...] )
-                Cth_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_th_prof'].data[0, ...] )
-                Cqt_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_th_prof'].data[0, ...] )
+            Cs_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_th_prof'].data[0, ...] )
+            Cth_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_th_prof'].data[0, ...] )
+            Cqt_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_th_prof'].data[0, ...] )
         else:
             Cs_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_prof'].data[0, ...]
             Cth_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_prof'].data[0, ...]
