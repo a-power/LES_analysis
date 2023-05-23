@@ -19,7 +19,7 @@ if case == 'BOMEX':
     path20f = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
     file20 = f"BOMEX_m0020_g0800_all_{set_time}_gaussian_filter_"
 elif case == 'ARM':
-    path20f = '/work/scratch-pw3/apower/ARM/on_p_grid/filtered_filters/'
+    path20f = '/work/scratch-pw3/apower/ARM/on_p_grid/filtering_filtered/'
     file20 = f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
 else:
     print('case not yet programmed')
