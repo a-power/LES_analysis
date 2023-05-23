@@ -31,7 +31,7 @@ dirs = [dir_cloud]#mydir]#,
 
 if beta == True:
     res = ['0', '1', '2', '3', '4', '5']
-    num_filts = ['1']
+    num_filts = ['0', '1']
 else:
     res = ['2D', '4D', '8D', '16D', '32D', '64D']
     num_filts = ['0']
