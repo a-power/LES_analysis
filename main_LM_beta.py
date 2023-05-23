@@ -2,12 +2,27 @@ import dynamic_script as dy_s
 from subfilter.io.dataout import save_field
 import os
 import xarray as xr
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--times', type=str, default='14400')
+
+args = parser.parse_args()
+set_time = args.times
+
+case = 'ARM' # 'BOMEX'
 
 av_type = 'all'
 mygrid = 'p'
 
-path20f = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
-file20 = "BOMEX_m0020_g0800_all_14400_gaussian_filter_"
+if case == 'BOMEX':
+    path20f = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
+    file20 = f"BOMEX_m0020_g0800_all_{set_time}_gaussian_filter_"
+elif case == 'ARM':
+    path20f = '/work/scratch-pw3/apower/ARM/on_p_grid/beta_filtered_filters/'
+    file20 = f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
+else:
+    print('case not yet programmed')
 
 scalar = ['momentum', 'th', 'q_total_f']
 set_save_all = 2
