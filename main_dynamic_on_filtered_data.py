@@ -115,3 +115,6 @@ elif start == 1:
             dy_s.run_dyn_on_filtered(model_res, set_time[j], filter_name, sigma_list * 2 ** (filters_start),
                                          in_dir, outdir, options, opgrid, start_point=start, filtered_data=
                                          f'ga0{str(filters_start)}', ref_file=None, time_name='time', case=case_in)
+
+else:
+    print('start needs to be 1 or 0')
