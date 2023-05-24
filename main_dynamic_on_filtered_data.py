@@ -58,7 +58,7 @@ if case_in=='BOMEX':
           }
 
 elif case_in=='ARM':
-        in_dir = f'/work/scratch-pw3/apower/ARM/on_{opgrid}_grid/'
+        in_dir = f'/work/scratch-pw3/apower/ARM/corrected_sigmas/'
         outdir = in_dir + 'filtering_filtered/'
         plotdir = outdir + 'plots/dyn/'
         model_res_list = [None]
