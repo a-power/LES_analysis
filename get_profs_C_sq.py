@@ -29,7 +29,7 @@ if case == 'BOMEX':
 
 elif case == 'ARM':
     homedir = '/work/scratch-pw3/apower/ARM/on_p_grid/filtering_filtered/'
-    dir_contour = homedir + f'diagnostics_3d_ts_{set_time}_gaussian_filter_'
+    dir_contour = homedir + f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     myfile = f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
 
 av_type = 'all'
