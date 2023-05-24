@@ -3,26 +3,46 @@ import matplotlib.pyplot as plt
 import xarray as xr
 import os
 import dynamic_functions as dyn
+import argparse
 
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--times', type=str, default='18000')
+args = parser.parse_args()
+set_time = args.times
+
+case = 'ARM'
 
 beta=True
 what_plotting='_0'
 C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 
-if beta == True:
+if case == 'ARM':
 
     homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/fitting_relations/'
+    file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
+
+elif case == 'BOMEX':
+    beta=True
+    what_plotting='_0'
+    C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
+    if beta == True:
+        homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
+        plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/fitting_relations/'
+    else:
+        homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
+        plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_1e-7/diff_C_calc/'
+    # if C_or_LM == 'MM':
+    file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
+    # else:
+    #     file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_{C_or_LM}_'
 
 else:
-    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
-    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_1e-7/diff_C_calc/'
-# if C_or_LM == 'MM':
-file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
-# else:
-#     file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_{C_or_LM}_'
+    print('need to def case')
+
 mydir = homedir + file_name
 
 if C_or_LM == 'C':
