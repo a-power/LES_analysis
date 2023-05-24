@@ -126,10 +126,7 @@ if what_plotting=='_beta':
             print('j = ', j)
             print('i = ', i)
 
-            if i == 0:
-                my_C_or_LM_profs = C_or_LM_profs_inv
-            else:
-                my_C_or_LM_profs = C_or_LM_profs
+            my_C_or_LM_profs = C_or_LM_profs
 
             print('shape of C data being imported =', np.shape(data_list[i]['Cs_sq_prof'].data))
 
