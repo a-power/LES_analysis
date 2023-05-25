@@ -115,12 +115,10 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
     if deltas==None:
         deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
-    data_field_len = xr.open_dataset(data_field_list + '2D_running_mean_filter_rm00.nc')
-
     for i in range(len(deltas)):
         cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_contour+f'{i}_running_mean_filter_rm00.nc')
 
-        data_field = data_field_list+f'{deltas[i]}_running_mean_filter_rm00.nc'
+        data_field = data_field_list+f'{i}_0_running_mean_filter_rm00.nc'
         data_field_in = xr.open_dataset(data_field)
 
         if other_vars!=None:
