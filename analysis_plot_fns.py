@@ -658,12 +658,20 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
     else:
 
         if beta==True:
-            print(f'length of time array for {field} is ',
-                  len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
-            data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
+
+            if f'f({field}_on_{grid})_r' in data_set:
+                data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
+            elif f'{field}' in data_set:
+                data_field = data_set[f'{field}'].data[...]
+
+            #print(f'length of time array for {field} is ', len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
+
         else:
-            print('length of time array for HR_qt is ', len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
-            data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
+            #print('length of time array for HR_qt is ', len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
+            if f'f({field}_on_{grid})_r' in data_set:
+                data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
+            elif f'{field}' in data_set:
+                data_field = data_set[f'{field}'].data[...]
 
         C=False
 
