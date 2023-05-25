@@ -116,7 +116,8 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
         deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
     for i in range(len(deltas)):
-        cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_contour+f'{i}_running_mean_filter_rm00.nc',
+        cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_contour +
+                                                                f'{i}_gaussian_filter_ga0_running_mean_filter_rm00.nc',
                                                                 cloud_liquid_threshold=cloud_liquid_threshold_in)
 
         data_field = data_field_list+f'{i}_0_running_mean_filter_rm00.nc'
@@ -125,14 +126,16 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
         if other_vars!=None:
             if return_all_in == False:
                 if len(other_vars) == 1:
-                    combo2_out_mask = clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
+                    combo2_out_mask = clo.cloudy_and_or(data_contour +
+                                                                f'{i}_gaussian_filter_ga0_running_mean_filter_rm00.nc',
                                                                other_var=other_vars, var_thres=other_var_thres,
                                                                less_greater=less_greater_in, and_or = and_or_in,
                                                                cloud_liquid_threshold=cloud_liquid_threshold_in,
                                                                res_counter=res_counter_in, return_all = return_all_in,
                                                                grid=grid_in)
                 else:
-                    combo2_out_mask, combo3_out_mask = clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
+                    combo2_out_mask, combo3_out_mask = clo.cloudy_and_or(data_contour  +
+                                                                f'{i}_gaussian_filter_ga0_running_mean_filter_rm00.nc',
                                                                other_var=other_vars, var_thres=other_var_thres,
                                                                less_greater=less_greater_in, and_or = and_or_in,
                                                                cloud_liquid_threshold=cloud_liquid_threshold_in,
@@ -140,7 +143,8 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
                                                                grid=grid_in)
             else:
                 if len(other_vars) == 1:
-                    combo2_out_mask, cloud_mask, var_mask = clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
+                    combo2_out_mask, cloud_mask, var_mask = clo.cloudy_and_or(data_contour  +
+                                                                f'{i}_gaussian_filter_ga0_running_mean_filter_rm00.nc',
                                                                other_var=other_vars, var_thres=other_var_thres,
                                                                less_greater=less_greater_in, and_or = and_or_in,
                                                                cloud_liquid_threshold=cloud_liquid_threshold_in,
@@ -148,7 +152,7 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
                                                                grid=grid_in)
                 else:
                     combo2_out_mask, combo3_out_mask, cloud_mask, var_mask, extra_var_mask = \
-                        clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
+                        clo.cloudy_and_or(data_contour + f'{i}_gaussian_filter_ga0_running_mean_filter_rm00.nc',
                                                                other_var=other_vars, var_thres=other_var_thres,
                                                                less_greater=less_greater_in, and_or = and_or_in,
                                                                cloud_liquid_threshold=cloud_liquid_threshold_in,
