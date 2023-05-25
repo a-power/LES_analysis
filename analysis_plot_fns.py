@@ -7,6 +7,7 @@ import dynamic_functions as dyn
 from matplotlib import cm
 from matplotlib.colors import TwoSlopeNorm
 import xarray as xr
+import os
 from matplotlib.ticker import FormatStrFormatter
 
 def negs_in_field(plotdir, field, data_field_list, data_cl_list):
@@ -113,6 +114,8 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
 
     if deltas==None:
         deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+
+    data_field_len = xr.open_dataset(data_field_list + '2D_running_mean_filter_rm00.nc')
 
     for i in range(len(deltas)):
         cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_contour+f'{i}_running_mean_filter_rm00.nc')
@@ -248,6 +251,14 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
                           data_names = ["Cloud", "Cloud updraft", "Cloud core"],
                           bins_in=set_bins)
 
+        np.save( plotdir + f'data/{deltas[i]}_{field}_flat_domain', data_field.flatten() )
+        np.save( plotdir + f'data/{deltas[i]}_{field}_flat_ML', data_field_env[..., 0:24].flatten() )
+        np.save( plotdir + f'data/{deltas[i]}_{field}_flat_clear_sky', data_field_env[..., 24:151].flatten() )
+        np.save( plotdir + f'data/{deltas[i]}_{field}_flat_cloud', data_field_cloud.flatten() )
+
+        if len(other_vars) == 2:
+            np.save( plotdir + f'data/{deltas[i]}_{field}_flat_cloud_up', data_field_cloud_up.flatten() )
+            np.save( plotdir + f'data/{deltas[i]}_{field}_flat_cloud_core', data_field_cloud_core.flatten() )
 
     plt.close('all')
 
