@@ -17,13 +17,15 @@ how_many_filters = args.n_filts #eg 6 = 0->5: ga00.nc -> ga05.nc
 
 MY_dx = 25
 case_in='ARM'
-#set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
+
 opgrid = 'p'
+
+#set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
 
 filter_name = 'gaussian'  # "wave_cutoff"
 #Sigma = hat(Delta)/2
 if start == 0:
-        sigma_list = np.array([MY_dx, 2*MY_dx]) #dont forget CHANGE start time if youre short-serial filtering
+        sigma_list = np.array([MY_dx, 2*MY_dx])
 elif start == 1:
         sigma_list = np.array([MY_dx])
 else:
