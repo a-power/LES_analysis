@@ -77,11 +77,11 @@ Cqt_sq_options = {'field': 'Cqt_sq_field',
 
 
 
-apf.C_values_dist(**Cs_sq_options, **gen_options)
-print('Cs_sq fn done')
-
-apf.C_values_dist(**Cth_sq_options, **gen_options)
-print('Cth_sq fn done')
+# apf.C_values_dist(**Cs_sq_options, **gen_options)
+# print('Cs_sq fn done')
+#
+# apf.C_values_dist(**Cth_sq_options, **gen_options)
+# print('Cth_sq fn done')
 
 apf.C_values_dist(**Cqt_sq_options, **gen_options)
 print('Cqt_sq fn done')
