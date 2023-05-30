@@ -83,5 +83,15 @@ Cqt_sq_options = {'field': 'Cqt_sq_field',
 # apf.C_values_dist(**Cth_sq_options, **gen_options)
 # print('Cth_sq fn done')
 
-apf.C_values_dist(**Cqt_sq_options, **gen_options)
+# apf.C_values_dist(**Cqt_sq_options, **gen_options)
+# print('Cqt_sq fn done')
+
+apf.plot_C_Delta_hist_comp(plotdir, 'Cs_sq')
+print('Cs_sq fn done')
+
+apf.plot_C_Delta_hist_comp(plotdir, 'Cth_sq')
+print('Cth_sq fn done')
+
+apf.plot_C_Delta_hist_comp(plotdir, 'Cqt_sq')
 print('Cqt_sq fn done')
+

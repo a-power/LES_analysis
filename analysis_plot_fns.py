@@ -108,6 +108,47 @@ def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, dat
     print(f'plotted for time {time_set_in} {field_in} {delta}')
 
 
+
+def plot_C_Delta_hist_comp(dir_in, field, condits = None, deltas=None):
+
+    data_dir = dir_in + 'data/'
+    if deltas == None:
+        deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+        delta_label = ['$2 \\Delta', '$4 \\Delta', '$8 \\Delta',
+                       '$16 \\Delta', '$32 \\Delta', '$64 \\Delta', ]
+    if condits == None:
+        condits = ['domain', 'ML', 'clear_sky', 'cloud', 'cloud_up', 'cloud_core']
+
+    if field == 'Cs_sq':
+        scalar = '$C_{s}^2$'
+    elif field == 'Cth_sq':
+        scalar = '$C_{\\theta}^2$'
+    elif field == 'Cqt_sq':
+        scalar = '$C_{qt}^2$'
+    else:
+        print('field must be Cs_sq, Cth_sq, or Cqt_sq')
+
+    for j in range(len(condits)):
+
+        plt.figure(figsize=(5, 6))
+
+        for i in range(len(deltas)):
+            C = np.load(data_dir + f'{deltas[i]}_{field}_flat_{condits[j]}.npy')
+            plt.hist(C, bins=50, histtype='step', stacked=False, label=delta_label[i])
+        bottom_set, top_set = plt.ylim()
+        print('y_min = ', bottom_set, 'y_max = ', top_set)
+        plt.legend(fontsize=12, loc='best')
+        plt.vlines(0, ymin=0, ymax=((1e9)), linestyles='dashed', colors='black', linewidths=0.5)
+        plt.yscale('log', nonposy='clip')
+        plt.ylim(bottom_set, (top_set + (top_set / 10)))
+        plt.xlabel(f"{scalar} at time {time_set_in}", fontsize=16)
+        plt.ylabel("number of value occurrences", fontsize=16)
+        plt.savefig(data_dir + f'delta_hist_of_{field}_{condits[j]}_values.png', bbox_inches='tight')
+        plt.clf()
+
+        print(f'plotted for {field} {condits[j]}')
+
+
 def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, deltas=None, times='av', grid='p', other_vars=None,
                   other_var_thres=None, less_greater_in=['less'], and_or_in = ['and'], cloud_liquid_threshold_in=10**(-5),
                   res_counter_in=None, return_all_in = False, grid_in='p', **kwargs):
