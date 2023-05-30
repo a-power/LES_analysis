@@ -14,8 +14,10 @@ print('start type = ', type(start))
 
 case='ARM'
 MY_dx = 25
-#set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
+
 opgrid = 'p'
+
+#set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
 
 filter_name = 'gaussian'  # "wave_cutoff"
 #Sigma = hat(Delta)/2
