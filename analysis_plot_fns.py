@@ -113,9 +113,7 @@ def plot_C_Delta_hist_comp(dir_in, field, condits = None, deltas=None):
 
     data_dir = dir_in + 'data/'
     if deltas == None:
-        deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
-        delta_label = ['$2 \\Delta', '$4 \\Delta', '$8 \\Delta',
-                       '$16 \\Delta', '$32 \\Delta', '$64 \\Delta', ]
+        deltas = ['2', '4', '8', '16', '32', '64']
     if condits == None:
         condits = ['domain', 'ML', 'clear_sky', 'cloud', 'cloud_up', 'cloud_core']
 
@@ -133,8 +131,8 @@ def plot_C_Delta_hist_comp(dir_in, field, condits = None, deltas=None):
         plt.figure(figsize=(5, 6))
 
         for i in range(len(deltas)):
-            C = np.load(data_dir + f'{deltas[i]}_{field}_flat_{condits[j]}.npy')
-            plt.hist(C, bins=50, histtype='step', stacked=False, label=delta_label[i])
+            C = np.load(data_dir + f'{deltas[i]}D_{field}_flat_{condits[j]}.npy')
+            plt.hist(C, bins=50, histtype='step', stacked=False, label=deltas[i]+'$\\Delta$')
         bottom_set, top_set = plt.ylim()
         print('y_min = ', bottom_set, 'y_max = ', top_set)
         plt.legend(fontsize=12, loc='best')
