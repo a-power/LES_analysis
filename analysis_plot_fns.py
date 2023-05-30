@@ -257,14 +257,14 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
                           data_names = ["Cloud", "Cloud updraft", "Cloud core"],
                           bins_in=set_bins)
 
-        np.save( data_dir + f'{deltas[i]}_{field}_flat_domain.npy', data_field.flatten() )
-        np.save( data_dir + f'{deltas[i]}_{field}_flat_ML.npy', data_field_env[..., 0:24].flatten() )
-        np.save( data_dir + f'{deltas[i]}_{field}_flat_clear_sky.npy', data_field_env[..., 24:151].flatten() )
-        np.save( data_dir + f'{deltas[i]}_{field}_flat_cloud.npy', data_field_cloud.flatten() )
+        np.save( data_dir + f'{deltas[i]}_{field}_flat_domain.npy', data_field.compressed() )
+        np.save( data_dir + f'{deltas[i]}_{field}_flat_ML.npy', data_field_env[..., 0:24].compressed() )
+        np.save( data_dir + f'{deltas[i]}_{field}_flat_clear_sky.npy', data_field_env[..., 24:151].compressed() )
+        np.save( data_dir + f'{deltas[i]}_{field}_flat_cloud.npy', data_field_cloud.compressed() )
 
         if len(other_vars) == 2:
-            np.save( data_dir + f'{deltas[i]}_{field}_flat_cloud_up', data_field_cloud_up.flatten() )
-            np.save( data_dir + f'{deltas[i]}_{field}_flat_cloud_core', data_field_cloud_core.flatten() )
+            np.save( data_dir + f'{deltas[i]}_{field}_flat_cloud_up', data_field_cloud_up.compressed() )
+            np.save( data_dir + f'{deltas[i]}_{field}_flat_cloud_core', data_field_cloud_core.compressed() )
 
     plt.close('all')
 
