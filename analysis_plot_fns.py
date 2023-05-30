@@ -689,17 +689,17 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
         if other_vars != None:
             num_field_combo2 = ma.masked_array(num_field, mask=combo2_out_mask)
             den_field_combo2 = ma.masked_array(den_field, mask=combo2_out_mask)
-            if other_vars[0] == 'f(f(w_on_p)_r_on_p)_r':
+            if other_vars[0] == 'f(f(w_on_p)_r_on_p)_r' or other_vars[0] == 'f(w_on_p)_r':
                 othervar1 = 'w'
-            elif other_vars[0] == 'f(f(th_v_on_p)_r_on_p)_r':
-                othervar1 = 'th'
+            elif other_vars[0] == 'f(f(th_v_on_p)_r_on_p)_r' or other_vars[0] == 'f(th_v_on_p)_r':
+                othervar1 = 'th_v'
 
             if len(other_vars) > 1:
                 num_field_combo3 = ma.masked_array(num_field, mask=combo3_out_mask)
                 den_field_combo3 = ma.masked_array(den_field, mask=combo3_out_mask)
-                if other_vars[1] == 'f(f(w_on_p)_r_on_p)_r':
+                if other_vars[1] == 'f(f(w_on_p)_r_on_p)_r' or other_vars[1] == 'f(w_on_p)_r':
                     othervar2 = 'w'
-                elif other_vars[1] == 'f(f(th_v_on_p)_r_on_p)_r':
+                elif other_vars[1] == 'f(f(th_v_on_p)_r_on_p)_r' or other_vars[1] == 'f(th_v_on_p)_r':
                     othervar2 = 'th'
 
         num_prof = np.zeros(z_num)
@@ -784,18 +784,18 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
         if other_vars != None:
             data_field_combo2 = ma.masked_array(data_field, mask=combo2_out_mask)
 
-            if other_vars[0] == 'f(f(w_on_p)_r_on_p)_r':
+            if other_vars[0] == 'f(f(w_on_p)_r_on_p)_r' or other_vars[0] == 'f(w_on_p)_r':
                 othervar1 = 'w'
-            elif other_vars[0] == 'f(f(th_v_on_p)_r_on_p)_r':
-                othervar1 = 'th'
+            elif other_vars[0] == 'f(f(th_v_on_p)_r_on_p)_r' or other_vars[0] == 'f(th_v_on_p)_r':
+                othervar1 = 'th_v'
 
             if len(other_vars) > 1:
                 data_field_combo3 = ma.masked_array(data_field, mask=combo3_out_mask)
 
-                if other_vars[1] == 'f(f(w_on_p)_r_on_p)_r':
+                if other_vars[1] == 'f(f(w_on_p)_r_on_p)_r' or other_vars[1] == 'f(w_on_p)_r':
                     othervar2 = 'w'
-                elif other_vars[1] == 'f(f(th_v_on_p)_r_on_p)_r':
-                    othervar2 = 'th'
+                elif other_vars[1] == 'f(f(th_v_on_p)_r_on_p)_r' or other_vars[1] == 'f(th_v_on_p)_r':
+                    othervar2 = 'th_v'
 
         data_prof = np.zeros(z_num)
         data_cloud_prof = np.zeros(z_num)
