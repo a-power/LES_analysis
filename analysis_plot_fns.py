@@ -192,9 +192,9 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
 
         elif field == 'Cqt_field' or field == 'Cqt_sq_field':
             print('length of time array for HR_qt is ',
-                  len(data_field_in[f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
-            num_field = data_field_in[f'f(HR_q_total_field_on_{grid})_r'].data[...]
-            den_field = data_field_in[f'f(RR_q_total_field_on_{grid})_r'].data[...]
+                  len(data_field_in[f'f(HR_q_total_f_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            num_field = data_field_in[f'f(HR_q_total_f_field_on_{grid})_r'].data[...]
+            den_field = data_field_in[f'f(RR_q_total_f_field_on_{grid})_r'].data[...]
 
             data_field_sq = 0.5 * num_field / den_field
             data_field_C = dyn.get_Cs(data_field_sq)
