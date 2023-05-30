@@ -131,7 +131,7 @@ def plot_C_Delta_hist_comp(dir_in, field, condits = None, deltas=None):
         plt.figure(figsize=(5, 6))
 
         for i in range(len(deltas)):
-            C = np.load(data_dir + f'{deltas[i]}D_{field}_flat_{condits[j]}.npy')
+            C = np.load(data_dir + f'{deltas[i]}D_{field}_field_flat_{condits[j]}.npy')
             plt.hist(C, bins=50, histtype='step', stacked=False, label=deltas[i]+'$\\Delta$')
         bottom_set, top_set = plt.ylim()
         print('y_min = ', bottom_set, 'y_max = ', top_set)
