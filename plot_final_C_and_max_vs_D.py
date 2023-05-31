@@ -10,11 +10,10 @@ np.seterr(invalid='ignore')
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--times', type=str, default='28800')
-args = parser.parse_args()
-set_time = args.times
-
 parser.add_argument('--case_in', type=str, default='ARM')
 args = parser.parse_args()
+
+set_time = args.times
 case = args.case_in
 
 
