@@ -25,6 +25,10 @@ if case == 'ARM':
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/on_p_grid/C_beta_profiles/'
     file_name = f"diagnostics_3d_ts_{set_time}_gaussian_filter_C_"
 
+    zn_set = np.arange(0, 4410, 10)
+    z_set = np.arange(-5, 4405, 10)
+    z_ML = 1
+
 elif case == 'BOMEX':
     beta=True
     what_plotting='_0'
@@ -39,6 +43,10 @@ elif case == 'BOMEX':
     file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
     # else:
     #     file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_{C_or_LM}_'
+
+    zn_set = np.arange(0, 3020, 20)
+    z_set = np.arange(-10, 3010, 20)
+    z_ML = 490
 
 else:
     print('need to def case')
@@ -116,9 +124,7 @@ else:
     set_labels = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
                   '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']
 
-zn_set = np.arange(0, 3020, 20)
-z_set = np.arange(-10, 3010, 20)
-z_ML = 490
+
 
 ##################################################################################################################
 
