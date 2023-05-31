@@ -13,9 +13,9 @@ parser.add_argument('--times', type=str, default='28800')
 args = parser.parse_args()
 set_time = args.times
 
-parser.add_argument('--case', type=str, default='ARM')
+parser.add_argument('--case_in', type=str, default='ARM')
 args = parser.parse_args()
-case = args.case
+case = args.case_in
 
 
 beta=True
