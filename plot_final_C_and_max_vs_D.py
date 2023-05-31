@@ -21,7 +21,7 @@ C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 
 if case == 'ARM':
 
-    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/filtering_filtered/C_profs/'
+    homedir = '/work/scratch-pw3/apower/ARM/on_p_grid/filtering_filtered/C_profs/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/on_p_grid/C_beta_profiles/'
     file_name = f"diagnostics_3d_ts_{set_time}_gaussian_filter_C_"
 
