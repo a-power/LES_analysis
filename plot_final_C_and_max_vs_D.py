@@ -30,7 +30,7 @@ if case == 'ARM':
     z_ML = 1
 
     z_cl_r = [130, 200]
-    z_ml_r = [8, 80]
+    z_ml_r = [8, 55]
 
     th_name = 'th_v'
 
@@ -53,8 +53,8 @@ elif case == 'BOMEX':
     z_set = np.arange(-10, 3010, 20)
     z_ML = 490
 
-    z_cl_r = [50, 75]
-    z_ml_r = [6, 20]
+    z_cl_r = [49, 73]
+    z_ml_r = [10, 22]
 
     th_name = 'th'
 
