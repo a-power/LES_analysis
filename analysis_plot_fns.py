@@ -128,7 +128,7 @@ def plot_C_Delta_hist_comp(dir_in, field, condits = None, deltas=None):
 
     for j in range(len(condits)):
 
-        plt.figure(figsize=(5, 6))
+        plt.figure(figsize=(10, 6))
 
         for i in range(len(deltas)):
             C = np.load(data_dir + f'{deltas[i]}D_{field}_field_flat_{condits[j]}.npy')
