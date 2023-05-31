@@ -29,6 +29,8 @@ if case == 'ARM':
     z_set = np.arange(-5, 4405, 10)
     z_ML = 1
 
+    th_name = 'th_v'
+
 elif case == 'BOMEX':
     beta=True
     what_plotting='_0'
@@ -47,6 +49,8 @@ elif case == 'BOMEX':
     zn_set = np.arange(0, 3020, 20)
     z_set = np.arange(-10, 3010, 20)
     z_ML = 490
+
+    th_name = 'th'
 
 else:
     print('need to def case')
@@ -173,9 +177,9 @@ if what_plotting=='_beta':
             Cth_w_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[1]}_w_prof'].data[0, ...]
             Cqt_w_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[2]}_w_prof'].data[0, ...]
 
-            Cs_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[0]}_w_th_prof'].data[0, ...]
-            Cth_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[1]}_w_th_prof'].data[0, ...]
-            Cqt_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[2]}_w_th_prof'].data[0, ...]
+            Cs_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[0]}_w_{th_name}_prof'].data[0, ...]
+            Cth_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[1]}_w_{th_name}_prof'].data[0, ...]
+            Cqt_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[2]}_w_{th_name}_prof'].data[0, ...]
 
     Cs_sq = Cs_sq_temp[0,...] / dyn.beta_calc(Cs_sq_temp[0,...], Cs_sq_temp[1,...])
     Cth_sq = Cth_sq_temp[0, ...] / dyn.beta_calc(Cth_sq_temp[0, ...], Cth_sq_temp[1, ...])
@@ -235,9 +239,9 @@ else:
             Cth_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_prof'].data[0, ...] )
             Cqt_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_prof'].data[0, ...] )
 
-            Cs_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_th_prof'].data[0, ...] )
-            Cth_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_th_prof'].data[0, ...] )
-            Cqt_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_th_prof'].data[0, ...] )
+            Cs_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_{th_name}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_{th_name}_prof'].data[0, ...] )
+            Cth_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_{th_name}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_{th_name}_prof'].data[0, ...] )
+            Cqt_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_{th_name}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_{th_name}_prof'].data[0, ...] )
         else:
             Cs_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_prof'].data[0, ...]
             Cth_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_prof'].data[0, ...]
@@ -255,9 +259,9 @@ else:
             Cth_w_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_w_prof'].data[0, ...]
             Cqt_w_sq[i, :] = data_list[i][f'{C_or_LM_profs[2]}_w_prof'].data[0, ...]
 
-            Cs_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_w_th_prof'].data[0, ...]
-            Cth_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_w_th_prof'].data[0, ...]
-            Cqt_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[2]}_w_th_prof'].data[0, ...]
+            Cs_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_w_{th_name}_prof'].data[0, ...]
+            Cth_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_w_{th_name}_prof'].data[0, ...]
+            Cqt_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[2]}_w_{th_name}_prof'].data[0, ...]
     print('shape of Cs_sq = ', np.shape(Cs_sq))
 
 ########################################################################################################################
