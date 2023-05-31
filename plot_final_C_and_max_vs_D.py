@@ -13,7 +13,10 @@ parser.add_argument('--times', type=str, default='28800')
 args = parser.parse_args()
 set_time = args.times
 
-case = 'ARM'
+parser.add_argument('--case', type=str, default='ARM')
+args = parser.parse_args()
+case = args.case
+
 
 beta=True
 what_plotting='_0' # '_beta'
