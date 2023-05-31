@@ -29,6 +29,9 @@ if case == 'ARM':
     z_set = np.arange(-5, 4405, 10)
     z_ML = 1
 
+    z_cl_r = [130, 200]
+    z_ml_r = [8, 80]
+
     th_name = 'th_v'
 
 elif case == 'BOMEX':
@@ -49,6 +52,9 @@ elif case == 'BOMEX':
     zn_set = np.arange(0, 3020, 20)
     z_set = np.arange(-10, 3010, 20)
     z_ML = 490
+
+    z_cl_r = [50, 75]
+    z_ml_r = [6, 20]
 
     th_name = 'th'
 
@@ -512,9 +518,6 @@ plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
 ##################################################################################################################
 
 
-z_cl_r = [50, 75]
-z_ml_r = [6, 20]
-
 def cal_max_Cs(C_list):
 
     print('when calc the max values, shape of C list is ', np.shape(C_list))
@@ -539,6 +542,34 @@ max_Cqt_sq_cond = cal_max_Cs(Cqt_sq_cond)
 max_Cs_cond = dyn.get_Cs(max_Cs_sq_cond)
 max_Cth_cond = dyn.get_Cs(max_Cth_sq_cond)
 max_Cqt_cond = dyn.get_Cs(max_Cqt_sq_cond)
+
+
+def cal_mean_Cs(C_list):
+
+    print('when calc the mean values, shape of C list is ', np.shape(C_list))
+
+    mean_C = np.zeros((np.shape(C_list)[0]+1, np.shape(C_list)[1]))
+
+    for i in range(np.shape(C_list)[0]):
+        for nD in range(np.shape(C_list)[1]):
+            if i == 0:
+                mean_C[i, nD] = np.mean(C_list[i, nD, z_ml_r[0]:z_ml_r[1]])
+                mean_C[i+1, nD] = np.mean(C_list[i, nD, z_cl_r[0]:z_cl_r[1]])
+            else:
+                mean_C[i+1, nD] = np.mean(C_list[i, nD, z_cl_r[0]:z_cl_r[1]])
+
+    print('shape of mean C is ', np.shape(mean_C))
+    return mean_C
+
+mean_Cs_sq_cond = cal_mean_Cs(Cs_sq_cond)
+mean_Cth_sq_cond = cal_mean_Cs(Cth_sq_cond)
+mean_Cqt_sq_cond = cal_mean_Cs(Cqt_sq_cond)
+
+mean_Cs_cond = dyn.get_Cs(mean_Cs_sq_cond)
+mean_Cth_cond = dyn.get_Cs(mean_Cth_sq_cond)
+mean_Cqt_cond = dyn.get_Cs(mean_Cqt_sq_cond)
+
+
 
 def get_max_l_from_C(max_C_cond, deltas_num, grid_spacing):
     Delta_res = deltas_num*grid_spacing
