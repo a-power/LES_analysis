@@ -9,21 +9,21 @@ np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='18000')
+parser.add_argument('--times', type=str, default='28800')
 args = parser.parse_args()
 set_time = args.times
 
 case = 'ARM'
 
 beta=True
-what_plotting='_0'
+what_plotting='_0' # '_beta'
 C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 
 if case == 'ARM':
 
-    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
-    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/fitting_relations/'
-    file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
+    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/filtering_filtered/C_profs/'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/on_p_grid/C_beta_profiles/'
+    file_name = f"diagnostics_3d_ts_{set_time}_gaussian_filter_C_"
 
 elif case == 'BOMEX':
     beta=True
@@ -60,20 +60,21 @@ else:
 os.makedirs(plotdir, exist_ok = True)
 
 if beta == True:
+    if what_plotting == '_0' or what_plotting == '_beta':
+        data_2D_0 = xr.open_dataset(mydir + f'2D_0.nc')
+        data_4D_0 = xr.open_dataset(mydir + f'4D_0.nc')
+        data_8D_0 = xr.open_dataset(mydir + f'8D_0.nc')
+        data_16D_0 = xr.open_dataset(mydir + f'16D_0.nc')
+        data_32D_0 = xr.open_dataset(mydir + f'32D_0.nc')
+        data_64D_0 = xr.open_dataset(mydir + f'64D_0.nc')
 
-    data_2D_0 = xr.open_dataset(mydir + f'2D_0.nc')
-    data_4D_0 = xr.open_dataset(mydir + f'4D_0.nc')
-    data_8D_0 = xr.open_dataset(mydir + f'8D_0.nc')
-    data_16D_0 = xr.open_dataset(mydir + f'16D_0.nc')
-    data_32D_0 = xr.open_dataset(mydir + f'32D_0.nc')
-    data_64D_0 = xr.open_dataset(mydir + f'64D_0.nc')
-
-    data_2D_1 = xr.open_dataset(mydir + f'2D_1.nc')
-    data_4D_1 = xr.open_dataset(mydir + f'4D_1.nc')
-    data_8D_1 = xr.open_dataset(mydir + f'8D_1.nc')
-    data_16D_1 = xr.open_dataset(mydir + f'16D_1.nc')
-    data_32D_1 = xr.open_dataset(mydir + f'32D_1.nc')
-    data_64D_1 = xr.open_dataset(mydir + f'64D_1.nc')
+    if what_plotting == '_1' or what_plotting == '_beta':
+        data_2D_1 = xr.open_dataset(mydir + f'2D_1.nc')
+        data_4D_1 = xr.open_dataset(mydir + f'4D_1.nc')
+        data_8D_1 = xr.open_dataset(mydir + f'8D_1.nc')
+        data_16D_1 = xr.open_dataset(mydir + f'16D_1.nc')
+        data_32D_1 = xr.open_dataset(mydir + f'32D_1.nc')
+        data_64D_1 = xr.open_dataset(mydir + f'64D_1.nc')
 
     if C_or_LM == 'C':
         if what_plotting == '_0':
@@ -529,8 +530,8 @@ max_Cs_cond = dyn.get_Cs(max_Cs_sq_cond)
 max_Cth_cond = dyn.get_Cs(max_Cth_sq_cond)
 max_Cqt_cond = dyn.get_Cs(max_Cqt_sq_cond)
 
-def get_max_l_from_C(max_C_cond, deltas_num):
-    Delta_res = deltas_num*20
+def get_max_l_from_C(max_C_cond, deltas_num, grid_spacing):
+    Delta_res = deltas_num*grid_spacing
     max_l_cond = np.zeros_like(max_C_cond)
     for it in range(np.shape(max_C_cond)[1]):
         max_l_cond[:,it] = max_C_cond[:,it] * Delta_res[it]
@@ -592,8 +593,8 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax):
 
 
 # plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Delta = set_labels, y_ax = 'C')
-# plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond, delta_numbers), get_max_l_from_C(max_Cth_cond, delta_numbers),
-#                       get_max_l_from_C(max_Cqt_cond, delta_numbers), Delta = set_labels, y_ax = 'l')
+plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond, delta_numbers, 25), get_max_l_from_C(max_Cth_cond, delta_numbers, 25),
+                      get_max_l_from_C(max_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l')
 
 
 
