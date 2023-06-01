@@ -7,6 +7,7 @@ import dynamic_functions as dyn
 from matplotlib import cm
 from matplotlib.colors import TwoSlopeNorm
 import xarray as xr
+import os
 from matplotlib.ticker import FormatStrFormatter
 
 def negs_in_field(plotdir, field, data_field_list, data_cl_list):
@@ -107,30 +108,76 @@ def plot_hist(plotdir_in, field_in, time_set_in, delta, data1, data2, data3, dat
     print(f'plotted for time {time_set_in} {field_in} {delta}')
 
 
+
+def plot_C_Delta_hist_comp(dir_in, field, condits = None, deltas=None):
+
+    data_dir = dir_in + 'data/'
+    if deltas == None:
+        deltas = ['2', '4', '8', '16', '32', '64']
+    if condits == None:
+        condits = ['domain', 'ML', 'clear_sky', 'cloud', 'cloud_up', 'cloud_core']
+
+    if field == 'Cs_sq':
+        scalar = '$C_{s}^2$'
+    elif field == 'Cth_sq':
+        scalar = '$C_{\\theta}^2$'
+    elif field == 'Cqt_sq':
+        scalar = '$C_{qt}^2$'
+    else:
+        print('field must be Cs_sq, Cth_sq, or Cqt_sq')
+
+    for j in range(len(condits)):
+
+        plt.figure(figsize=(10, 6))
+
+        for i in range(len(deltas)):
+            C = np.load(data_dir + f'{deltas[i]}D_{field}_field_flat_{condits[j]}.npy')
+            plt.hist(C, bins=50, histtype='step', stacked=False, label=deltas[i]+'$\\Delta$')
+        bottom_set, top_set = plt.ylim()
+        print('y_min = ', bottom_set, 'y_max = ', top_set)
+        plt.legend(fontsize=12, loc='best')
+        plt.vlines(0, ymin=0, ymax=((1e9)), linestyles='dashed', colors='black', linewidths=0.5)
+        plt.yscale('log', nonposy='clip')
+        plt.ylim(bottom_set, (top_set + (top_set / 10)))
+        plt.xlabel(f"{scalar}", fontsize=16)
+        plt.ylabel("number of value occurrences", fontsize=16)
+        plt.savefig(data_dir + f'delta_hist_of_{field}_{condits[j]}_values.png', bbox_inches='tight')
+        plt.clf()
+
+        print(f'plotted for {field} {condits[j]}')
+
+
 def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, deltas=None, times='av', grid='p', other_vars=None,
                   other_var_thres=None, less_greater_in=['less'], and_or_in = ['and'], cloud_liquid_threshold_in=10**(-5),
                   res_counter_in=None, return_all_in = False, grid_in='p', **kwargs):
+
+    data_dir = plotdir + f'data/'
+    os.makedirs(data_dir, exist_ok=True)
 
     if deltas==None:
         deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
     for i in range(len(deltas)):
-        cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_contour+f'{i}_running_mean_filter_rm00.nc')
+        cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_contour +
+                                                                f'{i}_gaussian_filter_ga00_running_mean_filter_rm00.nc',
+                                                                cloud_liquid_threshold=cloud_liquid_threshold_in)
 
-        data_field = data_field_list+f'{deltas[i]}_running_mean_filter_rm00.nc'
+        data_field = data_field_list+f'{i}_0_running_mean_filter_rm00.nc'
         data_field_in = xr.open_dataset(data_field)
 
         if other_vars!=None:
             if return_all_in == False:
                 if len(other_vars) == 1:
-                    combo2_out_mask = clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
+                    combo2_out_mask = clo.cloudy_and_or(data_contour +
+                                                                f'{i}_gaussian_filter_ga00_running_mean_filter_rm00.nc',
                                                                other_var=other_vars, var_thres=other_var_thres,
                                                                less_greater=less_greater_in, and_or = and_or_in,
                                                                cloud_liquid_threshold=cloud_liquid_threshold_in,
                                                                res_counter=res_counter_in, return_all = return_all_in,
                                                                grid=grid_in)
                 else:
-                    combo2_out_mask, combo3_out_mask = clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
+                    combo2_out_mask, combo3_out_mask = clo.cloudy_and_or(data_contour  +
+                                                                f'{i}_gaussian_filter_ga00_running_mean_filter_rm00.nc',
                                                                other_var=other_vars, var_thres=other_var_thres,
                                                                less_greater=less_greater_in, and_or = and_or_in,
                                                                cloud_liquid_threshold=cloud_liquid_threshold_in,
@@ -138,7 +185,8 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
                                                                grid=grid_in)
             else:
                 if len(other_vars) == 1:
-                    combo2_out_mask, cloud_mask, var_mask = clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
+                    combo2_out_mask, cloud_mask, var_mask = clo.cloudy_and_or(data_contour  +
+                                                                f'{i}_gaussian_filter_ga00_running_mean_filter_rm00.nc',
                                                                other_var=other_vars, var_thres=other_var_thres,
                                                                less_greater=less_greater_in, and_or = and_or_in,
                                                                cloud_liquid_threshold=cloud_liquid_threshold_in,
@@ -146,7 +194,7 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
                                                                grid=grid_in)
                 else:
                     combo2_out_mask, combo3_out_mask, cloud_mask, var_mask, extra_var_mask = \
-                        clo.cloudy_and_or(data_contour + f'{i}_running_mean_filter_rm00.nc',
+                        clo.cloudy_and_or(data_contour + f'{i}_gaussian_filter_ga00_running_mean_filter_rm00.nc',
                                                                other_var=other_vars, var_thres=other_var_thres,
                                                                less_greater=less_greater_in, and_or = and_or_in,
                                                                cloud_liquid_threshold=cloud_liquid_threshold_in,
@@ -183,9 +231,9 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
 
         elif field == 'Cqt_field' or field == 'Cqt_sq_field':
             print('length of time array for HR_qt is ',
-                  len(data_field_in[f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
-            num_field = data_field_in[f'f(HR_q_total_field_on_{grid})_r'].data[...]
-            den_field = data_field_in[f'f(RR_q_total_field_on_{grid})_r'].data[...]
+                  len(data_field_in[f'f(HR_q_total_f_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            num_field = data_field_in[f'f(HR_q_total_f_field_on_{grid})_r'].data[...]
+            den_field = data_field_in[f'f(RR_q_total_f_field_on_{grid})_r'].data[...]
 
             data_field_sq = 0.5 * num_field / den_field
             data_field_C = dyn.get_Cs(data_field_sq)
@@ -248,6 +296,14 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
                           data_names = ["Cloud", "Cloud updraft", "Cloud core"],
                           bins_in=set_bins)
 
+        np.save( data_dir + f'{deltas[i]}_{field}_flat_domain.npy', data_field.flatten() )
+        np.save( data_dir + f'{deltas[i]}_{field}_flat_ML.npy', data_field_env[..., 0:24].compressed() )
+        np.save( data_dir + f'{deltas[i]}_{field}_flat_clear_sky.npy', data_field_env[..., 24:151].compressed() )
+        np.save( data_dir + f'{deltas[i]}_{field}_flat_cloud.npy', data_field_cloud.compressed() )
+
+        if len(other_vars) == 2:
+            np.save( data_dir + f'{deltas[i]}_{field}_flat_cloud_up', data_field_cloud_up.compressed() )
+            np.save( data_dir + f'{deltas[i]}_{field}_flat_cloud_core', data_field_cloud_core.compressed() )
 
     plt.close('all')
 
@@ -591,22 +647,47 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
     print('current field = ', field)
 
     if field == 'Cs_field' or field == 'Cs_sq_field':
-        print('length of time array for LM is ', len(data_set[f'f(LM_field_on_{grid})_r'].data[:, 0, 0, 0]))
-        num_field = data_set[f'f(LM_field_on_{grid})_r'].data[...]
-        den_field = data_set[f'f(MM_field_on_{grid})_r'].data[...]
+        #print('length of time array for LM is ', len(data_set[f'f(LM_field_on_{grid})_r'].data[:, 0, 0, 0]))
+
+        if f'f(LM_field_on_{grid})_r' in data_set:
+            num_field = data_set[f'f(LM_field_on_{grid})_r'].data[...]
+            den_field = data_set[f'f(MM_field_on_{grid})_r'].data[...]
+        elif f'LM_field' in data_set:
+            num_field = data_set[f'LM_field'].data[...]
+            den_field = data_set[f'MM_field'].data[...]
+        else:
+            print('LM_field_on_{grid} not in file')
         C=True
 
     elif field == 'Cth_field' or field == 'Cth_sq_field':
-        print('length of time array for HR_th is ', len(data_set[f'f(HR_th_field_on_{grid})_r'].data[:, 0, 0, 0]))
-        num_field = data_set[f'f(HR_th_field_on_{grid})_r'].data[...]
-        den_field = data_set[f'f(RR_th_field_on_{grid})_r'].data[...]
+        #print('length of time array for HR_th is ', len(data_set[f'f(HR_th_field_on_{grid})_r'].data[:, 0, 0, 0]))
+
+        if f'f(HR_th_field_on_{grid})_r' in data_set:
+            num_field = data_set[f'f(HR_th_field_on_{grid})_r'].data[...]
+            den_field = data_set[f'f(RR_th_field_on_{grid})_r'].data[...]
+        elif f'HR_th_field' in data_set:
+            num_field = data_set[f'HR_th_field'].data[...]
+            den_field = data_set[f'RR_th_field'].data[...]
+        else:
+            print('HR_field_on_{grid} not in file')
+
         C=True
 
     elif field == 'Cqt_field' or field == 'Cqt_sq_field':
         if beta==True:
-            print('length of time array for HR_qt is ', len(data_set[f'f(HR_q_total_f_field_on_{grid})_r'].data[:, 0, 0, 0]))
-            num_field = data_set[f'f(HR_q_total_f_field_on_{grid})_r'].data[...]
-            den_field = data_set[f'f(RR_q_total_f_field_on_{grid})_r'].data[...]
+            # print('length of time array for HR_qt is ', len(data_set[f'f(HR_q_total_f_field_on_{grid})_r'].data[:, 0, 0, 0]))
+            # num_field = data_set[f'f(HR_q_total_f_field_on_{grid})_r'].data[...]
+            # den_field = data_set[f'f(RR_q_total_f_field_on_{grid})_r'].data[...]
+
+            if f'f(HR_q_total_f_field_on_{grid})_r' in data_set:
+                num_field = data_set[f'f(HR_q_total_f_field_on_{grid})_r'].data[...]
+                den_field = data_set[f'f(RR_q_total_f_field_on_{grid})_r'].data[...]
+            elif f'HR_q_total_f_field' in data_set:
+                num_field = data_set[f'HR_q_total_f_field'].data[...]
+                den_field = data_set[f'RR_q_total_f_field'].data[...]
+            else:
+                print('HR_field_on_{grid} not in file')
+
         else:
             print('length of time array for HR_qt is ', len(data_set[f'f(HR_q_total_field_on_{grid})_r'].data[:, 0, 0, 0]))
             num_field = data_set[f'f(HR_q_total_field_on_{grid})_r'].data[...]
@@ -616,12 +697,20 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
     else:
 
         if beta==True:
-            print(f'length of time array for {field} is ',
-                  len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
-            data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
+
+            if f'f({field}_on_{grid})_r' in data_set:
+                data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
+            elif f'{field}' in data_set:
+                data_field = data_set[f'{field}'].data[...]
+
+            #print(f'length of time array for {field} is ', len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
+
         else:
-            print('length of time array for HR_qt is ', len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
-            data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
+            #print('length of time array for HR_qt is ', len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
+            if f'f({field}_on_{grid})_r' in data_set:
+                data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
+            elif f'{field}' in data_set:
+                data_field = data_set[f'{field}'].data[...]
 
         C=False
 
@@ -639,17 +728,17 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
         if other_vars != None:
             num_field_combo2 = ma.masked_array(num_field, mask=combo2_out_mask)
             den_field_combo2 = ma.masked_array(den_field, mask=combo2_out_mask)
-            if other_vars[0] == 'f(f(w_on_p)_r_on_p)_r':
+            if other_vars[0] == f'f(f(w_on_{grid})_r_on_{grid})_r' or other_vars[0] == f'f(w_on_{grid})_r':
                 othervar1 = 'w'
-            elif other_vars[0] == 'f(f(th_v_on_p)_r_on_p)_r':
-                othervar1 = 'th'
+            elif other_vars[0] == f'f(f(th_v_on_{grid})_r_on_{grid})_r' or other_vars[0] == f'f(th_v_on_{grid})_r':
+                othervar1 = 'th_v'
 
             if len(other_vars) > 1:
                 num_field_combo3 = ma.masked_array(num_field, mask=combo3_out_mask)
                 den_field_combo3 = ma.masked_array(den_field, mask=combo3_out_mask)
-                if other_vars[1] == 'f(f(w_on_p)_r_on_p)_r':
+                if other_vars[1] == f'f(f(w_on_{grid})_r_on_{grid})_r' or other_vars[1] == f'f(w_on_{grid})_r':
                     othervar2 = 'w'
-                elif other_vars[1] == 'f(f(th_v_on_p)_r_on_p)_r':
+                elif other_vars[1] == f'f(f(th_v_on_{grid})_r_on_{grid})_r' or other_vars[1] == f'f(th_v_on_{grid})_r':
                     othervar2 = 'th'
 
         num_prof = np.zeros(z_num)
@@ -734,18 +823,18 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
         if other_vars != None:
             data_field_combo2 = ma.masked_array(data_field, mask=combo2_out_mask)
 
-            if other_vars[0] == 'f(f(w_on_p)_r_on_p)_r':
+            if other_vars[0] == f'f(f(w_on_{grid})_r_on_{grid})_r' or other_vars[0] == f'f(w_on_{grid})_r':
                 othervar1 = 'w'
-            elif other_vars[0] == 'f(f(th_v_on_p)_r_on_p)_r':
-                othervar1 = 'th'
+            elif other_vars[0] == f'f(f(th_v_on_{grid})_r_on_{grid})_r' or other_vars[0] == f'f(th_v_on_{grid})_r':
+                othervar1 = 'th_v'
 
             if len(other_vars) > 1:
                 data_field_combo3 = ma.masked_array(data_field, mask=combo3_out_mask)
 
-                if other_vars[1] == 'f(f(w_on_p)_r_on_p)_r':
+                if other_vars[1] == f'f(f(w_on_{grid})_r_on_{grid})_r' or other_vars[1] == f'f(w_on_{grid})_r':
                     othervar2 = 'w'
-                elif other_vars[1] == 'f(f(th_v_on_p)_r_on_p)_r':
-                    othervar2 = 'th'
+                elif other_vars[1] == f'f(f(th_v_on_{grid})_r_on_{grid})_r' or other_vars[1] == f'f(th_v_on_{grid})_r':
+                    othervar2 = 'th_v'
 
         data_prof = np.zeros(z_num)
         data_cloud_prof = np.zeros(z_num)

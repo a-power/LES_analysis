@@ -4,12 +4,13 @@ import analysis_plot_fns as apf
 import numpy as np
 
 
-homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
-#homedir = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_filters/smoothed_LM_HR_fields'
+#homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
+homedir = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_filters/smoothed_LM_HR_fields/'
 mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
-plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/distribs/'
+plotdir = homedir + 'plots/distribs/'
+#'/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/distribs/'
 os.makedirs(plotdir, exist_ok = True)
 
 dir_s = mydir + 'Cs_'
@@ -30,7 +31,7 @@ gen_options = {'plotdir': plotdir,
             'data_contour': dir_contour,
             'deltas': None,
             'other_vars': [w_field, th_v_field],
-            'cloud_liquid_threshold_in': 10**(-5),
+            'cloud_liquid_threshold_in': 10**(-7),
             'other_var_thres': [0.5, 0],
             'less_greater_in': ['less', 'less'],
             'and_or_in': ['and', 'and'],
@@ -76,11 +77,21 @@ Cqt_sq_options = {'field': 'Cqt_sq_field',
 
 
 
-apf.C_values_dist(**Cs_sq_options, **gen_options)
+# apf.C_values_dist(**Cs_sq_options, **gen_options)
+# print('Cs_sq fn done')
+#
+# apf.C_values_dist(**Cth_sq_options, **gen_options)
+# print('Cth_sq fn done')
+
+# apf.C_values_dist(**Cqt_sq_options, **gen_options)
+# print('Cqt_sq fn done')
+
+apf.plot_C_Delta_hist_comp(plotdir, 'Cs_sq')
 print('Cs_sq fn done')
 
-apf.C_values_dist(**Cth_sq_options, **gen_options)
+apf.plot_C_Delta_hist_comp(plotdir, 'Cth_sq')
 print('Cth_sq fn done')
 
-apf.C_values_dist(**Cqt_sq_options, **gen_options)
+apf.plot_C_Delta_hist_comp(plotdir, 'Cqt_sq')
 print('Cqt_sq fn done')
+

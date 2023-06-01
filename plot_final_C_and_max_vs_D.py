@@ -3,26 +3,66 @@ import matplotlib.pyplot as plt
 import xarray as xr
 import os
 import dynamic_functions as dyn
+import argparse
 
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--times', type=str, default='28800')
+parser.add_argument('--case_in', type=str, default='ARM')
+args = parser.parse_args()
+
+set_time = args.times
+case = args.case_in
+
+
 beta=True
-what_plotting='_0'
+what_plotting='_0' # '_beta'
 C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 
-if beta == True:
+if case == 'ARM':
 
-    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
-    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/fitting_relations/'
+    homedir = '/work/scratch-pw3/apower/ARM/on_p_grid/filtering_filtered/C_profs/'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/on_p_grid/C_beta_profiles/'
+    file_name = f"diagnostics_3d_ts_{set_time}_gaussian_filter_C_"
+
+    zn_set = np.arange(0, 4410, 10)
+    z_set = np.arange(-5, 4405, 10)
+    z_ML = 1
+
+    z_cl_r = [130, 200]
+    z_ml_r = [8, 55]
+
+    th_name = 'th_v'
+
+elif case == 'BOMEX':
+    beta=True
+    what_plotting='_0'
+    C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
+    if beta == True:
+        homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
+        plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/fitting_relations/'
+    else:
+        homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
+        plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_1e-7/diff_C_calc/'
+    # if C_or_LM == 'MM':
+    file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
+    # else:
+    #     file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_{C_or_LM}_'
+
+    zn_set = np.arange(0, 3020, 20)
+    z_set = np.arange(-10, 3010, 20)
+    z_ML = 490
+
+    z_cl_r = [49, 73]
+    z_ml_r = [10, 22]
+
+    th_name = 'th'
 
 else:
-    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
-    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_1e-7/diff_C_calc/'
-# if C_or_LM == 'MM':
-file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
-# else:
-#     file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_{C_or_LM}_'
+    print('need to def case')
+
 mydir = homedir + file_name
 
 if C_or_LM == 'C':
@@ -40,20 +80,21 @@ else:
 os.makedirs(plotdir, exist_ok = True)
 
 if beta == True:
+    if what_plotting == '_0' or what_plotting == '_beta':
+        data_2D_0 = xr.open_dataset(mydir + f'2D_0.nc')
+        data_4D_0 = xr.open_dataset(mydir + f'4D_0.nc')
+        data_8D_0 = xr.open_dataset(mydir + f'8D_0.nc')
+        data_16D_0 = xr.open_dataset(mydir + f'16D_0.nc')
+        data_32D_0 = xr.open_dataset(mydir + f'32D_0.nc')
+        data_64D_0 = xr.open_dataset(mydir + f'64D_0.nc')
 
-    data_2D_0 = xr.open_dataset(mydir + f'2D_0.nc')
-    data_4D_0 = xr.open_dataset(mydir + f'4D_0.nc')
-    data_8D_0 = xr.open_dataset(mydir + f'8D_0.nc')
-    data_16D_0 = xr.open_dataset(mydir + f'16D_0.nc')
-    data_32D_0 = xr.open_dataset(mydir + f'32D_0.nc')
-    data_64D_0 = xr.open_dataset(mydir + f'64D_0.nc')
-
-    data_2D_1 = xr.open_dataset(mydir + f'2D_1.nc')
-    data_4D_1 = xr.open_dataset(mydir + f'4D_1.nc')
-    data_8D_1 = xr.open_dataset(mydir + f'8D_1.nc')
-    data_16D_1 = xr.open_dataset(mydir + f'16D_1.nc')
-    data_32D_1 = xr.open_dataset(mydir + f'32D_1.nc')
-    data_64D_1 = xr.open_dataset(mydir + f'64D_1.nc')
+    if what_plotting == '_1' or what_plotting == '_beta':
+        data_2D_1 = xr.open_dataset(mydir + f'2D_1.nc')
+        data_4D_1 = xr.open_dataset(mydir + f'4D_1.nc')
+        data_8D_1 = xr.open_dataset(mydir + f'8D_1.nc')
+        data_16D_1 = xr.open_dataset(mydir + f'16D_1.nc')
+        data_32D_1 = xr.open_dataset(mydir + f'32D_1.nc')
+        data_64D_1 = xr.open_dataset(mydir + f'64D_1.nc')
 
     if C_or_LM == 'C':
         if what_plotting == '_0':
@@ -95,9 +136,7 @@ else:
     set_labels = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
                   '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']
 
-zn_set = np.arange(0, 3020, 20)
-z_set = np.arange(-10, 3010, 20)
-z_ML = 490
+
 
 ##################################################################################################################
 
@@ -146,9 +185,9 @@ if what_plotting=='_beta':
             Cth_w_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[1]}_w_prof'].data[0, ...]
             Cqt_w_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[2]}_w_prof'].data[0, ...]
 
-            Cs_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[0]}_w_th_prof'].data[0, ...]
-            Cth_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[1]}_w_th_prof'].data[0, ...]
-            Cqt_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[2]}_w_th_prof'].data[0, ...]
+            Cs_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[0]}_w_{th_name}_prof'].data[0, ...]
+            Cth_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[1]}_w_{th_name}_prof'].data[0, ...]
+            Cqt_w_th_sq_temp[j, i, :] = data_list[i][f'{my_C_or_LM_profs[2]}_w_{th_name}_prof'].data[0, ...]
 
     Cs_sq = Cs_sq_temp[0,...] / dyn.beta_calc(Cs_sq_temp[0,...], Cs_sq_temp[1,...])
     Cth_sq = Cth_sq_temp[0, ...] / dyn.beta_calc(Cth_sq_temp[0, ...], Cth_sq_temp[1, ...])
@@ -208,9 +247,9 @@ else:
             Cth_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_prof'].data[0, ...] )
             Cqt_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_prof'].data[0, ...] )
 
-            Cs_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_th_prof'].data[0, ...] )
-            Cth_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_th_prof'].data[0, ...] )
-            Cqt_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_th_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_th_prof'].data[0, ...] )
+            Cs_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_{th_name}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_{th_name}_prof'].data[0, ...] )
+            Cth_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_{th_name}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_{th_name}_prof'].data[0, ...] )
+            Cqt_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_{th_name}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_{th_name}_prof'].data[0, ...] )
         else:
             Cs_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_prof'].data[0, ...]
             Cth_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_prof'].data[0, ...]
@@ -228,9 +267,9 @@ else:
             Cth_w_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_w_prof'].data[0, ...]
             Cqt_w_sq[i, :] = data_list[i][f'{C_or_LM_profs[2]}_w_prof'].data[0, ...]
 
-            Cs_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_w_th_prof'].data[0, ...]
-            Cth_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_w_th_prof'].data[0, ...]
-            Cqt_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[2]}_w_th_prof'].data[0, ...]
+            Cs_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_w_{th_name}_prof'].data[0, ...]
+            Cth_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_w_{th_name}_prof'].data[0, ...]
+            Cqt_w_th_sq[i, :] = data_list[i][f'{C_or_LM_profs[2]}_w_{th_name}_prof'].data[0, ...]
     print('shape of Cs_sq = ', np.shape(Cs_sq))
 
 ########################################################################################################################
@@ -481,9 +520,6 @@ plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
 ##################################################################################################################
 
 
-z_cl_r = [50, 75]
-z_ml_r = [6, 20]
-
 def cal_max_Cs(C_list):
 
     print('when calc the max values, shape of C list is ', np.shape(C_list))
@@ -509,8 +545,36 @@ max_Cs_cond = dyn.get_Cs(max_Cs_sq_cond)
 max_Cth_cond = dyn.get_Cs(max_Cth_sq_cond)
 max_Cqt_cond = dyn.get_Cs(max_Cqt_sq_cond)
 
-def get_max_l_from_C(max_C_cond, deltas_num):
-    Delta_res = deltas_num*20
+
+def cal_mean_Cs(C_list):
+
+    print('when calc the mean values, shape of C list is ', np.shape(C_list))
+
+    mean_C = np.zeros((np.shape(C_list)[0]+1, np.shape(C_list)[1]))
+
+    for i in range(np.shape(C_list)[0]):
+        for nD in range(np.shape(C_list)[1]):
+            if i == 0:
+                mean_C[i, nD] = np.mean(C_list[i, nD, z_ml_r[0]:z_ml_r[1]])
+                mean_C[i+1, nD] = np.mean(C_list[i, nD, z_cl_r[0]:z_cl_r[1]])
+            else:
+                mean_C[i+1, nD] = np.mean(C_list[i, nD, z_cl_r[0]:z_cl_r[1]])
+
+    print('shape of mean C is ', np.shape(mean_C))
+    return mean_C
+
+mean_Cs_sq_cond = cal_mean_Cs(Cs_sq_cond)
+mean_Cth_sq_cond = cal_mean_Cs(Cth_sq_cond)
+mean_Cqt_sq_cond = cal_mean_Cs(Cqt_sq_cond)
+
+mean_Cs_cond = dyn.get_Cs(mean_Cs_sq_cond)
+mean_Cth_cond = dyn.get_Cs(mean_Cth_sq_cond)
+mean_Cqt_cond = dyn.get_Cs(mean_Cqt_sq_cond)
+
+
+
+def get_max_l_from_C(max_C_cond, deltas_num, grid_spacing):
+    Delta_res = deltas_num*grid_spacing
     max_l_cond = np.zeros_like(max_C_cond)
     for it in range(np.shape(max_C_cond)[1]):
         max_l_cond[:,it] = max_C_cond[:,it] * Delta_res[it]
@@ -519,7 +583,7 @@ def get_max_l_from_C(max_C_cond, deltas_num):
 
 #Cs_sq in ML, Cs_sq in CL, Cs_env_sq, Cs_cloud_sq, Cs_w_sq, Cs_w_th_sq
 
-def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax):
+def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_mean='max'):
 
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
     labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
@@ -565,15 +629,20 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax):
     ax[2].set_title(y_labels[2], fontsize=16)
 
     ax[1].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
-    plt.savefig(plotdir+f'max_{y_ax}{what_plotting}_prof.png', bbox_inches='tight')
+    plt.savefig(plotdir+f'{max_mean}_{y_ax}{what_plotting}_prof.png', bbox_inches='tight')
     plt.close()
 
 
 
 
-# plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Delta = set_labels, y_ax = 'C')
-# plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond, delta_numbers), get_max_l_from_C(max_Cth_cond, delta_numbers),
-#                       get_max_l_from_C(max_Cqt_cond, delta_numbers), Delta = set_labels, y_ax = 'l')
+plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Delta = set_labels, y_ax = 'C', max_mean='max')
+plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond, delta_numbers, 25), get_max_l_from_C(max_Cth_cond, delta_numbers, 25),
+                      get_max_l_from_C(max_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l', max_mean='max')
+
+
+plot_max_C_l_vs_Delta(mean_Cs_cond, mean_Cth_cond, mean_Cqt_cond, Delta = set_labels, y_ax = 'C', max_mean='mean')
+plot_max_C_l_vs_Delta(get_max_l_from_C(mean_Cs_cond, delta_numbers, 25), get_max_l_from_C(mean_Cth_cond, delta_numbers, 25),
+                      get_max_l_from_C(mean_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l', max_mean='mean')
 
 
 

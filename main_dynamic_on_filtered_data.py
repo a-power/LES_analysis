@@ -4,7 +4,7 @@ import os
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='14400')
+parser.add_argument('--times', type=str, default='25200')
 parser.add_argument('--start_in', type=int, default=0)
 parser.add_argument('--start_filt', type=int, default=0)
 parser.add_argument('--n_filts', type=int, default=6)
@@ -15,17 +15,19 @@ start = args.start_in
 filters_start = args.start_filt
 how_many_filters = args.n_filts #eg 6 = 0->5: ga00.nc -> ga05.nc
 
-
+MY_dx = 25
 case_in='ARM'
-#set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
+
 opgrid = 'p'
+
+#set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
 
 filter_name = 'gaussian'  # "wave_cutoff"
 #Sigma = hat(Delta)/2
 if start == 0:
-        sigma_list = np.array([20, 40]) #dont forget CHANGE start time if youre short-serial filtering
+        sigma_list = np.array([MY_dx, 2*MY_dx])
 elif start == 1:
-        sigma_list = np.array([40])
+        sigma_list = np.array([MY_dx])
 else:
         print('need to set up the sigma list for start = ', start)
 
@@ -58,7 +60,7 @@ if case_in=='BOMEX':
           }
 
 elif case_in=='ARM':
-        in_dir = f'/work/scratch-pw3/apower/ARM/on_{opgrid}_grid/'
+        in_dir = f'/work/scratch-pw3/apower/ARM/corrected_sigmas/'
         outdir = in_dir + 'filtering_filtered/'
         plotdir = outdir + 'plots/dyn/'
         model_res_list = [None]

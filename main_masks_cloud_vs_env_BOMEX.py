@@ -14,19 +14,12 @@ data_path = path20f+file20
 
 options = {
     'return_fields': False,
-
     'cloud_thres': 10 ** (-5),
-
     'other_var_choice': False,
-
     'other_var_thres': False,
-
     'less_greater': 'greater',
-
     'my_and_or': 'and',
-
     'return_all_masks': False,
-
     'dataset_in': path20f+file20
 }
 

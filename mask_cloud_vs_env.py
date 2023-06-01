@@ -81,7 +81,7 @@ def cloudy_and_or(data_in, other_var, var_thres, less_greater, and_or, \
     else:
         ds_in = xr.open_dataset(data_in)
 
-        if 'f(q_cloud_liquid_mass_on_w)_r' in ds_in:
+        if f'f(q_cloud_liquid_mass_on_{grid})_r' in ds_in:
             q_in = ds_in[f'f(q_cloud_liquid_mass_on_{grid})_r']
         elif f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r' in ds_in:
             q_in = ds_in[f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r']

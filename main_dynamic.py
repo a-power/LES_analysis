@@ -13,8 +13,11 @@ start = args.start_in
 print('start type = ', type(start))
 
 case='ARM'
-#set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
+MY_dx = 25
+
 opgrid = 'p'
+
+#set_time = ['10800', '14400', '18000', '21600', '25200'] # '3600', '7200',
 
 filter_name = 'gaussian'  # "wave_cutoff"
 #Sigma = hat(Delta)/2
@@ -27,17 +30,17 @@ filter_name = 'gaussian'  # "wave_cutoff"
 
 
 if start == 0:
-        sigma_list = np.array([20, 40, 80, 160, 320, 640])
+        sigma_list = np.array([MY_dx, 2*MY_dx, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
 elif start == 1:
-        sigma_list = np.array([40, 80, 160, 320, 640])
+        sigma_list = np.array([2*MY_dx, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
 elif start == 2:
-        sigma_list = np.array([80, 160, 320, 640])
+        sigma_list = np.array([4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
 elif start == 3:
-        sigma_list = np.array([160, 320, 640])
+        sigma_list = np.array([8*MY_dx, 16*MY_dx, 32*MY_dx])
 elif start == 4:
-        sigma_list = np.array([320, 640])
+        sigma_list = np.array([16*MY_dx, 32*MY_dx])
 elif start == 5:
-        sigma_list = np.array([640])
+        sigma_list = np.array([32*MY_dx])
 else:
         print('need to set up the sigma list for start = ', start)
 # #([20, 40, 80] ([160, 320, 640])
@@ -52,7 +55,7 @@ if case=='BOMEX':
         plotdir = outdir_og + 'plots/dyn/'
 elif case=='ARM':
         in_dir = '/work/scratch-pw3/apower/ARM/'
-        outdir = in_dir + f'on_{opgrid}_grid/'
+        outdir = in_dir + f'corrected_sigmas/'
         plotdir = outdir + 'plots/dyn/'
         model_res_list = [None]
 
