@@ -4,7 +4,7 @@ import os
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='14400')
+parser.add_argument('--times', type=str, default='25200')
 parser.add_argument('--start_in', type=int, default=0)
 parser.add_argument('--start_filt', type=int, default=0)
 parser.add_argument('--n_filts', type=int, default=6)
