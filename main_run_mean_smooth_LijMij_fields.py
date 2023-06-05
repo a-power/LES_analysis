@@ -58,7 +58,7 @@ if case == 'BOMEX':
 elif case == 'ARM':
     opt = opt_ARM
     if beta == True:
-        homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
+        homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/'
         dir_cloud = homedir + f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     else:
         print('not coded yet')
