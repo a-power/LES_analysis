@@ -5,7 +5,7 @@ import xarray as xr
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='14400')
+parser.add_argument('--times', type=str, default='25200')
 
 args = parser.parse_args()
 set_time = args.times
