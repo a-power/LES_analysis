@@ -7,27 +7,67 @@ import subfilter.subfilter as sf
 import subfilter.utils as ut
 import subfilter.utils.deformation as defm
 from subfilter.utils.dask_utils import re_chunk
+import argparse
 
 import dynamic_functions as dyn
 import dask
 import subfilter
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--times', type=str, default='25200')
+parser.add_argument('--start_filt', type=int, default=0)
+parser.add_argument('--n_filts', type=int, default=6)
+
+args = parser.parse_args()
+set_time = args.times
+filters_start = args.start_filt
+how_many_filters = args.n_filts
+
 beta=True
 case = 'ARM' # 'BOMEX',
 
+opt_BOMEX = {
+        'FFT_type': 'RFFT',
+        'save_all': 'Yes',
+        'th_ref': 300.0,
+        'dx': 20.0,
+        'dy': 20.0,
+        'domain' : 16.0,
+          }
 
-if beta==True:
-    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
-    dir_cloud = homedir + 'contours/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
-else:
-    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/'
-    dir_cloud = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+opt_ARM = {
+        'FFT_type': 'RFFT',
+        'save_all': 'Yes',
+        'override': True,
+        'th_ref': 300.0,
+        'dx': 25.0,
+        'dy': 25.0,
+        'domain' : 19.2,
+          }
 
 
-mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
+if case == 'BOMEX':
+    opt = opt_BOMEX
+    if beta==True:
+        homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
+        dir_cloud = homedir + 'contours/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+    else:
+        homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/'
+        dir_cloud = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+
+elif case == 'ARM':
+    opt = opt_ARM
+    if beta == True:
+        homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/'
+        dir_cloud = homedir + f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
+    else:
+        print('not coded yet')
 
 
-dirs = [dir_cloud]#mydir]#,
+mydir = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
+
+
+dirs = [mydir, dir_cloud]#,
 
 if beta == True:
     res = ['0', '1', '2', '3', '4', '5']
@@ -43,28 +83,20 @@ os.makedirs(outdir, exist_ok = True)
 filter_name = 'running_mean'
 width_list = np.array([2])
 
-start_point=0
 #Note short serial queue on JASMIN times out after 3 filter scales
 ingrid = 'p' #its on p but saved with the z coord saying z rather than zn woops
 
-opt = {
-        'FFT_type': 'RFFT',
-        'save_all': 'Yes',
-        'th_ref': 300.0,
-        'dx': 20.0,
-        'dy': 20.0,
-        'domain' : 16.0,
-          }
+
 
 for i, indir in enumerate(dirs):
-    for j, data_in_scale in enumerate(res):
+    for j in range(how_many_filters - filters_start): #, res[j] in enumerate(res):
         for l, filt_2nd in enumerate(num_filts):
             if indir == mydir:
                 for k, var_in in enumerate(vars):
                     if beta == True:
-                        file_in = f'{indir}{var_in}{data_in_scale}_{filt_2nd}.nc'
+                        file_in = f'{indir}{var_in}{res[j + filters_start]}_{filt_2nd}.nc'
                     else:
-                        file_in = f'{indir}{var_in}{data_in_scale}.nc'
+                        file_in = f'{indir}{var_in}{res[j + filters_start]}.nc'
 
                     if var_in == 'Cs_':
                         var_names = ['LM_field', 'MM_field']
@@ -96,7 +128,7 @@ for i, indir in enumerate(dirs):
                     xvar = list(ds_in.dims)[iix]
                     yvar = list(ds_in.dims)[iiy]
                     zvar = list(ds_in.dims)[iiz]
-                    max_ch = subfilter.global_config['chunk_size']
+                    max_ch = 4*subfilter.global_config['chunk_size']
 
                     # This is a rough way to estimate chunck size
                     nch = np.min([int(ds_in.dims[xvar] / (2 ** int(np.log(ds_in.dims[xvar]
@@ -123,19 +155,19 @@ for i, indir in enumerate(dirs):
                     for ni, filt_set in enumerate(width_list):
                         print(filt_set)
                         if filter_name == 'gaussian':
-                            filter_id = 'filter_ga{:02d}'.format(ni + start_point)
+                            filter_id = 'filter_ga{:02d}'.format(ni)
                             twod_filter = filt.Filter(filter_id,
                                                       filter_name, npoints=N,
                                                       sigma=filt_set, width=-1,
                                                       delta_x=dx_in, cutoff=cutoff)
                         elif filter_name == 'wave_cutoff':
-                            filter_id = 'filter_wc{:02d}'.format(ni + start_point)
+                            filter_id = 'filter_wc{:02d}'.format(ni)
                             twod_filter = filt.Filter(filter_id, filter_name,
                                                       wavenumber=filt_set,
                                                       width=-1, npoints=N,
                                                       delta_x=dx_in)
                         elif filter_name == 'running_mean':
-                            filter_id = 'filter_rm{:02d}'.format(ni + start_point)
+                            filter_id = 'filter_rm{:02d}'.format(ni)
                             twod_filter = filt.Filter(filter_id,
                                                       filter_name,
                                                       width=filt_set,
@@ -172,22 +204,13 @@ for i, indir in enumerate(dirs):
             else:
 
                 if beta == True:
-                    file_in = f'{indir}{data_in_scale}_gaussian_filter_ga0{filt_2nd}.nc'
-                    # var_names = [f'f(f(q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
-                    #              f'f(f(th_v_on_{ingrid})_r_on_{ingrid})_r',
-                    #              f'f(f(w_on_{ingrid})_r_on_{ingrid})_r',
-                    #              f'f(f(w_on_{ingrid}.w_on_{ingrid})_r_on_{ingrid})_r',
-                    #              f'f(f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
-                    #              f'f(f(w_on_{ingrid}.th_on_{ingrid})_r_on_{ingrid})_r',
-                    #              f'f(f(w_on_{ingrid}.th_v_on_{ingrid})_r_on_{ingrid})_r',
-                    #              f'f(f(u_on_{ingrid}.u_on_{ingrid})_r_on_{ingrid})_r',
-                    #              f'f(f(v_on_{ingrid}.v_on_{ingrid})_r_on_{ingrid})_r',
-                    #              f'f(f(w_on_{ingrid}.w_on_{ingrid})_r_on_{ingrid})_r'
-                    #              ]
-                else:
-                    file_in = f'{indir}{data_in_scale}.nc'
+                    file_in = f'{indir}{res[j+filters_start]}_gaussian_filter_ga0{filt_2nd}.nc'
 
-                var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r', f'f(th_v_on_{ingrid})_r',
+                else:
+                    file_in = f'{indir}{res[j+filters_start]}.nc'
+
+                if case == 'ARM':
+                    var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r', f'f(th_v_on_{ingrid})_r',
                                  f'f(w_on_{ingrid})_r',
                              f'f(u_on_{ingrid}.u_on_{ingrid})_r',
                              f'f(v_on_{ingrid}.v_on_{ingrid})_r',
@@ -198,6 +221,21 @@ for i, indir in enumerate(dirs):
                                  # f'f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r',
                                  # f'f(w_on_{ingrid}.th_on_{ingrid})_r',
                                  # f'f(w_on_{ingrid}.q_total_on_{ingrid})_r'
+
+                elif case == 'BOMEX':
+                    var_names = [f'f(f(q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(th_v_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(w_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(w_on_{ingrid}.w_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(w_on_{ingrid}.th_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(w_on_{ingrid}.th_v_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(u_on_{ingrid}.u_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(v_on_{ingrid}.v_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(w_on_{ingrid}.w_on_{ingrid})_r_on_{ingrid})_r'
+                                  ]
+                else:
+                    print('contour variables not defined for this case')
 
                 ds_in = xr.open_dataset(file_in)
                 time_data = ds_in['time']
@@ -217,7 +255,7 @@ for i, indir in enumerate(dirs):
                 xvar = list(ds_in.dims)[iix]
                 yvar = list(ds_in.dims)[iiy]
                 zvar = list(ds_in.dims)[iiz]
-                max_ch = subfilter.global_config['chunk_size']
+                max_ch = 4*subfilter.global_config['chunk_size']
 
                 # This is a rough way to estimate chunck size
                 nch = np.min([int(ds_in.dims[xvar] / (2 ** int(np.log(ds_in.dims[xvar]
@@ -244,19 +282,19 @@ for i, indir in enumerate(dirs):
                 for ni, filt_set in enumerate(width_list):
                     print(filt_set)
                     if filter_name == 'gaussian':
-                        filter_id = 'filter_ga{:02d}'.format(ni + start_point)
+                        filter_id = 'filter_ga{:02d}'.format(ni)
                         twod_filter = filt.Filter(filter_id,
                                                   filter_name, npoints=N,
                                                   sigma=filt_set, width=-1,
                                                   delta_x=dx_in, cutoff=cutoff)
                     elif filter_name == 'wave_cutoff':
-                        filter_id = 'filter_wc{:02d}'.format(ni + start_point)
+                        filter_id = 'filter_wc{:02d}'.format(ni)
                         twod_filter = filt.Filter(filter_id, filter_name,
                                                   wavenumber=filt_set,
                                                   width=-1, npoints=N,
                                                   delta_x=dx_in)
                     elif filter_name == 'running_mean':
-                        filter_id = 'filter_rm{:02d}'.format(ni + start_point)
+                        filter_id = 'filter_rm{:02d}'.format(ni)
                         twod_filter = filt.Filter(filter_id,
                                                   filter_name,
                                                   width=filt_set,
