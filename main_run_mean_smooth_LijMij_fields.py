@@ -16,12 +16,13 @@ import subfilter
 parser = argparse.ArgumentParser()
 parser.add_argument('--times', type=str, default='25200')
 parser.add_argument('--start_filt', type=int, default=0)
-parser.add_argument('--n_filts', type=int, default=6)
+#parser.add_argument('--n_filts', type=int, default=6)
 
 args = parser.parse_args()
 set_time = args.times
 filters_start = args.start_filt
-how_many_filters = args.n_filts
+#how_many_filters = args.n_filts
+how_many_filters = filters_start + 1
 
 beta=True
 case = 'ARM' # 'BOMEX',
