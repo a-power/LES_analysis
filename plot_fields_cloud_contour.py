@@ -28,12 +28,16 @@ if case =='BOMEX':
 
     plotdir_in = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/fields_contour/standard_cb/'
 
+    Dx_grid = 20
+
 elif case == 'ARM':
     homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/'
     mydir = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
     contour_data = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_ga0"
 
     plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/ARM/plots/fields_contour/{set_time}/'
+
+    Dx_grid = 25
 
 else:
     print("case isn't yet coded for")
@@ -63,7 +67,8 @@ general_options = {'set_cb': set_cb_in,
                     'contour_field_in': contour_data,
                     'plot_dir': plotdir_in,
                     'start_end': x_axis_start_end,
-                    'deltas': Deltas
+                    'deltas': Deltas,
+                    'delta_grid': Dx_grid
                     }
 
 LijMij_options = {'field': 'LM_field',

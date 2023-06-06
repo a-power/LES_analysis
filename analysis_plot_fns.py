@@ -309,7 +309,7 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
 
 
 def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, contour_field_in, t_av_or_not,
-              start_end, set_percentile_C2=None, deltas=None, set_cb=[[None, None], [None, None]]):
+              start_end, set_percentile_C2=None, deltas=None, set_cb=[[None, None], [None, None]], delta_grid=25):
 
     myvmin_C = set_cb[0][0]
     myvmax_C = set_cb[0][1]
@@ -321,9 +321,9 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
         deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
 
     start = start_end[0]
-    start_grid = int(start/0.02) # going from km to grid spacing co-ords (20m grid)
+    start_grid = int(start/(0.001*delta_grid)) # going from km to grid spacing co-ords (20m or 25m grid)
     end = start_end[1]
-    end_grid = int(end/0.02) # going from km to grid spacing co-ords (20m grid)
+    end_grid = int(end/(0.001*delta_grid)) # going from km to grid spacing co-ords (20m or 25m grid)
 
 
     if field == 'Cs_field':
