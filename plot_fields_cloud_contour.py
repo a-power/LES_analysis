@@ -1,12 +1,43 @@
 import numpy as np
 import os
 import analysis_plot_fns as apf
+import argparse
 
-homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
-mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
-contour_data = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+parser = argparse.ArgumentParser()
+parser.add_argument('--times', type=str, default='25200')
+parser.add_argument('--x_y', type=str, default='300')
+parser.add_argument('--axis', type=str, default='y')
+parser.add_argument('--x_s', type=float, default=0)
+parser.add_argument('--x_e', type=float, default=19.6)
+args = parser.parse_args()
+set_time = args.times
+my_x_y = args.x_y # must be y due to direction of wind in BOMEX
+my_axis = args.axis
+x_start = args.x_s
+x_end = args.x_e
 
-plotdir_in = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/fields_contour/standard_cb/'
+case = 'ARM'
+
+Deltas = ['2D']#, '4D', '8D', '16D', '32D', '64D']
+
+
+if case =='BOMEX':
+    homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
+    mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
+    contour_data = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+
+    plotdir_in = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/fields_contour/standard_cb/'
+
+elif case == 'ARM':
+    homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/'
+    mydir = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
+    contour_data = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_ga0"
+
+    plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/ARM/plots/fields_contour/{set_time}/'
+
+else:
+    print("case isn't yet coded for")
+
 os.makedirs(plotdir_in, exist_ok = True)
 
 dir_s = mydir + 'Cs_'
@@ -17,16 +48,12 @@ in_set_percentile = [25,99]
 in_set_percentile_C = [70,99]
 in_set_percentile_C2 = ['min',99] #note that the first entry of this can be 'min' or a number representing the percentile
 
-x_axis_start_end = [0, 4] #start and end points in km
+x_axis_start_end = [x_start, x_end] #start and end points in km
 
 set_cb_in = [[0.16, 0.30], [-0.1, 0.1]] #C_min, C_max, C^2_min, C^2_max = [[None, None], [None, None]]
 
-time_av_or_not = np.array([2]) #, 1, 2 #'yes' (in the array) #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
+time_av_or_not = np.array([0, 1, 2]) #0, 1, 2 #'yes' (in the array) #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
 
-my_axis = 300
-my_x_y = 'y' # must be y due to direction of wind
-
-Deltas = ['2D']#, '4D', '8D', '16D', '32D', '64D']
 
 
 general_options = {'set_cb': set_cb_in,
