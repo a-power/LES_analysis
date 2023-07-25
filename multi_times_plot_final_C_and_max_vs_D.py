@@ -109,7 +109,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         else:
             name = '_'
 
-    fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(15,6))
+    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(15,6))
 
     fig.tight_layout(pad=0.5)
 
@@ -166,10 +166,10 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
 
     if interp==True:
         ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
-        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}prof_scaled_interp_z.png', bbox_inches='tight')
+        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{set_time[itr]}prof_scaled_interp_z.png', bbox_inches='tight')
     else:
         ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
-        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}prof_scaled_zn.png', bbox_inches='tight')
+        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{set_time[itr]}prof_scaled_zn.png', bbox_inches='tight')
     plt.close()
 
 
@@ -219,7 +219,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             Cqt = Cqt_temp.copy()
 
 
-        fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(15,6))
+        fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(15,6))
         print('np.shape(Cs) = ', np.shape(Cs))
 
         fig.tight_layout(pad=0.5)
@@ -280,11 +280,11 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
         if interp==True:
             ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
-            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_interp_z.png',
+            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{set_time[itr]}_scaled_interp_z.png',
                         bbox_inches='tight')
         else:
             ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
-            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_zn.png',
+            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{set_time[itr]}_scaled_zn.png',
                         bbox_inches='tight')
         plt.close()
 def cal_max_Cs(C_list):
@@ -339,7 +339,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     else:
         y_labels = ['$l_{s}$ (m)', '$l_{\\theta}$ (m)', '$l_{qt}$ (m)']
 
-    fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(15, 5))
+    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(15, 5))
     fig.tight_layout(pad=0.5)
 
     for it in range(np.shape(Cs_max_in)[0]):
@@ -372,7 +372,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     ax[2].set_title(y_labels[2], fontsize=16)
 
     ax[1].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
-    plt.savefig(plotdir+f'{max_mean}_{y_ax}{what_plotting}_prof.png', bbox_inches='tight')
+    plt.savefig(plotdir+f'{max_mean}_{y_ax}{what_plotting}_time{set_time[itr]}_prof.png', bbox_inches='tight')
     plt.close()
 
 
