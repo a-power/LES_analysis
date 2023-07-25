@@ -25,7 +25,7 @@ C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 if case == 'ARM':
 
     homedir = '/work/scratch-pw3/apower/ARM/on_p_grid/filtering_filtered/C_profs/'
-    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/on_p_grid/C_beta_profiles/'
+    plotdir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields'
 
 
     zn_set = np.arange(0, 4410, 10)
