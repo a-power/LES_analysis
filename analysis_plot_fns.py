@@ -591,23 +591,23 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
         save_name = 'Cqt_sq'
 
 
-    elif field == 'LM_field' or field == f'f(LM_field_on_{mygrid})_r':
+    elif field == 'LM_field' or field == f'f(LM_field_on_{grid})_r':
         field_name = '$LM$'
         save_name = 'LM'
-    elif field == 'HR_th_field' or field == f'f(HR_th_field_on_{mygrid})_r':
+    elif field == 'HR_th_field' or field == f'f(HR_th_field_on_{grid})_r':
         field_name = '$HR_{\\theta}$'
         save_name = 'HR_th'
-    elif field == 'HR_q_total_field' or field == 'HR_q_total_f_field' or field == f'f(HR_q_total_f_field_on_{mygrid})_r':
+    elif field == 'HR_q_total_field' or field == 'HR_q_total_f_field' or field == f'f(HR_q_total_f_field_on_{grid})_r':
         field_name = '$HR_{qt}$'
         save_name = 'HR_qt'
 
-    elif field == 'MM_field' or field == f'f(MM_field_on_{mygrid})_r':
+    elif field == 'MM_field' or field == f'f(MM_field_on_{grid})_r':
         field_name = '$MM$'
         save_name = 'MM'
-    elif field == 'RR_th_field' or field == f'f(RR_th_field_on_{mygrid})_r':
+    elif field == 'RR_th_field' or field == f'f(RR_th_field_on_{grid})_r':
         field_name = '$RR_{\\theta}$'
         save_name = 'RR_th'
-    elif field == 'RR_q_total_field'  or field == 'RR_q_total_f_field' or field == f'f(RR_q_total_f_field_on_{mygrid})_r':
+    elif field == 'RR_q_total_field'  or field == 'RR_q_total_f_field' or field == f'f(RR_q_total_f_field_on_{grid})_r':
         field_name = '$RR_{qt}$'
         save_name = 'RR_qt'
     else:
