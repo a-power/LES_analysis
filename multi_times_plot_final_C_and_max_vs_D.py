@@ -24,16 +24,17 @@ C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 
 if case == 'ARM':
 
-    homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/'
+    homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/C_profs/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigma/C_beta_profiles/'
+    profiles_dir = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_'
 
 
     zn_set = np.arange(0, 4410, 10)
     z_set = np.arange(-5, 4405, 10)
-    z_ML = 1
-
-    z_cl_r = [130, 200]
-    z_ml_r = [8, 55]
+    # z_ML = 1
+    #
+    # z_cl_r = [130, 200]
+    # z_ml_r = [8, 55]
 
     th_name = 'th_v'
 
@@ -54,7 +55,7 @@ elif case == 'BOMEX':
 
     zn_set = np.arange(0, 3020, 20)
     z_set = np.arange(-10, 3010, 20)
-    z_ML = 490
+    z_ML = 490 # the w'th' 1D MONC prof suggests 440m
 
     z_cl_r = [49, 73]
     z_ml_r = [10, 22]
@@ -78,6 +79,20 @@ else:
 
 
 os.makedirs(plotdir, exist_ok = True)
+
+
+#######################################################################################################################
+
+#'25200.nc'
+#'39600.nc'
+#'32400.nc'
+#'18000.nc'
+
+def calc_z_ML_and_CL(file_path, time_stamp=-1):
+
+    prof_data = xr.open_dataset(file_path)
+
+    wth_prof = prof_data['wtheta_cn_mean'].data[time_stamp, ...]
 
 
 def interp_z(var_in, z_from=z_set, z_to=zn_set):
@@ -376,7 +391,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     plt.close()
 
 
-
+#######################################################################################################################
 
 
 
