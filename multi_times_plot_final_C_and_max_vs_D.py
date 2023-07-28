@@ -36,6 +36,8 @@ if case == 'ARM':
     # z_cl_r = [130, 200]
     # z_ml_r = [8, 55]
 
+    times = ['25200.nc', '39600.nc', '32400.nc', '18000.nc']
+
     th_name = 'th_v'
 
 elif case == 'BOMEX':
@@ -60,6 +62,8 @@ elif case == 'BOMEX':
     z_cl_r = [49, 73]
     z_ml_r = [10, 22]
 
+    times = ['14400']
+
     th_name = 'th'
 
 else:
@@ -83,16 +87,19 @@ os.makedirs(plotdir, exist_ok = True)
 
 #######################################################################################################################
 
-#'25200.nc'
-#'39600.nc'
-#'32400.nc'
-#'18000.nc'
 
 def calc_z_ML_and_CL(file_path, time_stamp=-1):
 
     prof_data = xr.open_dataset(file_path)
 
     wth_prof = prof_data['wtheta_cn_mean'].data[time_stamp, ...]
+    z_ML = np.where(wth_prof = np.min(wth_prof))
+
+    cloud = prof_data['total_cloud_fraction'].data[time_stamp, ...]
+    z_cloud = np.where(wth_prof != 0)
+    z_CL = [ np.min(z_cloud), np.max(z_cloud) ]
+
+    return z_ML, z_CL
 
 
 def interp_z(var_in, z_from=z_set, z_to=zn_set):
