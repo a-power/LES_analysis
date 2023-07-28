@@ -14,7 +14,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--case_in', type=str, default='ARM')
 args = parser.parse_args()
 
-set_time = [ '18000', '25200', '32400', '39600' ]
 case = args.case_in
 
 
@@ -36,7 +35,9 @@ if case == 'ARM':
     # z_cl_r = [130, 200]
     # z_ml_r = [8, 55]
 
-    times = ['25200.nc', '39600.nc', '32400.nc', '18000.nc']
+    z_ML_bottom = 8
+
+    set_time = ['25200', '39600', '32400', '18000']
 
     th_name = 'th_v'
 
@@ -59,10 +60,10 @@ elif case == 'BOMEX':
     z_set = np.arange(-10, 3010, 20)
     z_ML = 490 # the w'th' 1D MONC prof suggests 440m
 
-    z_cl_r = [49, 73]
-    z_ml_r = [10, 22]
+    z_cl_r_Bomex = [49, 73]
+    z_ml_r_Bomex = [10, 22]
 
-    times = ['14400']
+    set_time = ['14400']
 
     th_name = 'th'
 
@@ -93,13 +94,21 @@ def calc_z_ML_and_CL(file_path, time_stamp=-1):
     prof_data = xr.open_dataset(file_path)
 
     wth_prof = prof_data['wtheta_cn_mean'].data[time_stamp, ...]
-    z_ML = np.where(wth_prof = np.min(wth_prof))
+    wth_prof_list = wth_prof.tolist()
+    z_ML = wth_prof_list.index(np.min(wth_prof))
 
-    cloud = prof_data['total_cloud_fraction'].data[time_stamp, ...]
-    z_cloud = np.where(wth_prof != 0)
-    z_CL = [ np.min(z_cloud), np.max(z_cloud) ]
+    z_cloud = prof_data['total_cloud_fraction'].data[time_stamp, ...]
+    z_cloud_where = np.where(z_cloud > 1e-7)
+    z_ind = np.arange(0, len(z_cloud))
+    z_cloud_ind = z_ind[z_cloud_where]
+    print(z_cloud_ind)
+    z_min_CL = np.min(z_cloud_ind)
+    z_max_CL = np.max(z_cloud_ind)
+    z_CL = [ z_min_CL, z_max_CL ]
 
-    return z_ML, z_CL
+    zn_out = prof_data['zn'].data[time_stamp, ...]
+
+    return z_ML, z_CL, zn_out
 
 
 def interp_z(var_in, z_from=z_set, z_to=zn_set):
@@ -110,7 +119,7 @@ def interp_z(var_in, z_from=z_set, z_to=zn_set):
     return interp_var
 
 
-def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C = False):
+def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C = False, time_in='14400'):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -188,16 +197,19 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
 
     if interp==True:
         ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
-        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{set_time[itr]}prof_scaled_interp_z.png', bbox_inches='tight')
+        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{time_in}_prof_scaled_interp_z.png',
+                    bbox_inches='tight')
     else:
         ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
-        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{set_time[itr]}prof_scaled_zn.png', bbox_inches='tight')
+        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{time_in}_prof_scaled_zn.png',
+                    bbox_inches='tight')
     plt.close()
 
 
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, interp=False, C_sq_to_C = True,
-                      labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core']):
+                      labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
+                              time_in='`14400'):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -302,14 +314,16 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
         if interp==True:
             ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
-            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{set_time[itr]}_scaled_interp_z.png',
+            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled_interp_z.png',
                         bbox_inches='tight')
         else:
             ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
-            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{set_time[itr]}_scaled_zn.png',
+            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled_zn.png',
                         bbox_inches='tight')
         plt.close()
-def cal_max_Cs(C_list):
+
+
+def cal_max_Cs(C_list, z_ml_r, z_cl_r):
 
     print('when calc the max values, shape of C list is ', np.shape(C_list))
 
@@ -325,7 +339,8 @@ def cal_max_Cs(C_list):
 
     print('shape of max C is ', np.shape(max_C))
     return max_C
-def cal_mean_Cs(C_list):
+
+def cal_mean_Cs(C_list, z_ml_r, z_cl_r):
 
     print('when calc the mean values, shape of C list is ', np.shape(C_list))
 
@@ -341,6 +356,7 @@ def cal_mean_Cs(C_list):
 
     print('shape of mean C is ', np.shape(mean_C))
     return mean_C
+
 def get_max_l_from_C(max_C_cond, deltas_num, grid_spacing):
     Delta_res = deltas_num*grid_spacing
     max_l_cond = np.zeros_like(max_C_cond)
@@ -348,7 +364,8 @@ def get_max_l_from_C(max_C_cond, deltas_num, grid_spacing):
         max_l_cond[:,it] = max_C_cond[:,it] * Delta_res[it]
     print('shape of max l is ', np.shape(max_l_cond))
     return max_l_cond
-def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_mean='max'):
+
+def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_mean='mean', time_in = '14400'):
 
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
     labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
@@ -394,7 +411,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     ax[2].set_title(y_labels[2], fontsize=16)
 
     ax[1].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
-    plt.savefig(plotdir+f'{max_mean}_{y_ax}{what_plotting}_time{set_time[itr]}_prof.png', bbox_inches='tight')
+    plt.savefig(plotdir+f'{max_mean}_{y_ax}{what_plotting}_time{time_in}_prof.png', bbox_inches='tight')
     plt.close()
 
 
@@ -402,12 +419,11 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
 
 
 
-for itr in range(len(set_time)):
+for itr, time_stamp in enumerate(set_time):
 
-    file_name = f"diagnostics_3d_ts_{set_time[itr]}_gaussian_filter_C_"
+    file_name = f"diagnostics_3d_ts_{time_stamp}_gaussian_filter_C_"
     mydir = homedir + file_name
-
-
+    prof_file = profiles_dir+time_stamp+'.nc'
 
     if beta == True:
         if what_plotting == '_0' or what_plotting == '_beta':
@@ -604,13 +620,24 @@ for itr in range(len(set_time)):
 
     ########################################################################################################################
 
+    z_ML_ind, z_cl_range, zn_arr = calc_z_ML_and_CL(prof_file)
+    z_ML = zn_set[z_ML_ind]
+
+    print('zn_set = ', zn_set)
+    print('zn_arr = ', zn_arr)
+
+    z_ml_range = [z_ML_bottom, z_ML_ind]
+
+
+
 
     #plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, interp=True)
     #plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels)
 
     #plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, interp=True, C_sq_to_C = True)
     print('shape of Cs_sq being fed into fn:', np.shape(Cs_sq))
-    plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels, C_sq_to_C = True)
+    plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels,
+                      C_sq_to_C = True, time_in=time_stamp)
 
     print('saved C plots to ', plotdir)
 
@@ -627,9 +654,9 @@ for itr in range(len(set_time)):
     Cth_sq_cond = np.reshape(Cth_sq_cond, ( np.shape(Cth_sq_cond)[0], np.shape(Cth_sq_cond)[1], np.shape(Cth_sq_cond)[2] ))
     Cqt_sq_cond = np.reshape(Cqt_sq_cond, ( np.shape(Cqt_sq_cond)[0], np.shape(Cqt_sq_cond)[1], np.shape(Cqt_sq_cond)[2] ))
 
-    np.save(f'Cs_sq_cond_{set_time[itr]}.npy', Cs_sq_cond)
-    np.save(f'Cth_sq_cond_{set_time[itr]}.npy', Cth_sq_cond)
-    np.save(f'Cqt_sq_cond_{set_time[itr]}.npy', Cqt_sq_cond)
+    np.save(homedir+f'Cs_sq_cond_{time_stamp}.npy', Cs_sq_cond)
+    np.save(homedir+f'Cth_sq_cond_{time_stamp}.npy', Cth_sq_cond)
+    np.save(homedir+f'Cqt_sq_cond_{time_stamp}.npy', Cqt_sq_cond)
 
 
 
@@ -640,7 +667,8 @@ for itr in range(len(set_time)):
 
     #plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = True)
     plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
-                              deltas = deltas_in, delta_label = set_labels, interp=False, C_sq_to_C = True)
+                              deltas = deltas_in, delta_label = set_labels, interp=False,
+                              C_sq_to_C = True, time_in=time_stamp)
 
 
     ##################################################################################################################
@@ -648,9 +676,9 @@ for itr in range(len(set_time)):
 
 
 
-    max_Cs_sq_cond = cal_max_Cs(Cs_sq_cond)
-    max_Cth_sq_cond = cal_max_Cs(Cth_sq_cond)
-    max_Cqt_sq_cond = cal_max_Cs(Cqt_sq_cond)
+    max_Cs_sq_cond = cal_max_Cs(Cs_sq_cond, z_ml_range, z_cl_range)
+    max_Cth_sq_cond = cal_max_Cs(Cth_sq_cond, z_ml_range, z_cl_range)
+    max_Cqt_sq_cond = cal_max_Cs(Cqt_sq_cond, z_ml_range, z_cl_range)
 
     max_Cs_cond = dyn.get_Cs(max_Cs_sq_cond)
     max_Cth_cond = dyn.get_Cs(max_Cth_sq_cond)
@@ -659,9 +687,9 @@ for itr in range(len(set_time)):
 
 
 
-    mean_Cs_sq_cond = cal_mean_Cs(Cs_sq_cond)
-    mean_Cth_sq_cond = cal_mean_Cs(Cth_sq_cond)
-    mean_Cqt_sq_cond = cal_mean_Cs(Cqt_sq_cond)
+    mean_Cs_sq_cond = cal_mean_Cs(Cs_sq_cond, z_ml_range, z_cl_range)
+    mean_Cth_sq_cond = cal_mean_Cs(Cth_sq_cond, z_ml_range, z_cl_range)
+    mean_Cqt_sq_cond = cal_mean_Cs(Cqt_sq_cond, z_ml_range, z_cl_range)
 
     mean_Cs_cond = dyn.get_Cs(mean_Cs_sq_cond)
     mean_Cth_cond = dyn.get_Cs(mean_Cth_sq_cond)
@@ -676,14 +704,18 @@ for itr in range(len(set_time)):
 
 
 
-    plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Delta = set_labels, y_ax = 'C', max_mean='max')
+    plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Delta = set_labels, y_ax = 'C', max_mean='max',
+                          time_in = time_stamp)
     plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond, delta_numbers, 25), get_max_l_from_C(max_Cth_cond, delta_numbers, 25),
-                          get_max_l_from_C(max_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l', max_mean='max')
+                          get_max_l_from_C(max_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l',
+                          max_mean='max', time_in = time_stamp)
 
 
-    plot_max_C_l_vs_Delta(mean_Cs_cond, mean_Cth_cond, mean_Cqt_cond, Delta = set_labels, y_ax = 'C', max_mean='mean')
+    plot_max_C_l_vs_Delta(mean_Cs_cond, mean_Cth_cond, mean_Cqt_cond, Delta = set_labels, y_ax = 'C', max_mean='mean',
+                          time_in = time_stamp)
     plot_max_C_l_vs_Delta(get_max_l_from_C(mean_Cs_cond, delta_numbers, 25), get_max_l_from_C(mean_Cth_cond, delta_numbers, 25),
-                          get_max_l_from_C(mean_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l', max_mean='mean')
+                          get_max_l_from_C(mean_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l',
+                          max_mean='mean', time_in = time_stamp)
 
 
 
