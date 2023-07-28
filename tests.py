@@ -1,3 +1,5 @@
+import xarray as xr
+
 def calc_z_ML_and_CL(file_path, time_stamp=-1):
 
     prof_data = xr.open_dataset(file_path)
