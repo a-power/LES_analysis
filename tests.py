@@ -1,4 +1,5 @@
 import xarray as xr
+import numpy as np
 
 def calc_z_ML_and_CL(file_path, time_stamp=-1):
 
