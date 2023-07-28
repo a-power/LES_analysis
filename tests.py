@@ -7,12 +7,13 @@ def calc_z_ML_and_CL(file_path, time_stamp=-1):
 
     wth_prof = prof_data['wtheta_cn_mean'].data[time_stamp, ...]
     print(wth_prof)
-    z_ML = wth_prof.index(np.min(wth_prof))
+    wth_prof_list = wth_prof.tolist()
+    z_ML = wth_prof_list.index(np.min(wth_prof))
 
-    cloud = prof_data['total_cloud_fraction'].data[time_stamp, ...]
-    z_cloud = np.where(cloud > 0)
-    z_min_CL = np.min(z_cloud.index(True))
-    z_max_CL = np.max(z_cloud.index(True))
+    z_cloud = prof_data['total_cloud_fraction'].data[time_stamp, ...]
+    z_cloud_list = z_cloud.tolist()
+    z_min_CL = np.min(z_cloud_list.index(z_cloud > 1e-7))
+    z_max_CL = np.max(z_cloud_list.index(z_cloud > 1e-7))
     z_CL = [ z_min_CL, z_max_CL ]
 
     return z_ML, z_CL
