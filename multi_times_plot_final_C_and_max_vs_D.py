@@ -70,6 +70,8 @@ elif case == 'BOMEX':
 else:
     print('need to def case')
 
+os.makedirs(plotdir, exist_ok = True)
+
 
 if C_or_LM == 'C':
     C_or_LM_profs = [['LM', 'HR_th', 'HR_qt'],
