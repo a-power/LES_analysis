@@ -11,7 +11,7 @@ def calc_z_ML_and_CL(file_path, time_stamp=-1):
 
     z_cloud = prof_data['total_cloud_fraction'].data[time_stamp, ...]
     z_cloud_list = z_cloud.tolist()
-    z_cloud_ind = z_cloud_list.index(z_cloud > 1e-7)
+    z_cloud_ind = z_cloud_list.index(z_cloud.all() > 1e-7)
     print(z_cloud_ind)
     z_min_CL = np.min(z_cloud_ind)
     z_max_CL = np.max(z_cloud_ind)
