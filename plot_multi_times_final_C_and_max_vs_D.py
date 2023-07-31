@@ -221,6 +221,10 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
                               time_in='`14400'):
 
+
+    clock_time_int = 05.30 + time_in/(60*60)
+    clock_time = str(clock_time_int)+'Z'
+
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
 
@@ -274,23 +278,24 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt])
         if C_sq_to_C == True:
             if C_or_LM == 'C':
-                ax[0].set_xlabel('$C_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
-                ax[1].set_xlabel('$C_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it],
+                ax[0].set_xlabel('$C_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it] + clock_time, fontsize=16)
+                ax[1].set_xlabel('$C_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it] + clock_time,
                                  fontsize=16)
-                ax[2].set_xlabel('$C_{qt}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it],
+                ax[2].set_xlabel('$C_{qt}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it] + clock_time,
                                  fontsize=16)
             else:
-                ax[0].set_xlabel(f'${C_or_LM}$'+' for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it],
+                ax[0].set_xlabel(f'${C_or_LM}$'+' for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it]+clock_time,
                                  fontsize=16)
-                ax[1].set_xlabel(f'${C_or_LM}$'+'$_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it],
+                ax[1].set_xlabel(f'${C_or_LM}$'+'$_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it]+clock_time,
                                  fontsize=16)
-                ax[2].set_xlabel(f'${C_or_LM}$'+'$_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it],
-                                   fontsize=16)
+                ax[2].set_xlabel(f'${C_or_LM}$'+'$_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it]+clock_time,
+                                 fontsize=16)
         else:
-            ax[0].set_xlabel('$C^2_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
-            ax[1].set_xlabel('$C^2_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
-            ax[2].set_xlabel('$C^2_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
-        ax[2].legend(fontsize=13, loc='upper right')
+            ax[0].set_xlabel('$C^2_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it] + clock_time, fontsize=16)
+            ax[1].set_xlabel('$C^2_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it] + clock_time, fontsize=16)
+            ax[2].set_xlabel('$C^2_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it] + clock_time, fontsize=16)
+
+        ax[0].legend(fontsize=13, loc='upper right')
 
         if C_or_LM == 'C':
             left0, right0 = ax[0].set_xlim()
@@ -323,11 +328,11 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
         print('deltas[it] =', deltas[it])
 
         if interp==True:
-            ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
+            ax[0].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
             plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled_interp_z.png',
                         bbox_inches='tight')
         else:
-            ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
+            ax[0].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
             plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled_zn.png',
                         bbox_inches='tight')
         plt.close()
@@ -377,6 +382,10 @@ def get_max_l_from_C(max_C_cond, deltas_num, grid_spacing):
 
 def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_mean='mean', time_in = '14400'):
 
+
+    clock_time_int = 05.30 + time_in/(60*60)
+    clock_time = str(clock_time_int)+'Z'
+
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
     labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
 
@@ -412,15 +421,22 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     ax[2].set_ylim(top=set_top)
 
     if y_ax == 'C':
-        ax[0].set_ylabel('Smagorinsky Parameter', fontsize=14)
+        ax[0].set_ylabel('$C_{mix}$ at '+ clock_time, fontsize=14)
+        ax[1].set_ylabel('$C_{\\theta}$ at '+ clock_time, fontsize=14)
+        ax[2].set_ylabel('$C_{qt}$ at '+ clock_time, fontsize=14)
     else:
-        ax[0].set_ylabel('Mixing Length', fontsize=14)
+        ax[0].set_ylabel('$l_{mix}$ at '+ clock_time, fontsize=14)
+        ax[1].set_ylabel('$l_{\\theta}$ at '+ clock_time, fontsize=14)
+        ax[2].set_ylabel('$l_{qt}$ at '+ clock_time, fontsize=14)
 
     ax[0].set_title(y_labels[0], fontsize=16)
     ax[1].set_title(y_labels[1], fontsize=16)
     ax[2].set_title(y_labels[2], fontsize=16)
 
+    ax[0].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
     ax[1].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
+    ax[2].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
+
     plt.savefig(plotdir+f'{max_mean}_{y_ax}{what_plotting}_time{time_in}_prof.png', bbox_inches='tight')
     plt.close()
 
