@@ -123,6 +123,9 @@ def interp_z(var_in, z_from=z_set, z_to=zn_set):
 
 def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C = False, time_in='14400'):
 
+    clock_time_int = 05.30 + time_in/(60*60)
+    clock_time = str(clock_time_int)+'Z'
+
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
 
@@ -142,7 +145,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         else:
             name = '_'
 
-    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(15,6))
+    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4,18))
 
     fig.tight_layout(pad=0.5)
 
@@ -152,24 +155,25 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         ax[2].plot(Cqt[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
     if C_sq_to_C == True:
         if C_or_LM == 'C':
-            ax[0].set_xlabel('$C_{s}$', fontsize=16)
-            ax[1].set_xlabel('$C_{\\theta}$', fontsize=16)
-            ax[2].set_xlabel('$C_{qt}$', fontsize=16)
+            ax[0].set_xlabel(f'$C_{s}$ at ' + clock_time, fontsize=16)
+            ax[1].set_xlabel('$C_{\\theta}$ at' + clock_time, fontsize=16)
+            ax[2].set_xlabel('$C_{qt}$ at' + clock_time, fontsize=16)
         elif C_or_LM == 'LM':
-            ax[0].set_xlabel(f'$LM$', fontsize=16)
-            ax[1].set_xlabel('$HR_{\\theta}$', fontsize=16)
-            ax[2].set_xlabel('$HR_{qt}$', fontsize=16)
+            ax[0].set_xlabel(f'$LM$ at {clock_time}', fontsize=16)
+            ax[1].set_xlabel('$HR_{\\theta}$ at' + clock_time, fontsize=16)
+            ax[2].set_xlabel('$HR_{qt}$ at' + clock_time, fontsize=16)
         elif C_or_LM == 'MM':
-            ax[0].set_xlabel(f'$MM$', fontsize=16)
-            ax[1].set_xlabel('$RR_{\\theta}$', fontsize=16)
-            ax[2].set_xlabel('$RR_{qt}$', fontsize=16)
+            ax[0].set_xlabel(f'$MM$ at {clock_time}', fontsize=16)
+            ax[1].set_xlabel('$RR_{\\theta}$ at' + clock_time, fontsize=16)
+            ax[2].set_xlabel('$RR_{qt}$ at' + clock_time, fontsize=16)
         else:
             print('not a recognised LM/MM/C')
     else:
-        ax[0].set_xlabel('$C^2_{s}$', fontsize=16)
-        ax[1].set_xlabel('$C^2_{\\theta}$', fontsize=16)
-        ax[2].set_xlabel('$C^2_{qt}$', fontsize=16)
-    ax[2].legend(fontsize=13, loc='best')
+        ax[0].set_xlabel('$C^2_{s}$ at' + clock_time, fontsize=16)
+        ax[1].set_xlabel('$C^2_{\\theta}$ at' + clock_time, fontsize=16)
+        ax[2].set_xlabel('$C^2_{qt}$ at' + clock_time, fontsize=16)
+
+    ax[0].legend(fontsize=13, loc='best')
 
     if C_or_LM == 'C':
         left0, right0 = ax[0].set_xlim()
@@ -198,11 +202,15 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
     ax[2].set_xlim(right = set_right, left = set_left)
 
     if interp==True:
-        ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
+        ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
+        ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
+        ax[2].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
         plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{time_in}_prof_scaled_interp_z.png',
                     bbox_inches='tight')
     else:
-        ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
+        ax[0].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
+        ax[1].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
+        ax[2].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
         plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{time_in}_prof_scaled_zn.png',
                     bbox_inches='tight')
     plt.close()
@@ -255,15 +263,15 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             Cqt = Cqt_temp.copy()
 
 
-        fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(15,6))
+        fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4,18))
         print('np.shape(Cs) = ', np.shape(Cs))
 
         fig.tight_layout(pad=0.5)
 
         for nt in range(np.shape(Cs)[0]):
-            ax[0].plot(Cs[nt, it, :], z/z_i, color=colours[nt])
+            ax[0].plot(Cs[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
             ax[1].plot(Cth[nt, it, :], z/z_i, color=colours[nt])
-            ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
+            ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt])
         if C_sq_to_C == True:
             if C_or_LM == 'C':
                 ax[0].set_xlabel('$C_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
@@ -380,13 +388,13 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     else:
         y_labels = ['$l_{s}$ (m)', '$l_{\\theta}$ (m)', '$l_{qt}$ (m)']
 
-    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(15, 5))
+    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4, 18))
     fig.tight_layout(pad=0.5)
 
     for it in range(np.shape(Cs_max_in)[0]):
-        ax[0].plot(Delta, Cs_max_in[it,...], color=colours[it], linestyle=my_lines[it])
+        ax[0].plot(Delta, Cs_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
         ax[1].plot(Delta, Cth_max_in[it,...], color=colours[it], linestyle=my_lines[it])
-        ax[2].plot(Delta, Cqt_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
+        ax[2].plot(Delta, Cqt_max_in[it,...], color=colours[it], linestyle=my_lines[it])
 
     if y_ax == 'C':
         ax[2].legend(fontsize=13, loc='upper right')
@@ -578,26 +586,40 @@ for itr, time_stamp in enumerate(set_time):
         for i in range(len(data_list)):
             if C_or_LM == 'C':
 
+                Cs_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_prof'].data[0, ...] /
+                                     data_list[i][f'{C_or_LM_profs[1][0]}_prof'].data[0, ...] )
+                Cth_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_prof'].data[0, ...] /
+                                      data_list[i][f'{C_or_LM_profs[1][1]}_prof'].data[0, ...] )
+                Cqt_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_prof'].data[0, ...] /
+                                      data_list[i][f'{C_or_LM_profs[1][2]}_prof'].data[0, ...] )
 
-                Cs_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_prof'].data[0, ...] )
-                Cth_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_prof'].data[0, ...] )
-                Cqt_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_prof'].data[0, ...] )
+                Cs_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_env_prof'].data[0, ...] /
+                                         data_list[i][f'{C_or_LM_profs[1][0]}_env_prof'].data[0, ...] )
+                Cth_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_env_prof'].data[0, ...] /
+                                          data_list[i][f'{C_or_LM_profs[1][1]}_env_prof'].data[0, ...] )
+                Cqt_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_env_prof'].data[0, ...] /
+                                          data_list[i][f'{C_or_LM_profs[1][2]}_env_prof'].data[0, ...] )
 
-                Cs_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_env_prof'].data[0, ...] )
-                Cth_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_env_prof'].data[0, ...] )
-                Cqt_env_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_env_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_env_prof'].data[0, ...] )
+                Cs_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_cloud_prof'].data[0, ...] /
+                                           data_list[i][f'{C_or_LM_profs[1][0]}_cloud_prof'].data[0, ...] )
+                Cth_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_cloud_prof'].data[0, ...] /
+                                            data_list[i][f'{C_or_LM_profs[1][1]}_cloud_prof'].data[0, ...] )
+                Cqt_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_cloud_prof'].data[0, ...] /
+                                            data_list[i][f'{C_or_LM_profs[1][2]}_cloud_prof'].data[0, ...] )
 
-                Cs_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_cloud_prof'].data[0, ...] )
-                Cth_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_cloud_prof'].data[0, ...] )
-                Cqt_cloud_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_cloud_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_cloud_prof'].data[0, ...] )
+                Cs_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_prof'].data[0, ...] /
+                                       data_list[i][f'{C_or_LM_profs[1][0]}_w_prof'].data[0, ...] )
+                Cth_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_prof'].data[0, ...] /
+                                        data_list[i][f'{C_or_LM_profs[1][1]}_w_prof'].data[0, ...] )
+                Cqt_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_prof'].data[0, ...] /
+                                        data_list[i][f'{C_or_LM_profs[1][2]}_w_prof'].data[0, ...] )
 
-                Cs_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_prof'].data[0, ...] )
-                Cth_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_prof'].data[0, ...] )
-                Cqt_w_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_prof'].data[0, ...] )
-
-                Cs_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_{th_name}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][0]}_w_{th_name}_prof'].data[0, ...] )
-                Cth_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_{th_name}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][1]}_w_{th_name}_prof'].data[0, ...] )
-                Cqt_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_{th_name}_prof'].data[0, ...] / data_list[i][f'{C_or_LM_profs[1][2]}_w_{th_name}_prof'].data[0, ...] )
+                Cs_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][0]}_w_{th_name}_prof'].data[0, ...] /
+                                          data_list[i][f'{C_or_LM_profs[1][0]}_w_{th_name}_prof'].data[0, ...] )
+                Cth_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][1]}_w_{th_name}_prof'].data[0, ...] /
+                                           data_list[i][f'{C_or_LM_profs[1][1]}_w_{th_name}_prof'].data[0, ...] )
+                Cqt_w_th_sq[i, :] = 0.5 * (data_list[i][f'{C_or_LM_profs[0][2]}_w_{th_name}_prof'].data[0, ...] /
+                                           data_list[i][f'{C_or_LM_profs[1][2]}_w_{th_name}_prof'].data[0, ...] )
             else:
                 Cs_sq[i, :] = data_list[i][f'{C_or_LM_profs[0]}_prof'].data[0, ...]
                 Cth_sq[i, :] = data_list[i][f'{C_or_LM_profs[1]}_prof'].data[0, ...]
