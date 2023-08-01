@@ -123,7 +123,7 @@ def interp_z(var_in, z_from=z_set, z_to=zn_set):
 
 def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C = False, time_in='14400'):
 
-    clock_time_int = 05.30 + time_in/(60*60)
+    clock_time_int = 05.30 + int(time_in)/(60*60)
     clock_time = str(clock_time_int)+'L'
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
@@ -222,7 +222,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
                               time_in='`14400'):
 
 
-    clock_time_int = 05.30 + time_in/(60*60)
+    clock_time_int = 05.30 + int(time_in)/(60*60)
     clock_time = str(clock_time_int)+'L'
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
@@ -383,7 +383,7 @@ def get_max_l_from_C(max_C_cond, deltas_num, grid_spacing):
 def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_mean='mean', time_in = '14400'):
 
 
-    clock_time_int = 05.30 + time_in/(60*60)
+    clock_time_int = 05.30 + int(time_in)/(60*60)
     clock_time = str(clock_time_int)+'L'
 
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
