@@ -103,12 +103,12 @@ def calc_z_ML_and_CL(file_path, time_stamp=-1):
     z_cloud_where = np.where(z_cloud > 1e-7)
     z_ind = np.arange(0, len(z_cloud))
     z_cloud_ind = z_ind[z_cloud_where]
-    print(z_cloud_ind)
+    #print('z_cloud_ind =', z_cloud_ind)
     z_min_CL = np.min(z_cloud_ind)
     z_max_CL = np.max(z_cloud_ind)
     z_CL = [ z_min_CL, z_max_CL ]
 
-    zn_out = prof_data['zn'].data[time_stamp, ...]
+    zn_out = prof_data['zn'].data[...] # timeless parameter?
 
     return z_ML, z_CL, zn_out
 
@@ -155,7 +155,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         ax[2].plot(Cqt[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
     if C_sq_to_C == True:
         if C_or_LM == 'C':
-            ax[0].set_xlabel(f'$C_{s}$ at ' + clock_time, fontsize=16)
+            ax[0].set_xlabel('$C_{s}$ at ' + clock_time, fontsize=16)
             ax[1].set_xlabel('$C_{\\theta}$ at' + clock_time, fontsize=16)
             ax[2].set_xlabel('$C_{qt}$ at' + clock_time, fontsize=16)
         elif C_or_LM == 'LM':
@@ -183,7 +183,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         set_right = max(right0, right1, right2)
         set_left = left0
     else:
-        print(np.shape(Cs))
+        print('np.shape(Cs) =', np.shape(Cs))
         x_ax_max_Cs = np.amax(Cs[:, 10:80])
         x_ax_max_Cth = np.amax(Cth[:, 10:80])
         x_ax_max_Cqt = np.amax(Cqt[:, 10:80])
@@ -305,7 +305,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             set_right = max(right0, right1, right2)
             set_left = left0
         else:
-            print(np.shape(Cs))
+            print('np.shape(Cs) = ', np.shape(Cs))
             x_ax_max_Cs = np.nanmax(Cs[:, it, 10:80])
             x_ax_max_Cth = np.nanmax(Cth[:, it, 10:80])
             x_ax_max_Cqt = np.nanmax(Cqt[:, it, 10:80])
