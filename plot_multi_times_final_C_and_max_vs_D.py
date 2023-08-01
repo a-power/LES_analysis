@@ -679,8 +679,8 @@ for itr, time_stamp in enumerate(set_time):
     z_ML_ind, z_cl_range, zn_arr = calc_z_ML_and_CL(prof_file)
     z_ML = zn_set[z_ML_ind]
 
-    print('zn_set = ', zn_set)
-    print('zn_arr = ', zn_arr)
+    # print('zn_set = ', zn_set)
+    # print('zn_arr = ', zn_arr)
 
     z_ml_range = [z_ML_bottom, z_ML_ind]
 
