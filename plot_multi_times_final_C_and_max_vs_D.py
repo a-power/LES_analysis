@@ -124,7 +124,7 @@ def interp_z(var_in, z_from=z_set, z_to=zn_set):
 def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C = False, time_in='14400'):
 
     clock_time_int = 05.30 + int(time_in)/(60*60)
-    clock_time = str(clock_time_int)+'L'
+    clock_time = str(clock_time_int)+'0L'
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -205,6 +205,9 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
         ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
         ax[2].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
+
+        plt.tight_layout()
+
         plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{time_in}_prof_scaled_interp_z.png',
                     bbox_inches='tight')
     else:
@@ -223,7 +226,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
 
     clock_time_int = 05.30 + int(time_in)/(60*60)
-    clock_time = str(clock_time_int)+'L'
+    clock_time = str(clock_time_int)+'0L'
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -327,6 +330,8 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
         print('deltas[it] =', deltas[it])
 
+        plt.tight_layout()
+
         if interp==True:
             ax[0].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
             plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled_interp_z.png',
@@ -384,7 +389,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
 
 
     clock_time_int = 05.30 + int(time_in)/(60*60)
-    clock_time = str(clock_time_int)+'L'
+    clock_time = str(clock_time_int)+'0L'
 
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
     labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
@@ -421,7 +426,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     ax[2].set_ylim(top=set_top)
 
     if y_ax == 'C':
-        ax[0].set_ylabel('$C_{mix}$ at '+ clock_time, fontsize=14)
+        ax[0].set_ylabel('$C_{s}$ at '+ clock_time, fontsize=14)
         ax[1].set_ylabel('$C_{\\theta}$ at '+ clock_time, fontsize=14)
         ax[2].set_ylabel('$C_{qt}$ at '+ clock_time, fontsize=14)
     else:
@@ -436,6 +441,8 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     ax[0].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
     ax[1].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
     ax[2].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
+
+    plt.tight_layout()
 
     plt.savefig(plotdir+f'{max_mean}_{y_ax}{what_plotting}_time{time_in}_prof.png', bbox_inches='tight')
     plt.close()
