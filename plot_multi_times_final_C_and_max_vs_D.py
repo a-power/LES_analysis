@@ -124,7 +124,7 @@ def interp_z(var_in, z_from=z_set, z_to=zn_set):
 def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C = False, time_in='14400'):
 
     clock_time_int = 05.30 + time_in/(60*60)
-    clock_time = str(clock_time_int)+'Z'
+    clock_time = str(clock_time_int)+'L'
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -223,7 +223,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
 
     clock_time_int = 05.30 + time_in/(60*60)
-    clock_time = str(clock_time_int)+'Z'
+    clock_time = str(clock_time_int)+'L'
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -384,7 +384,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
 
 
     clock_time_int = 05.30 + time_in/(60*60)
-    clock_time = str(clock_time_int)+'Z'
+    clock_time = str(clock_time_int)+'L'
 
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
     labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
