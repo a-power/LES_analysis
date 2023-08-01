@@ -202,15 +202,15 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
     ax[2].set_xlim(right = set_right, left = set_left)
 
     if interp==True:
-        ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
-        ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
-        ax[2].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
+        ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
+        ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
+        ax[2].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
         plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{time_in}_prof_scaled_interp_z.png',
                     bbox_inches='tight')
     else:
-        ax[0].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
-        ax[1].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
-        ax[2].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
+        ax[0].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
+        ax[1].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
+        ax[2].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
         plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{time_in}_prof_scaled_zn.png',
                     bbox_inches='tight')
     plt.close()
@@ -328,11 +328,11 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
         print('deltas[it] =', deltas[it])
 
         if interp==True:
-            ax[0].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
+            ax[0].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
             plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled_interp_z.png',
                         bbox_inches='tight')
         else:
-            ax[0].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + ")", fontsize=16)
+            ax[0].set_ylabel("zn/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
             plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled_zn.png',
                         bbox_inches='tight')
         plt.close()
