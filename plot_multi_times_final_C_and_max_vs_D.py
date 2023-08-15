@@ -229,7 +229,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, interp=False, C_sq_to_C = True,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
-                              time_in='`14400'):
+                              time_in='`14400', set_x_lim_list=[0.355, 0.355, 0.355, 0.355, 0.255, 0.07] ):
 
 
     clock_time_int = 05.30 + int(time_in)/(60*60)
@@ -278,18 +278,19 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
 
         fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4,18))
-        print('np.shape(Cs) = ', np.shape(Cs))
-
         fig.tight_layout(pad=0.5)
 
         for nt in range(np.shape(Cs)[0]):
+
+            set_x_lim = set_x_lim_list[nt]
+
             ax[0].plot(Cs[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
             ax[1].plot(Cth[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
             ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
         if C_sq_to_C == True:
             if C_or_LM == 'C':
                 ax[0].set_xlabel('$C_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it]  + ' at time ' + clock_time, fontsize=16)
-                ax[1].set_xlabel('$C_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it] + clock_time,
+                ax[1].set_xlabel('$C_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it]  + ' at time '  + clock_time,
                                  fontsize=16)
                 ax[2].set_xlabel('$C_{qt}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it]  + ' at time ' + clock_time,
                                  fontsize=16)
@@ -314,7 +315,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             left1, right1 = ax[1].set_xlim()
             left2, right2 = ax[2].set_xlim()
 
-            set_right = max(right0, right1, right2)
+            set_right = set_x_lim #max(right0, right1, right2)
             set_left = left0
         else:
             print('np.shape(Cs) = ', np.shape(Cs))
@@ -411,7 +412,8 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     clock_time = str(clock_time_int)+'0L'
 
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
-    labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
+    #labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
+    labels = ['ML', 'CL', 'CS', 'IC', 'CU', 'CC']
 
     colours = ['k', 'tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -421,7 +423,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     else:
         y_labels = ['$l_{s}$ (m)', '$l_{\\theta}$ (m)', '$l_{qt}$ (m)']
 
-    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4, 18))
+    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4, 15))
     fig.tight_layout(pad=0.5)
 
     for it in range(np.shape(Cs_max_in)[0]):
@@ -442,7 +444,11 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     bottom1, top1 = ax[1].set_ylim()
     bottom2, top2 = ax[2].set_ylim()
 
-    set_top = max(top0, top1, top2)
+    if max_mean == 'mean':
+       set_top = 0.2 #max(top0, top1, top2)
+
+    elif max_mean == 'max':
+       set_top = 0.3
 
     ax[0].set_ylim(top=set_top)
     ax[1].set_ylim(top=set_top)
@@ -475,7 +481,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
 
 #######################################################################################################################
 
-
+x_lim_list = [0.355, 0.355, 0.355, 0.355, 0.255, 0.07]
 
 for itr, time_stamp in enumerate(set_time):
 
@@ -740,7 +746,7 @@ for itr, time_stamp in enumerate(set_time):
     #plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = True)
     plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
                               deltas = deltas_in, delta_label = set_labels, interp=False,
-                              C_sq_to_C = True, time_in=time_stamp)
+                              C_sq_to_C = True, time_in=time_stamp, set_x_lim=x_lim_list)
 
 
     ##################################################################################################################

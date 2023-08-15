@@ -586,7 +586,8 @@ def get_max_l_from_C(max_C_cond, deltas_num, grid_spacing):
 def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_mean='max'):
 
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
-    labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
+    #labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
+    labels = ['ML', 'CL', 'CS', 'IC', 'CU', 'CC']
 
     colours = ['k', 'tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
