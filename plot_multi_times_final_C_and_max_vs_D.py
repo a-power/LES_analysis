@@ -423,7 +423,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     else:
         y_labels = ['$l_{s}$ (m)', '$l_{\\theta}$ (m)', '$l_{qt}$ (m)']
 
-    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4, 15))
+    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4, 14))
     fig.tight_layout(pad=0.5)
 
     for it in range(np.shape(Cs_max_in)[0]):
@@ -445,10 +445,10 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     bottom2, top2 = ax[2].set_ylim()
 
     if max_mean == 'mean':
-       set_top = 0.2 #max(top0, top1, top2)
+       set_top = 0.205 #max(top0, top1, top2)
 
     elif max_mean == 'max':
-       set_top = 0.3
+       set_top = 0.305
 
     ax[0].set_ylim(top=set_top)
     ax[1].set_ylim(top=set_top)
