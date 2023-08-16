@@ -40,9 +40,13 @@ elif case == 'BOMEX':
     beta=True
     what_plotting='_0'
     C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
+
+    todd_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m0020_g0800/diagnostic_files/'
+    prof_file = todd_dir + 'BOMEX_m0020_g0800_all_14400.nc'
+
     if beta == True:
         homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
-        plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/fitting_relations/'
+        plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/'
     else:
         homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
         plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_1e-7/diff_C_calc/'
@@ -53,15 +57,43 @@ elif case == 'BOMEX':
 
     zn_set = np.arange(0, 3020, 20)
     z_set = np.arange(-10, 3010, 20)
-    z_ML = 490
+    # z_ML = 490
+    #
+    # z_cl_r = [49, 73]
+    # z_ml_r = [10, 22]
 
-    z_cl_r = [49, 73]
-    z_ml_r = [10, 22]
+    z_ML_bottom = 10
 
     th_name = 'th'
 
 else:
     print('need to def case')
+
+
+def calc_z_ML_and_CL(file_path, time_stamp=-1):
+
+    prof_data = xr.open_dataset(file_path)
+
+    wth_prof = prof_data['wtheta_cn_mean'].data[time_stamp, ...]
+    wth_prof_list = wth_prof.tolist()
+    z_ML = wth_prof_list.index(np.min(wth_prof))
+
+    z_cloud = prof_data['total_cloud_fraction'].data[time_stamp, ...]
+    z_cloud_where = np.where(z_cloud > 1e-7)
+    z_ind = np.arange(0, len(z_cloud))
+    z_cloud_ind = z_ind[z_cloud_where]
+    #print('z_cloud_ind =', z_cloud_ind)
+    z_min_CL = np.min(z_cloud_ind)
+    z_max_CL = np.max(z_cloud_ind)
+    z_CL = [ z_min_CL, z_max_CL ]
+
+    zn_out = prof_data['zn'].data[...] # timeless parameter?
+
+    return z_ML, z_CL, zn_out
+
+
+
+
 
 mydir = homedir + file_name
 
@@ -274,6 +306,23 @@ else:
 
 ########################################################################################################################
 
+
+
+
+z_ML_ind, z_cl_r, zn_arr = calc_z_ML_and_CL(prof_file)
+z_ML = zn_set[z_ML_ind]
+
+# print('zn_set = ', zn_set)
+# print('zn_arr = ', zn_arr)
+
+z_ml_r = [z_ML_bottom, z_ML_ind]
+
+
+
+
+
+
+
 def interp_z(var_in, z_from=z_set, z_to=zn_set):
     interp_var = np.zeros_like(var_in)
     for n in range(len(var_in[:,0])):
@@ -359,10 +408,10 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
     ax[2].set_xlim(right = set_right, left = set_left)
 
     if interp==True:
-        ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
+        ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
         plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}prof_scaled_interp_z.png', bbox_inches='tight')
     else:
-        ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
+        ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
         plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}prof_scaled_zn.png', bbox_inches='tight')
     plt.close()
 
@@ -498,11 +547,11 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
         print('deltas[it] =', deltas[it])
 
         if interp==True:
-            ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
+            ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
             plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_interp_z.png',
                         bbox_inches='tight')
         else:
-            ax[0].set_ylabel("zn/z$_{ML}$", fontsize=16)
+            ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
             plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_zn.png',
                         bbox_inches='tight')
         plt.close()
