@@ -423,7 +423,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     else:
         y_labels = ['$l_{s}$ (m)', '$l_{\\theta}$ (m)', '$l_{qt}$ (m)']
 
-    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4, 13))
+    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4, 12))
     fig.tight_layout(pad=0.5)
 
     for it in range(np.shape(Cs_max_in)[0]):
@@ -463,9 +463,9 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
         ax[1].set_ylabel('$l_{\\theta}$ at '+ clock_time, fontsize=14)
         ax[2].set_ylabel('$l_{qt}$ at '+ clock_time, fontsize=14)
 
-    ax[0].set_title(y_labels[0], fontsize=16)
-    ax[1].set_title(y_labels[1], fontsize=16)
-    ax[2].set_title(y_labels[2], fontsize=16)
+    # ax[0].set_title(y_labels[0], fontsize=16)
+    # ax[1].set_title(y_labels[1], fontsize=16)
+    # ax[2].set_title(y_labels[2], fontsize=16)
 
     ax[0].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
     ax[1].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
