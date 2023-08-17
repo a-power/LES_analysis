@@ -42,19 +42,20 @@ if case == 'ARM':
     th_name = 'th_v'
 
 elif case == 'BOMEX':
+
     beta=True
     what_plotting='_0'
     C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
+
     if beta == True:
         homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
         plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/fitting_relations/'
     else:
         homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
         plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_1e-7/diff_C_calc/'
-    # if C_or_LM == 'MM':
-    file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
-    # else:
-    #     file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_{C_or_LM}_'
+
+    file_name = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
+
 
     zn_set = np.arange(0, 3020, 20)
     z_set = np.arange(-10, 3010, 20)
