@@ -59,7 +59,8 @@ elif case == 'BOMEX':
     z_set = np.arange(-10, 3010, 20)
     # z_ML = 490
     #
-    z_cl_r = [49, 73]
+    z_cl_r = [33, 77]
+    z_cl_r_old = [49, 73]
     # z_ml_r = [10, 22]
 
     z_ML_bottom = 10
