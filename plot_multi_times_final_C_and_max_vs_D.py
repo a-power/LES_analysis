@@ -31,11 +31,10 @@ if case == 'ARM':
     zn_set = np.arange(0, 4410, 10)
     z_set = np.arange(-5, 4405, 10)
     #z_ML = 10 #z_ML_calc
-    #
+    #z_ML_bottom = 20
+
     z_cl_range = [ [87, 110], [102, 150], [115, 200], [130, 230] ] #z_cl_range_calc
     z_ml_range = [ [20, 75], [20, 80], [20, 85], [20, 90] ] #z_ml_range_calc
-
-    z_ML_bottom = 20
 
     set_time = ['18000', '25200', '32400', '39600']
 
