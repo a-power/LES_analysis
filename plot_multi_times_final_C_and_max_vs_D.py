@@ -30,7 +30,7 @@ if case == 'ARM':
 
     zn_set = np.arange(0, 4410, 10)
     z_set = np.arange(-5, 4405, 10)
-    z_ML = 10 #z_ML_calc
+    #z_ML = 10 #z_ML_calc
     #
     # z_cl_r = [130, 200]
     # z_ml_r = [8, 55]
@@ -700,7 +700,7 @@ for itr, time_stamp in enumerate(set_time):
     ########################################################################################################################
 
     z_ML_ind, z_cl_range, zn_arr = calc_z_ML_and_CL(prof_file)
-    z_ML_calc = zn_set[z_ML_ind]
+    z_ML = zn_set[z_ML_ind]
 
     # print('zn_set = ', zn_set)
     # print('zn_arr = ', zn_arr)
