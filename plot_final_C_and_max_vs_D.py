@@ -9,7 +9,7 @@ np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='28800')
+parser.add_argument('--times', type=str, default='14400')
 parser.add_argument('--case_in', type=str, default='ARM')
 args = parser.parse_args()
 
