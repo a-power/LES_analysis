@@ -59,7 +59,7 @@ elif case == 'BOMEX':
     z_set = np.arange(-10, 3010, 20)
     # z_ML = 490
     #
-    # z_cl_r = [49, 73]
+    z_cl_r = [49, 73]
     # z_ml_r = [10, 22]
 
     z_ML_bottom = 10
@@ -309,7 +309,7 @@ else:
 
 
 
-z_ML_ind, z_cl_r, zn_arr = calc_z_ML_and_CL(prof_file)
+z_ML_ind, z_cl_range, zn_arr = calc_z_ML_and_CL(prof_file)
 z_ML = zn_set[z_ML_ind]
 
 # print('zn_set = ', zn_set)
@@ -357,8 +357,8 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
     fig.tight_layout(pad=0.5)
 
     for it in range(len(Cs[:,0])):
-        ax[0].plot(Cs[it,:], z/z_i, color=colours[it])
-        ax[1].plot(Cth[it, :], z/z_i, color=colours[it])
+        ax[0].plot(Cs[it,:], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
+        ax[1].plot(Cth[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
         ax[2].plot(Cqt[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
     if C_sq_to_C == True:
         if C_or_LM == 'C':
@@ -379,7 +379,9 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         ax[0].set_xlabel('$C^2_{s}$', fontsize=16)
         ax[1].set_xlabel('$C^2_{\\theta}$', fontsize=16)
         ax[2].set_xlabel('$C^2_{qt}$', fontsize=16)
-    ax[2].legend(fontsize=13, loc='best')
+    ax[0].legend(fontsize=13, loc='upper right')
+    ax[1].legend(fontsize=13, loc='upper right')
+    ax[2].legend(fontsize=13, loc='upper right')
 
     if C_or_LM == 'C':
         left0, right0 = ax[0].set_xlim()
@@ -493,8 +495,8 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
         fig.tight_layout(pad=0.5)
 
         for nt in range(np.shape(Cs)[0]):
-            ax[0].plot(Cs[nt, it, :], z/z_i, color=colours[nt])
-            ax[1].plot(Cth[nt, it, :], z/z_i, color=colours[nt])
+            ax[0].plot(Cs[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
+            ax[1].plot(Cth[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
             ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
         if C_sq_to_C == True:
             if C_or_LM == 'C':
@@ -514,6 +516,8 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             ax[0].set_xlabel('$C^2_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
             ax[1].set_xlabel('$C^2_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
             ax[2].set_xlabel('$C^2_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it], fontsize=16)
+        ax[0].legend(fontsize=13, loc='upper right')
+        ax[1].legend(fontsize=13, loc='upper right')
         ax[2].legend(fontsize=13, loc='upper right')
 
         if C_or_LM == 'C':
@@ -650,13 +654,17 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     fig.tight_layout(pad=0.5)
 
     for it in range(np.shape(Cs_max_in)[0]):
-        ax[0].plot(Delta, Cs_max_in[it,...], color=colours[it], linestyle=my_lines[it])
-        ax[1].plot(Delta, Cth_max_in[it,...], color=colours[it], linestyle=my_lines[it])
+        ax[0].plot(Delta, Cs_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
+        ax[1].plot(Delta, Cth_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
         ax[2].plot(Delta, Cqt_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
 
     if y_ax == 'C':
+        ax[0].legend(fontsize=13, loc='upper right')
+        ax[1].legend(fontsize=13, loc='upper right')
         ax[2].legend(fontsize=13, loc='upper right')
     else:
+        ax[0].legend(fontsize=13, loc='best')
+        ax[1].legend(fontsize=13, loc='best')
         ax[2].legend(fontsize=13, loc='best')
 
     bottom0, top0 = ax[0].set_ylim()
