@@ -21,6 +21,8 @@ beta=True
 what_plotting='_0' # '_beta'
 C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 
+x_lim_list = [0.355, 0.355, 0.355, 0.355, 0.255, 0.07]
+
 if case == 'ARM':
 
     homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/C_profs/'
@@ -445,7 +447,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     bottom2, top2 = ax[2].set_ylim()
 
     if max_mean == 'mean':
-       set_top = 0.205 #max(top0, top1, top2)
+       set_top = 0.255 #max(top0, top1, top2)
 
     elif max_mean == 'max':
        set_top = 0.305
@@ -481,7 +483,6 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
 
 #######################################################################################################################
 
-x_lim_list = [0.355, 0.355, 0.355, 0.355, 0.255, 0.07]
 
 for itr, time_stamp in enumerate(set_time):
 
