@@ -33,8 +33,8 @@ if case == 'ARM':
     #z_ML = 10 #z_ML_calc
     z_ML_bottom = 20
 
-    z_cl_range = [ [87, 110], [102, 150], [115, 200], [130, 230] ] #z_cl_range_calc
-    z_ml_range = [ [20, 75], [20, 80], [20, 85], [20, 90] ] #z_ml_range_calc
+    z_cl_r_t_list = [ [87, 110], [102, 150], [115, 200], [130, 230] ] #z_cl_range_calc
+    z_ml_r_t_list = [ [20, 75], [20, 80], [20, 85], [20, 90] ] #z_ml_range_calc
 
     set_time = ['18000', '25200', '32400', '39600']
 
@@ -484,6 +484,9 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
 x_lim_list = [0.355, 0.355, 0.355, 0.355, 0.255, 0.07]
 
 for itr, time_stamp in enumerate(set_time):
+
+    z_cl_range = z_cl_r_t_list[itr]
+    z_ml_range = z_ml_r_t_list[itr]
 
     file_name = f"diagnostics_3d_ts_{time_stamp}_gaussian_filter_C_"
     mydir = homedir + file_name
