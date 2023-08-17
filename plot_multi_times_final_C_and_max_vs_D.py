@@ -37,7 +37,7 @@ if case == 'ARM':
 
     z_ML_bottom = 8
 
-    set_time = ['25200', '39600', '32400', '18000']
+    set_time = ['18000', '25200', '32400', '39600']
 
     th_name = 'th_v'
 
@@ -285,9 +285,9 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
             set_x_lim = set_x_lim_list[nt]
 
-            ax[0].plot(Cs[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
-            ax[1].plot(Cth[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
-            ax[2].plot(Cqt[nt, it, :], z/z_i, color=colours[nt], label=labels_in[nt])
+            ax[0].plot(Cs[nt, it, :])#, z/z_i, color=colours[nt], label=labels_in[nt])
+            ax[1].plot(Cth[nt, it, :])#, z/z_i, color=colours[nt], label=labels_in[nt])
+            ax[2].plot(Cqt[nt, it, :])#, z/z_i, color=colours[nt], label=labels_in[nt])
         if C_sq_to_C == True:
             if C_or_LM == 'C':
                 ax[0].set_xlabel('$C_{s}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it]  + ' at time ' + clock_time, fontsize=16)
@@ -307,9 +307,9 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             ax[1].set_xlabel('$C^2_{\\theta}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it] + ' at time ' + clock_time, fontsize=16)
             ax[2].set_xlabel('$C^2_{qt}$ for $\\widehat{\\bar{\\Delta}} = $'+delta_label[it] + ' at time ' + clock_time, fontsize=16)
 
-        ax[0].legend(fontsize=13, loc='upper right')
-        ax[1].legend(fontsize=13, loc='upper right')
-        ax[2].legend(fontsize=13, loc='upper right')
+        # ax[0].legend(fontsize=13, loc='upper right')
+        # ax[1].legend(fontsize=13, loc='upper right')
+        # ax[2].legend(fontsize=13, loc='upper right')
 
         if C_or_LM == 'C':
             left0, right0 = ax[0].set_xlim()
@@ -357,9 +357,9 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
             ax[2].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
 
-            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled_zn.png',
+            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_z_label.png',
                         bbox_inches='tight')
-            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled_zn.pdf',
+            plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_z_label.pdf',
                         bbox_inches='tight')
         plt.close()
 
