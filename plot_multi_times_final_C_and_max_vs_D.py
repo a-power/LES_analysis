@@ -797,6 +797,10 @@ for itr, time_stamp in enumerate(set_time):
                           max_mean='mean', time_in = time_stamp)
 
 
+    print('z_ml_range = ', z_ml_range)
+    print('z_cl_range = ', z_cl_range)
+
+
 
     # #########################################################################################################################
     #
