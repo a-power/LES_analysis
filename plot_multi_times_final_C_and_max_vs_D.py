@@ -228,6 +228,60 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
     plt.close()
 
 
+def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
+
+    clock_time_int = 05.30 + int(time_in) / (60 * 60)
+    clock_time = str(clock_time_int) + '0L'
+
+    colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
+               'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
+    # NOTE youre feeding in C^2 not C
+
+    if interp == True:
+        Cs = interp_z(Cs)
+        Cth = interp_z(Cth)
+        Cqt = interp_z(Cqt)
+
+    if case == 'BOMEX':
+        fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(9, 6))
+    else:
+        fig, ax = plt.subplots(nrows=2, ncols=1, sharey=False, figsize=(5, 12))
+
+    for it in range(len(Cs[:, 0])):
+        ax[0].plot(Cs[it, :] / Cth[it, :], z / z_i, color=colours[it],
+                   label='$\\widehat{\\bar{\\Delta}} = $' + labels_in[it])
+        ax[1].plot(Cs[it, :] / Cqt[it, :], z / z_i, color=colours[it],
+                   label='$\\widehat{\\bar{\\Delta}} = $' + labels_in[it])
+
+        ax[0].set_xlabel('$Pr_{\\theta}$ at time ' + clock_time, fontsize=16)
+        ax[1].set_xlabel('$Pr_{qt}$ at time ' + clock_time, fontsize=16)
+
+        ax[0].legend(fontsize=13, loc='upper right')
+        ax[1].legend(fontsize=13, loc='upper right')
+
+        ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
+
+        # left0, right0 = ax[0].set_xlim()
+        # left1, right1 = ax[1].set_xlim()
+        # left2, right2 = ax[2].set_xlim()
+        #
+        # set_right = max(right0, right1, right2)
+        # set_left = left0
+
+        #
+        # ax[0].set_xlim(right = set_right, left = set_left)
+        # ax[1].set_xlim(right = set_right, left = set_left)
+        # ax[2].set_xlim(right = set_right, left = set_left)
+
+    fig.tight_layout(pad=0.5)
+
+    plt.savefig(plotdir + f'Pr_prof_{time_in}.pdf', bbox_inches='tight')
+    plt.close()
+
+
+
+
+
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, interp=False, C_sq_to_C = True,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
@@ -722,6 +776,8 @@ for itr, time_stamp in enumerate(set_time):
                       C_sq_to_C = True, time_in=time_stamp)
 
     print('saved C plots to ', plotdir)
+
+    plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels, time_in=time_stamp)
 
 
 
