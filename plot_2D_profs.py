@@ -92,6 +92,11 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
 
     fig.tight_layout(pad=0.5)
 
+    setleft0 = 0
+    setleft1 = 0
+    setright0 = 0
+    setright1 = 0
+
     for it, time_in in enumerate(times):
 
         file_in = prof_file + f'{time_in}.nc'
@@ -115,19 +120,26 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
             ax[0, it].set_xlabel("$ \\overline{w' \\theta'}$ at "  + clock_time, fontsize=16)
             ax[0, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
 
+            left0, right0 = ax[0].set_xlim()
+            if left0 < setleft0:
+                setleft0 = left0
+            if right0 > setright0:
+                setright0 = right0
+
             ax[1, it].plot(cloud_prof * 100, z / z_i, color='black')
             ax[1, it].set_xlabel('cloud cover (%) at '  + clock_time, fontsize=16)
             ax[1, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
 
+            left1, right1 = ax[1].set_xlim()
+            if left1 < setleft1:
+                setleft1 = left1
+            if right1 > setright1:
+                setright1 = right1
 
-
-    #
-    # left0, right0 = ax[0].set_xlim()
-    # left1, right1 = ax[1].set_xlim()
-    # left2, right2 = ax[2].set_xlim()
-    #
-    # set_right = max(right0, right1, right2)
-    # set_left = left0
+    if len(times) != 1:
+        for itn in range(len(times)):
+            ax[0, itn].set_xlim(right=setright0, left=setleft0)
+            ax[1, itn].set_xlim(right=setright1, left=setleft1)
 
 
     plt.tight_layout()
