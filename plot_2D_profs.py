@@ -105,7 +105,7 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
             ax[0].plot(wth_prof, z / z_i, color='black')
             ax[0].set_xlabel("$ \\overline{w' \\theta'}$", fontsize=16)
             ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
-            ax[0].set_xticks(ax.get_xticks()[::2])
+            ax[0].set_xticks(ax[0].get_xticks()[::2])
 
             ax[1].plot(cloud_prof*100, z / z_i, color='black')
             ax[1].set_xlabel('cloud cover (%)', fontsize=16)
