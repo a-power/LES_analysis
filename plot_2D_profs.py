@@ -70,10 +70,11 @@ def get_cloud_wth_profs(file_path, time_stamp=-1):
         cloud_prof_out = cloud_prof_raw[time_stamp, ...]
 
     wth_prof_list = wth_prof_out.tolist()
-    z_ML_out = wth_prof_list.index(np.min(wth_prof_out))
+    z_ML_ind = wth_prof_list.index(np.min(wth_prof_out))
+    z_ML = zn_out[z_ML_ind]
 
 
-    return wth_prof_out, cloud_prof_out, zn_out, z_ML_out
+    return wth_prof_out, cloud_prof_out, zn_out, z_ML
 
 
 
@@ -104,6 +105,7 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
             ax[0].plot(wth_prof, z / z_i, color='black')
             ax[0].set_xlabel("$ \\overline{w' \\theta'}$", fontsize=16)
             ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
+            ax[0].set_xticks(ax.get_xticks()[::2])
 
             ax[1].plot(cloud_prof*100, z / z_i, color='black')
             ax[1].set_xlabel('cloud cover (%)', fontsize=16)
