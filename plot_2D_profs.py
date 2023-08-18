@@ -117,7 +117,7 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
 
             ax[1, it].plot(cloud_prof * 100, z / z_i, color='black')
             ax[1, it].set_xlabel('cloud cover (%) at '  + clock_time, fontsize=16)
-            ax[1, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
+            ax[1, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
 
 
 
@@ -130,13 +130,13 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
     # set_left = left0
 
 
-        plt.tight_layout()
+    plt.tight_layout()
 
 
-        plt.savefig(plotdir + f'cloud_wth_profs_{time_in}.png',
-                    bbox_inches='tight')
+    plt.savefig(plotdir + f'cloud_wth_profs.png',
+                bbox_inches='tight')
 
-        plt.close()
+    plt.close()
 
 
 
