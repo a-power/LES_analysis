@@ -146,8 +146,7 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
     plt.tight_layout()
 
 
-    plt.savefig(plotdir + f'cloud_wth_profs.png',
-                bbox_inches='tight')
+    plt.savefig(plotdir + f'cloud_wth_profs.pdf', bbox_inches='tight')
 
     plt.close()
 
