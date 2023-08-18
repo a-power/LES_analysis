@@ -101,19 +101,19 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
         clock_time = str(clock_time_int) + '0L'
 
         if len(times) == 1:
-            ax[0].plot(wth_prof[it, :], z / z_i, color='black')
+            ax[0].plot(wth_prof, z / z_i, color='black')
             ax[0].set_xlabel("$ \\overline{w' \\theta'}$", fontsize=16)
             ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
 
-            ax[1].plot(cloud_prof[it, :]*100, z / z_i, color='black')
+            ax[1].plot(cloud_prof*100, z / z_i, color='black')
             ax[1].set_xlabel('cloud cover (%)', fontsize=16)
 
         else:
-            ax[0, it].plot(wth_prof[it, :], z / z_i, color='black')
+            ax[0, it].plot(wth_prof, z / z_i, color='black')
             ax[0, it].set_xlabel("$ \\overline{w' \\theta'}$ at "  + clock_time, fontsize=16)
             ax[0, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
 
-            ax[1, it].plot(cloud_prof[it, :] * 100, z / z_i, color='black')
+            ax[1, it].plot(cloud_prof * 100, z / z_i, color='black')
             ax[1, it].set_xlabel('cloud cover (%) at '  + clock_time, fontsize=16)
             ax[1, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
 
