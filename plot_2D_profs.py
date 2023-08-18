@@ -120,7 +120,7 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
             ax[0, it].set_xlabel("$ \\overline{w' \\theta'}$ at "  + clock_time, fontsize=16)
             ax[0, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
 
-            left0, right0 = ax[0].set_xlim()
+            left0, right0 = ax[0, it].set_xlim()
             if left0 < setleft0:
                 setleft0 = left0
             if right0 > setright0:
@@ -130,7 +130,7 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
             ax[1, it].set_xlabel('cloud cover (%) at '  + clock_time, fontsize=16)
             ax[1, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
 
-            left1, right1 = ax[1].set_xlim()
+            left1, right1 = ax[1, it].set_xlim()
             if left1 < setleft1:
                 setleft1 = left1
             if right1 > setright1:
@@ -140,6 +140,7 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
         for itn in range(len(times)):
             ax[0, itn].set_xlim(right=setright0, left=setleft0)
             ax[1, itn].set_xlim(right=setright1, left=setleft1)
+            ax[0, itn].set_xticks(ax[0, itn].get_xticks()[::2])
 
 
     plt.tight_layout()
