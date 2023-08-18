@@ -21,7 +21,7 @@ case = args.case_in
 if case == 'ARM':
 
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigma/MONC_profiles/'
-    profiles_dir = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_' #diagnostics_ts_18000.nc
+    prof_file = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_' #diagnostics_ts_18000.nc
 
     zn_set = np.arange(0, 4410, 10)
     z_set = np.arange(-5, 4405, 10)
@@ -68,19 +68,20 @@ def get_cloud_wth_profs(file_path, time_stamp=-1):
         wth_prof_out = wth_prof_raw[time_stamp, ...]
         cloud_prof_out = cloud_prof_raw[time_stamp, ...]
 
-    wth_prof_list = wth_prof.tolist()
-    z_ML_out = wth_prof_list.index(np.min(wth_prof))
+    wth_prof_list = wth_prof_out.tolist()
+    z_ML_out = wth_prof_list.index(np.min(wth_prof_out))
 
 
     return wth_prof_out, cloud_prof_out, zn_out, z_ML_out
 
 
 
-def plot_C_all_Deltas(file_path, times, time_stamp_in):
+def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
 
 
     colours = ['tab:red', 'black', 'tab:green', 'tab:blue', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink', 'tab:orange']
+
 
     if len(times) == 1:
         fig, ax = plt.subplots(nrows=1, ncols=2, sharey=True, figsize=(9, 6))
@@ -89,9 +90,11 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in):
 
     fig.tight_layout(pad=0.5)
 
-    for it, time_in in enumerate(times):#
+    for it, time_in in enumerate(times):
 
-        wth_prof, cloud_prof, z, z_i = get_cloud_wth_profs(file_path, time_stamp='mean')
+        file_in = prof_file + f'{time_in}.nc'
+
+        wth_prof, cloud_prof, z, z_i = get_cloud_wth_profs(file_in, time_stamp=time_stamp_in)
 
         clock_time_int = 05.30 + int(time_in) / (60 * 60)
         clock_time = str(clock_time_int) + '0L'
@@ -134,3 +137,4 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in):
 
 
 
+plot_C_all_Deltas(prof_file, set_time)
