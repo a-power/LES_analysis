@@ -31,6 +31,7 @@ if case == 'ARM':
 
 elif case == 'BOMEX':
 
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/BOMEX/MONC_profiles/'
     todd_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m0020_g0800/diagnostic_files/'
     prof_file = todd_dir + 'BOMEX_m0020_g0800_all_' #'BOMEX_m0020_g0800_all_14400.nc'
 
