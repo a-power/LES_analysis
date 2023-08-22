@@ -253,8 +253,18 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
         ax[1].plot(Cs[it, :] / Cqt[it, :], z / z_i, color=colours[it],
                    label='$\\widehat{\\bar{\\Delta}} = $' + labels_in[it])
 
-        ax[0].set_xlabel('$Pr_{\\theta}$ at time ' + clock_time, fontsize=16)
-        ax[1].set_xlabel('$Pr_{qt}$ at time ' + clock_time, fontsize=16)
+        bottom0, top0 = ax[0].set_ylim()
+        bottom1, top1 = ax[1].set_ylim()
+        set_bottom = min(bottom0, bottom1)
+        set_top = max(top0, top1)
+        ax[0].set_ylim(set_bottom, set_top)
+        ax[1].set_ylim(set_bottom, set_top)
+
+        ax[0].plot.vlines(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
+        ax[1].plot.vlines(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
+
+        ax[0].set_xlabel('$Pr$ at time ' + clock_time, fontsize=16)
+        ax[1].set_xlabel('$Sc_{qt}$ at time ' + clock_time, fontsize=16)
 
         ax[0].legend(fontsize=13, loc='upper right')
         ax[1].legend(fontsize=13, loc='upper right')
@@ -285,7 +295,7 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, interp=False, C_sq_to_C = True,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
-                              time_in='`14400', set_x_lim_list=[0.355, 0.355, 0.355, 0.355, 0.255, 0.07] ):
+                              time_in='`14400', set_x_lim_list=[0.355, 0.355, 0.355, 0.355, 0.255, 0.07], Pr=True):
 
 
     clock_time_int = 05.30 + int(time_in)/(60*60)
@@ -303,8 +313,12 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
     Cth = np.zeros_like(Cs_in)
     Cqt = np.zeros_like(Cs_in)
 
+    if Pr == True:
+        Pr = Cs_temp/Cth_temp # not C here actually denotes C^2
+        Sc = Cs_temp/Cqt_temp
+
     print('np.shape(Cs_in)[1] = ', np.shape(Cs_in)[1])
-    for it in range(np.shape(Cs_in)[1]):
+    for it in range(np.shape(Cs_in)[1]): #loop over Deltas
         print('it = ', it)
 
         if interp==True:
@@ -331,7 +345,6 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             Cs = Cs_temp.copy()
             Cth = Cth_temp.copy()
             Cqt = Cqt_temp.copy()
-
 
         fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4,18))
         fig.tight_layout(pad=0.5)
@@ -418,6 +431,47 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
                         bbox_inches='tight')
         plt.close()
 
+        if Pr == True:
+
+            fig, ax = plt.subplots(nrows=2, ncols=1, sharey=True, figsize=(4, 11))
+            fig.tight_layout(pad=0.5)
+
+            for nt in range(np.shape(Pr)[0]):
+
+                ax[0].plot(Pr[nt, it, :], z / z_i, color=colours[nt], label=labels_in[nt])
+                ax[1].plot(Sc[nt, it, :], z / z_i, color=colours[nt], label=labels_in[nt])
+
+            ax[0].set_xlabel('$Pr$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it] + ' at time ' + clock_time, fontsize=16)
+            ax[1].set_xlabel('$Sc_{qt}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it] + ' at time ' + clock_time, fontsize=16)
+
+            ax[0].legend(fontsize=13, loc='upper right')
+            ax[1].legend(fontsize=13, loc='upper right')
+
+            left0, right0 = ax[0].set_xlim()
+            left1, right1 = ax[1].set_xlim()
+
+            set_right = max(right0, right1)
+            set_left = min(left0, left1)
+
+            ax[0].set_xlim(right=set_right, left=set_left)
+            ax[1].set_xlim(right=set_right, left=set_left)
+
+            bottom0, top0 = ax[0].set_ylim()
+            bottom1, top1 = ax[1].set_ylim()
+            set_bottom = min(bottom0, bottom1)
+            set_top = max(top0, top1)
+
+            ax[0].plot.vlines(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
+            ax[1].plot.vlines(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
+
+            ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
+            ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
+            ax[2].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
+
+            plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled.png', bbox_inches='tight')
+            plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled.pdf', bbox_inches='tight')
+            plt.close()
+
 
 def cal_max_Cs(C_list, z_ml_r, z_cl_r):
 
@@ -476,48 +530,63 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
 
     if y_ax == 'C':
         y_labels = ['$C_{s}$', '$C_{\\theta}$', '$C_{qt}$']
-    else:
+    elif y_ax == 'l':
         y_labels = ['$l_{s}$ (m)', '$l_{\\theta}$ (m)', '$l_{qt}$ (m)']
+    elif y_ax == 'Pr':
+        y_labels = ['$Pr$', '$Sc_{qt}$']
+    else:
+        print('y_ax input not recognised')
 
-    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4, 12))
+    if y_ax == 'Pr':
+        fig, ax = plt.subplots(nrows=2, ncols=1, sharey=True, figsize=(4, 8))
+    else:
+        fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4, 12))
     fig.tight_layout(pad=0.5)
 
     for it in range(np.shape(Cs_max_in)[0]):
         ax[0].plot(Delta, Cs_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
         ax[1].plot(Delta, Cth_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
-        ax[2].plot(Delta, Cqt_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
+        if y_ax != 'Pr':
+            ax[2].plot(Delta, Cqt_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
 
     if y_ax == 'C':
         ax[0].legend(fontsize=13, loc='upper right')
         ax[1].legend(fontsize=13, loc='upper right')
-        ax[2].legend(fontsize=13, loc='upper right')
+        if y_ax != 'Pr':
+            ax[2].legend(fontsize=13, loc='upper right')
     else:
         ax[0].legend(fontsize=13, loc='best')
         ax[1].legend(fontsize=13, loc='best')
-        ax[2].legend(fontsize=13, loc='best')
+        if y_ax != 'Pr':
+            ax[2].legend(fontsize=13, loc='best')
 
     bottom0, top0 = ax[0].set_ylim()
     bottom1, top1 = ax[1].set_ylim()
-    bottom2, top2 = ax[2].set_ylim()
+    if y_ax != 'Pr':
+        bottom2, top2 = ax[2].set_ylim()
 
     if max_mean == 'mean':
-       set_top = 0.255 #max(top0, top1, top2)
+       set_top = max(top0, top1, top2) #0.255
 
     elif max_mean == 'max':
-       set_top = 0.305
+       set_top= max(top0, top1, top2) #0.305
 
     ax[0].set_ylim(top=set_top)
     ax[1].set_ylim(top=set_top)
-    ax[2].set_ylim(top=set_top)
+    if y_ax != 'Pr':
+        ax[2].set_ylim(top=set_top)
 
     if y_ax == 'C':
         ax[0].set_ylabel('$C_{s}$ at '+ clock_time, fontsize=14)
         ax[1].set_ylabel('$C_{\\theta}$ at '+ clock_time, fontsize=14)
         ax[2].set_ylabel('$C_{qt}$ at '+ clock_time, fontsize=14)
-    else:
+    elif y_ax == 'l':
         ax[0].set_ylabel('$l_{mix}$ at '+ clock_time, fontsize=14)
         ax[1].set_ylabel('$l_{\\theta}$ at '+ clock_time, fontsize=14)
         ax[2].set_ylabel('$l_{qt}$ at '+ clock_time, fontsize=14)
+    elif y_ax == 'Pr':
+        ax[0].set_ylabel('$Pr$ at '+ clock_time, fontsize=14)
+        ax[1].set_ylabel('$Sc_{qt}$ at '+ clock_time, fontsize=14)
 
     # ax[0].set_title(y_labels[0], fontsize=16)
     # ax[1].set_title(y_labels[1], fontsize=16)
@@ -525,7 +594,105 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
 
     ax[0].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
     ax[1].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
-    ax[2].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
+    if y_ax != 'Pr':
+        ax[2].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
+
+    plt.tight_layout()
+
+    plt.savefig(plotdir+f'{max_mean}_{y_ax}{what_plotting}_time{time_in}_prof.png', bbox_inches='tight')
+    plt.savefig(plotdir + f'{max_mean}_{y_ax}{what_plotting}_time{time_in}_prof.pdf', bbox_inches='tight')
+    plt.close()
+
+
+
+def plot_max_mean_dom_av_vs_Delta(Cs_val_in, Cth_val_in, Cqt_val_in, Cs_err, Cth_err, Cqt_err,
+                                  Delta, y_ax, max_mean='mean', time_in = '14400'):
+
+    clock_time_int = 05.30 + int(time_in)/(60*60)
+    clock_time = str(clock_time_int)+'0L'
+
+    if y_ax == 'C':
+        y_labels = ['$C_{s}$', '$C_{\\theta}$', '$C_{qt}$']
+    elif y_ax == 'l':
+        y_labels = ['$l_{s}$ (m)', '$l_{\\theta}$ (m)', '$l_{qt}$ (m)']
+    elif y_ax == 'Pr':
+        y_labels = ['$Pr$', '$Sc_{qt}$']
+    else:
+        print('y_ax input not recognised')
+
+    if y_ax == 'Pr':
+        fig, ax = plt.subplots(nrows=2, ncols=1, sharey=True, figsize=(4, 8))
+    else:
+        fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4, 12))
+    fig.tight_layout(pad=0.5)
+
+    ax[0].plot(Delta, Cs_val_in, 'k')
+    ax[1].plot(Delta, Cth_val_in, 'k')
+    if y_ax != 'Pr':
+        ax[2].plot(Delta, Cqt_val_in, 'k')
+
+    # for i, D_in in enumerate(Delta):
+    #     ax[0].errorbar(D_in[i], Cs_val_in[i], yerr=Cs_err[i], color='k', ecolor='k', fmt='.', capsize=7)
+    #     ax[1].errorbar(D_in[i], Cth_val_in[i], yerr=Cth_err[i], color='k', ecolor='k', fmt='.', capsize=7)
+    #     if y_ax != 'Pr':
+    #         ax[2].errorbar(D_in[i], Cqt_val_in[i], yerr=Cqt_err[i], color='k', ecolor='k', fmt='.', capsize=7)
+
+    if y_ax == 'C':
+        ax[0].legend(fontsize=13, loc='upper right')
+        ax[1].legend(fontsize=13, loc='upper right')
+        ax[2].legend(fontsize=13, loc='upper right')
+    elif y_ax == 'l':
+        ax[0].legend(fontsize=13, loc='best')
+        ax[1].legend(fontsize=13, loc='best')
+        ax[2].legend(fontsize=13, loc='best')
+    elif y_ax == 'Pr':
+        ax[0].legend(fontsize=13, loc='upper right')
+        ax[1].legend(fontsize=13, loc='upper right')
+    else:
+        print('y_ax not recognised')
+
+    bottom0, top0 = ax[0].set_ylim()
+    bottom1, top1 = ax[1].set_ylim()
+    if y_ax != 'Pr':
+        bottom2, top2 = ax[2].set_ylim()
+
+    if max_mean == 'mean':
+       set_top = max(top0, top1)
+       if y_ax != 'Pr':
+           temp_top = set_top.copy()
+           set_top = max(temp_top, top2) #0.255
+
+    elif max_mean == 'max':
+       set_top= max(top0, top1)
+       if y_ax != 'Pr':
+           temp_top = set_top.copy()
+           set_top = max(temp_top, top2) #0.305
+
+    ax[0].set_ylim(top=set_top)
+    ax[1].set_ylim(top=set_top)
+    if y_ax != 'Pr':
+        ax[2].set_ylim(top=set_top)
+
+    if y_ax == 'C':
+        ax[0].set_ylabel('$C_{s}$ at '+ clock_time, fontsize=14)
+        ax[1].set_ylabel('$C_{\\theta}$ at '+ clock_time, fontsize=14)
+        ax[2].set_ylabel('$C_{qt}$ at '+ clock_time, fontsize=14)
+    elif y_ax == 'l':
+        ax[0].set_ylabel('$l_{mix}$ at '+ clock_time, fontsize=14)
+        ax[1].set_ylabel('$l_{\\theta}$ at '+ clock_time, fontsize=14)
+        ax[2].set_ylabel('$l_{qt}$ at '+ clock_time, fontsize=14)
+    elif y_ax == 'Pr':
+        ax[0].set_ylabel('$Pr$ at '+ clock_time, fontsize=14)
+        ax[1].set_ylabel('$Sc_{qt}$ at '+ clock_time, fontsize=14)
+
+    # ax[0].set_title(y_labels[0], fontsize=16)
+    # ax[1].set_title(y_labels[1], fontsize=16)
+    # ax[2].set_title(y_labels[2], fontsize=16)
+
+    ax[0].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
+    ax[1].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
+    if y_ax != 'Pr':
+        ax[2].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
 
     plt.tight_layout()
 
@@ -836,6 +1003,18 @@ for itr, time_stamp in enumerate(set_time):
 
 
 
+    Pr_partit_profs = Cs_sq_cond / Cth_sq_cond
+    Sc_partit_profs = Cs_sq_cond / Cqt_sq_cond
+
+    max_Pr_cond = cal_max_Cs(Pr_partit_profs, z_ml_range, z_cl_range)
+    max_Sc_cond = cal_max_Cs(Sc_partit_profs, z_ml_range, z_cl_range)
+
+    mean_Pr_cond = cal_mean_Cs(Pr_partit_profs, z_ml_range, z_cl_range)
+    mean_Sc_cond = cal_mean_Cs(Sc_partit_profs, z_ml_range, z_cl_range)
+
+
+
+
 
     #Cs_sq in ML, Cs_sq in CL, Cs_env_sq, Cs_cloud_sq, Cs_w_sq, Cs_w_th_sq
 
@@ -854,6 +1033,11 @@ for itr, time_stamp in enumerate(set_time):
     plot_max_C_l_vs_Delta(get_max_l_from_C(mean_Cs_cond, delta_numbers, 25), get_max_l_from_C(mean_Cth_cond, delta_numbers, 25),
                           get_max_l_from_C(mean_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l',
                           max_mean='mean', time_in = time_stamp)
+
+    plot_max_C_l_vs_Delta(mean_Pr_cond, max_Sc_cond, None, Delta=set_labels, y_ax='Pr', max_mean='max',
+                          time_in=time_stamp)
+    plot_max_C_l_vs_Delta(mean_Pr_cond, mean_Sc_cond, None, Delta=set_labels, y_ax='Pr', max_mean='mean',
+                          time_in=time_stamp)
 
 
     print('z_ml_range = ', z_ml_range)
