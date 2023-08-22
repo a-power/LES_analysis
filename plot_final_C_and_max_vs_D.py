@@ -671,7 +671,6 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
             ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
             ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
-            ax[2].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
 
             plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_scaled.png', bbox_inches='tight')
             plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_scaled.pdf', bbox_inches='tight')
