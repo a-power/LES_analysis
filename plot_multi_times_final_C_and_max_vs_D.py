@@ -295,7 +295,7 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, interp=False, C_sq_to_C = True,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
-                              time_in='`14400', set_x_lim_list=[0.355, 0.355, 0.355, 0.355, 0.255, 0.07], Pr=True):
+                              time_in='`14400', set_x_lim_list=[0.355, 0.355, 0.355, 0.355, 0.255, 0.07], Pr_in=True):
 
 
     clock_time_int = 05.30 + int(time_in)/(60*60)
@@ -313,7 +313,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
     Cth = np.zeros_like(Cs_in)
     Cqt = np.zeros_like(Cs_in)
 
-    if Pr == True:
+    if Pr_in == True:
         Pr = Cs_temp/Cth_temp # not C here actually denotes C^2
         Sc = Cs_temp/Cqt_temp
 
@@ -431,7 +431,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
                         bbox_inches='tight')
         plt.close()
 
-        if Pr == True:
+        if Pr_in == True:
 
             fig, ax = plt.subplots(nrows=2, ncols=1, sharey=True, figsize=(4, 11))
             fig.tight_layout(pad=0.5)

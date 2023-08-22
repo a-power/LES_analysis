@@ -516,7 +516,7 @@ np.save('Cth_sq_cond.npy', Cth_sq_cond)
 np.save('Cqt_sq_cond.npy', Cqt_sq_cond)
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, interp=False, C_sq_to_C = True,
-                      labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'], Pr=True):
+                      labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'], Pr_in=True):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -530,7 +530,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
     Cth = np.zeros_like(Cs_in)
     Cqt = np.zeros_like(Cs_in)
 
-    if Pr == True:
+    if Pr_in == True:
         Pr = Cs_temp/Cth_temp # not C here actually denotes C^2
         Sc = Cs_temp/Cqt_temp
 
@@ -636,7 +636,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
         plt.close()
 
 
-        if Pr == True:
+        if Pr_in == True:
 
             fig, ax = plt.subplots(nrows=2, ncols=1, sharey=True, figsize=(4, 11))
             fig.tight_layout(pad=0.5)
