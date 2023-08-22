@@ -552,13 +552,14 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     if y_ax == 'C':
         ax[0].legend(fontsize=13, loc='upper right')
         ax[1].legend(fontsize=13, loc='upper right')
-        if y_ax != 'Pr':
-            ax[2].legend(fontsize=13, loc='upper right')
-    else:
+        ax[2].legend(fontsize=13, loc='upper right')
+    elif y_ax == 'l':
         ax[0].legend(fontsize=13, loc='best')
         ax[1].legend(fontsize=13, loc='best')
-        if y_ax != 'Pr':
-            ax[2].legend(fontsize=13, loc='best')
+        ax[2].legend(fontsize=13, loc='best')
+    elif y_ax == 'Pr':
+        ax[0].legend(fontsize=13, loc='upper right')
+        ax[1].legend(fontsize=13, loc='upper right')
 
     bottom0, top0 = ax[0].set_ylim()
     bottom1, top1 = ax[1].set_ylim()
@@ -566,10 +567,16 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
         bottom2, top2 = ax[2].set_ylim()
 
     if max_mean == 'mean':
-       set_top = max(top0, top1, top2) #0.255
+        set_top = max(top0, top1)
+        if y_ax != 'Pr':
+            temp_top = set_top.copy()
+            set_top = max(temp_top, top2)  # 0.255
 
     elif max_mean == 'max':
-       set_top= max(top0, top1, top2) #0.305
+        set_top = max(top0, top1)
+        if y_ax != 'Pr':
+            temp_top = set_top.copy()
+            set_top = max(temp_top, top2)  # 0.305
 
     ax[0].set_ylim(top=set_top)
     ax[1].set_ylim(top=set_top)

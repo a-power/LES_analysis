@@ -457,8 +457,18 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False):
         ax[0].plot(Cs[it,:] / Cth[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
         ax[1].plot(Cs[it,:] / Cqt[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
 
-        ax[0].set_xlabel('$Pr_{\\theta}$', fontsize=16)
-        ax[1].set_xlabel('$Pr_{qt}$', fontsize=16)
+        bottom0, top0 = ax[0].set_ylim()
+        bottom1, top1 = ax[1].set_ylim()
+        set_bottom = min(bottom0, bottom1)
+        set_top = max(top0, top1)
+        ax[0].set_ylim(set_bottom, set_top)
+        ax[1].set_ylim(set_bottom, set_top)
+
+        ax[0].plot.vlines(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
+        ax[1].plot.vlines(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
+
+        ax[0].set_xlabel('$Pr$', fontsize=16)
+        ax[1].set_xlabel('$Sc_{qt}$', fontsize=16)
 
         ax[0].legend(fontsize=13, loc='upper right')
         ax[1].legend(fontsize=13, loc='upper right')
@@ -506,7 +516,7 @@ np.save('Cth_sq_cond.npy', Cth_sq_cond)
 np.save('Cqt_sq_cond.npy', Cqt_sq_cond)
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, interp=False, C_sq_to_C = True,
-                      labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core']):
+                      labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'], Pr=True):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -519,6 +529,10 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
     Cs = np.zeros_like(Cs_in)
     Cth = np.zeros_like(Cs_in)
     Cqt = np.zeros_like(Cs_in)
+
+    if Pr == True:
+        Pr = Cs_temp/Cth_temp # not C here actually denotes C^2
+        Sc = Cs_temp/Cqt_temp
 
     print('np.shape(Cs_in)[1] = ', np.shape(Cs_in)[1])
     for it in range(np.shape(Cs_in)[1]):
@@ -622,6 +636,49 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
         plt.close()
 
 
+        if Pr == True:
+
+            fig, ax = plt.subplots(nrows=2, ncols=1, sharey=True, figsize=(4, 11))
+            fig.tight_layout(pad=0.5)
+
+            for nt in range(np.shape(Pr)[0]):
+
+                ax[0].plot(Pr[nt, it, :], z / z_i, color=colours[nt], label=labels_in[nt])
+                ax[1].plot(Sc[nt, it, :], z / z_i, color=colours[nt], label=labels_in[nt])
+
+            ax[0].set_xlabel('$Pr$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it], fontsize=16)
+            ax[1].set_xlabel('$Sc_{qt}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it], fontsize=16)
+
+            ax[0].legend(fontsize=13, loc='upper right')
+            ax[1].legend(fontsize=13, loc='upper right')
+
+            left0, right0 = ax[0].set_xlim()
+            left1, right1 = ax[1].set_xlim()
+
+            set_right = max(right0, right1)
+            set_left = min(left0, left1)
+
+            ax[0].set_xlim(right=set_right, left=set_left)
+            ax[1].set_xlim(right=set_right, left=set_left)
+
+            bottom0, top0 = ax[0].set_ylim()
+            bottom1, top1 = ax[1].set_ylim()
+            set_bottom = min(bottom0, bottom1)
+            set_top = max(top0, top1)
+
+            ax[0].plot.vlines(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
+            ax[1].plot.vlines(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
+
+            ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
+            ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
+            ax[2].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
+
+            plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_scaled.png', bbox_inches='tight')
+            plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_scaled.pdf', bbox_inches='tight')
+            plt.close()
+
+
+
 #plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = False)
 # plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
 #                           deltas = deltas_in, delta_label = set_labels, interp=False, C_sq_to_C = False)
@@ -708,45 +765,72 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
 
     if y_ax == 'C':
         y_labels = ['$C_{s}$', '$C_{\\theta}$', '$C_{qt}$']
-    else:
+    elif y_ax == 'l':
         y_labels = ['$l_{s}$ (m)', '$l_{\\theta}$ (m)', '$l_{qt}$ (m)']
+    elif y_ax == 'Pr':
+        y_labels = ['$Pr$', '$Sc_{qt}$']
+    else:
+        print('y_ax input not recognised')
 
-    fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(15, 5))
+    if y_ax == 'Pr':
+        fig, ax = plt.subplots(nrows=1, ncols=2, sharey=False, figsize=(10, 5))
+    else:
+        fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(15, 5))
     fig.tight_layout(pad=0.5)
 
     for it in range(np.shape(Cs_max_in)[0]):
         ax[0].plot(Delta, Cs_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
         ax[1].plot(Delta, Cth_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
-        ax[2].plot(Delta, Cqt_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
+        if y_ax != 'Pr':
+            ax[2].plot(Delta, Cqt_max_in[it,...], color=colours[it], linestyle=my_lines[it], label=labels[it])
 
     if y_ax == 'C':
         ax[0].legend(fontsize=13, loc='upper right')
         ax[1].legend(fontsize=13, loc='upper right')
         ax[2].legend(fontsize=13, loc='upper right')
-    else:
+    elif y_ax == 'l':
         ax[0].legend(fontsize=13, loc='best')
         ax[1].legend(fontsize=13, loc='best')
         ax[2].legend(fontsize=13, loc='best')
+    elif y_ax == 'Pr':
+        ax[0].legend(fontsize=13, loc='upper right')
+        ax[1].legend(fontsize=13, loc='upper right')
 
     bottom0, top0 = ax[0].set_ylim()
     bottom1, top1 = ax[1].set_ylim()
-    bottom2, top2 = ax[2].set_ylim()
+    if y_ax != 'Pr':
+        bottom2, top2 = ax[2].set_ylim()
 
-    set_top = max(top0, top1, top2)
+    if max_mean == 'mean':
+        set_top = max(top0, top1)
+        if y_ax != 'Pr':
+            temp_top = set_top.copy()
+            set_top = max(temp_top, top2)  # 0.255
+
+    elif max_mean == 'max':
+        set_top = max(top0, top1)
+        if y_ax != 'Pr':
+            temp_top = set_top.copy()
+            set_top = max(temp_top, top2)  # 0.305
 
     ax[0].set_ylim(top=set_top)
     ax[1].set_ylim(top=set_top)
-    ax[2].set_ylim(top=set_top)
+    if y_ax != 'Pr':
+        ax[2].set_ylim(top=set_top)
 
     if y_ax == 'C':
         ax[0].set_ylabel('Smagorinsky Parameter', fontsize=14)
-    else:
+    elif y_ax == 'l':
         ax[0].set_ylabel('Mixing Length', fontsize=14)
+    elif y_ax == 'Pr':
+        ax[0].set_ylabel('Prandtl number for heat', fontsize=14)
+        ax[1].set_ylabel('Schmidt number for moisture', fontsize=14)
 
-    ax[0].set_title(y_labels[0], fontsize=16)
-    ax[1].set_title(y_labels[1], fontsize=16)
-    ax[2].set_title(y_labels[2], fontsize=16)
-
+    # ax[0].set_title(y_labels[0], fontsize=16)
+    # ax[1].set_title(y_labels[1], fontsize=16)
+    # ax[2].set_title(y_labels[2], fontsize=16)
+    if y_ax == 'Pr':
+        ax[0].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
     ax[1].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
     plt.savefig(plotdir+f'{max_mean}_{y_ax}{what_plotting}_prof.pdf', bbox_inches='tight')
     plt.close()
