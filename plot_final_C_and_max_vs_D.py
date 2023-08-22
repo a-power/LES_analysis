@@ -464,8 +464,8 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False):
         ax[0].set_ylim(set_bottom, set_top)
         ax[1].set_ylim(set_bottom, set_top)
 
-        ax[0].Axes.axvline(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
-        ax[1].Axes.axvline(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
+        ax[0].axvline(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
+        ax[1].axvline(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
 
         ax[0].set_xlabel('$Pr$', fontsize=16)
         ax[1].set_xlabel('$Sc_{qt}$', fontsize=16)
@@ -666,8 +666,8 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             set_bottom = min(bottom0, bottom1)
             set_top = max(top0, top1)
 
-            ax[0].Axes.axvline(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
-            ax[1].Axes.axvline(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
+            ax[0].axvline(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
+            ax[1].axvline(0.7, set_bottom, set_top, colors='k', linestyles='dashed')
 
             ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
             ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
