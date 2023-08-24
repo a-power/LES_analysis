@@ -314,8 +314,8 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
     Cqt = np.zeros_like(Cs_in)
 
     if Pr_in == True:
-        Pr = Cs_temp/Cth_temp # not C here actually denotes C^2
-        Sc = Cs_temp/Cqt_temp
+        Pr = Cs_in/Cth_in # not C here actually denotes C^2
+        Sc = Cs_in/Cqt_in
 
     print('np.shape(Cs_in)[1] = ', np.shape(Cs_in)[1])
     for it in range(np.shape(Cs_in)[1]): #loop over Deltas
@@ -441,8 +441,10 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
                 ax[0].plot(Pr[nt, it, :], z / z_i, color=colours[nt], label=labels_in[nt])
                 ax[1].plot(Sc[nt, it, :], z / z_i, color=colours[nt], label=labels_in[nt])
 
-            ax[0].set_xlabel('$Pr$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it] + ' at time ' + clock_time, fontsize=16)
-            ax[1].set_xlabel('$Sc_{qt}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it] + ' at time ' + clock_time, fontsize=16)
+            ax[0].set_xlabel('$Pr$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it] + ' at time ' + clock_time,
+                             fontsize=16)
+            ax[1].set_xlabel('$Sc_{qt}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it] + ' at time ' + clock_time,
+                             fontsize=16)
 
             ax[0].legend(fontsize=13, loc='upper right')
             ax[1].legend(fontsize=13, loc='upper right')
@@ -467,8 +469,12 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
             ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
 
-            plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled.png', bbox_inches='tight')
-            plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled.pdf', bbox_inches='tight')
+            fig.tight_layout(pad=0.5)
+
+            plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled.png',
+                        bbox_inches='tight')
+            plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled.pdf',
+                        bbox_inches='tight')
             plt.close()
 
 

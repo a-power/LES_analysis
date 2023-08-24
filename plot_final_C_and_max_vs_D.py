@@ -539,8 +539,8 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
     Cqt = np.zeros_like(Cs_in)
 
     if Pr_in == True:
-        Pr = Cs_temp/Cth_temp # not C here actually denotes C^2
-        Sc = Cs_temp/Cqt_temp
+        Pr = Cs_in/Cth_in # not C here actually denotes C^2
+        Sc = Cs_in/Cqt_in
 
     print('np.shape(Cs_in)[1] = ', np.shape(Cs_in)[1])
     for it in range(np.shape(Cs_in)[1]):
@@ -633,6 +633,8 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
         print('deltas[it] =', deltas[it])
 
+        fig.tight_layout(pad=0.5)
+
         if interp==True:
             ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
             plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_interp_z.pdf',
@@ -641,12 +643,13 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
             plt.savefig(plotdir + f'{C_or_LM}{name}condit_prof_D={deltas[it]}{what_plotting}_scaled_zn.pdf',
                         bbox_inches='tight')
+
         plt.close()
 
 
         if Pr_in == True:
 
-            fig, ax = plt.subplots(nrows=2, ncols=1, sharey=True, figsize=(4, 11))
+            fig, ax = plt.subplots(nrows=1, ncols=2, sharey=True, figsize=(8, 5))
             fig.tight_layout(pad=0.5)
 
             for nt in range(np.shape(Pr)[0]):
@@ -679,6 +682,8 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
             ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
             ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
+
+            fig.tight_layout(pad=0.5)
 
             plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_scaled.png', bbox_inches='tight')
             plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_scaled.pdf', bbox_inches='tight')
