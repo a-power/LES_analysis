@@ -263,8 +263,6 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
         ax[0].set_xlim(-0.5, 3.5)
         ax[1].set_xlim(-0.5, 3.5)
 
-        ticks_out = ax[0].set_xticks()
-
         ax[0].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
         ax[1].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
 
@@ -294,14 +292,12 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
     plt.savefig(plotdir + f'Pr_prof_{time_in}.pdf', bbox_inches='tight')
     plt.close()
 
-    return ticks_out
 
 
 
 
 
-
-def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, ticks_in, interp=False, C_sq_to_C = True,
+def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, interp=False, C_sq_to_C = True,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
                               time_in='`14400', set_x_lim_list=[0.355, 0.355, 0.355, 0.355, 0.255, 0.07], Pr_in=True):
 
@@ -469,6 +465,9 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             ax[0].set_xlim(-0.5, 3.5)
             ax[1].set_xlim(-0.5, 3.5)
 
+            ax[0].set_xticks([-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5])
+            ax[1].set_xticks([-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5])
+
             bottom0, top0 = ax[0].set_ylim()
             bottom1, top1 = ax[1].set_ylim()
             set_bottom = min(bottom0, bottom1)
@@ -487,7 +486,6 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled.pdf',
                         bbox_inches='tight')
             plt.close()
-
 
 
 def cal_max_Cs(C_list, z_ml_r, z_cl_r):
@@ -968,7 +966,7 @@ for itr, time_stamp in enumerate(set_time):
 
     print('saved C plots to ', plotdir)
 
-    working_ticks = plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels, time_in=time_stamp)
+    plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels, time_in=time_stamp)
 
 
 
@@ -996,7 +994,7 @@ for itr, time_stamp in enumerate(set_time):
 
     #plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = True)
     plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
-                              deltas = deltas_in, delta_label = set_labels, ticks_in = working_ticks, interp=False,
+                              deltas = deltas_in, delta_label = set_labels, interp=False,
                               C_sq_to_C = True, time_in=time_stamp, set_x_lim_list=x_lim_list)
 
 
