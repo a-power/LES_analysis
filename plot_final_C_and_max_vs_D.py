@@ -450,7 +450,7 @@ def plot_Pr_all_Deltas(Cs_sq_in, Cth_sq_in, Cqt_sq_in, z, z_i, labels_in, interp
         Cqt_sq_in = interp_z(Cqt_sq_in)
 
     if case == 'BOMEX':
-        fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(9,6))
+        fig, ax = plt.subplots(nrows=1, ncols=2, sharey=True, figsize=(8,6))
     else:
         fig, ax = plt.subplots(nrows=2, ncols=1, sharey=False, figsize=(5,12))
 
@@ -467,6 +467,9 @@ def plot_Pr_all_Deltas(Cs_sq_in, Cth_sq_in, Cqt_sq_in, z, z_i, labels_in, interp
         set_top = max(top0, top1)
         ax[0].set_ylim(set_bottom, set_top)
         ax[1].set_ylim(set_bottom, set_top)
+
+        ax[0].set_xlim(-2, 2)
+        ax[1].set_xlim(-2, 2)
 
         ax[0].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
         ax[1].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
@@ -649,7 +652,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
         if Pr_in == True:
 
-            fig, ax = plt.subplots(nrows=1, ncols=2, sharey=True, figsize=(8, 5))
+            fig, ax = plt.subplots(nrows=1, ncols=2, sharey=True, figsize=(8, 6))
             fig.tight_layout(pad=0.5)
 
             for nt in range(np.shape(Pr)[0]):
@@ -669,8 +672,11 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             set_right = max(right0, right1)
             set_left = min(left0, left1)
 
-            ax[0].set_xlim(right=set_right, left=set_left)
-            ax[1].set_xlim(right=set_right, left=set_left)
+            # ax[0].set_xlim(right=set_right, left=set_left)
+            # ax[1].set_xlim(right=set_right, left=set_left)
+
+            ax[0].set_xlim(-2, 2)
+            ax[1].set_xlim(-2, 2)
 
             bottom0, top0 = ax[0].set_ylim()
             bottom1, top1 = ax[1].set_ylim()
@@ -681,7 +687,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             ax[1].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
 
             ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
-            ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
+            # ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
 
             fig.tight_layout(pad=0.5)
 

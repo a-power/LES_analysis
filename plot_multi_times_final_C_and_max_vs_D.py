@@ -260,6 +260,9 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
         ax[0].set_ylim(set_bottom, set_top)
         ax[1].set_ylim(set_bottom, set_top)
 
+        ax[0].set_xlim(-2, 2)
+        ax[1].set_xlim(-2, 2)
+
         ax[0].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
         ax[1].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
 
@@ -270,6 +273,7 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
         ax[1].legend(fontsize=13, loc='upper right')
 
         ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
+        ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
 
         # left0, right0 = ax[0].set_xlim()
         # left1, right1 = ax[1].set_xlim()
@@ -455,8 +459,11 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             set_right = max(right0, right1)
             set_left = min(left0, left1)
 
-            ax[0].set_xlim(right=set_right, left=set_left)
-            ax[1].set_xlim(right=set_right, left=set_left)
+            # ax[0].set_xlim(right=set_right, left=set_left)
+            # ax[1].set_xlim(right=set_right, left=set_left)
+
+            ax[0].set_xlim(-2, 2)
+            ax[1].set_xlim(-2, 2)
 
             bottom0, top0 = ax[0].set_ylim()
             bottom1, top1 = ax[1].set_ylim()
