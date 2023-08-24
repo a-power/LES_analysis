@@ -453,11 +453,11 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             ax[0].legend(fontsize=13, loc='upper right')
             ax[1].legend(fontsize=13, loc='upper right')
 
-            left0, right0 = ax[0].set_xlim()
-            left1, right1 = ax[1].set_xlim()
-
-            set_right = max(right0, right1)
-            set_left = min(left0, left1)
+            # left0, right0 = ax[0].set_xlim()
+            # left1, right1 = ax[1].set_xlim()
+            #
+            # set_right = max(right0, right1)
+            # set_left = min(left0, left1)
 
             # ax[0].set_xlim(right=set_right, left=set_left)
             # ax[1].set_xlim(right=set_right, left=set_left)
