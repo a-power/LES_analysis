@@ -301,10 +301,9 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
 
 
 
-def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, interp=False, C_sq_to_C = True,
+def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, ticks_in, interp=False, C_sq_to_C = True,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
-                              time_in='`14400', set_x_lim_list=[0.355, 0.355, 0.355, 0.355, 0.255, 0.07], Pr_in=True,
-                              ticks_in):
+                              time_in='`14400', set_x_lim_list=[0.355, 0.355, 0.355, 0.355, 0.255, 0.07], Pr_in=True):
 
 
     clock_time_int = 05.30 + int(time_in)/(60*60)
@@ -997,8 +996,8 @@ for itr, time_stamp in enumerate(set_time):
 
     #plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = True)
     plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
-                              deltas = deltas_in, delta_label = set_labels, interp=False,
-                              C_sq_to_C = True, time_in=time_stamp, set_x_lim_list=x_lim_list, ticks_in = working_ticks)
+                              deltas = deltas_in, delta_label = set_labels, ticks_in = working_ticks, interp=False,
+                              C_sq_to_C = True, time_in=time_stamp, set_x_lim_list=x_lim_list)
 
 
     ##################################################################################################################
