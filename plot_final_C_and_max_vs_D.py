@@ -438,26 +438,28 @@ print('saved C plots to ', plotdir)
 
 
 
-def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False):
+def plot_Pr_all_Deltas(Cs_sq_in, Cth_sq_in, Cqt_sq_in, z, z_i, labels_in, interp=False):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
     #NOTE youre feeding in C^2 not C
 
     if interp==True:
-        Cs = interp_z(Cs)
-        Cth = interp_z(Cth)
-        Cqt = interp_z(Cqt)
+        Cs_sq_in = interp_z(Cs_sq_in)
+        Cth_sq_in = interp_z(Cth_sq_in)
+        Cqt_sq_in = interp_z(Cqt_sq_in)
 
     if case == 'BOMEX':
         fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(9,6))
     else:
         fig, ax = plt.subplots(nrows=2, ncols=1, sharey=False, figsize=(5,12))
 
-    for it in range(len(Cs[:,0])):
+    for it in range(len(Cs_sq_in[:,0])):
 
-        ax[0].plot(Cs[it,:] / Cth[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
-        ax[1].plot(Cs[it,:] / Cqt[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
+        ax[0].plot(Cs_sq_in[it,:] / Cth_sq_in[it, :], z/z_i, color=colours[it],
+                   label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
+        ax[1].plot(Cs_sq_in[it,:] / Cqt_sq_in[it, :], z/z_i, color=colours[it],
+                   label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
 
         bottom0, top0 = ax[0].set_ylim()
         bottom1, top1 = ax[1].set_ylim()
@@ -500,6 +502,10 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False):
     plt.savefig(plotdir + f'Pr_prof.pdf', bbox_inches='tight')
     plt.close()
 
+
+
+
+plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels)
 
 
 #################################################################################
