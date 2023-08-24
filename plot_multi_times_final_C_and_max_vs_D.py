@@ -304,7 +304,7 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, interp=False, C_sq_to_C = True,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
                               time_in='`14400', set_x_lim_list=[0.355, 0.355, 0.355, 0.355, 0.255, 0.07], Pr_in=True,
-                              ticks_in = working_ticks):
+                              ticks_in):
 
 
     clock_time_int = 05.30 + int(time_in)/(60*60)
