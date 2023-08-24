@@ -854,6 +854,14 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     plt.close()
 
 
+Pr_partit_profs = Cs_sq_cond / Cth_sq_cond
+Sc_partit_profs = Cs_sq_cond / Cqt_sq_cond
+
+max_Pr_cond = cal_max_Cs(Pr_partit_profs)
+max_Sc_cond = cal_max_Cs(Sc_partit_profs)
+
+mean_Pr_cond = cal_mean_Cs(Pr_partit_profs)
+mean_Sc_cond = cal_mean_Cs(Sc_partit_profs)
 
 
 plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Delta = set_labels, y_ax = 'C', max_mean='max')
@@ -864,6 +872,9 @@ plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond, delta_numbers, 25), get_max_
 plot_max_C_l_vs_Delta(mean_Cs_cond, mean_Cth_cond, mean_Cqt_cond, Delta = set_labels, y_ax = 'C', max_mean='mean')
 plot_max_C_l_vs_Delta(get_max_l_from_C(mean_Cs_cond, delta_numbers, 25), get_max_l_from_C(mean_Cth_cond, delta_numbers, 25),
                       get_max_l_from_C(mean_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l', max_mean='mean')
+
+plot_max_C_l_vs_Delta(mean_Pr_cond, max_Sc_cond, None, Delta=set_labels, y_ax='Pr', max_mean='max')
+plot_max_C_l_vs_Delta(mean_Pr_cond, mean_Sc_cond, None, Delta=set_labels, y_ax='Pr', max_mean='mean')
 
 
 
