@@ -70,6 +70,8 @@ elif case == 'BOMEX':
 else:
     print('need to def case')
 
+os.makedirs(plotdir, exist_ok = True)
+
 
 def calc_z_ML_and_CL(file_path, time_stamp=-1):
 
