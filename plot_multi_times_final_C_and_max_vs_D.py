@@ -260,8 +260,8 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
         ax[0].set_ylim(set_bottom, set_top)
         ax[1].set_ylim(set_bottom, set_top)
 
-        ax[0].set_xlim(-2, 2)
-        ax[1].set_xlim(-2, 2)
+        ax[0].set_xlim(-0.5, 3.5)
+        ax[1].set_xlim(-0.5, 3.5)
 
         ax[0].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
         ax[1].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
@@ -462,8 +462,8 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             # ax[0].set_xlim(right=set_right, left=set_left)
             # ax[1].set_xlim(right=set_right, left=set_left)
 
-            ax[0].set_xlim(-2, 2)
-            ax[1].set_xlim(-2, 2)
+            ax[0].set_xlim(-0.5, 3.5)
+            ax[1].set_xlim(-0.5, 3.5)
 
             bottom0, top0 = ax[0].set_ylim()
             bottom1, top1 = ax[1].set_ylim()
