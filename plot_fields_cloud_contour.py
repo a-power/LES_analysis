@@ -4,7 +4,7 @@ import analysis_plot_fns as apf
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='25200')
+parser.add_argument('--times', type=str, default='32400')
 parser.add_argument('--x_y', type=str, default='300')
 parser.add_argument('--axis', type=str, default='y')
 parser.add_argument('--x_s', type=float, default=0)
@@ -18,7 +18,8 @@ x_end = args.x_e
 
 case = 'ARM'
 
-Deltas = ['2D']#, '4D', '8D', '16D', '32D', '64D']
+Deltas = ['0_0']
+#['2D', '4D', '8D', '16D', '32D', '64D']
 
 
 if case =='BOMEX':

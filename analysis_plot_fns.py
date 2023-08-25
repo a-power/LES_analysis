@@ -351,11 +351,16 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
 
     for i in range(len(deltas)):
-
-        data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
+        if deltas[i] == '0_0':
+            CL_itr = '0'
+            beta_CL_itr = '0'
+        else:
+            print('need to code the delta for ', deltas[i])
 
         for t_set in t_av_or_not:
             if field == 'Cs_field':
+                data_set = xr.open_dataset(data_field_in + f'Cs_{deltas[i]}_running_mean_filter_rm00.nc')
+
                 print('length of time array for LM is ', len(data_set['f(LM_field_on_p)_r'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
                     if x_or_y == 'x':
@@ -376,6 +381,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 data_field = dyn.get_Cs(data_field_sq)
 
             elif field == 'Cth_field':
+                data_set = xr.open_dataset(data_field_in + f'C_th_{deltas[i]}_running_mean_filter_rm00.nc')
 
                 print('length of time array for HR_th is ', len(data_set['f(HR_th_field_on_p)_r'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
@@ -397,24 +403,26 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 data_field = dyn.get_Cs(data_field_sq)
 
             elif field == 'Cqt_field':
+                data_set = xr.open_dataset(data_field_in + f'C_qt_{deltas[i]}_running_mean_filter_rm00.nc')
+
                 print('length of time array for HR_qt is ',
                       len(data_set['f(HR_q_total_field_on_p)_r'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
                     if x_or_y == 'x':
-                        HR_field = np.mean(data_set['f(HR_q_total_field_on_p)_r'].data[:, axis_set, ...], axis=0)
-                        RR_field = np.mean(data_set['f(RR_q_total_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                        HR_field = np.mean(data_set['f(HR_q_total_f_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['f(RR_q_total_f_field_on_p)_r'].data[:, axis_set, ...], axis=0)
 
                     elif x_or_y == 'y':
-                        HR_field = np.mean(data_set['f(HR_q_total_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
-                        RR_field = np.mean(data_set['f(RR_q_total_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                        HR_field = np.mean(data_set['f(HR_q_total_f_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['f(RR_q_total_f_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
                 else:
                     if x_or_y == 'x':
-                        HR_field = data_set['f(HR_q_total_field_on_p)_r'].data[t_set, axis_set, ...]
-                        RR_field = data_set['f(RR_q_total_field_on_p)_r'].data[t_set, axis_set, ...]
+                        HR_field = data_set['f(HR_q_total_f_field_on_p)_r'].data[t_set, axis_set, ...]
+                        RR_field = data_set['f(RR_q_total_f_field_on_p)_r'].data[t_set, axis_set, ...]
 
                     elif x_or_y == 'y':
-                        HR_field = data_set['f(HR_q_total_field_on_p)_r'].data[t_set, :, axis_set, ...]
-                        RR_field = data_set['f(RR_q_total_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                        HR_field = data_set['f(HR_q_total_f_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                        RR_field = data_set['f(RR_q_total_f_field_on_p)_r'].data[t_set, :, axis_set, ...]
 
                 data_field_sq = 0.5 * HR_field / RR_field
                 data_field = dyn.get_Cs(data_field_sq)
@@ -434,7 +442,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
             data_set.close()
 
-            contour_set = xr.open_dataset(contour_field_in + f'{i}_running_mean_filter_rm00.nc')
+            contour_set = xr.open_dataset(contour_field_in +
+                                          f'{CL_itr}_gaussian_filter_ga0{beta_CL_itr}_running_mean_filter_rm00.nc')
 
             print('length of time array for cloud field is ',
                   len(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, 0, 0, 0]))
