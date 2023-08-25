@@ -4,19 +4,19 @@ import analysis_plot_fns as apf
 import argparse
 
 parser = argparse.ArgumentParser()
+parser.add_argument('--case_in', type=str, default='ARM')
 parser.add_argument('--times', type=str, default='32400')
 parser.add_argument('--x_y', type=str, default='300')
 parser.add_argument('--axis', type=str, default='y')
 parser.add_argument('--x_s', type=float, default=0)
 parser.add_argument('--x_e', type=float, default=19.6)
 args = parser.parse_args()
+case = args.case_in
 set_time = args.times
 my_x_y = args.x_y # must be y due to direction of wind in BOMEX
 my_axis = args.axis
 x_start = args.x_s
 x_end = args.x_e
-
-case = 'ARM'
 
 Deltas = ['0_0']
 #['2D', '4D', '8D', '16D', '32D', '64D']

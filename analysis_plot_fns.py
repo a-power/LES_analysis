@@ -359,7 +359,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
         for t_set in t_av_or_not:
             if field == 'Cs_field':
-                data_set = xr.open_dataset(data_field_in + f'Cs_{deltas[i]}_running_mean_filter_rm00.nc')
+                data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
 
                 print('length of time array for LM is ', len(data_set['f(LM_field_on_p)_r'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
@@ -381,7 +381,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 data_field = dyn.get_Cs(data_field_sq)
 
             elif field == 'Cth_field':
-                data_set = xr.open_dataset(data_field_in + f'C_th_{deltas[i]}_running_mean_filter_rm00.nc')
+                data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
 
                 print('length of time array for HR_th is ', len(data_set['f(HR_th_field_on_p)_r'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
@@ -403,7 +403,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 data_field = dyn.get_Cs(data_field_sq)
 
             elif field == 'Cqt_field':
-                data_set = xr.open_dataset(data_field_in + f'C_qt_{deltas[i]}_running_mean_filter_rm00.nc')
+                data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
 
                 print('length of time array for HR_qt is ',
                       len(data_set['f(HR_q_total_field_on_p)_r'].data[:, 0, 0, 0]))
