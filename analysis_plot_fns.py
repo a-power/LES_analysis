@@ -369,6 +369,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                     elif x_or_y == 'y':
                         LM_field = np.mean(data_set['f(LM_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
                         MM_field = np.mean(data_set['f(MM_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                    else:
+                        print("x_or_y must be set to either 'x' or 'y', not ", x_or_y)
                 else:
                     if x_or_y == 'x':
                         LM_field = data_set['f(LM_field_on_p)_r'].data[t_set, axis_set, ...]
@@ -376,6 +378,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                     elif x_or_y == 'y':
                         LM_field = data_set['f(LM_field_on_p)_r'].data[t_set, :, axis_set, ...]
                         MM_field = data_set['f(MM_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                    else:
+                        print("x_or_y must be set to either 'x' or 'y', not ", x_or_y)
 
                 data_field_sq = 0.5 * LM_field / MM_field
                 data_field = dyn.get_Cs(data_field_sq)
