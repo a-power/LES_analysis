@@ -123,7 +123,7 @@ def interp_z(var_in, z_from=z_set, z_to=zn_set):
     return interp_var
 
 
-def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C = False, time_in='14400'):
+def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_index, labels_in, interp=False, C_sq_to_C = False, time_in='14400'):
 
     clock_time_int = 05.30 + int(time_in)/(60*60)
     clock_time = str(clock_time_int)+'0L'
@@ -199,6 +199,14 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
         set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
         set_left = -1 #min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
 
+    ax[0].axhline(z_CL_r_index[0], set_left, set_right, color='k', linestyle='-.')
+    ax[1].axhline(z_CL_r_index[0], set_left, set_right, color='k', linestyle='-.')
+    ax[2].axhline(z_CL_r_index[0], set_left, set_right, color='k', linestyle='-.')
+
+    ax[0].axhline(z_CL_r_index[1], set_left, set_right, color='k', linestyle='dashed')
+    ax[1].axhline(z_CL_r_index[1], set_left, set_right, color='k', linestyle='dashed')
+    ax[2].axhline(z_CL_r_index[1], set_left, set_right, color='k', linestyle='dashed')
+
     print('for all Delta profs, min is = ', set_left, 'max is =', set_right)
 
     ax[0].set_xlim(right = set_right, left = set_left)
@@ -228,7 +236,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
     plt.close()
 
 
-def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
+def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_index, labels_in, time_in, interp=False):
 
     clock_time_int = 05.30 + int(time_in) / (60 * 60)
     clock_time = str(clock_time_int) + '0L'
@@ -260,8 +268,18 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
         ax[0].set_ylim(set_bottom, set_top)
         ax[1].set_ylim(set_bottom, set_top)
 
-        ax[0].set_xlim(-0.5, 3.5)
-        ax[1].set_xlim(-0.5, 3.5)
+        set_left = -0.5
+        set_right = 3.5
+
+        ax[0].set_xlim(set_left, set_right)
+        ax[1].set_xlim(set_left, set_right)
+
+        ax[0].axhline(z_CL_r_index[0], set_left, set_right, color='k', linestyle='-.')
+        ax[1].axhline(z_CL_r_index[0], set_left, set_right, color='k', linestyle='-.')
+
+        ax[0].axhline(z_CL_r_index[1], set_left, set_right, color='k', linestyle='dashed')
+        ax[1].axhline(z_CL_r_index[1], set_left, set_right, color='k', linestyle='dashed')
+
 
         ax[0].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
         ax[1].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
@@ -275,13 +293,14 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
         ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
         ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
 
+
         # left0, right0 = ax[0].set_xlim()
         # left1, right1 = ax[1].set_xlim()
         # left2, right2 = ax[2].set_xlim()
         #
         # set_right = max(right0, right1, right2)
-        # set_left = left0
-
+        # set_left = min
+        #
         #
         # ax[0].set_xlim(right = set_right, left = set_left)
         # ax[1].set_xlim(right = set_right, left = set_left)
@@ -297,7 +316,7 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, time_in, interp=False):
 
 
 
-def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, interp=False, C_sq_to_C = True,
+def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_index, deltas, delta_label, interp=False, C_sq_to_C = True,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
                               time_in='`14400', set_x_lim_list=[0.355, 0.355, 0.355, 0.355, 0.255, 0.07], Pr_in=True):
 
@@ -411,6 +430,14 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
         ax[1].set_xlim(right=set_right, left=set_left)
         ax[2].set_xlim(right=set_right, left=set_left)
 
+        ax[0].axhline(z_CL_r_index[0], set_left, set_right, color='k', linestyle='-.')
+        ax[1].axhline(z_CL_r_index[0], set_left, set_right, color='k', linestyle='-.')
+        ax[2].axhline(z_CL_r_index[0], set_left, set_right, color='k', linestyle='-.')
+
+        ax[0].axhline(z_CL_r_index[1], set_left, set_right, color='k', linestyle='dashed')
+        ax[1].axhline(z_CL_r_index[1], set_left, set_right, color='k', linestyle='dashed')
+        ax[2].axhline(z_CL_r_index[1], set_left, set_right, color='k', linestyle='dashed')
+
         print('deltas[it] =', deltas[it])
 
         plt.tight_layout()
@@ -464,6 +491,12 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 
             ax[0].set_xlim(-0.5, 3.5)
             ax[1].set_xlim(-0.5, 3.5)
+
+            ax[0].axhline(z_CL_r_index[0], -0.5, 3.5, color='k', linestyle='-.')
+            ax[1].axhline(z_CL_r_index[0], -0.5, 3.5, color='k', linestyle='-.')
+
+            ax[0].axhline(z_CL_r_index[1], -0.5, 3.5, color='k', linestyle='dashed')
+            ax[1].axhline(z_CL_r_index[1], -0.5, 3.5, color='k', linestyle='dashed')
 
             ax[0].set_xticks([-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5])
             ax[1].set_xticks([-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5])
@@ -945,13 +978,13 @@ for itr, time_stamp in enumerate(set_time):
 
     ########################################################################################################################
 
-    z_ML_ind, z_cl_range_calc, zn_arr = calc_z_ML_and_CL(prof_file)
-    z_ML = zn_set[z_ML_ind]
+    z_ML_index, z_cl_range_calc, zn_arr = calc_z_ML_and_CL(prof_file)
+    z_ML = zn_set[z_ML_index]
 
     # print('zn_set = ', zn_set)
     # print('zn_arr = ', zn_arr)
 
-    z_ml_range_calc = [z_ML_bottom, z_ML_ind]
+    z_ml_range_calc = [z_ML_bottom, z_ML_index]
 
 
 
