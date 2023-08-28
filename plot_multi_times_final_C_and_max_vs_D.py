@@ -994,12 +994,12 @@ for itr, time_stamp in enumerate(set_time):
 
     #plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, interp=True, C_sq_to_C = True)
     print('shape of Cs_sq being fed into fn:', np.shape(Cs_sq))
-    plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels,
+    plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range, labels_in=set_labels,
                       C_sq_to_C = True, time_in=time_stamp)
 
     print('saved C plots to ', plotdir)
 
-    plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels, time_in=time_stamp)
+    plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range, labels_in=set_labels, time_in=time_stamp)
 
 
 
@@ -1026,7 +1026,7 @@ for itr, time_stamp in enumerate(set_time):
     #                           deltas = deltas_in, delta_label = set_labels, interp=False, C_sq_to_C = False)
 
     #plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = True)
-    plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
+    plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML, z_cl_range,
                               deltas = deltas_in, delta_label = set_labels, interp=False,
                               C_sq_to_C = True, time_in=time_stamp, set_x_lim_list=x_lim_list)
 
