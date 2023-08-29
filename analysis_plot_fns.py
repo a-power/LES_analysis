@@ -418,7 +418,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
 
                 print('length of time array for HR_qt is ',
-                      len(data_set['f(HR_q_total_field_on_p)_r'].data[:, 0, 0, 0]))
+                      len(data_set['f(HR_q_total_f_field_on_p)_r'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
                     if x_or_y == 'x':
                         HR_field = np.mean(data_set['f(HR_q_total_f_field_on_p)_r'].data[:, axis_set, ...], axis=0)
