@@ -30,6 +30,9 @@ if case =='BOMEX':
     plotdir_in = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/fields_contour/standard_cb/'
 
     Dx_grid = 20
+    time_av_or_not = np.array([0, 1, 2])
+    #0, 1, 2 #'yes' (in the array)
+    # #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
 
 elif case == 'ARM':
     homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/'
@@ -39,6 +42,9 @@ elif case == 'ARM':
     plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/ARM/plots/fields_contour/{set_time}/'
 
     Dx_grid = 25
+    time_av_or_not = np.array([0, 1])
+    #0, 1 #'yes' (in the array)
+    # #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
 
 else:
     print("case isn't yet coded for")
@@ -57,7 +63,7 @@ x_axis_start_end = [x_start, x_end] #start and end points in km
 
 set_cb_in = [[0.16, 0.30], [-0.1, 0.1]] #C_min, C_max, C^2_min, C^2_max = [[None, None], [None, None]]
 
-time_av_or_not = np.array([0, 1, 2]) #0, 1, 2 #'yes' (in the array) #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
+
 
 
 

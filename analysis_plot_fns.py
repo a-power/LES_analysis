@@ -311,6 +311,8 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
 def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, contour_field_in, t_av_or_not,
               start_end, set_percentile_C2=None, deltas=None, set_cb=[[None, None], [None, None]], delta_grid=25):
 
+    print('starting to plot field: ', field)
+
     myvmin_C = set_cb[0][0]
     myvmax_C = set_cb[0][1]
 
@@ -359,7 +361,9 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
         for t_set in t_av_or_not:
             if field == 'Cs_field':
+                print('opening dataset ', data_field_in, f'{deltas[i]}_running_mean_filter_rm00.nc')
                 data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
+                print('successfully opened dataset')
 
                 print('length of time array for LM is ', len(data_set['f(LM_field_on_p)_r'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
@@ -384,6 +388,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 data_field_sq = 0.5 * LM_field / MM_field
                 data_field = dyn.get_Cs(data_field_sq)
 
+                print('successfully calculated Cs^2')
+
             elif field == 'Cth_field':
                 data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
 
@@ -405,6 +411,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
                 data_field_sq = 0.5 * HR_field / RR_field
                 data_field = dyn.get_Cs(data_field_sq)
+
+                print('successfully calculated C_th^2')
 
             elif field == 'Cqt_field':
                 data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
@@ -431,6 +439,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 data_field_sq = 0.5 * HR_field / RR_field
                 data_field = dyn.get_Cs(data_field_sq)
 
+                print('successfully calculated C_qt^2')
+
             else:
                 print(f'length of time array for {field} is ', len(data_set[f'f({field}_on_p)_r'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
@@ -446,8 +456,12 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
             data_set.close()
 
+            print('opening the contour dataset')
+
             contour_set = xr.open_dataset(contour_field_in +
                                           f'{CL_itr}_gaussian_filter_ga0{beta_CL_itr}_running_mean_filter_rm00.nc')
+
+            print('successfully opened contour set')
 
             print('length of time array for cloud field is ',
                   len(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, 0, 0, 0]))
@@ -481,6 +495,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 mytime = f't{t_set}'
 
             contour_set.close()
+
+            print('beginning plots')
 
             fig1, ax1 = plt.subplots(figsize=(20, 5))
             plt.title(f'{field_name} with $\\Delta = $ {deltas[i]}', fontsize=16)
