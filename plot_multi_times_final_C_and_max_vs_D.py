@@ -268,17 +268,17 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, time_in, inter
         ax[0].set_ylim(set_bottom, set_top)
         ax[1].set_ylim(set_bottom, set_top)
 
-        set_left = -0.5
-        set_right = 3.5
+        set_left_pr = -0.5
+        set_right_pr = 3.5
 
-        ax[0].set_xlim(set_left, set_right)
-        ax[1].set_xlim(set_left, set_right)
+        ax[0].set_xlim(set_left_pr, set_right_pr)
+        ax[1].set_xlim(set_left_pr, set_right_pr)
 
-        ax[0].axhline(z_CL_r_m[0]/z_i, set_left, set_right, color='k', linestyle='-.')
-        ax[1].axhline(z_CL_r_m[0]/z_i, set_left, set_right, color='k', linestyle='-.')
+        ax[0].axhline(z_CL_r_m[0]/z_i, set_left_pr, set_right_pr, color='k', linestyle='-.')
+        ax[1].axhline(z_CL_r_m[0]/z_i, set_left_pr, set_right_pr, color='k', linestyle='-.')
 
-        ax[0].axhline(z_CL_r_m[1]/z_i, set_left, set_right, color='k', linestyle='dashed')
-        ax[1].axhline(z_CL_r_m[1]/z_i, set_left, set_right, color='k', linestyle='dashed')
+        ax[0].axhline(z_CL_r_m[1]/z_i, set_left_pr, set_right_pr, color='k', linestyle='dashed')
+        ax[1].axhline(z_CL_r_m[1]/z_i, set_left_pr, set_right_pr, color='k', linestyle='dashed')
 
 
         ax[0].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
