@@ -199,13 +199,13 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, interp=False, C
         set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
         set_left = -1 #min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
 
-    ax[0].axhline(z_CL_r_m[0]/z_i, set_left, set_right, color='k', linestyle='-.')
-    ax[1].axhline(z_CL_r_m[0]/z_i, set_left, set_right, color='k', linestyle='-.')
-    ax[2].axhline(z_CL_r_m[0]/z_i, set_left, set_right, color='k', linestyle='-.')
+    ax[0].axhline(z_CL_r_m[0]/z_i, set_left, 1, color='k', linestyle='-.')
+    ax[1].axhline(z_CL_r_m[0]/z_i, set_left, 1, color='k', linestyle='-.')
+    ax[2].axhline(z_CL_r_m[0]/z_i, set_left, 1, color='k', linestyle='-.')
 
-    ax[0].axhline(z_CL_r_m[1]/z_i, set_left, set_right, color='k', linestyle='dashed')
-    ax[1].axhline(z_CL_r_m[1]/z_i, set_left, set_right, color='k', linestyle='dashed')
-    ax[2].axhline(z_CL_r_m[1]/z_i, set_left, set_right, color='k', linestyle='dashed')
+    ax[0].axhline(z_CL_r_m[1]/z_i, set_left, 1, color='k', linestyle='dashed')
+    ax[1].axhline(z_CL_r_m[1]/z_i, set_left, 1, color='k', linestyle='dashed')
+    ax[2].axhline(z_CL_r_m[1]/z_i, set_left, 1, color='k', linestyle='dashed')
 
     print('for all Delta profs, min is = ', set_left, 'max is =', set_right)
 
@@ -432,13 +432,13 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_m, deltas, d
 
         print('C value of set right after xlim set =', set_right)
 
-        ax[0].axhline(z_CL_r_m[0]/z_i, xmin=set_left, xmax=set_right, color='k', linestyle='-.')
-        ax[1].axhline(z_CL_r_m[0]/z_i, xmin=set_left, xmax=set_right, color='k', linestyle='-.')
-        ax[2].axhline(z_CL_r_m[0]/z_i, xmin=set_left, xmax=set_right, color='k', linestyle='-.')
+        ax[0].axhline(z_CL_r_m[0]/z_i, xmin=set_left, xmax=1, color='k', linestyle='-.')
+        ax[1].axhline(z_CL_r_m[0]/z_i, xmin=set_left, xmax=1, color='k', linestyle='-.')
+        ax[2].axhline(z_CL_r_m[0]/z_i, xmin=set_left, xmax=1, color='k', linestyle='-.')
 
-        ax[0].axhline(z_CL_r_m[1]/z_i, xmin=set_left, xmax=set_right, color='k', linestyle='dashed')
-        ax[1].axhline(z_CL_r_m[1]/z_i, xmin=set_left, xmax=set_right, color='k', linestyle='dashed')
-        ax[2].axhline(z_CL_r_m[1]/z_i, xmin=set_left, xmax=set_right, color='k', linestyle='dashed')
+        ax[0].axhline(z_CL_r_m[1]/z_i, xmin=set_left, xmax=1, color='k', linestyle='dashed')
+        ax[1].axhline(z_CL_r_m[1]/z_i, xmin=set_left, xmax=1, color='k', linestyle='dashed')
+        ax[2].axhline(z_CL_r_m[1]/z_i, xmin=set_left, xmax=1, color='k', linestyle='dashed')
 
         print('C value of set right after hline set =', set_right)
 
