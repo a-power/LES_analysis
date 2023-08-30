@@ -464,21 +464,21 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_m, deltas, d
 
         if Pr_in == True:
 
-            fig, ax = plt.subplots(nrows=2, ncols=1, sharey=True, figsize=(4, 11))
-            fig.tight_layout(pad=0.5)
+            fig_Pr, ax_Pr = plt.subplots(nrows=2, ncols=1, sharey=True, figsize=(4, 11))
+            fig_Pr.tight_layout(pad=0.5)
 
             for nt in range(np.shape(Pr)[0]):
 
-                ax[0].plot(Pr[nt, it, :], z / z_i, color=colours[nt], label=labels_in[nt])
-                ax[1].plot(Sc[nt, it, :], z / z_i, color=colours[nt], label=labels_in[nt])
+                ax_Pr[0].plot(Pr[nt, it, :], z / z_i, color=colours[nt], label=labels_in[nt])
+                ax_Pr[1].plot(Sc[nt, it, :], z / z_i, color=colours[nt], label=labels_in[nt])
 
-            ax[0].set_xlabel('$Pr$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it] + ' at time ' + clock_time,
+            ax_Pr[0].set_xlabel('$Pr$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it] + ' at time ' + clock_time,
                              fontsize=16)
-            ax[1].set_xlabel('$Sc_{qt}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it] + ' at time ' + clock_time,
+            ax_Pr[1].set_xlabel('$Sc_{qt}$ for $\\widehat{\\bar{\\Delta}} = $' + delta_label[it] + ' at time ' + clock_time,
                              fontsize=16)
 
-            ax[0].legend(fontsize=13, loc='upper right')
-            ax[1].legend(fontsize=13, loc='upper right')
+            ax_Pr[0].legend(fontsize=13, loc='upper right')
+            ax_Pr[1].legend(fontsize=13, loc='upper right')
 
             # left0, right0 = ax[0].set_xlim()
             # left1, right1 = ax[1].set_xlim()
@@ -489,28 +489,28 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_m, deltas, d
             # ax[0].set_xlim(right=set_right, left=set_left)
             # ax[1].set_xlim(right=set_right, left=set_left)
 
-            ax[0].set_xlim(-0.5, 3.5)
-            ax[1].set_xlim(-0.5, 3.5)
+            ax_Pr[0].set_xlim(-0.5, 3.5)
+            ax_Pr[1].set_xlim(-0.5, 3.5)
 
-            ax[0].axhline(z_CL_r_m[0]/z_i, -0.5, 3.5, color='k', linestyle='-.')
-            ax[1].axhline(z_CL_r_m[0]/z_i, -0.5, 3.5, color='k', linestyle='-.')
+            ax_Pr[0].axhline(z_CL_r_m[0]/z_i, -0.5, 3.5, color='k', linestyle='-.')
+            ax_Pr[1].axhline(z_CL_r_m[0]/z_i, -0.5, 3.5, color='k', linestyle='-.')
 
-            ax[0].axhline(z_CL_r_m[1]/z_i, -0.5, 3.5, color='k', linestyle='dashed')
-            ax[1].axhline(z_CL_r_m[1]/z_i, -0.5, 3.5, color='k', linestyle='dashed')
+            ax_Pr[0].axhline(z_CL_r_m[1]/z_i, -0.5, 3.5, color='k', linestyle='dashed')
+            ax_Pr[1].axhline(z_CL_r_m[1]/z_i, -0.5, 3.5, color='k', linestyle='dashed')
 
-            ax[0].set_xticks([-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5])
-            ax[1].set_xticks([-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5])
+            ax_Pr[0].set_xticks([-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5])
+            ax_Pr[1].set_xticks([-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5])
 
-            bottom0, top0 = ax[0].set_ylim()
-            bottom1, top1 = ax[1].set_ylim()
+            bottom0, top0 = ax_Pr[0].set_ylim()
+            bottom1, top1 = ax_Pr[1].set_ylim()
             set_bottom = min(bottom0, bottom1)
             set_top = max(top0, top1)
 
-            ax[0].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
+            ax_Pr[0].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
             ax[1].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
 
-            ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
-            ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
+            ax_Pr[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
+            ax_Pr[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
 
             fig.tight_layout(pad=0.5)
 
