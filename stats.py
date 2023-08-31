@@ -8,6 +8,11 @@ from matplotlib import cm
 from matplotlib.colors import TwoSlopeNorm
 import xarray as xr
 import os
+import csv
+
+
+set_CL_r = []
+Deltas = []
 
 
 def get_masks(contour_field_in, cloud_thres, other_vars, other_var_thres,
@@ -27,6 +32,9 @@ def get_masks(contour_field_in, cloud_thres, other_vars, other_var_thres,
 
 def get_stats_for_C(dataset_in, param, ML_int, CL_int, CL_depth_int, t_in, grid,
               cloud_only_mask_in, env_only_mask_in, cloud_up_mask_in, cloud_core_mask_in):
+
+    csv_file_path = ''
+    Delta_in = ''
 
 
     if param == 'Cs':
@@ -57,7 +65,7 @@ def get_stats_for_C(dataset_in, param, ML_int, CL_int, CL_depth_int, t_in, grid,
     zn_s = zn_data.data
 
 
-    if param == 'Cs_field':
+    if param == 'Cs':
 
         if f'f(LM_field_on_{grid})_r' in data_set:
             num_field = data_set[f'f(LM_field_on_{grid})_r'].data[...]
@@ -68,7 +76,7 @@ def get_stats_for_C(dataset_in, param, ML_int, CL_int, CL_depth_int, t_in, grid,
         else:
             print('LM_field_on_{grid} not in file')
 
-    elif param == 'Cth_field':
+    elif param == 'Cth':
 
         if f'f(HR_th_field_on_{grid})_r' in data_set:
             num_field = data_set[f'f(HR_th_field_on_{grid})_r'].data[...]
@@ -80,7 +88,7 @@ def get_stats_for_C(dataset_in, param, ML_int, CL_int, CL_depth_int, t_in, grid,
             print('HR_field_on_{grid} not in file')
 
 
-    elif param == 'Cqt_field':
+    elif param == 'Cqt':
 
 
         if f'f(HR_q_total_f_field_on_{grid})_r' in data_set:
@@ -144,22 +152,62 @@ def get_stats_for_C(dataset_in, param, ML_int, CL_int, CL_depth_int, t_in, grid,
     C_partiton = [C_dom, C_ML, C_CL, C_IC, C_CU, C_CC,
                   C_sq_dom, C_sq_ML, C_sq_CL, C_sq_IC, C_sq_CU, C_sq_CC]
 
-    for it, C_in in enumerate(C_partiton):
+    partition_name = ['domain', 'ML', 'CL', 'IC', 'CU', 'CC']
+    header = ['Smagorinsky_Parameter', 'Partition_Condition', 'Layer_Range', 'Mean', 'Standard_Deviation',
+              'Median', 'Lower_Quartile', 'Upper_Quartile', 'Minimum', 'Maximum', 'Number_of_Points']
 
-        C_mean = C_in.mean()
-        C_st_dev = C_in.std()
-        C_med = C_in.median()
-        C_25 = np.percentile( C_in.compressed(), 25)
-        C_75 = np.percentile( C_in.compressed(), 75)
-        C_min = C_in.max()
-        C_max = C_in.min()
-        C_n = len( C_in.compressed() )
+    CL_range_name = str(CL_int[0]) + '_' + str(CL_int[1])
 
-        ####need to now save this data to a CSV file
+    file_csv = open(csv_file_path + f'{smag}_{times[-1]}_{t_in}_{Delta_in}_CL_{CL_range_name}', 'w')
+    C_stats = csv.writer(file_csv)
 
+    for it, C_part_in in enumerate(C_partiton):
 
-
+        if it < len(partition_name):
+            param_name = param
+        else:
+            param_name = param+'_sq'
 
 
+        if C_part_in == 'CL':
+            range_str = str(CL_depth_int[0]) + '_' + str(CL_depth_int[1])
+
+        elif C_part_in == 'IC' or C_part_in == 'CU'  or C_part_in == 'CC':
+            range_str = str(CL_int[0]) + '_' + str(CL_int[1])
+
+        elif C_part_in == 'ML':
+            range_str = str(ML_int[0]) + '_' + str(ML_int[1])
+        else:
+            range_str = 'all_domain'
+
+
+        C_mean = C_part_in.mean()
+        C_st_dev = C_part_in.std()
+        C_med = C_part_in.median()
+        C_25 = np.percentile( C_part_in.compressed(), 25)
+        C_75 = np.percentile( C_part_in.compressed(), 75)
+        C_min = C_part_in.max()
+        C_max = C_part_in.min()
+        C_n = len( C_part_in.compressed() )
+
+        row = [param_name, partition_name[it % 6], range_str, C_mean,
+               C_st_dev, C_med, C_25, C_75, C_min, C_max, C_n]
+
+
+        C_stats.writerow(row)
+
+    file_csv.close()
+
+
+for delta, it_d in enumerate(Deltas):
+
+    cloud_only_mask, env_only_mask, cloud_up_mask, cloud_core_mask = \
+        get_masks(contour_field_in, cloud_thres, other_vars, other_var_thres, less_greater_in, and_or_in, grid)
+
+
+    for smag, it_c in enumerate(['Cs', 'Cth', 'Cqt']):
+
+        get_stats_for_C(dataset_in, param, ML_int, CL_int, CL_depth_int, t_in, grid,
+                        cloud_only_mask_in, env_only_mask_in, cloud_up_mask_in, cloud_core_mask_in)
 
 
