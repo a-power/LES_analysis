@@ -90,7 +90,7 @@ def plot_MONC_profs(file_path, times, time_stamp_in='mean'):
 
 
     if len(times) == 1:
-        fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(10, 5))
+        fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(10, 4))
     else:
         fig, ax = plt.subplots(nrows=3, ncols=len(times), sharey=False, figsize=(18,14))
 
