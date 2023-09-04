@@ -54,6 +54,7 @@ def get_cloud_wth_profs(file_path, time_stamp=-1):
     prof_data = xr.open_dataset(file_path)
 
     wth_prof_raw = prof_data['wtheta_cn_mean'].data[...]
+    th_prof_raw = prof_data['theta_mean'].data[...]
     cloud_prof_raw = prof_data['total_cloud_fraction'].data[...]
     zn_out = prof_data['zn'].data[...] # timeless parameter?
 
@@ -74,11 +75,11 @@ def get_cloud_wth_profs(file_path, time_stamp=-1):
     z_ML = zn_out[z_ML_ind]
 
 
-    return wth_prof_out, cloud_prof_out, zn_out, z_ML
+    return wth_prof_out, th_prof_raw, cloud_prof_out, zn_out, z_ML
 
 
 
-def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
+def plot_MONC_profs(file_path, times, time_stamp_in='mean'):
 
 
     colours = ['tab:red', 'black', 'tab:green', 'tab:blue', 'tab:purple',
@@ -86,22 +87,25 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
 
 
     if len(times) == 1:
-        fig, ax = plt.subplots(nrows=1, ncols=2, sharey=True, figsize=(9, 6))
+        fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(9, 6))
     else:
-        fig, ax = plt.subplots(nrows=2, ncols=len(times), sharey=False, figsize=(18,12))
+        fig, ax = plt.subplots(nrows=3, ncols=len(times), sharey=False, figsize=(18,12))
 
     fig.tight_layout(pad=0.5)
 
     setleft0 = 0
     setleft1 = 0
+    setleft2 = 0
     setright0 = 0
     setright1 = 0
+    setright2 = 0
+
 
     for it, time_in in enumerate(times):
 
-        file_in = prof_file + f'{time_in}.nc'
+        file_in = file_path + f'{time_in}.nc'
 
-        wth_prof, cloud_prof, z, z_i = get_cloud_wth_profs(file_in, time_stamp=time_stamp_in)
+        wth_prof,  th_prof, cloud_prof, z, z_i = get_cloud_wth_profs(file_in, time_stamp=time_stamp_in)
 
         clock_time_int = 05.30 + int(time_in) / (60 * 60)
         clock_time = str(clock_time_int) + '0L'
@@ -114,6 +118,9 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
 
             ax[1].plot(cloud_prof*100, z / z_i, color='black')
             ax[1].set_xlabel('cloud cover (%)', fontsize=16)
+
+            ax[2].plot(th_prof, z / z_i, color='black')
+            ax[2].set_xlabel("$ \\overline{\\theta'}$", fontsize=16)
 
         else:
             ax[0, it].plot(wth_prof, z / z_i, color='black')
@@ -136,10 +143,20 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
             if right1 > setright1:
                 setright1 = right1
 
+            ax[2, it].plot(th_prof, z / z_i, color='black')
+            ax[2, it].set_xlabel("$ \\overline{\\theta'}$ at "  + clock_time, fontsize=16)
+
+            left2, right2 = ax[0, it].set_xlim()
+            if left2 < setleft2:
+                setleft2 = left2
+            if right2 > setright2:
+                setright2 = right2
+
     if len(times) != 1:
         for itn in range(len(times)):
             ax[0, itn].set_xlim(right=setright0, left=setleft0)
             ax[1, itn].set_xlim(right=setright1, left=setleft1)
+            ax[2, itn].set_xlim(right=setright2, left=setleft2)
             ax[0, itn].set_xticks(ax[0, itn].get_xticks()[::2])
 
 
@@ -152,4 +169,4 @@ def plot_C_all_Deltas(file_path, times, time_stamp_in='mean'):
 
 
 
-plot_C_all_Deltas(prof_file, set_time)
+plot_MONC_profs(prof_file, set_time)
