@@ -61,21 +61,24 @@ def get_cloud_wth_profs(file_path, time_stamp=-1):
     if time_stamp == 'mean':
         wth_prof_out = np.mean(wth_prof_raw, 0)
         cloud_prof_out = np.mean(cloud_prof_raw, 0)
+        th_prof_out = np.mean(th_prof_raw, 0)
 
     elif time_stamp == None:
         wth_prof_out = wth_prof_raw
         cloud_prof_out = cloud_prof_raw
+        th_prof_out = th_prof_raw
 
     else:
         wth_prof_out = wth_prof_raw[time_stamp, ...]
         cloud_prof_out = cloud_prof_raw[time_stamp, ...]
+        th_prof_out = th_prof_raw[time_stamp, ...]
 
     wth_prof_list = wth_prof_out.tolist()
     z_ML_ind = wth_prof_list.index(np.min(wth_prof_out))
     z_ML = zn_out[z_ML_ind]
 
 
-    return wth_prof_out, th_prof_raw, cloud_prof_out, zn_out, z_ML
+    return wth_prof_out, th_prof_out, cloud_prof_out, zn_out, z_ML
 
 
 
