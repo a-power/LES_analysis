@@ -98,7 +98,7 @@ MijMij_options = {'field': 'MM_field',
 Cs_options = {'field': 'Cs_field',
                'data_field_in': dir_s,
               'set_percentile': in_set_percentile_C,
-              'set_percentile_C2': in_set_percentile_C2
+              'set_percentile_C_sq': in_set_percentile_C2
            }
 
 
@@ -115,7 +115,7 @@ RjRj_th_options = {'field': 'RR_th_field',
 Cth_options = {'field': 'Cth_field',
                'data_field_in': dir_th,
                'set_percentile': in_set_percentile_C,
-               'set_percentile_C2': in_set_percentile_C2
+               'set_percentile_C_sq': in_set_percentile_C2
            }
 
 
@@ -132,7 +132,7 @@ RjRj_qt_options = {'field': 'RR_q_total_field',
 Cqt_options = {'field': 'Cqt_field',
                'data_field_in': dir_qt,
                'set_percentile': in_set_percentile_C,
-               'set_percentile_C2': in_set_percentile_C2
+               'set_percentile_C_sq': in_set_percentile_C2
            }
 
 
