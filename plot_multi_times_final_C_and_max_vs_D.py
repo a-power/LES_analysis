@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import xarray as xr
 import os
 import dynamic_functions as dyn
+import numpy.ma as ma
 import argparse
 
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
@@ -265,6 +266,9 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, time_in, inter
 
         Sc[Sc > 3.45] = np.nan
         Sc[Sc < -0.45] = np.nan
+
+        Pr = ma.masked_invalid(Pr)
+        Sc = ma.masked_invalid(Sc)
 
     for it in range(len(Cs[:, 0])):
         ax[0].plot(Pr[it, :], z / z_i, color=colours[it],
