@@ -542,7 +542,7 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_m, deltas, d
             ax_Pr[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
             ax_Pr[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
 
-            fig.tight_layout(pad=0.5)
+            fig_Pr.tight_layout(pad=0.5)
 
             plt.savefig(plotdir + f'Pr_condit_prof_D={deltas[it]}{what_plotting}_time{time_in}_scaled.png',
                         bbox_inches='tight')
