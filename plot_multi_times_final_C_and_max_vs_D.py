@@ -123,7 +123,8 @@ def interp_z(var_in, z_from=z_set, z_to=zn_set):
     return interp_var
 
 
-def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, interp=False, C_sq_to_C = False, time_in='14400'):
+def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, interp=False, C_sq_to_C = False, time_in='14400',
+                      mask_spur_vals = True):
 
     clock_time_int = 05.30 + int(time_in)/(60*60)
     clock_time = str(clock_time_int)+'0L'
@@ -255,10 +256,21 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, time_in, inter
     else:
         fig, ax = plt.subplots(nrows=2, ncols=1, sharey=False, figsize=(5, 12))
 
+
+    Pr = Cs / Cth
+    Sc = Cs / Cqt
+
+    if mask_spur_vals == True:
+        Pr[Pr > 3.45] = np.nan
+        Pr[Pr < -0.45] = np.nan
+
+        Sc[Sc > 3.45] = np.nan
+        Sc[Sc < -0.45] = np.nan
+
     for it in range(len(Cs[:, 0])):
-        ax[0].plot(Cs[it, :] / Cth[it, :], z / z_i, color=colours[it],
+        ax[0].plot(Pr[it, :], z / z_i, color=colours[it],
                    label='$\\widehat{\\bar{\\Delta}} = $' + labels_in[it])
-        ax[1].plot(Cs[it, :] / Cqt[it, :], z / z_i, color=colours[it],
+        ax[1].plot(Sc[it, :], z / z_i, color=colours[it],
                    label='$\\widehat{\\bar{\\Delta}} = $' + labels_in[it])
 
         bottom0, top0 = ax[0].set_ylim()
@@ -992,6 +1004,8 @@ for itr, time_stamp in enumerate(set_time):
 
     z_ml_range_calc = [z_ML_bottom, z_ML_index]
 
+    z_cl_range_calc_m = [ zn_set[z_cl_range_calc[0]], zn_set[z_cl_range_calc[1]] ]
+
 
 
 
@@ -1000,12 +1014,12 @@ for itr, time_stamp in enumerate(set_time):
 
     #plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, interp=True, C_sq_to_C = True)
     print('shape of Cs_sq being fed into fn:', np.shape(Cs_sq))
-    plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_r_meters, labels_in=set_labels,
+    plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range_calc_m, labels_in=set_labels,
                       C_sq_to_C = True, time_in=time_stamp)
 
     print('saved C plots to ', plotdir)
 
-    plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_r_meters, labels_in=set_labels, time_in=time_stamp)
+    plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range_calc_m, labels_in=set_labels, time_in=time_stamp)
 
 
 

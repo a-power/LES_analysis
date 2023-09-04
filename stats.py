@@ -148,6 +148,8 @@ def get_stats_for_C(dataset_in, param, ML_int, CL_int, CL_depth_int, t_in, grid,
     CC_den = den_field_CC[t_in, :, :, CL_int[0] :: CL_int[1] ]
     C_sq_CC = 0.5*(CC_num / CC_den)
     C_CC = dyn.get_Cs( C_sq_CC )
+    
+
 
     C_partiton = [C_dom, C_ML, C_CL, C_IC, C_CU, C_CC,
                   C_sq_dom, C_sq_ML, C_sq_CL, C_sq_IC, C_sq_CU, C_sq_CC]
@@ -157,6 +159,8 @@ def get_stats_for_C(dataset_in, param, ML_int, CL_int, CL_depth_int, t_in, grid,
               'Median', 'Lower_Quartile', 'Upper_Quartile', 'Minimum', 'Maximum', 'Number_of_Points']
 
     CL_range_name = str(CL_int[0]) + '_' + str(CL_int[1])
+
+
 
     file_csv = open(csv_file_path + f'{smag}_{times[-1]}_{t_in}_{Delta_in}_CL_{CL_range_name}', 'w')
     C_stats = csv.writer(file_csv)
@@ -200,6 +204,7 @@ def get_stats_for_C(dataset_in, param, ML_int, CL_int, CL_depth_int, t_in, grid,
 
 
 for delta, it_d in enumerate(Deltas):
+
 
     cloud_only_mask, env_only_mask, cloud_up_mask, cloud_core_mask = \
         get_masks(contour_field_in, cloud_thres, other_vars, other_var_thres, less_greater_in, and_or_in, grid)
