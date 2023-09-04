@@ -4,6 +4,7 @@ import xarray as xr
 import os
 import dynamic_functions as dyn
 import argparse
+import numpy.ma as ma
 
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
@@ -62,6 +63,9 @@ elif case == 'BOMEX':
     z_cl_r = [33, 77]
     z_cl_r_old = [49, 73]
     # z_ml_r = [10, 22]
+
+    # z_cl_r_Bomex = [49, 73]
+    # z_ml_r_Bomex = [10, 22]
 
     z_ML_bottom = 10
 
@@ -310,15 +314,18 @@ else:
 ########################################################################################################################
 
 
-
-
-z_ML_ind, z_cl_range, zn_arr = calc_z_ML_and_CL(prof_file)
-z_ML = zn_set[z_ML_ind]
+z_ML_index, z_cl_range_calc, zn_arr = calc_z_ML_and_CL(prof_file)
+z_ML = zn_set[z_ML_index]
 
 # print('zn_set = ', zn_set)
 # print('zn_arr = ', zn_arr)
 
-z_ml_r = [z_ML_bottom, z_ML_ind]
+z_cl_r_set_m = [ zn_set[z_cl_r[0]],  zn_set[z_cl_r[1]] ]
+
+z_cl_range_calc_m = [ zn_set[z_cl_range_calc[0]], zn_set[z_cl_range_calc[1]] ]
+
+z_ML = zn_set[z_ML_index]
+z_ml_r = [z_ML_bottom, z_ML_index]
 
 
 
@@ -334,7 +341,7 @@ def interp_z(var_in, z_from=z_set, z_to=zn_set):
     return interp_var
 
 
-def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C = False):
+def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, interp=False, C_sq_to_C = False):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -412,6 +419,14 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
     ax[1].set_xlim(right = set_right, left = set_left)
     ax[2].set_xlim(right = set_right, left = set_left)
 
+    ax[0].axhline(z_CL_r_m[0]/z_i, set_left, 1, color='k', linestyle='-.')
+    ax[1].axhline(z_CL_r_m[0]/z_i, set_left, 1, color='k', linestyle='-.')
+    ax[2].axhline(z_CL_r_m[0]/z_i, set_left, 1, color='k', linestyle='-.')
+
+    ax[0].axhline(z_CL_r_m[1]/z_i, set_left, 1, color='k', linestyle='dashed')
+    ax[1].axhline(z_CL_r_m[1]/z_i, set_left, 1, color='k', linestyle='dashed')
+    ax[2].axhline(z_CL_r_m[1]/z_i, set_left, 1, color='k', linestyle='dashed')
+
     if interp==True:
         ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
         plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}prof_scaled_interp_z.pdf', bbox_inches='tight')
@@ -426,7 +441,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, labels_in, interp=False, C_sq_to_C =
 
 #plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, interp=True, C_sq_to_C = True)
 print('shape of Cs_sq being fed into fn:', np.shape(Cs_sq))
-plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels, C_sq_to_C = True)
+plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range_calc_m, labels_in=set_labels, C_sq_to_C = True)
 
 print('saved C plots to ', plotdir)
 
@@ -438,7 +453,7 @@ print('saved C plots to ', plotdir)
 
 
 
-def plot_Pr_all_Deltas(Cs_sq_in, Cth_sq_in, Cqt_sq_in, z, z_i, labels_in, interp=False):
+def plot_Pr_all_Deltas(Cs_sq_in, Cth_sq_in, Cqt_sq_in, z, z_i, z_CL_r_m, labels_in, mask_spur_vals = True, interp=False):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -454,11 +469,24 @@ def plot_Pr_all_Deltas(Cs_sq_in, Cth_sq_in, Cqt_sq_in, z, z_i, labels_in, interp
     else:
         fig, ax = plt.subplots(nrows=2, ncols=1, sharey=False, figsize=(5,12))
 
+    Pr = Cs_sq_in / Cth_sq_in
+    Sc = Cs_sq_in / Cqt_sq_in
+
+    if mask_spur_vals == True:
+        Pr[Pr > 3.45] = np.nan
+        Pr[Pr < -0.45] = np.nan
+
+        Sc[Sc > 3.45] = np.nan
+        Sc[Sc < -0.45] = np.nan
+
+        Pr = ma.masked_invalid(Pr)
+        Sc = ma.masked_invalid(Sc)
+
     for it in range(len(Cs_sq_in[:,0])):
 
-        ax[0].plot(Cs_sq_in[it,:] / Cth_sq_in[it, :], z/z_i, color=colours[it],
+        ax[0].plot(Pr[it,:], z/z_i, color=colours[it],
                    label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
-        ax[1].plot(Cs_sq_in[it,:] / Cqt_sq_in[it, :], z/z_i, color=colours[it],
+        ax[1].plot(Sc[it,:], z/z_i, color=colours[it],
                    label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
 
         bottom0, top0 = ax[0].set_ylim()
@@ -470,6 +498,18 @@ def plot_Pr_all_Deltas(Cs_sq_in, Cth_sq_in, Cqt_sq_in, z, z_i, labels_in, interp
 
         ax[0].set_xlim(-0.5, 3.5)
         ax[1].set_xlim(-0.5, 3.5)
+
+        set_left_pr = -0.5
+        set_right_pr = 3.5
+
+        ax[0].set_xlim(set_left_pr, set_right_pr)
+        ax[1].set_xlim(set_left_pr, set_right_pr)
+
+        ax[0].axhline(z_CL_r_m[0]/z_i, set_left_pr, set_right_pr, color='k', linestyle='-.')
+        ax[1].axhline(z_CL_r_m[0]/z_i, set_left_pr, set_right_pr, color='k', linestyle='-.')
+
+        ax[0].axhline(z_CL_r_m[1]/z_i, set_left_pr, set_right_pr, color='k', linestyle='dashed')
+        ax[1].axhline(z_CL_r_m[1]/z_i, set_left_pr, set_right_pr, color='k', linestyle='dashed')
 
         ax[0].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
         ax[1].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
@@ -508,7 +548,7 @@ def plot_Pr_all_Deltas(Cs_sq_in, Cth_sq_in, Cqt_sq_in, z, z_i, labels_in, interp
 
 
 
-plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, labels_in=set_labels)
+plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range_calc_m, labels_in=set_labels)
 
 
 #################################################################################
@@ -526,8 +566,9 @@ np.save('Cs_sq_cond.npy', Cs_sq_cond)
 np.save('Cth_sq_cond.npy', Cth_sq_cond)
 np.save('Cqt_sq_cond.npy', Cqt_sq_cond)
 
-def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label, interp=False, C_sq_to_C = True,
-                      labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'], Pr_in=True):
+def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_m, deltas, delta_label, interp=False,
+                              C_sq_to_C = True, Pr_in=True, mask_spur_vals = True,
+                              labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core']):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -544,6 +585,16 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
     if Pr_in == True:
         Pr = Cs_in/Cth_in # not C here actually denotes C^2
         Sc = Cs_in/Cqt_in
+
+        if mask_spur_vals == True:
+            Pr[Pr > 3.45] = np.nan
+            Pr[Pr < -0.45] = np.nan
+
+            Sc[Sc > 3.45] = np.nan
+            Sc[Sc < -0.45] = np.nan
+
+            Pr = ma.masked_invalid(Pr)
+            Sc = ma.masked_invalid(Sc)
 
     print('np.shape(Cs_in)[1] = ', np.shape(Cs_in)[1])
     for it in range(np.shape(Cs_in)[1]):
@@ -634,6 +685,14 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
         ax[1].set_xlim(right=set_right, left=set_left)
         ax[2].set_xlim(right=set_right, left=set_left)
 
+        ax[0].axhline(z_CL_r_m[0] / z_i, xmin=set_left, xmax=1, color='k', linestyle='-.')
+        ax[1].axhline(z_CL_r_m[0] / z_i, xmin=set_left, xmax=1, color='k', linestyle='-.')
+        ax[2].axhline(z_CL_r_m[0] / z_i, xmin=set_left, xmax=1, color='k', linestyle='-.')
+
+        ax[0].axhline(z_CL_r_m[1] / z_i, xmin=set_left, xmax=1, color='k', linestyle='dashed')
+        ax[1].axhline(z_CL_r_m[1] / z_i, xmin=set_left, xmax=1, color='k', linestyle='dashed')
+        ax[2].axhline(z_CL_r_m[1] / z_i, xmin=set_left, xmax=1, color='k', linestyle='dashed')
+
         print('deltas[it] =', deltas[it])
 
         fig.tight_layout(pad=0.5)
@@ -686,6 +745,12 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
             ax[0].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
             ax[1].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
 
+            ax[0].axhline(z_CL_r_m[0] / z_i, xmin=set_left, xmax=1, color='k', linestyle='-.')
+            ax[1].axhline(z_CL_r_m[0] / z_i, xmin=set_left, xmax=1, color='k', linestyle='-.')
+
+            ax[0].axhline(z_CL_r_m[1] / z_i, xmin=set_left, xmax=1, color='k', linestyle='dashed')
+            ax[1].axhline(z_CL_r_m[1] / z_i, xmin=set_left, xmax=1, color='k', linestyle='dashed')
+
             ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
             # ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(z_i) + "m)", fontsize=16)
 
@@ -702,7 +767,9 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, deltas, delta_label
 #                           deltas = deltas_in, delta_label = set_labels, interp=False, C_sq_to_C = False)
 
 #plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = True)
-plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML,
+
+
+plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML, z_cl_r_set_m,
                           deltas = deltas_in, delta_label = set_labels, interp=False, C_sq_to_C = True)
 
 
