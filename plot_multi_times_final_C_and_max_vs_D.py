@@ -123,8 +123,7 @@ def interp_z(var_in, z_from=z_set, z_to=zn_set):
     return interp_var
 
 
-def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, interp=False, C_sq_to_C = False, time_in='14400',
-                      mask_spur_vals = True):
+def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, interp=False, C_sq_to_C = False, time_in='14400'):
 
     clock_time_int = 05.30 + int(time_in)/(60*60)
     clock_time = str(clock_time_int)+'0L'
@@ -237,7 +236,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, interp=False, C
     plt.close()
 
 
-def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, time_in, interp=False):
+def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, time_in, interp=False, mask_spur_vals = True):
 
     clock_time_int = 05.30 + int(time_in) / (60 * 60)
     clock_time = str(clock_time_int) + '0L'
