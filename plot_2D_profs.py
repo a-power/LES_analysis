@@ -98,7 +98,7 @@ def plot_MONC_profs(file_path, times, time_stamp_in='mean'):
 
     setleft0 = 0
     setleft1 = 0
-    setleft2 = 0
+    setleft2 = 300
     setright0 = 0
     setright1 = 0
     setright2 = 0
