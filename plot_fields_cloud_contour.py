@@ -31,6 +31,8 @@ if case =='BOMEX':
 
     Dx_grid = 20
     time_av_or_not = np.array([0, 1, 2])
+    z_tix = np.linspace(0, 101, 5)
+    z_labels = np.linspace(0, 2, 5)
     #0, 1, 2 #'yes' (in the array)
     # #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
 
@@ -40,6 +42,9 @@ elif case == 'ARM':
     contour_data = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_ga0"
 
     plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/ARM/plots/fields_contour/{set_time}/'
+
+    z_tix = np.linspace(0, 250, 6)
+    z_labels = np.linspace(0, 2.5, 6)
 
     Dx_grid = 25
     time_av_or_not = np.array([0, 1])
@@ -75,7 +80,9 @@ general_options = {'set_cb': set_cb_in,
                     'plot_dir': plotdir_in,
                     'start_end': x_axis_start_end,
                     'deltas': Deltas,
-                    'delta_grid': Dx_grid
+                    'delta_grid': Dx_grid,
+                    'z_tix_in': z_tix,
+                    'z_labels_in': z_labels
                     }
 
 LijMij_options = {'field': 'LM_field',

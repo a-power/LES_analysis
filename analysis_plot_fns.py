@@ -309,10 +309,11 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
 
 
 def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, contour_field_in, t_av_or_not,
-              start_end, set_percentile_C_sq=None, deltas=None, set_cb=[[None, None], [None, None]], delta_grid=25,
-              cl_top_perc=150):
+              start_end, z_tix_in, z_labels_in, set_percentile_C_sq=None, deltas=None, set_cb=[[None, None], [None, None]],
+              delta_grid=25, cl_top_perc=150):
 
     print('starting to plot field: ', field)
+
 
     myvmin_C = set_cb[0][0]
     myvmax_C = set_cb[0][1]
@@ -533,13 +534,13 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1, levels=[0.1])
             plt.xlabel(f'x (cross section with {x_or_y} = {axis_set*delta_grid/1000}km) (km)', fontsize=16)
 
-            plt.ylabel("z", fontsize=16)
+            plt.ylabel("z (km)", fontsize=16)
             og_xtic = plt.xticks()
             plt.xticks(og_xtic[0], np.round(np.linspace(start, end, len(og_xtic[0])), 1))
             # ax1.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 
             og_ytic = plt.yticks()
-            #plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))  # plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
+            plt.yticks(z_tix_in, z_labels_in)  # plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
 
             plt.savefig(plot_dir + f'{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}_start_{start}_end_{end}.pdf',
                         bbox_inches='tight')
@@ -585,8 +586,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 # ax2.set_xticks(np.linspace(start, end, len(og_xtic[0])))
                 # ax2.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
                 # og_ytic = plt.yticks()
-                #plt.yticks(np.linspace(0, 101, 5), np.linspace(0, 2, 5))#plt.yticks(np.linspace(0, 151, 7), np.linspace(0, 3, 7))
-                plt.ylabel("z", fontsize=16)
+                plt.yticks(z_tix_in, z_labels_in)#plt.yticks(np.linspace(0, 151, 7), np.linspace(0, 3, 7))
+                plt.ylabel("z (km)", fontsize=16)
                 plt.savefig(plot_dir + f'{field}_sq_{deltas[i]}_{mytime}_{x_or_y}={axis_set}_start_{start}_end_{end}.pdf',
                             bbox_inches='tight')
                 plt.clf()
