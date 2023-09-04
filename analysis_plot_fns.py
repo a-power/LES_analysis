@@ -309,7 +309,7 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
 
 
 def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, contour_field_in, t_av_or_not,
-              start_end, set_percentile_C2=None, deltas=None, set_cb=[[None, None], [None, None]], delta_grid=25,
+              start_end, set_percentile_C_sq=None, deltas=None, set_cb=[[None, None], [None, None]], delta_grid=25,
               cl_top_perc=150):
 
     print('starting to plot field: ', field)
@@ -553,12 +553,12 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                     myvmin = myvmin_C_sq
                     myvmax = myvmax_C_sq
                 else:
-                    if set_percentile_C2[0] == 'min':
+                    if set_percentile_C_sq[0] == 'min':
                         myvmin_temp = np.min(data_field_sq[start_grid:end_grid, 5:cl_top_perc])
                         myvmin = myvmin_temp + abs(0.6*myvmin_temp)
                     else:
-                        myvmin = np.percentile(data_field_sq[start_grid:end_grid, 5:cl_top_perc], set_percentile_C2[0])
-                    myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:cl_top_perc], set_percentile_C2[1])
+                        myvmin = np.percentile(data_field_sq[start_grid:end_grid, 5:cl_top_perc], set_percentile_C_sq[0])
+                    myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:cl_top_perc], set_percentile_C_sq[1])
 
                 mylevels = np.linspace(myvmin, myvmax, 8)
 

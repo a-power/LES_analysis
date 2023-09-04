@@ -9,7 +9,7 @@ parser.add_argument('--times', type=str, default='32400')
 parser.add_argument('--x_y', type=str, default='y')
 parser.add_argument('--axis', type=str, default=300)
 parser.add_argument('--x_s', type=float, default=0)
-parser.add_argument('--x_e', type=float, default=19.6)
+parser.add_argument('--x_e', type=float, default=19.2)
 args = parser.parse_args()
 case = args.case_in
 set_time = args.times
@@ -61,7 +61,7 @@ in_set_percentile_C2 = ['min',99] #note that the first entry of this can be 'min
 
 x_axis_start_end = [x_start, x_end] #start and end points in km
 
-set_cb_in = [[0.16, 0.30], [-0.1, 0.1]] #C_min, C_max, C^2_min, C^2_max = [[None, None], [None, None]]
+set_cb_in = [[None, None], [None, None]] #[[0.16, 0.30], [-0.1, 0.1]] #C_min, C_max, C^2_min, C^2_max
 
 
 
