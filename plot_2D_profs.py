@@ -149,7 +149,7 @@ def plot_MONC_profs(file_path, times, time_stamp_in='mean'):
             ax[2, it].plot(th_prof, z / z_i, color='black')
             ax[2, it].set_xlabel("$ \\overline{\\theta'}$ at "  + clock_time, fontsize=16)
 
-            left2, right2 = ax[0, it].set_xlim()
+            left2, right2 = ax[2, it].set_xlim()
             if left2 < setleft2:
                 setleft2 = left2
             if right2 > setright2:
