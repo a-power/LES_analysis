@@ -333,7 +333,8 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, time_in, inter
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_m, deltas, delta_label, interp=False, C_sq_to_C = True,
                       labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
-                              time_in='`14400', set_x_lim_list=[0.355, 0.355, 0.355, 0.355, 0.255, 0.07], Pr_in=True):
+                              time_in='`14400', set_x_lim_list=[0.355, 0.355, 0.355, 0.355, 0.255, 0.07], Pr_in=True,
+                              mask_spur_vals = True):
 
 
     clock_time_int = 05.30 + int(time_in)/(60*60)
@@ -354,6 +355,16 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_m, deltas, d
     if Pr_in == True:
         Pr = Cs_in/Cth_in # not C here actually denotes C^2
         Sc = Cs_in/Cqt_in
+
+        if mask_spur_vals == True:
+            Pr[Pr > 3.45] = np.nan
+            Pr[Pr < -0.45] = np.nan
+
+            Sc[Sc > 3.45] = np.nan
+            Sc[Sc < -0.45] = np.nan
+
+            Pr = ma.masked_invalid(Pr)
+            Sc = ma.masked_invalid(Sc)
 
     print('np.shape(Cs_in)[1] = ', np.shape(Cs_in)[1])
     for it in range(np.shape(Cs_in)[1]): #loop over Deltas
