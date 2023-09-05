@@ -317,7 +317,7 @@ else:
 z_ML_index, z_cl_range_calc, zn_arr = calc_z_ML_and_CL(prof_file)
 z_ML = zn_set[z_ML_index]
 
-# print('zn_set = ', zn_set)
+print('z index for CL calc = ', z_cl_range_calc)
 # print('zn_arr = ', zn_arr)
 
 z_cl_r_set_m = [ zn_set[z_cl_r[0]],  zn_set[z_cl_r[1]] ]
