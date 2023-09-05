@@ -1,14 +1,14 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import dynamic_functions as dyn
 import mask_cloud_vs_env as clo
 import numpy.ma as ma
 import dynamic_functions as dyn
-from matplotlib import cm
-from matplotlib.colors import TwoSlopeNorm
 import xarray as xr
 import os
 import csv
+import argparse
+
+parser = argparse.ArgumentParser()
+
 parser.add_argument('--case_in', type=str, default='ARM')
 parser.add_argument('--time_it', type=str, default='0')
 
@@ -16,13 +16,12 @@ args = parser.parse_args()
 case = args.case_in
 
 mygrid = 'p'
-set_CL_r = []
 Deltas = ['0', '1', '2', '3', '4', '5']
 beta_filt_num = ['0']
 
 if case == 'BOMEX':
     data_path = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_data/smoothed_LM_HR_fields/'
-    times_analysed = [ '18000', '25200', '32400', '39600' ]
+    times_analysed = [ '14400' ]
     set_time = times_analysed[args.time_it]
     file_name = f'BOMEX_m0020_g0800_all_{set_time}_gaussian_filter_'
 
@@ -39,7 +38,7 @@ if case == 'BOMEX':
 
 if case == 'ARM':
     data_path = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/'
-    times_analysed = [ '14400' ]
+    times_analysed = [ '18000', '25200', '32400', '39600' ]
     set_time = times_analysed[args.time_it]
     file_name = f'diagnostics_3d_ts_{set_time}_gaussian_filter_'
 
@@ -128,6 +127,8 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
               cloud_only_mask_in, env_only_mask_in, cloud_up_mask_in, cloud_core_mask_in, grid=mygrid):
 
     csv_file_path = dataset_path + 'stats/'
+    os.makedirs(csv_file_path, exist_ok=True)
+
     dataset_in = dataset_path + file_name_in + param + '_' + Delta_in + '_' + beta_filt + '_running_mean_filter_rm00.nc'
 
 
