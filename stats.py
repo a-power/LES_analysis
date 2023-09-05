@@ -43,7 +43,13 @@ if case == 'ARM':
     file_name = f'diagnostics_3d_ts_{set_time}_gaussian_filter_'
 
     zn_set = np.arange(0, 4410, 10)
-    z_ML_bottom = 10
+    z_ML_bottom = 20
+
+    z_cl_r_ind_set_list = [ [87, 110], [102, 150], [115, 200], [130, 230] ] #z_cl_range_calc
+    z_ml_r_ind_list = [ [20, 75], [20, 80], [20, 85], [20, 90] ]
+
+    z_cl_r_ind_set = z_cl_r_ind_set_list[args.time_it]
+    z_ml_r_ind_set = z_ml_r_ind_list[args.time_it]
 
     profiles_dir = f'/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_{set_time}.nc'
 
