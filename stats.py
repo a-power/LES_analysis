@@ -10,7 +10,7 @@ import argparse
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--case_in', type=str, default='ARM')
-parser.add_argument('--time_it', type=str, default='0')
+parser.add_argument('--time_it', type=int, default=0)
 
 args = parser.parse_args()
 case = args.case_in
