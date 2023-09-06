@@ -43,6 +43,7 @@ elif case == 'ARM':
 
     plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/ARM/plots/fields_contour/{set_time}/'
 
+    z_top = 250
     z_tix = np.linspace(0, 250, 6)
     z_labels = np.linspace(0, 2.5, 6)
 
@@ -81,6 +82,7 @@ general_options = {'set_cb': set_cb_in,
                     'start_end': x_axis_start_end,
                     'deltas': Deltas,
                     'delta_grid': Dx_grid,
+                    'z_top_in': z_top,
                     'z_tix_in': z_tix,
                     'z_labels_in': z_labels
                     }
