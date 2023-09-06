@@ -301,13 +301,13 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
             range_str = 'all_domain'
 
 
-        C_mean = C_part_in.mean()
-        C_st_dev = C_part_in.std()
-        C_med = C_part_in.median()
+        C_mean = np.mean(C_part_in)
+        C_st_dev = np.std(C_part_in)
+        C_med = np.median(C_part_in)
         C_25 = np.percentile( C_part_in.compressed(), 25)
         C_75 = np.percentile( C_part_in.compressed(), 75)
-        C_min = C_part_in.max()
-        C_max = C_part_in.min()
+        C_min = np.max(C_part_in)
+        C_max = np.min(C_part_in)
         C_n = len( C_part_in.compressed() )
 
         row = [param_name, partition_name[it % 6], range_str, C_mean,
