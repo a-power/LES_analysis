@@ -135,8 +135,7 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
     csv_file_path = dataset_path + 'stats/'
     os.makedirs(csv_file_path, exist_ok=True)
 
-    dataset_in = dataset_path + file_name_in + param + '_' + str(Delta_in) + '_' + str(beta_filt) + \
-                 '_running_mean_filter_rm00.nc'
+    dataset_in = str(dataset_path)+str(file_name_in)+str(param)+'_'+str(Delta_in)+'_'+str(beta_filt)+'_running_mean_filter_rm00.nc'
 
 
     if param == 'Cs':
@@ -266,7 +265,7 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
     header = ['Smagorinsky_Parameter', 'Partition_Condition', 'Layer_Range', 'Mean', 'Standard_Deviation',
               'Median', 'Lower_Quartile', 'Upper_Quartile', 'Minimum', 'Maximum', 'Number_of_Points']
 
-    CL_range_name = str(CL_depth_int_set[0]) + '_' + str(CL_depth_int_set[1])
+    CL_range_name = str(CL_depth_int_set[0])+'_'+str(CL_depth_int_set[1])
 
 
     print('times[-1] =', times[-1])
