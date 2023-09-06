@@ -135,8 +135,15 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
     csv_file_path = dataset_path + 'stats/'
     os.makedirs(csv_file_path, exist_ok=True)
 
+    print('dataset_path = ', dataset_path)
+    print('file_name_in = ', file_name_in)
+    print('param = ', param)
+    print('Delta_in = ', Delta_in)
+    print('beta_filt = ', beta_filt)
+
     dataset_in = str(dataset_path)+str(file_name_in)+str(param)+'_'+str(Delta_in)+'_'+str(beta_filt)+'_running_mean_filter_rm00.nc'
 
+    print('dataset_in = ', dataset_in)
 
     if param == 'Cs':
         field_name = '$C_s$'
