@@ -311,8 +311,8 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
     file_csv.close()
 
 
-for delta, it_d in enumerate(Deltas):
-    for beta_in, it_b in enumerate(beta_filt_num):
+for it_d, delta in enumerate(Deltas):
+    for it_b, beta_in in enumerate(beta_filt_num):
 
 
         cloud_only_mask, env_only_mask, cloud_up_mask, cloud_core_mask = \
