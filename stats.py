@@ -145,17 +145,17 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
 
     print('dataset_in = ', dataset_in)
 
-    if param == 'Cs':
-        field_name = '$C_s$'
-        field_name_sq = '$C_s^2$'
-
-    elif param == 'C_th':
-        field_name = '$C_{\\theta}$'
-        field_name_sq = '$C_{\\theta}^2$'
-
-    elif param == 'C_qt':
-        field_name = '$C_{qt}$'
-        field_name_sq = '$C_{qt}^2$'
+    # if param == 'Cs':
+    #     field_name = '$C_s$'
+    #     field_name_sq = '$C_s^2$'
+    #
+    # elif param == 'C_th':
+    #     field_name = '$C_{\\theta}$'
+    #     field_name_sq = '$C_{\\theta}^2$'
+    #
+    # elif param == 'C_qt':
+    #     field_name = '$C_{qt}$'
+    #     field_name_sq = '$C_{qt}^2$'
 
 
     data_set = xr.open_dataset(dataset_in)
@@ -327,7 +327,7 @@ for it_d, delta in enumerate(Deltas):
             get_masks(data_path, file_name, delta, beta_in, **mask_options)
 
 
-        for smag, it_c in enumerate(['Cs', 'C_th', 'C_qt']):
+        for it_c, smag in enumerate(['Cs', 'C_th', 'C_qt']):
 
             get_stats_for_C(data_path, file_name, delta, beta_in, smag, z_ML_r_ind, z_cl_r_ind_calc, z_cl_r_ind_set,
                             cloud_only_mask, env_only_mask, cloud_up_mask, cloud_core_mask)
