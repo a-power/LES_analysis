@@ -135,7 +135,8 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
     csv_file_path = dataset_path + 'stats/'
     os.makedirs(csv_file_path, exist_ok=True)
 
-    dataset_in = dataset_path + file_name_in + param + '_' + Delta_in + '_' + beta_filt + '_running_mean_filter_rm00.nc'
+    dataset_in = dataset_path + file_name_in + param + '_' + str(Delta_in) + '_' + str(beta_filt) + \
+                 '_running_mean_filter_rm00.nc'
 
 
     if param == 'Cs':
@@ -155,6 +156,7 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
 
     time_data = data_set['time']
     times = time_data.data
+    print('times = ', times)
     nt = len(times)
     x_data = data_set['x_p']
     x_s = x_data.data
@@ -267,8 +269,8 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
     CL_range_name = str(CL_depth_int_set[0]) + '_' + str(CL_depth_int_set[1])
 
 
-
-    file_csv = open(csv_file_path + f'{smag}_{times[-1]}_delta_{Delta_in}_CL_{CL_range_name}', 'w')
+    print('times[-1] =', times[-1])
+    file_csv = open(csv_file_path + f'{smag}_{str(times[-1])}_delta_{str(Delta_in)}_CL_{CL_range_name}', 'w')
     C_stats = csv.writer(file_csv)
 
     for it, C_part_in in enumerate(C_partiton):
