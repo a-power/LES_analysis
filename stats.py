@@ -276,7 +276,7 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
 
 
     print('times[-1] =', times[-1])
-    file_csv = open(csv_file_path + f'{smag}_{str(times[-1])}_delta_{str(Delta_in)}_CL_{CL_range_name}', 'w')
+    file_csv = open(csv_file_path + f'{smag}_{str(int(times[-1]))}_delta_{str(Delta_in)}_CL_{CL_range_name}', 'w')
     C_stats = csv.writer(file_csv)
 
     for it, C_part_in in enumerate(C_partiton):
@@ -290,7 +290,8 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
         if partition_name[it % len(partition_name)] == 'CL_set':
             range_str = str(CL_depth_int_set[0]) + '_' + str(CL_depth_int_set[1])
 
-        elif partition_name[it % len(partition_name)] == 'IC' or partition_name[it] == 'CU'  or partition_name[it] == 'CC' \
+        elif partition_name[it % len(partition_name)] == 'IC' or partition_name[it  % len(partition_name)] == 'CU'  \
+                or partition_name[it  % len(partition_name)] == 'CC' \
                 or partition_name[it % len(partition_name)] == 'CL_calc':
             range_str = str(CL_depth_int_calc[0]) + '_' + str(CL_depth_int_calc[1])
 
@@ -306,7 +307,8 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
         C_min = np.max(C_part_in)
         C_max = np.min(C_part_in)
 
-        if partition_name[it % len(partition_name)] == 'ML' or partition_name[it % len(partition_name)] == 'IC' or partition_name[it % len(partition_name)] == 'CU' or partition_name[it % len(partition_name)] == 'CC':
+        if partition_name[it % len(partition_name)] == 'ML' or partition_name[it % len(partition_name)] == 'IC' \
+                or partition_name[it % len(partition_name)] == 'CU' or partition_name[it % len(partition_name)] == 'CC':
 
             C_25 = np.percentile( C_part_in.compressed(), 25)
             C_75 = np.percentile( C_part_in.compressed(), 75)
