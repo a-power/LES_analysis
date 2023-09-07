@@ -310,8 +310,8 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
         if partition_name[it % len(partition_name)] == 'ML' or partition_name[it % len(partition_name)] == 'IC' \
                 or partition_name[it % len(partition_name)] == 'CU' or partition_name[it % len(partition_name)] == 'CC':
             print('partition name = ', partition_name[it % len(partition_name)])
-            C_25 = np.percentile( C_part_in.compressed(), 25)
-            C_75 = np.percentile( C_part_in.compressed(), 75)
+            C_25 = np.nanpercentile( C_part_in, 25)
+            C_75 = np.nanpercentile( C_part_in, 75)
             C_n = len( C_part_in.compressed() )
 
         else:
