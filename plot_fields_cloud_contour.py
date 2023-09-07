@@ -30,8 +30,9 @@ if case =='BOMEX':
     plotdir_in = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/fields_contour/standard_cb/'
 
     Dx_grid = 20
+    z_top = 101
     time_av_or_not = np.array([0, 1, 2])
-    z_tix = np.linspace(0, 101, 5)
+    z_tix = np.linspace(0, z_top, 5)
     z_labels = np.linspace(0, 2, 5)
     #0, 1, 2 #'yes' (in the array)
     # #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
@@ -44,7 +45,7 @@ elif case == 'ARM':
     plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/ARM/plots/fields_contour/{set_time}/'
 
     z_top = 250
-    z_tix = np.linspace(0, 250, 6)
+    z_tix = np.linspace(0, z_top, 6)
     z_labels = np.linspace(0, 2.5, 6)
 
     Dx_grid = 25
