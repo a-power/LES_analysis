@@ -68,7 +68,7 @@ in_set_percentile_C2 = ['min',99] #note that the first entry of this can be 'min
 
 x_axis_start_end = [x_start, x_end] #start and end points in km
 
-set_cb_in = [[None, None], [None, None]] #[[0.16, 0.30], [-0.1, 0.1]] #C_min, C_max, C^2_min, C^2_max
+set_cb_in = [[0.16, 0.30], [-0.1, 0.1]] #C_min, C_max, C^2_min, C^2_max [[None, None], [None, None]]
 
 
 

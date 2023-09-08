@@ -523,13 +523,13 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             cb = plt.colorbar(cf, format='%.2f')
             cb.set_label(f'{field_name}', size=16)
 
-            cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, :]), colors='black', linewidths=2,
+            cl_c = plt.contour(np.transpose(cloud_field), colors='black', linewidths=2,
                                levels=[1e-7])
-            th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, :]), colors='black', linestyles='dashed',
+            th_v_c = plt.contour(np.transpose(th_v_field), colors='black', linestyles='dashed',
                         linewidths=1)  # , levels=[0.1, 1, 2])
             ax1.clabel(th_v_c, inline=True, fontsize=10)
-            w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, :]), colors='darkslategrey', linewidths=1,
-                        levels=[0.1, 0.5])
+            w_c = plt.contour(np.transpose(w_field), colors='darkslategrey', linewidths=1,
+                        levels=[0.1, 0.5]) #start_grid:end_grid
             ax1.clabel(w_c, inline=True, fontsize=8)
             # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1, levels=[0.1])
             plt.xlabel(f'x (cross section with {x_or_y} = {axis_set*delta_grid/1000}km) (km)', fontsize=16)
@@ -537,6 +537,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             plt.ylabel("z (km)", fontsize=16)
             og_xtic = plt.xticks()
             plt.xticks(og_xtic[0], np.round(np.linspace(start, end, len(og_xtic[0])), 1))
+            plt.xlim(start_grid, end_grid)
             # ax1.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 
             plt.ylim(0, z_top_in)
@@ -571,12 +572,12 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 # cb.set_under('k')
                 cb.set_label(f'{field_name_sq}', size=16)
 
-                cl_c = plt.contour(np.transpose(cloud_field[start_grid:end_grid, :]), colors='black', linewidths=2,
+                cl_c = plt.contour(np.transpose(cloud_field), colors='black', linewidths=2,
                                    levels=[1e-7])
-                th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, :]), colors='black', linestyles='dashed',
+                th_v_c = plt.contour(np.transpose(th_v_field), colors='black', linestyles='dashed',
                                      linewidths=1)  # , levels=[0.1, 1, 2])
                 ax2.clabel(th_v_c, inline=True, fontsize=10)
-                w_c = plt.contour(np.transpose(w_field[start_grid:end_grid, :]), colors='darkslategrey',
+                w_c = plt.contour(np.transpose(w_field), colors='darkslategrey',
                                   linewidths=1, levels=[0.1, 0.5])
                 ax2.clabel(w_c, inline=True, fontsize=8)
                 # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1, levels=[0.1])
@@ -584,6 +585,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
                 og_xtic = plt.xticks()
                 plt.xticks(og_xtic[0], np.round(np.linspace(start, end, len(og_xtic[0])), 1))
+                plt.xlim(start_grid, end_grid)
                 # ax2.set_xticks(np.linspace(start, end, len(og_xtic[0])))
                 # ax2.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
                 # og_ytic = plt.yticks()
