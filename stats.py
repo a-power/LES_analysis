@@ -26,6 +26,7 @@ if case == 'BOMEX':
     file_name = f'BOMEX_m0020_g0800_all_{set_time}_gaussian_filter_'
 
     zn_set = np.arange(0, 3020, 20)
+    dx=20
 
     # todd_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m0020_g0800/diagnostic_files/'
     # prof_file = todd_dir + 'BOMEX_m0020_g0800_all_14400.nc'
@@ -44,6 +45,8 @@ if case == 'ARM':
 
     zn_set = np.arange(0, 4410, 10)
     z_ML_bottom = 20
+
+    dx=25
 
     z_cl_r_ind_set_list = [ [87, 110], [102, 150], [115, 200], [130, 230] ] #z_cl_range_calc
     z_ml_r_ind_list = [ [20, 75], [20, 80], [20, 85], [20, 90] ]
