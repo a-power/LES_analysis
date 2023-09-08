@@ -276,8 +276,13 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
 
 
     print('times[-1] =', times[-1])
-    file_csv = open(csv_file_path + f'{smag}_{str(int(times[-1]))}_delta_{str(Delta_in)}_CL_{CL_range_name}', 'w')
+    file_csv = open(csv_file_path + f'{smag}_{str(int(times[-1]))}_delta_{str(Delta_in)}_CL_{CL_range_name}.csv', 'w')
     C_stats = csv.writer(file_csv)
+
+    header = ['param', 'partition', 'layer_range', 'C_mean', 'C_st_dev',
+              'C_med', 'C_25', 'C_75', 'C_min', 'C_max', 'C_number']
+
+    C_stats.writerow(header)
 
     for it, C_part_in in enumerate(C_partiton):
 
@@ -288,15 +293,15 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
 
 
         if partition_name[it % len(partition_name)] == 'CL_set':
-            range_str = str(CL_depth_int_set[0]) + '_' + str(CL_depth_int_set[1])
+            range_str = 'CL_set_' + str(CL_depth_int_set[0]) + '_' + str(CL_depth_int_set[1])
 
         elif partition_name[it % len(partition_name)] == 'IC' or partition_name[it  % len(partition_name)] == 'CU'  \
                 or partition_name[it  % len(partition_name)] == 'CC' \
                 or partition_name[it % len(partition_name)] == 'CL_calc':
-            range_str = str(CL_depth_int_calc[0]) + '_' + str(CL_depth_int_calc[1])
+            range_str = partition_name[it%len(partition_name)]+'_'+str(CL_depth_int_calc[0])+'_'+str(CL_depth_int_calc[1])
 
         elif partition_name[it % len(partition_name)] == 'ML':
-            range_str = str(ML_r_int[0]) + '_' + str(ML_r_int[1])
+            range_str = 'ML_'+str(ML_r_int[0]) + '_' + str(ML_r_int[1])
 
         else:
             range_str = 'all_domain'
