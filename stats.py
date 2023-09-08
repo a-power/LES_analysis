@@ -279,7 +279,7 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
 
 
     print('times[-1] =', times[-1])
-    file_csv = open(csv_file_path + f'{smag}_{str(int(times[-1]))}_delta_{str(Delta_in)}_CL_{CL_range_name}.csv', 'w')
+    file_csv = open(csv_file_path + f'{smag}_{str(int(times[-1]))}_delta_{str(Delta_in)}.csv', 'w')
     C_stats = csv.writer(file_csv)
 
     header = ['param', 'partition', 'layer_range', 'C_mean', 'C_st_dev',
