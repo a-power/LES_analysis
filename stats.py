@@ -251,6 +251,11 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
     C_sq_CL_set = 0.5*(CL_num_set / CL_den_set)
     C_CL_set = dyn.get_Cs( C_sq_CL_set )
 
+    CS_num = num_field_env[:, :, :, CL_depth_int_calc[0] :: CL_depth_int_calc[1] ]
+    CS_den = den_field_env[:, :, :, CL_depth_int_calc[0] :: CL_depth_int_calc[1] ]
+    C_sq_CS = 0.5*(CS_num / CS_den)
+    C_CS = dyn.get_Cs( C_sq_CS )
+
     IC_num = num_field_IC[:, :, :, CL_depth_int_calc[0] :: CL_depth_int_calc[1] ]
     IC_den = den_field_IC[:, :, :, CL_depth_int_calc[0] :: CL_depth_int_calc[1] ]
     C_sq_IC = 0.5*(IC_num / IC_den)
@@ -268,10 +273,10 @@ def get_stats_for_C(dataset_path, file_name_in, Delta_in, beta_filt, param, ML_r
     
 
 
-    C_partiton = [C_dom, C_ML, C_CL_calc, C_CL_set, C_IC, C_CU, C_CC,
-                  C_sq_dom, C_sq_ML, C_sq_CL_calc, C_sq_CL_set, C_sq_IC, C_sq_CU, C_sq_CC]
+    C_partiton = [C_dom, C_ML, C_CL_calc, C_CL_set, C_CS, C_IC, C_CU, C_CC,
+                  C_sq_dom, C_sq_ML, C_sq_CL_calc, C_sq_CL_set, C_sq_CS, C_sq_IC, C_sq_CU, C_sq_CC]
 
-    partition_name = ['domain', 'ML', 'CL_calc', 'CL_set', 'IC', 'CU', 'CC']
+    partition_name = ['domain', 'ML', 'CL_calc', 'CL_set', 'CS', 'IC', 'CU', 'CC']
     header = ['Smagorinsky_Parameter', 'Partition_Condition', 'Layer_Range', 'Mean', 'Standard_Deviation',
               'Median', 'Lower_Quartile', 'Upper_Quartile', 'Minimum', 'Maximum', 'Number_of_Points']
 
