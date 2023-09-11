@@ -618,7 +618,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
     if y_ax == 'Pr':
         fig, ax = plt.subplots(nrows=2, ncols=1, sharey=True, figsize=(4, 8))
     else:
-        fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4, 12))
+        fig, ax = plt.subplots(nrows=3, ncols=1, figsize=(4, 12))
     fig.tight_layout(pad=0.5)
 
     for it in range(np.shape(Cs_max_in)[0]):
