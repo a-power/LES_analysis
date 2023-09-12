@@ -164,3 +164,5 @@ def plt_all_D_mean_sd():
         plt.savefig(plotdir + f'C_vs_Delta_st_dev_all_time.pdf', bbox_inches='tight')
         plt.close()
         print('plotted second plot to ', plotdir)
+
+plt_all_D_mean_sd()
