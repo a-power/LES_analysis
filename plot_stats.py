@@ -79,6 +79,7 @@ def plt_all_D_mean_sd():
                 # header = ['param', 'partition', 'layer_range', 'C_mean', 'C_st_dev',
                 #           'C_med', 'C_25', 'C_75', 'C_min', 'C_max', 'C_number']
 
+                #           1     2       3         4        5     6     7     8
                 # rows = [C_dom, C_ML, C_CL_calc, C_CL_set, C_CS, C_IC, C_CU, C_CC,
                 #         C_sq_dom, C_sq_ML, C_sq_CL_calc, C_sq_CL_set, C_sq_CS, C_sq_IC, C_sq_CU, C_sq_CC]
 
@@ -91,7 +92,7 @@ def plt_all_D_mean_sd():
                     print('file ', csv_file, ' is open')
 
                     for row in csv_reader:
-                        if line_count == 1: #or line_count == len(partition_name)+1: #definietly +1, have counted
+                        if line_count == 8: #or line_count == len(partition_name)+1: #definietly +1, have counted
                             print('Smagorinsky parameter being plotted is ', row[0])
                             C_domain_mean[t, c_n, d] = row[3]
                             C_domain_sd[t, c_n, d] = row[4]
@@ -122,7 +123,7 @@ def plt_all_D_mean_sd():
         ax[1].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
         ax[2].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
 
-        plt.savefig(plotdir + f'C_vs_Delta_st_dev_3_ax_time_{time_in}.pdf', bbox_inches='tight')
+        plt.savefig(plotdir + f'C_vs_Delta_st_dev_CC_3_ax_time_{time_in}.pdf', bbox_inches='tight')
         plt.close()
         print(f'plotted 3 axis plot for time {time_in} to ', plotdir)
 
@@ -166,7 +167,7 @@ def plt_all_D_mean_sd():
         ax2[1].legend(fontsize=13, loc='upper right')
         ax2[2].legend(fontsize=13, loc='upper right')
 
-        plt.savefig(plotdir + f'C_vs_Delta_st_dev_all_time.pdf', bbox_inches='tight')
+        plt.savefig(plotdir + f'C_vs_Delta_st_dev_CC_all_time.pdf', bbox_inches='tight')
         plt.close()
         print('plotted second plot to ', plotdir)
 
