@@ -141,7 +141,7 @@ def plt_all_D_mean_sd():
 
             for c_n, smag in enumerate(['Cs', 'C_th', 'C_qt']):
                 ax2[c_n].errorbar(Delta_labels, C_domain_mean[t, c_n, ...], yerr=C_domain_sd[t, c_n, ...],
-                             color=col_list[t], ecolor=col_list[t], capsize=5, label=f'{clock_time}')
+                             color=col_list[t], ecolor=col_list[t], capsize=5, label=clock_time)
 
         ax2[0].set_ylabel('$C_{s}$', fontsize=16)
         ax2[1].set_ylabel('$C_{\\theta}$', fontsize=16)
