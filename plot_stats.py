@@ -54,7 +54,10 @@ def plt_all_D_mean_sd():
     C_domain_mean = np.zeros((len(times), 3, len(Deltas)))
     C_domain_sd = np.zeros((len(times), 3, len(Deltas)))
 
+    print('starting first time loop')
+
     for t, time_in in enumerate(times):
+        print('time is ', time_in)
 
         clock_time_int = 05.30 + int(time_in) / (60 * 60)
         clock_time = str(clock_time_int) + '0L'
@@ -69,6 +72,8 @@ def plt_all_D_mean_sd():
         for c_n, smag in enumerate(['Cs', 'C_th', 'C_qt']):
             for d, Delta_in in enumerate(Deltas):
 
+                print('Smagorinsky and Delta is ', smag, Delta_in)
+
                 file_name = data_path + f'{smag}_{time_in}_delta_{str(Delta_in)}.csv'
 
                 # header = ['param', 'partition', 'layer_range', 'C_mean', 'C_st_dev',
@@ -82,6 +87,9 @@ def plt_all_D_mean_sd():
                 with open(file_name) as csv_file:
                     csv_reader = csv.DictReader(csv_file)
                     line_count = 0
+
+                    print('file ', csv_file, ' is open')
+
                     for row in csv_reader:
                         if line_count == 1: #or line_count == len(partition_name)+1: #definietly +1, have counted
                             print('Smagorinsky parameter being plotted is ', row[0])
@@ -89,7 +97,7 @@ def plt_all_D_mean_sd():
                             C_domain_sd[t, c_n, d] = row[4]
                             break
                         line_count += 1
-
+                    print('loop stopped at line_count = ', line_count)
 
             ax[c_n].errorbar(Delta_labels, C_domain_mean[t, c_n, ...], yerr=C_domain_sd[t, c_n, ...],
                              color='black', ecolor='black', capsize=5)
@@ -116,10 +124,12 @@ def plt_all_D_mean_sd():
 
         plt.savefig(plotdir + f'C_vs_Delta_st_dev_3_ax_time_{time_in}.pdf', bbox_inches='tight')
         plt.close()
+        print(f'plotted 3 axis plot for time {time_in} to ', plotdir)
 
 
 
     if case == 'ARM':
+        print('plotting second plot with all times')
 
         fig2, ax2 = plt.subplots(nrows=1, ncols=3, figsize=(15, 6))
 
@@ -153,3 +163,4 @@ def plt_all_D_mean_sd():
 
         plt.savefig(plotdir + f'C_vs_Delta_st_dev_all_time.pdf', bbox_inches='tight')
         plt.close()
+        print('plotted second plot to ', plotdir)
