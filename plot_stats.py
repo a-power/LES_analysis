@@ -7,7 +7,6 @@ import argparse
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--case_in', type=str, default='ARM')
-parser.add_argument('--time_it', type=int, default=0)
 
 args = parser.parse_args()
 case = args.case_in
@@ -19,7 +18,7 @@ beta_filt_num = ['0']
 
 if case == 'BOMEX':
     data_path = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_data/smoothed_LM_HR_fields/stats/'
-    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigma/stats/'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/BOMEX/stats/'
     times_analysed = [ '14400' ]
 
     zn_set = np.arange(0, 3020, 20)
@@ -36,7 +35,7 @@ if case == 'BOMEX':
 
 if case == 'ARM':
     data_path = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/stats/'
-    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/BOMEX/stats/'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigma/stats/'
     times = [ '18000', '25200', '32400', '39600' ]
 
     zn_set = np.arange(0, 4410, 10)
