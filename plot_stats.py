@@ -132,6 +132,7 @@ def plt_all_D_mean_sd():
         print('plotting second plot with all times')
 
         fig2, ax2 = plt.subplots(nrows=1, ncols=3, figsize=(15, 6))
+        fig.tight_layout(pad=0.5)
 
         for t, time_in in enumerate(times):
 
@@ -160,6 +161,10 @@ def plt_all_D_mean_sd():
         ax2[0].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
         ax2[1].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
         ax2[2].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
+
+        ax2[0].legend('upper right')
+        ax2[1].legend('upper right')
+        ax2[2].legend('upper right')
 
         plt.savefig(plotdir + f'C_vs_Delta_st_dev_all_time.pdf', bbox_inches='tight')
         plt.close()
