@@ -56,6 +56,8 @@ os.makedirs(plotdir, exist_ok = True)
 def plt_all_D_mean_sd():
 
     col_list = ['k', 'b', 'r', 'y'] # 'm', 'k', 'tab:gray', 'b']
+    C_domain_mean = np.zeros((len(times), 3, len(Deltas)))
+    C_domain_sd = np.zeros((len(times), 3, len(Deltas)))
 
     for t, time_in in enumerate(times):
 
@@ -68,8 +70,6 @@ def plt_all_D_mean_sd():
             fig, ax = plt.subplots(nrows=3, ncols=1, figsize=(4, 12))
         fig.tight_layout(pad=0.5)
 
-        C_domain_mean = np.zeros((3, len(Deltas) ))
-        C_domain_sd = np.zeros((3, len(Deltas) ))
 
         for c_n, smag in enumerate(['Cs', 'C_th', 'C_qt']):
             for d, Delta_in in enumerate(Deltas):
@@ -90,13 +90,13 @@ def plt_all_D_mean_sd():
                     for row in csv_reader:
                         if line_count == 1: #or line_count == len(partition_name)+1: #definietly +1, have counted
                             print('Smagorinsky parameter being plotted is ', row[0])
-                            C_domain_mean[c_n, d] = row[3]
-                            C_domain_sd[c_n, d] = row[4]
+                            C_domain_mean[t, c_n, d] = row[3]
+                            C_domain_sd[t, c_n, d] = row[4]
                             break
                         line_count += 1
 
 
-            ax[c_n].errorbar(Delta_labels, C_domain_mean[c_n, ...], yerr=C_domain_sd[c_n, ...],
+            ax[c_n].errorbar(Delta_labels, C_domain_mean[t, c_n, ...], yerr=C_domain_sd[t, c_n, ...],
                              color='black', ecolor='black', capsize=5)
 
 
@@ -124,11 +124,18 @@ def plt_all_D_mean_sd():
 
 
 
+    if case == 'ARM':
 
-        if case == 'ARM':
-            fig2, ax2 = plt.subplots(nrows=1, ncols=3, figsize=(15, 6))
-            ax[c_n].errorbar(Delta_labels, C_domain_mean[c_n, ...], yerr=C_domain_sd[c_n, ...],
-                             color=col_list[t], ecolor=col_list[t], capsize=5)
+        fig2, ax2 = plt.subplots(nrows=1, ncols=3, figsize=(15, 6))
+
+        for t, time_in in enumerate(times):
+
+            clock_time_int = 05.30 + int(time_in) / (60 * 60)
+            clock_time = str(clock_time_int) + '0L'
+
+            for c_n, smag in enumerate(['Cs', 'C_th', 'C_qt']):
+                ax2[c_n].errorbar(Delta_labels, C_domain_mean[t, c_n, ...], yerr=C_domain_sd[t, c_n, ...],
+                             color=col_list[t], ecolor=col_list[t], capsize=5, label=f'{clock_time}')
 
         ax2[0].set_ylabel('$C_{s}$', fontsize=16)
         ax2[1].set_ylabel('$C_{\\theta}$', fontsize=16)
@@ -149,5 +156,5 @@ def plt_all_D_mean_sd():
         ax2[1].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
         ax2[2].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
 
-        plt.savefig(plotdir + f'C_vs_Delta_st_dev_3_ax_time_{time_in}.pdf', bbox_inches='tight')
+        plt.savefig(plotdir + f'C_vs_Delta_st_dev_all_time.pdf', bbox_inches='tight')
         plt.close()
