@@ -85,7 +85,7 @@ def plt_all_D_mean_sd():
                 # partition_name = ['domain', 'ML', 'CL_calc', 'CL_set', 'CS', 'IC', 'CU', 'CC']
 
                 with open(file_name) as csv_file:
-                    csv_reader = csv.DictReader(csv_file)
+                    csv_reader = csv.DictReader(csv_file, 'r', delimiter=',', newline='')
                     line_count = 0
 
                     print('file ', csv_file, ' is open')
