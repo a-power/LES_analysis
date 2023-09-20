@@ -186,7 +186,7 @@ def plt_all_D_mean_sd(set_focus):
         ax2[1].legend(fontsize=13, loc='upper right')
         ax2[2].legend(fontsize=13, loc='upper right')
 
-        plt.savefig(plotdir + f'C_vs_Delta_st_dev_CC_all_time.pdf', bbox_inches='tight')
+        plt.savefig(plotdir + f'C_vs_Delta_st_dev_CC_all_time_{focus_name}.pdf', bbox_inches='tight')
         plt.close()
         print('plotted second plot to ', plotdir)
 
