@@ -48,7 +48,18 @@ if case == 'ARM':
 
 os.makedirs(plotdir, exist_ok = True)
 
-def plt_all_D_mean_sd():
+def plt_all_D_mean_sd(set_focus):
+
+    if set_focus == 6:
+        focus_name = 'IC'
+    elif set_focus == 7:
+        focus_name = 'CC'
+    elif set_focus == 8:
+        focus_name = 'CU'
+    else:
+        print('need to set name for this partition focus')
+    #           1     2       3         4        5     6     7     8
+    # rows = [C_dom, C_ML, C_CL_calc, C_CL_set, C_CS, C_IC, C_CU, C_CC,
 
     col_list = ['k', 'b', 'r', 'y'] # 'm', 'k', 'tab:gray', 'b']
     C_domain_mean = np.zeros((len(times), 3, len(Deltas)))
@@ -92,7 +103,8 @@ def plt_all_D_mean_sd():
                     print('file ', csv_file, ' is open')
 
                     for row in csv_reader:
-                        if line_count == 8: #or line_count == len(partition_name)+1: #definietly +1, have counted
+                        if line_count == set_focus:
+                            #or line_count == len(partition_name)+1: #definietly +1, have counted
                             print('Smagorinsky parameter being plotted is ', row[0])
                             C_domain_mean[t, c_n, d] = row[3]
                             C_domain_sd[t, c_n, d] = row[4]
@@ -103,6 +115,7 @@ def plt_all_D_mean_sd():
             ax[c_n].errorbar(Delta_labels, C_domain_mean[t, c_n, ...], yerr=C_domain_sd[t, c_n, ...],
                              color='black', ecolor='black', capsize=5)
 
+        plt.title(f'Mean and Standard Deviation for {focus_name}')
 
         ax[0].set_ylabel('$C_{s}$'+f' at {clock_time}', fontsize=16)
         ax[1].set_ylabel('$C_{\\theta}$'+f' at {clock_time}', fontsize=16)
@@ -123,7 +136,7 @@ def plt_all_D_mean_sd():
         ax[1].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
         ax[2].set_xlabel('Filter scale $\\widehat{\\bar{\\Delta}}$', fontsize=14)
 
-        plt.savefig(plotdir + f'C_vs_Delta_st_dev_CC_3_ax_time_{time_in}.pdf', bbox_inches='tight')
+        plt.savefig(plotdir + f'C_vs_Delta_st_dev_CC_3_ax_time_{time_in}_{focus_name}.pdf', bbox_inches='tight')
         plt.close()
         print(f'plotted 3 axis plot for time {time_in} to ', plotdir)
 
@@ -171,4 +184,6 @@ def plt_all_D_mean_sd():
         plt.close()
         print('plotted second plot to ', plotdir)
 
-plt_all_D_mean_sd()
+
+for i in range(6,9):
+    plt_all_D_mean_sd(i)
