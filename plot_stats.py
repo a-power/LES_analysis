@@ -106,8 +106,14 @@ def plt_all_D_mean_sd(set_focus):
                         if line_count == set_focus:
                             #or line_count == len(partition_name)+1: #definietly +1, have counted
                             print('Smagorinsky parameter being plotted is ', row[0])
-                            C_domain_mean[t, c_n, d] = row[3]
-                            C_domain_sd[t, c_n, d] = row[4]
+                            if row[3] == '--':
+                                C_domain_mean[t, c_n, d] = np.nan
+                            else:
+                                C_domain_mean[t, c_n, d] = row[3]
+                            if row[4] == '--':
+                                C_domain_sd[t, c_n, d] = np.nan
+                            else:
+                                C_domain_sd[t, c_n, d] = row[4]
                             break
                         line_count += 1
                     print('loop stopped at line_count = ', line_count)
