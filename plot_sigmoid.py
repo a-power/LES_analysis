@@ -116,8 +116,8 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
     # plt.ylim(ymax=1.1, ymin=0.0)
     # plt.xlim(xmax=4e3, xmin=3e0)
     plt.legend(fontsize=12, loc='best')
-    og_xtic = plt.xticks()
-    plt.xticks(og_xtic[0], Delta_labels)
+    # og_xtic = plt.xticks()
+    # plt.xticks(og_xtic[0], Delta_labels)
 
     plt.savefig(plotdir + f'{variable}_sigmoid_{layer}.pdf')  # ("../plots/5m_w_variance_subgrid.png")
 
