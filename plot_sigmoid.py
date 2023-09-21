@@ -92,12 +92,15 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
 
     for t, time_str in enumerate(time_list):
 
+        clock_time_int = 05.30 + int(time_str) / (60 * 60)
+        clock_time = str(clock_time_int) + '0L'
+
         z_l_r = z_l_r_ind_list_in[t]
         z_l_mid_layer = int( (z_l_r[0] + z_l_r[1])/2 )
         print('axis index for ', layer, f'at time {time_str} is ', z_l_mid_layer)
 
         var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
-        plt.semilogx(Delta_values, var_sig, col_list[t], label=f'{time_str}')
+        plt.semilogx(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
 
     # plt.errorbar(res[0] / z_i, w_var[0] / w_var[0], yerr=var_err[0] / w_var[0], label=str(res[0]) + 'm',
     #              color=col_list[0], ecolor='green', fmt='o', capsize=5)
@@ -106,8 +109,8 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
     #                  label=str(res[i + 1]) + 'm',
     #                  color=col_list[i + 1], ecolor='green', fmt='o', capsize=5)
 
-    plt.xlabel("Filter Scale", fontsize=16)
-    plt.title(f'{layer}', fontsize=22)
+    plt.xlabel("Filter Scale", fontsize=14)
+    plt.title(f'{layer}', fontsize=16)
     if variable == 'w':
         plt.ylabel("$\\overline{ w'^2 }$", fontsize=16)
     # plt.ylim(ymax=1.1, ymin=0.0)
