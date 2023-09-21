@@ -15,6 +15,7 @@ set_var = args.var
 mygrid = 'p'
 Deltas = ['0', '1', '2', '3', '4', '5']
 Delta_labels = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$', '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']
+Delta_values = [2*25, 4*25, 8*25, 16*25, 32*25, 64*25]
 beta_filt_num = ['0']
 
 if case == 'BOMEX':
@@ -44,7 +45,7 @@ if case == 'ARM':
 
     dx=25
 
-    z_cl_r_ind_set_list = [ [87, 110], [102, 150], [115, 200], [130, 230] ] #z_cl_range_calc
+    z_cl_r_ind_set = [ [87, 110], [102, 150], [115, 200], [130, 230] ] #z_cl_range_calc
     z_ml_r_ind_list = [ [20, 75], [20, 80], [20, 85], [20, 90] ]
 
 
@@ -83,7 +84,7 @@ def calc_variance(var, dir, time, layer, Delta_list):
     return var_varience
 
 
-def plot_sigmoid(variable, data_dir, time_list, delta_list, z_ml_r_ind_list_in):
+def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_list_in):
 
     col_list = ['k', 'r', 'b', 'g', 'y', 'm', 'tab:gray']
 
@@ -91,12 +92,12 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, z_ml_r_ind_list_in):
 
     for t, time_str in enumerate(time_list):
 
-        z_ml_r = z_ml_r_ind_list_in[t]
-        z_l_mid_BL = int( (z_ml_r[0] + z_ml_r[1])/2 )
-        print(z_l_mid_BL)
+        z_l_r = z_l_r_ind_list_in[t]
+        z_l_mid_layer = int( (z_l_r[0] + z_l_r[1])/2 )
+        print('axis index for ', layer, f'at time {time_str} is ', z_l_mid_layer)
 
-        var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_BL, delta_list)
-        plt.semilogx(Delta_labels, var_sig, col_list[t], label=f'{time_str}')
+        var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
+        plt.semilogx(Delta_values, var_sig, col_list[t], label=f'{time_str}')
 
     # plt.errorbar(res[0] / z_i, w_var[0] / w_var[0], yerr=var_err[0] / w_var[0], label=str(res[0]) + 'm',
     #              color=col_list[0], ecolor='green', fmt='o', capsize=5)
@@ -105,14 +106,17 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, z_ml_r_ind_list_in):
     #                  label=str(res[i + 1]) + 'm',
     #                  color=col_list[i + 1], ecolor='green', fmt='o', capsize=5)
 
-    plt.xlabel("Filter Scale", fontsize=22)
+    plt.xlabel("Filter Scale", fontsize=16)
+    plt.title(f'{layer}', fontsize=22)
     if variable == 'w':
         plt.ylabel("$\\overline{ w'^2 }$", fontsize=16)
     # plt.ylim(ymax=1.1, ymin=0.0)
     # plt.xlim(xmax=4e3, xmin=3e0)
     plt.legend(fontsize=12, loc='best')
-    #plt.xticks(np.array([0.01, 0.1, 1]), [0.01, 0.1, 1])
+    og_xtic = plt.xticks()
+    plt.xticks(og_xtic[0], Delta_labels)
 
-    plt.savefig(plotdir + f'{variable}_sigmoid_mid_ML.pdf')  # ("../plots/5m_w_variance_subgrid.png")
+    plt.savefig(plotdir + f'{variable}_sigmoid_{layer}.pdf')  # ("../plots/5m_w_variance_subgrid.png")
 
-plot_sigmoid(set_var, data_path, times, Deltas, z_ml_r_ind_list)
+plot_sigmoid(set_var, data_path, times, Deltas, 'Mid ML', z_ml_r_ind_list)
+plot_sigmoid(set_var, data_path, times, Deltas, 'Mid CL', z_cl_r_ind_set)
