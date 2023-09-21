@@ -92,7 +92,8 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, z_ml_r_ind_list_in):
     for t, time_str in enumerate(time_list):
 
         z_ml_r = z_ml_r_ind_list_in[t]
-        z_l_mid_BL = (z_ml_r[0] + z_ml_r[1])/2
+        z_l_mid_BL = int( (z_ml_r[0] + z_ml_r[1])/2 )
+        print(z_l_mid_BL)
 
         var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_BL, delta_list)
         plt.semilogx(Delta_labels, var_sig, col_list[t], label=f'{time_str}')
