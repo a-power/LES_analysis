@@ -74,7 +74,7 @@ def calc_variance(var, dir, time, layer, Delta_list):
     var_mean = calc_var_mean(var, dir, time, layer, Delta_list)
     var_varience = np.zeros(( len(Deltas) ))
 
-    for i in range(Delta_list):
+    for i in range(len(Delta_list)):
         dataset_in = dir + f'{time}_gaussian_filter_ga0{i}_gaussian_filter_ga00.nc'
 
         data_set = xr.open_dataset(dataset_in)
