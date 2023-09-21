@@ -6,8 +6,11 @@ import xarray as xr
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--case_in', type=str, default='ARM')
+parser.add_argument('--var', type=str, default='w')
+
 args = parser.parse_args()
 case = args.case_in
+set_var = args.var
 
 mygrid = 'p'
 Deltas = ['0', '1', '2', '3', '4', '5']
@@ -17,7 +20,7 @@ beta_filt_num = ['0']
 if case == 'BOMEX':
     data_path = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_data/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/BOMEX/sigmoid/'
-    times_analysed = [ '14400' ]
+    times = [ '14400' ]
 
     zn_set = np.arange(0, 3020, 20)
     dx=20
@@ -80,7 +83,7 @@ def calc_variance(var, dir, time, layer, Delta_list):
     return var_varience
 
 
-def plot_sigmoid(variable, data_dir, time_list, delta_list, z_level):
+def plot_sigmoid(variable, data_dir, time_list, delta_list, z_ml_r_ind_list_in):
 
     col_list = ['k', 'r', 'b', 'g', 'y', 'm', 'tab:gray']
 
@@ -88,7 +91,10 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, z_level):
 
     for t, time_str in enumerate(time_list):
 
-        var_sig = calc_variance(variable, data_dir, time_str, z_level, delta_list)
+        z_ml_r = z_ml_r_ind_list_in[t]
+        z_l_mid_BL = (z_ml_r[0] + z_ml_r[1])/2
+
+        var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_BL, delta_list)
         plt.semilogx(Delta_labels, var_sig, col_list[t], label=f'{time_str}')
 
     # plt.errorbar(res[0] / z_i, w_var[0] / w_var[0], yerr=var_err[0] / w_var[0], label=str(res[0]) + 'm',
@@ -106,4 +112,6 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, z_level):
     plt.legend(fontsize=12, loc='best')
     #plt.xticks(np.array([0.01, 0.1, 1]), [0.01, 0.1, 1])
 
-    plt.savefig(plotdir + f'{variable}_sigmoid.pdf')  # ("../plots/5m_w_variance_subgrid.png")
+    plt.savefig(plotdir + f'{variable}_sigmoid_mid_ML.pdf')  # ("../plots/5m_w_variance_subgrid.png")
+
+plot_sigmoid(set_var, data_path, times, Deltas, z_ml_r_ind_list)
