@@ -59,11 +59,11 @@ def calc_var_mean(var_in, dir_in, time_in, layer_set, Deltas):
 
     var_mean = np.zeros(( len(Deltas) ))
 
-    for i in range(Deltas):
-        dataset_in = dir_in + f'{time_in}_gaussian_filter_ga0{i}_gaussian_filter_ga00.nc'
+    for d, Del in range(Deltas):
+        dataset_in = dir_in + f'{time_in}_gaussian_filter_ga0{Del}_gaussian_filter_ga00.nc'
 
         data_set = xr.open_dataset(dataset_in)
-        var_mean[i] = np.mean(data_set[var_name].data[..., layer_set])
+        var_mean[d] = np.mean(data_set[var_name].data[..., layer_set])
 
     return var_mean
 
