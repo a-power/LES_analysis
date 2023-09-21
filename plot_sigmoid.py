@@ -7,10 +7,12 @@ import xarray as xr
 parser = argparse.ArgumentParser()
 parser.add_argument('--case_in', type=str, default='ARM')
 parser.add_argument('--var', type=str, default='w')
+parser.add_argument('--log_a', default=True)
 
 args = parser.parse_args()
 case = args.case_in
 set_var = args.var
+set_log_axis = args.log_a
 
 mygrid = 'p'
 Deltas = ['0', '1', '2', '3', '4', '5']
@@ -84,7 +86,7 @@ def calc_variance(var, dir, time, layer, Delta_list):
     return var_varience
 
 
-def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_list_in):
+def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_list_in, log_axis=True):
 
     col_list = ['k', 'r', 'b', 'g', 'y', 'm', 'tab:gray']
 
@@ -100,7 +102,10 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
         print('axis index for ', layer, f'at time {time_str} is ', z_l_mid_layer)
 
         var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
-        plt.semilogx(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
+        if log_axis == True:
+            plt.semilogx(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
+        else:
+            plt.plot(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
 
     # plt.errorbar(res[0] / z_i, w_var[0] / w_var[0], yerr=var_err[0] / w_var[0], label=str(res[0]) + 'm',
     #              color=col_list[0], ecolor='green', fmt='o', capsize=5)
@@ -120,5 +125,5 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
 
     plt.savefig(plotdir + f'{variable}_sigmoid_{layer}.pdf')  # ("../plots/5m_w_variance_subgrid.png")
 
-plot_sigmoid(set_var, data_path, times, Deltas, 'Mid ML', z_ml_r_ind_list)
-plot_sigmoid(set_var, data_path, times, Deltas, 'Mid CL', z_cl_r_ind_set)
+plot_sigmoid(set_var, data_path, times, Deltas, 'Mid ML', z_ml_r_ind_list, set_log_axis)
+plot_sigmoid(set_var, data_path, times, Deltas, 'Mid CL', z_cl_r_ind_set, set_log_axis)
