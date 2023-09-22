@@ -20,7 +20,7 @@ Delta_labels = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$', '16$\\Delta$', '32$\\D
 beta_filt_num = ['0']
 
 if case == 'BOMEX':
-    data_path = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_fields/contours/BOMEX_m0020_g0800_all_'
+    data_path = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_filters/contours/BOMEX_m0020_g0800_all_'
     plotdir = '/home/users/si818415/phd/plots/'
     times = [ '14400' ]
 
