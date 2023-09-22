@@ -17,12 +17,11 @@ set_log_axis = args.log_a
 mygrid = 'p'
 Deltas = ['0', '1', '2', '3', '4', '5']
 Delta_labels = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$', '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']
-Delta_values = [2*25, 4*25, 8*25, 16*25, 32*25, 64*25]
 beta_filt_num = ['0']
 
 if case == 'BOMEX':
     data_path = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_data/'
-    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/BOMEX/sigmoid/'
+    plotdir = '/home/users/si818415/phd/plots/'
     times = [ '14400' ]
 
     zn_set = np.arange(0, 3020, 20)
@@ -31,10 +30,11 @@ if case == 'BOMEX':
     # todd_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m0020_g0800/diagnostic_files/'
     # prof_file = todd_dir + 'BOMEX_m0020_g0800_all_14400.nc'
 
-    z_cl_r_ind_set = [33, 77] # set
-    z_cl_r_ind_calc = [22, 109]  # calc
+    z_cl_r_ind_set = [[33, 77]] # set
+    z_cl_r_ind_calc = [[22, 109]]  # calc
 
-    z_ML_r_ind = [10, 22] # 22 as calc but the profs
+    z_ml_r_ind_list = [[10, 22]] # 22 as calc but the profs
+    Delta_values = [2 * 20, 4 * 20, 8 * 20, 16 * 20, 32 * 20, 64 * 20]
 
 
 if case == 'ARM':
@@ -49,6 +49,8 @@ if case == 'ARM':
 
     z_cl_r_ind_set = [ [87, 110], [102, 150], [115, 200], [130, 230] ] #z_cl_range_calc
     z_ml_r_ind_list = [ [20, 75], [20, 80], [20, 85], [20, 90] ]
+
+    Delta_values = [2 * 25, 4 * 25, 8 * 25, 16 * 25, 32 * 25, 64 * 25]
 
 
 
@@ -102,6 +104,7 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
         print('axis index for ', layer, f'at time {time_str} is ', z_l_mid_layer)
 
         var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
+
         if log_axis == True:
             plt.semilogx(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
         else:
