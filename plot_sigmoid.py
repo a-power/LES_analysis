@@ -22,6 +22,8 @@ beta_filt_num = ['0']
 if case == 'BOMEX':
     data_path = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_filters/contours/BOMEX_m0020_g0800_all_'
     plotdir = '/home/users/si818415/phd/plots/'
+    outdir = '/home/users/si818415/phd/data/'
+
     times = [ '14400' ]
 
     zn_set = np.arange(0, 3020, 20)
@@ -55,6 +57,7 @@ if case == 'ARM':
 
 
 os.makedirs(plotdir, exist_ok = True)
+os.makedirs(outdir, exist_ok = True)
 
 
 def calc_var_mean(var_in, dir_in, time_in, layer_set, Deltas):
@@ -105,6 +108,9 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
 
         var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
 
+        if case == 'BOMEX':
+            np.save(outdir+f'BOMEX_{variable}_{layer}.npy', var_sig)
+
         if log_axis == True:
             plt.semilogx(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
         else:
@@ -120,10 +126,11 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
     plt.xlabel("Filter Scale", fontsize=14)
     plt.title(f'{layer}', fontsize=16)
     if variable == 'w':
-        plt.ylabel("$\\overline{ w'^2 }$", fontsize=16)
+        plt.ylabel("$\\overline{ w'^2 m^2 s^{-1}}$", fontsize=16)
     # plt.ylim(ymax=1.1, ymin=0.0)
     # plt.xlim(xmax=4e3, xmin=3e0)
-    plt.legend(fontsize=12, loc='best')
+    if case == 'ARM':
+        plt.legend(fontsize=12, loc='best')
     plt.xticks(Delta_values, Delta_labels)
 
     plt.savefig(plotdir + f'{variable}_sigmoid_{layer}_log_{set_log_axis}.pdf')  # ("../plots/5m_w_variance_subgrid.png")
