@@ -38,6 +38,8 @@ if case == 'BOMEX':
     z_ml_r_ind_list = [[10, 22]] # 22 as calc but the profs
     Delta_values = [2 * 20, 4 * 20, 8 * 20, 16 * 20, 32 * 20, 64 * 20]
 
+    os.makedirs(outdir, exist_ok=True)
+
 
 if case == 'ARM':
     data_path = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/diagnostics_3d_ts_'
@@ -62,7 +64,6 @@ if case == 'ARM':
 
 
 os.makedirs(plotdir, exist_ok = True)
-os.makedirs(outdir, exist_ok = True)
 
 
 def calc_var_mean(var_in, dir_in, time_in, layer_set, Deltas):
