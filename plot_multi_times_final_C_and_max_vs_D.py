@@ -651,10 +651,11 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
             set_top = max(temp_top, top2)  # 0.255
 
     elif max_mean == 'max':
-        set_top = max(top0, top1)
-        if y_ax != 'Pr':
-            temp_top = set_top
-            set_top = max(temp_top, top2)  # 0.305
+        set_top = 0.255
+        # set_top = max(top0, top1)
+        # if y_ax != 'Pr':
+        #     temp_top = set_top
+        #     set_top = max(temp_top, top2)  # 0.305
 
     ax[0].set_ylim(top=set_top)
     ax[1].set_ylim(top=set_top)
