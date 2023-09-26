@@ -176,7 +176,7 @@ def plot_all_sigmoid(variable, data_dir, extra_case_npy, time_list, delta_list, 
     plt.xlabel("$\\widehat{\\bar{\\Delta}} / z_{ML}$", fontsize=14)
     plt.title(f'{layer}', fontsize=16)
     if variable == 'w':
-        plt.ylabel("$\\overline{ w'^2 / w'^2_{total}$", fontsize=16)
+        plt.ylabel("$\\overline{ w'^2} / \overline{ w'^2_{total} }$", fontsize=16)
     # plt.ylim(ymax=1.1, ymin=0.0)
     # plt.xlim(xmax=4e3, xmin=3e0)
     plt.legend(fontsize=12, loc='best')
