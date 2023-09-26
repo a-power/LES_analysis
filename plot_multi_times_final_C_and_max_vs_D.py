@@ -1029,13 +1029,13 @@ for itr, time_stamp in enumerate(set_time):
 
     #plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, interp=True, C_sq_to_C = True)
     print('shape of Cs_sq being fed into fn:', np.shape(Cs_sq))
-    plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range_calc_m, labels_in=set_labels,
-                      C_sq_to_C = True, time_in=time_stamp)
-
-    print('saved C plots to ', plotdir)
-
-    plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range_calc_m, labels_in=set_labels, time_in=time_stamp)
-
+    # plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range_calc_m, labels_in=set_labels,
+    #                   C_sq_to_C = True, time_in=time_stamp)
+    #
+    # print('saved C plots to ', plotdir)
+    #
+    # plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range_calc_m, labels_in=set_labels, time_in=time_stamp)
+    #
 
 
     #################################################################################
@@ -1061,9 +1061,9 @@ for itr, time_stamp in enumerate(set_time):
     #                           deltas = deltas_in, delta_label = set_labels, interp=False, C_sq_to_C = False)
 
     #plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = True)
-    plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML, z_cl_r_meters,
-                              deltas = deltas_in, delta_label = set_labels, interp=False,
-                              C_sq_to_C = True, time_in=time_stamp, set_x_lim_list=x_lim_list)
+    # plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML, z_cl_r_meters,
+    #                           deltas = deltas_in, delta_label = set_labels, interp=False,
+    #                           C_sq_to_C = True, time_in=time_stamp, set_x_lim_list=x_lim_list)
 
 
     ##################################################################################################################
@@ -1113,25 +1113,25 @@ for itr, time_stamp in enumerate(set_time):
 
     plot_max_C_l_vs_Delta(max_Cs_cond, max_Cth_cond, max_Cqt_cond, Delta = set_labels, y_ax = 'C', max_mean='max',
                           time_in = time_stamp)
-    plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond, delta_numbers, 25), get_max_l_from_C(max_Cth_cond, delta_numbers, 25),
-                          get_max_l_from_C(max_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l',
-                          max_mean='max', time_in = time_stamp)
-
-
-    plot_max_C_l_vs_Delta(mean_Cs_cond, mean_Cth_cond, mean_Cqt_cond, Delta = set_labels, y_ax = 'C', max_mean='mean',
-                          time_in = time_stamp)
-    plot_max_C_l_vs_Delta(get_max_l_from_C(mean_Cs_cond, delta_numbers, 25), get_max_l_from_C(mean_Cth_cond, delta_numbers, 25),
-                          get_max_l_from_C(mean_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l',
-                          max_mean='mean', time_in = time_stamp)
-
-    plot_max_C_l_vs_Delta(mean_Pr_cond, max_Sc_cond, None, Delta=set_labels, y_ax='Pr', max_mean='max',
-                          time_in=time_stamp)
-    plot_max_C_l_vs_Delta(mean_Pr_cond, mean_Sc_cond, None, Delta=set_labels, y_ax='Pr', max_mean='mean',
-                          time_in=time_stamp)
-
-
-    print('z_ml_range = ', z_ml_range)
-    print('z_cl_range = ', z_cl_range)
+    # plot_max_C_l_vs_Delta(get_max_l_from_C(max_Cs_cond, delta_numbers, 25), get_max_l_from_C(max_Cth_cond, delta_numbers, 25),
+    #                       get_max_l_from_C(max_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l',
+    #                       max_mean='max', time_in = time_stamp)
+    #
+    #
+    # plot_max_C_l_vs_Delta(mean_Cs_cond, mean_Cth_cond, mean_Cqt_cond, Delta = set_labels, y_ax = 'C', max_mean='mean',
+    #                       time_in = time_stamp)
+    # plot_max_C_l_vs_Delta(get_max_l_from_C(mean_Cs_cond, delta_numbers, 25), get_max_l_from_C(mean_Cth_cond, delta_numbers, 25),
+    #                       get_max_l_from_C(mean_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l',
+    #                       max_mean='mean', time_in = time_stamp)
+    #
+    # plot_max_C_l_vs_Delta(mean_Pr_cond, max_Sc_cond, None, Delta=set_labels, y_ax='Pr', max_mean='max',
+    #                       time_in=time_stamp)
+    # plot_max_C_l_vs_Delta(mean_Pr_cond, mean_Sc_cond, None, Delta=set_labels, y_ax='Pr', max_mean='mean',
+    #                       time_in=time_stamp)
+    #
+    #
+    # print('z_ml_range = ', z_ml_range)
+    # print('z_cl_range = ', z_cl_range)
 
 
 
