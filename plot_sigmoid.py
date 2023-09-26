@@ -58,7 +58,7 @@ if case == 'ARM':
     Delta_values = [2 * 25, 4 * 25, 8 * 25, 16 * 25, 32 * 25, 64 * 25]
     Delta_values_BOMEX = [2 * 20, 4 * 20, 8 * 20, 16 * 20, 32 * 20, 64 * 20]
 
-    ml_heights = [820, 970, 1120, 1270]
+    ml_heights = np.array([820, 970, 1120, 1270])
     ml_height_bomex = 440
 
 
@@ -161,10 +161,10 @@ def plot_all_sigmoid(variable, data_dir, extra_case_npy, time_list, delta_list, 
 
         var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
 
-        plt.semilogx(Delta_values/ml_heights[t], var_sig/var_sig[0], col_list[t], label=f'ARM at {clock_time}')
+        plt.semilogx(Delta_values/ml_heights[t], var_sig/float(var_sig[0]), col_list[t], label=f'ARM at {clock_time}')
 
     e_case = np.load(extra_case_npy+f'BOMEX_{variable}_{layer}.npy')
-    plt.semilogx(Delta_values_BOMEX/ml_height_bomex, e_case/e_case[0], col_list[t+1], label=f'BOMEX')
+    plt.semilogx(Delta_values_BOMEX/ml_height_bomex, e_case/float(e_case[0]), col_list[t+1], label=f'BOMEX')
 
     # plt.errorbar(res[0] / z_i, w_var[0] / w_var[0], yerr=var_err[0] / w_var[0], label=str(res[0]) + 'm',
     #              color=col_list[0], ecolor='green', fmt='o', capsize=5)
