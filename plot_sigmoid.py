@@ -6,7 +6,7 @@ import xarray as xr
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--case_in', type=str, default='ARM')
-parser.add_argument('--var', type=str, default='w')
+parser.add_argument('--var', type=str, default='TKE')
 parser.add_argument('--log_a', default=True)
 
 args = parser.parse_args()
@@ -111,8 +111,14 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
         z_l_r = z_l_r_ind_list_in[t]
         z_l_mid_layer = int( (z_l_r[0] + z_l_r[1])/2 )
         print('axis index for ', layer, f'at time {time_str} is ', z_l_mid_layer)
+        if variable == 'TKE':
+            sig_u = calc_variance('u', data_dir, time_str, z_l_mid_layer, delta_list)
+            sig_v = calc_variance('v', data_dir, time_str, z_l_mid_layer, delta_list)
+            sig_w = calc_variance('w', data_dir, time_str, z_l_mid_layer, delta_list)
 
-        var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
+            var_sig = 0.5 * (sig_u + sig_v + sig_w)
+        else:
+            var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
 
         if case == 'BOMEX':
             np.save(outdir+f'BOMEX_{variable}_{layer}.npy', var_sig)
@@ -141,8 +147,7 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
 
     plt.savefig(plotdir + f'{variable}_sigmoid_{layer}_log_{set_log_axis}.pdf')  # ("../plots/5m_w_variance_subgrid.png")
 
-# plot_sigmoid(set_var, data_path, times, Deltas, 'Mid ML', z_ml_r_ind_list, set_log_axis)
-# plot_sigmoid(set_var, data_path, times, Deltas, 'Mid CL', z_cl_r_ind_set, set_log_axis)
+
 
 def plot_all_sigmoid(variable, data_dir, extra_case_npy, time_list, delta_list, layer, z_l_r_ind_list_in):
 
@@ -184,5 +189,12 @@ def plot_all_sigmoid(variable, data_dir, extra_case_npy, time_list, delta_list, 
 
     plt.savefig(plotdir + f'all_{variable}_sigmoids_{layer}_log_{set_log_axis}.pdf')
 
-plot_all_sigmoid(set_var, data_path, bomex_info_in, times, Deltas, 'Mid ML', z_ml_r_ind_list)
-plot_all_sigmoid(set_var, data_path, bomex_info_in, times, Deltas, 'Mid CL', z_ml_r_ind_list)
+
+
+
+plot_sigmoid(set_var, data_path, times, Deltas, 'Mid ML', z_ml_r_ind_list, set_log_axis)
+plot_sigmoid(set_var, data_path, times, Deltas, 'Mid CL', z_cl_r_ind_set, set_log_axis)
+
+
+# plot_all_sigmoid(set_var, data_path, bomex_info_in, times, Deltas, 'Mid ML', z_ml_r_ind_list)
+# plot_all_sigmoid(set_var, data_path, bomex_info_in, times, Deltas, 'Mid CL', z_ml_r_ind_list)
