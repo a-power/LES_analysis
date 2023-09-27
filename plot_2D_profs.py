@@ -22,6 +22,7 @@ if case == 'ARM':
 
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigma/MONC_profiles/'
     prof_file = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_' #diagnostics_ts_18000.nc
+    field_file = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_3d_ts_'
 
     zn_set = np.arange(0, 4410, 10)
     z_set = np.arange(-5, 4405, 10)
@@ -34,6 +35,7 @@ elif case == 'BOMEX':
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/BOMEX/MONC_profiles/'
     todd_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m0020_g0800/diagnostic_files/'
     prof_file = todd_dir + 'BOMEX_m0020_g0800_all_' #'BOMEX_m0020_g0800_all_14400.nc'
+    field_file = prof_file
 
     zn_set = np.arange(0, 3020, 20)
     z_set = np.arange(-10, 3010, 20)
@@ -107,7 +109,7 @@ def get_w_max_profs(file_path, time_stamp=-1):
 
 
 
-def plot_MONC_profs(file_path, times, time_stamp_in='mean'):
+def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
 
 
     colours = ['tab:red', 'black', 'tab:green', 'tab:blue', 'tab:purple',
@@ -134,9 +136,10 @@ def plot_MONC_profs(file_path, times, time_stamp_in='mean'):
     for it, time_in in enumerate(times):
 
         file_in = file_path + f'{time_in}.nc'
+        field_in = field_path + f'{time_in}.nc'
 
         wth_prof,  th_prof, cloud_prof, z, z_i = get_cloud_wth_profs(file_in, time_stamp=time_stamp_in)
-        w_max_prof_in = get_w_max_profs(file_in, time_stamp=time_stamp_in)
+        w_max_prof_in = get_w_max_profs(field_in, time_stamp=time_stamp_in)
 
         clock_time_int = 05.30 + int(time_in) / (60 * 60)
         clock_time = str(clock_time_int) + '0L'
@@ -215,4 +218,4 @@ def plot_MONC_profs(file_path, times, time_stamp_in='mean'):
 
 
 
-plot_MONC_profs(prof_file, set_time)
+plot_MONC_profs(prof_file, field_file, set_time)
