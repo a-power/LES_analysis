@@ -84,9 +84,9 @@ def get_cloud_wth_profs(file_path, time_stamp=-1):
 
 
 
-def get_w_max_profs(file_path, time_stamp=-1):
+def get_w_max_profs(field_path_in, time_stamp=-1):
 
-    field_data = xr.open_dataset(file_path)
+    field_data = xr.open_dataset(field_path_in)
 
     w = field_data['w'].data[...]
     w_max_prof = np.zeros(len(w[0,0,0,:]))
@@ -94,13 +94,6 @@ def get_w_max_profs(file_path, time_stamp=-1):
     if time_stamp == None:
         for z in range(len(w_max_prof)):
             w_max_prof[z] = np.max(w[...,z])
-
-    elif time_stamp == 'mean':
-        w_max_time = np.zeros(( len(w[:, 0, 0, 0]), len(w[0, 0, 0, :]) ))
-        for t in range(len(w[:,0,0,0,])):
-            for z in range(len(w_max_prof)):
-                w_max_time[t, :] = np.max(w[t, ..., z])
-        w_max_prof = np.mean(w_max_time, axis=0)
 
     else:
         for z in range(len(w_max_prof)):
