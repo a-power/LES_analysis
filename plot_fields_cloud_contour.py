@@ -7,7 +7,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--case_in', type=str, default='ARM')
 parser.add_argument('--times', type=str, default='32400')
 parser.add_argument('--x_y', type=str, default='y')
-parser.add_argument('--axis', type=int, default=300)
+parser.add_argument('--axis', type=int, default=297)
 parser.add_argument('--x_s', type=float, default=0)
 parser.add_argument('--x_e', type=float, default=19.2)
 args = parser.parse_args()
@@ -68,7 +68,7 @@ in_set_percentile_C2 = ['min',99] #note that the first entry of this can be 'min
 
 x_axis_start_end = [x_start, x_end] #start and end points in km
 
-set_cb_in = [[0.16, 0.30], [-0.1, 0.1]] #C_min, C_max, C^2_min, C^2_max [[None, None], [None, None]]
+set_cb_in = [[0.10, 0.30], [-0.12, 0.12]] #C_min, C_max, C^2_min, C^2_max [[None, None], [None, None]]
 
 
 
