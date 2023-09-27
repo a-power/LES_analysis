@@ -314,7 +314,6 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
     print('starting to plot field: ', field)
 
-
     myvmin_C = set_cb[0][0]
     myvmax_C = set_cb[0][1]
 
@@ -506,20 +505,26 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             fig1, ax1 = plt.subplots(figsize=(20, 5))
             plt.title(f'{field_name}' + ' with $\\widehat{\\bar{\\Delta}} = $' + f'{delta_label}', fontsize=16)
 
-            if myvmin_C != None:
-                 myvmin = myvmin_C
-                 myvmax = myvmax_C
-            else:
-                myvmin = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], set_percentile[0])
-                myvmax = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], set_percentile[1])
-
-            mylevels = np.linspace(myvmin, myvmax, 8)
-
             mycmap = plt.get_cmap('YlOrRd').copy()
             mycmap.set_extremes(under='white', over='maroon')
 
-            cf = plt.contourf(np.transpose(data_field), cmap=mycmap, levels=mylevels,
-                              extend='both')
+            if myvmin_C != None:
+                 myvmin = myvmin_C
+                 myvmax = myvmax_C
+                 mylevels = np.linspace(myvmin, myvmax, 8)
+                 cf = plt.contourf(np.transpose(data_field), cmap=mycmap, levels=mylevels,
+                                   extend='both')
+            else:
+                if set_percentile != None:
+                    myvmin = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], set_percentile[0])
+                    myvmax = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], set_percentile[1])
+                mylevels = np.linspace(myvmin, myvmax, 8)
+                cf = plt.contourf(np.transpose(data_field), cmap=mycmap, levels=mylevels,
+                                  extend='both')
+
+                if set_percentile == None:
+                    cf = plt.contourf(np.transpose(data_field), cmap=mycmap, extend='both')
+
             cb = plt.colorbar(cf, format='%.2f')
             cb.set_label(f'{field_name}', size=16)
 
@@ -556,19 +561,32 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 if myvmin_C_sq != None:
                     myvmin = myvmin_C_sq
                     myvmax = myvmax_C_sq
+
+                    mylevels = np.linspace(myvmin, myvmax, 8)
+                    cf = plt.contourf(np.transpose(data_field_sq), cmap=cm.bwr,
+                                      norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
+                                      levels=mylevels, extend='both')
                 else:
                     if set_percentile_C_sq[0] == 'min':
                         myvmin_temp = np.min(data_field_sq[start_grid:end_grid, 5:z_top_in])
                         myvmin = myvmin_temp + abs(0.6*myvmin_temp)
-                    else:
-                        myvmin = np.percentile(data_field_sq[start_grid:end_grid, 5:z_top_in], set_percentile_C_sq[0])
-                    myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:z_top_in], set_percentile_C_sq[1])
+                        myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:z_top_in], set_percentile_C_sq[1])
 
-                mylevels = np.linspace(myvmin, myvmax, 8)
-
-                cf = plt.contourf(np.transpose(data_field_sq), cmap=cm.bwr,
+                        mylevels = np.linspace(myvmin, myvmax, 8)
+                        cf = plt.contourf(np.transpose(data_field_sq), cmap=cm.bwr,
                                   norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
                                   levels=mylevels, extend='both')
+                    elif set_percentile_C_sq[0] != None:
+                        myvmin = np.percentile(data_field_sq[start_grid:end_grid, 5:z_top_in], set_percentile_C_sq[0])
+                        myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:z_top_in], set_percentile_C_sq[1])
+
+                        mylevels = np.linspace(myvmin, myvmax, 8)
+                        cf = plt.contourf(np.transpose(data_field_sq), cmap=cm.bwr,
+                                  norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
+                                  levels=mylevels, extend='both')
+                    else:
+                        cf = plt.contourf(np.transpose(data_field_sq), cmap=cm.bwr, vcenter=0, extend='both')
+
                 cb = plt.colorbar(cf, format='%.2f')
                 # cb.set_under('k')
                 cb.set_label(f'{field_name_sq}', size=16)

@@ -27,7 +27,7 @@ if case =='BOMEX':
     mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
     contour_data = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
-    plotdir_in = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/fields_contour/standard_cb/'
+    plotdir_in = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/fields_contour/full_cb/'
 
     Dx_grid = 20
     z_top = 101
@@ -42,7 +42,7 @@ elif case == 'ARM':
     mydir = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
     contour_data = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_ga0"
 
-    plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/ARM/plots/fields_contour/{set_time}/'
+    plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/ARM/plots/fields_contour/{set_time}/full_cb'
 
     z_top = 250
     z_tix = np.linspace(0, z_top, 6)
@@ -62,13 +62,14 @@ dir_s = mydir + 'Cs_'
 dir_th = mydir + 'C_th_'
 dir_qt = mydir + 'C_qt_'
 
-in_set_percentile = [25,99]
-in_set_percentile_C = [70,99]
-in_set_percentile_C2 = ['min',99] #note that the first entry of this can be 'min' or a number representing the percentile
+in_set_percentile = None #[25,99]
+in_set_percentile_C = None #[70,99]
+in_set_percentile_C2 = None #['min',99]
+# #note that the first entry of this can be 'min' or a number representing the percentile, or None
 
 x_axis_start_end = [x_start, x_end] #start and end points in km
 
-set_cb_in = [[0.10, 0.30], [-0.12, 0.12]] #C_min, C_max, C^2_min, C^2_max [[None, None], [None, None]]
+set_cb_in = [[None, None], [None, None]] #[[0.10, 0.30], [-0.12, 0.12]] #C_min, C_max, C^2_min, C^2_max
 
 
 
