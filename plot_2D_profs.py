@@ -89,18 +89,22 @@ def get_w_max_profs(file_path, time_stamp=-1):
     field_data = xr.open_dataset(file_path)
 
     w = field_data['w'].data[...]
+    w_max_prof = np.zeros(len(w[0,0,0,:]))
 
     if time_stamp == None:
-        w_max_prof = np.max(w, axis=-1)
+        for z in range(len(w_max_prof)):
+            w_max_prof[z] = np.max(w[...,z])
 
     elif time_stamp == 'mean':
         w_max_time = np.zeros(( len(w[:, 0, 0, 0]), len(w[0, 0, 0, :]) ))
         for t in range(len(w[:,0,0,0,])):
-            w_max_time[t, :] = np.max(w[t, ...], axis=-1)
-        w_max_prof = np.mean(w_max_time, axis=-1)
+            for z in range(len(w_max_prof)):
+                w_max_prof[t, :] = np.max(w[t, ..., z])
+        w_max_prof = np.mean(w_max_time, axis=0)
 
     else:
-        w_max_prof = np.max(w[time_stamp, ...], axis=-1)
+        for z in range(len(w_max_prof)):
+            w_max_prof[z] = np.max(w[time_stamp, ..., z])
 
     print('shape of the w_max_prof is ', np.shape(w_max_prof))
 
