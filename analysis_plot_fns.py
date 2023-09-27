@@ -518,8 +518,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 if set_percentile != None:
                     myvmin = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], set_percentile[0])
                     myvmax = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], set_percentile[1])
-                mylevels = np.linspace(myvmin, myvmax, 8)
-                cf = plt.contourf(np.transpose(data_field), cmap=mycmap, levels=mylevels,
+                    mylevels = np.linspace(myvmin, myvmax, 8)
+                    cf = plt.contourf(np.transpose(data_field), cmap=mycmap, levels=mylevels,
                                   extend='both')
 
                 if set_percentile == None:
