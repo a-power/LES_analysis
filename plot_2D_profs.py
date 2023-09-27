@@ -99,7 +99,7 @@ def get_w_max_profs(field_path_in, time_stamp=-1):
     else:
         for z in range(len(w_max_prof)):
             w_max_prof[z] = np.max(w[time_stamp, ..., z])
-            print(f'calced w max for time_stamp = {time_stamp}}')
+            print(f'calced w max for time_stamp = {time_stamp}')
 
     print('shape of the w_max_prof is ', np.shape(w_max_prof))
 
