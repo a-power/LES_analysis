@@ -145,7 +145,7 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
 
         if len(times) == 1:
             ax[0].plot(wth_prof, z / z_i, color='black')
-            ax[0].set_xlabel("$ \\overline{w' \\theta}$", fontsize=16)
+            ax[0].set_xlabel("$ \\overline{w' \\theta} (K m s^{-1})$", fontsize=16)
             ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
             ax[0].set_xticks(ax[0].get_xticks()[::2])
 
@@ -153,10 +153,10 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
             ax[1].set_xlabel('cloud cover (%)', fontsize=16)
 
             ax[2].plot(th_prof, z / z_i, color='black')
-            ax[2].set_xlabel("$ \\overline{\\theta}$", fontsize=16)
+            ax[2].set_xlabel("$ \\overline{\\theta}$ (K)", fontsize=16)
 
             ax[3].plot(w_max_prof_in, z / z_i, color='black')
-            ax[3].set_xlabel("$ w'_{max}$", fontsize=16)
+            ax[3].set_xlabel("$ w'_{max}$ (m s^{-1})", fontsize=16)
 
         else:
             ax[0, it].plot(wth_prof, z / z_i, color='black')
