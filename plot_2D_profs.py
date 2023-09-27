@@ -82,6 +82,31 @@ def get_cloud_wth_profs(file_path, time_stamp=-1):
 
 
 
+def get_w_max_profs(file_path, time_stamp=-1):
+
+    field_data = xr.open_dataset(file_path)
+
+    w = field_data['w'].data[...]
+
+    if time_stamp == None:
+        w_max_prof = np.max(w, axis=-1)
+
+    elif time_stamp == 'mean':
+        w_max_time = np.zeros(( len(w[:, 0, 0, 0]), len(w[0, 0, 0, :]) ))
+        for t in range(len(w[:,0,0,0,])):
+            w_max_time[t, :] = np.max(w[t, ...], axis=-1)
+        w_max_prof = np.mean(w_max_time, axis=-1)
+
+    else:
+        w_max_prof = np.max(w[time_stamp, ...], axis=-1)
+
+    print('shape of the w_max_prof is ', np.shape(w_max_prof))
+
+    return w_max_prof
+
+
+
+
 def plot_MONC_profs(file_path, times, time_stamp_in='mean'):
 
 
@@ -90,18 +115,20 @@ def plot_MONC_profs(file_path, times, time_stamp_in='mean'):
 
 
     if len(times) == 1:
-        fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(10, 4))
+        fig, ax = plt.subplots(nrows=1, ncols=4, sharey=True, figsize=(13, 4))
     else:
-        fig, ax = plt.subplots(nrows=3, ncols=len(times), sharey=False, figsize=(18,14))
+        fig, ax = plt.subplots(nrows=4, ncols=len(times), sharey=False, figsize=(24,14))
 
     fig.tight_layout(pad=0.5)
 
     setleft0 = 0
     setleft1 = 0
     setleft2 = 300
+    setleft3 = 0
     setright0 = 0
     setright1 = 0
     setright2 = 0
+    setright3 = 0
 
 
     for it, time_in in enumerate(times):
@@ -109,13 +136,14 @@ def plot_MONC_profs(file_path, times, time_stamp_in='mean'):
         file_in = file_path + f'{time_in}.nc'
 
         wth_prof,  th_prof, cloud_prof, z, z_i = get_cloud_wth_profs(file_in, time_stamp=time_stamp_in)
+        w_max_prof_in = get_w_max_profs(file_in, time_stamp=time_stamp_in)
 
         clock_time_int = 05.30 + int(time_in) / (60 * 60)
         clock_time = str(clock_time_int) + '0L'
 
         if len(times) == 1:
             ax[0].plot(wth_prof, z / z_i, color='black')
-            ax[0].set_xlabel("$ \\overline{w' \\theta'}$", fontsize=16)
+            ax[0].set_xlabel("$ \\overline{w' \\theta}$", fontsize=16)
             ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
             ax[0].set_xticks(ax[0].get_xticks()[::2])
 
@@ -123,7 +151,10 @@ def plot_MONC_profs(file_path, times, time_stamp_in='mean'):
             ax[1].set_xlabel('cloud cover (%)', fontsize=16)
 
             ax[2].plot(th_prof, z / z_i, color='black')
-            ax[2].set_xlabel("$ \\overline{\\theta'}$", fontsize=16)
+            ax[2].set_xlabel("$ \\overline{\\theta}$", fontsize=16)
+
+            ax[3].plot(w_max_prof_in, z / z_i, color='black')
+            ax[3].set_xlabel("$ w'_{max}$", fontsize=16)
 
         else:
             ax[0, it].plot(wth_prof, z / z_i, color='black')
@@ -148,6 +179,7 @@ def plot_MONC_profs(file_path, times, time_stamp_in='mean'):
 
             ax[2, it].plot(th_prof, z / z_i, color='black')
             ax[2, it].set_xlabel("$ \\overline{\\theta'}$ at "  + clock_time, fontsize=16)
+            ax[2, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
 
             left2, right2 = ax[2, it].set_xlim()
             if left2 < setleft2:
@@ -155,18 +187,29 @@ def plot_MONC_profs(file_path, times, time_stamp_in='mean'):
             if right2 > setright2:
                 setright2 = right2
 
+            ax[3, it].plot(w_max_prof_in, z / z_i, color='black')
+            ax[3, it].set_xlabel("$ w'_{max}$", fontsize=16)
+            ax[3, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
+
+            left3, right3 = ax[3, it].set_xlim()
+            if left3 < setleft3:
+                setleft3 = left3
+            if right3 > setright3:
+                setright3 = right3
+
     if len(times) != 1:
         for itn in range(len(times)):
             ax[0, itn].set_xlim(right=setright0, left=setleft0)
             ax[1, itn].set_xlim(right=setright1, left=setleft1)
             ax[2, itn].set_xlim(right=setright2, left=setleft2)
+            ax[3, itn].set_xlim(right=setright3, left=setleft3)
             ax[0, itn].set_xticks(ax[0, itn].get_xticks()[::2])
 
 
     plt.tight_layout()
 
 
-    plt.savefig(plotdir + f'cloud_wth_profs.pdf', bbox_inches='tight')
+    plt.savefig(plotdir + f'cloud_wth_th_wmax_profs.pdf', bbox_inches='tight')
 
     plt.close()
 
