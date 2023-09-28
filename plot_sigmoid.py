@@ -200,5 +200,5 @@ plot_sigmoid(set_var, data_path, times, Deltas, 'Mid ML', z_ml_r_ind_list, set_l
 plot_sigmoid(set_var, data_path, times, Deltas, 'Mid CL', z_cl_r_ind_set, set_log_axis)
 
 
-# plot_all_sigmoid(set_var, data_path, bomex_info_in, times, Deltas, 'Mid ML', z_ml_r_ind_list)
-# plot_all_sigmoid(set_var, data_path, bomex_info_in, times, Deltas, 'Mid CL', z_ml_r_ind_list)
+plot_all_sigmoid(set_var, data_path, bomex_info_in, times, Deltas, 'Mid ML', z_ml_r_ind_list)
+plot_all_sigmoid(set_var, data_path, bomex_info_in, times, Deltas, 'Mid CL', z_ml_r_ind_list)
