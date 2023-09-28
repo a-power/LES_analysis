@@ -118,7 +118,7 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
     if len(times) == 1:
         fig, ax = plt.subplots(nrows=1, ncols=4, sharey=True, figsize=(13, 4))
     else:
-        fig, ax = plt.subplots(nrows=4, ncols=len(times), sharey=False, figsize=(24,14))
+        fig, ax = plt.subplots(nrows=4, ncols=len(times), sharey=False, figsize=(14,19))
 
     fig.tight_layout(pad=0.5)
 
