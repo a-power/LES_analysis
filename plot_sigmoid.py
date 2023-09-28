@@ -138,7 +138,9 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
     plt.xlabel("Filter Scale", fontsize=14)
     plt.title(f'{layer}', fontsize=16)
     if variable == 'w':
-        plt.ylabel("$\\overline{ w'^2 m^2 s^{-1}}$", fontsize=16)
+        plt.ylabel("$\\overline{ w'^2 } (m^2 s^{-1})$", fontsize=16)
+    elif variable == 'TKE':
+        plt.ylabel("$TKE (m^2 s^{-1})$", fontsize=16)
     # plt.ylim(ymax=1.1, ymin=0.0)
     # plt.xlim(xmax=4e3, xmin=3e0)
     if case == 'ARM':
@@ -182,6 +184,8 @@ def plot_all_sigmoid(variable, data_dir, extra_case_npy, time_list, delta_list, 
     plt.title(f'{layer}', fontsize=16)
     if variable == 'w':
         plt.ylabel("$\\overline{ w'^2} / \overline{ w'^2_{total} }$", fontsize=16)
+    elif variable == 'TKE':
+        plt.ylabel("$TKE / TKE_{total}$", fontsize=16)
     # plt.ylim(ymax=1.1, ymin=0.0)
     # plt.xlim(xmax=4e3, xmin=3e0)
     plt.legend(fontsize=12, loc='best')
