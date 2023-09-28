@@ -166,7 +166,14 @@ def plot_all_sigmoid(variable, data_dir, extra_case_npy, time_list, delta_list, 
         z_l_mid_layer = int( (z_l_r[0] + z_l_r[1])/2 )
         print('axis index for ', layer, f'at time {time_str} is ', z_l_mid_layer)
 
-        var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
+        if variable == 'TKE':
+            sig_u = calc_variance('u', data_dir, time_str, z_l_mid_layer, delta_list)
+            sig_v = calc_variance('v', data_dir, time_str, z_l_mid_layer, delta_list)
+            sig_w = calc_variance('w', data_dir, time_str, z_l_mid_layer, delta_list)
+
+            var_sig = 0.5 * (sig_u + sig_v + sig_w)
+        else:
+            var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
 
         plt.semilogx(Delta_values/ml_heights[t], var_sig/float(var_sig[0]), col_list[t], label=f'ARM at {clock_time}')
 
@@ -195,9 +202,9 @@ def plot_all_sigmoid(variable, data_dir, extra_case_npy, time_list, delta_list, 
 
 
 
-
-plot_sigmoid(set_var, data_path, times, Deltas, 'Mid ML', z_ml_r_ind_list, set_log_axis)
-plot_sigmoid(set_var, data_path, times, Deltas, 'Mid CL', z_cl_r_ind_set, set_log_axis)
+#
+# plot_sigmoid(set_var, data_path, times, Deltas, 'Mid ML', z_ml_r_ind_list, set_log_axis)
+# plot_sigmoid(set_var, data_path, times, Deltas, 'Mid CL', z_cl_r_ind_set, set_log_axis)
 
 
 plot_all_sigmoid(set_var, data_path, bomex_info_in, times, Deltas, 'Mid ML', z_ml_r_ind_list)
