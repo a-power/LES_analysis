@@ -147,7 +147,7 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
         plt.legend(fontsize=12, loc='best')
     plt.xticks(Delta_values, Delta_labels)
 
-    plt.savefig(plotdir + f'{variable}_sigmoid_{layer}_log_{set_log_axis}.pdf')  # ("../plots/5m_w_variance_subgrid.png")
+    plt.savefig(plotdir + f'{case}_{variable}_sigmoid_{layer}_log_{set_log_axis}.pdf')  # ("../plots/5m_w_variance_subgrid.png")
 
 
 
