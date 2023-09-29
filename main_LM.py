@@ -66,7 +66,9 @@ for nt, time_in in enumerate(times_list):
 
     file_in = f'{time_in}_gaussian_filter_'
     data_2D = path20f + file_in + str('ga00.nc')
-    dataset_name2 = [path20f + file20 + 'Cs_2D.nc', path20f + file20 + 'C_th_2D.nc', path20f + file20 + 'C_qt_2D.nc']
+    dataset_name2 = [path20f + file_in + 'Cs_2D.nc',
+                     path20f + file_in + 'C_th_2D.nc',
+                     path20f + file_in + 'C_qt_2D.nc']
 
     for i, scalar_in in enumerate(scalar):
 
