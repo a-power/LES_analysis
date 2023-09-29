@@ -37,10 +37,7 @@ elif case == 'ARM':
 scalar = ['momentum', 'th', 'q_total']
 set_save_all = 2
 
-DX_2D = {
-    'indir': data_2D,
-    'dx_hat': 2*dx
-}
+
 # DX_4D = {
 #     'indir': data_4D,
 #     'dx_hat': 80
@@ -69,6 +66,11 @@ for nt, time_in in enumerate(times_list):
     dataset_name2 = [path20f + file_in + 'Cs_2D.nc',
                      path20f + file_in + 'C_th_2D.nc',
                      path20f + file_in + 'C_qt_2D.nc']
+
+    DX_2D = {
+        'indir': data_2D,
+        'dx_hat': 2 * dx
+    }
 
     for i, scalar_in in enumerate(scalar):
 
