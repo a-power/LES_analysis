@@ -4,14 +4,17 @@ import os
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='19200')
-parser.add_argument('--case', type=str, default='ARM')
+parser.add_argument('--times', type=str, default='14400')
+parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--start_in', type=int, default=0)
+parser.add_argument('--sigma_in', type=int, default=-1)
 
 args = parser.parse_args()
 set_time = [ args.times ]
 case = args.case
 start = args.start_in
+sigma = args.sigma_in
+
 
 print('start type = ', type(start))
 
@@ -23,6 +26,7 @@ elif case=='BOMEX':
 
 else:
     print('case not recognised, need to input dx for this case')
+
 
 opgrid = 'p'
 
@@ -37,21 +41,24 @@ filter_name = 'gaussian'  # "wave_cutoff"
 #                                 #
 ###################################
 
+if sigma != -1:
+    sigma_list = np.array([ MY_dx * (sigma_in +1) ])
 
-if start == 0:
-    sigma_list = np.array([MY_dx, 2*MY_dx, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
-elif start == 1:
-    sigma_list = np.array([2*MY_dx, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
-elif start == 2:
-    sigma_list = np.array([4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
-elif start == 3:
-    sigma_list = np.array([8*MY_dx, 16*MY_dx, 32*MY_dx])
-elif start == 4:
-    sigma_list = np.array([16*MY_dx, 32*MY_dx])
-elif start == 5:
-    sigma_list = np.array([32*MY_dx])
 else:
-    print('need to set up the sigma list for start = ', start)
+    if start == 0:
+        sigma_list = np.array([MY_dx, 2*MY_dx, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
+    elif start == 1:
+        sigma_list = np.array([2*MY_dx, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
+    elif start == 2:
+        sigma_list = np.array([4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
+    elif start == 3:
+        sigma_list = np.array([8*MY_dx, 16*MY_dx, 32*MY_dx])
+    elif start == 4:
+        sigma_list = np.array([16*MY_dx, 32*MY_dx])
+    elif start == 5:
+        sigma_list = np.array([32*MY_dx])
+    else:
+        print('need to set up the sigma list for start = ', start)
 # #([20, 40, 80] ([160, 320, 640])
 
 
