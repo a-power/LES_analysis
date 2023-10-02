@@ -42,7 +42,7 @@ filter_name = 'gaussian'  # "wave_cutoff"
 ###################################
 
 if sigma != -1:
-    sigma_list = np.array([ MY_dx * (sigma_in +1) ])
+    sigma_list = np.array([ MY_dx * (sigma +1) ])
 
 else:
     if start == 0:
