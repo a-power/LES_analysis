@@ -61,7 +61,7 @@ set_save_all = 2
 
 for nt, time_in in enumerate(times_list):
 
-    file_in = f'{time_in}_gaussian_filter_'
+    file_in = file20+f'{time_in}_gaussian_filter_'
     data_2D = path20f + file_in + str('ga00.nc')
     dataset_name2 = [path20f + file_in + 'Cs_2D.nc',
                      path20f + file_in + 'C_th_2D.nc',
