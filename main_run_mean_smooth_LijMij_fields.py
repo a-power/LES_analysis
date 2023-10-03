@@ -14,18 +14,23 @@ import dask
 import subfilter
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='25200')
+# parser.add_argument('--times', type=str, default='25200')
+parser.add_argument('--time_ind', type=int, default=1)
 parser.add_argument('--start_filt', type=int, default=0)
 #parser.add_argument('--n_filts', type=int, default=6)
+parser.add_argument('--case_in', type=str, default='ARM')
 
 args = parser.parse_args()
-set_time = args.times
+set_time_ind = args.time_ind
 filters_start = args.start_filt
 #how_many_filters = args.n_filts
 how_many_filters = filters_start + 1
+case = args.case_in
 
-beta=True
-case = 'ARM' # 'BOMEX',
+beta=False
+times = ['18000', '25200', '32400', '39600']
+set_time = times[set_time_ind]
+
 
 opt_BOMEX = {
         'FFT_type': 'RFFT',
@@ -62,10 +67,11 @@ elif case == 'ARM':
         homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/'
         dir_cloud = homedir + f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     else:
-        print('not coded yet')
+        homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/'
+        dir_cloud = homedir + f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
 
 
-mydir = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
+    mydir = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
 
 
 dirs = [mydir, dir_cloud]#,
@@ -74,7 +80,8 @@ if beta == True:
     res = ['0', '1', '2', '3', '4', '5']
     num_filts = ['0', '1']
 else:
-    res = ['2D', '4D', '8D', '16D', '32D', '64D']
+    res = ['0', '1', '2', '3', '4', '5']
+    #res = ['2D', '4D', '8D', '16D', '32D', '64D']
     num_filts = ['0']
 vars = ['Cs_', 'C_th_', 'C_qt_']
 
