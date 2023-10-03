@@ -6,9 +6,9 @@ import xarray as xr
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--case_in', type=str, default='ARM')
-parser.add_argument('--var', type=str, default='TKE')
+parser.add_argument('--var', type=str, default='TKE') # 'w', 'TKE'
+parser.add_argument('--var2', type=str, default=None)# 'th', 'q_total'
 parser.add_argument('--log_a', default=True)
-parser.add_argument('--var2', type=str, default=None)
 
 args = parser.parse_args()
 case = args.case_in
@@ -47,6 +47,7 @@ if case == 'BOMEX':
 if case == 'ARM':
     data_path = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/diagnostics_3d_ts_'
     once_filt = '/work/scratch-pw3/apower/ARM/corrected_sigmas/diagnostics_3d_ts_'
+    outdir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/data/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigma/sigmoid/'
     bomex_info_in = '/gws/nopw/j04/paracon_rdg/users/apower/BOMEX/data/'
     times = [ '18000', '25200', '32400', '39600' ]
@@ -64,6 +65,8 @@ if case == 'ARM':
 
     ml_heights = np.array([820, 970, 1120, 1270])
     ml_height_bomex = 440
+
+    os.makedirs(outdir, exist_ok=True)
 
 
 
