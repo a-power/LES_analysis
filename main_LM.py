@@ -3,7 +3,7 @@ from subfilter.io.dataout import save_field
 import os
 import xarray as xr
 
-case = 'ARM'
+case = 'BOMEX'
 
 av_type = 'all'
 mygrid = 'p'

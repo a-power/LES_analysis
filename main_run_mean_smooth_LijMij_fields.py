@@ -15,7 +15,7 @@ import subfilter
 
 parser = argparse.ArgumentParser()
 # parser.add_argument('--times', type=str, default='25200')
-parser.add_argument('--time_ind', type=int, default=1)
+parser.add_argument('--time_ind', type=int, default=0)
 parser.add_argument('--start_filt', type=int, default=0)
 #parser.add_argument('--n_filts', type=int, default=6)
 parser.add_argument('--case_in', type=str, default='ARM')
