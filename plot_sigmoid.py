@@ -158,7 +158,7 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
                 if os.path.exists(outdir + f'sigmoid_{case}_{variable}_{var2}_{layer}_{time_str}.npy'):
                     var_sig = np.load(outdir+f'sigmoid_{case}_{variable}_{var2}_{layer}_{time_str}.npy')
                 else:
-                    var_sig = calc_variance(variable, var2, data_dir, time_str, z_l_mid_layer, delta_list)
+                    var_sig = calc_covariance(variable, var2, data_dir, time_str, z_l_mid_layer, delta_list)
                     np.save(outdir+f'sigmoid_{case}_{variable}_{var2}_{layer}_{time_str}.npy', var_sig)
             else:
                 if os.path.exists(outdir + f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy'):
