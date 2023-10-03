@@ -8,10 +8,12 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--case_in', type=str, default='ARM')
 parser.add_argument('--var', type=str, default='TKE')
 parser.add_argument('--log_a', default=True)
+parser.add_argument('--var2', type=str, default=None)
 
 args = parser.parse_args()
 case = args.case_in
 set_var = args.var
+set_var2 = args.var2
 set_log_axis = args.log_a
 
 mygrid = 'p'
@@ -70,7 +72,7 @@ os.makedirs(plotdir, exist_ok = True)
 
 def calc_var_mean(var_in, dir_in, time_in, layer_set, Deltas, dir_once_filt = once_filt):
 
-    var_mean_high_res = f'{var_in}_wind_mean'
+    #var_mean_high_res = f'{var_in}_wind_mean'
     var_name = f'f({var_in}_on_{mygrid})_r'
 
     var_mean = np.zeros(( len(Deltas) ))
@@ -257,9 +259,9 @@ def plot_all_sigmoid(variable, data_dir, extra_case_npy, time_list, delta_list, 
 
 
 #
-plot_sigmoid(set_var, data_path, times, Deltas, 'Mid ML', z_ml_r_ind_list, set_log_axis)
-plot_sigmoid(set_var, data_path, times, Deltas, 'Mid CL', z_cl_r_ind_set, set_log_axis)
+plot_sigmoid(set_var, data_path, times, Deltas, 'Mid ML', z_ml_r_ind_list, set_var2, set_log_axis)
+plot_sigmoid(set_var, data_path, times, Deltas, 'Mid CL', z_cl_r_ind_set, set_var2, set_log_axis)
 
 
-# plot_all_sigmoid(set_var, data_path, bomex_info_in, times, Deltas, 'Mid ML', z_ml_r_ind_list)
-# plot_all_sigmoid(set_var, data_path, bomex_info_in, times, Deltas, 'Mid CL', z_ml_r_ind_list)
+# plot_all_sigmoid(set_var, data_path, bomex_info_in, times, Deltas, 'Mid ML', z_ml_r_ind_list, set_var2)
+# plot_all_sigmoid(set_var, data_path, bomex_info_in, times, Deltas, 'Mid CL', z_ml_r_ind_list, set_var2)
