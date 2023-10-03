@@ -113,7 +113,7 @@ def calc_variance(var, dir, time, layer, Delta_list, dir_once_filt = once_filt):
 def calc_covariance(var1, var2, dir, time, layer, Delta_list, dir_once_filt = once_filt):
 
     var_name1 = f'f({var1}_on_{mygrid})_r'
-    var_name2 = f'f({var2}_on_{mygrid})_r'
+    var_name2_temp = f'f({var2}_on_{mygrid})_r'
 
     var_mean1 = calc_var_mean(var1, dir, time, layer, Delta_list)
     var_mean2 = calc_var_mean(var2, dir, time, layer, Delta_list)
@@ -123,8 +123,13 @@ def calc_covariance(var1, var2, dir, time, layer, Delta_list, dir_once_filt = on
     for d, Del in enumerate(Deltas):
         if Del == '-1':
             dataset_in = dir_once_filt + f'{time}_gaussian_filter_ga00.nc'
+            var_name2 = 'q_total'
         else:
             dataset_in = dir + f'{time}_gaussian_filter_ga0{Del}_gaussian_filter_ga00.nc'
+            if var_name2_temp == 'q_total':
+                var_name2 = 'q_total_f'
+            else:
+                var_name2 = var_name2_temp
 
         data_set = xr.open_dataset(dataset_in)
         var_covariance[d] = np.mean( (data_set[var_name1].data[..., layer] - var_mean1[d]) * \
@@ -190,7 +195,7 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
         if variable == 'w' and var2 == 'th':
             plt.ylabel("$\\overline{ w' \\theta' }$ $(K m s^{-1})$", fontsize=16)
         elif variable == 'w' and var2 == 'q_total':
-            plt.ylabel("$\\overline{ w' \\q_t' }$ $(K m s^{-1})$", fontsize=16)
+            plt.ylabel("$\\overline{ w' q_t' }$ $(K m s^{-1})$", fontsize=16)
 
     # plt.ylim(ymax=1.1, ymin=0.0)
     # plt.xlim(xmax=4e3, xmin=3e0)
