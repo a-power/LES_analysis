@@ -107,14 +107,24 @@ for i, indir in enumerate(dirs):
                         file_in = f'{indir}{var_in}{res[j + filters_start]}.nc'
 
                     if var_in == 'Cs_':
-                        var_names = ['LM_field', 'MM_field']
+                        if case == 'BOMEX':
+                                var_names = [f'f(LM_field_on_{ingrid})', f'f(MM_field_on_{ingrid})']
+                        else:
+                            var_names = ['LM_field', 'MM_field']
 
                     if var_in == 'C_th_':
-                        var_names = ['HR_th_field', 'RR_th_field']
+                        if case == 'BOMEX':
+                                var_names = [f'f(HR_th_field_on_{ingrid})', f'f(RR_th_field_on_{ingrid})']
+                        else:
+                            var_names = ['HR_th_field', 'RR_th_field']
 
                     if var_in == 'C_qt_':
                         if beta==True:
-                            var_names = ['HR_q_total_f_field', 'RR_q_total_f_field']
+                            if case == 'BOMEX':
+                                var_names = [f'f(HR_q_total_f_field_on_{ingrid})',
+                                             f'f(RR_q_total_f_field_on_{ingrid})']
+                            else:
+                                var_names = ['HR_q_total_f_field', 'RR_q_total_f_field']
                         else:
                             var_names = ['HR_q_total_field', 'RR_q_total_field']
 
@@ -234,13 +244,13 @@ for i, indir in enumerate(dirs):
                     var_names = [f'f(f(q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
                                   f'f(f(th_v_on_{ingrid})_r_on_{ingrid})_r',
                                   f'f(f(w_on_{ingrid})_r_on_{ingrid})_r',
-                                  f'f(f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
-                                  f'f(f(w_on_{ingrid}.th_on_{ingrid})_r_on_{ingrid})_r',
-                                  f'f(f(w_on_{ingrid}.th_v_on_{ingrid})_r_on_{ingrid})_r',
                                   f'f(f(u_on_{ingrid}.u_on_{ingrid})_r_on_{ingrid})_r',
                                   f'f(f(v_on_{ingrid}.v_on_{ingrid})_r_on_{ingrid})_r',
-                                  f'f(f(w_on_{ingrid}.w_on_{ingrid})_r_on_{ingrid})_r'
-                                  ]
+                                  f'f(f(w_on_{ingrid}.w_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(w_on_{ingrid}.th_v_on_{ingrid})_r_on_{ingrid})_r' ] #,
+                                  # f'f(f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
+                                  # f'f(f(w_on_{ingrid}.th_on_{ingrid})_r_on_{ingrid})_r']
+
                 else:
                     print('contour variables not defined for this case')
 
