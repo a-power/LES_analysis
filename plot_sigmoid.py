@@ -209,9 +209,9 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
     plt.xticks(Delta_values, Delta_labels)
 
     if var2 != None:
-        plt.savefig(plotdir + f'{case}_{variable}_{var2}_sigmoid_{layer}_log_{set_log_axis}.pdf')
+        plt.savefig(plotdir + f'{case}_{variable}_{var2}_sigmoid_{layer}_log_{set_log_axis}.pdf', bbox_inches='tight')
     else:
-        plt.savefig(plotdir + f'{case}_{variable}_sigmoid_{layer}_log_{set_log_axis}.pdf')
+        plt.savefig(plotdir + f'{case}_{variable}_sigmoid_{layer}_log_{set_log_axis}.pdf', bbox_inches='tight')
 
 
 
@@ -265,9 +265,9 @@ def plot_all_sigmoid(variable, data_dir, extra_case_npy, time_list, delta_list, 
     # plt.xticks(Delta_values, Delta_labels)
 
     if var2 != None:
-        plt.savefig(plotdir + f'all_{variable}_{var2}_sigmoids_{layer}_log_{set_log_axis}.pdf')
+        plt.savefig(plotdir + f'all_{variable}_{var2}_sigmoids_{layer}_log_{set_log_axis}.pdf', bbox_inches='tight')
     else:
-        plt.savefig(plotdir + f'all_{variable}_sigmoids_{layer}_log_{set_log_axis}.pdf')
+        plt.savefig(plotdir + f'all_{variable}_sigmoids_{layer}_log_{set_log_axis}.pdf', bbox_inches='tight')
 
 
 
