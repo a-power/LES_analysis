@@ -123,11 +123,11 @@ def calc_covariance(var1, var2, dir, time, layer, Delta_list, dir_once_filt = on
     for d, Del in enumerate(Deltas):
         if Del == '-1':
             dataset_in = dir_once_filt + f'{time}_gaussian_filter_ga00.nc'
-            var_name2 = 'q_total'
+            var_name2 = f'f({var2}_on_{mygrid})_r'
         else:
             dataset_in = dir + f'{time}_gaussian_filter_ga0{Del}_gaussian_filter_ga00.nc'
             if var_name2_temp == 'q_total':
-                var_name2 = 'q_total_f'
+                var_name2 = f'f(q_total_f_on_{mygrid})_r'
             else:
                 var_name2 = var_name2_temp
 
