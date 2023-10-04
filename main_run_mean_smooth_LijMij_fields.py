@@ -215,7 +215,7 @@ for i, indir in enumerate(dirs):
                     file_in = f'{indir}{res[j+filters_start]}_gaussian_filter_ga0{filt_2nd}.nc'
 
                 else:
-                    file_in = f'{indir}{res[j+filters_start]}.nc'
+                    file_in = f'{indir}{j+filters_start}.nc'
 
                 if case == 'ARM':
                     var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r', f'f(th_v_on_{ingrid})_r',
