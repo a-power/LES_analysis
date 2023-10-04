@@ -5,7 +5,7 @@ import argparse
 import xarray as xr
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--case_in', type=str, default='ARM')
+parser.add_argument('--case_in', type=str, default='BOMEX')
 parser.add_argument('--var', type=str, default='TKE') # 'w', 'TKE'
 parser.add_argument('--var2', type=str, default=None)# 'th', 'q_total'
 parser.add_argument('--log_a', default=True)
@@ -23,7 +23,7 @@ beta_filt_num = ['0']
 
 if case == 'BOMEX':
     data_path = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_filters/contours/BOMEX_m0020_g0800_all_'
-    once_filt = '' # needs to run on jas and be transfered to RACC
+    once_filt = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_filters/contours/BOMEX_m0020_g0800_all_'
     plotdir = '/home/users/si818415/phd/plots/'
     outdir = '/home/users/si818415/phd/data/'
 
