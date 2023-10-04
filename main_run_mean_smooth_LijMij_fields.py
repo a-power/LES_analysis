@@ -78,7 +78,7 @@ elif case == 'ARM':
     mydir = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
 
 
-dirs = [mydir, dir_cloud]#,
+dirs = [dir_cloud]#mydir,
 
 if beta == True:
     res = ['0', '1', '2', '3', '4', '5']
@@ -231,7 +231,19 @@ for i, indir in enumerate(dirs):
                 else:
                     file_in = f'{indir}{j+filters_start}.nc'
 
-                if case == 'ARM':
+
+                if case == 'BOMEX' and beta == True:
+                    var_names = [f'f(f(q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(th_v_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(w_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(u_on_{ingrid}.u_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(v_on_{ingrid}.v_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(w_on_{ingrid}.w_on_{ingrid})_r_on_{ingrid})_r',
+                                  f'f(f(w_on_{ingrid}.th_v_on_{ingrid})_r_on_{ingrid})_r' ] #,
+                                  # f'f(f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
+                                  # f'f(f(w_on_{ingrid}.th_on_{ingrid})_r_on_{ingrid})_r']
+
+                else:
                     var_names = [f'f(q_cloud_liquid_mass_on_{ingrid})_r', f'f(th_v_on_{ingrid})_r',
                                  f'f(w_on_{ingrid})_r',
                              f'f(u_on_{ingrid}.u_on_{ingrid})_r',
@@ -244,19 +256,6 @@ for i, indir in enumerate(dirs):
                                  # f'f(w_on_{ingrid}.th_on_{ingrid})_r',
                                  # f'f(w_on_{ingrid}.q_total_on_{ingrid})_r'
 
-                elif case == 'BOMEX':
-                    var_names = [f'f(f(q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
-                                  f'f(f(th_v_on_{ingrid})_r_on_{ingrid})_r',
-                                  f'f(f(w_on_{ingrid})_r_on_{ingrid})_r',
-                                  f'f(f(u_on_{ingrid}.u_on_{ingrid})_r_on_{ingrid})_r',
-                                  f'f(f(v_on_{ingrid}.v_on_{ingrid})_r_on_{ingrid})_r',
-                                  f'f(f(w_on_{ingrid}.w_on_{ingrid})_r_on_{ingrid})_r',
-                                  f'f(f(w_on_{ingrid}.th_v_on_{ingrid})_r_on_{ingrid})_r' ] #,
-                                  # f'f(f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
-                                  # f'f(f(w_on_{ingrid}.th_on_{ingrid})_r_on_{ingrid})_r']
-
-                else:
-                    print('contour variables not defined for this case')
 
                 ds_in = xr.open_dataset(file_in)
                 time_data = ds_in['time']
