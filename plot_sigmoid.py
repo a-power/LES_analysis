@@ -158,11 +158,15 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
         z_l_mid_layer = int( (z_l_r[0] + z_l_r[1])/2 )
         print('axis index for ', layer, f'at time {time_str} is ', z_l_mid_layer)
         if variable == 'TKE':
-            sig_u = calc_variance('u', data_dir, time_str, z_l_mid_layer, delta_list)
-            sig_v = calc_variance('v', data_dir, time_str, z_l_mid_layer, delta_list)
-            sig_w = calc_variance('w', data_dir, time_str, z_l_mid_layer, delta_list)
+            if os.path.exists(outdir + f'sigmoid_{case}_{variable}_{var2}_{layer}_{time_str}.npy'):
+                var_sig = np.load(outdir+f'sigmoid_{case}_{variable}_{var2}_{layer}_{time_str}.npy')
+            else:
+                sig_u = calc_variance('u', data_dir, time_str, z_l_mid_layer, delta_list)
+                sig_v = calc_variance('v', data_dir, time_str, z_l_mid_layer, delta_list)
+                sig_w = calc_variance('w', data_dir, time_str, z_l_mid_layer, delta_list)
+                var_sig = 0.5 * (sig_u + sig_v + sig_w)
+                np.save(outdir+f'sigmoid_{case}_{variable}_{var2}_{layer}_{time_str}.npy', var_sig)
 
-            var_sig = 0.5 * (sig_u + sig_v + sig_w)
         else:
             if var2 != None:
                 if os.path.exists(outdir + f'sigmoid_{case}_{variable}_{var2}_{layer}_{time_str}.npy'):
