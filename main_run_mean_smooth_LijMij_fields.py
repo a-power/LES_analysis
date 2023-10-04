@@ -62,8 +62,8 @@ if case == 'BOMEX':
         dir_cloud = homedir + 'contours/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
     else:
         homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/'
-        dir_cloud = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
-    mydir = homedir + f"BOMEX_m0020_g0800_all_{set_time}_gaussian_filter_ga0"
+        dir_cloud = homedir + f'BOMEX_m0020_g0800_all_{set_time}_gaussian_filter_ga0'
+    mydir = homedir + f"BOMEX_m0020_g0800_all_{set_time}_gaussian_filter_"
 
 elif case == 'ARM':
     opt = opt_ARM
@@ -78,7 +78,7 @@ elif case == 'ARM':
     mydir = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
 
 
-dirs = [dir_cloud]#,mydir,
+dirs = [mydir, dir_cloud]#,
 
 if beta == True:
     res = ['0', '1', '2', '3', '4', '5']
