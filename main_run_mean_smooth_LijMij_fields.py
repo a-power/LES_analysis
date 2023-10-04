@@ -74,7 +74,7 @@ elif case == 'ARM':
     mydir = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
 
 
-dirs = [mydir, dir_cloud]#,
+dirs = [dir_cloud]#,mydir,
 
 if beta == True:
     res = ['0', '1', '2', '3', '4', '5']
@@ -234,7 +234,6 @@ for i, indir in enumerate(dirs):
                     var_names = [f'f(f(q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
                                   f'f(f(th_v_on_{ingrid})_r_on_{ingrid})_r',
                                   f'f(f(w_on_{ingrid})_r_on_{ingrid})_r',
-                                  f'f(f(w_on_{ingrid}.w_on_{ingrid})_r_on_{ingrid})_r',
                                   f'f(f(w_on_{ingrid}.q_cloud_liquid_mass_on_{ingrid})_r_on_{ingrid})_r',
                                   f'f(f(w_on_{ingrid}.th_on_{ingrid})_r_on_{ingrid})_r',
                                   f'f(f(w_on_{ingrid}.th_v_on_{ingrid})_r_on_{ingrid})_r',
