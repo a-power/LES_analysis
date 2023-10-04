@@ -63,7 +63,7 @@ if case == 'BOMEX':
     else:
         homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/'
         dir_cloud = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
-    mydir = homedir + f"BOMEX_m0020_g0800_all_{set_time}_gaussian_filter_"
+    mydir = homedir + f"BOMEX_m0020_g0800_all_{set_time}_gaussian_filter_ga0"
 
 elif case == 'ARM':
     opt = opt_ARM
