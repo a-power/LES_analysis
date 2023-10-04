@@ -111,13 +111,13 @@ for i, indir in enumerate(dirs):
                         file_in = f'{indir}{var_in}{res[j + filters_start]}.nc'
 
                     if var_in == 'Cs_':
-                        if case == 'BOMEX':
-                                var_names = [f'f(LM_field_on_{ingrid})', f'f(MM_field_on_{ingrid})']
+                        if case == 'BOMEX' and beta == True:
+                            var_names = [f'f(LM_field_on_{ingrid})', f'f(MM_field_on_{ingrid})']
                         else:
                             var_names = ['LM_field', 'MM_field']
 
                     if var_in == 'C_th_':
-                        if case == 'BOMEX':
+                        if case == 'BOMEX' and beta == True:
                                 var_names = [f'f(HR_th_field_on_{ingrid})', f'f(RR_th_field_on_{ingrid})']
                         else:
                             var_names = ['HR_th_field', 'RR_th_field']
