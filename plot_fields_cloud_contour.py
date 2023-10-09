@@ -91,8 +91,7 @@ general_options = {'set_cb': set_cb_in,
                     }
 
 
-plot_var_fields_options = {'set_cb': set_cb_in,
-                            'plot_dir': plotdir_in,
+plot_var_fields_options = {'plot_dir': plotdir_in,
                             'axis_set': my_axis,
                             'var_path': contour_data,
                             'x_or_y': my_x_y,

@@ -863,6 +863,7 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
             if myvmin_var != None:
                  myvmin = myvmin_var
                  myvmax = myvmax_var
+                 print('vmax and vmin values are: ', myvmax, myvmin)
                  mylevels = np.linspace(myvmin, myvmax, 8)
                  cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.bwr,
                                    norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
