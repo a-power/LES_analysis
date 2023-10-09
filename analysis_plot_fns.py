@@ -586,13 +586,13 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 # cb.set_under('k')
                 cb.set_label(f'{field_name_sq}', size=16)
 
-                cl_c = plt.contour(np.transpose(cloud_field), colors='black', linewidths=3,
+                cl_c = plt.contour(np.transpose(cloud_field), colors='black', linewidths=2,
                                    levels=[1e-7])
                 th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, :]), colors='black', linestyles='dashed',
-                                     linewidths=2)  # , levels=[0.1, 1, 2])
+                                     linewidths=1)  # , levels=[0.1, 1, 2])
                 ax2.clabel(th_v_c, inline=True, fontsize=10)
                 w_c = plt.contour(np.transpose(w_field), colors='darkslategrey',
-                                  linewidths=2, levels=[0.1, 0.5])
+                                  linewidths=1, levels=[0.1, 0.5])
                 ax2.clabel(w_c, inline=True, fontsize=8)
                 # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1, levels=[0.1])
                 plt.xlabel(f'x (km) (cross section with {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km)', fontsize=16)
@@ -954,17 +954,17 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
             cb = plt.colorbar(cf, format='%.2f')
             cb.set_label(f'{var_name} ({var_units})', size=16)
 
-            cl_c = plt.contour(np.transpose(cloud_field), colors='black', linewidths=2, levels=[1e-7])
+            cl_c = plt.contour(np.transpose(cloud_field), colors='black', linewidths=3, levels=[1e-7])
             th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, :]), colors='black', linestyles='dashed',
-                        linewidths=1)  # , levels=[0.1, 1, 2])
+                        linewidths=2)  # , levels=[0.1, 1, 2])
             ax1.clabel(th_v_c, inline=True, fontsize=10)
 
             C_1st = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], C_perc_1st)
             C_2nd = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], C_perc_2nd)
-            C_contour = plt.contour(np.transpose(data_field), colors='darkslategrey', linewidths=1,
+            C_contour = plt.contour(np.transpose(data_field), colors='yellow', linewidths=2,
                         levels=[C_1st, C_2nd])
             ax1.clabel(C_contour, inline=True, fontsize=10, fmt='%1.2f')
-            # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1, levels=[0.1])
+            # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=2, levels=[0.1])
             plt.xlabel(f'x (km) (cross section with {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km) (km)', fontsize=16)
 
             plt.ylabel("z (km)", fontsize=16)
