@@ -931,7 +931,7 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                  # shifted_cmap = shiftedColorMap(orig_cmap, myvmin, myvmax)
 
                  print('vmax and vmin values are: ', myvmax, myvmin)
-                 mylevels = np.linspace(myvmin, myvmax, 8)
+                 mylevels = np.linspace(myvmin, myvmax, 9)
                  cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.bwr,
                                    norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
                                    levels=mylevels, extend='both')
@@ -943,7 +943,7 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                     # orig_cmap = matplotlib.cm.coolwarm
                     # shifted_cmap = shiftedColorMap(orig_cmap, myvmin, myvmax)
 
-                    mylevels = np.linspace(myvmin, myvmax, 8)
+                    mylevels = np.linspace(myvmin, myvmax, 9)
                     cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.bwr,
                                       norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
                                       levels=mylevels, extend='both')
