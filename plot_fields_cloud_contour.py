@@ -20,7 +20,7 @@ x_end = args.x_e
 
 Deltas = ['0_0']
 #['2D', '4D', '8D', '16D', '32D', '64D']
-contour_vars = 'w'
+set_var_field = 'w' #'w', 'TKE', 'w_th_v'
 
 
 if case =='BOMEX':
@@ -28,7 +28,7 @@ if case =='BOMEX':
     mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
     contour_data = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
-    plotdir_in = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/fields_contour/full_cb/'
+    plotdir_in = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/fields_contour/var_fields/'
 
     Dx_grid = 20
     z_top = 101
@@ -43,7 +43,7 @@ elif case == 'ARM':
     mydir = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
     contour_data = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_ga0"
 
-    plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/ARM/plots/fields_contour/{set_time}/full_cb/'
+    plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/ARM/plots/fields_contour/{set_time}/var_fields/'
 
     z_top = 250
     z_tix = np.linspace(0, z_top, 6)
@@ -92,18 +92,19 @@ general_options = {'set_cb': set_cb_in,
 
 
 plot_var_fields_options = {'set_cb': set_cb_in,
-                    'axis_set': my_axis,
-                    'x_or_y': my_x_y,
-                    't_av_or_not': time_av_or_not,
-                    'var_field': contour_vars,
-                    'plot_dir': plotdir_in,
-                    'start_end': x_axis_start_end,
-                    'deltas': Deltas,
-                    'delta_grid': Dx_grid,
-                    'z_top_in': z_top,
-                    'z_tix_in': z_tix,
-                    'z_labels_in': z_labels
-                    }
+                            'plot_dir': plotdir_in,
+                            'axis_set': my_axis,
+                            'var_path': contour_data,
+                            'x_or_y': my_x_y,
+                            't_av_or_not': time_av_or_not,
+                            'var_field': set_var_field,
+                            'start_end': x_axis_start_end,
+                            'deltas': Deltas,
+                            'delta_grid': Dx_grid,
+                            'z_top_in': z_top,
+                            'z_tix_in': z_tix,
+                            'z_labels_in': z_labels
+                            }
 
 
 
@@ -164,18 +165,18 @@ Cqt_options = {'field': 'Cqt_field',
 #
 # apf.plotfield(plotdir, start_end=x_axis_start_end, **MijMij_options)
 #
-apf.plotfield(**general_options, **Cs_options)
+apf.plot_C_contours(**plot_var_fields_options, **Cs_options)
 #
 #
 # apf.plotfield(plotdir, start_end=x_axis_start_end, **HjRj_th_options)
 
 # apf.plotfield(plotdir, start_end=x_axis_start_end, **RjRj_th_options)
 #
-apf.plotfield(**general_options, **Cth_options)
+apf.plot_C_contours(**plot_var_fields_options, **Cth_options)
 #
 #
 # apf.plotfield(plotdir, start_end=x_axis_start_end, **HjRj_qt_options)
 
 # apf.plotfield(plotdir, start_end=x_axis_start_end, **RjRj_qt_options)
 
-apf.plotfield(**general_options, **Cqt_options)
+apf.plot_C_contours(**plot_var_fields_options, **Cqt_options)
