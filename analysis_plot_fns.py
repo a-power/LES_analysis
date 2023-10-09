@@ -978,7 +978,7 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
             og_ytic = plt.yticks()
             plt.yticks(z_tix_in, z_labels_in)  # plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
 
-            plt.savefig(plot_dir + f'{field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}_start_{start}_end_{end}.pdf',
+            plt.savefig(plot_dir + f'{var_field}_{field}_{C_perc_1st}_{C_perc_2nd}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}_start_{start}_end_{end}.pdf',
                         bbox_inches='tight')
             plt.clf()
 
