@@ -8,6 +8,7 @@ from matplotlib import cm
 from matplotlib.colors import TwoSlopeNorm
 import xarray as xr
 import os
+import matplotlib
 from matplotlib.ticker import FormatStrFormatter
 
 def negs_in_field(plotdir, field, data_field_list, data_cl_list):
@@ -617,6 +618,65 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
 
 
+
+def shiftedColorMap(cmap, vmax, vmin, start=0, midpoint='calc', stop=1.0, name='shiftedcmap'):
+    '''
+    Function to offset the "center" of a colormap. Useful for
+    data with a negative min and positive max and you want the
+    middle of the colormap's dynamic range to be at zero.
+
+    Input
+    -----
+      cmap : The matplotlib colormap to be altered
+      start : Offset from lowest point in the colormap's range.
+          Defaults to 0.0 (no lower offset). Should be between
+          0.0 and `midpoint`.
+      midpoint : The new center of the colormap. Defaults to
+          0.5 (no shift). Should be between 0.0 and 1.0. In
+          general, this should be  1 - vmax / (vmax + abs(vmin))
+          For example if your data range from -15.0 to +5.0 and
+          you want the center of the colormap at 0.0, `midpoint`
+          should be set to  1 - 5/(5 + 15)) or 0.75
+      stop : Offset from highest point in the colormap's range.
+          Defaults to 1.0 (no upper offset). Should be between
+          `midpoint` and 1.0.
+    '''
+    cdict = {
+        'red': [],
+        'green': [],
+        'blue': [],
+        'alpha': []
+    }
+
+    # regular index to compute the colors
+    reg_index = np.linspace(start, stop, 257)
+
+    if midpoint == 'calc':
+        midpoint = 1 - ( vmax / (vmax + abs(vmin)) )
+
+
+    # shifted index to match the data
+    shift_index = np.hstack([
+        np.linspace(0.0, midpoint, 128, endpoint=False),
+        np.linspace(midpoint, 1.0, 129, endpoint=True)
+    ])
+
+    for ri, si in zip(reg_index, shift_index):
+        r, g, b, a = cmap(ri)
+
+        cdict['red'].append((si, r, r))
+        cdict['green'].append((si, g, g))
+        cdict['blue'].append((si, b, b))
+        cdict['alpha'].append((si, a, a))
+
+    newcmap = matplotlib.colors.LinearSegmentedColormap(name, cdict)
+    plt.register_cmap(cmap=newcmap)
+
+    return newcmap
+
+
+
+
 def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, var_field, var_path, t_av_or_not,
               start_end, z_top_in, z_tix_in, z_labels_in, C_perc_1st, C_perc_2nd, deltas=None,
                     set_cb=[None, None], delta_grid=25, set_percentile_C_sq = None):
@@ -866,6 +926,10 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
             if myvmin_var != None:
                  myvmin = myvmin_var
                  myvmax = myvmax_var
+
+                 orig_cmap = matplotlib.cm.coolwarm
+                 shifted_cmap = shiftedColorMap(orig_cmap, myvmin_var, myvmax_var)
+
                  print('vmax and vmin values are: ', myvmax, myvmin)
                  mylevels = np.linspace(myvmin, myvmax, 8)
                  cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.bwr,
@@ -875,6 +939,10 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                 if set_percentile != None:
                     myvmin = np.percentile(var_field_plot[start_grid:end_grid, 5:z_top_in], set_percentile[0])
                     myvmax = np.percentile(var_field_plot[start_grid:end_grid, 5:z_top_in], set_percentile[1])
+
+                    orig_cmap = matplotlib.cm.coolwarm
+                    shifted_cmap = shiftedColorMap(orig_cmap, myvmin_var, myvmax_var)
+
                     mylevels = np.linspace(myvmin, myvmax, 8)
                     cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.bwr,
                                       norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
@@ -895,7 +963,7 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
             C_2nd = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], C_perc_2nd)
             C_contour = plt.contour(np.transpose(data_field), colors='darkslategrey', linewidths=1,
                         levels=[C_1st, C_2nd])
-            ax1.clabel(C_contour, inline=True, fontsize=8, fmt='%1.2f')
+            ax1.clabel(C_contour, inline=True, fontsize=10, fmt='%1.2f')
             # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1, levels=[0.1])
             plt.xlabel(f'x (km) (cross section with {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km) (km)', fontsize=16)
 
