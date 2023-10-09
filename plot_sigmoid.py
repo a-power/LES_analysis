@@ -23,7 +23,7 @@ beta_filt_num = ['0']
 
 if case == 'BOMEX':
     data_path = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_filters/contours/BOMEX_m0020_g0800_all_'
-    once_filt = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_filters/contours/BOMEX_m0020_g0800_all_'
+    og_unfilt = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_filters/contours/BOMEX_m0020_g0800_all_'
     plotdir = '/home/users/si818415/phd/plots/'
     outdir = '/home/users/si818415/phd/data/'
 
@@ -73,14 +73,14 @@ if case == 'ARM':
 os.makedirs(plotdir, exist_ok = True)
 
 
-def calc_var_mean(var_in, dir_in, time_in, layer_set, Deltas, dir_once_filt = og_unfilt):
+def calc_var_mean(var_in, dir_in, time_in, layer_set, Deltas, dir_og_unfilt = og_unfilt):
 
     #var_mean_high_res = f'{var_in}_wind_mean'
     var_mean = np.zeros(( len(Deltas) ))
 
     for d, Del in enumerate(Deltas):
         if Del == '-1':
-            dataset_in = dir_once_filt + f'{time_in}.nc'
+            dataset_in = dir_og_unfilt + f'{time_in}.nc'
             var_name = f'{var_in}'
         else:
             dataset_in = dir_in + f'{time_in}_gaussian_filter_ga0{Del}.nc'
@@ -91,14 +91,14 @@ def calc_var_mean(var_in, dir_in, time_in, layer_set, Deltas, dir_once_filt = og
 
     return var_mean
 
-def calc_variance(var, dir, time, layer, Delta_list, dir_once_filt = og_unfilt):
+def calc_variance(var, dir, time, layer, Delta_list, dir_og_unfilt = og_unfilt):
 
     var_mean = calc_var_mean(var, dir, time, layer, Delta_list)
     var_variance = np.zeros(( len(Deltas) ))
 
     for d, Del in enumerate(Deltas):
         if Del == '-1':
-            dataset_in = dir_once_filt + f'{time}.nc'
+            dataset_in = dir_og_unfilt + f'{time}.nc'
             var_name = f'{var}'
         else:
             dataset_in = dir + f'{time}_gaussian_filter_ga0{Del}.nc'
@@ -110,7 +110,7 @@ def calc_variance(var, dir, time, layer, Delta_list, dir_once_filt = og_unfilt):
     return var_variance
 
 
-def calc_covariance(var1, var2, dir, time, layer, Delta_list, dir_once_filt = once_filt):
+def calc_covariance(var1, var2, dir, time, layer, Delta_list, dir_og_unfilt = og_unfilt):
 
 
     var_mean1 = calc_var_mean(var1, dir, time, layer, Delta_list)
@@ -120,7 +120,7 @@ def calc_covariance(var1, var2, dir, time, layer, Delta_list, dir_once_filt = on
 
     for d, Del in enumerate(Deltas):
         if Del == '-1':
-            dataset_in = dir_once_filt + f'{time}.nc'
+            dataset_in = dir_og_unfilt + f'{time}.nc'
             var_name2 = f'{var2}'
             var_name1 = f'{var1}'
         else:
