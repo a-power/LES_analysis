@@ -150,14 +150,14 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
         z_l_mid_layer = int( (z_l_r[0] + z_l_r[1])/2 )
         print('axis index for ', layer, f'at time {time_str} is ', z_l_mid_layer)
         if variable == 'TKE':
-            if os.path.exists(outdir + f'sigmoid_{case}_{variable}_{var2}_{layer}_{time_str}.npy'):
-                var_sig = np.load(outdir+f'sigmoid_{case}_{variable}_{var2}_{layer}_{time_str}.npy')
+            if os.path.exists(outdir + f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy'):
+                var_sig = np.load(outdir+f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy')
             else:
                 sig_u = calc_variance('u', data_dir, time_str, z_l_mid_layer, delta_list)
                 sig_v = calc_variance('v', data_dir, time_str, z_l_mid_layer, delta_list)
                 sig_w = calc_variance('w', data_dir, time_str, z_l_mid_layer, delta_list)
                 var_sig = 0.5 * (sig_u + sig_v + sig_w)
-                np.save(outdir+f'sigmoid_{case}_{variable}_{var2}_{layer}_{time_str}.npy', var_sig)
+                np.save(outdir+f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy', var_sig)
 
         else:
             if var2 != None:
@@ -166,6 +166,8 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
                 else:
                     var_sig = calc_covariance(variable, var2, data_dir, time_str, z_l_mid_layer, delta_list)
                     np.save(outdir+f'sigmoid_{case}_{variable}_{var2}_{layer}_{time_str}.npy', var_sig)
+                if var2 == 'q_total':
+                    var_sig = var_sig*1000 # kg to g
             else:
                 if os.path.exists(outdir + f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy'):
                     var_sig = np.load(outdir+f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy')
@@ -191,12 +193,12 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
         if variable == 'w':
             plt.ylabel("$\\overline{ w'^2 }$ $(m^2 s^{-2})$", fontsize=16)
         elif variable == 'TKE':
-            plt.ylabel("TKE $(m^2 s^{-2})$", fontsize=16)
+            plt.ylabel("RKE $(m^2 s^{-2})$", fontsize=16)
     else:
         if variable == 'w' and var2 == 'th':
             plt.ylabel("$\\overline{ w' \\theta' }$ $(K m s^{-1})$", fontsize=16)
         elif variable == 'w' and var2 == 'q_total':
-            plt.ylabel("$\\overline{ w' q_t' }$ $(K m s^{-1})$", fontsize=16)
+            plt.ylabel("$\\overline{ w' q_t' }$ $(g kg^{-1} m s^{-1})$", fontsize=16)
 
     # plt.ylim(ymax=1.1, ymin=0.0)
     # plt.xlim(xmax=4e3, xmin=3e0)
