@@ -53,7 +53,7 @@ elif case == 'ARM':
     z_labels = np.linspace(0, 2.5, 6)
 
     Dx_grid = 25
-    time_av_or_not = np.array([0, 1])
+    time_av_or_not = np.array([0])#, 1])
     #0, 1 #'yes' (in the array)
     # #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
 
