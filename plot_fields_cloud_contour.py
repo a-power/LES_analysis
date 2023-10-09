@@ -67,7 +67,7 @@ dir_th = mydir + 'C_th_'
 dir_qt = mydir + 'C_qt_'
 
 in_set_percentile = None #[25,99] for C
-in_set_percentile_C = [15, 85] # None #[70,99]
+in_set_percentile_C = [1, 99] # None #[70,99]
 in_set_percentile_C2 = None #['min',99]
 # #note that the first entry of this can be 'min' or a number representing the percentile, or None
 
