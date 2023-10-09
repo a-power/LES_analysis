@@ -82,12 +82,18 @@ def calc_var_mean(var_in, dir_in, time_in, layer_set, Deltas, dir_og_unfilt = og
         if Del == '-1':
             dataset_in = dir_og_unfilt + f'{time_in}.nc'
             var_name = f'{var_in}'
+            if var_in == 'q_total':
+                vara = 'q_vapour'
+                varb = 'q_cloud_liquid_mass'
         else:
             dataset_in = dir_in + f'{time_in}_gaussian_filter_ga0{Del}.nc'
             var_name = f'f({var_in}_on_{mygrid})_r'
 
         data_set = xr.open_dataset(dataset_in)
-        var_mean[d] = np.mean(data_set[var_name].data[..., layer_set])
+        if Del == '-1' and var_in == 'q_total':
+            var_mean[d] = np.mean(data_set[vara].data[..., layer_set] + data_set[varb].data[..., layer_set])
+        else:
+            var_mean[d] = np.mean(data_set[var_name].data[..., layer_set])
 
     return var_mean
 
@@ -121,15 +127,22 @@ def calc_covariance(var1, var2, dir, time, layer, Delta_list, dir_og_unfilt = og
     for d, Del in enumerate(Deltas):
         if Del == '-1':
             dataset_in = dir_og_unfilt + f'{time}.nc'
-            var_name2 = f'{var2}'
             var_name1 = f'{var1}'
+            var_name2 = f'{var2}'
+            if var2 == 'q_total':
+                vara = 'q_vapour'
+                varb = 'q_cloud_liquid_mass'
         else:
             dataset_in = dir + f'{time}_gaussian_filter_ga0{Del}.nc'
             var_name2 = f'f({var2}_on_{mygrid})_r'
             var_name1 = f'f({var1}_on_{mygrid})_r'
 
         data_set = xr.open_dataset(dataset_in)
-        var_covariance[d] = np.mean( (data_set[var_name1].data[..., layer] - var_mean1[d]) * \
+        if Del == '-1' and var2 == 'q_total':
+            var_covariance[d] = np.mean((data_set[var_name1].data[..., layer] - var_mean1[d]) * \
+                             ( (data_set[vara].data[..., layer] + data_set[varb].data[..., layer]) - var_mean2[d]))
+        else:
+            var_covariance[d] = np.mean( (data_set[var_name1].data[..., layer] - var_mean1[d]) * \
                                      (data_set[var_name2].data[..., layer] - var_mean2[d]))
 
     return var_covariance
