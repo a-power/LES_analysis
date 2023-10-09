@@ -5,7 +5,7 @@ import argparse
 import xarray as xr
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--case_in', type=str, default='BOMEX')
+parser.add_argument('--case_in', type=str, default='ARM')
 parser.add_argument('--var', type=str, default='TKE') # 'w', 'TKE'
 parser.add_argument('--var2', type=str, default=None)# 'th', 'q_total'
 parser.add_argument('--log_a', default=True)
