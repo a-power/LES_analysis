@@ -461,8 +461,8 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
             print('opening the contour dataset')
 
-            contour_set = xr.open_dataset(contour_field_in +
-                                          f'{CL_itr}_gaussian_filter_ga0{beta_CL_itr}_running_mean_filter_rm00.nc')
+            contour_set = xr.open_dataset(data_field_in +
+                                          f'_ga0{CL_itr}_gaussian_filter_ga0{beta_CL_itr}_running_mean_filter_rm00.nc')
 
             print('successfully opened contour set')
 

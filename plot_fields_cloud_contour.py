@@ -20,6 +20,7 @@ x_end = args.x_e
 
 Deltas = ['0_0']
 #['2D', '4D', '8D', '16D', '32D', '64D']
+contour_vars = 'w'
 
 
 if case =='BOMEX':
@@ -88,6 +89,23 @@ general_options = {'set_cb': set_cb_in,
                     'z_tix_in': z_tix,
                     'z_labels_in': z_labels
                     }
+
+
+plot_var_fields_options = {'set_cb': set_cb_in,
+                    'axis_set': my_axis,
+                    'x_or_y': my_x_y,
+                    't_av_or_not': time_av_or_not,
+                    'var_field': contour_vars,
+                    'plot_dir': plotdir_in,
+                    'start_end': x_axis_start_end,
+                    'deltas': Deltas,
+                    'delta_grid': Dx_grid,
+                    'z_top_in': z_top,
+                    'z_tix_in': z_tix,
+                    'z_labels_in': z_labels
+                    }
+
+
 
 LijMij_options = {'field': 'LM_field',
                    'data_field_in': dir_s,
