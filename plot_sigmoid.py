@@ -45,8 +45,8 @@ if case == 'BOMEX':
 
 
 if case == 'ARM':
-    data_path = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/diagnostics_3d_ts_'
-    once_filt = '/work/scratch-pw3/apower/ARM/corrected_sigmas/diagnostics_3d_ts_'
+    data_path = '/work/scratch-pw3/apower/ARM/corrected_sigmas/diagnostics_3d_ts_'
+    og_unfilt = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_3d_ts_'
     outdir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/data/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigma/sigmoid/'
     bomex_info_in = '/gws/nopw/j04/paracon_rdg/users/apower/BOMEX/data/'
@@ -73,42 +73,36 @@ if case == 'ARM':
 os.makedirs(plotdir, exist_ok = True)
 
 
-def calc_var_mean(var_in, dir_in, time_in, layer_set, Deltas, dir_once_filt = once_filt):
+def calc_var_mean(var_in, dir_in, time_in, layer_set, Deltas, dir_once_filt = og_unfilt):
 
     #var_mean_high_res = f'{var_in}_wind_mean'
     var_mean = np.zeros(( len(Deltas) ))
 
     for d, Del in enumerate(Deltas):
         if Del == '-1':
-            dataset_in = dir_once_filt + f'{time_in}_gaussian_filter_ga00.nc'
-            var_name = f'f({var_in}_on_{mygrid})_r'
+            dataset_in = dir_once_filt + f'{time_in}.nc'
+            var_name = f'{var_in}'
         else:
-            dataset_in = dir_in + f'{time_in}_gaussian_filter_ga0{Del}_gaussian_filter_ga00.nc'
-            if var_in == 'q_total':
-                var_name = f'f(q_total_f_on_{mygrid})_r'
-            else:
-                var_name = f'f({var_in}_on_{mygrid})_r'
+            dataset_in = dir_in + f'{time_in}_gaussian_filter_ga0{Del}.nc'
+            var_name = f'f({var_in}_on_{mygrid})_r'
 
         data_set = xr.open_dataset(dataset_in)
         var_mean[d] = np.mean(data_set[var_name].data[..., layer_set])
 
     return var_mean
 
-def calc_variance(var, dir, time, layer, Delta_list, dir_once_filt = once_filt):
+def calc_variance(var, dir, time, layer, Delta_list, dir_once_filt = og_unfilt):
 
     var_mean = calc_var_mean(var, dir, time, layer, Delta_list)
     var_variance = np.zeros(( len(Deltas) ))
 
     for d, Del in enumerate(Deltas):
         if Del == '-1':
-            dataset_in = dir_once_filt + f'{time}_gaussian_filter_ga00.nc'
-            var_name = f'f({var}_on_{mygrid})_r'
+            dataset_in = dir_once_filt + f'{time}.nc'
+            var_name = f'{var}'
         else:
-            dataset_in = dir + f'{time}_gaussian_filter_ga0{Del}_gaussian_filter_ga00.nc'
-            if var == 'q_total':
-                var_name = f'f(q_total_f_on_{mygrid})_r'
-            else:
-                var_name = f'f({var}_on_{mygrid})_r'
+            dataset_in = dir + f'{time}_gaussian_filter_ga0{Del}.nc'
+            var_name = f'f({var}_on_{mygrid})_r'
 
         data_set = xr.open_dataset(dataset_in)
         var_variance[d] = np.mean( (data_set[var_name].data[..., layer] - var_mean[d])**2 )
@@ -118,7 +112,6 @@ def calc_variance(var, dir, time, layer, Delta_list, dir_once_filt = once_filt):
 
 def calc_covariance(var1, var2, dir, time, layer, Delta_list, dir_once_filt = once_filt):
 
-    var_name1 = f'f({var1}_on_{mygrid})_r'
 
     var_mean1 = calc_var_mean(var1, dir, time, layer, Delta_list)
     var_mean2 = calc_var_mean(var2, dir, time, layer, Delta_list)
@@ -127,14 +120,13 @@ def calc_covariance(var1, var2, dir, time, layer, Delta_list, dir_once_filt = on
 
     for d, Del in enumerate(Deltas):
         if Del == '-1':
-            dataset_in = dir_once_filt + f'{time}_gaussian_filter_ga00.nc'
-            var_name2 = f'f({var2}_on_{mygrid})_r'
+            dataset_in = dir_once_filt + f'{time}.nc'
+            var_name2 = f'{var2}'
+            var_name1 = f'{var1}'
         else:
-            dataset_in = dir + f'{time}_gaussian_filter_ga0{Del}_gaussian_filter_ga00.nc'
-            if var2 == 'q_total':
-                var_name2 = f'f(q_total_f_on_{mygrid})_r'
-            else:
-                var_name2 = f'f({var2}_on_{mygrid})_r'
+            dataset_in = dir + f'{time}_gaussian_filter_ga0{Del}.nc'
+            var_name2 = f'f({var2}_on_{mygrid})_r'
+            var_name1 = f'f({var1}_on_{mygrid})_r'
 
         data_set = xr.open_dataset(dataset_in)
         var_covariance[d] = np.mean( (data_set[var_name1].data[..., layer] - var_mean1[d]) * \
