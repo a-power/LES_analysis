@@ -9,7 +9,7 @@ parser.add_argument('--times', type=str, default='32400')
 parser.add_argument('--x_y', type=str, default='y')
 parser.add_argument('--axis', type=int, default=297)
 parser.add_argument('--x_s', type=float, default=0)
-parser.add_argument('--x_e', type=float, default=19.2)
+parser.add_argument('--x_e', type=float, default=5.5)#19.2)
 args = parser.parse_args()
 case = args.case_in
 set_time = args.times
@@ -21,6 +21,9 @@ x_end = args.x_e
 Deltas = ['0_0']
 #['2D', '4D', '8D', '16D', '32D', '64D']
 set_var_field = 'w' #'w', 'TKE', 'w_th_v'
+
+set_C_perc_1st = 90
+set_C_perc_2nd = 95
 
 
 if case =='BOMEX':
@@ -102,7 +105,9 @@ plot_var_fields_options = {'plot_dir': plotdir_in,
                             'delta_grid': Dx_grid,
                             'z_top_in': z_top,
                             'z_tix_in': z_tix,
-                            'z_labels_in': z_labels
+                            'z_labels_in': z_labels,
+                            'C_perc_1st': set_C_perc_1st,
+                            'C_perc_2nd': set_C_perc_2nd
                             }
 
 
