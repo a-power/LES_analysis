@@ -23,7 +23,7 @@ Deltas = ['0_0']
 set_var_field = 'w' #'w', 'TKE', 'w_th_v'
 
 set_C_perc_1st = 98
-set_C_perc_2nd = 98
+set_C_perc_2nd = None
 
 
 if case =='BOMEX':

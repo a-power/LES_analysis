@@ -960,9 +960,12 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
             ax1.clabel(th_v_c, inline=True, fontsize=10)
 
             C_1st = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], C_perc_1st)
-            C_2nd = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], C_perc_2nd)
+            my_C_levels = [C_1st]
+            if C_perc_2nd != None:
+                C_2nd = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], C_perc_2nd)
+                my_C_levels = [C_1st, C_2nd]
             C_contour = plt.contour(np.transpose(data_field), colors='silver', linewidths=2,
-                        levels=[C_1st, C_2nd]) #darkslategrey
+                        levels=my_C_levels) #darkslategrey
             ax1.clabel(C_contour, inline=True, fontsize=10, fmt='%1.2f')
             # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=2, levels=[0.1])
             plt.xlabel(f'x (km) (cross section with {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km) (km)', fontsize=16)
