@@ -932,9 +932,13 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
 
                  print('vmax and vmin values are: ', myvmax, myvmin)
                  mylevels = np.linspace(myvmin, myvmax, 9)
-                 cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm,
-                                   norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
-                                   levels=mylevels, extend='both')
+                 if var_field == 'w' or var_field == 'w_th_v':
+                     cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm,
+                                       norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
+                                       levels=mylevels, extend='both')
+                 else:
+                     cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm,
+                                       levels=mylevels, extend='both')
             else:
                 if set_percentile != None:
                     myvmin = np.percentile(var_field_plot[start_grid:end_grid, 5:z_top_in], set_percentile[0])
@@ -944,9 +948,13 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                     # shifted_cmap = shiftedColorMap(orig_cmap, myvmin, myvmax)
 
                     mylevels = np.linspace(myvmin, myvmax, 9)
-                    cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm,
+                    if var_field == 'w' or var_field == 'w_th_v':
+                        cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm,
                                       norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
                                       levels=mylevels, extend='both')
+                    else:
+                        cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm,
+                                          levels=mylevels, extend='both')
 
                 if set_percentile == None:
                     cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm, extend='both')
