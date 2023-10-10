@@ -6,6 +6,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--case_in', type=str, default='ARM')
 parser.add_argument('--times', type=str, default='32400')
+parser.add_argument('--var_f', type=str, default='w_th_v') #'w', 'TKE', 'w_th_v'
 parser.add_argument('--x_y', type=str, default='y')
 parser.add_argument('--axis', type=int, default=297)
 parser.add_argument('--x_s', type=float, default=0)
@@ -17,10 +18,10 @@ my_x_y = args.x_y # must be y due to direction of wind in BOMEX
 my_axis = args.axis
 x_start = args.x_s
 x_end = args.x_e
+set_var_field = args.var_f
 
 Deltas = ['0_0']
 #['2D', '4D', '8D', '16D', '32D', '64D']
-set_var_field = 'TKE' #'w', 'TKE', 'w_th_v'
 
 set_C_perc_1st = 98
 set_C_perc_2nd = None
