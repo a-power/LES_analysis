@@ -20,7 +20,7 @@ x_end = args.x_e
 
 Deltas = ['0_0']
 #['2D', '4D', '8D', '16D', '32D', '64D']
-set_var_field = 'w' #'w', 'TKE', 'w_th_v'
+set_var_field = 'TKE' #'w', 'TKE', 'w_th_v'
 
 set_C_perc_1st = 98
 set_C_perc_2nd = None
