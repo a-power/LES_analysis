@@ -17,13 +17,10 @@ sigma = args.sigma_in
 
 
 print('start type = ', type(start))
-
 if case=='ARM':
     MY_dx = 25
-
 elif case=='BOMEX':
     MY_dx = 20
-
 else:
     print('case not recognised, need to input dx for this case')
 
@@ -46,15 +43,15 @@ if sigma != -1:
 
 else:
     if start == 0:
-        sigma_list = np.array([MY_dx, 2*MY_dx, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
+        sigma_list = np.array([MY_dx]) #, 2*MY_dx, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
     elif start == 1:
-        sigma_list = np.array([2*MY_dx, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
+        sigma_list = np.array([2*MY_dx]) #, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
     elif start == 2:
-        sigma_list = np.array([4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
+        sigma_list = np.array([4*MY_dx]) #, 8*MY_dx, 16*MY_dx, 32*MY_dx])
     elif start == 3:
-        sigma_list = np.array([8*MY_dx, 16*MY_dx, 32*MY_dx])
+        sigma_list = np.array([8*MY_dx]) #, 16*MY_dx, 32*MY_dx])
     elif start == 4:
-        sigma_list = np.array([16*MY_dx, 32*MY_dx])
+        sigma_list = np.array([16*MY_dx]) #, 32*MY_dx])
     elif start == 5:
         sigma_list = np.array([32*MY_dx])
     else:

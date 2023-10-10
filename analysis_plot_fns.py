@@ -964,7 +964,7 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
             if C_perc_2nd != None:
                 C_2nd = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], C_perc_2nd)
                 my_C_levels = [C_1st, C_2nd]
-            C_contour = plt.contour(np.transpose(data_field), colors='silver', linewidths=2,
+            C_contour = plt.contour(np.transpose(data_field), colors='darkslategrey', linewidths=2,
                         levels=my_C_levels) #darkslategrey
             ax1.clabel(C_contour, inline=True, fontsize=10, fmt='%1.2f')
             # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=2, levels=[0.1])
