@@ -127,7 +127,8 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
                         "th_L",
                         "q_total",
                         "q_vapour",
-                        "q_cloud_liquid_mass"
+                        "q_cloud_liquid_mass",
+                        "buoyancy"
                         ]
 
             field_list = sf.filter_variable_list(dataset, ref_dataset,
@@ -150,16 +151,17 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
                         ["w", "q_total"],
                         ["u", "q_vapour"],
                         ["v", "q_vapour"],
-                        ["w", "q_vapour"],
-                        ["u", "th_v"],
-                        ["v", "th_v"],
-                        ["w", "th_v"],
-                        ["w", "th_L"],
-                        ["th_v", "q_total"],
-                        ["w", "q_cloud_liquid_mass"],
-                        ["q_total", "q_total"],
-                        ["th_L", "q_cloud_liquid_mass"]
+                        ["w", "q_vapour"]
                         ]
+                        # ["u", "th_v"],
+                        # ["v", "th_v"],
+                        # ["w", "th_v"],
+                        # ["w", "th_L"],
+                        # ["th_v", "q_total"],
+                        # ["w", "q_cloud_liquid_mass"],
+                        # ["q_total", "q_total"],
+                        # ["th_L", "q_cloud_liquid_mass"]
+
 
             quad_field_list = sf.filter_variable_pair_list(dataset,
                                                            ref_dataset,
@@ -230,8 +232,8 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
         abs_S_dq_dx_filt = sf.filter_field(abs_S_dq_dx, filtered_data,
                                             opt, new_filter)
 
-        abs_S_dq_dx = dqv_dx * abs_S
-        abs_S_dqv_dx.name = 'abs_S_dq_dx'
+        abs_S_dqv_dx = dqv_dx * abs_S
+        abs_S_dqv_dx.name = 'abs_S_dqv_dx'
         abs_S_dqv_dx = re_chunk(abs_S_dqv_dx)
 
         abs_S_dqv_dx_filt = sf.filter_field(abs_S_dqv_dx, filtered_data,
