@@ -942,9 +942,9 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                         v_prime_field = var_field_data['f(f(v_on_p)_r_on_p)_r'].data[t_set, axis_set, ...] - v_mean
                         #w_prime_field = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...] - w_mean
                         ww_field = var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
-                        var_field_plot = np.mean(0.5 * (u_prime_field * u_prime_field + \
+                        var_field_plot = 0.5 * (u_prime_field * u_prime_field + \
                                                         v_prime_field * v_prime_field + \
-                                                        ww_field), axis=0)
+                                                        ww_field)
                         u_prime_field = None
                         v_prime_field = None
                         ww_field = None
@@ -981,9 +981,9 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                         v_prime_field = var_field_data['f(f(v_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...] - v_mean
                         # w_prime_field = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...] - w_mean
                         ww_field = var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
-                        var_field_plot = np.mean(0.5 * (u_prime_field * u_prime_field + \
+                        var_field_plot = 0.5 * (u_prime_field * u_prime_field + \
                                                         v_prime_field * v_prime_field + \
-                                                        ww_field), axis=0)
+                                                        ww_field)
                         u_prime_field = None
                         v_prime_field = None
                         w_prime_field = None
