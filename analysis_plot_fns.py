@@ -1228,6 +1228,8 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
                 data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
             elif f'{field}' in data_set:
                 data_field = data_set[f'{field}'].data[...]
+            else:
+                print('field ', field, ' not in dataset')
 
             #print(f'length of time array for {field} is ', len(data_set[f'f({field}_on_{grid})_r'].data[:, 0, 0, 0]))
 
@@ -1237,6 +1239,8 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
                 data_field = data_set[f'f({field}_on_{grid})_r'].data[...]
             elif f'{field}' in data_set:
                 data_field = data_set[f'{field}'].data[...]
+            else:
+                print('field', field, ' ')
 
         C=False
 

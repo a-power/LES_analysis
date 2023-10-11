@@ -69,10 +69,12 @@ else:
 # fields = ['Cs_sq_field', 'Cth_sq_field', 'Cqt_sq_field']
 # field_dir = ['Cs', 'C_th', 'C_qt']
 
-# if beta==True:
-fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_field_on_{mygrid})_r', f'f(HR_q_total_f_field_on_{mygrid})_r',
+if beta==True:
+    fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_field_on_{mygrid})_r', f'f(HR_q_total_f_field_on_{mygrid})_r',
               f'f(MM_field_on_{mygrid})_r', f'f(RR_th_field_on_{mygrid})_r', f'f(RR_q_total_f_field_on_{mygrid})_r']
-# else:
+else:
+    fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_field_on_{mygrid})_r', f'f(HR_q_total_field_on_{mygrid})_r',
+              f'f(MM_field_on_{mygrid})_r', f'f(RR_th_field_on_{mygrid})_r', f'f(RR_q_total_field_on_{mygrid})_r']
 #     fields = ['LM_field', 'HR_th_field', 'HR_q_total_field', 'MM_field', 'RR_th_field', 'RR_q_total_field']
 field_dir = ['Cs', 'C_th', 'C_qt', 'Cs', 'C_th', 'C_qt']
 
