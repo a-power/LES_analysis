@@ -13,6 +13,8 @@ import dynamic_functions as dyn
 import dask
 import subfilter
 
+beta=True
+
 parser = argparse.ArgumentParser()
 # parser.add_argument('--times', type=str, default='25200')
 parser.add_argument('--time_ind', type=int, default=0)
@@ -27,7 +29,7 @@ filters_start = args.start_filt
 how_many_filters = filters_start + 1
 case = args.case_in
 
-beta=False
+
 if case == 'ARM':
     times = ['18000', '25200', '32400', '39600']
 else:
