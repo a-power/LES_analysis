@@ -16,7 +16,7 @@ times_analysed = [ '18000', '25200', '32400', '39600' ]
 args = parser.parse_args()
 set_time = times_analysed[args.times]
 
-beta=True
+beta=False
 case = 'ARM'
 
 if case == 'BOMEX':
@@ -31,7 +31,10 @@ if case == 'BOMEX':
     myfile = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 
 elif case == 'ARM':
-    homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/'
+    if beta==True:
+        homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/'
+    else:
+        homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/smoothed_LM_HR_fields/'
     dir_contour = homedir + f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     myfile = f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
 
@@ -41,7 +44,7 @@ mygrid = 'p'
 outdir = homedir+'C_profs/'
 os.makedirs(outdir, exist_ok = True)
 
-deltas=['2D', '4D', '8D', '16D', '32D', '64D']
+deltas=['2D']#, '4D', '8D', '16D', '32D', '64D']
 
 if beta==True:
     dataset_name = [outdir+myfile+'C_2D_', outdir+myfile+'C_4D_', outdir+myfile+'C_8D_',
@@ -50,11 +53,11 @@ if beta==True:
     #                             outdir+myfile+'LM_16D_', outdir+myfile+'LM_32D_', outdir+myfile+'LM_64D_']
     extra_filter = ['0']#, '1']
 else:
-    # dataset_name = [outdir+myfile+'C_2D.nc', outdir+myfile+'C_4D.nc', outdir+myfile+'C_8D.nc',
+    dataset_name = [outdir+myfile+'C_2D.nc']#, outdir+myfile+'C_4D.nc', outdir+myfile+'C_8D.nc',
     #                 outdir+myfile+'C_16D.nc', outdir+myfile+'C_32D.nc', outdir+myfile+'C_64D.nc']
 
-    dataset_name = [outdir + myfile + 'LM_2D.nc', outdir + myfile + 'LM_4D.nc', outdir + myfile + 'LM_8D.nc',
-                    outdir + myfile + 'LM_16D.nc', outdir + myfile + 'LM_32D.nc', outdir + myfile + 'LM_64D.nc']
+    # dataset_name = [outdir + myfile + 'LM_2D.nc', outdir + myfile + 'LM_4D.nc', outdir + myfile + 'LM_8D.nc',
+    #                 outdir + myfile + 'LM_16D.nc', outdir + myfile + 'LM_32D.nc', outdir + myfile + 'LM_64D.nc']
 
 # 'field': 'f(LM_field_on_w)_r'
 # 'field': 'Cs_field'
@@ -66,11 +69,11 @@ else:
 # fields = ['Cs_sq_field', 'Cth_sq_field', 'Cqt_sq_field']
 # field_dir = ['Cs', 'C_th', 'C_qt']
 
-if beta==True:
-    fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_field_on_{mygrid})_r', f'f(HR_q_total_f_field_on_{mygrid})_r',
+# if beta==True:
+fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_field_on_{mygrid})_r', f'f(HR_q_total_f_field_on_{mygrid})_r',
               f'f(MM_field_on_{mygrid})_r', f'f(RR_th_field_on_{mygrid})_r', f'f(RR_q_total_f_field_on_{mygrid})_r']
-else:
-    fields = ['LM_field', 'HR_th_field', 'HR_q_total_field', 'MM_field', 'RR_th_field', 'RR_q_total_field']
+# else:
+#     fields = ['LM_field', 'HR_th_field', 'HR_q_total_field', 'MM_field', 'RR_th_field', 'RR_q_total_field']
 field_dir = ['Cs', 'C_th', 'C_qt', 'Cs', 'C_th', 'C_qt']
 
 
@@ -122,8 +125,8 @@ for j, delta_in in enumerate(deltas):
 
     else:
         ds = xr.Dataset()
-        ds.to_netcdf(dataset_name[j] + f'{name_2_gauss}' + '.nc', mode='w')
-        ds_in = {'file': dataset_name[j] + f'{name_2_gauss}' + '.nc', 'ds': ds}
+        ds.to_netcdf(dataset_name[j] + '.nc', mode='w')
+        ds_in = {'file': dataset_name[j] + '.nc', 'ds': ds}
 
         for i, field_in in enumerate(fields):
             mydataset = homedir + myfile + str(f'{field_dir[i]}_{deltas[j]}_running_mean_filter_rm00.nc')
