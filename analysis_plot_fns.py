@@ -1046,7 +1046,7 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                                           levels=mylevels, extend='both')
 
                 if set_percentile == None:
-                    cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm, extend='both')
+                    cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.YlOrRd, extend='both')
 
             cb = plt.colorbar(cf, format='%.2f')
             cb.set_label(f'{var_name} ({var_units})', size=16)
