@@ -1122,7 +1122,8 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
     elif field == 'HR_th_field' or field == f'f(HR_th_field_on_{grid})_r':
         field_name = '$HR_{\\theta}$'
         save_name = 'HR_th'
-    elif field == 'HR_q_total_field' or field == 'HR_q_total_f_field' or field == f'f(HR_q_total_f_field_on_{grid})_r':
+    elif field == 'HR_q_total_field' or field == 'HR_q_total_f_field' or field == f'f(HR_q_total_f_field_on_{grid})_r' \
+            or field == f'f(HR_q_total_field_on_{grid})_r':
         field_name = '$HR_{qt}$'
         save_name = 'HR_qt'
 
@@ -1132,11 +1133,12 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
     elif field == 'RR_th_field' or field == f'f(RR_th_field_on_{grid})_r':
         field_name = '$RR_{\\theta}$'
         save_name = 'RR_th'
-    elif field == 'RR_q_total_field'  or field == 'RR_q_total_f_field' or field == f'f(RR_q_total_f_field_on_{grid})_r':
+    elif field == 'RR_q_total_field'  or field == 'RR_q_total_f_field' or field == f'f(RR_q_total_f_field_on_{grid})_r' \
+            or field == f'f(RR_q_total_field_on_{grid})_r':
         field_name = '$RR_{qt}$'
         save_name = 'RR_qt'
     else:
-        print('field not found')
+        print(f'field {field} not found')
 
 
     cloud_only_mask, env_only_mask = \
