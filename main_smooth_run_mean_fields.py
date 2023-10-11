@@ -20,7 +20,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--time_ind', type=int, default=0)
 parser.add_argument('--start_filt', type=int, default=0)
 #parser.add_argument('--n_filts', type=int, default=6)
-parser.add_argument('--case_in', type=str, default='BOMEX')
+parser.add_argument('--case_in', type=str, default='ARM')
 
 args = parser.parse_args()
 set_time_ind = args.time_ind
@@ -31,7 +31,7 @@ case = args.case_in
 
 
 if case == 'ARM':
-    times = ['18000', '25200', '32400', '39600']
+    times = ['32400']#['18000', '25200', '32400', '39600']
 else:
     times = ['14400']
 set_time = times[set_time_ind]
