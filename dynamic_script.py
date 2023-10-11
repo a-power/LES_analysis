@@ -27,7 +27,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
     if res_in != None:
         file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
     else:
-        file_in = f'{indir}/MONC_out/diagnostics_3d_ts_{time_in}.nc'
+        file_in = f'{indir}/diagnostics_3d_ts_{time_in}.nc'
 
     ds_in = xr.open_dataset(file_in)
     time_data = ds_in[time_name]
@@ -186,15 +186,32 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
         dqv_dx.name = 'dqv_dx'
         dqv_dx = re_chunk(dqv_dx)
 
-        S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
+        S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False) #
 
-        S_ij = 1 / 2 * S_ij_temp
+        S_ij = 0.5 * S_ij_temp
+        S_ij_temp = None
         S_ij.name = 'S_ij'
         S_ij = re_chunk(S_ij)
 
-        abs_S = np.sqrt(abs_S_temp)
+        abs_S = np.sqrt(abs_S_temp) ##### do not need to mult by 4 here, see Smag notes pg 8 on Boox
         abs_S.name = "abs_S"
         abs_S = re_chunk(abs_S)
+
+
+        Ri = dyn.calc_Ri(abs_S_temp, derived_data, filtered_data, ref_dataset, opt, ingrid)
+        Ri.name = 'Ri'
+        Ri = re_chunk(Ri)
+
+        Ri_filt = sf.filter_field(Ri, filtered_data, opt, new_filter)
+
+        fm_Ri = dyn.stab_fn_mom(Ri)
+        fm_Ri.name = 'fm_Ri'
+        fm_Ri = re_chunk(fm_Ri)
+
+        fh_Ri = dyn.stab_fn_scal(Ri)
+        fh_Ri.name = 'fh_Ri'
+        fh_Ri = re_chunk(fh_Ri)
+
 
         S_ij_filt = sf.filter_field(S_ij, filtered_data,
                                     opt, new_filter)
@@ -218,12 +235,40 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
         S_ij_abs_S_hat_filt = sf.filter_field(S_ij_abs_S, filtered_data,
                                               opt, new_filter)
 
+
+        S_ij_abs_S_fm_Ri = S_ij * abs_S * fm_Ri
+        S_ij_abs_S_fm_Ri.name = 'S_ij_abs_S_fm_Ri'
+        S_ij_abs_S_fm_Ri = re_chunk(S_ij_abs_S_fm_Ri)
+
+        S_ij_abs_S_fm_filt = sf.filter_field(S_ij_abs_S_fm_Ri, filtered_data, opt, new_filter)
+
+
+
+
+
         abs_S_dth_dx = dth_dx * abs_S
         abs_S_dth_dx.name = 'abs_S_dth_dx'
         abs_S_dth_dx = re_chunk(abs_S_dth_dx)
 
         abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
                                               opt, new_filter)
+
+        abs_S_dth_dx_fh_Ri = dth_dx * abs_S * fh_Ri
+        abs_S_dth_dx_fh_Ri.name = 'abs_S_dth_dx_fh_Ri'
+        abs_S_dth_dx_fh_Ri = re_chunk(abs_S_dth_dx_fh_Ri)
+
+        abs_S_dth_dx_fh_Ri_filt = sf.filter_field(abs_S_dth_dx_fh_Ri, filtered_data,
+                                              opt, new_filter)
+
+
+
+
+        abs_S_dq_dx_fh_Ri = dq_dx * abs_S * fh_Ri
+        abs_S_dq_dx_fh_Ri.name = 'abs_S_dq_dx_fh_Ri'
+        abs_S_dq_dx_fh_Ri = re_chunk(abs_S_dq_dx_fh_Ri)
+
+        abs_S_dq_dx_fh_Ri_filt = sf.filter_field(abs_S_dq_dx_fh_Ri, filtered_data,
+                                            opt, new_filter)
 
         abs_S_dq_dx = dq_dx * abs_S
         abs_S_dq_dx.name = 'abs_S_dq_dx'
@@ -237,6 +282,13 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
         abs_S_dqv_dx = re_chunk(abs_S_dqv_dx)
 
         abs_S_dqv_dx_filt = sf.filter_field(abs_S_dqv_dx, filtered_data,
+                                            opt, new_filter)
+
+        abs_S_dqv_dx_fh_Ri = dqv_dx * abs_S * fh_Ri
+        abs_S_dqv_dx_fh_Ri.name = 'abs_S_dqv_dx_fh_Ri'
+        abs_S_dqv_dx_fh_Ri = re_chunk(abs_S_dqv_dx_fh_Ri)
+
+        abs_S_dqv_dx_fh_Ri_filt = sf.filter_field(abs_S_dqv_dx_fh_Ri, filtered_data,
                                             opt, new_filter)
 
         filtered_data['ds'].close()

@@ -64,12 +64,12 @@ if case=='BOMEX':
     in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
     model_res_list = ['0020_g0800']
     outdir_og = '/work/scratch-pw3/apower/'
-    outdir = outdir_og + f'20m_gauss_dyn/on_{opgrid}_grid/'
+    outdir = outdir_og + f'BOMEX/'
     plotdir = outdir_og + 'plots/dyn/'
 
 elif case=='ARM':
-    in_dir = '/work/scratch-pw3/apower/ARM/'
-    outdir = in_dir + f'corrected_sigmas/'
+    in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/'
+    outdir = '/work/scratch-pw3/apower/ARM/'
     plotdir = outdir + 'plots/dyn/'
     model_res_list = [None]
 

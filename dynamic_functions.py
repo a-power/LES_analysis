@@ -107,7 +107,16 @@ def M_ij(dx, dx_filt, S_filt, abs_S_filt, HAT_abs_S_Sij, beta=1):
     return M_ij
 
 
-def ds_dxi(scalar, source_dataset, ref_dataset, options, ingrid, filting_filted=False):
+def M_ij_stab_fns(dx, dx_filt, S_filt, abs_S_filt, HAT_abs_S_Sij_fRi, fRi_hat, beta=1):
+    alpha = dx_filt / dx
+    power = alpha / 2
+
+    M_ij = dx_filt * dx_filt * (beta ** power) * abs_S_filt * S_filt * fRi_hat - dx * dx * HAT_abs_S_Sij_fRi
+
+    return M_ij
+
+
+def ds_dxi(scalar, source_dataset, ref_dataset_in, options, in_grid, filting_filted=False):
     # scalar can be either 'th' or "q_total"
 
     if scalar == 'q':
@@ -116,7 +125,7 @@ def ds_dxi(scalar, source_dataset, ref_dataset, options, ingrid, filting_filted=
         else:
             scalar = 'q_total_f'
 
-    s = get_data(source_dataset, ref_dataset, str(scalar), options)
+    s = get_data(source_dataset, ref_dataset_in, str(scalar), options)
 
     [iix, iiy, iiz] = get_string_index(s.dims, ['x', 'y', 'z'])
     sh = np.shape(s)
@@ -129,9 +138,9 @@ def ds_dxi(scalar, source_dataset, ref_dataset, options, ingrid, filting_filted=
     z = source_dataset["z"]
     zn = source_dataset["zn"]
 
-    sx = do.d_by_dx_field(s, z, zn, grid=ingrid)
-    sy = do.d_by_dy_field(s, z, zn, grid=ingrid)
-    sz = do.d_by_dz_field(s, z, zn, grid=ingrid)
+    sx = do.d_by_dx_field(s, z, zn, grid=in_grid)
+    sy = do.d_by_dy_field(s, z, zn, grid=in_grid)
+    sz = do.d_by_dz_field(s, z, zn, grid=in_grid)
 
     s = None  # Save some memory
 
@@ -148,6 +157,87 @@ def R_j(dx, dx_filt, abs_S_hat, ds_dxj_hat, HAT_abs_S_ds_dxj, beta=1):
     R_j = dx_filt * dx_filt * beta ** power * abs_S_hat * ds_dxj_hat - dx * dx * HAT_abs_S_ds_dxj
 
     return R_j
+
+
+def R_j_stab_fns(dx, dx_filt, abs_S_hat, ds_dxj_hat, HAT_abs_S_ds_dxj_fRi, fRi_hat, beta=1):
+    alpha = dx_filt / dx
+    power = alpha / 2
+
+    R_j = dx_filt * dx_filt * beta ** power * abs_S_hat * ds_dxj_hat * fRi_hat - dx * dx * HAT_abs_S_ds_dxj_fRi
+
+    return R_j
+
+
+
+def calc_Ri(abs_S_sq, derived_dataset, filtered_dataset, ref_dataset_in, options, in_grid):
+    # scalar can be either 'th' or "q_total"
+
+    # derived_dataset = dataset_path + '.nc'
+    # filtered_dataset = dataset_path + f'_filter_ga0{}.nc'
+
+    buoy = get_data(derived_dataset, ref_dataset_in, 'bouyancy_on_p', options)
+
+    [iix, iiy, iiz] = get_string_index(buoy.dims, ['x', 'y', 'z'])
+    sh = np.shape(buoy)
+    max_ch = subfilter.global_config['chunk_size']
+    nch = int(sh[iix] / (2 ** int(np.log(sh[iix] * sh[iiy] * sh[iiz] / max_ch) / np.log(2) / 2)))
+
+
+    buoy = re_chunk(buoy, xch=nch, ych=nch, zch='all')
+
+    z = filtered_dataset["z"]
+    zn = filtered_dataset["zn"]
+
+    buoy_x = do.d_by_dx_field(buoy, z, zn, grid=in_grid)
+    buoy_y = do.d_by_dy_field(buoy, z, zn, grid=in_grid)
+    buoy_z = do.d_by_dz_field(buoy, z, zn, grid=in_grid)
+
+    buoy = None  # Save some memory
+
+    dB_dx = xr.concat([buoy_x, buoy_y, buoy_z], dim='j', coords='minimal',
+                     compat='override')
+
+    Ri = dB_dx / abs_S_sq
+
+    dB_dx = None
+
+    return Ri
+
+def stab_fn_mom(Ri):
+
+    Ri_c = 0.25
+    Pr_n = 0.7
+    a = 1/Pr_n
+    b = 40
+    c = 16
+    g = 1.2
+    h = 0.0
+    r = 4
+
+    fm_Ri = Ri.copy()
+    fm_Ri[Ri < Ri_c] = ( (1 - (Ri/Ri_c))**r ) * (1 - h*Ri)
+    fm_Ri[Ri < 0] = np.sqrt(1 - c * Ri)
+    fm_Ri[Ri >= Ri_c] = 0
+
+    return fm_Ri
+
+
+def stab_fn_scal(Ri):
+    Ri_c = 0.25
+    Pr_n = 0.7
+    a = 1 / Pr_n
+    b = 40
+    c = 16
+    g = 1.2
+    h = 0.0
+    r = 4
+
+    fh_Ri = Ri.copy()
+    fh_Ri[Ri < Ri_c] = ((1 - (Ri / Ri_c)) ** r) * (1 - g * Ri)
+    fh_Ri[Ri < 0] = a * np.sqrt(1 - b * Ri)
+    fh_Ri[Ri >= Ri_c] = 0
+
+    return fh_Ri
 
 
 
