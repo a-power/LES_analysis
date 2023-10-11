@@ -1042,7 +1042,7 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                                       norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
                                       levels=mylevels, extend='both')
                     else:
-                        cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm,
+                        cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.YlOrRd,
                                           levels=mylevels, extend='both')
 
                 if set_percentile == None:
