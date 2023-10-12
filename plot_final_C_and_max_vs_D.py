@@ -27,6 +27,7 @@ if case == 'ARM':
     homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/C_profs/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigmas/C_beta_profiles/'
     file_name = f"diagnostics_3d_ts_{set_time}_gaussian_filter_C_"
+    prof_file = f'/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_{set_time}.nc'
 
     zn_set = np.arange(0, 4410, 10)
     z_set = np.arange(-5, 4405, 10)
