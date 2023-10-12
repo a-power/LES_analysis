@@ -31,7 +31,8 @@ if case == 'ARM':
 
     zn_set = np.arange(0, 4410, 10)
     z_set = np.arange(-5, 4405, 10)
-    z_ML = 1
+    #z_ML = 1
+    z_ML_bottom = 8
 
     z_cl_r = [130, 200]
     z_ml_r = [8, 55]
