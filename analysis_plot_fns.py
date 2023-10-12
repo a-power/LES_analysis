@@ -1140,7 +1140,6 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
     else:
         print(f'field {field} not found')
 
-
     cloud_only_mask, env_only_mask = \
         clo.cloud_vs_env_masks(contour_field_in, \
                                cloud_liquid_threshold=cloud_thres)
