@@ -25,10 +25,11 @@ C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 x_lim_list = [0.355, 0.355, 0.355, 0.355, 0.255, 0.07]
 
 if case == 'ARM':
-
+    homedir1st = '/work/scratch-pw3/apower/ARM/corrected_sigmas/smoothed_LM_HR_fields/C_profs/'
     homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/C_profs/'
-    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigma/C_beta_profiles/'
+    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigmas/C_beta_profiles/'
     profiles_dir = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_'
+    # prof_file = f'/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_{set_time}.nc'
 
 
     zn_set = np.arange(0, 4410, 10)
@@ -261,10 +262,10 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, time_in, inter
     Sc = Cs / Cqt
 
     if mask_spur_vals == True:
-        Pr[Pr > 3.45] = np.nan
+        Pr[Pr > 2.95] = np.nan
         Pr[Pr < -0.45] = np.nan
 
-        Sc[Sc > 3.45] = np.nan
+        Sc[Sc > 2.95] = np.nan
         Sc[Sc < -0.45] = np.nan
 
         Pr = ma.masked_invalid(Pr)
@@ -284,7 +285,7 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, time_in, inter
         ax[1].set_ylim(set_bottom, set_top)
 
         set_left_pr = -0.5
-        set_right_pr = 3.5
+        set_right_pr = 3.0
 
         ax[0].set_xlim(set_left_pr, set_right_pr)
         ax[1].set_xlim(set_left_pr, set_right_pr)
@@ -332,7 +333,7 @@ def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, time_in, inter
 
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_m, deltas, delta_label, interp=False, C_sq_to_C = True,
-                      labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core'],
+                      labels_in = ['total', 'no cloud', 'in-cloud', 'cloud updraft', 'cloud core'],
                               time_in='`14400', set_x_lim_list=[0.355, 0.355, 0.355, 0.355, 0.255, 0.07], Pr_in=True,
                               mask_spur_vals = True):
 
@@ -357,10 +358,10 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_m, deltas, d
         Sc = Cs_in/Cqt_in
 
         if mask_spur_vals == True:
-            Pr[Pr > 3.45] = np.nan
+            Pr[Pr > 2.95] = np.nan
             Pr[Pr < -0.45] = np.nan
 
-            Sc[Sc > 3.45] = np.nan
+            Sc[Sc > 2.95] = np.nan
             Sc[Sc < -0.45] = np.nan
 
             Pr = ma.masked_invalid(Pr)
@@ -519,17 +520,17 @@ def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_m, deltas, d
             # ax[0].set_xlim(right=set_right, left=set_left)
             # ax[1].set_xlim(right=set_right, left=set_left)
 
-            ax_Pr[0].set_xlim(-0.5, 3.5)
-            ax_Pr[1].set_xlim(-0.5, 3.5)
+            ax_Pr[0].set_xlim(-0.5, 3.0)
+            ax_Pr[1].set_xlim(-0.5, 3.0)
 
-            ax_Pr[0].axhline(z_CL_r_m[0]/z_i, -0.5, 3.5, color='k', linestyle='-.')
-            ax_Pr[1].axhline(z_CL_r_m[0]/z_i, -0.5, 3.5, color='k', linestyle='-.')
+            ax_Pr[0].axhline(z_CL_r_m[0]/z_i, -0.5, 3.0, color='k', linestyle='-.')
+            ax_Pr[1].axhline(z_CL_r_m[0]/z_i, -0.5, 3.0, color='k', linestyle='-.')
 
-            ax_Pr[0].axhline(z_CL_r_m[1]/z_i, -0.5, 3.5, color='k', linestyle='dashed')
-            ax_Pr[1].axhline(z_CL_r_m[1]/z_i, -0.5, 3.5, color='k', linestyle='dashed')
+            ax_Pr[0].axhline(z_CL_r_m[1]/z_i, -0.5, 3.0, color='k', linestyle='dashed')
+            ax_Pr[1].axhline(z_CL_r_m[1]/z_i, -0.5, 3.0, color='k', linestyle='dashed')
 
-            ax_Pr[0].set_xticks([-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5])
-            ax_Pr[1].set_xticks([-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5])
+            ax_Pr[0].set_xticks([-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0])
+            ax_Pr[1].set_xticks([-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0])
 
             bottom0, top0 = ax_Pr[0].set_ylim()
             bottom1, top1 = ax_Pr[1].set_ylim()
@@ -601,7 +602,7 @@ def plot_max_C_l_vs_Delta(Cs_max_in, Cth_max_in, Cqt_max_in, Delta, y_ax, max_me
 
     my_lines = ['solid', 'solid', 'dotted', 'dashed', 'dashed', 'dashed']
     #labels = ['ML domain', 'CL domain', 'CL: clear sky', 'in-cloud', 'cloudy updraft', 'cloud core']
-    labels = ['ML', 'CL', 'NC', 'C', 'CU', 'CC']
+    labels = ['ML', 'CL', 'NC', 'IC', 'CU', 'CC']
 
     colours = ['k', 'tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
@@ -804,6 +805,7 @@ for itr, time_stamp in enumerate(set_time):
 
     if beta == True:
         if what_plotting == '_0' or what_plotting == '_beta':
+            data_D = xr.open_dataset(homedir1st + file_name + f'2D.nc')
             data_2D_0 = xr.open_dataset(mydir + f'2D_0.nc')
             data_4D_0 = xr.open_dataset(mydir + f'4D_0.nc')
             data_8D_0 = xr.open_dataset(mydir + f'8D_0.nc')
@@ -821,11 +823,11 @@ for itr, time_stamp in enumerate(set_time):
 
         if C_or_LM == 'C':
             if what_plotting == '_0':
-                data_list = [data_2D_0, data_4D_0, data_8D_0, data_16D_0, data_32D_0, data_64D_0]
-                set_labels = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
+                data_list = [data_D, data_2D_0, data_4D_0, data_8D_0, data_16D_0, data_32D_0, data_64D_0]
+                set_labels = ['$\\Delta$', '2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
                               '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']
-                deltas_in = ['2D', '4D', '8D', '16D', '32D', '64D']
-                delta_numbers = np.array((2, 4, 8, 16, 32, 64))
+                deltas_in = ['D', '2D', '4D', '8D', '16D', '32D', '64D']
+                delta_numbers = np.array((1, 2, 4, 8, 16, 32, 64))
             elif what_plotting == '_1':
                 data_list = [data_2D_1, data_4D_1, data_8D_1, data_16D_1, data_32D_1, data_64D_1]
                 set_labels = ['4$\\Delta$', '8$\\Delta$', '16$\\Delta$',
@@ -1029,12 +1031,12 @@ for itr, time_stamp in enumerate(set_time):
 
     #plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, interp=True, C_sq_to_C = True)
     print('shape of Cs_sq being fed into fn:', np.shape(Cs_sq))
-    # plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range_calc_m, labels_in=set_labels,
-    #                   C_sq_to_C = True, time_in=time_stamp)
+    plot_C_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range_calc_m, labels_in=set_labels,
+                      C_sq_to_C = True, time_in=time_stamp)
     #
     # print('saved C plots to ', plotdir)
     #
-    # plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range_calc_m, labels_in=set_labels, time_in=time_stamp)
+    plot_Pr_all_Deltas(Cs_sq, Cth_sq, Cqt_sq, zn_set, z_ML, z_cl_range_calc_m, labels_in=set_labels, time_in=time_stamp)
     #
 
 
@@ -1061,9 +1063,9 @@ for itr, time_stamp in enumerate(set_time):
     #                           deltas = deltas_in, delta_label = set_labels, interp=False, C_sq_to_C = False)
 
     #plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, z_set, z_ML, interp=True, C_sq_to_C = True)
-    # plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML, z_cl_r_meters,
-    #                           deltas = deltas_in, delta_label = set_labels, interp=False,
-    #                           C_sq_to_C = True, time_in=time_stamp, set_x_lim_list=x_lim_list)
+    plot_condit_C_each_Deltas(Cs_sq_cond, Cth_sq_cond, Cqt_sq_cond, zn_set, z_ML, z_cl_r_meters,
+                              deltas = deltas_in, delta_label = set_labels, interp=False,
+                              C_sq_to_C = True, time_in=time_stamp, set_x_lim_list=x_lim_list)
 
 
     ##################################################################################################################
@@ -1118,16 +1120,16 @@ for itr, time_stamp in enumerate(set_time):
     #                       max_mean='max', time_in = time_stamp)
     #
     #
-    # plot_max_C_l_vs_Delta(mean_Cs_cond, mean_Cth_cond, mean_Cqt_cond, Delta = set_labels, y_ax = 'C', max_mean='mean',
-    #                       time_in = time_stamp)
+    plot_max_C_l_vs_Delta(mean_Cs_cond, mean_Cth_cond, mean_Cqt_cond, Delta = set_labels, y_ax = 'C', max_mean='mean',
+                          time_in = time_stamp)
     # plot_max_C_l_vs_Delta(get_max_l_from_C(mean_Cs_cond, delta_numbers, 25), get_max_l_from_C(mean_Cth_cond, delta_numbers, 25),
     #                       get_max_l_from_C(mean_Cqt_cond, delta_numbers, 25), Delta = set_labels, y_ax = 'l',
     #                       max_mean='mean', time_in = time_stamp)
     #
     # plot_max_C_l_vs_Delta(mean_Pr_cond, max_Sc_cond, None, Delta=set_labels, y_ax='Pr', max_mean='max',
     #                       time_in=time_stamp)
-    # plot_max_C_l_vs_Delta(mean_Pr_cond, mean_Sc_cond, None, Delta=set_labels, y_ax='Pr', max_mean='mean',
-    #                       time_in=time_stamp)
+    plot_max_C_l_vs_Delta(mean_Pr_cond, mean_Sc_cond, None, Delta=set_labels, y_ax='Pr', max_mean='mean',
+                          time_in=time_stamp)
     #
     #
     # print('z_ml_range = ', z_ml_range)

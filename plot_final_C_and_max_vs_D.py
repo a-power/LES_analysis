@@ -571,7 +571,7 @@ np.save('Cqt_sq_cond.npy', Cqt_sq_cond)
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_m, deltas, delta_label, interp=False,
                               C_sq_to_C = True, Pr_in=True, mask_spur_vals = True,
-                              labels_in = ['total', 'cloud-free', 'in-cloud', 'cloud updraft', 'cloud core']):
+                              labels_in = ['total', 'no cloud', 'in-cloud', 'cloud updraft', 'cloud core']):
 
     colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
