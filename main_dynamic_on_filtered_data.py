@@ -15,7 +15,8 @@ start = args.start_in
 filters_start = args.start_filt
 how_many_filters = args.n_filts #eg 6 = 0->5: ga00.nc -> ga05.nc
 
-MY_dx = 25
+MY_dx_HAT = 50
+
 case_in='ARM'
 
 opgrid = 'p'
