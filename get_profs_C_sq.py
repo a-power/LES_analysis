@@ -53,11 +53,11 @@ if beta==True:
     #                             outdir+myfile+'LM_16D_', outdir+myfile+'LM_32D_', outdir+myfile+'LM_64D_']
     extra_filter = ['0']#, '1']
 else:
-    dataset_name = [outdir+myfile+'C_2D.nc']#, outdir+myfile+'C_4D.nc', outdir+myfile+'C_8D.nc',
-    #                 outdir+myfile+'C_16D.nc', outdir+myfile+'C_32D.nc', outdir+myfile+'C_64D.nc']
+    dataset_name = [outdir+myfile+'C_2D']#, outdir+myfile+'C_4D', outdir+myfile+'C_8D',
+    #                 outdir+myfile+'C_16D', outdir+myfile+'C_32D', outdir+myfile+'C_64D']
 
-    # dataset_name = [outdir + myfile + 'LM_2D.nc', outdir + myfile + 'LM_4D.nc', outdir + myfile + 'LM_8D.nc',
-    #                 outdir + myfile + 'LM_16D.nc', outdir + myfile + 'LM_32D.nc', outdir + myfile + 'LM_64D.nc']
+    # dataset_name = [outdir + myfile + 'LM_2D', outdir + myfile + 'LM_4D', outdir + myfile + 'LM_8D',
+    #                 outdir + myfile + 'LM_16D', outdir + myfile + 'LM_32D', outdir + myfile + 'LM_64D']
 
 # 'field': 'f(LM_field_on_w)_r'
 # 'field': 'Cs_field'
