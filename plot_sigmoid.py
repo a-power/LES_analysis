@@ -58,7 +58,7 @@ if case == 'ARM':
     dx=25
 
     z_cl_r_ind_set = [ [87, 110], [102, 150], [115, 200], [130, 230] ] #z_cl_range_calc
-    z_ml_r_ind_list = [ [20, 75], [20, 80], [20, 85], [20, 90] ]
+    z_ml_r_ind_list = [ [15, 75], [15, 80], [15, 85], [15, 90] ]
 
     Delta_values = [25, 2 * 25, 4 * 25, 8 * 25, 16 * 25, 32 * 25, 64 * 25]
     Delta_values_BOMEX = [20, 2 * 20, 4 * 20, 8 * 20, 16 * 20, 32 * 20, 64 * 20]
@@ -116,11 +116,13 @@ def calc_variance(var, dir, time, layer, Delta_list, dir_og_unfilt = og_unfilt):
     return var_variance
 
 
-def calc_covariance(var1, var2, dir, time, layer, Delta_list, dir_og_unfilt = og_unfilt):
+def calc_covariance(var1, var2, dir, time, layer, Delta_list, var3=None, dir_og_unfilt = og_unfilt):
 
 
     var_mean1 = calc_var_mean(var1, dir, time, layer, Delta_list)
     var_mean2 = calc_var_mean(var2, dir, time, layer, Delta_list)
+    if var3 != None:
+        var_mean3 = calc_var_mean(var3, dir, time, layer, Delta_list)
 
     var_covariance = np.zeros(( len(Deltas) ))
 
@@ -129,18 +131,24 @@ def calc_covariance(var1, var2, dir, time, layer, Delta_list, dir_og_unfilt = og
             dataset_in = dir_og_unfilt + f'{time}.nc'
             var_name1 = f'{var1}'
             var_name2 = f'{var2}'
+            var_name3 = f'{var3}'
             if var2 == 'q_total':
                 vara = 'q_vapour'
                 varb = 'q_cloud_liquid_mass'
         else:
             dataset_in = dir + f'{time}_gaussian_filter_ga0{Del}.nc'
-            var_name2 = f'f({var2}_on_{mygrid})_r'
             var_name1 = f'f({var1}_on_{mygrid})_r'
+            var_name2 = f'f({var2}_on_{mygrid})_r'
+            var_name3 = f'f({var3}_on_{mygrid})_r'
 
         data_set = xr.open_dataset(dataset_in)
         if Del == '-1' and var2 == 'q_total':
-            var_covariance[d] = np.mean((data_set[var_name1].data[..., layer] - var_mean1[d]) * \
-                             ( (data_set[vara].data[..., layer] + data_set[varb].data[..., layer]) - var_mean2[d]))
+            var_covariance[d] = np.mean( (data_set[var_name1].data[..., layer] - var_mean1[d]) * \
+                             ( (data_set[vara].data[..., layer] + data_set[varb].data[..., layer]) - var_mean2[d]) )
+        elif var3 != None:
+            var_covariance[d] = np.mean( 0.5 * ( (data_set[var_name1].data[..., layer] - var_mean1[d] )**2 + \
+                                        (data_set[var_name2].data[..., layer] - var_mean2[d])**2 + \
+                                        (data_set[var_name3].data[..., layer] - var_mean3[d]) ** 2 ) )
         else:
             var_covariance[d] = np.mean( (data_set[var_name1].data[..., layer] - var_mean1[d]) * \
                                      (data_set[var_name2].data[..., layer] - var_mean2[d]))
@@ -148,13 +156,17 @@ def calc_covariance(var1, var2, dir, time, layer, Delta_list, dir_og_unfilt = og
     return var_covariance
 
 
-def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_list_in, var2=None, log_axis=True):
+def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_list_in, var2=None, log_axis=True, \
+                 dir_unfilt = og_unfilt):
 
     col_list = ['k', 'r', 'b', 'g', 'y', 'm', 'tab:gray']
 
     plt.figure(figsize=(6, 6))
 
     for t, time_str in enumerate(time_list):
+
+        sg_dataset_path = dir_unfilt + f'{time_str}.nc'
+        sg_dataset = xr.open_dataset(sg_dataset_path)
 
         clock_time_int = 05.30 + int(time_str) / (60 * 60)
         clock_time = str(clock_time_int) + '0L'
@@ -163,20 +175,23 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
         z_l_mid_layer = int( (z_l_r[0] + z_l_r[1])/2 )
         print('axis index for ', layer, f'at time {time_str} is ', z_l_mid_layer)
         if variable == 'TKE':
+            sg_var = np.mean(sg_dataset['tkesg_mean'].data[..., layer])
             if os.path.exists(outdir + f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy'):
                 var_sig = np.load(outdir+f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy')
             else:
-                var_u = calc_variance('u', data_dir, time_str, z_l_mid_layer, delta_list)
-                var_v = calc_variance('v', data_dir, time_str, z_l_mid_layer, delta_list)
-                var_w = calc_variance('w', data_dir, time_str, z_l_mid_layer, delta_list)
-                var_sig = 0.5 * (var_u + var_v + var_w)
-                var_u = None
-                var_v = None
-                var_w = None
+                # var_u = calc_variance('u', data_dir, time_str, z_l_mid_layer, delta_list)
+                # var_v = calc_variance('v', data_dir, time_str, z_l_mid_layer, delta_list)
+                # var_w = calc_variance('w', data_dir, time_str, z_l_mid_layer, delta_list)
+                # var_sig = 0.5 * (var_u + var_v + var_w)
+                # var_u = None
+                # var_v = None
+                # var_w = None
+                var_sig = calc_covariance('u', 'v', data_dir, time_str, z_l_mid_layer, delta_list, 'w')
                 np.save(outdir+f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy', var_sig)
 
         else:
             if var2 != None:
+
                 if os.path.exists(outdir + f'sigmoid_{case}_{variable}_{var2}_{layer}_{time_str}.npy'):
                     var_sig = np.load(outdir+f'sigmoid_{case}_{variable}_{var2}_{layer}_{time_str}.npy')
                 else:
@@ -185,16 +200,21 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
                 if var2 == 'q_total':
                     var_sig = var_sig*1000 # kg to g
             else:
+                sg_var = np.mean(sg_dataset[f'{variable}sg_mean'].data[..., layer])
                 if os.path.exists(outdir + f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy'):
                     var_sig = np.load(outdir+f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy')
                 else:
                     var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
                     np.save(outdir+f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy', var_sig)
 
+        total_var = sg_var + var_sig[0]
+
         if log_axis == True:
             plt.semilogx(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
+            plt.semilogx(Delta_values, total_var, col_list[t], linestyle = '--')
         else:
             plt.plot(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
+            plt.plot(Delta_values, total_var, col_list[t], linestyle='--')
 
     # plt.errorbar(res[0] / z_i, w_var[0] / w_var[0], yerr=var_err[0] / w_var[0], label=str(res[0]) + 'm',
     #              color=col_list[0], ecolor='green', fmt='o', capsize=5)
