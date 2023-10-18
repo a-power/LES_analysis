@@ -207,17 +207,16 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
                 else:
                     var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
                     np.save(outdir+f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy', var_sig)
-        if var2 == None:
-            total_var = sg_var + var_sig[0]
-            if log_axis == True:
-                plt.semilogx(Delta_values, total_var, col_list[t], linestyle='--')
-            else:
-                plt.plot(Delta_values, total_var, col_list[t], linestyle='--')
 
         if log_axis == True:
             plt.semilogx(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
         else:
             plt.plot(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
+
+        if var2 == None:
+            total_var = sg_var + var_sig[0]
+            left, right = plt.xlim()
+            plt.hlines(total_var, xmin=left, xmax=right, colors=col_list[t], linestyles='--')
 
     # plt.errorbar(res[0] / z_i, w_var[0] / w_var[0], yerr=var_err[0] / w_var[0], label=str(res[0]) + 'm',
     #              color=col_list[0], ecolor='green', fmt='o', capsize=5)
