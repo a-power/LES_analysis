@@ -175,7 +175,7 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
         z_l_mid_layer = int( (z_l_r[0] + z_l_r[1])/2 )
         print('axis index for ', layer, f'at time {time_str} is ', z_l_mid_layer)
         if variable == 'TKE':
-            sg_var = np.mean(sg_dataset['tkesg_mean'].data[..., layer])
+            sg_var = np.mean(sg_dataset['tkesg_mean'].data[..., z_l_mid_layer])
             if os.path.exists(outdir + f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy'):
                 var_sig = np.load(outdir+f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy')
             else:
@@ -201,7 +201,7 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
                     var_sig = var_sig*1000 # kg to g
             else:
                 if variable == 'w':
-                    sg_var = np.mean(sg_dataset[f'{variable}sg_mean'].data[..., layer])
+                    sg_var = np.mean(sg_dataset[f'{variable}sg_mean'].data[..., z_l_mid_layer])
                 if os.path.exists(outdir + f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy'):
                     var_sig = np.load(outdir+f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy')
                 else:
