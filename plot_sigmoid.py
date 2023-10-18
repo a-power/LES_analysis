@@ -200,21 +200,24 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
                 if var2 == 'q_total':
                     var_sig = var_sig*1000 # kg to g
             else:
-                sg_var = np.mean(sg_dataset[f'{variable}sg_mean'].data[..., layer])
+                if variable == 'w':
+                    sg_var = np.mean(sg_dataset[f'{variable}sg_mean'].data[..., layer])
                 if os.path.exists(outdir + f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy'):
                     var_sig = np.load(outdir+f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy')
                 else:
                     var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
                     np.save(outdir+f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy', var_sig)
-
-        total_var = sg_var + var_sig[0]
+        if variable == 'TKE' or variable == 'w':
+            total_var = sg_var + var_sig[0]
+            if log_axis == True:
+                plt.semilogx(Delta_values, total_var, col_list[t], linestyle='--')
+            else:
+                plt.plot(Delta_values, total_var, col_list[t], linestyle='--')
 
         if log_axis == True:
             plt.semilogx(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
-            plt.semilogx(Delta_values, total_var, col_list[t], linestyle = '--')
         else:
             plt.plot(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
-            plt.plot(Delta_values, total_var, col_list[t], linestyle='--')
 
     # plt.errorbar(res[0] / z_i, w_var[0] / w_var[0], yerr=var_err[0] / w_var[0], label=str(res[0]) + 'm',
     #              color=col_list[0], ecolor='green', fmt='o', capsize=5)
