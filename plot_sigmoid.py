@@ -46,7 +46,7 @@ if case == 'BOMEX':
 
 if case == 'ARM':
     data_path = '/work/scratch-pw3/apower/ARM/corrected_sigmas/diagnostics_3d_ts_'
-    og_unfilt = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_3d_ts_'
+    og_unfilt = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_'
     outdir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/data/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigma/sigmoid/'
     bomex_info_in = '/gws/nopw/j04/paracon_rdg/users/apower/BOMEX/data/'
@@ -80,7 +80,7 @@ def calc_var_mean(var_in, dir_in, time_in, layer_set, Deltas, dir_og_unfilt = og
 
     for d, Del in enumerate(Deltas):
         if Del == '-1':
-            dataset_in = dir_og_unfilt + f'{time_in}.nc'
+            dataset_in = dir_og_unfilt + f'3d_ts_{time_in}.nc'
             var_name = f'{var_in}'
             if var_in == 'q_total':
                 vara = 'q_vapour'
@@ -104,7 +104,7 @@ def calc_variance(var, dir, time, layer, Delta_list, dir_og_unfilt = og_unfilt):
 
     for d, Del in enumerate(Deltas):
         if Del == '-1':
-            dataset_in = dir_og_unfilt + f'{time}.nc'
+            dataset_in = dir_og_unfilt + f'3d_ts_{time}.nc'
             var_name = f'{var}'
         else:
             dataset_in = dir + f'{time}_gaussian_filter_ga0{Del}.nc'
@@ -128,7 +128,7 @@ def calc_covariance(var1, var2, dir, time, layer, Delta_list, var3=None, dir_og_
 
     for d, Del in enumerate(Deltas):
         if Del == '-1':
-            dataset_in = dir_og_unfilt + f'{time}.nc'
+            dataset_in = dir_og_unfilt + f'3d_ts_{time}.nc'
             var_name1 = f'{var1}'
             var_name2 = f'{var2}'
             var_name3 = f'{var3}'
@@ -165,7 +165,7 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
 
     for t, time_str in enumerate(time_list):
 
-        sg_dataset_path = dir_unfilt + f'{time_str}.nc'
+        sg_dataset_path = dir_unfilt + f'ts_{time_str}.nc'
         sg_dataset = xr.open_dataset(sg_dataset_path)
 
         clock_time_int = 05.30 + int(time_str) / (60 * 60)
@@ -207,7 +207,7 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
                 else:
                     var_sig = calc_variance(variable, data_dir, time_str, z_l_mid_layer, delta_list)
                     np.save(outdir+f'sigmoid_{case}_{variable}_{layer}_{time_str}.npy', var_sig)
-        if variable == 'TKE' or variable == 'w':
+        if var2 == None:
             total_var = sg_var + var_sig[0]
             if log_axis == True:
                 plt.semilogx(Delta_values, total_var, col_list[t], linestyle='--')
