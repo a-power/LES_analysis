@@ -212,10 +212,10 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
             plt.semilogx(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
         else:
             plt.plot(Delta_values, var_sig, col_list[t], label=f'{clock_time}')
+        left, right = plt.xlim()
 
         if var2 == None:
             total_var = sg_var + var_sig[0]
-            left, right = plt.xlim()
             plt.hlines(total_var, xmin=left, xmax=right, colors=col_list[t], linestyles='--')
 
     # plt.errorbar(res[0] / z_i, w_var[0] / w_var[0], yerr=var_err[0] / w_var[0], label=str(res[0]) + 'm',
@@ -238,8 +238,8 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
         elif variable == 'w' and var2 == 'q_total':
             plt.ylabel("$\\overline{ w' q_t' }$ $(g kg^{-1} m s^{-1})$", fontsize=16)
 
-    # plt.ylim(ymax=1.1, ymin=0.0)
-    # plt.xlim(xmax=4e3, xmin=3e0)
+    plt.ylim(ymin=0.0)
+    plt.xlim(xmin=Delta_values[0]-1, xmax=Delta_values[-1]+10)
     if case == 'ARM':
         plt.legend(fontsize=12, loc='best')
     plt.xticks(Delta_values, Delta_labels)
