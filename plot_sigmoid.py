@@ -47,7 +47,7 @@ if case == 'BOMEX':
 if case == 'ARM':
     data_path = '/work/scratch-pw3/apower/ARM/corrected_sigmas/diagnostics_3d_ts_'
     og_unfilt = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_'
-    outdir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/data/'
+    outdir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/data/test/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigma/sigmoid/'
     bomex_info_in = '/gws/nopw/j04/paracon_rdg/users/apower/BOMEX/data/'
     times = [ '18000', '25200', '32400', '39600' ]
