@@ -13,10 +13,10 @@ os.makedirs(plotdir, exist_ok=True)
 z_cl_r_ind_set = [ [87, 110], [102, 150], [115, 200], [130, 230] ] #z_cl_range_calc
 z_ml_r_ind_list = [ [15, 75], [15, 80], [15, 85], [15, 90] ]
 
-z_level_mid_CL = (z_cl_r_ind_set[2][1] + z_cl_r_ind_set[2][0]) / 2
-z_level_mid_ML = (z_ml_r_ind_list[2][1] + z_ml_r_ind_list[2][0]) / 2
+z_level_mid_CL = (z_cl_r_ind_set[2][1] - z_cl_r_ind_set[2][0]) / 2
+z_level_mid_ML = (z_ml_r_ind_list[2][1] - z_ml_r_ind_list[2][0]) / 2
 
-z_set = z_level_mid_ML
+z_set = 50#z_level_mid_ML
 
 z_ml_height = z_ml_r_ind_list[2][1] * 10
 
