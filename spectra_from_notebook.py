@@ -158,19 +158,19 @@ ax.loglog(w_kpo_filt6g2*z_ml_height/(2*np.pi), w_filt_2nd_5[:,z_set], '--', labe
 #ax.loglog(125*filt_slope_x, 0.0006*filt_slope_y, 'k-')
 #ax.text(80, 0.01, r'$k^{-11/2}$', fontsize=14)
 ax.legend(fontsize=12, loc='upper right')
-ax.set_xlabel("$k z_i$", fontsize=14)
+ax.set_xlabel("$k z_{ML}$", fontsize=14)
 ax.set_ylabel("$\\mathcal{S}$ $w'^2$", fontsize=14) #("$\mathcal{S}$ ($w'$)", fontsize=14)
 ax.set_ylim(ymax=1e2, ymin=1e-6)
 ax.set_xlim(xmax=200, xmin=0.02)
 #plt.xlim(xmax=1e0, xmin=1e-3)
 
 def ktol(kz):
-    l = (1/kz)*np.mean(z_i) #2*np.pi/k
+    l = (1/kz)*np.mean(z_ml_height) #2*np.pi/k
     return l
 
 
 def ltok(l):
-    kz = (1/l)*np.mean(z_i) #2*np.pi/l
+    kz = (1/l)*np.mean(z_ml_height) #2*np.pi/l
     return kz
 
 
