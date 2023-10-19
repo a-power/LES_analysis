@@ -45,12 +45,12 @@ print('ga04.nc sigma = ', data4_20.getncattr('sigma'))
 print('ga05.nc sigma = ', data5_20.getncattr('sigma'))
 
 w_filt_1st = np.zeros((6,768,768,400))
-w_filt_1st[0,:,:,:] = data0_20.variables['w_on_p_r'][0,:,:,:]
-w_filt_1st[1,:,:,:] = data1_20.variables['w_on_p_r'][0,:,:,:]
-w_filt_1st[2,:,:,:] = data2_20.variables['w_on_p_r'][0,:,:,:]
-w_filt_1st[3,:,:,:] = data3_20.variables['w_on_p_r'][0,:,:,:]
-w_filt_1st[4,:,:,:] = data4_20.variables['w_on_p_r'][0,:,:,:]
-w_filt_1st[5,:,:,:] = data5_20.variables['w_on_p_r'][0,:,:,:]
+w_filt_1st[0,:,:,:] = data0_20.variables['f(w_on_p)_r'][0,:,:,:]
+w_filt_1st[1,:,:,:] = data1_20.variables['f(w_on_p)_r'][0,:,:,:]
+w_filt_1st[2,:,:,:] = data2_20.variables['f(w_on_p)_r'][0,:,:,:]
+w_filt_1st[3,:,:,:] = data3_20.variables['f(w_on_p)_r'][0,:,:,:]
+w_filt_1st[4,:,:,:] = data4_20.variables['f(w_on_p)_r'][0,:,:,:]
+w_filt_1st[5,:,:,:] = data5_20.variables['f(w_on_p)_r'][0,:,:,:]
 
 
 
@@ -62,12 +62,12 @@ data4_2nd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[4]+'_gaussian_fi
 data5_2nd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[5]+'_gaussian_filter_ga00.nc', mode='r')
 
 w_filt_2nd = np.zeros((6,768,768,400))
-w_filt_2nd[0,:,:,:] = data0_2nd.variables['w_on_p_r'][0,:,:,:]
-w_filt_2nd[1,:,:,:] = data1_2nd.variables['w_on_p_r'][0,:,:,:]
-w_filt_2nd[2,:,:,:] = data2_2nd.variables['w_on_p_r'][0,:,:,:]
-w_filt_2nd[3,:,:,:] = data3_2nd.variables['w_on_p_r'][0,:,:,:]
-w_filt_2nd[4,:,:,:] = data4_2nd.variables['w_on_p_r'][0,:,:,:]
-w_filt_2nd[5,:,:,:] = data5_2nd.variables['w_on_p_r'][0,:,:,:]
+w_filt_2nd[0,:,:,:] = data0_2nd.variables['f(w_on_p)_r'][0,:,:,:]
+w_filt_2nd[1,:,:,:] = data1_2nd.variables['f(w_on_p)_r'][0,:,:,:]
+w_filt_2nd[2,:,:,:] = data2_2nd.variables['f(w_on_p)_r'][0,:,:,:]
+w_filt_2nd[3,:,:,:] = data3_2nd.variables['f(w_on_p)_r'][0,:,:,:]
+w_filt_2nd[4,:,:,:] = data4_2nd.variables['f(w_on_p)_r'][0,:,:,:]
+w_filt_2nd[5,:,:,:] = data5_2nd.variables['f(w_on_p)_r'][0,:,:,:]
 
 
 dx = dy = 25 #metres
