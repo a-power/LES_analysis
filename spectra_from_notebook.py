@@ -15,8 +15,10 @@ which_time_int = 2
 z_cl_r_ind_set = [ [87, 110], [102, 150], [115, 200], [130, 230] ] #z_cl_range_calc
 z_ml_r_ind_list = [ [15, 75], [15, 80], [15, 85], [15, 90] ]
 
-z_level_mid_CL = int( z_cl_r_ind_set[which_time_int][0] +  ((z_cl_r_ind_set[which_time_int][1] - z_cl_r_ind_set[which_time_int][0]) / 2) )
-z_level_mid_ML = int( z_ml_r_ind_list[which_time_int][0] + ((z_ml_r_ind_list[which_time_int][1] - z_ml_r_ind_list[which_time_int][0]) / 2) )
+z_level_mid_CL = int( z_cl_r_ind_set[which_time_int][0] +
+                      ((z_cl_r_ind_set[which_time_int][1] - z_cl_r_ind_set[which_time_int][0]) / 2) )
+z_level_mid_ML = int( z_ml_r_ind_list[which_time_int][0] +
+                      ((z_ml_r_ind_list[which_time_int][1] - z_ml_r_ind_list[which_time_int][0]) / 2) )
 
 print('z_level_mid_CL = ', z_level_mid_CL, 'z_level_mid_ML = ', z_level_mid_ML)
 
