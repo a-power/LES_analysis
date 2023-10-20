@@ -164,8 +164,8 @@ ax.loglog(w_kpo_filt3g1*z_ml_height/(2*np.pi), w_filt_1st_2[:,z_set], '--',  lab
 ax.loglog(90*turb_slope_x, 0.02*turb_slope_y, 'k-') #0.015
 ax.text(10, 1.6, r'$k^{-5/3}$', fontsize=14)
 
-ax.loglog(w_kpo_filt1g2*z_ml_height/(2*np.pi), w_filt_2nd_0[:,z_set], '.-', label="$\\sigma$ = 25m, $\\sigma$ = 25m")
-ax.loglog(w_kpo_filt2g2*z_ml_height/(2*np.pi), w_filt_2nd_1[:,z_set], '.-', label="$\\sigma$ = 50m, $\\sigma$ = 25m")
+ax.loglog(w_kpo_filt1g2*z_ml_height/(2*np.pi), w_filt_2nd_0[:,z_set], '-.', label="$\\sigma$ = 25m, $\\sigma$ = 25m")
+ax.loglog(w_kpo_filt2g2*z_ml_height/(2*np.pi), w_filt_2nd_1[:,z_set], '-.', label="$\\sigma$ = 50m, $\\sigma$ = 25m")
 #ax.loglog(w_kpo_filt3g2*z_ml_height/(2*np.pi), w_filt_2nd_2[:,z_set], '--', label="$\\sigma$ = 100m, $\\sigma$ = 25m")
 # ax.loglog(w_kpo_filt4g2*z_ml_height/(2*np.pi), w_filt_2nd_3[:,z_set], '--', label="$\\sigma$ = 200m, $\\sigma$ = 25m")
 # ax.loglog(w_kpo_filt5g2*z_ml_height/(2*np.pi), w_filt_2nd_4[:,z_set], '--', label="$\\sigma$ = 400m, $\\sigma$ = 25m")
