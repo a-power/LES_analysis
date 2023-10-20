@@ -146,7 +146,7 @@ filt_slope_x = np.linspace(0.5,1,50)
 filt_slope_y = filt_slope_x**(-11/2)
 
 
-ax.loglog(w_kpo*z_ml_height/(2*np.pi), w_spec[:,z_set], label="$\\Delta$ = 25m")
+ax.loglog(w_kpo*z_ml_height/(2*np.pi), w_spec[:,z_set], 'k', lw = 2, label="$\\Delta$ = 25m")
 
 ax.loglog(w_kpo_filt1g1*z_ml_height/(2*np.pi), w_filt_1st_0[:,z_set], label="$\\sigma$ = 25m") #\\Delta
 ax.loglog(w_kpo_filt2g1*z_ml_height/(2*np.pi), w_filt_1st_1[:,z_set], label="$\\sigma$ = 50m")
@@ -164,9 +164,9 @@ ax.loglog(w_kpo_filt3g2*z_ml_height/(2*np.pi), w_filt_2nd_2[:,z_set], '--', labe
 # ax.loglog(w_kpo_filt5g2*z_ml_height/(2*np.pi), w_filt_2nd_4[:,z_set], '--', label="$\\sigma$ = 400m, $\\sigma$ = 25m")
 # ax.loglog(w_kpo_filt6g2*z_ml_height/(2*np.pi), w_filt_2nd_5[:,z_set], '--', label="$\\sigma$ = 800m, $\\sigma$ = 25m")
 
-ax.loglog(w_kpo_filt1g3*z_ml_height/(2*np.pi), w_filt_3rd_0[:,z_set], '--', label="$\\sigma$ = 25m, $\\sigma$ = 50m")
-ax.loglog(w_kpo_filt2g3*z_ml_height/(2*np.pi), w_filt_3rd_1[:,z_set], '--', label="$\\sigma$ = 50m, $\\sigma$ = 50m")
-ax.loglog(w_kpo_filt3g3*z_ml_height/(2*np.pi), w_filt_3rd_2[:,z_set], '--', label="$\\sigma$ = 100m, $\\sigma$ = 50m")
+ax.loglog(w_kpo_filt1g3*z_ml_height/(2*np.pi), w_filt_3rd_0[:,z_set], '-.', label="$\\sigma$ = 25m, $\\sigma$ = 50m")
+ax.loglog(w_kpo_filt2g3*z_ml_height/(2*np.pi), w_filt_3rd_1[:,z_set], '-.', label="$\\sigma$ = 50m, $\\sigma$ = 50m")
+ax.loglog(w_kpo_filt3g3*z_ml_height/(2*np.pi), w_filt_3rd_2[:,z_set], '-.', label="$\\sigma$ = 100m, $\\sigma$ = 50m")
 
 
 
