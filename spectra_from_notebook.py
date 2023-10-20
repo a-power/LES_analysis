@@ -10,11 +10,15 @@ import functions as f
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigma/spectra/'
 os.makedirs(plotdir, exist_ok=True)
 
+which_time_int = 2
+
 z_cl_r_ind_set = [ [87, 110], [102, 150], [115, 200], [130, 230] ] #z_cl_range_calc
 z_ml_r_ind_list = [ [15, 75], [15, 80], [15, 85], [15, 90] ]
 
-z_level_mid_CL = (z_cl_r_ind_set[2][1] - z_cl_r_ind_set[2][0]) / 2
-z_level_mid_ML = (z_ml_r_ind_list[2][1] - z_ml_r_ind_list[2][0]) / 2
+z_level_mid_CL = int( z_cl_r_ind_set[which_time_int][0] +  ((z_cl_r_ind_set[which_time_int][1] - z_cl_r_ind_set[which_time_int][0]) / 2) )
+z_level_mid_ML = int( z_ml_r_ind_list[which_time_int][0] + ((z_ml_r_ind_list[which_time_int][1] - z_ml_r_ind_list[which_time_int][0]) / 2) )
+
+print('z_level_mid_CL = ', z_level_mid_CL, 'z_level_mid_ML = ', z_level_mid_ML)
 
 z_set = 50#z_level_mid_ML
 
@@ -165,8 +169,8 @@ ax.loglog(w_kpo_filt2g2*z_ml_height/(2*np.pi), w_filt_2nd_1[:,z_set], '.-', labe
 # ax.loglog(w_kpo_filt5g2*z_ml_height/(2*np.pi), w_filt_2nd_4[:,z_set], '--', label="$\\sigma$ = 400m, $\\sigma$ = 25m")
 # ax.loglog(w_kpo_filt6g2*z_ml_height/(2*np.pi), w_filt_2nd_5[:,z_set], '--', label="$\\sigma$ = 800m, $\\sigma$ = 25m")
 
-ax.loglog(w_kpo_filt1g3*z_ml_height/(2*np.pi), w_filt_3rd_0[:,z_set], '..', label="$\\sigma$ = 25m, $\\sigma$ = 50m")
-ax.loglog(w_kpo_filt2g3*z_ml_height/(2*np.pi), w_filt_3rd_1[:,z_set], '..', label="$\\sigma$ = 50m, $\\sigma$ = 50m")
+ax.loglog(w_kpo_filt1g3*z_ml_height/(2*np.pi), w_filt_3rd_0[:,z_set], ':', label="$\\sigma$ = 25m, $\\sigma$ = 50m")
+ax.loglog(w_kpo_filt2g3*z_ml_height/(2*np.pi), w_filt_3rd_1[:,z_set], ':', label="$\\sigma$ = 50m, $\\sigma$ = 50m")
 #ax.loglog(w_kpo_filt3g3*z_ml_height/(2*np.pi), w_filt_3rd_2[:,z_set], '-.', label="$\\sigma$ = 100m, $\\sigma$ = 50m")
 
 
