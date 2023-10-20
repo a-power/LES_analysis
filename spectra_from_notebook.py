@@ -24,50 +24,64 @@ set_time = '32400'
 set_z_level = z_level_mid_ML
 
 homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/'
-
+MONC_dir = f'/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_3d_ts_{set_time}.nc'
 mydir20 = '/work/scratch-pw3/apower/ARM/corrected_sigmas/'
 myfile20 = [f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga00', f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga01',
            f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga02', f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga03',
             f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga04', f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga05']
 
+unfilt_data = Dataset(str(MONC_dir), mode='r')
+w = unfilt_data.variables['w'][0,:,:,:]
+
 data0_20 = Dataset(str(mydir20)+myfile20[0]+'.nc', mode='r')
 data1_20 = Dataset(str(mydir20)+myfile20[1]+'.nc', mode='r')
 data2_20 = Dataset(str(mydir20)+myfile20[2]+'.nc', mode='r')
-data3_20 = Dataset(str(mydir20)+myfile20[3]+'.nc', mode='r')
-data4_20 = Dataset(str(mydir20)+myfile20[4]+'.nc', mode='r')
-data5_20 = Dataset(str(mydir20)+myfile20[5]+'.nc', mode='r')
+# data3_20 = Dataset(str(mydir20)+myfile20[3]+'.nc', mode='r')
+# data4_20 = Dataset(str(mydir20)+myfile20[4]+'.nc', mode='r')
+# data5_20 = Dataset(str(mydir20)+myfile20[5]+'.nc', mode='r')
 
 print('ga00.nc sigma = ', data0_20.getncattr('sigma'))
 print('ga01.nc sigma = ', data1_20.getncattr('sigma'))
 print('ga02.nc sigma = ', data2_20.getncattr('sigma'))
-print('ga03.nc sigma = ', data3_20.getncattr('sigma'))
-print('ga04.nc sigma = ', data4_20.getncattr('sigma'))
-print('ga05.nc sigma = ', data5_20.getncattr('sigma'))
+# print('ga03.nc sigma = ', data3_20.getncattr('sigma'))
+# print('ga04.nc sigma = ', data4_20.getncattr('sigma'))
+# print('ga05.nc sigma = ', data5_20.getncattr('sigma'))
 
-w_filt_1st = np.zeros((6,768,768,441))
+w_filt_1st = np.zeros((3,768,768,441))
 w_filt_1st[0,:,:,:] = data0_20.variables['f(w_on_p)_r'][0,:,:,:]
 w_filt_1st[1,:,:,:] = data1_20.variables['f(w_on_p)_r'][0,:,:,:]
 w_filt_1st[2,:,:,:] = data2_20.variables['f(w_on_p)_r'][0,:,:,:]
-w_filt_1st[3,:,:,:] = data3_20.variables['f(w_on_p)_r'][0,:,:,:]
-w_filt_1st[4,:,:,:] = data4_20.variables['f(w_on_p)_r'][0,:,:,:]
-w_filt_1st[5,:,:,:] = data5_20.variables['f(w_on_p)_r'][0,:,:,:]
+# w_filt_1st[3,:,:,:] = data3_20.variables['f(w_on_p)_r'][0,:,:,:]
+# w_filt_1st[4,:,:,:] = data4_20.variables['f(w_on_p)_r'][0,:,:,:]
+# w_filt_1st[5,:,:,:] = data5_20.variables['f(w_on_p)_r'][0,:,:,:]
 
 
 
 data0_2nd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[0]+'_gaussian_filter_ga00.nc', mode='r')
 data1_2nd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[1]+'_gaussian_filter_ga00.nc', mode='r')
 data2_2nd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[2]+'_gaussian_filter_ga00.nc', mode='r')
-data3_2nd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[3]+'_gaussian_filter_ga00.nc', mode='r')
-data4_2nd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[4]+'_gaussian_filter_ga00.nc', mode='r')
-data5_2nd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[5]+'_gaussian_filter_ga00.nc', mode='r')
+# data3_2nd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[3]+'_gaussian_filter_ga00.nc', mode='r')
+# data4_2nd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[4]+'_gaussian_filter_ga00.nc', mode='r')
+# data5_2nd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[5]+'_gaussian_filter_ga00.nc', mode='r')
 
-w_filt_2nd = np.zeros((6,768,768,441))
+w_filt_2nd = np.zeros((3,768,768,441))
 w_filt_2nd[0,:,:,:] = data0_2nd.variables['f(w_on_p)_r'][0,:,:,:]
 w_filt_2nd[1,:,:,:] = data1_2nd.variables['f(w_on_p)_r'][0,:,:,:]
 w_filt_2nd[2,:,:,:] = data2_2nd.variables['f(w_on_p)_r'][0,:,:,:]
-w_filt_2nd[3,:,:,:] = data3_2nd.variables['f(w_on_p)_r'][0,:,:,:]
-w_filt_2nd[4,:,:,:] = data4_2nd.variables['f(w_on_p)_r'][0,:,:,:]
-w_filt_2nd[5,:,:,:] = data5_2nd.variables['f(w_on_p)_r'][0,:,:,:]
+# w_filt_2nd[3,:,:,:] = data3_2nd.variables['f(w_on_p)_r'][0,:,:,:]
+# w_filt_2nd[4,:,:,:] = data4_2nd.variables['f(w_on_p)_r'][0,:,:,:]
+# w_filt_2nd[5,:,:,:] = data5_2nd.variables['f(w_on_p)_r'][0,:,:,:]
+
+
+data0_3rd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[0]+'_gaussian_filter_ga01.nc', mode='r')
+data1_3rd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[1]+'_gaussian_filter_ga01.nc', mode='r')
+data2_3rd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[2]+'_gaussian_filter_ga01.nc', mode='r')
+
+
+w_filt_3rd = np.zeros((3,768,768,441))
+w_filt_3rd[0,:,:,:] = data0_3rd.variables['f(w_on_p)_r'][0,:,:,:]
+w_filt_3rd[1,:,:,:] = data1_3rd.variables['f(w_on_p)_r'][0,:,:,:]
+w_filt_3rd[2,:,:,:] = data2_3rd.variables['f(w_on_p)_r'][0,:,:,:]
 
 
 dx = dy = 25 #metres
@@ -84,6 +98,8 @@ options_spec = {
              }
 
 
+w_spec, w_kpo = f.spectra_2d(w, dx, dy, options_spec)
+
 #w_spec_filt0k, w_kpo_filt0k = f.spectra_2d(w_filt20k[0,:,:,:], dx, dy, options_spec)
 #print("sigma 25")
 w_filt_1st_0, w_kpo_filt1g1 = f.spectra_2d(w_filt_1st[0,:,:,:], dx, dy, options_spec)
@@ -92,11 +108,11 @@ w_filt_1st_1, w_kpo_filt2g1 = f.spectra_2d(w_filt_1st[1,:,:,:], dx, dy, options_
 #print("w_filt_1st_sigma 100")
 w_filt_1st_2, w_kpo_filt3g1 = f.spectra_2d(w_filt_1st[2,:,:,:], dx, dy, options_spec)
 #print("sigma 200")
-w_filt_1st_3, w_kpo_filt4g1 = f.spectra_2d(w_filt_1st[3,:,:,:], dx, dy, options_spec)
-#print("sigma 400")
-w_filt_1st_4, w_kpo_filt5g1 = f.spectra_2d(w_filt_1st[4,:,:,:], dx, dy, options_spec)
-#print("sigma 522")
-w_filt_1st_5, w_kpo_filt6g1 = f.spectra_2d(w_filt_1st[5,:,:,:], dx, dy, options_spec)
+# w_filt_1st_3, w_kpo_filt4g1 = f.spectra_2d(w_filt_1st[3,:,:,:], dx, dy, options_spec)
+# #print("sigma 400")
+# w_filt_1st_4, w_kpo_filt5g1 = f.spectra_2d(w_filt_1st[4,:,:,:], dx, dy, options_spec)
+# #print("sigma 522")
+# w_filt_1st_5, w_kpo_filt6g1 = f.spectra_2d(w_filt_1st[5,:,:,:], dx, dy, options_spec)
 #print("sigma 522")
 
 
@@ -106,12 +122,18 @@ w_filt_2nd_1, w_kpo_filt2g2 = f.spectra_2d(w_filt_2nd[1,:,:,:], dx, dy, options_
 #print("w_filt_1st_sigma 100")
 w_filt_2nd_2, w_kpo_filt3g2 = f.spectra_2d(w_filt_2nd[2,:,:,:], dx, dy, options_spec)
 #print("sigma 200")
-w_filt_2nd_3, w_kpo_filt4g2 = f.spectra_2d(w_filt_2nd[3,:,:,:], dx, dy, options_spec)
-#print("sigma 400")
-w_filt_2nd_4, w_kpo_filt5g2 = f.spectra_2d(w_filt_2nd[4,:,:,:], dx, dy, options_spec)
-#print("sigma 522")
-w_filt_2nd_5, w_kpo_filt6g2 = f.spectra_2d(w_filt_2nd[5,:,:,:], dx, dy, options_spec)
+# w_filt_2nd_3, w_kpo_filt4g2 = f.spectra_2d(w_filt_2nd[3,:,:,:], dx, dy, options_spec)
+# #print("sigma 400")
+# w_filt_2nd_4, w_kpo_filt5g2 = f.spectra_2d(w_filt_2nd[4,:,:,:], dx, dy, options_spec)
+# #print("sigma 522")
+# w_filt_2nd_5, w_kpo_filt6g2 = f.spectra_2d(w_filt_2nd[5,:,:,:], dx, dy, options_spec)
 
+
+w_filt_3rd_0, w_kpo_filt1g3 = f.spectra_2d(w_filt_3rd[0,:,:,:], dx, dy, options_spec)
+#print("sigma 50")
+w_filt_3rd_1, w_kpo_filt2g3 = f.spectra_2d(w_filt_3rd[1,:,:,:], dx, dy, options_spec)
+#print("w_filt_1st_sigma 100")
+w_filt_3rd_2, w_kpo_filt3g3 = f.spectra_2d(w_filt_3rd[2,:,:,:], dx, dy, options_spec)
 
 
 
@@ -124,23 +146,27 @@ filt_slope_x = np.linspace(0.5,1,50)
 filt_slope_y = filt_slope_x**(-11/2)
 
 
-
+ax.loglog(w_kpo*z_ml_height/(2*np.pi), w_spec[:,z_set], label="$\\Delta$ = 25m")
 
 ax.loglog(w_kpo_filt1g1*z_ml_height/(2*np.pi), w_filt_1st_0[:,z_set], label="$\\sigma$ = 25m") #\\Delta
 ax.loglog(w_kpo_filt2g1*z_ml_height/(2*np.pi), w_filt_1st_1[:,z_set], label="$\\sigma$ = 50m")
 ax.loglog(w_kpo_filt3g1*z_ml_height/(2*np.pi), w_filt_1st_2[:,z_set], label="$\\sigma$ = 100m")
-ax.loglog(w_kpo_filt4g1*z_ml_height/(2*np.pi), w_filt_1st_3[:,z_set], label="$\\sigma$ = 200m")
-ax.loglog(w_kpo_filt5g1*z_ml_height/(2*np.pi), w_filt_1st_4[:,z_set], label="$\\sigma$ = 400m")
-ax.loglog(w_kpo_filt6g1*z_ml_height/(2*np.pi), w_filt_1st_5[:,z_set], label="$\\sigma$ = 800m")
+# ax.loglog(w_kpo_filt4g1*z_ml_height/(2*np.pi), w_filt_1st_3[:,z_set], label="$\\sigma$ = 200m")
+# ax.loglog(w_kpo_filt5g1*z_ml_height/(2*np.pi), w_filt_1st_4[:,z_set], label="$\\sigma$ = 400m")
+# ax.loglog(w_kpo_filt6g1*z_ml_height/(2*np.pi), w_filt_1st_5[:,z_set], label="$\\sigma$ = 800m")
 #ax.loglog(90*turb_slope_x, 0.015*turb_slope_y, 'k-')
 #ax.text(10, 1.6, r'$k^{-5/3}$', fontsize=14)
 
 ax.loglog(w_kpo_filt1g2*z_ml_height/(2*np.pi), w_filt_2nd_0[:,z_set], '--', label="$\\sigma$ = 25m, $\\sigma$ = 25m")
 ax.loglog(w_kpo_filt2g2*z_ml_height/(2*np.pi), w_filt_2nd_1[:,z_set], '--', label="$\\sigma$ = 50m, $\\sigma$ = 25m")
 ax.loglog(w_kpo_filt3g2*z_ml_height/(2*np.pi), w_filt_2nd_2[:,z_set], '--', label="$\\sigma$ = 100m, $\\sigma$ = 25m")
-ax.loglog(w_kpo_filt4g2*z_ml_height/(2*np.pi), w_filt_2nd_3[:,z_set], '--', label="$\\sigma$ = 200m, $\\sigma$ = 25m")
-ax.loglog(w_kpo_filt5g2*z_ml_height/(2*np.pi), w_filt_2nd_4[:,z_set], '--', label="$\\sigma$ = 400m, $\\sigma$ = 25m")
-ax.loglog(w_kpo_filt6g2*z_ml_height/(2*np.pi), w_filt_2nd_5[:,z_set], '--', label="$\\sigma$ = 800m, $\\sigma$ = 25m")
+# ax.loglog(w_kpo_filt4g2*z_ml_height/(2*np.pi), w_filt_2nd_3[:,z_set], '--', label="$\\sigma$ = 200m, $\\sigma$ = 25m")
+# ax.loglog(w_kpo_filt5g2*z_ml_height/(2*np.pi), w_filt_2nd_4[:,z_set], '--', label="$\\sigma$ = 400m, $\\sigma$ = 25m")
+# ax.loglog(w_kpo_filt6g2*z_ml_height/(2*np.pi), w_filt_2nd_5[:,z_set], '--', label="$\\sigma$ = 800m, $\\sigma$ = 25m")
+
+ax.loglog(w_kpo_filt1g3*z_ml_height/(2*np.pi), w_filt_3rd_0[:,z_set], '--', label="$\\sigma$ = 25m, $\\sigma$ = 50m")
+ax.loglog(w_kpo_filt2g3*z_ml_height/(2*np.pi), w_filt_3rd_1[:,z_set], '--', label="$\\sigma$ = 50m, $\\sigma$ = 50m")
+ax.loglog(w_kpo_filt3g3*z_ml_height/(2*np.pi), w_filt_3rd_2[:,z_set], '--', label="$\\sigma$ = 100m, $\\sigma$ = 50m")
 
 
 
@@ -177,4 +203,4 @@ def ltok(l):
 secax = ax.secondary_xaxis('top', functions=(ltok, ktol))
 secax.set_xlabel('$\\lambda$', fontsize=14)
 
-plt.savefig(plotdir+"ARM_w_spectra_1st_and_2nd_filts.pdf", pad_inches=0)
+plt.savefig(plotdir+"ARM_w_spectra_unfilt_and_1st_2nd_filts_0_and_1.pdf", pad_inches=0)
