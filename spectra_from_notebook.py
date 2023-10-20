@@ -146,27 +146,28 @@ filt_slope_x = np.linspace(0.5,1,50)
 filt_slope_y = filt_slope_x**(-11/2)
 
 
-ax.loglog(w_kpo*z_ml_height/(2*np.pi), w_spec[:,z_set], 'k', lw = 2, label="$\\Delta$ = 25m")
+ax.loglog(w_kpo*z_ml_height/(2*np.pi), w_spec[0,z_set], lw = 2, label="$\\overline{\\Delta}$ = 25m")
+ax.loglog(w_kpo*z_ml_height/(2*np.pi), w_spec[1,z_set], lw = 2, label="$\\overline{\\Delta}$ = 50m")
 
-ax.loglog(w_kpo_filt1g1*z_ml_height/(2*np.pi), w_filt_1st_0[:,z_set], label="$\\sigma$ = 25m") #\\Delta
-ax.loglog(w_kpo_filt2g1*z_ml_height/(2*np.pi), w_filt_1st_1[:,z_set], label="$\\sigma$ = 50m")
-ax.loglog(w_kpo_filt3g1*z_ml_height/(2*np.pi), w_filt_1st_2[:,z_set], label="$\\sigma$ = 100m")
+ax.loglog(w_kpo_filt1g1*z_ml_height/(2*np.pi), w_filt_1st_0[:,z_set], '--',  label="$\\sigma$ = 25m") #\\Delta
+ax.loglog(w_kpo_filt2g1*z_ml_height/(2*np.pi), w_filt_1st_1[:,z_set], '--',  label="$\\sigma$ = 50m")
+ax.loglog(w_kpo_filt3g1*z_ml_height/(2*np.pi), w_filt_1st_2[:,z_set], '--',  label="$\\sigma$ = 100m")
 # ax.loglog(w_kpo_filt4g1*z_ml_height/(2*np.pi), w_filt_1st_3[:,z_set], label="$\\sigma$ = 200m")
 # ax.loglog(w_kpo_filt5g1*z_ml_height/(2*np.pi), w_filt_1st_4[:,z_set], label="$\\sigma$ = 400m")
 # ax.loglog(w_kpo_filt6g1*z_ml_height/(2*np.pi), w_filt_1st_5[:,z_set], label="$\\sigma$ = 800m")
-#ax.loglog(90*turb_slope_x, 0.015*turb_slope_y, 'k-')
-#ax.text(10, 1.6, r'$k^{-5/3}$', fontsize=14)
+ax.loglog(90*turb_slope_x, 0.02*turb_slope_y, 'k-') #0.015
+ax.text(10, 1.6, r'$k^{-5/3}$', fontsize=14)
 
-ax.loglog(w_kpo_filt1g2*z_ml_height/(2*np.pi), w_filt_2nd_0[:,z_set], '--', label="$\\sigma$ = 25m, $\\sigma$ = 25m")
-ax.loglog(w_kpo_filt2g2*z_ml_height/(2*np.pi), w_filt_2nd_1[:,z_set], '--', label="$\\sigma$ = 50m, $\\sigma$ = 25m")
-ax.loglog(w_kpo_filt3g2*z_ml_height/(2*np.pi), w_filt_2nd_2[:,z_set], '--', label="$\\sigma$ = 100m, $\\sigma$ = 25m")
+ax.loglog(w_kpo_filt1g2*z_ml_height/(2*np.pi), w_filt_2nd_0[:,z_set], '.-', label="$\\sigma$ = 25m, $\\sigma$ = 25m")
+ax.loglog(w_kpo_filt2g2*z_ml_height/(2*np.pi), w_filt_2nd_1[:,z_set], '.-', label="$\\sigma$ = 50m, $\\sigma$ = 25m")
+#ax.loglog(w_kpo_filt3g2*z_ml_height/(2*np.pi), w_filt_2nd_2[:,z_set], '--', label="$\\sigma$ = 100m, $\\sigma$ = 25m")
 # ax.loglog(w_kpo_filt4g2*z_ml_height/(2*np.pi), w_filt_2nd_3[:,z_set], '--', label="$\\sigma$ = 200m, $\\sigma$ = 25m")
 # ax.loglog(w_kpo_filt5g2*z_ml_height/(2*np.pi), w_filt_2nd_4[:,z_set], '--', label="$\\sigma$ = 400m, $\\sigma$ = 25m")
 # ax.loglog(w_kpo_filt6g2*z_ml_height/(2*np.pi), w_filt_2nd_5[:,z_set], '--', label="$\\sigma$ = 800m, $\\sigma$ = 25m")
 
-ax.loglog(w_kpo_filt1g3*z_ml_height/(2*np.pi), w_filt_3rd_0[:,z_set], '-.', label="$\\sigma$ = 25m, $\\sigma$ = 50m")
-ax.loglog(w_kpo_filt2g3*z_ml_height/(2*np.pi), w_filt_3rd_1[:,z_set], '-.', label="$\\sigma$ = 50m, $\\sigma$ = 50m")
-ax.loglog(w_kpo_filt3g3*z_ml_height/(2*np.pi), w_filt_3rd_2[:,z_set], '-.', label="$\\sigma$ = 100m, $\\sigma$ = 50m")
+ax.loglog(w_kpo_filt1g3*z_ml_height/(2*np.pi), w_filt_3rd_0[:,z_set], '..', label="$\\sigma$ = 25m, $\\sigma$ = 50m")
+ax.loglog(w_kpo_filt2g3*z_ml_height/(2*np.pi), w_filt_3rd_1[:,z_set], '..', label="$\\sigma$ = 50m, $\\sigma$ = 50m")
+#ax.loglog(w_kpo_filt3g3*z_ml_height/(2*np.pi), w_filt_3rd_2[:,z_set], '-.', label="$\\sigma$ = 100m, $\\sigma$ = 50m")
 
 
 
@@ -186,7 +187,7 @@ ax.loglog(w_kpo_filt3g3*z_ml_height/(2*np.pi), w_filt_3rd_2[:,z_set], '-.', labe
 ax.legend(fontsize=12, loc='upper right')
 ax.set_xlabel("$k z_{ML}$", fontsize=14)
 ax.set_ylabel("$\\mathcal{S}$ $w'^2$", fontsize=14) #("$\mathcal{S}$ ($w'$)", fontsize=14)
-ax.set_ylim(ymax=1e2, ymin=1e-6)
+ax.set_ylim(ymax=1e2, ymin=1e-4)
 ax.set_xlim(xmax=200, xmin=0.02)
 #plt.xlim(xmax=1e0, xmin=1e-3)
 
@@ -203,4 +204,4 @@ def ltok(l):
 secax = ax.secondary_xaxis('top', functions=(ltok, ktol))
 secax.set_xlabel('$\\lambda$', fontsize=14)
 
-plt.savefig(plotdir+"ARM_w_spectra_unfilt_and_1st_2nd_filts_0_and_1.pdf", pad_inches=0)
+plt.savefig(plotdir+"ARM_w_spectra_unfilt_and_1st_2nd_filts_0_and_1_2nd_draft.pdf", pad_inches=0)
