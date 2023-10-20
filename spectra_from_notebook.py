@@ -146,7 +146,7 @@ filt_slope_x = np.linspace(0.5,1,50)
 filt_slope_y = filt_slope_x**(-11/2)
 
 
-ax.loglog(w_kpo*z_ml_height/(2*np.pi), w_spec[z_set], lw = 2, label="$\\overline{\\Delta}$ = 25m")
+ax.loglog(w_kpo*z_ml_height/(2*np.pi), w_spec[:,z_set], lw = 2, label="$\\overline{\\Delta}$ = 25m")
 #ax.loglog(w_kpo*z_ml_height/(2*np.pi), w_spec[1,z_set], lw = 2, label="$\\overline{\\Delta}$ = 50m")
 
 ax.loglog(w_kpo_filt1g1*z_ml_height/(2*np.pi), w_filt_1st_0[:,z_set], '--',  label="$\\sigma$ = 25m") #\\Delta
