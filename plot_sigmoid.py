@@ -238,7 +238,7 @@ def plot_sigmoid(variable, data_dir, time_list, delta_list, layer, z_l_r_ind_lis
         elif variable == 'w' and var2 == 'q_total':
             plt.ylabel("$\\overline{ w' q_t' }$ $(g kg^{-1} m s^{-1})$", fontsize=16)
 
-    plt.ylim(ymin=0.0)
+    #plt.ylim(ymin=0.0)
     plt.xlim(xmin=Delta_values[0]-1, xmax=Delta_values[-1]+10)
     if case == 'ARM':
         plt.legend(fontsize=12, loc='best')
