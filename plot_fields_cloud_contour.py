@@ -6,7 +6,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--case_in', type=str, default='ARM')
 parser.add_argument('--times', type=str, default='32400')
-parser.add_argument('--var_f', type=str, default='w_th_v') #'w', 'TKE', 'w_th_v'
+parser.add_argument('--var_f', type=str, default='TKE') #'w', 'TKE', 'w_th_v'
 parser.add_argument('--x_y', type=str, default='y')
 parser.add_argument('--axis', type=int, default=297)
 parser.add_argument('--x_s', type=float, default=0)
