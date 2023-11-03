@@ -1009,7 +1009,7 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
 
             print('beginning plots')
 
-            fig1, ax1 = plt.subplots(figsize=(16, 5))
+            fig1, ax1 = plt.subplots(figsize=(15, 6))
             plt.title(f'{var_name} and {field_name} contours' + ' with $\\widehat{\\bar{\\Delta}} = $' + f'{delta_label}', fontsize=16)
 
             if myvmin_var != None:
