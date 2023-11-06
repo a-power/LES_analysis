@@ -679,7 +679,7 @@ def shiftedColorMap(cmap, vmax, vmin, start=0, midpoint='calc', stop=1.0, name='
 
 def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, var_field, var_path, t_av_or_not,
               start_end, z_top_in, z_tix_in, z_labels_in, C_perc_1st, C_perc_2nd, deltas=None,
-                    set_cb=[None, None], delta_grid=25, set_percentile_C_sq = None):
+                    set_cb=[None, None], delta_grid=25, set_percentile_C_sq = None, case='BOMEX'):
 
     print('starting to plot field: ', field)
 
@@ -927,21 +927,40 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                 mytime = 't_av'
             else:
                 if x_or_y == 'x':
-                    cloud_field = var_field_data['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+                    if case == 'BOMEX':
+                        cloud_field = var_field_data['f(q_cloud_liquid_mass_on_p)_r'].data[t_set, axis_set, ...]
+                    else:
+                        cloud_field = var_field_data['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
                     if var_field == 'w':
-                        var_field_plot = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+                        if case == 'BOMEX':
+                            var_field_plot = var_field_data['f(w_on_p)_r'].data[t_set, axis_set, ...]
+                        else:
+                            var_field_plot = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
                     elif var_field == 'TKE':
-                        u_mean = np.zeros(len(var_field_data['f(f(u_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
-                        v_mean = np.zeros(len(var_field_data['f(f(v_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
-                        #w_mean = np.zeros(len(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
-                        for nz in range(len(v_mean)):
-                            u_mean[nz] = np.mean(var_field_data['f(f(u_on_p)_r_on_p)_r'].data[..., nz])
-                            v_mean[nz] = np.mean(var_field_data['f(f(v_on_p)_r_on_p)_r'].data[..., nz])
-                            #w_mean[nz] = np.mean(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[..., nz])
-                        u_prime_field = var_field_data['f(f(u_on_p)_r_on_p)_r'].data[t_set, axis_set, ...] - u_mean
-                        v_prime_field = var_field_data['f(f(v_on_p)_r_on_p)_r'].data[t_set, axis_set, ...] - v_mean
-                        #w_prime_field = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...] - w_mean
-                        ww_field = var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+                        if case == 'BOMEX':
+                            u_mean = np.zeros(len(var_field_data['f(u_on_p)_r'].data[0, 0, 0, :]))
+                            v_mean = np.zeros(len(var_field_data['f(v_on_p)_r'].data[0, 0, 0, :]))
+                            # w_mean = np.zeros(len(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
+                            for nz in range(len(v_mean)):
+                                u_mean[nz] = np.mean(var_field_data['f(u_on_p)_r'].data[..., nz])
+                                v_mean[nz] = np.mean(var_field_data['f(v_on_p)_r'].data[..., nz])
+                                # w_mean[nz] = np.mean(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[..., nz])
+                            u_prime_field = var_field_data['f(u_on_p)_r'].data[t_set, axis_set, ...] - u_mean
+                            v_prime_field = var_field_data['f(v_on_p)_r'].data[t_set, axis_set, ...] - v_mean
+                            # w_prime_field = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...] - w_mean
+                            ww_field = var_field_data['f(w_on_p.w_on_p)_r'].data[t_set, axis_set, ...]
+                        else:
+                            u_mean = np.zeros(len(var_field_data['f(f(u_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
+                            v_mean = np.zeros(len(var_field_data['f(f(v_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
+                            #w_mean = np.zeros(len(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
+                            for nz in range(len(v_mean)):
+                                u_mean[nz] = np.mean(var_field_data['f(f(u_on_p)_r_on_p)_r'].data[..., nz])
+                                v_mean[nz] = np.mean(var_field_data['f(f(v_on_p)_r_on_p)_r'].data[..., nz])
+                                #w_mean[nz] = np.mean(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[..., nz])
+                            u_prime_field = var_field_data['f(f(u_on_p)_r_on_p)_r'].data[t_set, axis_set, ...] - u_mean
+                            v_prime_field = var_field_data['f(f(v_on_p)_r_on_p)_r'].data[t_set, axis_set, ...] - v_mean
+                            #w_prime_field = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...] - w_mean
+                            ww_field = var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
                         var_field_plot = 0.5 * (u_prime_field * u_prime_field + \
                                                         v_prime_field * v_prime_field + \
                                                         ww_field)
@@ -949,7 +968,10 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                         v_prime_field = None
                         ww_field = None
                     elif var_field == 'w_th_v':
-                        th_v_mean = np.zeros(len(var_field_data['f(f(th_v_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
+                        if case == 'BOMEX':
+                            th_v_mean = np.zeros(len(var_field_data['f(th_v_on_p)_r'].data[0, 0, 0, :]))
+                        else:
+                            th_v_mean = np.zeros(len(var_field_data['f(f(th_v_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
                         for nz in range(len(th_v_mean)):
                             th_v_mean[nz] = np.mean(var_field_data['f(f(th_v_on_p)_r_on_p)_r'].data[t_set,..., nz])
                         th_v_f = var_field_data['f(f(th_v_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
@@ -966,21 +988,41 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                     th_v_field = var_field_data['f(f(th_v_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
 
                 elif x_or_y == 'y':
-                    cloud_field = var_field_data['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+                    if case == 'BOMEX':
+                        cloud_field = var_field_data['f(q_cloud_liquid_mass_on_p)_r'].data[t_set, :, axis_set, ...]
+                    else:
+                        cloud_field = var_field_data['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
                     if var_field == 'w':
-                        var_field_plot = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+                        if case == 'BOMEX':
+                            var_field_plot = var_field_data['f(w_on_p)_r'].data[t_set, :, axis_set, ...]
+                        else:
+                            var_field_plot = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
                     elif var_field == 'TKE':
-                        u_mean = np.zeros(len(var_field_data['f(f(u_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
-                        v_mean = np.zeros(len(var_field_data['f(f(v_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
-                        #w_mean = np.zeros(len(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
-                        for nz in range(len(v_mean)):
-                            u_mean[nz] = np.mean(var_field_data['f(f(u_on_p)_r_on_p)_r'].data[..., nz])
-                            v_mean[nz] = np.mean(var_field_data['f(f(v_on_p)_r_on_p)_r'].data[..., nz])
-                            #w_mean[nz] = np.mean(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[..., nz])
-                        u_prime_field = var_field_data['f(f(u_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...] - u_mean
-                        v_prime_field = var_field_data['f(f(v_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...] - v_mean
-                        # w_prime_field = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...] - w_mean
-                        ww_field = var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+
+                        if case == 'BOMEX':
+                            u_mean = np.zeros(len(var_field_data['f(u_on_p)_r'].data[0, 0, 0, :]))
+                            v_mean = np.zeros(len(var_field_data['f(v_on_p)_r'].data[0, 0, 0, :]))
+                            # w_mean = np.zeros(len(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
+                            for nz in range(len(v_mean)):
+                                u_mean[nz] = np.mean(var_field_data['f(u_on_p)_r'].data[..., nz])
+                                v_mean[nz] = np.mean(var_field_data['f(v_on_p)_r'].data[..., nz])
+                                # w_mean[nz] = np.mean(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[..., nz])
+                            u_prime_field = var_field_data['f(u_on_p)_r'].data[t_set, :, axis_set, ...] - u_mean
+                            v_prime_field = var_field_data['f(v_on_p)_r'].data[t_set, :, axis_set, ...] - v_mean
+                            # w_prime_field = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...] - w_mean
+                            ww_field = var_field_data['f(w_on_p.w_on_p)_r'].data[t_set, :, axis_set, ...]
+                        else:
+                            u_mean = np.zeros(len(var_field_data['f(f(u_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
+                            v_mean = np.zeros(len(var_field_data['f(f(v_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
+                            #w_mean = np.zeros(len(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
+                            for nz in range(len(v_mean)):
+                                u_mean[nz] = np.mean(var_field_data['f(f(u_on_p)_r_on_p)_r'].data[..., nz])
+                                v_mean[nz] = np.mean(var_field_data['f(f(v_on_p)_r_on_p)_r'].data[..., nz])
+                                #w_mean[nz] = np.mean(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[..., nz])
+                            u_prime_field = var_field_data['f(f(u_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...] - u_mean
+                            v_prime_field = var_field_data['f(f(v_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...] - v_mean
+                            # w_prime_field = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...] - w_mean
+                            ww_field = var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
                         var_field_plot = 0.5 * (u_prime_field * u_prime_field + \
                                                         v_prime_field * v_prime_field + \
                                                         ww_field)
@@ -1001,7 +1043,11 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                         th_v_f = None
 
                     #w2_field = var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
-                    th_v_field = var_field_data['f(f(th_v_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+                    if case == 'BOMEX':
+                        th_v_field = var_field_data['f(th_v_on_p)_r'].data[t_set, :, axis_set, ...]
+                    else:
+                        th_v_field = var_field_data['f(f(th_v_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+
 
                 mytime = f't{t_set}'
 
