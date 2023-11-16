@@ -73,7 +73,7 @@ data2_2nd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[2]+'_gaussian_fi
 # data5_2nd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[5]+'_gaussian_filter_ga00.nc', mode='r')
 
 data1_check = Dataset(str(mydir20)+'filtering_filtered_check/'+myfile20[1]+'_gaussian_filter_ga00.nc', mode='r')
-data2_check = Dataset(str(mydir20)+'filtering_filtered_check/'+myfile20[2]+'_gaussian_filter_ga00.nc', mode='r')
+#data2_check = Dataset(str(mydir20)+'filtering_filtered_check/'+myfile20[2]+'_gaussian_filter_ga00.nc', mode='r')
 
 w_filt_2nd = np.zeros((3,768,768,441))
 w_filt_2nd[0,:,:,:] = data0_2nd.variables['f(w_on_p)_r'][0,:,:,:]
@@ -85,7 +85,7 @@ w_filt_2nd[2,:,:,:] = data2_2nd.variables['f(w_on_p)_r'][0,:,:,:]
 
 w_filt_check = np.zeros((2,768,768,441))
 w_filt_check[0,:,:,:] = data1_check.variables['f(w_on_p)_r'][0,:,:,:]
-w_filt_check[1,:,:,:] = data2_check.variables['f(w_on_p)_r'][0,:,:,:]
+#w_filt_check[1,:,:,:] = data2_check.variables['f(w_on_p)_r'][0,:,:,:]
 
 
 data0_3rd = Dataset(str(mydir20)+'filtering_filtered/'+myfile20[0]+'_gaussian_filter_ga01.nc', mode='r')
@@ -146,8 +146,7 @@ w_filt_2nd_2, w_kpo_filt3g2 = f.spectra_2d(w_filt_2nd[2,:,:,:], dx, dy, options_
 
 
 w_filt_check_0, w_kpo_filt1check = f.spectra_2d(w_filt_check[0,:,:,:], dx, dy, options_spec)
-#print("sigma 50")
-w_filt_check_1, w_kpo_filt2check = f.spectra_2d(w_filt_check[1,:,:,:], dx, dy, options_spec)
+#w_filt_check_1, w_kpo_filt2check = f.spectra_2d(w_filt_check[1,:,:,:], dx, dy, options_spec)
 
 
 w_filt_3rd_0, w_kpo_filt1g3 = f.spectra_2d(w_filt_3rd[0,:,:,:], dx, dy, options_spec)
@@ -192,7 +191,7 @@ ax.loglog(w_kpo_filt2g3*z_ml_height/(2*np.pi), w_filt_3rd_1[:,z_set], 'densely d
           label="$\\sigma$ = 50m, $\\sigma$ = 100m")
 
 ax.loglog(w_kpo_filt1check*z_ml_height/(2*np.pi), w_filt_check_0[:,z_set], ':', label="$\\sigma$ = 50m, $\\sigma$ = 25m")
-ax.loglog(w_kpo_filt2check*z_ml_height/(2*np.pi), w_filt_check_1[:,z_set], ':', label="$\\sigma$ = 100m, $\\sigma$ = 50m")
+#ax.loglog(w_kpo_filt2check*z_ml_height/(2*np.pi), w_filt_check_1[:,z_set], ':', label="$\\sigma$ = 100m, $\\sigma$ = 50m")
 #
 
 
