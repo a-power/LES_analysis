@@ -185,9 +185,9 @@ ax.text(4, 8, r'$k^{-5/3}$', fontsize=14)
 # ax.loglog(w_kpo_filt5g2*z_ml_height/(2*np.pi), w_filt_2nd_4[:,z_set], '--', label="$\\sigma$ = 400m, $\\sigma$ = 400m")
 # ax.loglog(w_kpo_filt6g2*z_ml_height/(2*np.pi), w_filt_2nd_5[:,z_set], '--', label="$\\sigma$ = 800m, $\\sigma$ = 800m")
 
-ax.loglog(w_kpo_filt1g3*z_ml_height/(2*np.pi), w_filt_3rd_0[:,z_set], 'densely dashdotdotted',
+ax.loglog(w_kpo_filt1g3*z_ml_height/(2*np.pi), w_filt_3rd_0[:,z_set], '-.',
           label="$\\sigma$ = 25m, $\\sigma$ = 50m")
-ax.loglog(w_kpo_filt2g3*z_ml_height/(2*np.pi), w_filt_3rd_1[:,z_set], 'densely dashdotdotted',
+ax.loglog(w_kpo_filt2g3*z_ml_height/(2*np.pi), w_filt_3rd_1[:,z_set], '-.',
           label="$\\sigma$ = 50m, $\\sigma$ = 100m")
 
 ax.loglog(w_kpo_filt1check*z_ml_height/(2*np.pi), w_filt_check_0[:,z_set], ':', label="$\\sigma$ = 50m, $\\sigma$ = 25m")
