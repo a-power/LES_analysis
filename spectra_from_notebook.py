@@ -22,7 +22,8 @@ z_level_mid_ML = int( z_ml_r_ind_list[which_time_int][0] +
 
 print('z_level_mid_CL = ', z_level_mid_CL, 'z_level_mid_ML = ', z_level_mid_ML)
 
-z_set = 50#z_level_mid_ML
+z_set = 50 #z_level_mid_ML
+z_set_50 = 25
 
 z_ml_height = z_ml_r_ind_list[2][1] * 10
 
@@ -167,7 +168,7 @@ filt_slope_y = filt_slope_x**(-11/2)
 
 
 ax.loglog(w_kpo*z_ml_height/(2*np.pi), w_spec[:,z_set], lw = 2, label="$\\overline{\\Delta}$ = 25m")
-ax.loglog(w_kpo_50*z_ml_height/(2*np.pi), w_spec_50[:,z_set], lw = 2, label="$\\overline{\\Delta}$ = 50m")
+ax.loglog(w_kpo_50*z_ml_height/(2*np.pi), w_spec_50[:,z_set_50], lw = 2, label="$\\overline{\\Delta}$ = 50m")
 
 ax.loglog(w_kpo_filt1g1*z_ml_height/(2*np.pi), w_filt_1st_0[:,z_set], '--',  label="$\\sigma$ = 25m") #\\Delta
 ax.loglog(w_kpo_filt2g1*z_ml_height/(2*np.pi), w_filt_1st_1[:,z_set], '--',  label="$\\sigma$ = 50m")
