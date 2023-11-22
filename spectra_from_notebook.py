@@ -160,7 +160,7 @@ w_filt_3rd_2, w_kpo_filt3g3 = f.spectra_2d(w_filt_3rd[2,:,:,:], dx, dy, options_
 
 fig, ax = plt.subplots(figsize=(8,6), constrained_layout=True)
 
-turb_slope_x = np.linspace(0.02,0.4,100)
+turb_slope_x = np.linspace(0.7,10,100)
 turb_slope_y = turb_slope_x**(-5/3)
 
 filt_slope_x = np.linspace(0.5,1,50)
@@ -176,7 +176,7 @@ ax.loglog(w_kpo_filt3g1*z_ml_height/(2*np.pi), w_filt_1st_2[:,z_set], '--',  lab
 ax.loglog(w_kpo_filt4g1*z_ml_height/(2*np.pi), w_filt_1st_3[:,z_set], '--', label="$\\sigma$ = 200m")
 # ax.loglog(w_kpo_filt5g1*z_ml_height/(2*np.pi), w_filt_1st_4[:,z_set], label="$\\sigma$ = 400m")
 # ax.loglog(w_kpo_filt6g1*z_ml_height/(2*np.pi), w_filt_1st_5[:,z_set], label="$\\sigma$ = 800m")
-ax.loglog(90*turb_slope_x, 0.025*turb_slope_y, 'k-') #0.015
+ax.loglog(turb_slope_x, 0.25*turb_slope_y, 'k-') #0.015
 ax.text(4, 8, r'$k^{-5/3}$', fontsize=14)
 
 # ax.loglog(w_kpo_filt1g2*z_ml_height/(2*np.pi), w_filt_2nd_0[:,z_set], '-.', label="$\\sigma$ = 25m, $\\sigma$ = 25m")
@@ -192,7 +192,7 @@ ax.loglog(w_kpo_filt2g3*z_ml_height/(2*np.pi), w_filt_3rd_1[:,z_set], '-.',
           label="$\\sigma$ = 50m, $\\sigma$ = 100m")
 
 ax.loglog(w_kpo_filt1check*z_ml_height/(2*np.pi), w_filt_check_0[:,z_set], ':', label="$\\sigma$ = 50m, $\\sigma$ = 25m")
-#ax.loglog(w_kpo_filt2check*z_ml_height/(2*np.pi), w_filt_check_1[:,z_set], ':', label="$\\sigma$ = 100m, $\\sigma$ = 50m")
+ax.loglog(w_kpo_filt2check*z_ml_height/(2*np.pi), w_filt_check_1[:,z_set], ':', label="$\\sigma$ = 100m, $\\sigma$ = 50m")
 #
 
 
@@ -213,7 +213,7 @@ ax.loglog(w_kpo_filt1check*z_ml_height/(2*np.pi), w_filt_check_0[:,z_set], ':', 
 ax.legend(fontsize=12, loc='upper right')
 ax.set_xlabel("$k z_{ML}$", fontsize=14)
 ax.set_ylabel("$\\mathcal{S}$ $w'^2$", fontsize=14) #("$\mathcal{S}$ ($w'$)", fontsize=14)
-ax.set_ylim(ymax=1e2, ymin=1e-4)
+ax.set_ylim(ymax=1e3, ymin=1e-3)
 ax.set_xlim(xmax=200, xmin=0.02)
 #plt.xlim(xmax=1e0, xmin=1e-3)
 
