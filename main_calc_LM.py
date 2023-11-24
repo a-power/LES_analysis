@@ -5,7 +5,7 @@ import xarray as xr
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--t', type=str, default='32400')
+parser.add_argument('--t', type=str, default='0')
 parser.add_argument('--case', type=str, default='ARM')
 args = parser.parse_args()
 t_in = args.t
