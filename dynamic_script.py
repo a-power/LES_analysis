@@ -640,7 +640,7 @@ def run_dyn_on_filtered_for_beta_contour(res_in, time_in, filt_in, filt_scale, i
 
 
 
-def Cs(indir, dx, dx_hat, ingrid, save_all=2, reaxes=False):
+def Cs(indir, dx_bar, dx_hat, ingrid, save_all=2, reaxes=False):
 
     """ function takes in:
 
@@ -697,7 +697,7 @@ def Cs(indir, dx, dx_hat, ingrid, save_all=2, reaxes=False):
     else:
         hat_Sij_abs_S = ds_in['f(S_ij_abs_S)_r'].data[...]
 
-    Mij = dyn.M_ij(dx, dx_hat, hat_Sij, hat_abs_S, hat_Sij_abs_S)
+    Mij = dyn.M_ij(dx_bar, dx_hat, hat_Sij, hat_abs_S, hat_Sij_abs_S)
 
     hat_Sij_abs_S = None
     hat_Sij = None
@@ -840,7 +840,7 @@ def Cs(indir, dx, dx_hat, ingrid, save_all=2, reaxes=False):
 
 
 
-def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
+def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False):
     """ function takes in:
 
     save_all: 1 is for profiles, 2 is for fields, 3 is for all fields PLUS Lij and Mij"""
@@ -907,7 +907,7 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
         HAT_abs_S_ds_dx = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[...]
 
 
-    Rj = dyn.R_j(dx, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
+    Rj = dyn.R_j(dx_bar, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
     HAT_abs_S_ds_dx = None
 
     zn_save = np.zeros((nt, len(zn_s)))
@@ -1025,7 +1025,7 @@ def C_scalar(scalar, indir, dx, dx_hat, ingrid, save_all = 2, axisfix=False):
         return z_save, zn_save, C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, HR_field, RR_field, C_scalar_sq_field, Hj, Rj
 
 
-def LijMij_fields(scalar, indir, dx, dx_hat, ingrid):
+def LijMij_fields(scalar, indir, dx_bar, dx_hat, ingrid):
 
     if scalar == 'q_total':
         scalar_name = 'q'
@@ -1098,7 +1098,7 @@ def LijMij_fields(scalar, indir, dx, dx_hat, ingrid):
 
         hat_Sij_abs_S = ds_in['f(S_ij_abs_S)_r'].data[...]
 
-        Mij = dyn.M_ij(dx, dx_hat, hat_Sij, hat_abs_S, hat_Sij_abs_S)
+        Mij = dyn.M_ij(dx_bar, dx_hat, hat_Sij, hat_abs_S, hat_Sij_abs_S)
 
         hat_Sij_abs_S = None
         hat_Sij = None
@@ -1144,7 +1144,7 @@ def LijMij_fields(scalar, indir, dx, dx_hat, ingrid):
 
         HAT_abs_S_ds_dx = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[...]
 
-        Rj = dyn.R_j(dx, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
+        Rj = dyn.R_j(dx_bar, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
         HAT_abs_S_ds_dx = None
 
         HR_field = np.zeros_like(Hj[0, ...])
