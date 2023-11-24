@@ -24,7 +24,7 @@ if case == 'BOMEX':
 
 elif case == 'ARM':
     path_f = '/work/scratch-pw3/apower/ARM/corrected_sigmas/'
-    folder_ff = 'filtering_filtered'
+    folder_ff = 'filtering_filtered/'
     file_f = f'diagnostics_3d_ts_{time_in}_'
     times_list = ['18000', '25200', '32400', '39600']
     Delta = 25
