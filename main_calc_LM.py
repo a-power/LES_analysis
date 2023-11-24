@@ -5,10 +5,10 @@ import xarray as xr
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='32400')
+parser.add_argument('--t', type=str, default='32400')
 parser.add_argument('--case', type=str, default='ARM')
 args = parser.parse_args()
-time_in = args.times
+t_in = args.t
 
 case_in = args.case
 
@@ -23,10 +23,11 @@ if case == 'BOMEX':
     Delta = 20
 
 elif case == 'ARM':
+    times_list = ['18000', '25200', '32400', '39600']
+    time_in = times_list[t_in]
     path_f = '/work/scratch-pw3/apower/ARM/corrected_sigmas/'
     folder_ff = 'filtering_filtered/'
     file_f = f'diagnostics_3d_ts_{time_in}_'
-    times_list = ['18000', '25200', '32400', '39600']
     Delta = 25
     dx_bar_in = [56, 103, 202, 401, 800, 1600]
     dx_hat_in = [75, 144, 284, 566, 1132, 2263]
