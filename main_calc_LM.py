@@ -52,8 +52,7 @@ for i, C_res_in in enumerate(C_res):
     DX_in = {
         'indir': data_in,
         'dx_bar': dx_bar_in[i],
-        'dx_hat': dx_hat_in[i],
-        'dx': Delta
+        'dx_hat': dx_hat_in[i]
     }
 
     for i, scalar_in in enumerate(scalar):
