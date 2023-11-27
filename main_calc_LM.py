@@ -31,7 +31,7 @@ elif case_in == 'ARM':
     Delta = 25
     dx_bar_in = [56, 103, 202, 401, 800, 1600]
     dx_hat_in = [75, 144, 284, 566, 1132, 2263]
-    #C_res = ['3D', '6D', '11D', '22D', '45D', '90D']
+    C_res = ['3D', '6D', '11D', '22D', '45D', '90D']
 
 else:
     print('case not recognised')
