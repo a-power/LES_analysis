@@ -99,7 +99,7 @@ def abs_S_hat_S_ij_hat(S_filt):
 
 
 def M_ij(dx_filt1, dx_filt2, S_filt, abs_S_filt, HAT_abs_S_Sij, beta=1):
-    alpha = dx_filt / dx
+    alpha = dx_filt2 / dx_filt1
     power = alpha / 2
 
     M_ij = dx_filt2 * dx_filt2 * (beta ** power) * abs_S_filt * S_filt - dx_filt1 * dx_filt1 * HAT_abs_S_Sij
@@ -107,8 +107,8 @@ def M_ij(dx_filt1, dx_filt2, S_filt, abs_S_filt, HAT_abs_S_Sij, beta=1):
     return M_ij
 
 
-def M_ij_stab_fns(dx, dx_filt, S_filt, abs_S_filt, HAT_abs_S_Sij_fRi, fRi_hat, beta=1):
-    alpha = dx_filt / dx
+def M_ij_stab_fns(dx_filt1, dx_filt2, S_filt, abs_S_filt, HAT_abs_S_Sij_fRi, fRi_hat, beta=1):
+    alpha = dx_filt2 / dx_filt1
     power = alpha / 2
 
     M_ij = dx_filt * dx_filt * (beta ** power) * abs_S_filt * S_filt * fRi_hat - dx * dx * HAT_abs_S_Sij_fRi
@@ -150,20 +150,20 @@ def ds_dxi(scalar, source_dataset, ref_dataset_in, options, in_grid, filting_fil
     return s_xi
 
 
-def R_j(dx, dx_filt, abs_S_hat, ds_dxj_hat, HAT_abs_S_ds_dxj, beta=1):
-    alpha = dx_filt / dx
+def R_j(dx_filt1, dx_filt2, abs_S_hat, ds_dxj_hat, HAT_abs_S_ds_dxj, beta=1):
+    alpha = dx_filt2 / dx_filt1
     power = alpha / 2
 
-    R_j = dx_filt * dx_filt * beta ** power * abs_S_hat * ds_dxj_hat - dx * dx * HAT_abs_S_ds_dxj
+    R_j = dx_filt2 * dx_filt2 * beta ** power * abs_S_hat * ds_dxj_hat - dx_filt1 * dx_filt1 * HAT_abs_S_ds_dxj
 
     return R_j
 
 
-def R_j_stab_fns(dx, dx_filt, abs_S_hat, ds_dxj_hat, HAT_abs_S_ds_dxj_fRi, fRi_hat, beta=1):
-    alpha = dx_filt / dx
+def R_j_stab_fns(dx_filt1, dx_filt2, abs_S_hat, ds_dxj_hat, HAT_abs_S_ds_dxj_fRi, fRi_hat, beta=1):
+    alpha = dx_filt2 / dx_filt1
     power = alpha / 2
 
-    R_j = dx_filt * dx_filt * beta ** power * abs_S_hat * ds_dxj_hat * fRi_hat - dx * dx * HAT_abs_S_ds_dxj_fRi
+    R_j = dx_filt2 * dx_filt2 * beta ** power * abs_S_hat * ds_dxj_hat * fRi_hat - dx_filt1 * dx_filt1 * HAT_abs_S_ds_dxj_fRi
 
     return R_j
 
