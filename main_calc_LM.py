@@ -15,14 +15,14 @@ case_in = args.case
 av_type = 'all'
 mygrid = 'p'
 
-if case == 'BOMEX':
+if case_in == 'BOMEX':
     path_f = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/'
     folder_ff = 'filtering_filtered'
     file_f = 'BOMEX_m0020_g0800_all_'
     times_list = ['14400']
     Delta = 20
 
-elif case == 'ARM':
+elif case_in == 'ARM':
     times_list = ['18000', '25200', '32400', '39600']
     time_in = times_list[t_in]
     path_f = '/work/scratch-pw3/apower/ARM/corrected_sigmas/'
