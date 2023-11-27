@@ -69,7 +69,7 @@ for i, C_res_in in enumerate(C_res):
 
         ds = xr.Dataset()
         ds.to_netcdf(dataset_name[i], mode='w')
-        ds_in = {'file':dataset_name[i], 'ds': ds_}
+        ds_in = {'file':dataset_name[i], 'ds': ds}
 
         save_field(ds_in, HR_field)
         save_field(ds_in, RR_field)
