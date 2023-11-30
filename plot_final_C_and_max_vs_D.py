@@ -23,7 +23,7 @@ what_plotting='_0' # '_beta'
 C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 
 if case == 'ARM':
-    homedir1st = '/work/scratch-pw3/apower/ARM/corrected_sigmas/smoothed_LM_HR_fields/C_profs/'
+    #homedir1st = '/work/scratch-pw3/apower/ARM/corrected_sigmas/smoothed_LM_HR_fields/C_profs/'
     homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/C_profs/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigmas/C_beta_profiles/'
     file_name = f"diagnostics_3d_ts_{set_time}_gaussian_filter_C_"
@@ -122,7 +122,7 @@ os.makedirs(plotdir, exist_ok = True)
 
 if beta == True:
     if what_plotting == '_0' or what_plotting == '_beta':
-        data_D = xr.open_dataset(homedir1st + file_name + f'2D.nc')
+        # data_D = xr.open_dataset(homedir1st + file_name + f'2D.nc')
         data_2D_0 = xr.open_dataset(mydir + f'2D_0.nc')
         data_4D_0 = xr.open_dataset(mydir + f'4D_0.nc')
         data_8D_0 = xr.open_dataset(mydir + f'8D_0.nc')
