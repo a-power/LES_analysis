@@ -23,7 +23,7 @@ what_plotting='_0' # '_beta'
 C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 
 if case == 'ARM':
-    homedir1st = '/work/scratch-pw3/apower/ARM/corrected_sigmas/smoothed_LM_HR_fields/C_profs/'
+    #homedir1st = '/work/scratch-pw3/apower/ARM/corrected_sigmas/smoothed_LM_HR_fields/C_profs/'
     homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/C_profs/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigmas/C_beta_profiles/'
     file_name = f"diagnostics_3d_ts_{set_time}_gaussian_filter_C_"
@@ -122,7 +122,7 @@ os.makedirs(plotdir, exist_ok = True)
 
 if beta == True:
     if what_plotting == '_0' or what_plotting == '_beta':
-        data_D = xr.open_dataset(homedir1st + file_name + f'2D.nc')
+        # data_D = xr.open_dataset(homedir1st + file_name + f'2D.nc')
         data_2D_0 = xr.open_dataset(mydir + f'2D_0.nc')
         data_4D_0 = xr.open_dataset(mydir + f'4D_0.nc')
         data_8D_0 = xr.open_dataset(mydir + f'8D_0.nc')
@@ -565,9 +565,9 @@ Cs_sq_cond = np.reshape(Cs_sq_cond, ( np.shape(Cs_sq_cond)[0], np.shape(Cs_sq_co
 Cth_sq_cond = np.reshape(Cth_sq_cond, ( np.shape(Cth_sq_cond)[0], np.shape(Cth_sq_cond)[1], np.shape(Cth_sq_cond)[2] ))
 Cqt_sq_cond = np.reshape(Cqt_sq_cond, ( np.shape(Cqt_sq_cond)[0], np.shape(Cqt_sq_cond)[1], np.shape(Cqt_sq_cond)[2] ))
 
-np.save('Cs_sq_cond.npy', Cs_sq_cond)
-np.save('Cth_sq_cond.npy', Cth_sq_cond)
-np.save('Cqt_sq_cond.npy', Cqt_sq_cond)
+np.save(homedir+'Cs_sq_cond.npy', Cs_sq_cond)
+np.save(homedir+'Cth_sq_cond.npy', Cth_sq_cond)
+np.save(homedir+'Cqt_sq_cond.npy', Cqt_sq_cond)
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_m, deltas, delta_label, interp=False,
                               C_sq_to_C = True, Pr_in=True, mask_spur_vals = True,
