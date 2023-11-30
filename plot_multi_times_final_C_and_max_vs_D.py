@@ -1013,6 +1013,16 @@ for itr, time_stamp in enumerate(set_time):
 
     ########################################################################################################################
 
+    # np.save(homedir+'Cs_env.npy', Cs_env_sq)
+    # np.save(homedir+'Cth_env.npy', Cth_env_sq)
+    # np.save(homedir+'Cqt_env.npy', Cqt_env_sq)
+    #
+    # np.save(homedir+'Cs_in_cloud.npy', Cs_cloud_sq)
+    # np.save(homedir+'Cth_in_cloud.npy', Cth_cloud_sq)
+    # np.save(homedir+'Cqt_in_cloud.npy', Cqt_cloud_sq)
+
+
+
     z_ML_index, z_cl_range_calc, zn_arr = calc_z_ML_and_CL(prof_file)
     z_ML = zn_set[z_ML_index]
 

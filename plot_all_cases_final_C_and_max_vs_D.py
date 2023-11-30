@@ -10,12 +10,8 @@ import argparse
 np.seterr(divide='ignore') #ignore divide by zero errors in beta calcs
 np.seterr(invalid='ignore')
 
-parser = argparse.ArgumentParser()
-#parser.add_argument('--times', type=str, default='28800')
-parser.add_argument('--case_in', type=str, default='ARM')
-args = parser.parse_args()
-
-case = args.case_in
+# parser = argparse.ArgumentParser()
+# args = parser.parse_args()
 
 
 beta=True
@@ -25,11 +21,14 @@ C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 x_lim_list = [0.355, 0.355, 0.355, 0.355, 0.255, 0.07]
 
 
-ARM_homedir1st = '/work/scratch-pw3/apower/ARM/corrected_sigmas/smoothed_LM_HR_fields/C_profs/'
 ARM_homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/C_profs/'
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/plots/C_beta_profiles/'
 ARM_profiles_dir = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_'
 # prof_file = f'/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_{set_time}.nc'
+
+BOMEX_homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
+todd_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m0020_g0800/diagnostic_files/'
+prof_file = todd_dir + 'BOMEX_m0020_g0800_all_14400.nc'
 
 
 ARM_zn_set = np.arange(0, 4410, 10)
@@ -44,14 +43,6 @@ ARM_set_time = ['18000', '25200', '32400', '39600']
 
 ARM_th_name = 'th_v'
 
-
-
-if beta == True:
-    BOMEX_homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
-    BOMEX_plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/fitting_relations/'
-else:
-    BOMEX_homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
-    BOMEX_plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_1e-7/diff_C_calc/'
 
 BOMEX_file_name = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
 
@@ -117,211 +108,6 @@ def interp_z(var_in, z_from=z_set, z_to=zn_set):
         for k in range(len(z_from)-1):
             interp_var[n,k] = var_in[n,k] + (z_to[k] - z_from[k])*( (var_in[n,k+1] - var_in[n,k]) / (z_from[k+1] - z_from[k]) )
     return interp_var
-
-
-def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, interp=False, C_sq_to_C = False, time_in='14400'):
-
-    clock_time_int = 05.30 + int(time_in)/(60*60)
-    clock_time = str(clock_time_int)+'0L'
-
-    colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
-               'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
-
-    if interp==True:
-        Cs = interp_z(Cs)
-        Cth = interp_z(Cth)
-        Cqt = interp_z(Cqt)
-    if C_sq_to_C == True:
-        if C_or_LM == 'C':
-            Cs = dyn.get_Cs(Cs)
-            Cth = dyn.get_Cs(Cth)
-            Cqt = dyn.get_Cs(Cqt)
-        name='_'
-    else:
-        if C_or_LM == 'C':
-            name='_sq_'
-        else:
-            name = '_'
-
-    fig, ax = plt.subplots(nrows=3, ncols=1, sharey=True, figsize=(4,18))
-
-    fig.tight_layout(pad=0.5)
-
-    for it in range(len(Cs[:,0])):
-        ax[0].plot(Cs[it,:], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
-        ax[1].plot(Cth[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
-        ax[2].plot(Cqt[it, :], z/z_i, color=colours[it], label='$\\widehat{\\bar{\\Delta}} = $'+labels_in[it])
-    if C_sq_to_C == True:
-        if C_or_LM == 'C':
-            ax[0].set_xlabel('$C_{s}$ at time ' + clock_time, fontsize=16)
-            ax[1].set_xlabel('$C_{\\theta}$ at time ' + clock_time, fontsize=16)
-            ax[2].set_xlabel('$C_{qt}$ at time ' + clock_time, fontsize=16)
-        elif C_or_LM == 'LM':
-            ax[0].set_xlabel(f'$LM$ at time {clock_time}', fontsize=16)
-            ax[1].set_xlabel('$HR_{\\theta}$ at time ' + clock_time, fontsize=16)
-            ax[2].set_xlabel('$HR_{qt}$ at time ' + clock_time, fontsize=16)
-        elif C_or_LM == 'MM':
-            ax[0].set_xlabel(f'$MM$ at time {clock_time}', fontsize=16)
-            ax[1].set_xlabel('$RR_{\\theta}$ at time ' + clock_time, fontsize=16)
-            ax[2].set_xlabel('$RR_{qt}$ at time ' + clock_time, fontsize=16)
-        else:
-            print('not a recognised LM/MM/C')
-    else:
-        ax[0].set_xlabel('$C^2_{s}$ at time ' + clock_time, fontsize=16)
-        ax[1].set_xlabel('$C^2_{\\theta}$ at time ' + clock_time, fontsize=16)
-        ax[2].set_xlabel('$C^2_{qt}$ at time ' + clock_time, fontsize=16)
-
-    ax[0].legend(fontsize=13, loc='upper right')
-    ax[1].legend(fontsize=13, loc='upper right')
-    ax[2].legend(fontsize=13, loc='upper right')
-
-    if C_or_LM == 'C':
-        left0, right0 = ax[0].set_xlim()
-        left1, right1 = ax[1].set_xlim()
-        left2, right2 = ax[2].set_xlim()
-
-        set_right = max(right0, right1, right2)
-        set_left = left0
-    else:
-        print('np.shape(Cs) =', np.shape(Cs))
-        x_ax_max_Cs = np.amax(Cs[:, 10:80])
-        x_ax_max_Cth = np.amax(Cth[:, 10:80])
-        x_ax_max_Cqt = np.amax(Cqt[:, 10:80])
-
-        x_ax_min_Cs = np.amin(Cs[:, 10:80])
-        x_ax_min_Cth = np.amin(Cth[:, 10:80])
-        x_ax_min_Cqt = np.amin(Cqt[:, 10:80])
-
-        set_right = max(x_ax_max_Cs, x_ax_max_Cth, x_ax_max_Cqt)
-        set_left = -1 #min(x_ax_min_Cs, x_ax_min_Cth, x_ax_min_Cqt)
-
-    ax[0].axhline(z_CL_r_m[0]/z_i, set_left, 1, color='k', linestyle='-.')
-    ax[1].axhline(z_CL_r_m[0]/z_i, set_left, 1, color='k', linestyle='-.')
-    ax[2].axhline(z_CL_r_m[0]/z_i, set_left, 1, color='k', linestyle='-.')
-
-    ax[0].axhline(z_CL_r_m[1]/z_i, set_left, 1, color='k', linestyle='dashed')
-    ax[1].axhline(z_CL_r_m[1]/z_i, set_left, 1, color='k', linestyle='dashed')
-    ax[2].axhline(z_CL_r_m[1]/z_i, set_left, 1, color='k', linestyle='dashed')
-
-    print('for all Delta profs, min is = ', set_left, 'max is =', set_right)
-
-    ax[0].set_xlim(right = set_right, left = set_left)
-    ax[1].set_xlim(right = set_right, left = set_left)
-    ax[2].set_xlim(right = set_right, left = set_left)
-
-    plt.tight_layout()
-
-    if interp==True:
-        ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
-        ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
-        ax[2].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
-
-
-        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{time_in}_prof_scaled_interp_z.png',
-                    bbox_inches='tight')
-        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{time_in}_prof_scaled_interp_z.pdf',
-                    bbox_inches='tight')
-    else:
-        ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
-        ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
-        ax[2].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
-        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{time_in}_prof_scaled_zn.png',
-                    bbox_inches='tight')
-        plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}_time{time_in}_prof_scaled_zn.pdf',
-                    bbox_inches='tight')
-    plt.close()
-
-
-def plot_Pr_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, time_in, interp=False, mask_spur_vals = True):
-
-    clock_time_int = 05.30 + int(time_in) / (60 * 60)
-    clock_time = str(clock_time_int) + '0L'
-
-    colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
-               'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
-    # NOTE youre feeding in C^2 not C
-
-    if interp == True:
-        Cs = interp_z(Cs)
-        Cth = interp_z(Cth)
-        Cqt = interp_z(Cqt)
-
-    if case == 'BOMEX':
-        fig, ax = plt.subplots(nrows=1, ncols=3, sharey=True, figsize=(9, 6))
-    else:
-        fig, ax = plt.subplots(nrows=2, ncols=1, sharey=False, figsize=(5, 12))
-
-
-    Pr = Cs / Cth
-    Sc = Cs / Cqt
-
-    if mask_spur_vals == True:
-        Pr[Pr > 2.95] = np.nan
-        Pr[Pr < -0.45] = np.nan
-
-        Sc[Sc > 2.95] = np.nan
-        Sc[Sc < -0.45] = np.nan
-
-        Pr = ma.masked_invalid(Pr)
-        Sc = ma.masked_invalid(Sc)
-
-    for it in range(len(Cs[:, 0])):
-        ax[0].plot(Pr[it, :], z / z_i, color=colours[it],
-                   label='$\\widehat{\\bar{\\Delta}} = $' + labels_in[it])
-        ax[1].plot(Sc[it, :], z / z_i, color=colours[it],
-                   label='$\\widehat{\\bar{\\Delta}} = $' + labels_in[it])
-
-        bottom0, top0 = ax[0].set_ylim()
-        bottom1, top1 = ax[1].set_ylim()
-        set_bottom = min(bottom0, bottom1)
-        set_top = max(top0, top1)
-        ax[0].set_ylim(set_bottom, set_top)
-        ax[1].set_ylim(set_bottom, set_top)
-
-        set_left_pr = -0.5
-        set_right_pr = 3.0
-
-        ax[0].set_xlim(set_left_pr, set_right_pr)
-        ax[1].set_xlim(set_left_pr, set_right_pr)
-
-        ax[0].axhline(z_CL_r_m[0]/z_i, set_left_pr, set_right_pr, color='k', linestyle='-.')
-        ax[1].axhline(z_CL_r_m[0]/z_i, set_left_pr, set_right_pr, color='k', linestyle='-.')
-
-        ax[0].axhline(z_CL_r_m[1]/z_i, set_left_pr, set_right_pr, color='k', linestyle='dashed')
-        ax[1].axhline(z_CL_r_m[1]/z_i, set_left_pr, set_right_pr, color='k', linestyle='dashed')
-
-
-        ax[0].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
-        ax[1].axvline(0.7, set_bottom, set_top, color='k', linestyle='dashed')
-
-        ax[0].set_xlabel('$Pr$ at time ' + clock_time, fontsize=16)
-        ax[1].set_xlabel('$Sc_{qt}$ at time ' + clock_time, fontsize=16)
-
-        ax[0].legend(fontsize=13, loc='upper right')
-        ax[1].legend(fontsize=13, loc='upper right')
-
-        ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
-        ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
-
-
-        # left0, right0 = ax[0].set_xlim()
-        # left1, right1 = ax[1].set_xlim()
-        # left2, right2 = ax[2].set_xlim()
-        #
-        # set_right = max(right0, right1, right2)
-        # set_left = min
-        #
-        #
-        # ax[0].set_xlim(right = set_right, left = set_left)
-        # ax[1].set_xlim(right = set_right, left = set_left)
-        # ax[2].set_xlim(right = set_right, left = set_left)
-
-    fig.tight_layout(pad=0.5)
-
-    plt.savefig(plotdir + f'Pr_prof_{time_in}.pdf', bbox_inches='tight')
-    plt.close()
-
-
 
 
 

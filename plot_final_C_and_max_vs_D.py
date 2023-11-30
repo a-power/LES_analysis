@@ -565,9 +565,9 @@ Cs_sq_cond = np.reshape(Cs_sq_cond, ( np.shape(Cs_sq_cond)[0], np.shape(Cs_sq_co
 Cth_sq_cond = np.reshape(Cth_sq_cond, ( np.shape(Cth_sq_cond)[0], np.shape(Cth_sq_cond)[1], np.shape(Cth_sq_cond)[2] ))
 Cqt_sq_cond = np.reshape(Cqt_sq_cond, ( np.shape(Cqt_sq_cond)[0], np.shape(Cqt_sq_cond)[1], np.shape(Cqt_sq_cond)[2] ))
 
-np.save('Cs_sq_cond.npy', Cs_sq_cond)
-np.save('Cth_sq_cond.npy', Cth_sq_cond)
-np.save('Cqt_sq_cond.npy', Cqt_sq_cond)
+np.save(homedir+'Cs_sq_cond.npy', Cs_sq_cond)
+np.save(homedir+'Cth_sq_cond.npy', Cth_sq_cond)
+np.save(homedir+'Cqt_sq_cond.npy', Cqt_sq_cond)
 
 def plot_condit_C_each_Deltas(Cs_in, Cth_in, Cqt_in, z, z_i, z_CL_r_m, deltas, delta_label, interp=False,
                               C_sq_to_C = True, Pr_in=True, mask_spur_vals = True,
