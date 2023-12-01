@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../jupyter_notebooks/notebooks" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../misc" vcs="Git" />
   </component>
 </project>

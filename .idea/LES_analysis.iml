@@ -8,6 +8,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="jas_home" />
     <orderEntry type="module" module-name="notebooks" />
+    <orderEntry type="module" module-name="misc" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />

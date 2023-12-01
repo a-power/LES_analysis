@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/LES_analysis.iml" filepath="$PROJECT_DIR$/.idea/LES_analysis.iml" />
       <module fileurl="file://$PROJECT_DIR$/../jasmin_notebooks/jas_home/.idea/jas_home.iml" filepath="$PROJECT_DIR$/../jasmin_notebooks/jas_home/.idea/jas_home.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../misc/.idea/misc.iml" filepath="$PROJECT_DIR$/../misc/.idea/misc.iml" />
       <module fileurl="file://$PROJECT_DIR$/../jupyter_notebooks/notebooks/.idea/notebooks.iml" filepath="$PROJECT_DIR$/../jupyter_notebooks/notebooks/.idea/notebooks.iml" />
     </modules>
   </component>
