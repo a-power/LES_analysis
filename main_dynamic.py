@@ -60,18 +60,22 @@ if case=='BOMEX':
     outdir_og = '/work/scratch-pw3/apower/'
     outdir = outdir_og + f'BOMEX/'
     plotdir = outdir_og + 'plots/dyn/'
+    time_name_in = 'time_series_600_600'
 
 elif case=='ARM':
     in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/'
     outdir = '/work/scratch-pw3/apower/ARM/'
     plotdir = outdir + 'plots/dyn/'
     model_res_list = [None]
+    time_name_in = 'time_series_600_600'
 
 elif case=='dry':
     in_dir = '/storage/silver/MONC_data/Alanna/dry_CBL/MONC_runs/20m/'
     outdir = '/storage/silver/greybls/si818415/dry_CBL/'
     plotdir = outdir + 'plots/'
     model_res_list = [None]
+    time_name_in = 'time_series_300_300',
+    vapour = False,
 
 
 os.makedirs(outdir, exist_ok = True)
@@ -105,12 +109,10 @@ options_dry = {
         'override': True,
         'dx': 20.0,
         'dy': 20.0,
-        'time_name': 'time_series_300_300',
-        'vapour': False,
         'domain': 4.8
           }
 
 for j in range(len(set_time)):
     for i, model_res in enumerate(model_res_list):
         dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, options_dry, \
-                            opgrid, start_point=start, ref_file = None)
+                            opgrid, start_point=start, ref_file = None, time_name = time_name_in, vapour=True)

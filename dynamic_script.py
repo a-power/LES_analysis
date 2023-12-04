@@ -24,6 +24,8 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
      dx: the grid spacing and number of grid points in the format:  """
     print('start point in the run_dyn script is', start_point, ' of type ', type(start_point))
 
+    print(time_name)
+
     if res_in != None:
         file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
     elif time_name == 'time_series_300_300':
