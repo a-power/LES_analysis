@@ -21,6 +21,10 @@ if case_in == 'BOMEX':
     file_f = 'BOMEX_m0020_g0800_all_'
     times_list = ['14400']
     Delta = 20
+    scalar = ['momentum', 'th', 'q_total']
+    dx_bar_in = [40, 80, 160, 320, 640, 1280]
+    dx_hat_in = [80, 160, 320, 640, 1280, 2560]
+    C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
 
 elif case_in == 'ARM':
     times_list = ['18000', '25200', '32400', '39600']
@@ -31,13 +35,26 @@ elif case_in == 'ARM':
     Delta = 25
     dx_bar_in = [56, 103, 202, 401, 800, 1600]
     dx_hat_in = [75, 144, 284, 566, 1132, 2263]
-    C_res = ['3D', '6D', '11D', '22D', '45D', '90D']
+    C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
+    scalar = ['momentum', 'th', 'q_total']
+
+elif case_in=='dry':
+    times_list = ['13800']
+    time_in = times_list[t_in]
+    path_f = f'/storage/silver/greybls/si818415/dry_CBL/'
+    folder_ff = 'filtering_filtered/'
+    file_f = f'cbl_{time_in}_'
+    Delta=20
+    scalar = ['momentum', 'th']
+    dx_bar_in = [40] #, 80, 160, 320, 640, 1280]
+    dx_hat_in = [80] #, 160, 320, 640, 1280, 2560]
+    C_res = ['2D'] #, '4D', '8D', '16D', '32D', '64D']
 
 else:
     print('case not recognised')
 
 
-scalar = ['momentum', 'th', 'q_total']
+
 set_save_all = 2
 
 
