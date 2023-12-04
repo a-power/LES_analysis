@@ -17,7 +17,7 @@ start = args.start_in
 print('start type = ', type(start))
 if case=='ARM':
     MY_dx = 25
-elif case=='BOMEX':
+elif case=='BOMEX' or case == 'dry':
     MY_dx = 20
 else:
     print('case not recognised, need to input dx for this case')
@@ -67,6 +67,12 @@ elif case=='ARM':
     plotdir = outdir + 'plots/dyn/'
     model_res_list = [None]
 
+elif case=='dry':
+    in_dir = '/storage/silver/MONC_data/Alanna/dry_CBL/MONC_runs/20m/'
+    outdir = '/storage/silver/greybls/si818415/dry_CBL/'
+    plotdir = outdir + 'plots/'
+    model_res_list = [None]
+
 
 os.makedirs(outdir, exist_ok = True)
 os.makedirs(plotdir, exist_ok = True)
@@ -92,7 +98,19 @@ options_BOMEX = {
         'domain' : 16.0
           }
 
+options_dry = {
+        'FFT_type': 'RFFT',
+        'save_all': 'Yes',
+        'th_ref': 300.0,
+        'override': True,
+        'dx': 20.0,
+        'dy': 20.0,
+        'time_name': 'time_series_300_300',
+        'vapour': False
+        'domain' : 4.8 #in km
+          }
+
 for j in range(len(set_time)):
     for i, model_res in enumerate(model_res_list):
-        dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, options_ARM, \
+        dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, options_dry, \
                             opgrid, start_point=start, ref_file = None)

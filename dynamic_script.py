@@ -18,7 +18,7 @@ np.seterr(invalid='ignore')
 
 
 def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, start_point=0,
-            ref_file = None, time_name = 'time_series_600_600'):
+            ref_file = None, time_name = 'time_series_600_600', vapour=True):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
@@ -26,6 +26,8 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
 
     if res_in != None:
         file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
+    elif time_name == 'time_series_300_300':
+        file_in = f'{indir}/cbl_{time_in}.nc'
     else:
         file_in = f'{indir}/diagnostics_3d_ts_{time_in}.nc'
 
@@ -117,27 +119,33 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
         if exists:
             print('Derived data file exists')
         else:
-
-            var_list = [
+            if vapour == False:
+                var_list = [
                         "u",
                         "v",
                         "w",
-                        "th",
-                        "th_v",
-                        "th_L",
-                        "q_total",
-                        "q_vapour",
-                        "q_cloud_liquid_mass",
-                        "buoyancy"
-                        ]
+                        "th"]
+            else:
+                var_list = [
+                            "u",
+                            "v",
+                            "w",
+                            "th",
+                            "th_v",
+                            "th_L",
+                            "q_total",
+                            "q_vapour",
+                            "q_cloud_liquid_mass",
+                            "buoyancy"
+                            ]
 
             field_list = sf.filter_variable_list(dataset, ref_dataset,
                                                  derived_data, filtered_data,
                                                  opt, new_filter,
                                                  var_list=var_list,
                                                  grid=ingrid)
-
-            var_list = [["u", "u"],
+            if vapour == False:
+                var_list = [["u", "u"],
                         ["u", "v"],
                         ["u", "w"],
                         ["v", "v"],
@@ -146,21 +154,32 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
                         ["u", "th"],
                         ["v", "th"],
                         ["w", "th"],
-                        ["u", "q_total"],
-                        ["v", "q_total"],
-                        ["w", "q_total"],
-                        ["u", "q_vapour"],
-                        ["v", "q_vapour"],
-                        ["w", "q_vapour"]
                         ]
-                        # ["u", "th_v"],
-                        # ["v", "th_v"],
-                        # ["w", "th_v"],
-                        # ["w", "th_L"],
-                        # ["th_v", "q_total"],
-                        # ["w", "q_cloud_liquid_mass"],
-                        # ["q_total", "q_total"],
-                        # ["th_L", "q_cloud_liquid_mass"]
+            else:
+                var_list = [["u", "u"],
+                            ["u", "v"],
+                            ["u", "w"],
+                            ["v", "v"],
+                            ["v", "w"],
+                            ["w", "w"],
+                            ["u", "th"],
+                            ["v", "th"],
+                            ["w", "th"],
+                            ["u", "q_total"],
+                            ["v", "q_total"],
+                            ["w", "q_total"],
+                            ["u", "q_vapour"],
+                            ["v", "q_vapour"],
+                            ["w", "q_vapour"]
+                            ]
+                            # ["u", "th_v"],
+                            # ["v", "th_v"],
+                            # ["w", "th_v"],
+                            # ["w", "th_L"],
+                            # ["th_v", "q_total"],
+                            # ["w", "q_cloud_liquid_mass"],
+                            # ["q_total", "q_total"],
+                            # ["th_L", "q_cloud_liquid_mass"]
 
 
             quad_field_list = sf.filter_variable_pair_list(dataset,
@@ -178,13 +197,14 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
         dth_dx.name = 'dth_dx'
         dth_dx = re_chunk(dth_dx)
 
-        dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid)
-        dq_dx.name = 'dq_dx'
-        dq_dx = re_chunk(dq_dx)
+        if vapour == True:
+            dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid)
+            dq_dx.name = 'dq_dx'
+            dq_dx = re_chunk(dq_dx)
 
-        dqv_dx = dyn.ds_dxi('q_vapour', dataset, ref_dataset, opt, ingrid)
-        dqv_dx.name = 'dqv_dx'
-        dqv_dx = re_chunk(dqv_dx)
+            dqv_dx = dyn.ds_dxi('q_vapour', dataset, ref_dataset, opt, ingrid)
+            dqv_dx.name = 'dqv_dx'
+            dqv_dx = re_chunk(dqv_dx)
 
         S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False) #
 
@@ -198,19 +218,19 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
         abs_S = re_chunk(abs_S)
 
 
-        Ri = dyn.calc_Ri(abs_S_temp, derived_data, filtered_data, ref_dataset, opt, ingrid)
-        Ri.name = 'Ri'
-        Ri = re_chunk(Ri)
-
-        Ri_filt = sf.filter_field(Ri, filtered_data, opt, new_filter)
-
-        fm_Ri = dyn.stab_fn_mom(Ri)
-        fm_Ri.name = 'fm_Ri'
-        fm_Ri = re_chunk(fm_Ri)
-
-        fh_Ri = dyn.stab_fn_scal(Ri)
-        fh_Ri.name = 'fh_Ri'
-        fh_Ri = re_chunk(fh_Ri)
+        # Ri = dyn.calc_Ri(abs_S_temp, derived_data, filtered_data, ref_dataset, opt, ingrid)
+        # Ri.name = 'Ri'
+        # Ri = re_chunk(Ri)
+        #
+        # Ri_filt = sf.filter_field(Ri, filtered_data, opt, new_filter)
+        #
+        # fm_Ri = dyn.stab_fn_mom(Ri)
+        # fm_Ri.name = 'fm_Ri'
+        # fm_Ri = re_chunk(fm_Ri)
+        #
+        # fh_Ri = dyn.stab_fn_scal(Ri)
+        # fh_Ri.name = 'fh_Ri'
+        # fh_Ri = re_chunk(fh_Ri)
 
 
         S_ij_filt = sf.filter_field(S_ij, filtered_data,
@@ -222,11 +242,12 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
         dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
                                     opt, new_filter)
 
-        dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
-                                      opt, new_filter)
+        if vapour == True:
+            dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
+                                          opt, new_filter)
 
-        dqv_dx_filt = sf.filter_field(dqv_dx, filtered_data,
-                                      opt, new_filter)
+            dqv_dx_filt = sf.filter_field(dqv_dx, filtered_data,
+                                          opt, new_filter)
 
         S_ij_abs_S = S_ij * abs_S
         S_ij_abs_S.name = 'S_ij_abs_S'
@@ -236,11 +257,11 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
                                               opt, new_filter)
 
 
-        S_ij_abs_S_fm_Ri = S_ij * abs_S * fm_Ri
-        S_ij_abs_S_fm_Ri.name = 'S_ij_abs_S_fm_Ri'
-        S_ij_abs_S_fm_Ri = re_chunk(S_ij_abs_S_fm_Ri)
-
-        S_ij_abs_S_fm_filt = sf.filter_field(S_ij_abs_S_fm_Ri, filtered_data, opt, new_filter)
+        # S_ij_abs_S_fm_Ri = S_ij * abs_S * fm_Ri
+        # S_ij_abs_S_fm_Ri.name = 'S_ij_abs_S_fm_Ri'
+        # S_ij_abs_S_fm_Ri = re_chunk(S_ij_abs_S_fm_Ri)
+        #
+        # S_ij_abs_S_fm_filt = sf.filter_field(S_ij_abs_S_fm_Ri, filtered_data, opt, new_filter)
 
 
 
@@ -253,43 +274,44 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
         abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
                                               opt, new_filter)
 
-        abs_S_dth_dx_fh_Ri = dth_dx * abs_S * fh_Ri
-        abs_S_dth_dx_fh_Ri.name = 'abs_S_dth_dx_fh_Ri'
-        abs_S_dth_dx_fh_Ri = re_chunk(abs_S_dth_dx_fh_Ri)
-
-        abs_S_dth_dx_fh_Ri_filt = sf.filter_field(abs_S_dth_dx_fh_Ri, filtered_data,
-                                              opt, new_filter)
-
-
+        # abs_S_dth_dx_fh_Ri = dth_dx * abs_S * fh_Ri
+        # abs_S_dth_dx_fh_Ri.name = 'abs_S_dth_dx_fh_Ri'
+        # abs_S_dth_dx_fh_Ri = re_chunk(abs_S_dth_dx_fh_Ri)
+        #
+        # abs_S_dth_dx_fh_Ri_filt = sf.filter_field(abs_S_dth_dx_fh_Ri, filtered_data,
+        #                                       opt, new_filter)
 
 
-        abs_S_dq_dx_fh_Ri = dq_dx * abs_S * fh_Ri
-        abs_S_dq_dx_fh_Ri.name = 'abs_S_dq_dx_fh_Ri'
-        abs_S_dq_dx_fh_Ri = re_chunk(abs_S_dq_dx_fh_Ri)
 
-        abs_S_dq_dx_fh_Ri_filt = sf.filter_field(abs_S_dq_dx_fh_Ri, filtered_data,
-                                            opt, new_filter)
 
-        abs_S_dq_dx = dq_dx * abs_S
-        abs_S_dq_dx.name = 'abs_S_dq_dx'
-        abs_S_dq_dx = re_chunk(abs_S_dq_dx)
+        # abs_S_dq_dx_fh_Ri = dq_dx * abs_S * fh_Ri
+        # abs_S_dq_dx_fh_Ri.name = 'abs_S_dq_dx_fh_Ri'
+        # abs_S_dq_dx_fh_Ri = re_chunk(abs_S_dq_dx_fh_Ri)
+        #
+        # abs_S_dq_dx_fh_Ri_filt = sf.filter_field(abs_S_dq_dx_fh_Ri, filtered_data,
+        #                                     opt, new_filter)
 
-        abs_S_dq_dx_filt = sf.filter_field(abs_S_dq_dx, filtered_data,
-                                            opt, new_filter)
+        if vapour == True:
+            abs_S_dq_dx = dq_dx * abs_S
+            abs_S_dq_dx.name = 'abs_S_dq_dx'
+            abs_S_dq_dx = re_chunk(abs_S_dq_dx)
 
-        abs_S_dqv_dx = dqv_dx * abs_S
-        abs_S_dqv_dx.name = 'abs_S_dqv_dx'
-        abs_S_dqv_dx = re_chunk(abs_S_dqv_dx)
+            abs_S_dq_dx_filt = sf.filter_field(abs_S_dq_dx, filtered_data,
+                                                opt, new_filter)
 
-        abs_S_dqv_dx_filt = sf.filter_field(abs_S_dqv_dx, filtered_data,
-                                            opt, new_filter)
+            abs_S_dqv_dx = dqv_dx * abs_S
+            abs_S_dqv_dx.name = 'abs_S_dqv_dx'
+            abs_S_dqv_dx = re_chunk(abs_S_dqv_dx)
 
-        abs_S_dqv_dx_fh_Ri = dqv_dx * abs_S * fh_Ri
-        abs_S_dqv_dx_fh_Ri.name = 'abs_S_dqv_dx_fh_Ri'
-        abs_S_dqv_dx_fh_Ri = re_chunk(abs_S_dqv_dx_fh_Ri)
+            abs_S_dqv_dx_filt = sf.filter_field(abs_S_dqv_dx, filtered_data,
+                                                opt, new_filter)
 
-        abs_S_dqv_dx_fh_Ri_filt = sf.filter_field(abs_S_dqv_dx_fh_Ri, filtered_data,
-                                            opt, new_filter)
+        # abs_S_dqv_dx_fh_Ri = dqv_dx * abs_S * fh_Ri
+        # abs_S_dqv_dx_fh_Ri.name = 'abs_S_dqv_dx_fh_Ri'
+        # abs_S_dqv_dx_fh_Ri = re_chunk(abs_S_dqv_dx_fh_Ri)
+        #
+        # abs_S_dqv_dx_fh_Ri_filt = sf.filter_field(abs_S_dqv_dx_fh_Ri, filtered_data,
+        #                                     opt, new_filter)
 
         filtered_data['ds'].close()
     derived_data['ds'].close()
