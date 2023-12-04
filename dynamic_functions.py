@@ -386,8 +386,8 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
     # C_s_num = None
     # C_s_den = None
 
-    LM_av = np.zeros((1,z_num)) #need a time index to save
-    MM_av = np.zeros((1,z_num)) #need a time index to save
+    LM_av = np.zeros((num_times,z_num)) #need a time index to save
+    MM_av = np.zeros((num_times,z_num)) #need a time index to save
 
     for k in range(z_num):
 
