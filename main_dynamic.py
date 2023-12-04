@@ -76,8 +76,8 @@ elif case=='dry':
     outdir = '/storage/silver/greybls/si818415/dry_CBL/'
     plotdir = outdir + 'plots/'
     model_res_list = [None]
-    time_name_in = 'time_series_300_300',
-    vapour = False,
+    time_name_in = 'time_series_300_300'
+    vapour = False
 
 
 os.makedirs(outdir, exist_ok = True)
