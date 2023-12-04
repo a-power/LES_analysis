@@ -62,9 +62,9 @@ for i, C_res_in in enumerate(C_res):
 
     file_in = file_f + f'gaussian_filter_ga0{i}_gaussian_filter_ga00.nc'
     data_in = path_f + folder_ff + file_in
-    dataset_name = [path_f + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                     path_f + file_f + f'C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                     path_f + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
+    dataset_name = [path_f + folder_ff + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                     path_f + folder_ff + file_f + f'C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                     path_f + folder_ff + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
 
     DX_in = {
         'indir': data_in,
