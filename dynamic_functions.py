@@ -386,13 +386,13 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
     # C_s_num = None
     # C_s_den = None
 
-    LM_av = np.zeros((z_num))
-    MM_av = np.zeros((z_num))
+    LM_av = np.zeros((1,z_num)) #need a time index to save
+    MM_av = np.zeros((1,z_num)) #need a time index to save
 
     for k in range(z_num):
 
-        LM_av[k] = np.sum(LM_flat[:,k])/total_num
-        MM_av[k] = np.sum(MM_flat[:,k])/total_num
+        LM_av[0, k] = np.sum(LM_flat[:,k])/total_num
+        MM_av[0, k] = np.sum(MM_flat[:,k])/total_num
 
 
     Cs_av_sq = (0.5*(LM_av / MM_av))
