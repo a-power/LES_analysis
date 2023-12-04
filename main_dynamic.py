@@ -13,6 +13,8 @@ set_time = [ args.times ]
 case = args.case
 start = args.start_in
 
+print(case)
+
 
 print('start type = ', type(start))
 if case=='ARM':
@@ -115,4 +117,4 @@ options_dry = {
 for j in range(len(set_time)):
     for i, model_res in enumerate(model_res_list):
         dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, options_dry, \
-                            opgrid, start_point=start, ref_file = None, time_name = time_name_in, vapour=True)
+                            opgrid, start_point=start, ref_file = None, time_name = time_name_in, vapour=False)
