@@ -106,8 +106,8 @@ options_dry = {
         'dx': 20.0,
         'dy': 20.0,
         'time_name': 'time_series_300_300',
-        'vapour': False
-        'domain' : 4.8 #in km
+        'vapour': False,
+        'domain': 4.8
           }
 
 for j in range(len(set_time)):
