@@ -330,6 +330,8 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
         file_in = f'{indir}{res_in}_all_{time_in}_gaussian_filter_{filtered_data}.nc'
     elif case=='ARM':
         file_in = f'{indir}/diagnostics_3d_ts_{time_in}_gaussian_filter_{filtered_data}.nc'
+    elif case == 'dry':
+        file_in = f'{indir}/cbl_{time_in}_gaussian_filter_{filtered_data}.nc'
 
     ds_in = xr.open_dataset(file_in)
     time_data = ds_in[time_name]
@@ -418,15 +420,25 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
         if exists:
             print('Derived data file exists')
         else:
-
-            var_list = ["u",
+            if case == 'dry':
+                var_list = [
+                        "u",
                         "v",
                         "w",
-                        "th",
-                        "q_total_f",
-                        "th_v",
-                        "q_cloud_liquid_mass"
-                        ]
+                        "th"]
+            else:
+                var_list = [
+                            "u",
+                            "v",
+                            "w",
+                            "th",
+                            "th_v",
+                            "th_L",
+                            "q_total",
+                            "q_vapour",
+                            "q_cloud_liquid_mass",
+                            "buoyancy"
+                            ]
 
             field_list = sf.filter_variable_list(dataset, ref_dataset,
                                                  derived_data, filtered_data,
@@ -434,7 +446,8 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                                  var_list=var_list,
                                                  grid=ingrid)
 
-            var_list = [["u", "u"],
+            if case == 'dry':
+                var_list = [["u", "u"],
                         ["u", "v"],
                         ["u", "w"],
                         ["v", "v"],
@@ -443,15 +456,24 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         ["u", "th"],
                         ["v", "th"],
                         ["w", "th"],
-                        ["u", "th_v"],
-                        ["v", "th_v"],
-                        ["w", "th_v"],
-                        ["u", "q_total_f"],
-                        ["v", "q_total_f"],
-                        ["w", "q_total_f"],
-                        ["th_v", "q_total_f"],
-                        ["q_total_f", "q_total_f"]
                         ]
+            else:
+                var_list = [["u", "u"],
+                            ["u", "v"],
+                            ["u", "w"],
+                            ["v", "v"],
+                            ["v", "w"],
+                            ["w", "w"],
+                            ["u", "th"],
+                            ["v", "th"],
+                            ["w", "th"],
+                            ["u", "q_total"],
+                            ["v", "q_total"],
+                            ["w", "q_total"],
+                            ["u", "q_vapour"],
+                            ["v", "q_vapour"],
+                            ["w", "q_vapour"]
+                            ]
 
             quad_field_list = sf.filter_variable_pair_list(dataset,
                                                            ref_dataset,
@@ -469,10 +491,10 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
         dth_dx.name = 'dth_dx'
         dth_dx = re_chunk(dth_dx)
 
-
-        dq_dx = dyn.ds_dxi(f'f(q_total_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid)
-        dq_dx.name = 'dq_dx'
-        dq_dx = re_chunk(dq_dx)
+        if case != 'dry':
+            dq_dx = dyn.ds_dxi(f'f(q_total_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid)
+            dq_dx.name = 'dq_dx'
+            dq_dx = re_chunk(dq_dx)
 
         S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
 
@@ -493,8 +515,9 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
         dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
                                     opt, new_filter)
 
-        dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
-                                      opt, new_filter)
+        if case != 'dry':
+            dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
+                                          opt, new_filter)
 
         S_ij_abs_S = S_ij * abs_S
         S_ij_abs_S.name = 'S_ij_abs_S'
@@ -510,12 +533,13 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
         abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
                                               opt, new_filter)
 
-        abs_S_dq_dx = dq_dx * abs_S
-        abs_S_dq_dx.name = 'abs_S_dq_dx'
-        abs_S_dq_dx = re_chunk(abs_S_dq_dx)
+        if case != 'dry':
+            abs_S_dq_dx = dq_dx * abs_S
+            abs_S_dq_dx.name = 'abs_S_dq_dx'
+            abs_S_dq_dx = re_chunk(abs_S_dq_dx)
 
-        abs_S_dq_dx_filt = sf.filter_field(abs_S_dq_dx, filtered_data,
-                                            opt, new_filter)
+            abs_S_dq_dx_filt = sf.filter_field(abs_S_dq_dx, filtered_data,
+                                                opt, new_filter)
 
         filtered_data['ds'].close()
     derived_data['ds'].close()
