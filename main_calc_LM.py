@@ -46,8 +46,8 @@ elif case_in=='dry':
     file_f = f'cbl_{time_in}_'
     Delta=20
     scalar = ['momentum', 'th']
-    dx_bar_in = [20]#40 #, 80, 160, 320, 640, 1280]
-    dx_hat_in = [40]#80] #, 160, 320, 640, 1280, 2560]
+    dx_bar_in = [40]#40 #, 80, 160, 320, 640, 1280]
+    dx_hat_in = [80]#80] #, 160, 320, 640, 1280, 2560]
     C_res = ['2D'] #, '4D', '8D', '16D', '32D', '64D']
 
 else:
