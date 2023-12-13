@@ -5,8 +5,8 @@ import xarray as xr
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--t', type=int, default=0)
-parser.add_argument('--case', type=str, default='dry')
+parser.add_argument('--t', type=int, default=2)
+parser.add_argument('--case', type=str, default='ARM')
 args = parser.parse_args()
 t_in = args.t
 
@@ -30,13 +30,15 @@ elif case_in == 'ARM':
     times_list = ['18000', '25200', '32400', '39600']
     time_in = times_list[t_in]
     path_f = '/work/scratch-pw3/apower/ARM/corrected_sigmas/'
-    folder_ff = 'filtering_filtered/'
+    folder_ff = 'filtering_filtered_recalc/'
     file_f = f'diagnostics_3d_ts_{time_in}_'
     Delta = 25
-    dx_bar_in = [56, 103, 202, 401, 800, 1600]
-    dx_hat_in = [75, 144, 284, 566, 1132, 2263]
-    C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
-    scalar = ['momentum', 'th', 'q_total']
+    # dx_bar_in = [56, 103, 202, 401, 800, 1600]
+    # dx_hat_in = [75, 144, 284, 566, 1132, 2263]
+    dx_bar_in = [50]#, 103, 202, 401, 800, 1600]
+    dx_hat_in = [100]#, 144, 284, 566, 1132, 2263]
+    C_res = ['2D']#, '4D', '8D', '16D', '32D', '64D']
+    scalar = ['th']#['momentum', 'th', 'q_total']
 
 elif case_in=='dry':
     times_list = ['13800']
