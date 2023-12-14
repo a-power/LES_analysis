@@ -17,7 +17,7 @@ mygrid = 'p'
 
 if case_in == 'BOMEX':
     path_f = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/'
-    folder_ff = 'filtering_filtered'
+    folder_ff = 'filtering_filtered/'
     file_f = 'BOMEX_m0020_g0800_all_'
     times_list = ['14400']
     Delta = 20
@@ -30,12 +30,12 @@ elif case_in == 'ARM':
     times_list = ['18000', '25200', '32400', '39600']
     time_in = times_list[t_in]
     path_f = '/work/scratch-pw3/apower/ARM/corrected_sigmas/'
-    folder_ff = 'filtering_filtered_recalc/'
+    folder_ff = 'filtering_filtered/'
     file_f = f'diagnostics_3d_ts_{time_in}_'
     Delta = 25
     # dx_bar_in = [56, 103, 202, 401, 800, 1600]
     # dx_hat_in = [75, 144, 284, 566, 1132, 2263]
-    dx_bar_in = [50]#, 103, 202, 401, 800, 1600]
+    dx_bar_in = [50]#, 100, 200, 400, 800, 1600]
     dx_hat_in = [100]#, 144, 284, 566, 1132, 2263]
     C_res = ['2D']#, '4D', '8D', '16D', '32D', '64D']
     scalar = ['th']#['momentum', 'th', 'q_total']
@@ -48,12 +48,15 @@ elif case_in=='dry':
     file_f = f'cbl_{time_in}_'
     Delta=20
     scalar = ['momentum', 'th']
-    dx_bar_in = [40]#40 #, 80, 160, 320, 640, 1280]
-    dx_hat_in = [80]#80] #, 160, 320, 640, 1280, 2560]
-    C_res = ['2D'] #, '4D', '8D', '16D', '32D', '64D']
+    dx_bar_in = [40, 80, 160, 320, 640, 1280]
+    dx_hat_in = [80, 160, 320, 640, 1280, 2560]
+    C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
 
 else:
     print('case not recognised')
+
+
+os.makedirs(folder_ff, exist_ok = True)
 
 
 
@@ -62,8 +65,8 @@ set_save_all = 2
 
 for i, C_res_in in enumerate(C_res):
 
-    file_in = file_f + f'gaussian_filter_ga0{i}.nc' #_gaussian_filter_ga00.nc'
-    data_in = path_f + file_in #+ folder_ff
+    file_in = file_f + f'gaussian_filter_ga0{i}_gaussian_filter_ga00.nc'
+    data_in = path_f + folder_ff + file_in
     dataset_name = [path_f + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
                      path_f + file_f + f'C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
                      path_f + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
