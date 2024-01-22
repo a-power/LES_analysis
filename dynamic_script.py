@@ -122,11 +122,12 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
             print('Derived data file exists')
         else:
             if vapour == False:
-                var_list = [
-                        "u",
-                        "v",
-                        "w",
-                        "th"]
+                print('need to unhas the filters needed for non-vapour variables (dyn_script line 125) once sorted C_th in ARM')
+                # var_list = [
+                #         "u",
+                #         "v",
+                #         "w",
+                #         "th"]
             else:
                 var_list = [
                             "u",

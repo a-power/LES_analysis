@@ -4,9 +4,9 @@ import os
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='13800')
-parser.add_argument('--case', type=str, default='dry')
-parser.add_argument('--start_in', type=int, default=1)
+parser.add_argument('--times', type=str, default='25200')
+parser.add_argument('--case', type=str, default='ARM')
+parser.add_argument('--start_in', type=int, default=0)
 
 args = parser.parse_args()
 set_time = [ args.times ]
@@ -66,7 +66,7 @@ if case=='BOMEX':
 
 elif case=='ARM':
     in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/'
-    outdir = '/work/scratch-pw3/apower/ARM/'
+    outdir = '/work/scratch-pw3/apower/ARM/C_th/'
     plotdir = outdir + 'plots/dyn/'
     model_res_list = [None]
     time_name_in = 'time_series_600_600'
