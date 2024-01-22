@@ -142,11 +142,11 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
                 # "th_v",
                 # "th_L",
 
-            field_list = sf.filter_variable_list(dataset, ref_dataset,
-                                                 derived_data, filtered_data,
-                                                 opt, new_filter,
-                                                 var_list=var_list,
-                                                 grid=ingrid)
+            # field_list = sf.filter_variable_list(dataset, ref_dataset,
+            #                                      derived_data, filtered_data,
+            #                                      opt, new_filter,
+            #                                      var_list=var_list,
+            #                                      grid=ingrid)
             if vapour == False:
                 var_list = [["u", "u"],
                         ["u", "v"],
