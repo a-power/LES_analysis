@@ -18,15 +18,15 @@ mygrid = 'p'
 filtering_filters = False
 
 if case_in == 'BOMEX':
-    path_f = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/'
+    path_f = '/work/scratch-pw3/apower/BOMEX/test/' #20m_gauss_dyn/on_p_grid/'
     folder_ff = 'filtering_filtered/'
     file_f = 'BOMEX_m0020_g0800_all_'
     times_list = ['14400']
     Delta = 20
-    scalar = ['momentum', 'th', 'q_total']
-    dx_bar_in = [40, 80, 160, 320, 640, 1280]
-    dx_hat_in = [80, 160, 320, 640, 1280, 2560]
-    C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
+    scalar = ['th'] #['momentum', 'th', 'q_total']
+    dx_bar_in = [40] #, 80, 160, 320, 640, 1280]
+    dx_hat_in = [80] #, 160, 320, 640, 1280, 2560]
+    C_res = ['2D'] #, '4D', '8D', '16D', '32D', '64D']
 
 elif case_in == 'ARM':
     times_list = ['18000', '25200', '32400', '39600']
