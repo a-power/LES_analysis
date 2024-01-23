@@ -4,8 +4,8 @@ import os
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='25200')
-parser.add_argument('--case', type=str, default='ARM')
+parser.add_argument('--times', type=str, default='14400')
+parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--start_in', type=int, default=0)
 
 args = parser.parse_args()
@@ -60,13 +60,13 @@ if case=='BOMEX':
     in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
     model_res_list = ['0020_g0800']
     outdir_og = '/work/scratch-pw3/apower/'
-    outdir = outdir_og + f'BOMEX/'
+    outdir = outdir_og + f'BOMEX/test/'
     plotdir = outdir_og + 'plots/dyn/'
     time_name_in = 'time_series_600_600'
 
 elif case=='ARM':
     in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/'
-    outdir = '/work/scratch-pw3/apower/ARM/C_th/'
+    outdir = '/work/scratch-pw3/apower/ARM/'
     plotdir = outdir + 'plots/dyn/'
     model_res_list = [None]
     time_name_in = 'time_series_600_600'
