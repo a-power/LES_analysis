@@ -15,6 +15,8 @@ case_in = args.case
 av_type = 'all'
 mygrid = 'p'
 
+filtering_filters = False
+
 if case_in == 'BOMEX':
     path_f = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/'
     folder_ff = 'filtering_filtered/'
@@ -29,7 +31,7 @@ if case_in == 'BOMEX':
 elif case_in == 'ARM':
     times_list = ['18000', '25200', '32400', '39600']
     time_in = times_list[t_in]
-    path_f = '/work/scratch-pw3/apower/ARM/corrected_sigmas/'
+    path_f = '/work/scratch-pw3/apower/ARM/C_th/'
     folder_ff = 'filtering_filtered/'
     file_f = f'diagnostics_3d_ts_{time_in}_'
     Delta = 25
@@ -55,9 +57,8 @@ elif case_in=='dry':
 else:
     print('case not recognised')
 
-
-os.makedirs(folder_ff, exist_ok = True)
-
+if filtering_filters == True:
+    os.makedirs(folder_ff, exist_ok = True)
 
 
 set_save_all = 2
@@ -65,11 +66,21 @@ set_save_all = 2
 
 for i, C_res_in in enumerate(C_res):
 
-    file_in = file_f + f'gaussian_filter_ga0{i}_gaussian_filter_ga00.nc'
-    data_in = path_f + folder_ff + file_in
-    dataset_name = [path_f + folder_ff + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                     path_f + folder_ff + file_f + f'C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                     path_f + folder_ff + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
+    if filtering_filters == True:
+        file_in = file_f + f'gaussian_filter_ga0{i}_gaussian_filter_ga00.nc'
+        data_in = path_f + folder_ff + file_in
+        print('reading files', data_in)
+        dataset_name = [path_f + folder_ff + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_ff + file_f + f'C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_ff + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
+
+    elif filtering_filters == False:
+        file_in = file_f + f'gaussian_filter_ga0{i}.nc'
+        data_in = path_f + file_in
+        print('reading files', data_in)
+        dataset_name = [path_f + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + file_f + f'C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
 
     DX_in = {
         'indir': data_in,
@@ -92,13 +103,16 @@ for i, C_res_in in enumerate(C_res):
         ds = xr.Dataset()
         if scalar_in == 'momentum':
             ds.to_netcdf(dataset_name[0], mode='w')
+            scalar_index = 0
         elif scalar_in == 'th':
-            ds.to_netcdf(dataset_name[0], mode='w')
+            ds.to_netcdf(dataset_name[1], mode='w')
+            scalar_index = 1
         elif scalar_in == 'q_total':
-            ds.to_netcdf(dataset_name[0], mode='w')
+            ds.to_netcdf(dataset_name[2], mode='w')
+            scalar_index = 2
         else:
             print('scalar not set to momentum, th, or q_total')
-        ds_in = {'file':dataset_name[i], 'ds': ds}
+        ds_in = {'file':dataset_name[scalar_index], 'ds': ds}
 
         save_field(ds_in, HR_field)
         save_field(ds_in, RR_field)
