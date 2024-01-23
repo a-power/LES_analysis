@@ -20,8 +20,9 @@ filtering_filters = False
 if case_in == 'BOMEX':
     path_f = '/work/scratch-pw3/apower/BOMEX/test/' #20m_gauss_dyn/on_p_grid/'
     folder_ff = 'filtering_filtered/'
-    file_f = 'BOMEX_m0020_g0800_all_'
     times_list = ['14400']
+    time_in = times_list[0]
+    file_f = f'BOMEX_m0020_g0800_all_{time_in}'
     Delta = 20
     scalar = ['th'] #['momentum', 'th', 'q_total']
     dx_bar_in = [40] #, 80, 160, 320, 640, 1280]
