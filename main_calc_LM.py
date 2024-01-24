@@ -22,7 +22,7 @@ if case_in == 'BOMEX':
     folder_ff = 'filtering_filtered/'
     times_list = ['14400']
     time_in = times_list[0]
-    file_f = f'BOMEX_m0020_g0800_all_{time_in}'
+    file_f = f'BOMEX_m0020_g0800_all_{time_in}_'
     Delta = 20
     scalar = ['th'] #['momentum', 'th', 'q_total']
     dx_bar_in = [40] #, 80, 160, 320, 640, 1280]
