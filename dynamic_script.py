@@ -72,7 +72,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                                                       'z': 'auto', 'zn': 'auto'}) #preprocess: check versions
 
     if ref_file is not None:
-        ref_dataset = xr.open_dataset(indir + ref_file)
+        ref_dataset = xr.open_dataset(ref_file)
     else:
         ref_dataset = None
 
