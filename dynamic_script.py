@@ -17,8 +17,8 @@ np.seterr(invalid='ignore')
 #code now has theta_l and _v, q_l, q_v were all added to the filtering code in this iteration
 
 
-def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, start_point=0,
-            ref_file = None, time_name = 'time_series_600_600', vapour=True):
+def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
+            start_point=0, time_name = 'time_series_600_600', vapour=True):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
@@ -28,10 +28,14 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, star
 
     if res_in != None:
         file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
+        ref_file = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
     elif time_name == 'time_series_300_300':
         file_in = f'{indir}/cbl_{time_in}.nc'
+        ref_file = None
     else:
         file_in = f'{indir}/diagnostics_3d_ts_{time_in}.nc'
+        ref_file = f'{indir}/diagnostics_ts_{time_in}.nc'
+
 
     ds_in = xr.open_dataset(file_in)
     time_data = ds_in[time_name]

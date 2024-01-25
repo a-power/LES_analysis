@@ -4,8 +4,8 @@ import os
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='14400')
-parser.add_argument('--case', type=str, default='BOMEX')
+parser.add_argument('--times', type=str, default='32400')
+parser.add_argument('--case', type=str, default='ARM')
 parser.add_argument('--start_in', type=int, default=0)
 
 args = parser.parse_args()
@@ -97,7 +97,6 @@ options_ARM = {
 options_BOMEX = {
         'FFT_type': 'RFFT',
         'save_all': 'Yes',
-        'th_ref': 300.0,
         'override': True,
         'dx': 20.0,
         'dy': 20.0,
@@ -107,7 +106,6 @@ options_BOMEX = {
 options_dry = {
         'FFT_type': 'RFFT',
         'save_all': 'Yes',
-        'th_ref': 300.0,
         'override': True,
         'dx': 20.0,
         'dy': 20.0,
@@ -117,4 +115,4 @@ options_dry = {
 for j in range(len(set_time)):
     for i, model_res in enumerate(model_res_list):
         dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, options_dry, \
-                            opgrid, start_point=start, ref_file = None, time_name = time_name_in, vapour=False)
+                            opgrid, start_point=start, time_name = time_name_in, vapour=False)
