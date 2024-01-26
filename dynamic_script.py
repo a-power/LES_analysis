@@ -7,7 +7,7 @@ import monc_utils.monc_utils as ut
 import monc_utils.data_utils.deformation as defm
 import monc_utils.data_utils.cloud_monc as cldm
 
-from monc_utils.utils.default_variables import (get_default_variable_list, get_default_variable_pair_list)
+#from monc_utils.utils.default_variables import (get_default_variable_list, get_default_variable_pair_list)
 from monc_utils.data_utils.string_utils import get_string_index
 from monc_utils.io.datain import get_data_on_grid
 from monc_utils.io.dataout import save_field, setup_child_file
