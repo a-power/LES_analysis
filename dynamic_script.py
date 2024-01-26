@@ -57,7 +57,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
     cutoff = 0.000001
 
     dask.config.set({"array.slicing.split_large_chunks": True})
-    [itime, iix, iiy, iiz] = ut.string_utils.get_string_index(ds_in.dims, ['time', 'x', 'y', 'z'])
+    [itime, iix, iiy, iiz] = get_string_index(ds_in.dims, ['time', 'x', 'y', 'z'])
     timevar = list(ds_in.dims)[itime]
     xvar = list(ds_in.dims)[iix]
     yvar = list(ds_in.dims)[iiy]
@@ -358,7 +358,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
     cutoff = 0.000001
 
     dask.config.set({"array.slicing.split_large_chunks": True})
-    [itime, iix, iiy, iiz] = ut.string_utils.get_string_index(ds_in.dims, ['time', 'x', 'y', 'z'])
+    [itime, iix, iiy, iiz] = get_string_index(ds_in.dims, ['time', 'x', 'y', 'z'])
     timevar = list(ds_in.dims)[itime]
     xvar = list(ds_in.dims)[iix]
     yvar = list(ds_in.dims)[iiy]
