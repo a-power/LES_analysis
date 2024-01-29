@@ -4,7 +4,7 @@ import os
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='32400')
+parser.add_argument('--times', type=str, default='39600')
 parser.add_argument('--case', type=str, default='ARM')
 parser.add_argument('--start_in', type=int, default=0)
 
