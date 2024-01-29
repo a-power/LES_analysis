@@ -2,6 +2,9 @@ import dynamic_script as dy_s #dot to get folder outside
 import numpy as np
 import os
 import argparse
+import monc_utils
+
+monc_utils.global_config['output_precision'] = 'float32'
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--times', type=str, default='32400')
@@ -54,35 +57,6 @@ else:
     print('need to set up the sigma list for start = ', start)
 # #([20, 40, 80] ([160, 320, 640])
 
-
-
-if case=='BOMEX':
-    in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
-    model_res_list = ['0020_g0800']
-    outdir_og = '/work/scratch-pw3/apower/'
-    outdir = outdir_og + f'BOMEX/test/'
-    plotdir = outdir_og + 'plots/dyn/'
-    time_name_in = 'time_series_600_600'
-
-elif case=='ARM':
-    in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/'
-    outdir = '/work/scratch-pw3/apower/ARM/'
-    plotdir = outdir + 'plots/dyn/'
-    model_res_list = [None]
-    time_name_in = 'time_series_600_600'
-
-elif case=='dry':
-    in_dir = '/storage/silver/MONC_data/Alanna/dry_CBL/MONC_runs/20m/'
-    outdir = '/storage/silver/greybls/si818415/dry_CBL/'
-    plotdir = outdir + 'plots/'
-    model_res_list = [None]
-    time_name_in = 'time_series_300_300'
-    vapour = False
-
-
-os.makedirs(outdir, exist_ok = True)
-os.makedirs(plotdir, exist_ok = True)
-
 options_ARM = {
         'FFT_type': 'RFFT',
         'save_all': 'Yes',
@@ -112,7 +86,40 @@ options_dry = {
         'domain': 4.8
           }
 
+
+if case=='BOMEX':
+    in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
+    model_res_list = ['0020_g0800']
+    outdir_og = '/work/scratch-pw3/apower/'
+    outdir = outdir_og + f'BOMEX/test/'
+    plotdir = outdir_og + 'plots/dyn/'
+    time_name_in = 'time_series_600_600'
+    my_opt = options_BOMEX
+
+elif case=='ARM':
+    in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/'
+    outdir = '/work/scratch-pw3/apower/ARM/'
+    plotdir = outdir + 'plots/dyn/'
+    model_res_list = [None]
+    time_name_in = 'time_series_600_600'
+    my_opt = options_ARM
+
+elif case=='dry':
+    in_dir = '/storage/silver/MONC_data/Alanna/dry_CBL/MONC_runs/20m/'
+    outdir = '/storage/silver/greybls/si818415/dry_CBL/'
+    plotdir = outdir + 'plots/'
+    model_res_list = [None]
+    time_name_in = 'time_series_300_300'
+    vapour = False
+    my_opt = options_dry
+
+
+os.makedirs(outdir, exist_ok = True)
+os.makedirs(plotdir, exist_ok = True)
+
+
+
 for j in range(len(set_time)):
     for i, model_res in enumerate(model_res_list):
-        dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, options_dry, \
+        dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, my_opt, \
                             opgrid, start_point=start, time_name = time_name_in, vapour=False)
