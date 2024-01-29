@@ -62,7 +62,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
     xvar = list(ds_in.dims)[iix]
     yvar = list(ds_in.dims)[iiy]
     zvar = list(ds_in.dims)[iiz]
-    max_ch = 4*subfilter.global_config['chunk_size']
+    max_ch = 2**dx_in #4*subfilter.global_config['chunk_size']
 
     # This is a rough way to estimate chunck size
     nch = np.min([int(ds_in.dims[xvar] / (2 ** int(np.log(ds_in.dims[xvar]
@@ -363,7 +363,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
     xvar = list(ds_in.dims)[iix]
     yvar = list(ds_in.dims)[iiy]
     zvar = list(ds_in.dims)[iiz]
-    max_ch = 4*subfilter.global_config['chunk_size']
+    max_ch = 2**dx_in #4*subfilter.global_config['chunk_size']
 
     # This is a rough way to estimate chunck size
     nch = np.min([int(ds_in.dims[xvar] / (2 ** int(np.log(ds_in.dims[xvar]
@@ -590,7 +590,7 @@ def run_dyn_on_filtered_for_beta_contour(res_in, time_in, filt_in, filt_scale, i
     xvar = list(ds_in.dims)[iix]
     yvar = list(ds_in.dims)[iiy]
     zvar = list(ds_in.dims)[iiz]
-    max_ch = 4*subfilter.global_config['chunk_size']
+    max_ch = 2**dx_in #4*subfilter.global_config['chunk_size']
 
     # This is a rough way to estimate chunck size
     nch = np.min([int(ds_in.dims[xvar] / (2 ** int(np.log(ds_in.dims[xvar]
