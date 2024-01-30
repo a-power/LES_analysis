@@ -3,8 +3,28 @@ import numpy as np
 import os
 import argparse
 import monc_utils
+from loguru import logger
 
-monc_utils.global_config['output_precision'] = 'float32'
+monc_utils.global_config['output_precision'] = "float32"
+
+
+logger.remove()
+logger.add(sys.stderr,
+
+           format="<c>{time:HH:mm:ss.SS}</c>" \
+ \
+                  + " | <level>{level:<8}</level>" \
+ \
+                  + " | <green>{function:<22}</green> : {message}",
+
+           colorize=True,
+
+           level="INFO")
+
+logger.enable("subfilter")
+logger.enable("monc_utils")
+logger.info("Logging 'INFO' or higher messages only")
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--times', type=str, default='32400')
