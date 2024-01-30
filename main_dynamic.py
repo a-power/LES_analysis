@@ -112,14 +112,14 @@ if case=='BOMEX':
     model_res_list = ['0020_g0800']
     outdir_og = '/work/scratch-pw3/apower/'
     outdir = outdir_og + f'BOMEX/C_th/'
-    plotdir = outdir_og + 'plots/dyn/'
+    #plotdir = outdir_og + 'plots/dyn/'
     time_name_in = 'time_series_600_600'
     my_opt = options_BOMEX
 
 elif case=='ARM':
     in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/'
     outdir = '/work/scratch-pw3/apower/ARM/C_th/'
-    plotdir = outdir + 'plots/dyn/'
+    #plotdir = outdir + 'plots/dyn/'
     model_res_list = [None]
     time_name_in = 'time_series_600_600'
     my_opt = options_ARM
@@ -127,7 +127,7 @@ elif case=='ARM':
 elif case=='dry':
     in_dir = '/storage/silver/MONC_data/Alanna/dry_CBL/MONC_runs/20m/'
     outdir = '/storage/silver/greybls/si818415/dry_CBL/'
-    plotdir = outdir + 'plots/'
+    #plotdir = outdir + 'plots/'
     model_res_list = [None]
     time_name_in = 'time_series_300_300'
     vapour = False
@@ -135,7 +135,7 @@ elif case=='dry':
 
 
 os.makedirs(outdir, exist_ok = True)
-os.makedirs(plotdir, exist_ok = True)
+# os.makedirs(plotdir, exist_ok = True)
 
 
 
