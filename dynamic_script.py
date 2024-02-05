@@ -206,16 +206,16 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                                 derived_data,
                                 opt)
 
-        dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, opt, ingrid)
+        dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, max_ch, opt, ingrid)
         dth_dx.name = 'dth_dx'
         dth_dx = re_chunk(dth_dx)
 
         if vapour == True:
-            dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid)
+            dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, max_ch, opt, ingrid)
             dq_dx.name = 'dq_dx'
             dq_dx = re_chunk(dq_dx)
 
-            dqv_dx = dyn.ds_dxi('q_vapour', dataset, ref_dataset, opt, ingrid)
+            dqv_dx = dyn.ds_dxi('q_vapour', dataset, ref_dataset, max_ch, opt, ingrid)
             dqv_dx.name = 'dqv_dx'
             dqv_dx = re_chunk(dqv_dx)
 
@@ -498,12 +498,12 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                 opt, ingrid,
                                 uvw_names=[f'f(u_on_{ingrid})_r', f'f(v_on_{ingrid})_r', f'f(w_on_{ingrid})_r'])
 
-        dth_dx = dyn.ds_dxi(f'f(th_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid)
+        dth_dx = dyn.ds_dxi(f'f(th_on_{ingrid})_r', dataset, ref_dataset, max_ch, opt, ingrid)
         dth_dx.name = 'dth_dx'
         dth_dx = re_chunk(dth_dx)
 
         if case != 'dry':
-            dq_dx = dyn.ds_dxi(f'f(q_total_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid)
+            dq_dx = dyn.ds_dxi(f'f(q_total_on_{ingrid})_r', dataset, ref_dataset, max_ch, opt, ingrid)
             dq_dx.name = 'dq_dx'
             dq_dx = re_chunk(dq_dx)
 

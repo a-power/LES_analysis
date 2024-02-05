@@ -125,7 +125,7 @@ def M_ij_stab_fns(dx_filt1, dx_filt2, S_filt, abs_S_filt, HAT_abs_S_Sij_fRi, fRi
     return M_ij
 
 
-def ds_dxi(scalar, source_dataset, ref_dataset_in, options, in_grid, filting_filted=False):
+def ds_dxi(scalar, source_dataset, ref_dataset_in, max_ch_in, options, in_grid, filting_filted=False):
     # scalar can be either 'th' or "q_total"
 
     if scalar == 'q':
@@ -138,8 +138,8 @@ def ds_dxi(scalar, source_dataset, ref_dataset_in, options, in_grid, filting_fil
 
     [iix, iiy, iiz] = get_string_index(s.dims, ['x', 'y', 'z'])
     sh = np.shape(s)
-    max_ch = subfilter.global_config['chunk_size']
-    nch = int(sh[iix] / (2 ** int(np.log(sh[iix] * sh[iiy] * sh[iiz] / max_ch) / np.log(2) / 2)))
+    #max_ch = subfilter.global_config['chunk_size']
+    nch = int(sh[iix] / (2 ** int(np.log(sh[iix] * sh[iiy] * sh[iiz] / max_ch_in) / np.log(2) / 2)))
     print(f'{scalar} nch={nch}')
 
     s = re_chunk(s, xch=nch, ych=nch, zch='all')
@@ -178,7 +178,7 @@ def R_j_stab_fns(dx_filt1, dx_filt2, abs_S_hat, ds_dxj_hat, HAT_abs_S_ds_dxj_fRi
 
 
 
-def calc_Ri(abs_S_sq, derived_dataset, filtered_dataset, ref_dataset_in, options, in_grid):
+def calc_Ri(abs_S_sq, derived_dataset, filtered_dataset, ref_dataset_in, max_ch_in, options, in_grid):
     # scalar can be either 'th' or "q_total"
 
     # derived_dataset = dataset_path + '.nc'
@@ -188,8 +188,8 @@ def calc_Ri(abs_S_sq, derived_dataset, filtered_dataset, ref_dataset_in, options
 
     [iix, iiy, iiz] = get_string_index(buoy.dims, ['x', 'y', 'z'])
     sh = np.shape(buoy)
-    max_ch = subfilter.global_config['chunk_size']
-    nch = int(sh[iix] / (2 ** int(np.log(sh[iix] * sh[iiy] * sh[iiz] / max_ch) / np.log(2) / 2)))
+    #max_ch = subfilter.global_config['chunk_size']
+    nch = int(sh[iix] / (2 ** int(np.log(sh[iix] * sh[iiy] * sh[iiz] / max_ch_in) / np.log(2) / 2)))
 
 
     buoy = re_chunk(buoy, xch=nch, ych=nch, zch='all')
