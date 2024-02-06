@@ -3,8 +3,9 @@ import numpy as np
 import os
 import argparse
 import monc_utils
-#import sys
+import sys
 #from loguru import logger
+sys.stdout.write
 
 monc_utils.global_config['output_precision'] = "float32"
 
