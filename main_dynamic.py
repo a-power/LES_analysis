@@ -4,29 +4,42 @@ import os
 import argparse
 import monc_utils
 import sys
-#from loguru import logger
-sys.stdout.write
+from loguru import logger
+# sys.stdout.write
 
 
 monc_utils.global_config['output_precision'] = "float32"
 
 
-# logger.remove()
-# logger.add(sys.stderr,
-#
-#            format="<c>{time:HH:mm:ss.SS}</c>" \
-#  \
-#                   + " | <level>{level:<8}</level>" \
-#  \
-#                   + " | <green>{function:<22}</green> : {message}",
-#
-#            colorize=True,
-#
-#            level="INFO")
-#
-# logger.enable("subfilter")
-# logger.enable("monc_utils")
-# logger.info("Logging 'INFO' or higher messages only")
+logger.remove()
+logger.add(sys.stderr,
+
+           format="<c>{time:HH:mm:ss.SS}</c>" \
+ \
+                  + " | <level>{level:<8}</level>" \
+ \
+                  + " | <green>{function:<22}</green> : {message}",
+
+           colorize=True,
+
+           level="ERROR")
+
+logger.add(sys.stdout,
+
+           format="<c>{time:HH:mm:ss.SS}</c>" \
+ \
+                  + " | <level>{level:<8}</level>" \
+ \
+                  + " | <green>{function:<22}</green> : {message}",
+
+           colorize=True,
+
+           level="INFO")
+
+
+logger.enable("subfilter")
+logger.enable("monc_utils")
+logger.info("Logging 'INFO', 'ERROR', and higher messages only")
 
 
 parser = argparse.ArgumentParser()
