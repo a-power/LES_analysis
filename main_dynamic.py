@@ -10,6 +10,17 @@ from loguru import logger
 
 monc_utils.global_config['output_precision'] = "float32"
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--times', type=str, default='32400')
+parser.add_argument('--case', type=str, default='ARM')
+parser.add_argument('--start_in', type=int, default=0)
+
+args = parser.parse_args()
+set_time = [ args.times ]
+case = args.case
+start = args.start_in
+
+
 
 logger.remove()
 logger.add(sys.stderr,
@@ -41,16 +52,6 @@ logger.enable("subfilter")
 logger.enable("monc_utils")
 logger.info("Logging 'INFO', 'ERROR', and higher messages only")
 
-
-parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='32400')
-parser.add_argument('--case', type=str, default='ARM')
-parser.add_argument('--start_in', type=int, default=0)
-
-args = parser.parse_args()
-set_time = [ args.times ]
-case = args.case
-start = args.start_in
 
 print(case)
 
