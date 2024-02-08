@@ -202,7 +202,30 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                                                            var_list=var_list,
                                                            grid=ingrid)
 
+        deform = defm.deformation(dataset,
+                                  ref_dataset,
+                                  derived_data,
+                                  opt)
+
         print('ran  deform = defm.deformation')
+
+        S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)  #
+        print('ran S_ij_temp, abs_S_temp = defm.shear')
+
+        S_ij = 0.5 * S_ij_temp
+        S_ij_temp = None
+        S_ij.name = 'S_ij'
+        S_ij = re_chunk(S_ij)
+
+        print('ran rechunk of S_ij')
+
+        abs_S = np.sqrt(abs_S_temp)  ##### do not need to mult by 4 here, see Smag notes pg 8 on Boox
+        abs_S.name = "abs_S"
+        abs_S = re_chunk(abs_S)
+
+        print('ran rechunk of abs_S')
+
+
 
         dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, max_ch, opt, ingrid)
         print('ran   dth_dx = dyn.ds_dxi')
@@ -232,26 +255,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
             dqv_dx_filt = sf.filter_field(dqv_dx, filtered_data,
                                           opt, new_filter)
 
-        deform = defm.deformation(dataset,
-                                      ref_dataset,
-                                      derived_data,
-                                      opt)
 
-        S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False) #
-        print('ran S_ij_temp, abs_S_temp = defm.shear')
-
-        S_ij = 0.5 * S_ij_temp
-        S_ij_temp = None
-        S_ij.name = 'S_ij'
-        S_ij = re_chunk(S_ij)
-
-        print('ran rechunk of S_ij')
-
-        abs_S = np.sqrt(abs_S_temp) ##### do not need to mult by 4 here, see Smag notes pg 8 on Boox
-        abs_S.name = "abs_S"
-        abs_S = re_chunk(abs_S)
-
-        print('ran rechunk of abs_S')
 
 
         # Ri = dyn.calc_Ri(abs_S_temp, derived_data, filtered_data, ref_dataset, opt, ingrid)
