@@ -205,22 +205,20 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
         print('ran  deform = defm.deformation')
 
         dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, max_ch, opt, ingrid)
-
         print('ran   dth_dx = dyn.ds_dxi')
-
         dth_dx.name = 'dth_dx'
-        # dth_dx = re_chunk(dth_dx)
-
+        dth_dx = re_chunk(dth_dx)
         print('ran  rechunk of dth_dx')
 
         if vapour == True:
             dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, max_ch, opt, ingrid)
             dq_dx.name = 'dq_dx'
-            # dq_dx = re_chunk(dq_dx)
+            dq_dx = re_chunk(dq_dx)
 
             dqv_dx = dyn.ds_dxi('q_vapour', dataset, ref_dataset, max_ch, opt, ingrid)
             dqv_dx.name = 'dqv_dx'
-            # dqv_dx = re_chunk(dqv_dx)
+            dqv_dx = re_chunk(dqv_dx)
+
 
         dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
                                     opt, new_filter)
