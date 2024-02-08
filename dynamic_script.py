@@ -210,6 +210,13 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
         dth_dx = re_chunk(dth_dx)
         print('ran  rechunk of dth_dx')
 
+        dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
+                                    opt, new_filter)
+        print('ran sf.filter_field(dth_dx')
+
+
+
+
         if vapour == True:
             dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, max_ch, opt, ingrid)
             dq_dx.name = 'dq_dx'
@@ -219,12 +226,6 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
             dqv_dx.name = 'dqv_dx'
             dqv_dx = re_chunk(dqv_dx)
 
-
-        dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
-                                    opt, new_filter)
-        print('ran sf.filter_field(dth_dx')
-
-        if vapour == True:
             dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
                                           opt, new_filter)
 
