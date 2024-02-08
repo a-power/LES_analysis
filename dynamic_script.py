@@ -201,10 +201,6 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                                                            opt, new_filter,
                                                            var_list=var_list,
                                                            grid=ingrid)
-        deform = defm.deformation(dataset,
-                                ref_dataset,
-                                derived_data,
-                                opt)
 
         print('ran  deform = defm.deformation')
 
@@ -213,18 +209,34 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
         print('ran   dth_dx = dyn.ds_dxi')
 
         dth_dx.name = 'dth_dx'
-        dth_dx = re_chunk(dth_dx)
+        # dth_dx = re_chunk(dth_dx)
 
         print('ran  rechunk of dth_dx')
 
         if vapour == True:
             dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, max_ch, opt, ingrid)
             dq_dx.name = 'dq_dx'
-            dq_dx = re_chunk(dq_dx)
+            # dq_dx = re_chunk(dq_dx)
 
             dqv_dx = dyn.ds_dxi('q_vapour', dataset, ref_dataset, max_ch, opt, ingrid)
             dqv_dx.name = 'dqv_dx'
-            dqv_dx = re_chunk(dqv_dx)
+            # dqv_dx = re_chunk(dqv_dx)
+
+        dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
+                                    opt, new_filter)
+        print('ran sf.filter_field(dth_dx')
+
+        if vapour == True:
+            dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
+                                          opt, new_filter)
+
+            dqv_dx_filt = sf.filter_field(dqv_dx, filtered_data,
+                                          opt, new_filter)
+
+        deform = defm.deformation(dataset,
+                                      ref_dataset,
+                                      derived_data,
+                                      opt)
 
         S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False) #
         print('ran S_ij_temp, abs_S_temp = defm.shear')
@@ -266,16 +278,6 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                                      opt, new_filter)
         print('ran sf.filter_field(abs_S')
 
-        dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
-                                    opt, new_filter)
-        print('ran sf.filter_field(dth_dx')
-
-        if vapour == True:
-            dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
-                                          opt, new_filter)
-
-            dqv_dx_filt = sf.filter_field(dqv_dx, filtered_data,
-                                          opt, new_filter)
 
         S_ij_abs_S = S_ij * abs_S
         S_ij_abs_S.name = 'S_ij_abs_S'
