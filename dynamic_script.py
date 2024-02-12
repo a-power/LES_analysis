@@ -195,12 +195,12 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             # ["th_L", "q_cloud_liquid_mass"]
 
 
-            quad_field_list = sf.filter_variable_pair_list(dataset,
-                                                           ref_dataset,
-                                                           derived_data, filtered_data,
-                                                           opt, new_filter,
-                                                           var_list=var_list,
-                                                           grid=ingrid)
+            # quad_field_list = sf.filter_variable_pair_list(dataset,
+            #                                                ref_dataset,
+            #                                                derived_data, filtered_data,
+            #                                                opt, new_filter,
+            #                                                var_list=var_list,
+            #                                                grid=ingrid)
 
         dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, max_ch, opt, ingrid)
         print('ran   dth_dx = dyn.ds_dxi which has a shape of', np.shape(dth_dx))
