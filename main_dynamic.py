@@ -97,6 +97,7 @@ else:
 options_ARM = {
         'FFT_type': 'RFFT',
         'save_all': 'Yes',
+        'th_ref': 300.0,
         'override': True,
         'dx': 25.0,
         'dy': 25.0,
