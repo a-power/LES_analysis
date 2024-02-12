@@ -134,27 +134,31 @@ def ds_dxi(scalar, source_dataset, ref_dataset_in, max_ch_in, options, in_grid, 
         else:
             scalar = 'q_total_f'
 
-    s = get_data(source_dataset, ref_dataset_in, str(scalar), options)
+    sca = get_data(source_dataset, ref_dataset_in, str(scalar), options)
 
-    [iix, iiy, iiz] = get_string_index(s.dims, ['x', 'y', 'z'])
-    sh = np.shape(s)
+    [iix, iiy, iiz] = get_string_index(sca.dims, ['x', 'y', 'z'])
+    sh = np.shape(sca)
     #max_ch = subfilter.global_config['chunk_size']
     nch = int(sh[iix] / (2 ** int(np.log(sh[iix] * sh[iiy] * sh[iiz] / max_ch_in) / np.log(2) / 2)))
     print(f'{scalar} nch={nch}')
 
-    s = re_chunk(s, xch=nch, ych=nch, zch='all')
+    sca = re_chunk(sca, xch=nch, ych=nch, zch='all')
 
     z = source_dataset["z"]
     zn = source_dataset["zn"]
 
-    sx = do.d_by_dx_field(s, z, zn, grid=in_grid)
-    sy = do.d_by_dy_field(s, z, zn, grid=in_grid)
-    sz = do.d_by_dz_field(s, z, zn, grid=in_grid)
+    sca_x = do.d_by_dx_field(sca, z, zn, grid=in_grid)
+    sca_y = do.d_by_dy_field(sca, z, zn, grid=in_grid)
+    sca_z = do.d_by_dz_field(sca, z, zn, grid=in_grid)
 
-    s = None  # Save some memory
+    sca = None  # Save some memory
 
-    s_xi = xr.concat([sx, sy, sz], dim='j', coords='minimal',
+    s_xi = xr.concat([sca_x, sca_y, sca_z], dim='j', coords='minimal',
                      compat='override')
+
+    sca_x = None
+    sca_y = None
+    sca_z = None
 
     return s_xi
 

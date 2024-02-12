@@ -203,14 +203,14 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                                                            grid=ingrid)
 
         dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, max_ch, opt, ingrid)
-        print('ran   dth_dx = dyn.ds_dxi')
+        print('ran   dth_dx = dyn.ds_dxi which has a shape of', np.shape(dth_dx))
         dth_dx.name = 'dth_dx'
         dth_dx = re_chunk(dth_dx)
-        print('ran  rechunk of dth_dx')
+        print('ran  rechunk of dth_dx which has a shape of', np.shape(dth_dx))
 
         dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
                                       opt, new_filter)
-        print('ran sf.filter_field(dth_dx')
+        print('ran sf.filter_field(dth_dx) which has a shape of', np.shape(dth_dx_filt))
 
         if vapour == True:
             dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, max_ch, opt, ingrid)
