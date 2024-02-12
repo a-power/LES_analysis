@@ -11,8 +11,8 @@ from loguru import logger
 monc_utils.global_config['output_precision'] = "float32"
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='32400')
-parser.add_argument('--case', type=str, default='ARM')
+parser.add_argument('--time', type=str, default='13200')
+parser.add_argument('--case', type=str, default='dry')
 parser.add_argument('--start_in', type=int, default=0)
 
 args = parser.parse_args()
