@@ -40,7 +40,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
         ref_file = None
     else:
         file_in = f'{indir}/diagnostics_3d_ts_{time_in}.nc'
-        ref_file = f'{indir}/diagnostics_ts_{time_in}.nc'
+        ref_file = None #f'{indir}/diagnostics_ts_{time_in}.nc'
 
 
     ds_in = xr.open_dataset(file_in)
