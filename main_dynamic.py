@@ -16,7 +16,7 @@ parser.add_argument('--case', type=str, default='ARM')
 parser.add_argument('--start_in', type=int, default=0)
 
 args = parser.parse_args()
-set_time = [ args.times ]
+set_time = [ args.time ]
 case = args.case
 start = args.start_in
 
