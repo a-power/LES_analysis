@@ -13,7 +13,7 @@ from monc_utils.data_utils.string_utils import get_string_index
 from monc_utils.io.datain import get_data_on_grid
 from monc_utils.io.dataout import save_field, setup_child_file
 from monc_utils.data_utils.dask_utils import re_chunk
-from monc_utils.io.datain import get_data
+#from monc_utils.io.datain import get_data
 
 import subfilter
 
@@ -134,7 +134,7 @@ def ds_dxi(scalar, source_dataset, ref_dataset_in, max_ch_in, options, in_grid, 
         else:
             scalar = 'q_total_f'
 
-    sca = get_data(source_dataset, ref_dataset_in, str(scalar), options)
+    sca = get_data_on_grid(source_dataset, ref_dataset_in, str(scalar), options)
 
     [iix, iiy, iiz] = get_string_index(sca.dims, ['x', 'y', 'z'])
     sh = np.shape(sca)
@@ -188,7 +188,7 @@ def calc_Ri(abs_S_sq, derived_dataset, filtered_dataset, ref_dataset_in, max_ch_
     # derived_dataset = dataset_path + '.nc'
     # filtered_dataset = dataset_path + f'_filter_ga0{}.nc'
 
-    buoy = get_data(derived_dataset, ref_dataset_in, 'bouyancy_on_p', options)
+    buoy = get_data_on_grid(derived_dataset, ref_dataset_in, 'bouyancy_on_p', options)
 
     [iix, iiy, iiz] = get_string_index(buoy.dims, ['x', 'y', 'z'])
     sh = np.shape(buoy)
