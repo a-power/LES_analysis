@@ -132,12 +132,12 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
             print('Derived data file exists')
         else:
             if vapour == False:
-                print('need to unhas the filters needed for non-vapour variables (dyn_script line 125) once sorted C_th in ARM')
-                # var_list = [
-                #         "u",
-                #         "v",
-                #         "w",
-                #         "th"]
+
+                var_list = [
+                        "u",
+                        "v",
+                        "w",
+                        "th"]
             else:
                 var_list = [
                             "u",
@@ -152,11 +152,11 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                 # "th_v",
                 # "th_L",
 
-            # field_list = sf.filter_variable_list(dataset, ref_dataset,
-            #                                      derived_data, filtered_data,
-            #                                      opt, new_filter,
-            #                                      var_list=var_list,
-            #                                      grid=ingrid)
+            field_list = sf.filter_variable_list(dataset, ref_dataset,
+                                                 derived_data, filtered_data,
+                                                 opt, new_filter,
+                                                 var_list=var_list,
+                                                 grid=ingrid)
             if vapour == False:
                 var_list = [["u", "u"],
                         ["u", "v"],
@@ -195,12 +195,12 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             # ["th_L", "q_cloud_liquid_mass"]
 
 
-            # quad_field_list = sf.filter_variable_pair_list(dataset,
-            #                                                ref_dataset,
-            #                                                derived_data, filtered_data,
-            #                                                opt, new_filter,
-            #                                                var_list=var_list,
-            #                                                grid=ingrid)
+            quad_field_list = sf.filter_variable_pair_list(dataset,
+                                                           ref_dataset,
+                                                           derived_data, filtered_data,
+                                                           opt, new_filter,
+                                                           var_list=var_list,
+                                                           grid=ingrid)
 
         dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, max_ch, opt, ingrid)
         print('ran   dth_dx = dyn.ds_dxi which has a shape of', np.shape(dth_dx))
