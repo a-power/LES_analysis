@@ -134,8 +134,8 @@ if case=='BOMEX':
     my_opt = options_BOMEX
 
 elif case=='ARM':
-    in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/'
-    outdir = '/work/scratch-pw2/apower/ARM/C_th/'
+    in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/25m/'
+    outdir = '/work/scratch-pw3/apower/ARM/C_th/'
     #plotdir = outdir + 'plots/dyn/'
     model_res_list = [None]
     time_name_in = 'time_series_600_600'
