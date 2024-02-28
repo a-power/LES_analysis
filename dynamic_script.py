@@ -233,7 +233,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
         deform = defm.deformation(dataset,
                                   ref_dataset,
                                   derived_data,
-                                  opt)
+                                  opt, ingrid)
 
         print('ran  deform = defm.deformation')
 
