@@ -128,7 +128,7 @@ if case=='BOMEX':
     in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
     model_res_list = ['0020_g0800']
     outdir_og = '/work/scratch-pw3/apower/'
-    outdir = outdir_og + f'BOMEX/C_th/'
+    outdir = outdir_og + f'BOMEX/'
     #plotdir = outdir_og + 'plots/dyn/'
     time_name_in = 'time_series_600_600'
     my_opt = options_BOMEX
@@ -136,7 +136,7 @@ if case=='BOMEX':
 
 elif case=='ARM':
     in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/25m/'
-    outdir = '/work/scratch-pw3/apower/ARM/C_th/'
+    outdir = '/work/scratch-pw3/apower/ARM/'
     #plotdir = outdir + 'plots/dyn/'
     model_res_list = [None]
     time_name_in = 'time_series_600_600'
