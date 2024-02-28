@@ -135,8 +135,8 @@ if case=='BOMEX':
     set_vapour=True
 
 elif case=='ARM':
-    in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/25m/first_filt/'
-    outdir = '/work/scratch-pw3/apower/ARM/'
+    in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/25m/'
+    outdir = '/work/scratch-pw3/apower/ARM/first_filt/'
     #plotdir = outdir + 'plots/dyn/'
     model_res_list = [None]
     time_name_in = 'time_series_600_600'
