@@ -125,7 +125,7 @@ def M_ij_stab_fns(dx_filt1, dx_filt2, S_filt, abs_S_filt, HAT_abs_S_Sij_fRi, fRi
     return M_ij
 
 
-def ds_dxi(scalar, source_dataset, ref_dataset_in, max_ch_in, options, in_grid, filting_filted=False):
+def ds_dxi(scalar, source_dataset, ref_dataset_in, options, in_grid, filting_filted=False):
     # scalar can be either 'th' or "q_total"
 
     if scalar == 'q':

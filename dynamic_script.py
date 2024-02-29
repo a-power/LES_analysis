@@ -205,7 +205,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
             #                                                var_list=var_list,
             #                                                grid=ingrid)
 
-        dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, max_ch, opt, ingrid)
+        dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, opt, ingrid)
         print('ran   dth_dx = dyn.ds_dxi which has a shape of', np.shape(dth_dx))
         dth_dx.name = 'dth_dx'
         # dth_dx_save = save_field(derived_data, dth_dx)
@@ -217,12 +217,12 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
         print('ran sf.filter_field(dth_dx) which has a shape of', np.shape(dth_dx_filt))
 
         # if vapour == True:
-        #     dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, max_ch, opt, ingrid)
+        #     dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid)
         #     dq_dx.name = 'dq_dx'
         #     # dq_dx_save = save_field(derived_data, dq_dx)
         #     dq_dx = re_chunk(dq_dx)
         #
-        #     dqv_dx = dyn.ds_dxi('q_vapour', dataset, ref_dataset, max_ch, opt, ingrid)
+        #     dqv_dx = dyn.ds_dxi('q_vapour', dataset, ref_dataset, opt, ingrid)
         #     dqv_dx.name = 'dqv_dx'
         #     # dqv_dx_save = save_field(derived_data, dqv_dx)
         #     dqv_dx = re_chunk(dqv_dx)
@@ -241,7 +241,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
         #                           derived_data,
         #                           opt, ingrid)
 
-        deform = dyn.my_defm(dataset, ref_dataset, max_ch, opt, ingrid)
+        deform = dyn.my_defm(dataset, ref_dataset, opt, ingrid)
 
         # deform_save = save_field(derived_data, deform)
 
