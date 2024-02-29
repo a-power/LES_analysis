@@ -134,9 +134,9 @@ def ds_dxi(scalar, source_dataset, ref_dataset_in, max_ch_in, options, in_grid, 
         else:
             scalar = 'q_total_f'
 
-    sca_x = get_data_on_grid(source_dataset, ref_dataset_in, f'dbydx({scalar})', options)
-    sca_y = get_data_on_grid(source_dataset, ref_dataset_in, f'dbydy({scalar})', options)
-    sca_z = get_data_on_grid(source_dataset, ref_dataset_in, f'dbydz({scalar})', options)
+    sca_x = get_data_on_grid(source_dataset, ref_dataset_in, f'dbydx({scalar})', options, in_grid)
+    sca_y = get_data_on_grid(source_dataset, ref_dataset_in, f'dbydy({scalar})', options, in_grid)
+    sca_z = get_data_on_grid(source_dataset, ref_dataset_in, f'dbydz({scalar})', options, in_grid)
 
     s_xi = xr.concat([sca_x, sca_y, sca_z], dim='j', coords='minimal',
                      compat='override')
@@ -146,6 +146,51 @@ def ds_dxi(scalar, source_dataset, ref_dataset_in, max_ch_in, options, in_grid, 
     sca_z = None
 
     return s_xi
+
+
+def my_defm(source_dataset, ref_dataset_in, options, in_grid, filting_filted=False):
+    # scalar can be either 'th' or "q_total"
+
+
+    ux = get_data_on_grid(source_dataset, ref_dataset_in, 'dbydx(u)', options, in_grid)
+    uy = get_data_on_grid(source_dataset, ref_dataset_in, 'dbydy(u)', options, in_grid)
+    uz = get_data_on_grid(source_dataset, ref_dataset_in, 'dbydz(u)', options, in_grid)
+
+    t0 = xr.concat([ux, uy, uz], dim='j', coords='minimal',
+                   compat='override')
+    ux = None
+    uy = None
+    uz = None
+
+    vx = get_data_on_grid(source_dataset, ref_dataset_in, 'dbydx(v)', options, in_grid)
+    vy = get_data_on_grid(source_dataset, ref_dataset_in, 'dbydy(v)', options, in_grid)
+    vz = get_data_on_grid(source_dataset, ref_dataset_in, 'dbydz(v)', options, in_grid)
+
+    t1 = xr.concat([vx, vy, vz], dim='j', coords='minimal',
+                   compat='override')
+    vx = None
+    vy = None
+    vz = None
+
+    wx = get_data_on_grid(source_dataset, ref_dataset_in, 'dbydx(w)', options, in_grid)
+    wy = get_data_on_grid(source_dataset, ref_dataset_in, 'dbydy(w)', options, in_grid)
+    wz = get_data_on_grid(source_dataset, ref_dataset_in, 'dbydz(w)', options, in_grid)
+
+    t2 = xr.concat([wx, wy, wz], dim='j', coords='minimal',
+                   compat='override')
+    wx = None
+    wy = None
+    wz = None
+
+    defm = xr.concat([t0, t1, t2], dim='i')
+    defm.name = 'deformation'
+    defm.attrs = {'units': 's-1'}
+
+    t0 = None
+    t1 = None
+    t2 = None
+
+    return defm
 
 
 def R_j(dx_filt1, dx_filt2, abs_S_hat, ds_dxj_hat, HAT_abs_S_ds_dxj, beta=1):

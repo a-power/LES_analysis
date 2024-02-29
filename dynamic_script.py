@@ -56,6 +56,9 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
     width = -1
     cutoff = 0.000001
 
+    # z_w = ds_in['z'].rename({'z': 'z_w'})
+    # z_p = ds_in['zn'].rename({'zn': 'z_p'})
+
     dask.config.set({"array.slicing.split_large_chunks": True})
     [itime, iix, iiy, iiz] = get_string_index(ds_in.dims, ['time', 'x', 'y', 'z'])
     timevar = list(ds_in.dims)[itime]
@@ -205,6 +208,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
         dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, max_ch, opt, ingrid)
         print('ran   dth_dx = dyn.ds_dxi which has a shape of', np.shape(dth_dx))
         dth_dx.name = 'dth_dx'
+        # dth_dx_save = save_field(derived_data, dth_dx)
         dth_dx = re_chunk(dth_dx)
         print('ran  rechunk of dth_dx which has a shape of', np.shape(dth_dx))
 
@@ -215,10 +219,12 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
         if vapour == True:
             dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, max_ch, opt, ingrid)
             dq_dx.name = 'dq_dx'
+            # dq_dx_save = save_field(derived_data, dq_dx)
             dq_dx = re_chunk(dq_dx)
 
             dqv_dx = dyn.ds_dxi('q_vapour', dataset, ref_dataset, max_ch, opt, ingrid)
             dqv_dx.name = 'dqv_dx'
+            # dqv_dx_save = save_field(derived_data, dqv_dx)
             dqv_dx = re_chunk(dqv_dx)
 
             dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
@@ -230,12 +236,16 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
 
 
 
-        deform = defm.deformation(dataset,
-                                  ref_dataset,
-                                  derived_data,
-                                  opt, ingrid)
+        # deform = defm.deformation(dataset,
+        #                           ref_dataset,
+        #                           derived_data,
+        #                           opt, ingrid)
 
-        print('ran  deform = defm.deformation')
+        deform = dyn.my_defm(dataset, ref_dataset, max_ch, opt, ingrid)
+
+        # deform_save = save_field(derived_data, deform)
+
+        print('ran  deform = dyn.my_defm')
 
         S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)  #
         print('ran S_ij_temp, abs_S_temp = defm.shear')
