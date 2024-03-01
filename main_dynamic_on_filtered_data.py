@@ -27,18 +27,16 @@ filter_name = 'gaussian'  # "wave_cutoff"
 
 
 if case_in=='BOMEX':
-    in_dir = f'/work/scratch-pw3/apower/20m_gauss_dyn/on_{opgrid}_grid/BOMEX_m'
+    in_dir = '/work/scratch-pw3/apower/BOMEX/first_filt/BOMEX_m'
     model_res_list = ['0020_g0800']
-    outdir_og = '/work/scratch-pw3/apower/'
-    outdir = outdir_og + f'/20m_gauss_dyn/on_{opgrid}_grid/filtering_filtered/'
-    plotdir = outdir_og + 'plots/dyn/'
+    outdir = '/work/scratch-pw3/apower/BOMEX/second_filt/'
     dx=20.0
 
     options = {
                 'FFT_type': 'RFFT',
                 'save_all': 'Yes',
                 'override': True,
-                'th_ref': 300.0,
+                'th_ref': None,
                 'dx': 20.0,
                 'dy': 20.0,
                 'domain' : 16.0,
@@ -55,9 +53,8 @@ if case_in=='BOMEX':
                   }
 
 elif case_in=='ARM':
-    in_dir = f'/work/scratch-pw3/apower/ARM/corrected_sigmas/'
-    outdir = in_dir + 'filtering_filtered_check/'
-    plotdir = outdir + 'plots/dyn/'
+    in_dir = '/work/scratch-pw3/apower/ARM/first_filt/'
+    outdir = '/work/scratch-pw3/apower/ARM/second_filt/'
     model_res_list = [None]
     dx=25
 
@@ -82,7 +79,7 @@ elif case_in=='ARM':
 
 elif case_in=='dry':
     in_dir = f'/storage/silver/greybls/si818415/dry_CBL/'
-    outdir = in_dir + 'filtering_filtered/'
+    outdir = in_dir + 'second_filt/'
     model_res_list = [None]
     plotdir = outdir + 'plots/'
     dx=20
