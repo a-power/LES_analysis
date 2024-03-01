@@ -59,7 +59,7 @@ else:
     print('case not recognised')
 
 if filtering_filters == True:
-    os.makedirs(folder_ff, exist_ok = True)
+    os.makedirs(path_f+folder_ff, exist_ok = True)
 
 
 set_save_all = 2
@@ -71,17 +71,20 @@ for i, C_res_in in enumerate(C_res):
         file_in = file_f + f'gaussian_filter_ga0{i}_gaussian_filter_ga00.nc'
         data_in = path_f + folder_ff + file_in
         print('reading files', data_in)
-        dataset_name = [path_f + folder_ff + file_f + f'LM/Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + folder_ff + file_f + f'LM/C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + folder_ff + file_f + f'LM/C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
+
+        os.makedirs(path_f + folder_ff + 'LM/', exist_ok = True)
+        dataset_name = [path_f + folder_ff + 'LM/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_ff + 'LM/' + file_f + f'C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_ff + 'LM/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
 
     elif filtering_filters == False:
         file_in = file_f + f'gaussian_filter_ga0{i}.nc'
         data_in = path_f + file_in
         print('reading files', data_in)
-        dataset_name = [path_f + file_f + f'LM/Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + file_f + f'LM/C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + file_f + f'LM/C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
+        os.makedirs(path_f + 'LM/', exist_ok=True)
+        dataset_name = [path_f + 'LM/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + 'LM/' + file_f + f'C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + 'LM/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
 
     DX_in = {
         'indir': data_in,
