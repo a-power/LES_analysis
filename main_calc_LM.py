@@ -18,36 +18,39 @@ mygrid = 'p'
 filtering_filters = False
 
 if case_in == 'BOMEX':
-    path_f = '/work/scratch-pw3/apower/BOMEX/first_filt/'
-    folder_ff = 'filtering_filtered/'
+    path_f = '/work/scratch-pw3/apower/BOMEX/'
+    folder_f = 'first_filt/'
+    folder_ff = 'second_filt/'
     times_list = ['14400']
     time_in = times_list[0]
     file_f = f'BOMEX_m0020_g0800_all_{time_in}_'
     Delta = 20
-    scalar = ['th'] #['momentum', 'th', 'q_total']
-    dx_bar_in = [20]#[40, 80, 160, 320, 640, 1280]
-    dx_hat_in = [40]#[80, 160, 320, 640, 1280, 2560]
-    C_res = ['D']#['2D', '4D', '8D', '16D', '32D', '64D']
+    scalar = ['momentum', 'th', 'q_total']
+    dx_bar_in = [40, 80, 160, 320, 640, 1280]
+    dx_hat_in = [80, 160, 320, 640, 1280, 2560]
+    C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
 
 elif case_in == 'ARM':
     times_list = ['18000', '25200', '32400', '39600']
     time_in = times_list[t_in]
-    path_f = '/work/scratch-pw3/apower/ARM/first_filt/'
-    folder_ff = 'filtering_filtered/'
+    path_f = '/work/scratch-pw3/apower/ARM/'
+    folder_f = 'first_filt/'
+    folder_ff = 'second_filt/'
     file_f = f'diagnostics_3d_ts_{time_in}_'
     Delta = 25
     # dx_bar_in = [56, 103, 202, 401, 800, 1600]
     # dx_hat_in = [75, 144, 284, 566, 1132, 2263]
-    dx_bar_in = [25]#[50, 100, 200, 400, 800, 1600]
-    dx_hat_in = [50]#[100, 144, 284, 566, 1132, 2263]
-    C_res = ['D']#['2D', '4D', '8D', '16D', '32D', '64D']
-    scalar = ['th']#['momentum', 'th', 'q_total']
+    dx_bar_in = [50, 100, 200, 400, 800, 1600]
+    dx_hat_in = [100, 144, 284, 566, 1132, 2263]
+    C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
+    scalar = ['momentum', 'th', 'q_total']
 
 elif case_in=='dry':
     times_list = ['13800']
     time_in = times_list[t_in]
     path_f = f'/storage/silver/greybls/si818415/dry_CBL/'
-    folder_ff = 'filtering_filtered/'
+    folder_f = 'first_filt/'
+    folder_ff = 'second_filt/'
     file_f = f'cbl_{time_in}_'
     Delta=20
     scalar = ['momentum', 'th']
@@ -79,12 +82,12 @@ for i, C_res_in in enumerate(C_res):
 
     elif filtering_filters == False:
         file_in = file_f + f'gaussian_filter_ga0{i}.nc'
-        data_in = path_f + file_in
+        data_in = path_f + folder_f + file_in
         print('reading files', data_in)
         os.makedirs(path_f + 'LM/', exist_ok=True)
-        dataset_name = [path_f + 'LM/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + 'LM/' + file_f + f'C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + 'LM/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
+        dataset_name = [path_f + folder_f + 'LM/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_f + 'LM/' + file_f + f'C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_f + 'LM/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
 
     DX_in = {
         'indir': data_in,
