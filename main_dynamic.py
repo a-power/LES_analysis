@@ -128,9 +128,7 @@ options_dry = {
 if case=='BOMEX':
     in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
     model_res_list = ['0020_g0800']
-    outdir_og = '/work/scratch-pw3/apower/'
-    outdir = outdir_og + f'BOMEX/first_filt/'
-    #plotdir = outdir_og + 'plots/dyn/'
+    outdir = '/work/scratch-pw3/apower/BOMEX/first_filt/'
     time_name_in = 'time_series_600_600'
     my_opt = options_BOMEX
     set_vapour=True
@@ -138,7 +136,6 @@ if case=='BOMEX':
 elif case=='ARM':
     in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/25m/'
     outdir = '/work/scratch-pw3/apower/ARM/first_filt/'
-    #plotdir = outdir + 'plots/dyn/'
     model_res_list = [None]
     time_name_in = 'time_series_600_600'
     my_opt = options_ARM
@@ -147,7 +144,6 @@ elif case=='ARM':
 elif case=='dry':
     in_dir = '/storage/silver/MONC_data/Alanna/dry_CBL/MONC_runs/20m/'
     outdir = '/storage/silver/greybls/si818415/dry_CBL/first_filt/'
-    #plotdir = outdir + 'plots/'
     model_res_list = [None]
     time_name_in = 'time_series_300_300'
     my_opt = options_dry

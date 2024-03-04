@@ -2,18 +2,13 @@ import numpy as np
 import xarray as xr
 
 import monc_utils.data_utils.difference_ops as do
-import subfilter.filters as filt
-import subfilter.subfilter as sf
-import monc_utils.monc_utils as ut
-import monc_utils.data_utils.deformation as defm
-import monc_utils.data_utils.cloud_monc as cldm
-
-#from monc_utils.utils.default_variables import (get_default_variable_list, get_default_variable_pair_list)
 from monc_utils.data_utils.string_utils import get_string_index
 from monc_utils.io.datain import get_data_on_grid
+from monc_utils.io.datain import get_data
+from monc_utils.io.datain import get_and_transform
 from monc_utils.io.dataout import save_field, setup_child_file
 from monc_utils.data_utils.dask_utils import re_chunk
-#from monc_utils.io.datain import get_data
+from monc_utils.io.datain import correct_grid_and_units
 
 import subfilter
 
@@ -26,6 +21,9 @@ def k_cut_find(delta):
 
 
 def sigma_1(n, delta):
+    ''' here  n is: \overbar{Delta} = n Delta,
+    where delta is the grid spacing of the original data
+    '''
 
     sig_smag = (2/np.pi)*delta
     sig_1 = np.sqrt((n*n/4)*delta*delta - sig_smag*sig_smag)
@@ -33,6 +31,9 @@ def sigma_1(n, delta):
     return np.round(sig_1, 0)
 
 def sigma_2(m, delta):
+    ''' here  m is: \hat{\overbar{Delta}} = m Delta,
+    where delta is the grid spacing of the original data
+        '''
 
     sig_2 = np.sqrt(3)*m*delta/4
 
@@ -40,6 +41,11 @@ def sigma_2(m, delta):
 
 
 def sigma_2_gen(n, m, delta):
+    ''' here  n is: \overbar{Delta} = n Delta,
+     and m is: \hat{\overbar{Delta}} = m Delta
+      where delta is the grid spacing of the original data
+        '''
+
     sig_2 = np.sqrt(m*m - n*n) * delta / 2
 
     return np.round(sig_2, 0)
@@ -205,6 +211,144 @@ def my_defm(source_dataset, ref_dataset_in, options, in_grid, filting_filted=Fal
     t0 = None
     t1 = None
     t2 = None
+
+    return defm
+
+
+def deform_altered(source_dataset, ref_dataset, derived_dataset,
+                options, max_ch, grid='p', uvw_names=["u", "v", "w"]):
+    r"""
+    Compute deformation tensor.
+
+    Deformation tensor is defined as :math:`{\partial u_{i}}/{\partial {x_j}}`.
+
+    Parameters
+    ----------
+        source_dataset  : NetCDF dataset
+            Inout data.
+        ref_dataset     : NetCDF dataset
+            Input data for input containing reference
+            profiles. Can be None
+        derived_dataset : NetCDF dataset
+            Output dataset for derived data.
+        options         : dict
+            General options e.g. FFT method used.
+        grid : str
+            destination grid (Default = 'w')
+        uvw_names: list of str
+            specific names for u, v, and w fields when differing from MONC default
+            Required to be in this order, otherwise we can change to 3 parameters?
+
+    Returns
+    -------
+        xarray
+            Array with new dimensions 'i' and 'j'.
+            Saves to derived_dataset if options['save_all'].lower() == 'yes'.
+
+    @author: Peter Clark
+    """
+    if 'deformation' in derived_dataset['ds']:
+        deformation = derived_dataset['ds']['deformation']
+        return deformation
+
+    # Check uvw_names
+    if not all([x in source_dataset for x in uvw_names]):
+        raise ValueError(f'The u, v, and w variable names, {uvw_names}, \
+                           are not all present in the source_dataset passed \
+                           to the deformation() function.')
+
+    u = get_data(source_dataset, ref_dataset, uvw_names[0], options)
+    [iix, iiy, iiz] = get_string_index(u.dims, ['x', 'y', 'z'])
+
+    sh = np.shape(u)
+
+    # max_ch = monc_utils.global_config['chunk_size']
+
+    nch = int(sh[iix] / (2 ** int(np.log(sh[iix] * sh[iiy] * sh[iiz] / max_ch) / np.log(2) / 2)))
+
+    print(f'Deformation nch={nch}')
+
+    u = re_chunk(u, xch=nch, ych=nch, zch='all')
+
+    if "z_w" in source_dataset:
+        z_w = source_dataset["z_w"]
+    elif "z" in source_dataset:
+        z_w = source_dataset["z"].rename({'z': 'z_w'})
+
+    if "z_p" in source_dataset:
+        z_p = source_dataset["z_p"]
+    elif "zn" in source_dataset:
+        z_p = source_dataset["zn"].rename({'zn': 'z_w'})
+
+    ux = do.d_by_dx_field(u, z_w, z_p, grid=grid)
+    uy = do.d_by_dy_field(u, z_w, z_p, grid=grid)
+    uz = do.d_by_dz_field(u, z_w, z_p, grid=grid)
+
+    ux = correct_grid_and_units('dbydx(u)', ux, source_dataset, options=options)
+    uy = correct_grid_and_units('dbydy(u)', uy, source_dataset, options=options)
+    uz = correct_grid_and_units('dbydz(u)', uz, source_dataset, options=options)
+
+    ux = get_and_transform(source_dataset, ref_dataset, 'dbydx(u)', options=options, grid=grid)
+    uy = get_and_transform(source_dataset, ref_dataset, 'dbydy(u)', options=options, grid=grid)
+    uz = get_and_transform(source_dataset, ref_dataset, 'dbydz(u)', options=options, grid=grid)
+
+    u = None  # Save some memory
+
+
+
+    v = get_data(source_dataset, ref_dataset, uvw_names[1], options)
+    v = re_chunk(v, xch=nch, ych=nch, zch='all')
+
+    vx = do.d_by_dx_field(v, z_w, z_p, grid=grid)
+    vy = do.d_by_dy_field(v, z_w, z_p, grid=grid)
+    vz = do.d_by_dz_field(v, z_w, z_p, grid=grid)
+
+    vx = correct_grid_and_units('dbydx(v)', vx, source_dataset, options=options)
+    vy = correct_grid_and_units('dbydy(v)', vy, source_dataset, options=options)
+    vz = correct_grid_and_units('dbydz(v)', vz, source_dataset, options=options)
+
+    vx = get_and_transform(source_dataset, ref_dataset, 'dbydx(v)', options=options, grid=grid)
+    vy = get_and_transform(source_dataset, ref_dataset, 'dbydy(v)', options=options, grid=grid)
+    vz = get_and_transform(source_dataset, ref_dataset, 'dbydz(v)', options=options, grid=grid)
+
+    v = None  # Save some memory
+
+
+
+    w = get_data(source_dataset, ref_dataset, uvw_names[2], options)
+    w = re_chunk(w, xch=nch, ych=nch, zch='all')
+
+    wx = do.d_by_dx_field(w, z_w, z_p, grid=grid)
+    wy = do.d_by_dy_field(w, z_w, z_p, grid=grid)
+    wz = do.d_by_dz_field(w, z_w, z_p, grid=grid)
+
+    wx = correct_grid_and_units('dbydx(w)', wx, source_dataset, options=options)
+    wy = correct_grid_and_units('dbydy(w)', wy, source_dataset, options=options)
+    wz = correct_grid_and_units('dbydz(w)', wz, source_dataset, options=options)
+
+    wx = get_and_transform(source_dataset, ref_dataset, 'dbydx(w)', options=options, grid=grid)
+    wy = get_and_transform(source_dataset, ref_dataset, 'dbydy(w)', options=options, grid=grid)
+    wz = get_and_transform(source_dataset, ref_dataset, 'dbydz(w)', options=options, grid=grid)
+
+    w = None  # Save some memory
+
+    print('Concatenating derivatives')
+
+    t0 = xr.concat([ux, uy, uz], dim='j', coords='minimal',
+                   compat='override')
+    t1 = xr.concat([vx, vy, vz], dim='j', coords='minimal',
+                   compat='override')
+    t2 = xr.concat([wx, wy, wz], dim='j', coords='minimal',
+                   compat='override')
+
+    defm = xr.concat([t0, t1, t2], dim='i')
+    defm.name = 'deformation'
+    defm.attrs = {'units': 's-1'}
+
+    print(defm)
+
+    if options is not None and options['save_all'].lower() == 'yes':
+        defm = save_field(derived_dataset, defm)
 
     return defm
 

@@ -2,10 +2,11 @@ import dynamic_script as dy_s #dot to get folder outside
 import numpy as np
 import os
 import argparse
+import dynamic_functions as df
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--times', type=str, default='13800')
-parser.add_argument('--case', type=str, default='dry')
+parser.add_argument('--times', type=str, default='14400')
+parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--start_in', type=int, default=0)
 parser.add_argument('--start_filt', type=int, default=0)
 parser.add_argument('--n_filts', type=int, default=6)
@@ -31,12 +32,13 @@ if case_in=='BOMEX':
     model_res_list = ['0020_g0800']
     outdir = '/work/scratch-pw3/apower/BOMEX/second_filt/'
     dx=20.0
+    #time = 14400
 
     options = {
                 'FFT_type': 'RFFT',
                 'save_all': 'Yes',
                 'override': True,
-                'th_ref': None,
+                'th_ref': 0.0,
                 'dx': 20.0,
                 'dy': 20.0,
                 'domain' : 16.0,
@@ -62,7 +64,7 @@ elif case_in=='ARM':
                 'FFT_type': 'RFFT',
                 'save_all': 'Yes',
                 'override': True,
-                'th_ref': 300.0,
+                'th_ref': 0.0,
                 'dx': 25.0,
                 'dy': 25.0,
                 'domain' : 19.2,
@@ -81,14 +83,14 @@ elif case_in=='dry':
     in_dir = f'/storage/silver/greybls/si818415/dry_CBL/'
     outdir = in_dir + 'second_filt/'
     model_res_list = [None]
-    plotdir = outdir + 'plots/'
     dx=20
+    #time = 13800
 
     options = {
                 'FFT_type': 'RFFT',
                 'save_all': 'Yes',
                 'override': True,
-                'th_ref': 300.0,
+                'th_ref': 0.0,
                 'dx': 20.0,
                 'dy': 20.0,
                 'domain' : 4.8,
@@ -105,9 +107,9 @@ else:
 
 
 if start == 0:
-        sigma_list = np.array([dx])
+        sigma_list = np.array([df.sigma_2(4, dx)])
 elif start == 1:
-        sigma_list = np.array([dx, 2*dx])
+        sigma_list = np.array([df.sigma_2(4, dx), df.sigma_2(8, dx)])
 else:
         print('need to set up the sigma list for start = ', start)
 
@@ -115,7 +117,6 @@ else:
 
 
 os.makedirs(outdir, exist_ok = True)
-os.makedirs(plotdir, exist_ok = True)
 
 filter_name = 'gaussian'  # "wave_cutoff"
 
