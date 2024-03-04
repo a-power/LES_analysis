@@ -5,6 +5,7 @@ import argparse
 import monc_utils
 import sys
 from loguru import logger
+import dynamic_functions as df
 # sys.stdout.write
 
 
@@ -79,17 +80,17 @@ filter_name = 'gaussian'  # "wave_cutoff"
 ###################################
 
 if start == 0:
-    sigma_list = np.array([MY_dx]) #, 2*MY_dx, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
+    sigma_list = np.array([df.sigma_1(2, MY_dx)]) #, 2*MY_dx, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
 elif start == 1:
-    sigma_list = np.array([2*MY_dx]) #, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
+    sigma_list = np.array([df.sigma_1(4, MY_dx)]) #, 4*MY_dx, 8*MY_dx, 16*MY_dx, 32*MY_dx])
 elif start == 2:
-    sigma_list = np.array([4*MY_dx]) #, 8*MY_dx, 16*MY_dx, 32*MY_dx])
+    sigma_list = np.array([df.sigma_1(8, MY_dx)]) #, 8*MY_dx, 16*MY_dx, 32*MY_dx])
 elif start == 3:
-    sigma_list = np.array([8*MY_dx]) #, 16*MY_dx, 32*MY_dx])
+    sigma_list = np.array([df.sigma_1(16, MY_dx)]) #, 16*MY_dx, 32*MY_dx])
 elif start == 4:
-    sigma_list = np.array([16*MY_dx]) #, 32*MY_dx])
+    sigma_list = np.array([df.sigma_1(32, MY_dx)]) #, 32*MY_dx])
 elif start == 5:
-    sigma_list = np.array([32*MY_dx])
+    sigma_list = np.array([df.sigma_1(64, MY_dx)])
 else:
     print('need to set up the sigma list for start = ', start)
 # #([20, 40, 80] ([160, 320, 640])

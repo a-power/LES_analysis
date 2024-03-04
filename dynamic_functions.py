@@ -25,8 +25,24 @@ def k_cut_find(delta):
     return np.pi / (delta)
 
 
-def sigma_find(delta):
-    return delta / 2
+def sigma_1(n, delta):
+
+    sig_smag = (2/np.pi)*delta
+    sig_1 = np.sqrt((n*n/4)*delta*delta - sig_smag*sig_smag)
+
+    return np.round(sig_1, 0)
+
+def sigma_2(m, delta):
+
+    sig_2 = np.sqrt(3)*m*delta/4
+
+    return np.round(sig_2, 0)
+
+
+def sigma_2_gen(n, m, delta):
+    sig_2 = np.sqrt(m*m - n*n) * delta / 2
+
+    return np.round(sig_2, 0)
 
 
 def l_mix_MONC(Cs, Delta, z_in, k=0.4):
