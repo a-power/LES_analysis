@@ -8,15 +8,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--times', type=str, default='14400')
 parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--start_in', type=int, default=0)
-parser.add_argument('--start_filt', type=int, default=0)
-parser.add_argument('--n_filts', type=int, default=6)
+parser.add_argument('--beta_filt', type=int, default=0)
 
 args = parser.parse_args()
 case_in = args.case
 set_time = [ args.times ]
 start = args.start_in
-filters_start = args.start_filt
-how_many_filters = args.n_filts #eg 6 = 0->5: ga00.nc -> ga05.nc (1 for ga00.nc)
+beta = args.beta_filt
 
 
 opgrid = 'p'
@@ -25,6 +23,7 @@ opgrid = 'p'
 
 filter_name = 'gaussian'  # "wave_cutoff"
 #Sigma = hat(Delta)/2
+
 
 
 if case_in=='BOMEX':
@@ -106,10 +105,11 @@ else:
     print(case_in, ": case isn't coded for yet")
 
 
-if start == 0:
-        sigma_list = np.array([df.sigma_2(4, dx)])
-elif start == 1:
-        sigma_list = np.array([df.sigma_2(4, dx), df.sigma_2(8, dx)])
+
+if beta == 0:
+        sigma_list = np.array([df.sigma_2(2**(start+2), dx)])
+elif beta == 1:
+        sigma_list = np.array([df.sigma_2(2**(start+2), dx), df.sigma_2(2**(start+3), dx)])
 else:
         print('need to set up the sigma list for start = ', start)
 
@@ -128,15 +128,15 @@ opgrid = 'p'
 if start==0:
     for j in range(len(set_time)):
             for i, model_res in enumerate(model_res_list):
-                for k in range(how_many_filters - filters_start):
-                    dy_s.run_dyn_on_filtered(model_res, set_time[j], filter_name, sigma_list*2**(k+filters_start), in_dir,
-                                             outdir, options, opgrid, start_point=start, filtered_data =
-                                             f'ga0{str(k+filters_start)}', ref_file = None, time_name='time', case=case_in)
+                dy_s.run_dyn_on_filtered(model_res, set_time[j], filter_name, sigma_list, in_dir,
+                                             outdir, options, opgrid, start_point=start,
+                                             filtered_data = f'ga0{str(start)}', ref_file = None,
+                                             time_name='time', case=case_in)
 
 elif start == 1:
     for j in range(len(set_time)):
         for i, model_res in enumerate(model_res_list):
-            dy_s.run_dyn_on_filtered(model_res, set_time[j], filter_name, sigma_list * 2 ** (filters_start),
+            dy_s.run_dyn_on_filtered(model_res, set_time[j], filter_name, sigma_list,
                                          in_dir, outdir, options, opgrid, start_point=start, filtered_data=
                                          f'ga0{str(filters_start)}', ref_file=None, time_name='time', case=case_in)
 
