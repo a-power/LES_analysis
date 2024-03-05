@@ -2,7 +2,45 @@ import dynamic_script as dy_s #dot to get folder outside
 import numpy as np
 import os
 import argparse
+import monc_utils
 import dynamic_functions as df
+from loguru import logger
+
+monc_utils.global_config['output_precision'] = "float32"
+
+logger.remove()
+logger.add(sys.stderr,
+
+           format="<c>{time:HH:mm:ss.SS}</c>" \
+ \
+                  + " | <level>{level:<8}</level>" \
+ \
+                  + " | <green>{function:<22}</green> : {message}",
+
+           colorize=True,
+
+           level="ERROR")
+
+logger.add(sys.stdout,
+
+           format="<c>{time:HH:mm:ss.SS}</c>" \
+ \
+                  + " | <level>{level:<8}</level>" \
+ \
+                  + " | <green>{function:<22}</green> : {message}",
+
+           colorize=True,
+
+           level="INFO")
+
+
+logger.enable("subfilter")
+logger.enable("monc_utils")
+logger.info("Logging 'INFO', 'ERROR', and higher messages only")
+
+
+
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--times', type=str, default='14400')
