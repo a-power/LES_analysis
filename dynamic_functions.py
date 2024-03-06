@@ -147,7 +147,7 @@ def M_ij_stab_fns(dx_filt1, dx_filt2, S_filt, abs_S_filt, HAT_abs_S_Sij_fRi, fRi
     return M_ij
 
 
-def ds_dxi(scalar, source_dataset, ref_dataset_in, options, in_grid, filting_filted=False):
+def ds_dxi(scalar, source_dataset, ref_dataset_in, options, in_grid, max_ch_in, filting_filted=False):
     # scalar can be either 'th' or "q_total"
 
     if scalar == 'q':
@@ -156,9 +156,33 @@ def ds_dxi(scalar, source_dataset, ref_dataset_in, options, in_grid, filting_fil
         else:
             scalar = 'q_total_f'
 
-    sca_x = get_data_on_grid(source_dataset, ref_dataset_in, f'dbydx({scalar})', derived_dataset=None, options=options, grid=in_grid)
-    sca_y = get_data_on_grid(source_dataset, ref_dataset_in, f'dbydy({scalar})', derived_dataset=None, options=options, grid=in_grid)
-    sca_z = get_data_on_grid(source_dataset, ref_dataset_in, f'dbydz({scalar})', derived_dataset=None, options=options, grid=in_grid)
+    sca = get_data_on_grid(source_dataset, ref_dataset_in, str(scalar), options)
+
+    [iix, iiy, iiz] = get_string_index(sca.dims, ['x', 'y', 'z'])
+    sh = np.shape(sca)
+
+    nch = int(sh[iix] / (2 ** int(np.log(sh[iix] * sh[iiy] * sh[iiz] / max_ch_in) / np.log(2) / 2)))
+    sca = re_chunk(sca, xch=nch, ych=nch, zch='all')
+
+    z = source_dataset["z"]
+    zn = source_dataset["zn"]
+
+    sca_x = do.d_by_dx_field(sca, z, zn, grid=in_grid)
+    sca_y = do.d_by_dy_field(sca, z, zn, grid=in_grid)
+    sca_z = do.d_by_dz_field(sca, z, zn, grid=in_grid)
+
+    sca = None  # Save some memory
+
+    s_xi = xr.concat([sca_x, sca_y, sca_z], dim='j', coords='minimal',
+                     compat='override')
+    sca_x = None
+    sca_y = None
+    sca_z = None
+    return s_xi
+
+    # sca_x = get_data_on_grid(source_dataset, ref_dataset_in, f'dbydx({scalar})', derived_dataset=None, options=options, grid=in_grid)
+    # sca_y = get_data_on_grid(source_dataset, ref_dataset_in, f'dbydy({scalar})', derived_dataset=None, options=options, grid=in_grid)
+    # sca_z = get_data_on_grid(source_dataset, ref_dataset_in, f'dbydz({scalar})', derived_dataset=None, options=options, grid=in_grid)
 
     s_xi = xr.concat([sca_x, sca_y, sca_z], dim='j', coords='minimal',
                      compat='override')

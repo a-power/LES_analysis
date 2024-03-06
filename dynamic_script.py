@@ -198,7 +198,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                                                            var_list=var_list,
                                                            grid=ingrid)
 
-        dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, opt, ingrid)
+        dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, opt, ingrid, max_ch)
         print('ran   dth_dx = dyn.ds_dxi which has a shape of', np.shape(dth_dx))
         dth_dx.name = 'dth_dx'
         # dth_dx_save = save_field(derived_data, dth_dx)
@@ -210,12 +210,12 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
         print('ran sf.filter_field(dth_dx) which has a shape of', np.shape(dth_dx_filt))
 
         if vapour == True:
-            dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid)
+            dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid, max_ch)
             dq_dx.name = 'dq_dx'
             # dq_dx_save = save_field(derived_data, dq_dx)
             dq_dx = re_chunk(dq_dx)
 
-            dqv_dx = dyn.ds_dxi('q_vapour', dataset, ref_dataset, opt, ingrid)
+            dqv_dx = dyn.ds_dxi('q_vapour', dataset, ref_dataset, opt, ingrid, max_ch)
             dqv_dx.name = 'dqv_dx'
             # dqv_dx_save = save_field(derived_data, dqv_dx)
             dqv_dx = re_chunk(dqv_dx)
@@ -529,12 +529,12 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                 uvw_names=[f'f(u_on_{ingrid})_r', f'f(v_on_{ingrid})_r', f'f(w_on_{ingrid})_r'])
 
 
-        dth_dx = dyn.ds_dxi(f'f(th_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid)
+        dth_dx = dyn.ds_dxi(f'f(th_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
         dth_dx.name = 'dth_dx'
         dth_dx = re_chunk(dth_dx)
 
         if case != 'dry':
-            dq_dx = dyn.ds_dxi(f'f(q_total_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid)
+            dq_dx = dyn.ds_dxi(f'f(q_total_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
             dq_dx.name = 'dq_dx'
             dq_dx = re_chunk(dq_dx)
 
