@@ -372,6 +372,8 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
     elif case == 'dry':
         file_in = f'{indir}/cbl_{time_in}_gaussian_filter_{filtered_data}.nc'
 
+    theta = f'f(th_on_{ingrid})_r'
+
     ds_in = xr.open_dataset(file_in)
     time_data = ds_in[time_name]
     times = time_data.data
@@ -464,13 +466,13 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         "u",
                         "v",
                         "w",
-                        "th"]
+                        theta]
             else:
                 var_list = [
                             "u",
                             "v",
                             "w",
-                            "th",
+                            theta,
                             "q_total",
                             "q_vapour",
                             "q_cloud_liquid_mass",
@@ -492,9 +494,9 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         ["v", "v"],
                         ["v", "w"],
                         ["w", "w"],
-                        ["u", "th"],
-                        ["v", "th"],
-                        ["w", "th"],
+                        ["u", theta],
+                        ["v", theta],
+                        ["w", theta],
                         ]
             else:
                 var_list = [["u", "u"],
@@ -503,9 +505,9 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                             ["v", "v"],
                             ["v", "w"],
                             ["w", "w"],
-                            ["u", "th"],
-                            ["v", "th"],
-                            ["w", "th"],
+                            ["u", theta],
+                            ["v", theta],
+                            ["w", theta],
                             ["u", "q_total"],
                             ["v", "q_total"],
                             ["w", "q_total"],
@@ -520,11 +522,12 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                                            opt, new_filter,
                                                            var_list=var_list,
                                                            grid=ingrid)
-        deform = dyn.deform_altered(dataset,
+        deform = defm.deformation(dataset,
                                 ref_dataset,
                                 derived_data,
                                 opt, ingrid,
                                 uvw_names=[f'f(u_on_{ingrid})_r', f'f(v_on_{ingrid})_r', f'f(w_on_{ingrid})_r'])
+
 
         dth_dx = dyn.ds_dxi(f'f(th_on_{ingrid})_r', dataset, ref_dataset, max_ch, opt, ingrid)
         dth_dx.name = 'dth_dx'
