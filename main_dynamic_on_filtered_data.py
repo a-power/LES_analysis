@@ -4,6 +4,7 @@ import os
 import argparse
 import monc_utils
 import dynamic_functions as df
+import sys
 from loguru import logger
 
 monc_utils.global_config['output_precision'] = "float32"
