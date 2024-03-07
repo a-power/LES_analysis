@@ -114,47 +114,48 @@ for i, C_res_in in enumerate(C_res):
 
     ########################################################################
         #  = \ #, C_sq_field_2D, Hj_2D, Rj_2D = \
-        if scalar_in == 'momentum':
-            z_save, zn_save, C_sq_prof, C_prof, HR_prof, RR_prof, HR_field, RR_field = \
-             dy_s.Cs(ingrid = mygrid, save_all = set_save_all, **DX_in)
-            # = \ #, C_sq_field_2D, Hj_2D, Rj_2D = \
-        else:
-            z_save, zn_save, C_sq_prof, C_prof, HR_prof, RR_prof, HR_field, RR_field = \
-                dy_s.C_scalar(scalar=scalar_in, ingrid=mygrid, save_all = set_save_all, **DX_in)
 
-        ds = xr.Dataset()
         if scalar_in == 'momentum':
-            ds.to_netcdf(dataset_name[0], mode='w')
             scalar_index = 0
         elif scalar_in == 'th' or scalar_in == 'f(th_on_p)_r':
-            ds.to_netcdf(dataset_name[1], mode='w')
             scalar_index = 1
         elif scalar_in == 'q_total':
-            ds.to_netcdf(dataset_name[2], mode='w')
             scalar_index = 2
         else:
             print('scalar not set to momentum, th, or q_total')
-        ds_in = {'file':dataset_name[scalar_index], 'ds': ds}
 
-        save_field(ds_in, HR_field)
-        save_field(ds_in, RR_field)
-        save_field(ds_in, z_save)
-        save_field(ds_in, zn_save)
-        save_field(ds_in, C_sq_prof)
-        save_field(ds_in, C_prof)
-        save_field(ds_in, HR_prof)
-        save_field(ds_in, RR_prof)
-        #save_field(ds_in2 = \ #, C_sq_field_2D)
-        # save_field(ds_in2, Hj_2D)
-        # save_field(ds_in2, Rj_2D)
+        file_setup = dataset_name[scalar_index]
+        # ds = xr.Dataset()
+        # ds_in = {'file':dataset_name[scalar_index], 'ds': ds}
+        # ds.to_netcdf(file_setup, mode='w')
 
-        ds.close()
+        if scalar_in == 'momentum':
+            #z_save, zn_save, C_sq_prof, C_prof, HR_prof, RR_prof, HR_field, RR_field = \
+            dy_s.Cs(file_save_to=file_setup, ingrid=mygrid, save_all=set_save_all, **DX_in)
+            # = \ #, C_sq_field_2D, Hj_2D, Rj_2D = \
+        else:
+            #z_save, zn_save, C_sq_prof, C_prof, HR_prof, RR_prof, HR_field, RR_field = \
+            dy_s.C_scalar(scalar=scalar_in, file_save_to=file_setup, ingrid=mygrid, save_all=set_save_all, **DX_in)
 
-        C_sq_prof = None
-        C_prof = None
-        HR_prof = None
-        RR_prof = None
-        HR_field = None
-        RR_field = None
+        # save_field(ds_in, HR_field)
+        # save_field(ds_in, RR_field)
+        # save_field(ds_in, z_save)
+        # save_field(ds_in, zn_save)
+        # save_field(ds_in, C_sq_prof)
+        # save_field(ds_in, C_prof)
+        # save_field(ds_in, HR_prof)
+        # save_field(ds_in, RR_prof)
+        # #save_field(ds_in2 = \ #, C_sq_field_2D)
+        # # save_field(ds_in2, Hj_2D)
+        # # save_field(ds_in2, Rj_2D)
+        #
+        # ds.close()
 
-        gc.collect()
+        # C_sq_prof = None
+        # C_prof = None
+        # HR_prof = None
+        # RR_prof = None
+        # HR_field = None
+        # RR_field = None
+
+        #gc.collect()

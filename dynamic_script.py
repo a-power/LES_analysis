@@ -5,6 +5,7 @@ import subfilter.filters as filt
 import subfilter.subfilter as sf
 import monc_utils.monc_utils as ut
 import monc_utils.data_utils.deformation as defm
+from monc_utils.io.dataout import save_field
 
 from monc_utils.data_utils.string_utils import get_string_index
 from monc_utils.data_utils.dask_utils import re_chunk
@@ -731,7 +732,7 @@ def run_dyn_on_filtered_for_beta_contour(res_in, time_in, filt_in, filt_scale, i
 
 
 
-def Cs(indir, dx_bar, dx_hat, ingrid, save_all=2, reaxes=False):
+def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
 
     """ function takes in:
 
@@ -759,9 +760,9 @@ def Cs(indir, dx_bar, dx_hat, ingrid, save_all=2, reaxes=False):
     ij_data = ds_in['i_j']
     ij_s = ij_data.data
 
-    ds_in.close()
-
-    ds_in = xr.open_dataset(file_in)
+    # ds_in.close()
+    #
+    # ds_in = xr.open_dataset(file_in)
     uu = ds_in[f's(u,u)_on_{ingrid}'].data[...]
     uv = ds_in[f's(u,v)_on_{ingrid}'].data[...]
     uw = ds_in[f's(u,w)_on_{ingrid}'].data[...]
@@ -788,11 +789,18 @@ def Cs(indir, dx_bar, dx_hat, ingrid, save_all=2, reaxes=False):
     else:
         hat_Sij_abs_S = ds_in['f(S_ij_abs_S)_r'].data[...]
 
+    ds_in.close()
+
     Mij = dyn.M_ij(dx_bar, dx_hat, hat_Sij, hat_abs_S, hat_Sij_abs_S)
 
     hat_Sij_abs_S = None
     hat_Sij = None
     hat_abs_S=None
+
+
+    ds = xr.Dataset()
+    ds.to_netcdf(file_save_to, mode='w')
+    ds_save = {'file': file_save_to, 'ds': ds}
 
     zn_save = np.zeros((nt, len(zn_s)))
     zn_save[0,...] = zn_s
@@ -821,7 +829,14 @@ def Cs(indir, dx_bar, dx_hat, ingrid, save_all=2, reaxes=False):
         MM_prof = xr.DataArray(MM_prof[...], coords={'time' : times, 'zn': zn_s},
                                dims=['time', "zn"], name='MM_prof')
 
-        return z_save, zn_save, Cs_sq_prof, Cs_prof, LM_prof, MM_prof
+        save_field(ds_save, z_save)
+        save_field(ds_save, zn_save)
+        save_field(ds_save, Cs_sq_prof)
+        save_field(ds_save, Cs_prof)
+        save_field(ds_save, LM_prof)
+        save_field(ds_save, MM_prof)
+
+
 
     if save_all==2:
 
@@ -855,7 +870,16 @@ def Cs(indir, dx_bar, dx_hat, ingrid, save_all=2, reaxes=False):
         #Cs_sq_field = xr.DataArray(Cs_sq_field[...], coords={'time' : times, 'x_p' : x_s, 'y_p' : y_s, 'zn': zn_s},
         #                          dims = ["time", "x_p", "y_p", "z"], name = 'Cs_sq_field')
 
-        return z_save, zn_save, Cs_sq_prof, Cs_prof, LM_prof, MM_prof, LM_field, MM_field#, Cs_sq_field
+        save_field(ds_save, z_save)
+        save_field(ds_save, zn_save)
+        save_field(ds_save, Cs_sq_prof)
+        save_field(ds_save, Cs_prof)
+        save_field(ds_save, LM_prof)
+        save_field(ds_save, MM_prof)
+        save_field(ds_save, LM_field)
+        save_field(ds_save, MM_field)
+
+
 
     if save_all==3:
 
@@ -909,8 +933,19 @@ def Cs(indir, dx_bar, dx_hat, ingrid, save_all=2, reaxes=False):
                                coords={'time': times, 'i_j': ij_s, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
                                dims=["time", "i_j", "x_p", "y_p", "zn"], name='Mij')
 
+        save_field(ds_save, z_save)
+        save_field(ds_save, zn_save)
+        save_field(ds_save, Cs_sq_prof)
+        save_field(ds_save, Cs_prof)
+        save_field(ds_save, LM_prof)
+        save_field(ds_save, MM_prof)
+        save_field(ds_save, LM_field)
+        save_field(ds_save, MM_field)
+        save_field(ds_save, Lij)
+        save_field(ds_save, Mij)
+        save_field(ds_save, Cs_sq_field)
 
-        return zn_save, Cs_sq_prof, Cs_prof, LM_prof, MM_prof, LM_field, MM_field, Cs_sq_field, Lij, Mij
+
 
     else:
         Cs_sq_prof, Cs_prof = dyn.Cs_profiles(Lij, Mij, return_all=0)
@@ -924,14 +959,19 @@ def Cs(indir, dx_bar, dx_hat, ingrid, save_all=2, reaxes=False):
         Lij = None
         Mij = None
 
-        return z_save, zn_save, Cs_sq_prof, Cs_prof
+        save_field(ds_save, z_save)
+        save_field(ds_save, zn_save)
+        save_field(ds_save, Cs_sq_prof)
+        save_field(ds_save, Cs_prof)
 
 
 
 
 
 
-def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False):
+
+
+def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, axisfix=False):
     """ function takes in:
 
     save_all: 1 is for profiles, 2 is for fields, 3 is for all fields PLUS Lij and Mij"""
@@ -972,9 +1012,9 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False)
     j_data = ds_in['j']
     j_s = j_data.data
 
-    ds_in.close()
-
-    ds_in = xr.open_dataset(file_in)
+    # ds_in.close()
+    #
+    # ds_in = xr.open_dataset(file_in)
     u_s = ds_in[f's(u,{scalar})_on_{ingrid}'].data[...]
     v_s = ds_in[f's(v,{scalar})_on_{ingrid}'].data[...]
     w_s = ds_in[f's(w,{scalar})_on_{ingrid}'].data[...]
@@ -996,6 +1036,13 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False)
         HAT_abs_S_ds_dx_temp = None
     else:
         HAT_abs_S_ds_dx = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[...]
+
+
+    ds_in.close()
+
+    ds = xr.Dataset()
+    ds.to_netcdf(file_save_to, mode='w')
+    ds_save = {'file': file_save_to, 'ds': ds}
 
 
     Rj = dyn.R_j(dx_bar, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
@@ -1021,7 +1068,11 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False)
         C_scalar_prof = xr.DataArray(C_scalar_prof[...], coords={'time': times, 'zn': zn_s},
                                      dims=['time', "zn"], name=f'C_{scalar_name}_prof')
 
-        return z_save, zn_save, C_scalar_sq_prof, C_scalar_prof
+        save_field(ds_save, z_save)
+        save_field(ds_save, zn_save)
+        save_field(ds_save, C_scalar_sq_prof)
+        save_field(ds_save, C_scalar_prof)
+
 
 
 
@@ -1050,12 +1101,15 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False)
         RR_field = xr.DataArray(RR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
                                      dims=["time", "x_p", "y_p", "zn"], name=f'RR_{scalar_name}_field')
 
-        # C_scalar_sq_field = xr.DataArray(C_scalar_sq_field[...],
-        #                                  coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
-        #                                  dims=["time", "x_p", "y_p", "z"], name=f'C_{scalar}_sq_field')
+        save_field(ds_save, z_save)
+        save_field(ds_save, zn_save)
+        save_field(ds_save, C_scalar_sq_prof)
+        save_field(ds_save, C_scalar_prof)
+        save_field(ds_save, HR_prof)
+        save_field(ds_save, RR_prof)
+        save_field(ds_save, HR_field)
+        save_field(ds_save, RR_field)
 
-
-        return z_save, zn_save, C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, HR_field, RR_field#, C_scalar_sq_field
 
 
 
@@ -1113,8 +1167,18 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False)
                               coords={'time': times, 'i_j': j_s, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
                               dims=["time", "i_j", "x_p", "y_p", "zn"], name='Rj')
 
-        return z_save, zn_save, C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, HR_field, RR_field, \
-            C_scalar_sq_field, Hj, Rj
+        save_field(ds_save, z_save)
+        save_field(ds_save, zn_save)
+        save_field(ds_save, C_scalar_sq_prof)
+        save_field(ds_save, C_scalar_prof)
+        save_field(ds_save, HR_prof)
+        save_field(ds_save, RR_prof)
+        save_field(ds_save, HR_field)
+        save_field(ds_save, RR_field)
+        save_field(ds_save, Hj)
+        save_field(ds_save, Rj)
+        save_field(ds_save, C_scalar_sq_field)
+
 
 
 def LijMij_fields(scalar, indir, dx_bar, dx_hat, ingrid):
