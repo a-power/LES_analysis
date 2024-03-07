@@ -7,7 +7,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--t', type=int, default=0)
 parser.add_argument('--case', type=str, default='ARM')
-parser.add_argument('--filting_filts', default='y')
+parser.add_argument('--filting_filts', default='n')
 args = parser.parse_args()
 t_in = args.t
 filtering_filters_yn = args.filting_filts
@@ -89,7 +89,7 @@ for i, C_res_in in enumerate(C_res):
         file_in = file_f + f'gaussian_filter_ga0{i}.nc'
         data_in = path_f + folder_f + file_in
         print('reading files', data_in)
-        os.makedirs(path_f + 'LM/', exist_ok=True)
+        os.makedirs(path_f + folder_f + 'LM/', exist_ok=True)
         dataset_name = [path_f + folder_f + 'LM/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
                          path_f + folder_f + 'LM/' + file_f + f'C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
                          path_f + folder_f + 'LM/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
