@@ -25,7 +25,7 @@ if case_in == 'BOMEX':
     time_in = times_list[0]
     file_f = f'BOMEX_m0020_g0800_all_{time_in}_'
     Delta = 20
-    scalar = ['momentum', 'th', 'q_total']
+    scalar = ['momentum', 'f(th_on_p)_r', 'q_total']
     dx_bar_in = [40, 80, 160, 320, 640, 1280]
     dx_hat_in = [80, 160, 320, 640, 1280, 2560]
     C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
@@ -43,7 +43,7 @@ elif case_in == 'ARM':
     dx_bar_in = [50, 100, 200, 400, 800, 1600]
     dx_hat_in = [100, 200, 400, 800, 1600, 3200]
     C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
-    scalar = ['momentum', 'th', 'q_total']
+    scalar = ['momentum', 'f(th_on_p)_r', 'q_total']
 
 elif case_in=='dry':
     times_list = ['13800']
@@ -53,7 +53,7 @@ elif case_in=='dry':
     folder_ff = 'second_filt/'
     file_f = f'cbl_{time_in}_'
     Delta=20
-    scalar = ['momentum', 'th']
+    scalar = ['momentum', 'f(th_on_p)_r']
     dx_bar_in = [40, 80, 160, 320, 640, 1280]
     dx_hat_in = [80, 160, 320, 640, 1280, 2560]
     C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
