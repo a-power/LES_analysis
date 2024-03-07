@@ -15,7 +15,7 @@ case_in = args.case
 av_type = 'all'
 mygrid = 'p'
 
-filtering_filters = False
+filtering_filters = True
 
 if case_in == 'BOMEX':
     path_f = '/work/scratch-pw3/apower/BOMEX/'
@@ -61,8 +61,8 @@ elif case_in=='dry':
 else:
     print('case not recognised')
 
-if filtering_filters == True:
-    os.makedirs(path_f+folder_ff, exist_ok = True)
+# if filtering_filters == True:
+#     os.makedirs(path_f+folder_ff, exist_ok = True)
 
 
 set_save_all = 2
