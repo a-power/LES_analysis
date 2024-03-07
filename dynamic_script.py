@@ -838,7 +838,7 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
 
 
 
-    if save_all==2:
+    elif save_all==2:
 
         #Cs_sq_field = dyn.C_s_sq(Lij, Mij)
 
@@ -881,7 +881,7 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
 
 
 
-    if save_all==3:
+    elif save_all==3:
 
         Cs_sq_field = dyn.C_s_sq(Lij, Mij)
 
