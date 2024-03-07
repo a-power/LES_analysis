@@ -17,7 +17,7 @@ case_in = args.case
 av_type = 'all'
 mygrid = 'p'
 
-if filtering_filters_yn == 'y':
+if filtering_filters_yn == 'y' or filtering_filters_yn == 'yes':
     filtering_filters = True
 else:
     filtering_filters = False
