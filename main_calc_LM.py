@@ -15,7 +15,7 @@ case_in = args.case
 av_type = 'all'
 mygrid = 'p'
 
-filtering_filters = True
+filtering_filters = False
 
 if case_in == 'BOMEX':
     path_f = '/work/scratch-pw3/apower/BOMEX/'
