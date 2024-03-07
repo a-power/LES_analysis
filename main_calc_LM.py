@@ -7,15 +7,20 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--t', type=int, default=0)
 parser.add_argument('--case', type=str, default='ARM')
+parser.add_argument('--filting_filts', default='y')
 args = parser.parse_args()
 t_in = args.t
+filtering_filters_yn = args.filting_filts
 
 case_in = args.case
 
 av_type = 'all'
 mygrid = 'p'
 
-filtering_filters = False
+if filtering_filters_yn == 'y':
+    filtering_filters = True
+else:
+    filtering_filters = False
 
 if case_in == 'BOMEX':
     path_f = '/work/scratch-pw3/apower/BOMEX/'
