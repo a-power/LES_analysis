@@ -944,7 +944,7 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False)
         scalar_name = 'q_v'
     elif scalar == 'q_total_f':
         scalar_name = 'q'
-    elif scalar == 'th':
+    elif scalar == 'th' or scalar == 'f(th_on_p)_r':
         scalar_name = 'th'
     else:
         print("scalar not recognised, only inputs available are 'th', 'q_cloud_liquid_mass', 'q_vapour', or 'q_total'.")
@@ -1016,10 +1016,10 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False)
         C_scalar_sq_prof, C_scalar_prof = dyn.C_scalar_profiles(Hj, Rj, return_all=0)
 
         C_scalar_sq_prof = xr.DataArray(C_scalar_sq_prof[...], coords={'time': times, 'zn': zn_s},
-                                        dims=['time', "zn"], name=f'C_{scalar}_sq_prof')
+                                        dims=['time', "zn"], name=f'C_{scalar_name}_sq_prof')
 
         C_scalar_prof = xr.DataArray(C_scalar_prof[...], coords={'time': times, 'zn': zn_s},
-                                     dims=['time', "zn"], name=f'C_{scalar}_prof')
+                                     dims=['time', "zn"], name=f'C_{scalar_name}_prof')
 
         return z_save, zn_save, C_scalar_sq_prof, C_scalar_prof
 
@@ -1033,22 +1033,22 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False)
 
 
         C_scalar_sq_prof = xr.DataArray(C_scalar_sq_prof[...], coords={'time': times, 'zn': zn_s},
-                                        dims=['time', "zn"], name=f'C_{scalar}_sq_prof')
+                                        dims=['time', "zn"], name=f'C_{scalar_name}_sq_prof')
 
         C_scalar_prof = xr.DataArray(C_scalar_prof[...], coords={'time': times, 'zn': zn_s},
-                                     dims=['time', "zn"], name=f'C_{scalar}_prof')
+                                     dims=['time', "zn"], name=f'C_{scalar_name}_prof')
 
         HR_prof = xr.DataArray(HR_prof[...], coords={'time': times, 'zn': zn_s},
-                               dims=['time', "zn"], name=f'HR_{scalar}_prof')
+                               dims=['time', "zn"], name=f'HR_{scalar_name}_prof')
 
         RR_prof = xr.DataArray(RR_prof[...], coords={'time': times, 'zn': zn_s},
-                               dims=['time', "zn"], name=f'RR_{scalar}_prof')
+                               dims=['time', "zn"], name=f'RR_{scalar_name}_prof')
 
         HR_field = xr.DataArray(HR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
-                                     dims=["time", "x_p", "y_p", "zn"], name=f'HR_{scalar}_field')
+                                     dims=["time", "x_p", "y_p", "zn"], name=f'HR_{scalar_name}_field')
 
         RR_field = xr.DataArray(RR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
-                                     dims=["time", "x_p", "y_p", "zn"], name=f'RR_{scalar}_field')
+                                     dims=["time", "x_p", "y_p", "zn"], name=f'RR_{scalar_name}_field')
 
         # C_scalar_sq_field = xr.DataArray(C_scalar_sq_field[...],
         #                                  coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
@@ -1066,26 +1066,26 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False)
         C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, HR_field, RR_field = dyn.C_scalar_profiles(Hj, Rj, return_all=2)
 
         C_scalar_sq_prof = xr.DataArray(C_scalar_sq_prof[...], coords={'time': times, 'zn': zn_s},
-                                    dims=['time', "zn"], name=f'C_{scalar}_sq_prof')
+                                    dims=['time', "zn"], name=f'C_{scalar_name}_sq_prof')
 
         C_scalar_prof = xr.DataArray(C_scalar_prof[...], coords={'time': times, 'zn': zn_s},
-                                 dims=['time', "zn"], name=f'C_{scalar}_prof')
+                                 dims=['time', "zn"], name=f'C_{scalar_name}_prof')
 
         HR_prof = xr.DataArray(HR_prof[...], coords={'time': times, 'zn': zn_s},
-                               dims=['time', "zn"], name=f'HR_{scalar}_prof')
+                               dims=['time', "zn"], name=f'HR_{scalar_name}_prof')
 
         RR_prof = xr.DataArray(RR_prof[...], coords={'time': times, 'zn': zn_s},
-                               dims=['time', "zn"], name=f'RR_{scalar}_prof')
+                               dims=['time', "zn"], name=f'RR_{scalar_name}_prof')
 
         HR_field = xr.DataArray(HR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
-                                     dims=["time", "x_p", "y_p", "zn"], name=f'HR_{scalar}_field')
+                                     dims=["time", "x_p", "y_p", "zn"], name=f'HR_{scalar_name}_field')
 
         RR_field = xr.DataArray(RR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
-                                     dims=["time", "x_p", "y_p", "zn"], name=f'RR_{scalar}_field')
+                                     dims=["time", "x_p", "y_p", "zn"], name=f'RR_{scalar_name}_field')
 
         C_scalar_sq_field = xr.DataArray(C_scalar_sq_field[...],
                                      coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
-                                     dims=["time", "x_p", "y_p", "zn"], name=f'C_{scalar}_sq_field')
+                                     dims=["time", "x_p", "y_p", "zn"], name=f'C_{scalar_name}_sq_field')
 
         if len(Hj.shape) == 5:
 
@@ -1113,7 +1113,8 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False)
                               coords={'time': times, 'i_j': j_s, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
                               dims=["time", "i_j", "x_p", "y_p", "zn"], name='Rj')
 
-        return z_save, zn_save, C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, HR_field, RR_field, C_scalar_sq_field, Hj, Rj
+        return z_save, zn_save, C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, HR_field, RR_field, \
+            C_scalar_sq_field, Hj, Rj
 
 
 def LijMij_fields(scalar, indir, dx_bar, dx_hat, ingrid):

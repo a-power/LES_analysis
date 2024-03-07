@@ -111,7 +111,7 @@ for i, C_res_in in enumerate(C_res):
         if scalar_in == 'momentum':
             ds.to_netcdf(dataset_name[0], mode='w')
             scalar_index = 0
-        elif scalar_in == 'th':
+        elif scalar_in == 'th' or scalar_in == 'f(th_on_p)_r':
             ds.to_netcdf(dataset_name[1], mode='w')
             scalar_index = 1
         elif scalar_in == 'q_total':
