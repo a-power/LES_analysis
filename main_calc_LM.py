@@ -7,7 +7,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--t', type=int, default=0)
 parser.add_argument('--case', type=str, default='ARM')
-parser.add_argument('--filting_filts', default='n')
+parser.add_argument('--filting_filts', type=str, default='n')
 args = parser.parse_args()
 t_in = args.t
 filtering_filters_yn = args.filting_filts
