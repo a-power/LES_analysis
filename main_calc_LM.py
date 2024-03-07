@@ -3,6 +3,7 @@ from monc_utils.io.dataout import save_field
 import os
 import xarray as xr
 import argparse
+import gc
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--t', type=int, default=0)
@@ -155,3 +156,5 @@ for i, C_res_in in enumerate(C_res):
         RR_prof = None
         HR_field = None
         RR_field = None
+
+        gc.collect()
