@@ -821,6 +821,11 @@ def Cs(indir, dx_bar, dx_hat, ingrid, save_all=2, reaxes=False):
         MM_prof = xr.DataArray(MM_prof[...], coords={'time' : times, 'zn': zn_s},
                                dims=['time', "zn"], name='MM_prof')
 
+        Cs_sq_prof = None
+        Cs_prof = None
+        LM_prof = None
+        MM_prof = None
+
         return z_save, zn_save, Cs_sq_prof, Cs_prof, LM_prof, MM_prof
 
     if save_all==2:
@@ -854,6 +859,13 @@ def Cs(indir, dx_bar, dx_hat, ingrid, save_all=2, reaxes=False):
 
         #Cs_sq_field = xr.DataArray(Cs_sq_field[...], coords={'time' : times, 'x_p' : x_s, 'y_p' : y_s, 'zn': zn_s},
         #                          dims = ["time", "x_p", "y_p", "z"], name = 'Cs_sq_field')
+
+        Cs_sq_prof = None
+        Cs_prof = None
+        LM_prof = None
+        MM_prof = None
+        LM_field = None
+        MM_field = None
 
         return z_save, zn_save, Cs_sq_prof, Cs_prof, LM_prof, MM_prof, LM_field, MM_field#, Cs_sq_field
 
@@ -908,6 +920,15 @@ def Cs(indir, dx_bar, dx_hat, ingrid, save_all=2, reaxes=False):
             Mij = xr.DataArray(Mij[...],
                                coords={'time': times, 'i_j': ij_s, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
                                dims=["time", "i_j", "x_p", "y_p", "zn"], name='Mij')
+
+        Cs_sq_prof = None
+        Cs_prof = None
+        LM_prof = None
+        MM_prof = None
+        LM_field = None
+        MM_field = None
+        Lij = None
+        Mij = None
 
 
         return zn_save, Cs_sq_prof, Cs_prof, LM_prof, MM_prof, LM_field, MM_field, Cs_sq_field, Lij, Mij
@@ -1021,6 +1042,11 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False)
         C_scalar_prof = xr.DataArray(C_scalar_prof[...], coords={'time': times, 'zn': zn_s},
                                      dims=['time', "zn"], name=f'C_{scalar_name}_prof')
 
+
+        C_scalar_sq_prof = None
+        C_scalar_prof = None
+
+
         return z_save, zn_save, C_scalar_sq_prof, C_scalar_prof
 
 
@@ -1053,6 +1079,13 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False)
         # C_scalar_sq_field = xr.DataArray(C_scalar_sq_field[...],
         #                                  coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
         #                                  dims=["time", "x_p", "y_p", "z"], name=f'C_{scalar}_sq_field')
+
+        C_scalar_sq_prof = None
+        C_scalar_prof = None
+        HR_prof = None
+        RR_prof = None
+        HR_field = None
+        RR_field = None
 
 
         return z_save, zn_save, C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, HR_field, RR_field#, C_scalar_sq_field
@@ -1112,6 +1145,16 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, ingrid, save_all = 2, axisfix=False)
             Hj = xr.DataArray(Hj[...],
                               coords={'time': times, 'i_j': j_s, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},
                               dims=["time", "i_j", "x_p", "y_p", "zn"], name='Rj')
+
+        C_scalar_sq_prof = None
+        C_scalar_prof = None
+        HR_prof = None
+        RR_prof = None
+        HR_field = None
+        RR_field = None
+        Rj = None
+        Hj = None
+
 
         return z_save, zn_save, C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, HR_field, RR_field, \
             C_scalar_sq_field, Hj, Rj
