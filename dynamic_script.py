@@ -836,6 +836,13 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
         save_field(ds_save, LM_prof)
         save_field(ds_save, MM_prof)
 
+        z_save = None
+        zn_save = None
+        Cs_sq_prof = None
+        Cs_prof = None
+        LM_prof = None
+        MM_prof = None
+
 
 
     elif save_all==2:
@@ -878,6 +885,15 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
         save_field(ds_save, MM_prof)
         save_field(ds_save, LM_field)
         save_field(ds_save, MM_field)
+
+        z_save = None
+        zn_save = None
+        Cs_sq_prof = None
+        Cs_prof = None
+        LM_prof = None
+        MM_prof = None
+        LM_field = None
+        MM_field = None
 
 
 
@@ -945,6 +961,18 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
         save_field(ds_save, Mij)
         save_field(ds_save, Cs_sq_field)
 
+        z_save = None
+        zn_save = None
+        Cs_sq_prof = None
+        Cs_prof = None
+        LM_prof = None
+        MM_prof = None
+        LM_field = None
+        MM_field = None
+        Lij = None
+        Mij = None
+        Cs_sq_field = None
+
 
 
     else:
@@ -963,6 +991,11 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
         save_field(ds_save, zn_save)
         save_field(ds_save, Cs_sq_prof)
         save_field(ds_save, Cs_prof)
+
+        z_save = None
+        zn_save = None
+        Cs_sq_prof = None
+        Cs_prof = None
 
 
 
@@ -1061,6 +1094,8 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
     if save_all == 1:
 
         C_scalar_sq_prof, C_scalar_prof = dyn.C_scalar_profiles(Hj, Rj, return_all=0)
+        Hj = None
+        Rj = None
 
         C_scalar_sq_prof = xr.DataArray(C_scalar_sq_prof[...], coords={'time': times, 'zn': zn_s},
                                         dims=['time', "zn"], name=f'C_{scalar_name}_sq_prof')
@@ -1073,6 +1108,11 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
         save_field(ds_save, C_scalar_sq_prof)
         save_field(ds_save, C_scalar_prof)
 
+        z_save = None
+        zn_save = None
+        C_scalar_sq_prof = None
+        C_scalar_prof = None
+
 
 
 
@@ -1081,6 +1121,9 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
         #C_scalar_sq_field = dyn.C_scalar_sq(Hj, Rj)
 
         C_scalar_sq_prof, C_scalar_prof, HR_prof, RR_prof, HR_field, RR_field = dyn.C_scalar_profiles(Hj, Rj, return_all=2)
+
+        Hj = None
+        Rj = None
 
 
         C_scalar_sq_prof = xr.DataArray(C_scalar_sq_prof[...], coords={'time': times, 'zn': zn_s},
@@ -1110,6 +1153,14 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
         save_field(ds_save, HR_field)
         save_field(ds_save, RR_field)
 
+        z_save = None
+        zn_save = None
+        C_scalar_sq_prof = None
+        C_scalar_prof = None
+        HR_prof = None
+        RR_prof = None
+        HR_field = None
+        RR_field = None
 
 
 
@@ -1178,6 +1229,18 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
         save_field(ds_save, Hj)
         save_field(ds_save, Rj)
         save_field(ds_save, C_scalar_sq_field)
+
+        z_save = None
+        zn_save = None
+        C_scalar_sq_prof = None
+        C_scalar_prof = None
+        HR_prof = None
+        RR_prof = None
+        HR_field = None
+        RR_field = None
+        Hj = None
+        Rj = None
+        C_scalar_sq_field = None
 
 
 
