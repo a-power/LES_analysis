@@ -35,8 +35,11 @@ if case_in == 'BOMEX':
         scalar = ['momentum', 'f(th_on_p)_r', 'q_total']
     else:
         scalar = ['momentum', 'th', 'q_total']
-    dx_bar_in = [40, 80, 160, 320, 640, 1280]
-    dx_hat_in = [80, 160, 320, 640, 1280, 2560]
+    dx_bar_in = np.array([20, 40, 80, 160, 320, 640])
+    dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
+    if filtering_filters == True:
+        dx_bar_in = 2*dx_bar_in
+        dx_hat_in = 2*dx_hat_in
     C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
 
 elif case_in == 'ARM':
@@ -49,8 +52,11 @@ elif case_in == 'ARM':
     Delta = 25
     # dx_bar_in = [56, 103, 202, 401, 800, 1600]
     # dx_hat_in = [75, 144, 284, 566, 1132, 2263]
-    dx_bar_in = [50, 100, 200, 400, 800, 1600]
-    dx_hat_in = [100, 200, 400, 800, 1600, 3200]
+    dx_bar_in = np.array([25, 50, 100, 200, 400, 800])
+    dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
+    if filtering_filters == True:
+        dx_bar_in = 2*dx_bar_in
+        dx_hat_in = 2*dx_hat_in
     C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
     if filtering_filters == True:
         scalar = ['momentum', 'f(th_on_p)_r', 'q_total']
@@ -69,8 +75,11 @@ elif case_in=='dry':
         scalar = ['momentum', 'f(th_on_p)_r']
     else:
         scalar = ['momentum', 'th']
-    dx_bar_in = [40, 80, 160, 320, 640, 1280]
-    dx_hat_in = [80, 160, 320, 640, 1280, 2560]
+    dx_bar_in = np.array([20, 40, 80, 160, 320, 640])
+    dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
+    if filtering_filters == True:
+        dx_bar_in = 2*dx_bar_in
+        dx_hat_in = 2*dx_hat_in
     C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
 
 else:
