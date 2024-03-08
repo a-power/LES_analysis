@@ -4,6 +4,7 @@ import os
 import xarray as xr
 import argparse
 import numpy as np
+import gc
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--t', type=int, default=0)
@@ -167,4 +168,4 @@ for i, C_res_in in enumerate(C_res):
         # HR_field = None
         # RR_field = None
 
-        #gc.collect()
+        gc.collect()
