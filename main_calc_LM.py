@@ -3,7 +3,7 @@ from monc_utils.io.dataout import save_field
 import os
 import xarray as xr
 import argparse
-import gc
+import numpy as np
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--t', type=int, default=0)
