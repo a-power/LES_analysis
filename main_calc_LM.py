@@ -147,6 +147,8 @@ for i, C_res_in in enumerate(C_res):
             #z_save, zn_save, C_sq_prof, C_prof, HR_prof, RR_prof, HR_field, RR_field = \
             dy_s.C_scalar(scalar=scalar_in, file_save_to=file_setup, ingrid=mygrid, save_all=set_save_all, **DX_in)
 
+        gc.collect()
+
         # save_field(ds_in, HR_field)
         # save_field(ds_in, RR_field)
         # save_field(ds_in, z_save)
@@ -168,4 +170,3 @@ for i, C_res_in in enumerate(C_res):
         # HR_field = None
         # RR_field = None
 
-        gc.collect()
