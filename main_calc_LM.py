@@ -51,14 +51,15 @@ elif case_in == 'ARM':
     folder_ff = 'second_filt/'
     file_f = f'diagnostics_3d_ts_{time_in}_'
     Delta = 25
-    # dx_bar_in = [56, 103, 202, 401, 800, 1600]
-    # dx_hat_in = [75, 144, 284, 566, 1132, 2263]
-    dx_bar_in = np.array([25, 50, 100, 200, 400, 800])
-    dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
+    # dx_bar_in = np.array([25, 50, 100, 200, 400, 800])
+    # dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
+    dx_bar_in = np.array([400, 800])
+    dx_hat_in = np.array([800, 1600])
     if filtering_filters == True:
         dx_bar_in = 2*dx_bar_in
         dx_hat_in = 2*dx_hat_in
-    C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
+    # C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
+    C_res = ['32D', '64D']
     if filtering_filters == True:
         scalar = ['momentum', 'f(th_on_p)_r', 'q_total']
     else:
@@ -127,7 +128,7 @@ for i, C_res_in in enumerate(C_res):
 
         if scalar_in == 'momentum':
             scalar_index = 0
-        elif scalar_in == 'th' or scalar_in == 'f(th_on_p)_r':
+        elif scalar_in == 'th'  or scalar_in == 'th_tot' or scalar_in == 'f(th_on_p)_r':
             scalar_index = 1
         elif scalar_in == 'q_total':
             scalar_index = 2

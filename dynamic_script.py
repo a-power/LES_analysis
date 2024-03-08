@@ -1017,7 +1017,7 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
         scalar_name = 'q_v'
     elif scalar == 'q_total_f':
         scalar_name = 'q'
-    elif scalar == 'th' or scalar == 'f(th_on_p)_r':
+    elif scalar == 'th' or scalar == 'th_tot' or scalar == 'f(th_on_p)_r':
         scalar_name = 'th'
     else:
         print("scalar not recognised, only inputs available are 'th', 'q_cloud_liquid_mass', 'q_vapour', or 'q_total'.")
