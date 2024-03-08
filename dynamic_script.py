@@ -1113,6 +1113,8 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
         C_scalar_sq_prof = None
         C_scalar_prof = None
 
+        ds.close()
+
 
 
 
@@ -1161,6 +1163,8 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
         RR_prof = None
         HR_field = None
         RR_field = None
+
+        ds.close()
 
 
 
@@ -1242,6 +1246,8 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
         Rj = None
         C_scalar_sq_field = None
 
+        ds.close()
+
 
 
 def LijMij_fields(scalar, indir, dx_bar, dx_hat, ingrid):
@@ -1281,7 +1287,7 @@ def LijMij_fields(scalar, indir, dx_bar, dx_hat, ingrid):
     zn_data = ds_in['zn']
     zn_s = zn_data.data
 
-    ds_in.close()
+    # ds_in.close()
 
     zn_save = np.zeros((nt, len(zn_s)))
     zn_save[0,...] = zn_s
@@ -1295,7 +1301,7 @@ def LijMij_fields(scalar, indir, dx_bar, dx_hat, ingrid):
 
     if scalar == 'momentum':
 
-        ds_in = xr.open_dataset(file_in)
+        # ds_in = xr.open_dataset(file_in)
         uu = ds_in[f's(u,u)_on_{ingrid}'].data[...]
         uv = ds_in[f's(u,v)_on_{ingrid}'].data[...]
         uw = ds_in[f's(u,w)_on_{ingrid}'].data[...]
@@ -1316,6 +1322,8 @@ def LijMij_fields(scalar, indir, dx_bar, dx_hat, ingrid):
         hat_abs_S = ds_in['f(abs_S)_r'].data[...]
 
         hat_Sij_abs_S = ds_in['f(S_ij_abs_S)_r'].data[...]
+
+        ds_in.close()
 
         Mij = dyn.M_ij(dx_bar, dx_hat, hat_Sij, hat_abs_S, hat_Sij_abs_S)
 
@@ -1347,7 +1355,7 @@ def LijMij_fields(scalar, indir, dx_bar, dx_hat, ingrid):
 
 
     else:
-        ds_in = xr.open_dataset(file_in)
+        # ds_in = xr.open_dataset(file_in)
         u_s = ds_in[f's(u,{scalar})_on_{ingrid}'].data[...]
         v_s = ds_in[f's(v,{scalar})_on_{ingrid}'].data[...]
         w_s = ds_in[f's(w,{scalar})_on_{ingrid}'].data[...]
@@ -1365,6 +1373,7 @@ def LijMij_fields(scalar, indir, dx_bar, dx_hat, ingrid):
 
         Rj = dyn.R_j(dx_bar, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
         HAT_abs_S_ds_dx = None
+        ds_in.close()
 
         HR_field = np.zeros_like(Hj[0, ...])
         RR_field = np.zeros_like(Rj[0, ...])
