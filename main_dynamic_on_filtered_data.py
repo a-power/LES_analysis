@@ -87,6 +87,7 @@ if case_in=='BOMEX':
                             'q_total': [f'f(q_total_on_{opgrid})_r'],
                             'q_vapour': [f'f(q_vapour_on_{opgrid})_r'],
                             'buoyancy': [f'f(buoyancy_on_{opgrid})_r'],
+                            'th_tot': [f'f(th_on_{opgrid})_r'],
                             'th_v': [f'f(th_v_on_{opgrid})_r'],
                             'q_cloud_liquid_mass': [f'f(q_cloud_liquid_mass_on_{opgrid})_r']
                             }
@@ -111,7 +112,7 @@ elif case_in=='ARM':
                 'aliases': {'u': [f'f(u_on_{opgrid})_r'],
                             'v': [f'f(v_on_{opgrid})_r'],
                             'w': [f'f(w_on_{opgrid})_r'],
-                            'th': [f'f(th_on_{opgrid})_r'],
+                            'th_tot': [f'f(th_on_{opgrid})_r'],
                             'q_total': [f'f(q_total_on_{opgrid})_r'],
                             'q_vapour': [f'f(q_vapour_on_{opgrid})_r'],
                             'buoyancy': [f'f(buoyancy_on_{opgrid})_r'],
@@ -139,7 +140,7 @@ elif case_in=='dry':
                 'aliases': {'u': [f'f(u_on_{opgrid})_r'],
                             'v': [f'f(v_on_{opgrid})_r'],
                             'w': [f'f(w_on_{opgrid})_r'],
-                            'th': [f'f(th_on_{opgrid})_r']
+                            'th_tot': [f'f(th_on_{opgrid})_r'],
                             }
                 }
 
