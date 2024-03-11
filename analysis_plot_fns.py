@@ -1406,7 +1406,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
 
 
             # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=2, levels=[0.1])
-            plt.xlabel(f'x (km) (cross section with {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km) (km)', fontsize=16)
+            plt.xlabel(f'x (km) (cross section {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km) (km)', fontsize=16)
 
             plt.ylabel("z (km)", fontsize=16)
             plt.xlim(start_grid, end_grid)
