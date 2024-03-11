@@ -1424,7 +1424,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
             plt.clf()
 
 
-            print(f'plotted fields for {mytime}')
+            print(f'plotted fields for {delta_label} {mytime}')
 
     plt.close('all')
 
