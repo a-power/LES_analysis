@@ -50,7 +50,7 @@ elif case == 'ARM':
     mydir = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
     contour_data = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_ga0"
 
-    plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/plots/ARM_fields/cloud_contour/'
+    plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/plots/ARM_fields/cloud_contour/'#/grey/'
 
     z_top = 250
     z_tix = np.linspace(0, z_top, 6)

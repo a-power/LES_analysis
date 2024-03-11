@@ -1360,7 +1360,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
             print('beginning plots')
 
             fig1, ax1 = plt.subplots(figsize=(6, 4))
-            plt.title('$\\widehat{\\bar{\\Delta}} = $' + f'{delta_label}'+f'{var_name} field with cloud contours', fontsize=16)
+            plt.title('$\\widehat{\\bar{\\Delta}} = $' + f'{delta_label}'+f' {var_name} field with cloud contours', fontsize=16)
 
             if myvmin_var != None:
                  myvmin = myvmin_var
