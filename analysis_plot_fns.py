@@ -1266,7 +1266,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
                 mytime = 't_av'
             else:
                 if x_or_y == 'x':
-                   cloud_field = var_field_data['f(q_cloud_liquid_mass_on_p)_r'].data[t_set, axis_set, ...]
+                    cloud_field = var_field_data['f(q_cloud_liquid_mass_on_p)_r'].data[t_set, axis_set, ...]
                     if var_field == 'w':
                         var_field_plot = var_field_data['f(w_on_p)_r'].data[t_set, axis_set, ...]
                     elif var_field == 'TKE':
