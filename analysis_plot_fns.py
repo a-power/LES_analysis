@@ -1115,6 +1115,323 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
 
 
 
+
+def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_path, t_av_or_not,
+              start_end, z_top_in, z_tix_in, z_labels_in, deltas=None,
+                    set_cb=[None, None], delta_grid=25):
+
+
+    myvmin_var = set_cb[0]
+    myvmax_var = set_cb[1]
+
+    if deltas==None:
+        deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+
+    start = start_end[0]
+    start_grid = int(start/(0.001*delta_grid)) # going from km to grid spacing co-ords (20m or 25m grid)
+    end = start_end[1]
+    end_grid = int(end/(0.001*delta_grid)) # going from km to grid spacing co-ords (20m or 25m grid)
+
+
+    if var_field == 'w':
+        var_name = "$w'$"
+        var_units = '$m s^{-1}$'
+    if var_field == 'w_th_v':
+        var_name = "$w' \\theta_v'$"
+        var_units = '$K m s^{-1}$'
+    if var_field == 'TKE':
+        var_name = "TKE"
+        var_units = '$m^2 s^{-2}$'
+
+
+
+    for i in range(len(deltas)):
+        if deltas[i] == '0_0':
+            CL_itr = '0'
+            beta_CL_itr = '0'
+            delta_label = '2$\\Delta$'
+        elif deltas[i] == '1_0':
+            CL_itr = '1'
+            beta_CL_itr = '0'
+            delta_label = '4$\\Delta$'
+        elif deltas[i] == '2_0':
+            CL_itr = '2'
+            beta_CL_itr = '0'
+            delta_label = '8$\\Delta$'
+        elif deltas[i] == '3_0':
+            CL_itr = '3'
+            beta_CL_itr = '0'
+            delta_label = '16$\\Delta$'
+        elif deltas[i] == '4_0':
+            CL_itr = '4'
+            beta_CL_itr = '0'
+            delta_label = '32$\\Delta$'
+        elif deltas[i] == '5_0':
+            CL_itr = '5'
+            beta_CL_itr = '0'
+            delta_label = '64$\\Delta$'
+
+        else:
+            print('need to code the delta for ', deltas[i])
+
+        for t_set in t_av_or_not:
+
+            print('opening the contour dataset')
+
+            var_field_data = xr.open_dataset(var_path +
+                                          f'{CL_itr}_gaussian_filter_ga0{beta_CL_itr}_running_mean_filter_rm00.nc')
+
+            print('successfully opened contour set')
+
+            print('length of time array for cloud field is ',
+                  len(var_field_data['f(q_cloud_liquid_mass_on_p)_r'].data[:, 0, 0, 0]))
+            if t_av_or_not == 'yes':
+                if x_or_y == 'x':
+                    cloud_field = np.mean(var_field_data['f(q_cloud_liquid_mass_on_p)_r'].data[:, axis_set, ...],
+                                          axis=0)
+                    if var_field == 'w':
+                        var_field_plot = np.mean(var_field_data['f(w_on_p)_r'].data[:, axis_set, ...], axis=0)
+                    elif var_field == 'TKE':
+                        u_mean = np.zeros(len(var_field_data['f(u_on_p)_r'].data[0, 0, 0, :]))
+                        v_mean = np.zeros(len(var_field_data['f(v_on_p)_r'].data[0, 0, 0, :]))
+                        #w_mean = np.zeros(len(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
+                        for nz in range(len(v_mean)):
+                            u_mean[nz] = np.mean(var_field_data['f(u_on_p)_r'].data[..., nz])
+                            v_mean[nz] = np.mean(var_field_data['f(v_on_p)_r'].data[..., nz])
+                            #w_mean[nz] = np.mean(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[..., nz])
+                        u_prime_field = var_field_data['f(u_on_p)_r'].data[:, axis_set, ...] - u_mean
+                        v_prime_field = var_field_data['f(v_on_p)_r'].data[:, axis_set, ...] - v_mean
+                        #w_prime_field = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[:, axis_set, ...] - w_mean
+                        ww_field = var_field_data['f(w_on_p.w_on_p)_r'].data[:, axis_set, ...]
+                        var_field_plot = np.mean( 0.5*(u_prime_field*u_prime_field + \
+                                                       v_prime_field*v_prime_field + \
+                                                       ww_field), axis=0)
+                        u_prime_field = None
+                        v_prime_field = None
+                        ww_field = None
+                    elif var_field == 'w_th_v':
+                        th_v_mean = np.zeros(len(var_field_data['f(th_v_on_p)_r'].data[0,0,0,:]))
+                        for nz in range(len(th_v_mean)):
+                            th_v_mean[nz] = np.mean(var_field_data['f(th_v_on_p)_r'].data[..., nz])
+                        th_v_f = np.mean(var_field_data['f(th_v_on_p)_r'].data[:, axis_set, ...], axis=0)
+
+                        # var_field_plot = np.mean(var_field_data['f(f(w_on_p.th_v_on_p)_r_on_p)_r'].data[:, axis_set, ...],
+                        #                          axis=0)
+
+                        var_field_plot = th_v_f - th_v_mean
+                        th_v_mean = None
+                        th_v_f = None
+
+                    #w2_field = np.mean(var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[:, axis_set, ...], axis=0)
+                    th_v_field = np.mean(var_field_data['f(th_v_on_p)_r'].data[:, axis_set, ...], axis=0)
+
+                elif x_or_y == 'y':
+                    cloud_field = np.mean(var_field_data['f(q_cloud_liquid_mass_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                    if var_field == 'w':
+                        var_field_plot = np.mean(var_field_data['f(w_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                    elif var_field == 'TKE':
+                        u_mean = np.zeros(len(var_field_data['f(u_on_p)_r'].data[0, 0, 0, :]))
+                        v_mean = np.zeros(len(var_field_data['f(v_on_p)_r'].data[0, 0, 0, :]))
+                        #w_mean = np.zeros(len(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
+                        for nz in range(len(v_mean)):
+                            u_mean[nz] = np.mean(var_field_data['f(u_on_p)_r'].data[..., nz])
+                            v_mean[nz] = np.mean(var_field_data['f(v_on_p)_r'].data[..., nz])
+                            #w_mean[nz] = np.mean(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[..., nz])
+                        u_prime_field = var_field_data['f(u_on_p)_r'].data[:, :, axis_set, ...] - u_mean
+                        v_prime_field = var_field_data['f(v_on_p)_r'].data[:, :, axis_set, ...] - v_mean
+                        #w_prime_field = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[:, :, axis_set, ...] - w_mean
+                        ww_field = var_field_data['f(w_on_p.w_on_p)_r'].data[:, :, axis_set, ...]
+                        var_field_plot = np.mean(0.5 * (u_prime_field * u_prime_field + \
+                                                        v_prime_field * v_prime_field + \
+                                                        ww_field), axis=0)
+                        u_prime_field = None
+                        v_prime_field = None
+                        ww_field = None
+                    elif var_field == 'w_th_v':
+                        th_v_mean = np.zeros(len(var_field_data['f(th_v_on_p)_r'].data[0, 0, 0, :]))
+                        for nz in range(len(th_v_mean)):
+                            th_v_mean[nz] = np.mean(var_field_data['f(th_v_on_p)_r'].data[..., nz])
+                        th_v_f = np.mean(var_field_data['f(th_v_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+
+                        # var_field_plot = np.mean(var_field_data['f(f(w_on_p.th_v_on_p)_r_on_p)_r'].data[:, axis_set, ...],
+                        #                          axis=0)
+
+                        var_field_plot = th_v_f - th_v_mean
+                        th_v_mean = None
+                        th_v_f = None
+
+                    #w2_field = np.mean(var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                    th_v_field = np.mean(var_field_data['f(th_v_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+
+                mytime = 't_av'
+            else:
+                if x_or_y == 'x':
+                   cloud_field = var_field_data['f(q_cloud_liquid_mass_on_p)_r'].data[t_set, axis_set, ...]
+                    if var_field == 'w':
+                        var_field_plot = var_field_data['f(w_on_p)_r'].data[t_set, axis_set, ...]
+                    elif var_field == 'TKE':
+
+                        u_mean = np.zeros(len(var_field_data['f(u_on_p)_r'].data[0, 0, 0, :]))
+                        v_mean = np.zeros(len(var_field_data['f(v_on_p)_r'].data[0, 0, 0, :]))
+                        #w_mean = np.zeros(len(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
+                        for nz in range(len(v_mean)):
+                            u_mean[nz] = np.mean(var_field_data['f(u_on_p)_r'].data[..., nz])
+                            v_mean[nz] = np.mean(var_field_data['f(v_on_p)_r'].data[..., nz])
+                            #w_mean[nz] = np.mean(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[..., nz])
+                        u_prime_field = var_field_data['f(u_on_p)_r'].data[t_set, axis_set, ...] - u_mean
+                        v_prime_field = var_field_data['f(v_on_p)_r'].data[t_set, axis_set, ...] - v_mean
+                        #w_prime_field = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...] - w_mean
+                        ww_field = var_field_data['f(w_on_p.w_on_p)_r'].data[t_set, axis_set, ...]
+                        var_field_plot = 0.5 * (u_prime_field * u_prime_field + \
+                                                        v_prime_field * v_prime_field + \
+                                                        ww_field)
+                        u_prime_field = None
+                        v_prime_field = None
+                        ww_field = None
+                    elif var_field == 'w_th_v':
+                        th_v_mean = np.zeros(len(var_field_data['f(th_v_on_p)_r'].data[0, 0, 0, :]))
+                        for nz in range(len(th_v_mean)):
+                            th_v_mean[nz] = np.mean(var_field_data['f(th_v_on_p)_r'].data[t_set,..., nz])
+                        th_v_f = var_field_data['f(th_v_on_p)_r'].data[t_set, axis_set, ...]
+
+                        # var_field_plot = np.mean(var_field_data['f(f(w_on_p.th_v_on_p)_r_on_p)_r'].data[:, axis_set, ...],
+                        #                          axis=0)
+
+                        var_field_plot = th_v_f - th_v_mean
+                        th_v_mean = None
+                        th_v_f = None
+
+
+                    #w2_field = var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+                    th_v_field = var_field_data['f(th_v_on_p)_r'].data[t_set, axis_set, ...]
+
+                elif x_or_y == 'y':
+
+                    cloud_field = var_field_data['f(q_cloud_liquid_mass_on_p)_r'].data[t_set, :, axis_set, ...]
+
+                    if var_field == 'w':
+                            var_field_plot = var_field_data['f(w_on_p)_r'].data[t_set, :, axis_set, ...]
+
+                    elif var_field == 'TKE':
+
+                        u_mean = np.zeros(len(var_field_data['f(u_on_p)_r'].data[0, 0, 0, :]))
+                        v_mean = np.zeros(len(var_field_data['f(v_on_p)_r'].data[0, 0, 0, :]))
+                        # w_mean = np.zeros(len(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[0, 0, 0, :]))
+                        for nz in range(len(v_mean)):
+                            u_mean[nz] = np.mean(var_field_data['f(u_on_p)_r'].data[..., nz])
+                            v_mean[nz] = np.mean(var_field_data['f(v_on_p)_r'].data[..., nz])
+                            # w_mean[nz] = np.mean(var_field_data['f(f(w_on_p)_r_on_p)_r'].data[..., nz])
+                        u_prime_field = var_field_data['f(u_on_p)_r'].data[t_set, :, axis_set, ...] - u_mean
+                        v_prime_field = var_field_data['f(v_on_p)_r'].data[t_set, :, axis_set, ...] - v_mean
+                        # w_prime_field = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...] - w_mean
+                        ww_field = var_field_data['f(w_on_p.w_on_p)_r'].data[t_set, :, axis_set, ...]
+
+                        var_field_plot = 0.5 * (u_prime_field * u_prime_field + \
+                                                        v_prime_field * v_prime_field + \
+                                                        ww_field)
+                        u_prime_field = None
+                        v_prime_field = None
+                        w_prime_field = None
+                    elif var_field == 'w_th_v':
+                        th_v_mean = np.zeros(len(var_field_data['f(th_v_on_p)_r'].data[0, 0, 0, :]))
+                        for nz in range(len(th_v_mean)):
+                            th_v_mean[nz] = np.mean(var_field_data['f(th_v_on_p)_r'].data[t_set, ..., nz])
+                        th_v_f = var_field_data['f(th_v_on_p)_r'].data[t_set, :, axis_set, ...]
+
+                        # var_field_plot = np.mean(var_field_data['f(f(w_on_p.th_v_on_p)_r_on_p)_r'].data[:, axis_set, ...],
+                        #                          axis=0)
+
+                        var_field_plot = th_v_f - th_v_mean
+                        th_v_mean = None
+                        th_v_f = None
+
+                    #w2_field = var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+                    th_v_field = var_field_data['f(th_v_on_p)_r'].data[t_set, :, axis_set, ...]
+
+
+
+                mytime = f't{t_set}'
+
+            var_field_data.close()
+
+
+
+
+            print('beginning plots')
+
+            fig1, ax1 = plt.subplots(figsize=(8, 5))
+            plt.title(f'{var_name} field with cloud contours for $\\widehat{\\bar{\\Delta}} = $' + f'{delta_label}', fontsize=16)
+
+            if myvmin_var != None:
+                 myvmin = myvmin_var
+                 myvmax = myvmax_var
+
+                 # orig_cmap = matplotlib.cm.coolwarm
+                 # shifted_cmap = shiftedColorMap(orig_cmap, myvmin, myvmax)
+
+                 print('vmax and vmin values are: ', myvmax, myvmin)
+                 mylevels = np.linspace(myvmin, myvmax, 9)
+                 if var_field == 'w' or var_field == 'w_th_v':
+                     cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm,
+                                       norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
+                                       levels=mylevels, extend='both')
+                 else:
+                     cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.YlOrRd,
+                                       levels=mylevels, extend='both')
+            else:
+                if set_percentile != None:
+                    myvmin = np.percentile(var_field_plot[start_grid:end_grid, 5:z_top_in], set_percentile[0])
+                    myvmax = np.percentile(var_field_plot[start_grid:end_grid, 5:z_top_in], set_percentile[1])
+
+                    # orig_cmap = matplotlib.cm.coolwarm
+                    # shifted_cmap = shiftedColorMap(orig_cmap, myvmin, myvmax)
+
+                    mylevels = np.linspace(myvmin, myvmax, 9)
+                    if var_field == 'w' or var_field == 'w_th_v':
+                        cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm,
+                                      norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
+                                      levels=mylevels, extend='both')
+                    else:
+                        cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.YlOrRd,
+                                          levels=mylevels, extend='both')
+
+                if set_percentile == None:
+                    cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.YlOrRd, extend='both')
+
+            cb = plt.colorbar(cf, format='%.1f')
+            cb.set_label(f'{var_name} ({var_units})', size=16)
+
+            cl_c = plt.contour(np.transpose(cloud_field), colors='black', linewidths=4, levels=[1e-5])
+
+
+
+            # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=2, levels=[0.1])
+            plt.xlabel(f'x (km) (cross section with {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km) (km)', fontsize=16)
+
+            plt.ylabel("z (km)", fontsize=16)
+            plt.xlim(start_grid, end_grid)
+            og_xtic = plt.xticks()
+            plt.xticks(og_xtic[0], np.round(np.linspace(start, end, len(og_xtic[0])), 1))
+
+            # ax1.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+
+            plt.ylim(0, z_top_in)
+            og_ytic = plt.yticks()
+            plt.yticks(z_tix_in, z_labels_in)  # plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
+
+            plt.savefig(plot_dir + f'{var_field}_{deltas[i]}_{mytime}_{x_or_y}={axis_set}_start_{start}_end_{end}.pdf',
+                        bbox_inches='tight')
+            plt.clf()
+
+
+            print(f'plotted fields for {mytime}')
+
+    plt.close('all')
+
+
+
+
+
 def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
                       cloud_thres, other_vars, other_var_thres,
                              less_greater_in, and_or_in, grid, beta):
