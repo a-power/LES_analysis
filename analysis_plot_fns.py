@@ -927,7 +927,7 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                 mytime = 't_av'
             else:
                 if x_or_y == 'x':
-                   cloud_field = var_field_data['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+                    cloud_field = var_field_data['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
                     if var_field == 'w':
                         var_field_plot = var_field_data['f(f(w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
                     elif var_field == 'TKE':
