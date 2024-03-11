@@ -1179,7 +1179,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
             print('opening the contour dataset')
 
             var_field_data = xr.open_dataset(var_path +
-                                          f'{CL_itr}_gaussian_filter_ga0{beta_CL_itr}_running_mean_filter_rm00.nc')
+                                          f'{CL_itr}_gaussian_filter_ga0{beta_CL_itr}.nc')
 
             print('successfully opened contour set')
 
