@@ -20,7 +20,7 @@ x_start = args.x_s
 x_end = args.x_e
 set_var_field = args.var_f
 
-Deltas = ['0_0', '1_0', '2_0', '3_0', '4_0', '5_0']
+deltas_in = ['0_0', '1_0', '2_0', '3_0', '4_0', '5_0']
 #['2D', '4D', '8D', '16D', '32D', '64D']
 
 set_cb_in = [-1.5, 2.0] #[None, None]
@@ -165,7 +165,7 @@ Cqt_options = {'field': 'Cqt_field',
 
 apf.plot_cloud_field(plotdir_in, x_or_y=my_x_y, axis_set=my_axis, set_percentile=None, var_field=set_var_field,
                  var_path=contour_data, t_av_or_not=time_av_or_not, start_end=x_axis_start_end, z_top_in=z_top,
-                 z_tix_in=z_tix, z_labels_in=z_labels, deltas=None, set_cb=[None, None], delta_grid=25)
+                 z_tix_in=z_tix, z_labels_in=z_labels, deltas=deltas_in, set_cb=[None, None], delta_grid=25)
 
 # # apf.plotfield(plotdir, start_end=x_axis_start_end, **LijMij_options)
 # #
