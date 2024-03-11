@@ -1360,7 +1360,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
             print('beginning plots')
 
             fig1, ax1 = plt.subplots(figsize=(9, 4))
-            plt.title(f'{var_name} field with cloud contours, ' + '$\\widehat{\\bar{\\Delta}} = $' + f'{delta_label}', fontsize=16)
+            plt.title(f'Vertical velocity ({var_name}) field with cloud contours, ' + '$\\widehat{\\bar{\\Delta}} = $' + f'{delta_label}', fontsize=16)
 
             if myvmin_var != None:
                  myvmin = myvmin_var
@@ -1370,7 +1370,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
                  # shifted_cmap = shiftedColorMap(orig_cmap, myvmin, myvmax)
 
                  print('vmax and vmin values are: ', myvmax, myvmin)
-                 mylevels = np.linspace(myvmin, myvmax, 9)
+                 mylevels = np.linspace(myvmin, myvmax, 8)
                  if var_field == 'w' or var_field == 'w_th_v':
                      cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm,
                                        norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
@@ -1406,7 +1406,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
 
 
             # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=2, levels=[0.1])
-            plt.xlabel(f'x (km) (cross section {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km)', fontsize=16)
+            plt.xlabel(f'x (km) (cross section at {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km)', fontsize=16)
 
             plt.ylabel("z (km)", fontsize=16)
             plt.xlim(start_grid, end_grid)
