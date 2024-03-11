@@ -1370,7 +1370,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
                  # shifted_cmap = shiftedColorMap(orig_cmap, myvmin, myvmax)
 
                  print('vmax and vmin values are: ', myvmax, myvmin)
-                 mylevels = np.linspace(myvmin, myvmax, 9)
+                 mylevels = np.linspace(myvmin, myvmax, 8)
                  if var_field == 'w' or var_field == 'w_th_v':
                      cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm,
                                        norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
