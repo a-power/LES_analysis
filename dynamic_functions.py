@@ -28,7 +28,7 @@ def sigma_1(n, delta):
     sig_smag = (2/np.pi)*delta
     sig_1 = np.sqrt((n*n/4)*delta*delta - sig_smag*sig_smag)
 
-    return np.round(sig_1, 0)
+    return int(np.round(sig_1, 0))
 
 def sigma_2(m, delta):
     ''' here  m is: \hat{\overbar{Delta}} = m Delta,
@@ -37,7 +37,7 @@ def sigma_2(m, delta):
 
     sig_2 = np.sqrt(3)*m*delta/4
 
-    return np.round(sig_2, 0)
+    return int(np.round(sig_2, 0))
 
 
 def sigma_2_gen(n, m, delta):
