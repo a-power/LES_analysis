@@ -6,6 +6,7 @@ from monc_utils.data_utils.string_utils import get_string_index
 from monc_utils.io.datain import get_data_on_grid
 from monc_utils.io.datain import get_data
 from monc_utils.io.datain import get_and_transform
+from monc_utils.io.datain import correct_grid_and_units
 from monc_utils.io.dataout import save_field, setup_child_file
 from monc_utils.data_utils.dask_utils import re_chunk
 from monc_utils.io.datain import correct_grid_and_units
@@ -167,9 +168,12 @@ def ds_dxi(scalar, source_dataset, ref_dataset_in, options, in_grid, max_ch_in, 
     # z = source_dataset["z"]
     # zn = source_dataset["zn"]
     #
-    # sca_x = do.d_by_dx_field(sca, z, zn, grid=in_grid)
-    # sca_y = do.d_by_dy_field(sca, z, zn, grid=in_grid)
-    # sca_z = do.d_by_dz_field(sca, z, zn, grid=in_grid)
+    # sca_x = do.d_by_dx_field_native(sca, z, zn, grid=in_grid)
+    # sca_x = correct_grid_and_units(f'dbydx({scalar})', sca_x, source_dataset, options)
+    # sca_y = do.d_by_dy_field_native(sca, z, zn, grid=in_grid)
+    # sca_y = correct_grid_and_units(f'dbydy({scalar})', sca_y, source_dataset, options)
+    # sca_z = do.d_by_dz_field_native(sca, z, zn, grid=in_grid)
+    # sca_z = correct_grid_and_units(f'dbydz({scalar})', sca_z, source_dataset, options)
     #
     # sca = None  # Save some memory
     #
@@ -384,7 +388,7 @@ def R_j(dx_filt1, dx_filt2, abs_S_hat, ds_dxj_hat, HAT_abs_S_ds_dxj, beta=1):
     alpha = dx_filt2 / dx_filt1
     power = alpha / 2
 
-    R_j = dx_filt2 * dx_filt2 * beta ** power * abs_S_hat * ds_dxj_hat - dx_filt1 * dx_filt1 * HAT_abs_S_ds_dxj
+    R_j = dx_filt2 * dx_filt2 * ( beta ** power ) * abs_S_hat * ds_dxj_hat - dx_filt1 * dx_filt1 * HAT_abs_S_ds_dxj
 
     return R_j
 
@@ -638,7 +642,7 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         return Cs_av_sq, Cs_av
 
 
-def C_scalar_profiles(H_ij, R_ij, return_all=2):
+def C_scalar_profiles(H_j, R_j, return_all=2):
     """ Calculates the horizontal average Cs value at each level
     using the Lij and Mij fields as input.
 
@@ -646,19 +650,26 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
 
     """
 
-    C_th_num = np.zeros_like(H_ij[0, ...])
-    C_th_den = np.zeros_like(R_ij[0, ...])
+    C_th_num = np.zeros_like(H_j[0, ...])
+    C_th_den = np.zeros_like(R_j[0, ...])
+    z_num = (C_th_num.shape)[-1]
+
+    H_prof = np.zeros((3, z_num))
+    R_prof = np.zeros((3, z_num))
 
     for it in range(0, 3):
 
-        C_th_num += H_ij[it, ...] * R_ij[it, ...]
-        C_th_den += R_ij[it, ...] * R_ij[it, ...]
+        C_th_num += H_j[it, ...] * R_j[it, ...]
+        C_th_den += R_j[it, ...] * R_j[it, ...]
 
-    z_num = (C_th_num.shape)[-1]
+        for k in range(z_num):
+            H_prof[it,k] = np.mean(H_j[it, ..., k])
+            R_prof[it,k] = np.mean(R_j[it, ..., k])
+
     horiz_num_temp = (C_th_num.shape)[-2]
     horiz_num = horiz_num_temp * horiz_num_temp
 
-    if len(H_ij.shape) == 5:
+    if len(H_j.shape) == 5:
         num_times = (C_th_num.shape)[0]
         total_num = num_times * horiz_num
         HR_flat = C_th_num.reshape(total_num, z_num)
@@ -670,7 +681,7 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
 
 
     # if return_all == 2:
-        # if len(H_ij.shape) == 5:
+        # if len(H_j.shape) == 5:
         #     HR_field_av = np.mean(C_th_num, 0)
         #     RR_field_av = np.mean(C_th_den, 0)
         # else:
@@ -696,7 +707,7 @@ def C_scalar_profiles(H_ij, R_ij, return_all=2):
         return C_th_av_sq, C_th_av, HR_av, RR_av
 
     if return_all == 2:
-        return C_th_av_sq, C_th_av, HR_av, RR_av, C_th_num, C_th_den
+        return C_th_av_sq, C_th_av, HR_av, RR_av, H_prof, R_prof, C_th_num, C_th_den
     else:
         return C_th_av_sq, C_th_av
 

@@ -51,10 +51,10 @@ elif case_in == 'ARM':
     folder_ff = 'second_filt/'
     file_f = f'diagnostics_3d_ts_{time_in}_'
     Delta = 25
-    # dx_bar_in = np.array([25, 50, 100, 200, 400, 800])
-    # dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
-    dx_bar_in = np.array([400, 800])
-    dx_hat_in = np.array([800, 1600])
+    dx_bar_in = np.array([25, 50, 100, 200, 400, 800])
+    dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
+    # dx_bar_in = np.array([400, 800])
+    # dx_hat_in = np.array([800, 1600])
     if filtering_filters == True:
         dx_bar_in = 2*dx_bar_in
         dx_hat_in = 2*dx_hat_in
