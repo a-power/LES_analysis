@@ -653,9 +653,10 @@ def C_scalar_profiles(H_j, R_j, return_all=2):
     C_th_num = np.zeros_like(H_j[0, ...])
     C_th_den = np.zeros_like(R_j[0, ...])
     z_num = (C_th_num.shape)[-1]
+    num_times = (C_th_num.shape)[0]
 
-    H_prof = np.zeros((3, z_num))
-    R_prof = np.zeros((3, z_num))
+    H_prof = np.zeros((1, 3, z_num))
+    R_prof = np.zeros((1, 3, z_num))
 
     for it in range(0, 3):
 
@@ -663,14 +664,13 @@ def C_scalar_profiles(H_j, R_j, return_all=2):
         C_th_den += R_j[it, ...] * R_j[it, ...]
 
         for k in range(z_num):
-            H_prof[it,k] = np.mean(H_j[it, ..., k])
-            R_prof[it,k] = np.mean(R_j[it, ..., k])
+            H_prof[0,it,k] = np.mean(H_j[it, ..., k])
+            R_prof[0,it,k] = np.mean(R_j[it, ..., k])
 
     horiz_num_temp = (C_th_num.shape)[-2]
     horiz_num = horiz_num_temp * horiz_num_temp
 
     if len(H_j.shape) == 5:
-        num_times = (C_th_num.shape)[0]
         total_num = num_times * horiz_num
         HR_flat = C_th_num.reshape(total_num, z_num)
         RR_flat = C_th_den.reshape(total_num, z_num)
