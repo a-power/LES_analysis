@@ -144,7 +144,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             "q_total",
                             "q_vapour",
                             "q_cloud_liquid_mass",
-                            "buoyancy"
+                            "buoyancy",
                             "th_v"
                             ]
                 # "th_L",
