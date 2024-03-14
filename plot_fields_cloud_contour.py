@@ -163,15 +163,15 @@ Cqt_options = {'field': 'Cqt_field',
            }
 
 
-# apf.plot_cloud_field(plotdir_in, x_or_y=my_x_y, axis_set=my_axis, set_percentile=None, var_field=set_var_field,
-#                  var_path=contour_data, t_av_or_not=time_av_or_not, start_end=x_axis_start_end, z_top_in=z_top,
-#                  z_tix_in=z_tix, z_labels_in=z_labels, deltas=deltas_in, set_cb=set_cb_in, delta_grid=25)
+apf.plot_cloud_field(plotdir_in, x_or_y=my_x_y, axis_set=my_axis, set_percentile=None, var_field=set_var_field,
+                 var_path=contour_data, t_av_or_not=time_av_or_not, start_end=x_axis_start_end, z_top_in=z_top,
+                 z_tix_in=z_tix, z_labels_in=z_labels, deltas=deltas_in, set_cb=set_cb_in, delta_grid=25)
 
 # # apf.plotfield(plotdir, start_end=x_axis_start_end, **LijMij_options)
 # #
 # # apf.plotfield(plotdir, start_end=x_axis_start_end, **MijMij_options)
 # #
-apf.plot_C_contours(**plot_var_fields_options, **Cs_options)
+# apf.plot_C_contours(**plot_var_fields_options, **Cs_options)
 # #
 # #
 # # apf.plotfield(plotdir, start_end=x_axis_start_end, **HjRj_th_options)
