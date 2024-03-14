@@ -46,7 +46,7 @@ if case =='BOMEX':
     # #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
 
 elif case == 'ARM':
-    homedir = '/work/scratch-pw3/apower/ARM/second_filt/'
+    homedir = '/work/scratch-pw3/apower/ARM/first_filt/'
     mydir = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
     contour_data = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_ga0"
 
