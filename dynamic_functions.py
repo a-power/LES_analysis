@@ -655,8 +655,8 @@ def C_scalar_profiles(H_j, R_j, return_all=2):
     z_num = (C_th_num.shape)[-1]
     num_times = (C_th_num.shape)[0]
 
-    H_prof = np.zeros((1, 3, z_num))
-    R_prof = np.zeros((1, 3, z_num))
+    H_prof = np.zeros((num_times, 3, z_num))
+    R_prof = np.zeros((num_times, 3, z_num))
 
     for it in range(0, 3):
 
