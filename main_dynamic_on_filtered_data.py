@@ -113,6 +113,7 @@ elif case_in=='ARM':
                             'v': [f'f(v_on_{opgrid})_r'],
                             'w': [f'f(w_on_{opgrid})_r'],
                             'th_tot': [f'f(th_on_{opgrid})_r'],
+                            'th_v': [f'f(th_v_on_{opgrid})_r'],
                             'q_total': [f'f(q_total_on_{opgrid})_r'],
                             'q_vapour': [f'f(q_vapour_on_{opgrid})_r'],
                             'buoyancy': [f'f(buoyancy_on_{opgrid})_r'],
