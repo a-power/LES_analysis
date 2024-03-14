@@ -1215,7 +1215,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
                             th_v_mean[nz] = np.mean(var_field_data['f(th_v_on_p)_r'].data[..., nz])
                         th_v_f = np.mean(var_field_data['f(th_v_on_p)_r'].data[:, axis_set, ...], axis=0)
 
-                        # var_field_plot = np.mean(var_field_data['f(f(w_on_p.th_v_on_p)_r_on_p)_r'].data[:, axis_set, ...],
+                        # var_field_plot = np.mean(var_field_data['f(w_on_p.th_v_on_p)_r'].data[:, axis_set, ...],
                         #                          axis=0)
 
                         var_field_plot = th_v_f - th_v_mean
@@ -1223,7 +1223,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
                         th_v_f = None
 
                     #w2_field = np.mean(var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[:, axis_set, ...], axis=0)
-                    #th_v_field = np.mean(var_field_data['f(th_v_on_p)_r'].data[:, axis_set, ...], axis=0)
+                    th_v_field = np.mean(var_field_data['f(th_v_on_p)_r'].data[:, axis_set, ...], axis=0)
 
                 elif x_or_y == 'y':
                     cloud_field = np.mean(var_field_data['f(q_cloud_liquid_mass_on_p)_r'].data[:, :, axis_set, ...], axis=0)
@@ -1253,7 +1253,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
                             th_v_mean[nz] = np.mean(var_field_data['f(th_v_on_p)_r'].data[..., nz])
                         th_v_f = np.mean(var_field_data['f(th_v_on_p)_r'].data[:, :, axis_set, ...], axis=0)
 
-                        # var_field_plot = np.mean(var_field_data['f(f(w_on_p.th_v_on_p)_r_on_p)_r'].data[:, axis_set, ...],
+                        # var_field_plot = np.mean(var_field_data['f(w_on_p.th_v_on_p)_r'].data[:, axis_set, ...],
                         #                          axis=0)
 
                         var_field_plot = th_v_f - th_v_mean
@@ -1261,7 +1261,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
                         th_v_f = None
 
                     #w2_field = np.mean(var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[:, :, axis_set, ...], axis=0)
-                    #th_v_field = np.mean(var_field_data['f(th_v_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                    th_v_field = np.mean(var_field_data['f(th_v_on_p)_r'].data[:, :, axis_set, ...], axis=0)
 
                 mytime = 't_av'
             else:
@@ -1303,7 +1303,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
 
 
                     #w2_field = var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
-                    #th_v_field = var_field_data['f(th_v_on_p)_r'].data[t_set, axis_set, ...]
+                    th_v_field = var_field_data['f(th_v_on_p)_r'].data[t_set, axis_set, ...]
 
                 elif x_or_y == 'y':
 
@@ -1346,7 +1346,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
                         th_v_f = None
 
                     #w2_field = var_field_data['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
-                    #th_v_field = var_field_data['f(th_v_on_p)_r'].data[t_set, :, axis_set, ...]
+                    th_v_field = var_field_data['f(th_v_on_p)_r'].data[t_set, :, axis_set, ...]
 
 
 
@@ -1403,7 +1403,15 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
 
             cl_c = plt.contour(np.transpose(cloud_field), colors='black', linewidths=4, levels=[1e-5])
 
+            th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, :]), colors='black', linestyles='dashed',
+                                 linewidths=1)  # , levels=[0.1, 1, 2])
+            ax1.clabel(th_v_c, inline=True, fontsize=10)
 
+            # C_1st = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], C_perc_1st)
+            # my_C_levels = [C_1st]
+            # C_contour = plt.contour(np.transpose(data_field), colors='darkslategrey', linewidths=2,
+            #                         levels=my_C_levels)  # darkslategrey
+            # ax1.clabel(C_contour, inline=True, fontsize=10, fmt='%1.2f')
 
             # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=2, levels=[0.1])
             plt.xlabel(f'x (km) (cross section at {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km)', fontsize=16)
