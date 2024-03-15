@@ -1437,13 +1437,10 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
     plt.close('all')
 
 
-def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_path, t_av_or_not,
+def plot_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_path, t_av_or_not,
               start_end, z_top_in, z_tix_in, z_labels_in, deltas=None,
                     set_cb=[None, None], delta_grid=25):
 
-
-    myvmin_var = set_cb[0]
-    myvmax_var = set_cb[1]
 
     if deltas==None:
         deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
@@ -1457,12 +1454,6 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
     if var_field == 'w':
         var_name = "$w'$"
         var_units = '$m s^{-1}$'
-    if var_field == 'w_th_v':
-        var_name = "$w' \\theta_v'$"
-        var_units = '$K m s^{-1}$'
-    if var_field == 'TKE':
-        var_name = "TKE"
-        var_units = '$m^2 s^{-2}$'
 
 
 
@@ -1520,39 +1511,15 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
             fig1, ax1 = plt.subplots(figsize=(9, 4))
             plt.title(f'{var_name}' + '$\\widehat{\\bar{\\Delta}} = $' + f'{delta_label}', fontsize=16)
 
-            cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm,
-                                       norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
-                                       levels=mylevels, extend='both')
-                 else:
-                     cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.YlOrRd,
-                                       levels=mylevels, extend='both')
-            else:
-                if set_percentile != None:
-                    myvmin = np.percentile(var_field_plot[start_grid:end_grid, 5:z_top_in], set_percentile[0])
-                    myvmax = np.percentile(var_field_plot[start_grid:end_grid, 5:z_top_in], set_percentile[1])
-
-                    # orig_cmap = matplotlib.cm.coolwarm
-                    # shifted_cmap = shiftedColorMap(orig_cmap, myvmin, myvmax)
-
-                    mylevels = np.linspace(myvmin, myvmax, 9)
-                    if var_field == 'w' or var_field == 'w_th_v':
-                        cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm,
-                                      norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
-                                      levels=mylevels, extend='both')
-                    else:
-                        cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.YlOrRd,
-                                          levels=mylevels, extend='both')
-
-                if set_percentile == None:
-                    cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.YlOrRd, extend='both')
+            cf = plt.contourf(np.transpose(var_field_plot), cmap=cm.coolwarm)
 
             cb = plt.colorbar(cf, format='%.1f')
             cb.set_label(f'{var_name} ({var_units})', size=16)
 
-            cl_c = plt.contour(np.transpose(cloud_field), colors='black', linewidths=4, levels=[1e-5])
+            # cl_c = plt.contour(np.transpose(cloud_field), colors='black', linewidths=4, levels=[1e-5])
 
-            th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, :]), colors='black', linestyles='dashed',
-                                 linewidths=1)  # , levels=[0.1, 1, 2])
+            # th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, :]), colors='black', linestyles='dashed',
+            #                      linewidths=1)  # , levels=[0.1, 1, 2])
             ax1.clabel(th_v_c, inline=True, fontsize=10)
 
             # C_1st = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], C_perc_1st)
