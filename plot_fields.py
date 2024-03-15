@@ -30,8 +30,8 @@ set_C_perc_2nd = None
 
 
 if case =='BOMEX':
-    homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/'
-    mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
+    homedir = 'C:/Users/Alanna/Documents/1_PhD/data/'#'/work/scratch-pw3/apower/BOMEX/second_filt/'
+    mydir = homedir + 'C:/Users/Alanna/Documents/1_PhD/data/'#'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
     contour_data = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
     plotdir_in = '/gws/nopw/j04/paracon_rdg/users/apower/plots/BOMEX_fields/cloud_contour/'
@@ -65,9 +65,9 @@ else:
 
 os.makedirs(plotdir_in, exist_ok = True)
 
-dir_s = mydir + 'Cs_'
-dir_th = mydir + 'C_th_'
-dir_qt = mydir + 'C_qt_'
+# dir_s = mydir + 'Cs_'
+# dir_th = mydir + 'C_th_'
+# dir_qt = mydir + 'C_qt_'
 
 in_set_percentile = None #[25,99] for C
 in_set_percentile_C = [1, 99] # None #[70,99]
@@ -78,7 +78,7 @@ x_axis_start_end = [x_start, x_end] #start and end points in km
 
 
 
-general_options = {'set_cb': set_cb_in,
+general_options = {
                     'axis_set': my_axis,
                     'x_or_y': my_x_y,
                     't_av_or_not': time_av_or_not,
@@ -111,60 +111,9 @@ plot_var_fields_options = {'plot_dir': plotdir_in,
 
 
 
-LijMij_options = {'field': 'LM_field',
-                   'data_field_in': dir_s,
-                    'set_percentile': in_set_percentile
-                  }
-
-MijMij_options = {'field': 'MM_field',
-                   'data_field_in': dir_s,
-                    'set_percentile': in_set_percentile
-           }
-
-Cs_options = {'field': 'Cs_field',
-               'data_field_in': dir_s,
-              'set_percentile': in_set_percentile_C,
-              'set_percentile_C_sq': in_set_percentile_C2
-           }
-
-
-HjRj_th_options = {'field': 'HR_th_field',
-                   'data_field_in': dir_th,
-                    'set_percentile': in_set_percentile
-           }
-
-RjRj_th_options = {'field': 'RR_th_field',
-                   'data_field_in': dir_th,
-                    'set_percentile': in_set_percentile
-           }
-
-Cth_options = {'field': 'Cth_field',
-               'data_field_in': dir_th,
-               'set_percentile': in_set_percentile_C,
-               'set_percentile_C_sq': in_set_percentile_C2
-           }
-
-
-HjRj_qt_options = {'field': 'HR_q_total_field',
-                   'data_field_in': dir_qt,
-                    'set_percentile': in_set_percentile
-           }
-
-RjRj_qt_options = {'field': 'RR_q_total_field',
-                   'data_field_in': dir_qt,
-                    'set_percentile': in_set_percentile
-           }
-
-Cqt_options = {'field': 'Cqt_field',
-               'data_field_in': dir_qt,
-               'set_percentile': in_set_percentile_C,
-               'set_percentile_C_sq': in_set_percentile_C2
-           }
-
-
-apf.plot_cloud_field(plotdir_in, x_or_y=my_x_y, axis_set=my_axis, set_percentile=None, var_field=set_var_field,
+apf.plotfield(plotdir_in, x_or_y=my_x_y, axis_set=my_axis, set_percentile=None, var_field=set_var_field,
                  var_path=contour_data, t_av_or_not=time_av_or_not, start_end=x_axis_start_end, z_top_in=z_top,
-                 z_tix_in=z_tix, z_labels_in=z_labels, deltas=deltas_in, set_cb=set_cb_in, delta_grid=25)
+                 z_tix_in=z_tix, z_labels_in=z_labels, deltas=deltas_in, delta_grid=25)
 
 # # apf.plotfield(plotdir, start_end=x_axis_start_end, **LijMij_options)
 # #
