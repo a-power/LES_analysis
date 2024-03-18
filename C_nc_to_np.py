@@ -32,7 +32,8 @@ elif case=='ARM':
 
 for j in res:
     for i in scalars:
-
+        if i == '_q':
+            i = '_qt'
         C_data = xr.open_dataset(homedir+f'{i}_{j}.nc')
         if i == '_qt':
             i = '_q'
