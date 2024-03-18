@@ -37,7 +37,7 @@ for i in scalars:
     if i == '_qt':
         i = '_q'
 
-    C_sq = C_data[f'C{i}_sq_prof}'].data[...]
+    C_sq = C_data[f'C{i}_sq_prof'].data[...]
     z = dx*C_sq[..., :]
 
     np.save(homedir+f'C{i}_sq_cond_{set_time}.npy', C_sq)
