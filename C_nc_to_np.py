@@ -28,7 +28,7 @@ if case=='BOMEX':
 elif case=='ARM':
     homedir = '/work/scratch-pw3/apower/ARM/first_filt/LM/diagnostics_3d_ts_32400_C'
     dx=25
-    res = '50_100'
+    res = '100_200'
 
 
 for i in scalars:
