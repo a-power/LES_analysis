@@ -28,7 +28,7 @@ if case=='BOMEX':
 elif case=='ARM':
     homedir = '/work/scratch-pw3/apower/ARM/first_filt/LM/diagnostics_3d_ts_32400_C'
     dx=25
-    res = '25_50'
+    res = '50_100'
 
 
 for i in scalars:
@@ -40,4 +40,4 @@ for i in scalars:
     C_sq = C_data[f'C{i}_sq_prof'].data[...]
     z = dx*C_sq[..., :]
 
-    np.save(homedir+f'C{i}_sq_cond_{set_time}.npy', C_sq)
+    np.save('C{i}_sq_cond_{set_time}.npy', C_sq)
