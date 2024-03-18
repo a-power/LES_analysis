@@ -30,9 +30,8 @@ elif case=='ARM':
     dx=25
     res = ['50_100', '100_200']
 
-
-for i in scalars:
-    for j in res:
+for j in res:
+    for i in scalars:
 
         C_data = xr.open_dataset(homedir+f'{i}_{j}.nc')
         if i == '_qt':
