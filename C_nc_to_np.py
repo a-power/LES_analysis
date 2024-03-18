@@ -28,16 +28,17 @@ if case=='BOMEX':
 elif case=='ARM':
     homedir = '/work/scratch-pw3/apower/ARM/first_filt/LM/diagnostics_3d_ts_32400_C'
     dx=25
-    res = '100_200'
+    res = ['50_100', '100_200']
 
 
 for i in scalars:
+    for j in res:
 
-    C_data = xr.open_dataset(homedir+f'{i}_{res}.nc')
-    if i == '_qt':
-        i = '_q'
+        C_data = xr.open_dataset(homedir+f'{i}_{res}.nc')
+        if i == '_qt':
+            i = '_q'
 
-    C_sq = C_data[f'C{i}_sq_prof'].data[...]
-    z = dx*C_sq[..., :]
+        C_sq = C_data[f'C{i}_sq_prof'].data[...]
+        z = dx*C_sq[..., :]
 
-    np.save('C{i}_sq_cond_{set_time}.npy', C_sq)
+        np.save(f'C{i}_sq_cond_{set_time}_{j}.npy', C_sq)
