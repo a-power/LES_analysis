@@ -27,8 +27,8 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
     print(time_name)
 
     if res_in != None:
-        file_in = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
-        ref_file = f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
+        file_in = f'{indir}/BOMEX_m{res_in}_all_{time_in}.nc' #f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
+        ref_file = f'{indir}/BOMEX_m{res_in}_all_{time_in}.nc' #f'{indir}{res_in}/diagnostic_files/BOMEX_m{res_in}_all_{time_in}.nc'
     elif time_name == 'time_series_300_300':
         file_in = f'{indir}/cbl_{time_in}.nc'
         ref_file = None

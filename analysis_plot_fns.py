@@ -309,8 +309,8 @@ def C_values_dist(plotdir, field, data_field_list, data_contour, set_bins, delta
     plt.close('all')
 
 
-def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, contour_field_in, t_av_or_not,
-              start_end, z_top_in, z_tix_in, z_labels_in, set_percentile_C_sq=None, deltas=None,
+def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, t_av_or_not,
+              start_end, z_top_in, z_tix_in, z_labels_in, deltas=None,
               set_cb=[[None, None], [None, None]], delta_grid=25):
 
     print('starting to plot field: ', field)

@@ -124,11 +124,13 @@ options_dry = {
         'domain': 4.8
           }
 
+print('running case')
 
 if case=='BOMEX':
-    in_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
+    in_dir = 'C:/Users/Alanna/Documents/1_PhD/data/'
+    #'/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m'
     model_res_list = ['0020_g0800']
-    outdir = '/work/scratch-pw3/apower/BOMEX/first_filt/'
+    outdir = 'C:/Users/Alanna/Documents/1_PhD/data/' #'/work/scratch-pw3/apower/BOMEX/first_filt/'
     time_name_in = 'time_series_600_600'
     my_opt = options_BOMEX
     set_vapour=True
