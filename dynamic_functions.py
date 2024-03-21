@@ -6,7 +6,6 @@ from monc_utils.data_utils.string_utils import get_string_index
 from monc_utils.io.datain import get_data_on_grid
 from monc_utils.io.datain import get_data
 from monc_utils.io.datain import get_and_transform
-from monc_utils.io.datain import correct_grid_and_units
 from monc_utils.io.dataout import save_field, setup_child_file
 from monc_utils.data_utils.dask_utils import re_chunk
 from monc_utils.io.datain import correct_grid_and_units
@@ -583,6 +582,12 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
     C_s_num = np.zeros_like(L_ij[0, ...])
     C_s_den = np.zeros_like(M_ij[0, ...])
 
+    z_num = (C_s_num.shape)[-1]
+    num_times = (C_s_num.shape)[0]
+
+    L_prof = np.zeros((num_times, 3, z_num))
+    M_prof = np.zeros((num_times, 3, z_num))
+
 
     for it in range(0,6):
         if it in [0,3,5]:
@@ -593,6 +598,10 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         else:
             C_s_num += 2*(L_ij[it, ...] * M_ij[it, ...])
             C_s_den += 2*(M_ij[it, ...] * M_ij[it, ...])
+
+        for k in range(z_num):
+            L_prof[0, it, k] = np.mean(L_ij[it, ..., k])
+            M_prof[0, it, k] = np.mean(M_ij[it, ..., k])
 
     z_num = (C_s_num.shape)[-1]
     horiz_num_temp = (C_s_num.shape)[-2]
@@ -637,7 +646,7 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
         return Cs_av_sq, Cs_av, LM_av, MM_av
 
     if return_all == 2:
-        return Cs_av_sq, Cs_av, LM_av, MM_av, C_s_num, C_s_den
+        return Cs_av_sq, Cs_av, LM_av, MM_av, L_prof, M_prof, C_s_num, C_s_den
     else:
         return Cs_av_sq, Cs_av
 
