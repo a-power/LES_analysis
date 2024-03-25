@@ -8,7 +8,7 @@ import gc
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--t', type=int, default=0)
-parser.add_argument('--case', type=str, default='ARM')
+parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--filting_filts', type=str, default='n')
 args = parser.parse_args()
 t_in = args.t
@@ -147,27 +147,3 @@ for i, C_res_in in enumerate(C_res):
         else:
             #z_save, zn_save, C_sq_prof, C_prof, HR_prof, RR_prof, HR_field, RR_field = \
             dy_s.C_scalar(scalar=scalar_in, file_save_to=file_setup, ingrid=mygrid, save_all=set_save_all, **DX_in)
-
-        gc.collect()
-
-        # save_field(ds_in, HR_field)
-        # save_field(ds_in, RR_field)
-        # save_field(ds_in, z_save)
-        # save_field(ds_in, zn_save)
-        # save_field(ds_in, C_sq_prof)
-        # save_field(ds_in, C_prof)
-        # save_field(ds_in, HR_prof)
-        # save_field(ds_in, RR_prof)
-        # #save_field(ds_in2 = \ #, C_sq_field_2D)
-        # # save_field(ds_in2, Hj_2D)
-        # # save_field(ds_in2, Rj_2D)
-        #
-        # ds.close()
-
-        # C_sq_prof = None
-        # C_prof = None
-        # HR_prof = None
-        # RR_prof = None
-        # HR_field = None
-        # RR_field = None
-

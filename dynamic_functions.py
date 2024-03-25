@@ -585,8 +585,8 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
     z_num = (C_s_num.shape)[-1]
     num_times = (C_s_num.shape)[0]
 
-    L_prof = np.zeros((num_times, 3, z_num))
-    M_prof = np.zeros((num_times, 3, z_num))
+    L_prof = np.zeros((num_times, 6, z_num))
+    M_prof = np.zeros((num_times, 6, z_num))
 
 
     for it in range(0,6):
