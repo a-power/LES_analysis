@@ -583,7 +583,7 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
     C_s_den = np.zeros_like(M_ij[0, ...])
 
     z_num = (C_s_num.shape)[-1]
-    num_times = (C_s_num.shape)[0]
+    num_times = (L_ij.shape)[0]
 
     L_prof = np.zeros((num_times, 6, z_num))
     M_prof = np.zeros((num_times, 6, z_num))
@@ -662,7 +662,7 @@ def C_scalar_profiles(H_j, R_j, return_all=2):
     C_th_num = np.zeros_like(H_j[0, ...])
     C_th_den = np.zeros_like(R_j[0, ...])
     z_num = (C_th_num.shape)[-1]
-    num_times = (C_th_num.shape)[0]
+    num_times = (H_j.shape)[0]
 
     H_prof = np.zeros((num_times, 3, z_num))
     R_prof = np.zeros((num_times, 3, z_num))
