@@ -583,7 +583,7 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
     C_s_den = np.zeros_like(M_ij[0, ...])
 
     z_num = (C_s_num.shape)[-1]
-    num_times = (L_ij.shape)[0]
+    num_times = (L_ij.shape)[1]
     print('shape of Lij is', np.shape(L_ij))
 
     L_prof = np.zeros((num_times, 6, z_num))
