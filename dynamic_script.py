@@ -761,6 +761,7 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
 
     ij_data = ds_in['i_j']
     ij_s = ij_data.data
+    print('i_j len is: ', ij_s)
 
     # ds_in.close()
     #
@@ -852,6 +853,8 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
         #Cs_sq_field = dyn.C_s_sq(Lij, Mij)
 
         Cs_sq_prof, Cs_prof, LM_prof, MM_prof, Lij_prof, Mij_prof, LM_field, MM_field = dyn.Cs_profiles(Lij, Mij, return_all=2)
+
+        print('shape of Lij_prof and Mij_prof is: ', np.shape(Lij_prof), np.shape(Mij_prof))
 
         Lij = None
         Mij = None
@@ -1150,11 +1153,11 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
                                dims=['time', "zn"], name=f'RR_{scalar_name}_prof')
 
         Hj_prof = xr.DataArray(Hj_prof[...],
-                          coords={'time': times, 'i_j': j_s, 'zn': zn_s},
+                          coords={'time': times, 'j': j_s, 'zn': zn_s},
                           dims=["time", "j", "zn"], name='Hj_prof')
 
         Rj_prof = xr.DataArray(Rj_prof[...],
-                               coords={'time': times, 'i_j': j_s, 'zn': zn_s},
+                               coords={'time': times, 'j': j_s, 'zn': zn_s},
                                dims=["time", "j", "zn"], name='Rj_prof')
 
         HR_field = xr.DataArray(HR_field, coords={'time': times, 'x_p': x_s, 'y_p': y_s, 'zn': zn_s},

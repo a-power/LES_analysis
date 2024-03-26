@@ -604,7 +604,6 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
             L_prof[0, it, k] = np.mean(L_ij[it, ..., k])
             M_prof[0, it, k] = np.mean(M_ij[it, ..., k])
 
-    z_num = (C_s_num.shape)[-1]
     horiz_num_temp = (C_s_num.shape)[-2]
     horiz_num = horiz_num_temp * horiz_num_temp
 
