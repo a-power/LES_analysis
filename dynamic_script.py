@@ -871,10 +871,10 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
         MM_prof = xr.DataArray(MM_prof[...], coords={'time' : times,'zn': zn_s},
                                dims=['time', "zn"], name='MM_prof')
 
-        Lij_prof = xr.DataArray(LM_prof[...], coords={'time': times, 'i_j': ij_s, 'zn': zn_s},
+        Lij_prof = xr.DataArray(Lij_prof[...], coords={'time': times, 'i_j': ij_s, 'zn': zn_s},
                                dims=["time", "i_j", "zn"], name='Lij_prof')
 
-        Mij_prof = xr.DataArray(MM_prof[...], coords={'time': times, 'i_j': ij_s, 'zn': zn_s},
+        Mij_prof = xr.DataArray(Mij_prof[...], coords={'time': times, 'i_j': ij_s, 'zn': zn_s},
                                dims=["time", "i_j", "zn"], name='Mij_prof')
 
         LM_field = xr.DataArray(LM_field[...], coords={'time' : times, 'x_p' : x_s, 'y_p' : y_s, 'zn': zn_s},
