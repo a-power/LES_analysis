@@ -584,6 +584,7 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
 
     z_num = (C_s_num.shape)[-1]
     num_times = (L_ij.shape)[0]
+    print('shape of Lij is', np.shape(L_ij))
 
     L_prof = np.zeros((num_times, 6, z_num))
     M_prof = np.zeros((num_times, 6, z_num))
