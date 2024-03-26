@@ -142,7 +142,7 @@ def M_ij_stab_fns(dx_filt1, dx_filt2, S_filt, abs_S_filt, HAT_abs_S_Sij_fRi, fRi
     alpha = dx_filt2 / dx_filt1
     power = alpha / 2
 
-    M_ij = dx_filt * dx_filt * (beta ** power) * abs_S_filt * S_filt * fRi_hat - dx * dx * HAT_abs_S_Sij_fRi
+    M_ij = dx_filt2 * dx_filt2 * (beta ** power) * abs_S_filt * S_filt * fRi_hat - dx_filt1 * dx_filt1 * HAT_abs_S_Sij_fRi
 
     return M_ij
 
