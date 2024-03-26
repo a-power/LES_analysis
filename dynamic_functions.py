@@ -609,7 +609,6 @@ def Cs_profiles(L_ij, M_ij, return_all=1):
     horiz_num = horiz_num_temp * horiz_num_temp
 
     if len(L_ij.shape) == 5:
-        num_times = (C_s_num.shape)[0]
         total_num = num_times*horiz_num
         LM_flat = C_s_num.reshape(total_num, z_num)
         MM_flat = C_s_den.reshape(total_num, z_num)
@@ -663,7 +662,7 @@ def C_scalar_profiles(H_j, R_j, return_all=2):
     C_th_num = np.zeros_like(H_j[0, ...])
     C_th_den = np.zeros_like(R_j[0, ...])
     z_num = (C_th_num.shape)[-1]
-    num_times = (H_j.shape)[0]
+    num_times = (H_j.shape)[1]
 
     H_prof = np.zeros((num_times, 3, z_num))
     R_prof = np.zeros((num_times, 3, z_num))

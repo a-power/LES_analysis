@@ -55,11 +55,14 @@ elif case_in == 'ARM':
     dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
     # dx_bar_in = np.array([400, 800])
     # dx_hat_in = np.array([800, 1600])
+
+    C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
+    #C_res = ['32D', '64D']
+
     if filtering_filters == True:
         dx_bar_in = 2*dx_bar_in
         dx_hat_in = 2*dx_hat_in
-    # C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
-    C_res = ['32D', '64D']
+
     if filtering_filters == True:
         scalar = ['momentum', 'f(th_on_p)_r', 'q_total']
     else:
