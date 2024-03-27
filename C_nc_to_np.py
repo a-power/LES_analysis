@@ -21,7 +21,7 @@ scalars = ['s', '_th', '_qt']
 
 
 if case=='BOMEX':
-    homedir = '/work/scratch-pw3/apower/BOMEX/first_filt/LM/BOMEX_m0020_g0800_14400_C'
+    homedir = '/work/scratch-pw3/apower/BOMEX/first_filt/LM/BOMEX_m0020_g0800_all_14400_C'
     dx=20
     res = ['20_40', '40_80', '80_160', '160_320', '320_640', '640_1280']
 
