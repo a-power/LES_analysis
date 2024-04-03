@@ -74,7 +74,7 @@ def L_ij_sym_xarray(uu, uv, uw, vv, vw, ww):
 
 
 def H_j(u_s, v_s, w_s):
-    H_j = np.array([-u_s, -v_s, -w_s])
+    H_j = np.stack([-u_s, -v_s, -w_s]) #np.array([-u_s, -v_s, -w_s])
     return H_j
 
 
@@ -396,7 +396,7 @@ def R_j_stab_fns(dx_filt1, dx_filt2, abs_S_hat, ds_dxj_hat, HAT_abs_S_ds_dxj_fRi
     alpha = dx_filt2 / dx_filt1
     power = alpha / 2
 
-    R_j = dx_filt2 * dx_filt2 * beta ** power * abs_S_hat * ds_dxj_hat * fRi_hat - dx_filt1 * dx_filt1 * HAT_abs_S_ds_dxj_fRi
+    R_j = dx_filt2 * dx_filt2 * (beta ** power) * abs_S_hat * ds_dxj_hat * fRi_hat - dx_filt1 * dx_filt1 * HAT_abs_S_ds_dxj_fRi
 
     return R_j
 

@@ -1064,7 +1064,15 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
     v_s = ds_in[f's(v,{scalar})_on_{ingrid}'].data[...]
     w_s = ds_in[f's(w,{scalar})_on_{ingrid}'].data[...]
 
+    print(f's(u,{scalar}) = ', u_s[0, :10, 10, 50])
+    print(f's(v,{scalar}) = ', v_s[0, :10, 10, 50])
+    print(f's(w,{scalar}) = ', w_s[0, :10, 10, 50])
+
     Hj = dyn.H_j(u_s, v_s, w_s)
+
+    print(f'H_0 = ', Hj[0, :10, 10, 50])
+    print(f'H_1 = ', Hj[0, :10, 10, 50])
+    print(f'H_2 = ', Hj[0, :10, 10, 50])
 
     u_s = None  # Save storage
     v_s = None  # Save storage
@@ -1073,14 +1081,22 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
     hat_abs_S = ds_in['f(abs_S)_r'].data[...]
     ds_dx_hat = ds_in[f'f(d{scalar_name}_dx)_r'].data[...]
 
+    print(f'd{scalar}_dx_hat = ', ds_dx_hat[0, 0, :10, 10, 50])
+    print(f'd{scalar}_dy_hat = ', ds_dx_hat[1, 0, :10, 10, 50])
+    print(f'd{scalar}_dz_hat = ', ds_dx_hat[2, 0, :10, 10, 50])
+
     ##########Rough axis fix###########
 
-    if axisfix == True:
-        HAT_abs_S_ds_dx_temp = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[...]
-        HAT_abs_S_ds_dx = np.transpose(HAT_abs_S_ds_dx_temp, axes=[4, 0, 1, 2, 3])
-        HAT_abs_S_ds_dx_temp = None
-    else:
-        HAT_abs_S_ds_dx = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[...]
+    # if axisfix == True:
+    #     HAT_abs_S_ds_dx_temp = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[...]
+    #     HAT_abs_S_ds_dx = np.transpose(HAT_abs_S_ds_dx_temp, axes=[4, 0, 1, 2, 3])
+    #     HAT_abs_S_ds_dx_temp = None
+    # else:
+    HAT_abs_S_ds_dx = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[...]
+
+    print(f'HAT_abs_S_d{scalar}_dx = ', HAT_abs_S_ds_dx[0, 0, :10, 10, 50])
+    print(f'HAT_abs_S_d{scalar}_dy = ', HAT_abs_S_ds_dx[1, 0, :10, 10, 50])
+    print(f'HAT_abs_S_d{scalar}_dz = ', HAT_abs_S_ds_dx[2, 0, :10, 10, 50])
 
 
     ds_in.close()
@@ -1092,6 +1108,10 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
 
     Rj = dyn.R_j(dx_bar, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
     HAT_abs_S_ds_dx = None
+
+    print(f'R_0 = ', Rj[0, :10, 10, 50])
+    print(f'R_1 = ', Rj[0, :10, 10, 50])
+    print(f'R_2 = ', Rj[0, :10, 10, 50])
 
     zn_save = np.zeros((nt, len(zn_s)))
     zn_save[0,...] = zn_s
