@@ -18,17 +18,27 @@ start = args.start_in
 
 scalars = ['s', '_th', '_qt']
 
+filt_num = 2
+
 
 
 if case=='BOMEX':
-    homedir = '/work/scratch-pw3/apower/BOMEX/first_filt/LM/BOMEX_m0020_g0800_all_14400_C'
     dx=20
-    res = ['20_40', '40_80', '80_160', '160_320', '320_640', '640_1280']
+    if filt_num == 1:
+        homedir = '/work/scratch-pw3/apower/BOMEX/first_filt/LM/BOMEX_m0020_g0800_all_14400_C'
+        res = ['20_40', '40_80', '80_160', '160_320', '320_640', '640_1280']
+    elif filt_num == 2:
+        homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/BOMEX_m0020_g0800_all_14400_C'
+        res = ['40_80', '80_160', '160_320', '320_640', '640_1280', '1280_2560']
 
 elif case=='ARM':
-    homedir = '/work/scratch-pw3/apower/ARM/first_filt/LM/diagnostics_3d_ts_32400_C'
     dx=25
-    res = ['50_100', '100_200']
+    if filt_num == 1:
+        homedir = '/work/scratch-pw3/apower/ARM/first_filt/LM/diagnostics_3d_ts_32400_C'
+        res = ['25_50', '50_100', '100_200']
+    elif filt_num == 2:
+        homedir = '/work/scratch-pw3/apower/ARM/second_filt/LM/diagnostics_3d_ts_32400_C'
+        res = ['50_100', '100_200', '200_400']
 
 for j in res:
     for i in scalars:

@@ -8,10 +8,12 @@ import gc
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--t', type=int, default=0)
+parser.add_argument('--start', type=int, default=0)
 parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--filting_filts', type=str, default='n')
 args = parser.parse_args()
 t_in = args.t
+nfilt = args.start
 filtering_filters_yn = args.filting_filts
 
 case_in = args.case
@@ -104,7 +106,8 @@ else:
 set_save_all = 2
 
 
-for i, C_res_in in enumerate(C_res):
+for it in range(len(C_res) - nfilt):
+    i = it+nfilt
 
     if filtering_filters == True:
         file_in = file_f + f'gaussian_filter_ga0{i}_gaussian_filter_ga00.nc'
