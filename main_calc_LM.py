@@ -36,12 +36,14 @@ if case_in == 'BOMEX':
         scalar = ['momentum', 'f(th_on_p)_r', 'q_total']
     else:
         scalar = ['momentum', 'th', 'q_total']
-    dx_bar_in = np.array([20, 20, 20, 20, 20, 20])
-    dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
-    if filtering_filters == True:
+    if filtering_filters == False:
+        dx_bar_in = np.array([20, 20, 20, 20, 20, 20])
+        dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
+        C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
+    elif filtering_filters == True:
         dx_bar_in = 2*np.array([20, 40, 80, 160, 320, 640])
-        dx_hat_in = 2*dx_hat_in
-    C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
+        dx_hat_in = 2*np.array([40, 80, 160, 320, 640, 1280])
+        C_res = ['4D', '8D', '16D', '32D', '64D', '128D']
 
 elif case_in == 'ARM':
     times_list = ['18000', '25200', '32400', '39600']
@@ -51,17 +53,20 @@ elif case_in == 'ARM':
     folder_ff = 'second_filt/'
     file_f = f'diagnostics_3d_ts_{time_in}_'
     Delta = 25
-    dx_bar_in = np.array([25, 25, 25, 25, 25, 25])
-    dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
+    if filtering_filters == False:
+        dx_bar_in = np.array([25, 25, 25, 25, 25, 25])
+        dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
+        C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
     # dx_bar_in = np.array([400, 800])
     # dx_hat_in = np.array([800, 1600])
 
-    C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
+
     #C_res = ['32D', '64D']
 
-    if filtering_filters == True:
+    elif filtering_filters == True:
         dx_bar_in = 2*np.array([25, 50, 100, 200, 400, 800])
-        dx_hat_in = 2*dx_hat_in
+        dx_hat_in = 2*np.array([50, 100, 200, 400, 800, 1600])
+        C_res = ['4D', '8D', '16D', '32D', '64D', '128D']
 
     if filtering_filters == True:
         scalar = ['momentum', 'f(th_on_p)_r', 'q_total']
@@ -80,12 +85,14 @@ elif case_in=='dry':
         scalar = ['momentum', 'f(th_on_p)_r']
     else:
         scalar = ['momentum', 'th']
-    dx_bar_in = np.array([20, 20, 20, 20, 20, 20])
-    dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
+    if filtering_filters == False:
+        dx_bar_in = np.array([20, 20, 20, 20, 20, 20])
+        dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
+        C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
     if filtering_filters == True:
         dx_bar_in = 2*np.array([20, 40, 80, 160, 320, 640])
-        dx_hat_in = 2*dx_hat_in
-    C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
+        dx_hat_in = 2*np.array([40, 80, 160, 320, 640, 1280])
+        C_res = ['4D', '8D', '16D', '32D', '64D', '128D']
 
 else:
     print('case not recognised')
