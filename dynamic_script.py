@@ -1109,9 +1109,9 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
     Rj = dyn.R_j(dx_bar, dx_hat, hat_abs_S, ds_dx_hat, HAT_abs_S_ds_dx, beta=1)
     HAT_abs_S_ds_dx = None
 
-    print(f'R_0 = ', Rj[0, :10, 10, 50])
-    print(f'R_1 = ', Rj[0, :10, 10, 50])
-    print(f'R_2 = ', Rj[0, :10, 10, 50])
+    print(f'R_0 = ', Rj[0, 0, :10, 10, 50])
+    print(f'R_1 = ', Rj[1, 0, :10, 10, 50])
+    print(f'R_2 = ', Rj[2, 0, :10, 10, 50])
 
     zn_save = np.zeros((nt, len(zn_s)))
     zn_save[0,...] = zn_s
