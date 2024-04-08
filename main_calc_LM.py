@@ -1,3 +1,5 @@
+import sys
+
 import dynamic_script as dy_s
 from monc_utils.io.dataout import save_field
 import os
@@ -28,10 +30,11 @@ print('about to start code')
 
 if filtering_filters_yn == 'y' or filtering_filters_yn == 'yes':
     filtering_filters = True
-    print('filtering_filters is se to False')
+    print('filtering_filters is set to False')
+    sys.exit()
 else:
     filtering_filters = False
-    print('filtering_filters is se to True')
+    print('filtering_filters is set to True')
 
 if case_in == 'BOMEX':
     print('using BOMEX')

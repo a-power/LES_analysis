@@ -1070,9 +1070,9 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
 
     Hj = dyn.H_j(u_s, v_s, w_s)
 
-    print(f'H_0 = ', Hj[0, :10, 10, 50])
-    print(f'H_1 = ', Hj[0, :10, 10, 50])
-    print(f'H_2 = ', Hj[0, :10, 10, 50])
+    print(f'H_0 = ', Hj[0, 0, :10, 10, 50])
+    print(f'H_1 = ', Hj[1, 0, :10, 10, 50])
+    print(f'H_2 = ', Hj[2, 0, :10, 10, 50])
 
     u_s = None  # Save storage
     v_s = None  # Save storage
