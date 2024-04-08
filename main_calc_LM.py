@@ -30,11 +30,10 @@ print('about to start code')
 
 if filtering_filters_yn == 'y' or filtering_filters_yn == 'yes':
     filtering_filters = True
-    print('filtering_filters is set to False')
-    sys.exit()
+    print('filtering_filters is set to True')
 else:
     filtering_filters = False
-    print('filtering_filters is set to True')
+    print('filtering_filters is set to False')
 
 if case_in == 'BOMEX':
     print('using BOMEX')
