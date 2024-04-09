@@ -10,6 +10,7 @@ import argparse
 parser = argparse.ArgumentParser()
 #parser.add_argument('--times', type=str, default='18000')
 parser.add_argument('--times', type=int, default=0)
+parser.add_argument('--case', type=str, default='ARM')
 
 times_analysed = [ '18000', '25200', '32400', '39600' ]
 
@@ -17,7 +18,7 @@ args = parser.parse_args()
 set_time = times_analysed[args.times]
 
 beta=False
-case = 'ARM'
+case = args.case
 
 if case == 'BOMEX':
 
