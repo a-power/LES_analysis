@@ -18,6 +18,7 @@ args = parser.parse_args()
 set_time = times_analysed[args.times]
 
 beta=False
+data_smoothed = False
 case = args.case
 
 if case == 'BOMEX':
@@ -70,9 +71,24 @@ else:
 # fields = ['Cs_sq_field', 'Cth_sq_field', 'Cqt_sq_field']
 # field_dir = ['Cs', 'C_th', 'C_qt']
 
-fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_field_on_{mygrid})_r', f'f(HR_q_total_field_on_{mygrid})_r',
-              f'f(MM_field_on_{mygrid})_r', f'f(RR_th_field_on_{mygrid})_r', f'f(RR_q_total_field_on_{mygrid})_r']
-#     fields = ['LM_field', 'HR_th_field', 'HR_q_total_field', 'MM_field', 'RR_th_field', 'RR_q_total_field']
+if data_smoothed == True:
+    fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_field_on_{mygrid})_r', f'f(HR_q_total_field_on_{mygrid})_r',
+                  f'f(MM_field_on_{mygrid})_r', f'f(RR_th_field_on_{mygrid})_r', f'f(RR_q_total_field_on_{mygrid})_r']
+
+    cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
+    w_field = f'f(f(w_on_{mygrid})_r_on_{mygrid})_r'
+    w2_field = f'f(f(w_on_{mygrid}.w_on_{mygrid})_r_on_{mygrid})_r'
+    th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
+    buoy_field = f'f(f(buoyancy_on_{mygrid})_r_on_{mygrid})_r'
+else:
+     fields = ['LM_field', 'HR_th_field', 'HR_q_total_field', 'MM_field', 'RR_th_field', 'RR_q_total_field']
+
+     cloud_field = f'f(q_cloud_liquid_mass_on_{mygrid})_r'
+     w_field = f'f(w_on_{mygrid})_r'
+     w2_field = f'f(w_on_{mygrid}.w_on_{mygrid})_r'
+     th_v_field = f'f(th_v_on_{mygrid})_r'
+     buoy_field = f'f(buoyancy_on_{mygrid})_r'
+
 field_dir = ['Cs', 'C_th', 'C_qt', 'Cs', 'C_th', 'C_qt']
 
 
@@ -81,11 +97,7 @@ field_dir = ['Cs', 'C_th', 'C_qt', 'Cs', 'C_th', 'C_qt']
 # w2_field = f'f(f(w_on_{mygrid}.w_on_{mygrid})_r_on_{mygrid})_r'
 # th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
 
-cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
-w_field = f'f(f(w_on_{mygrid})_r_on_{mygrid})_r'
-w2_field = f'f(f(w_on_{mygrid}.w_on_{mygrid})_r_on_{mygrid})_r'
-th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
-buoy_field = f'f(f(buoyancy_on_{mygrid})_r_on_{mygrid})_r'
+
 
 gen_opts = {'deltas': None,
             'other_vars': [w_field, buoy_field],
