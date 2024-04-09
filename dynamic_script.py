@@ -144,10 +144,9 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             "q_total",
                             "q_vapour",
                             "q_cloud_liquid_mass",
-                            "buoyancy",
-                            "th_v"
+                            "buoyancy"
                             ]
-                # "th_L",
+                # "th_L", "th_v"
 
             field_list = sf.filter_variable_list(dataset, ref_dataset,
                                                  derived_data, filtered_data,
