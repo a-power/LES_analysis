@@ -22,19 +22,19 @@ case = 'ARM'
 if case == 'BOMEX':
 
     if beta==True:
-        homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
+        homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/'
         dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
     else:
-        homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/'
+        homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/'
         dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
     myfile = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 
 elif case == 'ARM':
     if beta==True:
-        homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/'
+        homedir = '/work/scratch-pw3/apower/ARM/second_filt/LM/'
     else:
-        homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/smoothed_LM_HR_fields/'
+        homedir = '/work/scratch-pw3/apower/ARM/second_filt/LM/'
     dir_contour = homedir + f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     myfile = f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
 
@@ -44,7 +44,7 @@ mygrid = 'p'
 outdir = homedir+'C_profs/'
 os.makedirs(outdir, exist_ok = True)
 
-deltas=['2D']#, '4D', '8D', '16D', '32D', '64D']
+deltas=['4D', '8D', '16D', '32D', '64D', '128D']
 
 if beta==True:
     dataset_name = [outdir+myfile+'C_2D_', outdir+myfile+'C_4D_', outdir+myfile+'C_8D_',
@@ -53,8 +53,8 @@ if beta==True:
     #                             outdir+myfile+'LM_16D_', outdir+myfile+'LM_32D_', outdir+myfile+'LM_64D_']
     extra_filter = ['0']#, '1']
 else:
-    dataset_name = [outdir+myfile+'C_2D']#, outdir+myfile+'C_4D', outdir+myfile+'C_8D',
-    #                 outdir+myfile+'C_16D', outdir+myfile+'C_32D', outdir+myfile+'C_64D']
+    dataset_name = [outdir+myfile+'C_4D', outdir+myfile+'C_8D', outdir+myfile+'C_16D',
+                    outdir+myfile+'C_32D', outdir+myfile+'C_64D', outdir+myfile+'C_128D']
 
     # dataset_name = [outdir + myfile + 'LM_2D', outdir + myfile + 'LM_4D', outdir + myfile + 'LM_8D',
     #                 outdir + myfile + 'LM_16D', outdir + myfile + 'LM_32D', outdir + myfile + 'LM_64D']
@@ -69,11 +69,7 @@ else:
 # fields = ['Cs_sq_field', 'Cth_sq_field', 'Cqt_sq_field']
 # field_dir = ['Cs', 'C_th', 'C_qt']
 
-if beta==True:
-    fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_field_on_{mygrid})_r', f'f(HR_q_total_f_field_on_{mygrid})_r',
-              f'f(MM_field_on_{mygrid})_r', f'f(RR_th_field_on_{mygrid})_r', f'f(RR_q_total_f_field_on_{mygrid})_r']
-else:
-    fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_field_on_{mygrid})_r', f'f(HR_q_total_field_on_{mygrid})_r',
+fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_field_on_{mygrid})_r', f'f(HR_q_total_field_on_{mygrid})_r',
               f'f(MM_field_on_{mygrid})_r', f'f(RR_th_field_on_{mygrid})_r', f'f(RR_q_total_field_on_{mygrid})_r']
 #     fields = ['LM_field', 'HR_th_field', 'HR_q_total_field', 'MM_field', 'RR_th_field', 'RR_q_total_field']
 field_dir = ['Cs', 'C_th', 'C_qt', 'Cs', 'C_th', 'C_qt']
@@ -88,14 +84,15 @@ cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
 w_field = f'f(f(w_on_{mygrid})_r_on_{mygrid})_r'
 w2_field = f'f(f(w_on_{mygrid}.w_on_{mygrid})_r_on_{mygrid})_r'
 th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
+buoy_field = f'f(f(buoyancy_on_{mygrid})_r_on_{mygrid})_r'
 
 gen_opts = {'deltas': None,
-            'other_vars': [w_field, th_v_field],
+            'other_vars': [w_field, buoy_field],
             'cloud_thres': 1e-7,
             'other_var_thres': [0.5, 0],
             'less_greater_in': ['less', 'less'],
             'and_or_in': ['and', 'and'],
-            'grid': mygrid,
+            'grid': mygrid
                }
 
 for j, delta_in in enumerate(deltas):
