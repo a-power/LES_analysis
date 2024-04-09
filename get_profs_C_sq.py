@@ -53,7 +53,7 @@ if beta==True:
                 outdir+myfile+'C_16D_', outdir+myfile+'C_32D_', outdir+myfile+'C_64D_']
     # dataset_name = [outdir + myfile + 'LM_2D_', outdir + myfile + 'LM_4D_', outdir + myfile + 'LM_8D_',
     #                             outdir+myfile+'LM_16D_', outdir+myfile+'LM_32D_', outdir+myfile+'LM_64D_']
-    extra_filter = ['0']#, '1']
+    extra_filter = [0] #, 1]
 else:
     dataset_name = [outdir+myfile+'C_4D', outdir+myfile+'C_8D', outdir+myfile+'C_16D',
                     outdir+myfile+'C_32D', outdir+myfile+'C_64D', outdir+myfile+'C_128D']
@@ -101,7 +101,7 @@ field_dir = ['Cs', 'C_th', 'C_qt', 'Cs', 'C_th', 'C_qt']
 
 gen_opts = {'deltas': None,
             'other_vars': [w_field, buoy_field],
-            'cloud_thres': 1e-7,
+            'cloud_thres': 1e-5,
             'other_var_thres': [0.5, 0],
             'less_greater_in': ['less', 'less'],
             'and_or_in': ['and', 'and'],
@@ -120,10 +120,14 @@ for j, delta_in in enumerate(deltas):
     ########### need to fix this, fo now only do one 2nd filt at a time
 
             for i, field_in in enumerate(fields):
-
-                mydataset = homedir + myfile + \
-                            str(f'{field_dir[i]}_{j}_{name_2_gauss}_running_mean_filter_rm00.nc')
-                mydir_contour = dir_contour + f'{j}_gaussian_filter_ga0{name_2_gauss}_running_mean_filter_rm00.nc'
+                if data_smoothed == True:
+                    mydataset = homedir + myfile + \
+                                str(f'{field_dir[i]}_{j}_{name_2_gauss}_running_mean_filter_rm00.nc')
+                    mydir_contour = dir_contour + f'{j}_gaussian_filter_ga0{name_2_gauss}_running_mean_filter_rm00.nc'
+                else:
+                    mydataset = homedir + myfile + \
+                                str(f'{field_dir[i]}_{j}_{name_2_gauss}.nc')
+                    mydir_contour = dir_contour + f'{j}_gaussian_filter_ga0{name_2_gauss}.nc'
 
                 C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
                     apf.get_conditional_profiles(field=field_in, **gen_opts, dataset_in = mydataset,
@@ -141,8 +145,13 @@ for j, delta_in in enumerate(deltas):
         ds_in = {'file': dataset_name[j] + '.nc', 'ds': ds}
 
         for i, field_in in enumerate(fields):
-            mydataset = homedir + myfile + str(f'{field_dir[i]}_{deltas[j]}_running_mean_filter_rm00.nc')
-            mydir_contour = dir_contour + f'{j}_running_mean_filter_rm00.nc'
+
+            if data_smoothed == True:
+                mydataset = homedir + myfile + str(f'{field_dir[i]}_{2**(j+1)}_{2**(j+2)}_running_mean_filter_rm00.nc')
+                mydir_contour = dir_contour + f'{j}_gaussian_filter_ga00_running_mean_filter_rm00.nc'
+            else:
+                mydataset = homedir + myfile + str(f'{field_dir[i]}_{2**(j+1)}_{2**(j+2)}.nc')
+                mydir_contour = dir_contour + f'{j}_gaussian_filter_ga00.nc'
 
             C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
                 apf.get_conditional_profiles(field=field_in, **gen_opts, dataset_in = mydataset,

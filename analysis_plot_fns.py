@@ -1560,7 +1560,7 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
                       cloud_thres, other_vars, other_var_thres,
                              less_greater_in, and_or_in, grid, beta):
     if deltas==None:
-        deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+        deltas = ['4D', '8D', '16D', '32D', '64D', '128D']
 
     if field == 'Cs_field':
         field_name = '$C_s$'
