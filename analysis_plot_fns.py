@@ -1600,7 +1600,7 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
         field_name = '$RR_{\\theta}$'
         save_name = 'RR_th'
     elif field == 'RR_q_total_field'  or field == 'RR_q_total_f_field' or field == f'f(RR_q_total_f_field_on_{grid})_r' \
-            or field == f'f(RR_q_total_field_on_{grid})_r' or field == 'HR_q_field':
+            or field == f'f(RR_q_total_field_on_{grid})_r' or field == 'RR_q_field':
         field_name = '$RR_{qt}$'
         save_name = 'RR_qt'
     else:
