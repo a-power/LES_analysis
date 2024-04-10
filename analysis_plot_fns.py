@@ -1736,7 +1736,11 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
                 if other_vars[1] == f'f(f(w_on_{grid})_r_on_{grid})_r' or other_vars[1] == f'f(w_on_{grid})_r':
                     othervar2 = 'w'
                 elif other_vars[1] == f'f(f(th_v_on_{grid})_r_on_{grid})_r' or other_vars[1] == f'f(th_v_on_{grid})_r':
-                    othervar2 = 'th'
+                    othervar2 = 'th_v'
+                elif other_vars[1] == f'f(f(buoyancy_on_{grid})_r_on_{grid})_r' or other_vars[1] == f'f(buoyancy_on_{mygrid})_r':
+                    othervar2 = 'buoy'
+                else:
+                    print(f'this var {other_vars[1]} is not coded for')
 
         num_prof = np.zeros(z_num)
         num_cloud_prof = np.zeros(z_num)
@@ -1832,6 +1836,10 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
                     othervar2 = 'w'
                 elif other_vars[1] == f'f(f(th_v_on_{grid})_r_on_{grid})_r' or other_vars[1] == f'f(th_v_on_{grid})_r':
                     othervar2 = 'th_v'
+                elif other_vars[1] == f'f(f(buoyancy_on_{grid})_r_on_{grid})_r' or other_vars[1] == f'f(buoyancy_on_{mygrid})_r':
+                    othervar2 = 'buoy'
+                else:
+                    print(f'this var {other_vars[1]} is not coded for')
 
         data_prof = np.zeros(z_num)
         data_cloud_prof = np.zeros(z_num)
