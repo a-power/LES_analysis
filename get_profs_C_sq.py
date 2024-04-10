@@ -78,8 +78,8 @@ else:
 # field_dir = ['Cs', 'C_th', 'C_qt']
 
 if data_smoothed == True:
-    fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_field_on_{mygrid})_r', f'f(HR_q_total_field_on_{mygrid})_r',
-                  f'f(MM_field_on_{mygrid})_r', f'f(RR_th_field_on_{mygrid})_r', f'f(RR_q_total_field_on_{mygrid})_r']
+    fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_field_on_{mygrid})_r', f'f(HR_q_field_on_{mygrid})_r',
+                  f'f(MM_field_on_{mygrid})_r', f'f(RR_th_field_on_{mygrid})_r', f'f(RR_q_field_on_{mygrid})_r']
 
     cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
     w_field = f'f(f(w_on_{mygrid})_r_on_{mygrid})_r'
@@ -87,7 +87,7 @@ if data_smoothed == True:
     th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
     buoy_field = f'f(f(buoyancy_on_{mygrid})_r_on_{mygrid})_r'
 else:
-     fields = ['LM_field', 'HR_th_field', 'HR_q_total_field', 'MM_field', 'RR_th_field', 'RR_q_total_field']
+     fields = ['LM_field', 'HR_th_field', 'HR_q_field', 'MM_field', 'RR_th_field', 'RR_q_field']
 
      cloud_field = f'f(q_cloud_liquid_mass_on_{mygrid})_r'
      w_field = f'f(w_on_{mygrid})_r'

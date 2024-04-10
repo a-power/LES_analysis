@@ -1589,7 +1589,7 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
         field_name = '$HR_{\\theta}$'
         save_name = 'HR_th'
     elif field == 'HR_q_total_field' or field == 'HR_q_total_f_field' or field == f'f(HR_q_total_f_field_on_{grid})_r' \
-            or field == f'f(HR_q_total_field_on_{grid})_r':
+            or field == f'f(HR_q_total_field_on_{grid})_r' or field == 'HR_q_field':
         field_name = '$HR_{qt}$'
         save_name = 'HR_qt'
 
@@ -1600,7 +1600,7 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
         field_name = '$RR_{\\theta}$'
         save_name = 'RR_th'
     elif field == 'RR_q_total_field'  or field == 'RR_q_total_f_field' or field == f'f(RR_q_total_f_field_on_{grid})_r' \
-            or field == f'f(RR_q_total_field_on_{grid})_r':
+            or field == f'f(RR_q_total_field_on_{grid})_r' or field == 'HR_q_field':
         field_name = '$RR_{qt}$'
         save_name = 'RR_qt'
     else:
@@ -1707,7 +1707,7 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
             elif f'{field}' in data_set:
                 data_field = data_set[f'{field}'].data[...]
             else:
-                print('field', field, ' ')
+                print('field not present', field, ' ')
 
         C=False
 
