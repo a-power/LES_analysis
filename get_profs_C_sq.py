@@ -25,19 +25,20 @@ if case == 'BOMEX':
 
     if beta==True:
         homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/'
-        dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+        dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
     else:
         homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/'
-        dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+        dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
     myfile = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 
 elif case == 'ARM':
     if beta==True:
         homedir = '/work/scratch-pw3/apower/ARM/second_filt/LM/'
+        dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     else:
         homedir = '/work/scratch-pw3/apower/ARM/second_filt/LM/'
-    dir_contour = homedir + f'diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
+    dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     myfile = f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
 
 av_type = 'all'
