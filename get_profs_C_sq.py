@@ -32,7 +32,7 @@ if case == 'BOMEX':
         homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/'
         dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
-    myfile = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
+    myfile = 'BOMEX_m0020_g0800_all_14400_'
 
 elif case == 'ARM':
 
@@ -44,7 +44,7 @@ elif case == 'ARM':
     else:
         homedir = '/work/scratch-pw3/apower/ARM/second_filt/LM/'
     dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
-    myfile = f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
+    myfile = f"diagnostics_3d_ts_{set_time}_"
 
 av_type = 'all'
 mygrid = 'p'
