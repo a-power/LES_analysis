@@ -23,6 +23,8 @@ case = args.case
 
 if case == 'BOMEX':
 
+    dx = 20
+
     if beta==True:
         homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/'
         dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
@@ -33,6 +35,9 @@ if case == 'BOMEX':
     myfile = 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
 
 elif case == 'ARM':
+
+    dx = 25
+
     if beta==True:
         homedir = '/work/scratch-pw3/apower/ARM/second_filt/LM/'
         dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
@@ -148,10 +153,10 @@ for j, delta_in in enumerate(deltas):
         for i, field_in in enumerate(fields):
 
             if data_smoothed == True:
-                mydataset = homedir + myfile + str(f'{field_dir[i]}_{2**(j+1)}_{2**(j+2)}_running_mean_filter_rm00.nc')
+                mydataset = homedir + myfile + str(f'{field_dir[i]}_{dx*2**(j+1)}_{dx*2**(j+2)}_running_mean_filter_rm00.nc')
                 mydir_contour = dir_contour + f'{j}_gaussian_filter_ga00_running_mean_filter_rm00.nc'
             else:
-                mydataset = homedir + myfile + str(f'{field_dir[i]}_{2**(j+1)}_{2**(j+2)}.nc')
+                mydataset = homedir + myfile + str(f'{field_dir[i]}_{dx*2**(j+1)}_{dx*2**(j+2)}.nc')
                 mydir_contour = dir_contour + f'{j}_gaussian_filter_ga00.nc'
 
             C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
