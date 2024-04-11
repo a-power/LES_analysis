@@ -31,9 +31,12 @@ print('about to start code')
 if filtering_filters_yn == 'y' or filtering_filters_yn == 'yes':
     filtering_filters = True
     print('filtering_filters is set to True')
-else:
+elif filtering_filters_yn == 'n' or filtering_filters_yn == 'no':
     filtering_filters = False
     print('filtering_filters is set to False')
+else:
+    print("filting_filts input must be 'y', 'yes', 'n', or 'no'.")
+    sys.exit()
 
 if case_in == 'BOMEX':
     print('using BOMEX')
@@ -113,7 +116,8 @@ else:
 
 
 for it in range(len(C_res) - nfilt):
-    i = it+nfilt
+    i = int(it+nfilt)
+    print(f'computing filter ga0{i}')
 
     if filtering_filters == True:
         print('using 2nd filt')
