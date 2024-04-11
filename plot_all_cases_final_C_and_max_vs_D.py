@@ -21,12 +21,12 @@ C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 x_lim_list = [0.355, 0.355, 0.355, 0.355, 0.255, 0.07]
 
 
-ARM_homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/C_profs/'
+ARM_homedir = '/work/scratch-pw3/apower/ARM/second_filt/LM/C_profs/'
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/plots/C_beta_profiles/'
-ARM_profiles_dir = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_'
+ARM_profiles_dir = '/work/scratch-pw3/apower/ARM/MONC_out/25m/diagnostics_ts_'
 # prof_file = f'/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_{set_time}.nc'
 
-BOMEX_homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
+BOMEX_homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/C_profs/'
 todd_dir = '/gws/nopw/j04/paracon_rdg/users/toddj/updates_suite/BOMEX_m0020_g0800/diagnostic_files/'
 prof_file = todd_dir + 'BOMEX_m0020_g0800_all_14400.nc'
 
@@ -630,16 +630,15 @@ for itr, time_stamp in enumerate(set_time):
 
 
     else:
-        data_2D = xr.open_dataset(mydir + f'2D.nc')
         data_4D = xr.open_dataset(mydir + f'4D.nc')
         data_8D = xr.open_dataset(mydir + f'8D.nc')
         data_16D = xr.open_dataset(mydir + f'16D.nc')
         data_32D = xr.open_dataset(mydir + f'32D.nc')
         data_64D = xr.open_dataset(mydir + f'64D.nc')
+        data_128D = xr.open_dataset(mydir + f'128D.nc')
 
-        data_list = [data_2D, data_4D, data_8D, data_16D, data_32D, data_64D]
-        set_labels = ['2$\\Delta$', '4$\\Delta$', '8$\\Delta$',
-                      '16$\\Delta$', '32$\\Delta$', '64$\\Delta$']
+        data_list = [data_4D, data_8D, data_16D, data_32D, data_64D, data_128D]
+        set_labels = ['4$\\Delta$', '8$\\Delta$', '16$\\Delta$', '32$\\Delta$', '64$\\Delta$' '128$\\Delta$']
 
 
 
