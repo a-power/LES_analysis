@@ -47,13 +47,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--times', type=str, default='14400')
 parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--filt1', type=int, default=0)
-parser.add_argument('--beta_filt', type=int, default=0)
+parser.add_argument('--beta', type=int, default=0)
 
 args = parser.parse_args()
 case_in = args.case
 set_time = args.times
 first_filt_res = args.filt1
-beta = args.beta_filt
+beta = args.beta
 
 
 opgrid = 'p'
@@ -153,7 +153,7 @@ else:
 if beta == 0:
         sigma_list = np.array([df.sigma_2(2**(first_filt_res+2), dx)])
 elif beta == 1:
-        sigma_list = np.array([df.sigma_2(2**(first_filt_res+2), dx), df.sigma_2(2**(first_filt_res+3), dx)])
+        sigma_list = np.array([df.sigma_2(2**(first_filt_res+3), dx)])
 else:
         print('need to set up the sigma list for first_filt_res = ', first_filt_res)
 
@@ -173,4 +173,4 @@ opgrid = 'p'
 
 dy_s.run_dyn_on_filtered(model_res, set_time, filter_name, sigma_list, in_dir, outdir, options,
                         opgrid, filtered_data = f'ga0{str(first_filt_res)}', ref_file = None,
-                        time_name='time', case=case_in)
+                        time_name='time', case=case_in, beta_in=beta)
