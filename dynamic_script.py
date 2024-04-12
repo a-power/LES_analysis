@@ -757,9 +757,10 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
     zn_data = ds_in['zn']
     zn_s = zn_data.data
 
-    # ij_data = ds_in['i_j']
-    ij_data = ds_in['j']
+    ij_data = ds_in['i_j']
+    #j_data = ds_in['j']
     ij_s = ij_data.data
+    #j_s = j_data.data
     print('i_j len is: ', ij_s)
 
     # ds_in.close()
