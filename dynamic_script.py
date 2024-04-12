@@ -362,7 +362,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
 
 
 def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, filtered_data,
-            ref_file = None, time_name = 'time_series_600_600', case='ARM'):
+            ref_file = None, time_name = 'time_series_600_600', case='ARM', beta_in=0):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
@@ -422,8 +422,9 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
 
     filter_list = list([])
 
-    for i, filt_set in enumerate(filt_scale):
+    for it, filt_set in enumerate(filt_scale):
         print(filt_set)
+        i = it+beta_in
         if filter_name == 'gaussian':
             filter_id = 'filter_ga{:02d}'.format(i)
             twod_filter = filt.Filter(filter_id,
@@ -761,7 +762,7 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
     #j_data = ds_in['j']
     ij_s = ij_data.data
     #j_s = j_data.data
-    print('i_j len is: ', ij_s)
+    print('i_j len is: ', ij_s, 'about to import Lij components')
 
     # ds_in.close()
     #
@@ -773,7 +774,11 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
     vw = ds_in[f's(v,w)_on_{ingrid}'].data[...]
     ww = ds_in[f's(w,w)_on_{ingrid}'].data[...]
 
+    print('imported Lij components')
+
     Lij = dyn.L_ij_sym_xarray(uu, uv, uw, vv, vw, ww)
+
+    print('calculated Lij tensor')
 
     uu = None # Save storage
     uv = None # Save storage
@@ -783,18 +788,23 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
     ww = None # Save storage
 
     hat_Sij = ds_in['f(S_ij)_r'].data[...]
+    print('imported hat_Sij')
     hat_abs_S = ds_in['f(abs_S)_r'].data[...]
+    print('imported hat_abs_S components')
 
     if reaxes == True:
         hat_Sij_abs_S_temp = ds_in['f(S_ij_abs_S)_r'].data[...] # (time, x, y, z, ij) --> (ij, time, x, y, z)
         hat_Sij_abs_S = np.transpose(hat_Sij_abs_S_temp, axes=[4, 0, 1, 2, 3])
         hat_Sij_abs_S_temp = None
+        print('ran re-axis')
     else:
         hat_Sij_abs_S = ds_in['f(S_ij_abs_S)_r'].data[...]
+        print('imported hat_Sij_abs_S components')
 
     ds_in.close()
 
     Mij = dyn.M_ij(dx_bar, dx_hat, hat_Sij, hat_abs_S, hat_Sij_abs_S)
+    print('calculated Mij tensor')
 
     hat_Sij_abs_S = None
     hat_Sij = None
@@ -809,11 +819,13 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
     zn_save[0,...] = zn_s
     zn_save = xr.DataArray(zn_save, coords={'time': times, 'zn': zn_s},
                               dims=['time', "zn"], name='zn_save')
+    print('saved zn to .nc')
 
     z_save = np.zeros((nt, len(z_s)))
     z_save[0, ...] = z_s
     z_save = xr.DataArray(z_save, coords={'time': times, 'z': z_s},
                            dims=['time', "z"], name='z_save')
+    print('saved z to .nc')
 
     if save_all==1:
         Cs_sq_prof, Cs_prof, LM_prof, MM_prof = dyn.Cs_profiles(Lij, Mij, return_all=1)
@@ -851,8 +863,11 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
     elif save_all==2:
 
         #Cs_sq_field = dyn.C_s_sq(Lij, Mij)
+        print('about to run Cs_profiles function')
 
         Cs_sq_prof, Cs_prof, LM_prof, MM_prof, Lij_prof, Mij_prof, LM_field, MM_field = dyn.Cs_profiles(Lij, Mij, return_all=2)
+
+        print('ran Cs_profiles function')
 
         print('shape of Lij_prof and Mij_prof is: ', np.shape(Lij_prof), np.shape(Mij_prof))
 
