@@ -768,13 +768,19 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
     #
     # ds_in = xr.open_dataset(file_in)
     uu = ds_in[f's(u,u)_on_{ingrid}'].data[...]
+    print('imported uu')
     uv = ds_in[f's(u,v)_on_{ingrid}'].data[...]
+    print('imported uv')
     uw = ds_in[f's(u,w)_on_{ingrid}'].data[...]
+    print('imported uw')
     vv = ds_in[f's(v,v)_on_{ingrid}'].data[...]
+    print('imported vv')
     vw = ds_in[f's(v,w)_on_{ingrid}'].data[...]
+    print('imported vw')
     ww = ds_in[f's(w,w)_on_{ingrid}'].data[...]
+    print('imported ww')
 
-    print('imported Lij components')
+    print('imported all Lij components')
 
     Lij = dyn.L_ij_sym_xarray(uu, uv, uw, vv, vw, ww)
 
@@ -796,7 +802,7 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
         hat_Sij_abs_S_temp = ds_in['f(S_ij_abs_S)_r'].data[...] # (time, x, y, z, ij) --> (ij, time, x, y, z)
         hat_Sij_abs_S = np.transpose(hat_Sij_abs_S_temp, axes=[4, 0, 1, 2, 3])
         hat_Sij_abs_S_temp = None
-        print('ran re-axis')
+        print('ran re-axis and imported hat Sij abs S')
     else:
         hat_Sij_abs_S = ds_in['f(S_ij_abs_S)_r'].data[...]
         print('imported hat_Sij_abs_S components')
@@ -814,6 +820,7 @@ def Cs(indir, dx_bar, dx_hat, file_save_to, ingrid, save_all=2, reaxes=False):
     ds = xr.Dataset()
     ds.to_netcdf(file_save_to, mode='w')
     ds_save = {'file': file_save_to, 'ds': ds}
+    print('created .nc file to save LM calcs to')
 
     zn_save = np.zeros((nt, len(zn_s)))
     zn_save[0,...] = zn_s
