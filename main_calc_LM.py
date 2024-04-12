@@ -171,6 +171,6 @@ for it in range(len(C_res) - nfilt):
             dy_s.Cs(file_save_to=file_setup, ingrid=mygrid, save_all=set_save_all, **DX_in)
             # = \ #, C_sq_field_2D, Hj_2D, Rj_2D = \
         else:
-            print('about to start the Cs routine')
+            print(f'about to start the C_{scalar_in} routine')
             #z_save, zn_save, C_sq_prof, C_prof, HR_prof, RR_prof, HR_field, RR_field = \
             dy_s.C_scalar(scalar=scalar_in, file_save_to=file_setup, ingrid=mygrid, save_all=set_save_all, **DX_in)
