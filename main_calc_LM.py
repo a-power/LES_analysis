@@ -10,11 +10,14 @@ import gc
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--t', type=int, default=0)
+parser.add_argument('--b', type=int, default=0)
 parser.add_argument('--start', type=int, default=0)
 parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--filting_filts', type=str, default='n')
+
 args = parser.parse_args()
 t_in = args.t
+beta = args.b
 nfilt = args.start
 filtering_filters_yn = args.filting_filts
 
@@ -56,7 +59,14 @@ if case_in == 'BOMEX':
 
     elif filtering_filters == True:
         dx_bar_in = 2*np.array([20, 40, 80, 160, 320, 640])
-        dx_hat_in = 2*np.array([40, 80, 160, 320, 640, 1280])
+        if beta == 0:
+            dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
+        elif beta == 1:
+            dx_hat_in = 2 * np.array([40])#, 80, 160, 320, 640, 1280])
+        else:
+            print('beta must be =0 or =1')
+            sys.exit()
+
         C_res = ['4D', '8D', '16D', '32D', '64D', '128D']
         scalar = ['momentum', 'f(th_on_p)_r', 'q_total']
 
@@ -79,7 +89,13 @@ elif case_in == 'ARM':
     elif filtering_filters == True:
         scalar = ['momentum', 'f(th_on_p)_r', 'q_total']
         dx_bar_in = 2*np.array([25, 50, 100, 200, 400, 800])
-        dx_hat_in = 2*np.array([50, 100, 200, 400, 800, 1600])
+        if beta == 0:
+            dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
+        elif beta == 1:
+            dx_hat_in = 2 * np.array([50])#, 100, 200, 400, 800, 1600])
+        else:
+            print('beta must be =0 or =1')
+            sys.exit()
         C_res = ['4D', '8D', '16D', '32D', '64D', '128D']
 
 
@@ -101,7 +117,13 @@ elif case_in=='dry':
 
     elif filtering_filters == True:
         dx_bar_in = 2*np.array([20, 40, 80, 160, 320, 640])
-        dx_hat_in = 2*np.array([40, 80, 160, 320, 640, 1280])
+        if beta == 0:
+            dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
+        elif beta == 1:
+            dx_hat_in = 2 * np.array([40])#, 80, 160, 320, 640, 1280])
+        else:
+            print('beta must be =0 or =1')
+            sys.exit()
         C_res = ['4D', '8D', '16D', '32D', '64D', '128D']
         scalar = ['momentum', 'f(th_on_p)_r']
 
@@ -115,13 +137,13 @@ else:
 
 
 
-for it in range(len(C_res) - nfilt):
+for it in range(len(dx_hat_in) - nfilt):
     i = int(it+nfilt)
     print(f'computing filter ga0{i}')
 
     if filtering_filters == True:
         print('using 2nd filt')
-        file_in = file_f + f'gaussian_filter_ga0{i}_gaussian_filter_ga00.nc'
+        file_in = file_f + f'gaussian_filter_ga0{i}_gaussian_filter_ga0{beta}.nc'
         data_in = path_f + folder_ff + file_in
         print('reading files', data_in)
 
