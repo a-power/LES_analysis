@@ -10,11 +10,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--time', type=str, default='14400')
 parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--start_in', type=int, default=0)
+parser.add_argument('--b', type=int, default=0)
 
 args = parser.parse_args()
 set_time = args.time
 case = args.case
 start = args.start_in
+beta=args.b
 
 scalars = ['s', '_th', '_qt']
 

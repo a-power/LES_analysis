@@ -10,62 +10,83 @@ import argparse
 parser = argparse.ArgumentParser()
 #parser.add_argument('--times', type=str, default='18000')
 parser.add_argument('--times', type=int, default=0)
+parser.add_argument('--beta', type=int, default=1)
 parser.add_argument('--case', type=str, default='ARM')
 
 times_analysed = [ '18000', '25200', '32400', '39600' ]
 
 args = parser.parse_args()
 set_time = times_analysed[args.times]
-
-beta=False
-data_smoothed = False
 case = args.case
+beta = args.beta
+
+data_smoothed = False
+av_type = 'all'
+mygrid = 'p'
 
 if case == 'BOMEX':
-
     dx = 20
-
-    if beta==True:
+    if beta==0 or beta==1:
         homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/'
         dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
     else:
-        homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/'
-        dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
+        homedir = '/work/scratch-pw3/apower/BOMEX/first_filt/LM/'
+        dir_contour = '/work/scratch-pw3/apower/BOMEX/first_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
     myfile = 'BOMEX_m0020_g0800_all_14400_'
 
+    if beta == 0:
+        dx_bar_in = 2 * np.array([20, 40, 80, 160, 320, 640])
+        dx_hat_in = 2 * np.array([40, 80, 160, 320, 640, 1280])
+    elif beta == 1:
+        dx_bar_in = 2 * np.array([20, 40, 80, 160, 320, 640])
+        dx_hat_in = 4 * np.array([40])  # , 80, 160, 320, 640, 1280])
+    else:
+        dx_bar_in = np.array([20, 20, 20, 20, 20, 20])
+        dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
+
 elif case == 'ARM':
-
     dx = 25
-
-    if beta==True:
+    if beta==0 or beta==1:
         homedir = '/work/scratch-pw3/apower/ARM/second_filt/LM/'
         dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     else:
-        homedir = '/work/scratch-pw3/apower/ARM/second_filt/LM/'
-    dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
+        homedir = '/work/scratch-pw3/apower/ARM/first_filt/LM/'
+    dir_contour = f'/work/scratch-pw3/apower/ARM/first_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     myfile = f"diagnostics_3d_ts_{set_time}_"
 
-av_type = 'all'
-mygrid = 'p'
+    if beta == 0:
+        dx_bar_in = 2 * np.array([25, 50, 100, 200, 400, 800])
+        dx_hat_in = 2 * np.array([50, 100, 200, 400, 800, 1600])
+    elif beta == 1:
+        dx_bar_in = 2 * np.array([25, 50, 100, 200, 400, 800])
+        dx_hat_in = 4 * np.array([50])  # , 100, 200, 400, 800, 1600])
+    else:
+        dx_bar_in = np.array([25, 25, 25, 25, 25, 25])
+        dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
+
 
 outdir = homedir+'C_profs/'
 os.makedirs(outdir, exist_ok = True)
 
-deltas=['4D', '8D', '16D', '32D', '64D', '128D']
 
-if beta==True:
-    dataset_name = [outdir+myfile+'C_2D_', outdir+myfile+'C_4D_', outdir+myfile+'C_8D_',
-                outdir+myfile+'C_16D_', outdir+myfile+'C_32D_', outdir+myfile+'C_64D_']
-    # dataset_name = [outdir + myfile + 'LM_2D_', outdir + myfile + 'LM_4D_', outdir + myfile + 'LM_8D_',
-    #                             outdir+myfile+'LM_16D_', outdir+myfile+'LM_32D_', outdir+myfile+'LM_64D_']
-    extra_filter = [0] #, 1]
+
+if beta==0:
+    dataset_name = [outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}', outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+                outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}', outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}']
+    extra_filter = [0]
+
+elif beta==1:
+    dataset_name = [outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}']
+    extra_filter = [1]
+
 else:
-    dataset_name = [outdir+myfile+'C_4D', outdir+myfile+'C_8D', outdir+myfile+'C_16D',
-                    outdir+myfile+'C_32D', outdir+myfile+'C_64D', outdir+myfile+'C_128D']
-
-    # dataset_name = [outdir + myfile + 'LM_2D', outdir + myfile + 'LM_4D', outdir + myfile + 'LM_8D',
-    #                 outdir + myfile + 'LM_16D', outdir + myfile + 'LM_32D', outdir + myfile + 'LM_64D']
+    dataset_name = [outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}', outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}', outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}']
 
 # 'field': 'f(LM_field_on_w)_r'
 # 'field': 'Cs_field'
@@ -114,7 +135,7 @@ gen_opts = {'deltas': None,
             'grid': mygrid
                }
 
-for j, delta_in in enumerate(deltas):
+for j, delta_in in enumerate(dx_hat_in):
 
     if beta == True:
         for k, name_2_gauss in enumerate(extra_filter):
