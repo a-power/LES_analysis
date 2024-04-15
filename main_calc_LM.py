@@ -60,9 +60,9 @@ if case_in == 'BOMEX':
     elif filtering_filters == True:
         dx_bar_in = 2*np.array([20, 40, 80, 160, 320, 640])
         if beta == 0:
-            dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
+            dx_hat_in = 2 * np.array([40, 80, 160, 320, 640, 1280])
         elif beta == 1:
-            dx_hat_in = 2 * np.array([40])#, 80, 160, 320, 640, 1280])
+            dx_hat_in = 4 * np.array([40])#, 80, 160, 320, 640, 1280])
         else:
             print('beta must be =0 or =1')
             sys.exit()
@@ -90,9 +90,9 @@ elif case_in == 'ARM':
         scalar = ['momentum', 'f(th_on_p)_r', 'q_total']
         dx_bar_in = 2*np.array([25, 50, 100, 200, 400, 800])
         if beta == 0:
-            dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
+            dx_hat_in = 2 * np.array([50, 100, 200, 400, 800, 1600])
         elif beta == 1:
-            dx_hat_in = 2 * np.array([50])#, 100, 200, 400, 800, 1600])
+            dx_hat_in = 4 * np.array([50])#, 100, 200, 400, 800, 1600])
         else:
             print('beta must be =0 or =1')
             sys.exit()
@@ -118,9 +118,9 @@ elif case_in=='dry':
     elif filtering_filters == True:
         dx_bar_in = 2*np.array([20, 40, 80, 160, 320, 640])
         if beta == 0:
-            dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
+            dx_hat_in = 2*np.array([40, 80, 160, 320, 640, 1280])
         elif beta == 1:
-            dx_hat_in = 2 * np.array([40])#, 80, 160, 320, 640, 1280])
+            dx_hat_in = 4 * np.array([40])#, 80, 160, 320, 640, 1280])
         else:
             print('beta must be =0 or =1')
             sys.exit()
