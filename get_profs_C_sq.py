@@ -72,9 +72,11 @@ os.makedirs(outdir, exist_ok = True)
 
 
 if beta==0:
-    dataset_name = [outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}', outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+    dataset_name = [outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
                     outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
-                outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}', outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+                outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
                     outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}']
     extra_filter = [0]
 
@@ -83,9 +85,11 @@ elif beta==1:
     extra_filter = [1]
 
 else:
-    dataset_name = [outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}', outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+    dataset_name = [outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
                     outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
-                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}', outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
+                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
                     outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}']
 
 # 'field': 'f(LM_field_on_w)_r'
@@ -135,60 +139,36 @@ gen_opts = {'deltas': None,
             'grid': mygrid
                }
 
+if beta == 1:
+    beta_num = 1
+else:
+    beta_num = 0
+
 for j, delta_in in enumerate(dx_hat_in):
 
-    if beta == True:
-        for k, name_2_gauss in enumerate(extra_filter):
 
-            ds = xr.Dataset()
-            ds.to_netcdf(dataset_name[j]+f'{name_2_gauss}'+'.nc', mode='w')
-            ds_in = {'file': dataset_name[j]+ f'{name_2_gauss}'+'.nc', 'ds': ds}
+    ds = xr.Dataset()
+    ds.to_netcdf(dataset_name[j] + '.nc', mode='w')
+    ds_in = {'file': dataset_name[j] + '.nc', 'ds': ds}
 
-    ########### need to fix this, fo now only do one 2nd filt at a time
+    for i, field_in in enumerate(fields):
 
-            for i, field_in in enumerate(fields):
-                if data_smoothed == True:
-                    mydataset = homedir + myfile + \
-                                str(f'{field_dir[i]}_{j}_{name_2_gauss}_running_mean_filter_rm00.nc')
-                    mydir_contour = dir_contour + f'{j}_gaussian_filter_ga0{name_2_gauss}_running_mean_filter_rm00.nc'
-                else:
-                    mydataset = homedir + myfile + \
-                                str(f'{field_dir[i]}_{j}_{name_2_gauss}.nc')
-                    mydir_contour = dir_contour + f'{j}_gaussian_filter_ga0{name_2_gauss}.nc'
+        if data_smoothed == True:
+            mydataset = homedir + myfile + str(f'{field_dir[i]}_{dx*2**(j+1)}_{dx*2**(j+2+beta_num)}_running_mean_filter_rm00.nc')
+            mydir_contour = dir_contour + f'{j}_gaussian_filter_ga0{beta_num}_running_mean_filter_rm00.nc'
+        else:
+            mydataset = homedir + myfile + str(f'{field_dir[i]}_{dx*2**(j+1)}_{dx*2**(j+2+beta_num)}.nc')
+            mydir_contour = dir_contour + f'{j}_gaussian_filter_ga0{beta_num}.nc'
 
-                C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
-                    apf.get_conditional_profiles(field=field_in, **gen_opts, dataset_in = mydataset,
-                                                 contour_field_in = mydir_contour, beta=True)
+        C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
+            apf.get_conditional_profiles(field=field_in, **gen_opts, dataset_in = mydataset,
+                                         contour_field_in = mydir_contour, beta=False)
 
-                save_field(ds_in, C_sq_prof)
-                save_field(ds_in, C_sq_env_prof)
-                save_field(ds_in, C_sq_cloud_prof)
-                save_field(ds_in, C_sq_combo2_prof)
-                save_field(ds_in, C_sq_combo3_prof)
-
-    else:
-        ds = xr.Dataset()
-        ds.to_netcdf(dataset_name[j] + '.nc', mode='w')
-        ds_in = {'file': dataset_name[j] + '.nc', 'ds': ds}
-
-        for i, field_in in enumerate(fields):
-
-            if data_smoothed == True:
-                mydataset = homedir + myfile + str(f'{field_dir[i]}_{dx*2**(j+1)}_{dx*2**(j+2)}_running_mean_filter_rm00.nc')
-                mydir_contour = dir_contour + f'{j}_gaussian_filter_ga00_running_mean_filter_rm00.nc'
-            else:
-                mydataset = homedir + myfile + str(f'{field_dir[i]}_{dx*2**(j+1)}_{dx*2**(j+2)}.nc')
-                mydir_contour = dir_contour + f'{j}_gaussian_filter_ga00.nc'
-
-            C_sq_prof, C_sq_env_prof, C_sq_cloud_prof, C_sq_combo2_prof, C_sq_combo3_prof = \
-                apf.get_conditional_profiles(field=field_in, **gen_opts, dataset_in = mydataset,
-                                             contour_field_in = mydir_contour, beta=False)
-
-            save_field(ds_in, C_sq_prof)
-            save_field(ds_in, C_sq_env_prof)
-            save_field(ds_in, C_sq_cloud_prof)
-            save_field(ds_in, C_sq_combo2_prof)
-            save_field(ds_in, C_sq_combo3_prof)
+        save_field(ds_in, C_sq_prof)
+        save_field(ds_in, C_sq_env_prof)
+        save_field(ds_in, C_sq_cloud_prof)
+        save_field(ds_in, C_sq_combo2_prof)
+        save_field(ds_in, C_sq_combo3_prof)
 
 
     ds.close()
