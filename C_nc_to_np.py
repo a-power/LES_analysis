@@ -61,14 +61,14 @@ elif case=='ARM':
 
 C_sq =  np.zeros_like((len(numer), len(partitions), len(res), len(zn_set)))
 
-for r in res:
+for r_ind, r in enumerate(res):
     C_data = xr.open_dataset(homedir + f'{r}.nc')
-    for p in partitions:
+    for p_ind, r in enumerate(partitions):
         for s in range(len(denom)):
 
             LM = C_data[f'{numer[s]}_{p}'].data[...]
             MM = C_data[f'{denom[s]}_{p}'].data[...]
-            C_sq[s, p, r, :] = LM / MM
+            C_sq[s, p_ind, r_ind, :] = LM / MM
 
 
 np.save(data_dir+f'C_sq_cond_{time}_{beta}.npy', C_sq)
