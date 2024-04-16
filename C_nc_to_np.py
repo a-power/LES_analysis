@@ -63,7 +63,7 @@ C_sq =  np.zeros_like((len(numer), len(partitions), len(res), len(zn_set)))
 
 for r_ind, r in enumerate(res):
     C_data = xr.open_dataset(homedir + f'{r}.nc')
-    for p_ind, r in enumerate(partitions):
+    for p_ind, p in enumerate(partitions):
         for s in range(len(denom)):
 
             LM = C_data[f'{numer[s]}_{p}'].data[...]
