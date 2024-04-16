@@ -71,7 +71,7 @@ for r_ind, r in enumerate(res):
             C_sq[s, p_ind, r_ind, :] = LM / MM
 
 
-np.save(data_dir+f'C_sq_cond_{time}_{beta}.npy', C_sq)
+np.save(data_dir+f'{case}/C_sq_cond_{time}_{beta}.npy', C_sq)
 
             # if s == '_q':
             #     s = '_qt'
