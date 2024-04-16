@@ -59,7 +59,7 @@ elif case=='ARM':
 
 
 
-C_sq =  np.zeros_like((len(numer), len(partitions), len(res), len(zn_set)))
+C_sq =  np.zeros( (len(numer), len(partitions), len(res), len(zn_set)) )
 
 for r_ind, r in enumerate(res):
     C_data = xr.open_dataset(homedir + f'{r}.nc')
