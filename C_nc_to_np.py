@@ -9,13 +9,11 @@ monc_utils.global_config['output_precision'] = "float32"
 parser = argparse.ArgumentParser()
 parser.add_argument('--t', type=int, default=0)
 parser.add_argument('--case', type=str, default='BOMEX')
-parser.add_argument('--start_in', type=int, default=0)
 parser.add_argument('--b', type=int, default=0)
 
 args = parser.parse_args()
 t_in = args.time
 case = args.case
-start = args.start_in
 beta=args.b
 
 numer = ['LM', 'HR_th', 'HR_qt']
@@ -73,7 +71,7 @@ for r in res:
             C_sq[s, p, r, :] = LM / MM
 
 
-np.save(f'C_sq_cond_{time}.npy', C_sq)
+np.save(f'C_sq_cond_{time}_{beta}.npy', C_sq)
 
             # if s == '_q':
             #     s = '_qt'
