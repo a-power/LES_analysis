@@ -70,27 +70,8 @@ outdir = homedir+'C_profs/'
 os.makedirs(outdir, exist_ok = True)
 
 
+dataset_name = outdir+myfile+f'C_cond_profs_'
 
-if beta==0:
-    dataset_name = [outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
-                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
-                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
-                outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
-                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
-                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}']
-    extra_filter = [0]
-
-elif beta==1:
-    dataset_name = [outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}']
-    extra_filter = [1]
-
-else:
-    dataset_name = [outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
-                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
-                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
-                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
-                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}',
-                    outdir+myfile+f'C_cond_profs_{dx_bar_in}_{dx_hat_in}']
 
 # 'field': 'f(LM_field_on_w)_r'
 # 'field': 'Cs_field'
@@ -144,12 +125,14 @@ if beta == 1:
 else:
     beta_num = 0
 
+
+
 for j, delta_in in enumerate(dx_hat_in):
 
 
     ds = xr.Dataset()
-    ds.to_netcdf(dataset_name[j] + '.nc', mode='w')
-    ds_in = {'file': dataset_name[j] + '.nc', 'ds': ds}
+    ds.to_netcdf(dataset_name + f'{dx_bar_in[j]}_{dx_hat_in[j]}.nc', mode='w')
+    ds_in = {'file': dataset_name + f'{dx_bar_in[j]}_{dx_hat_in[j]}.nc', 'ds': ds}
 
     for i, field_in in enumerate(fields):
 
