@@ -422,6 +422,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, interp=False, C
     ax[1].set_xlim(right = set_right, left = set_left)
     ax[2].set_xlim(right = set_right, left = set_left)
 
+
     ax[0].axhline(z_CL_r_m[0]/z_i, set_left, 1, color='k', linestyle='-.')
     ax[1].axhline(z_CL_r_m[0]/z_i, set_left, 1, color='k', linestyle='-.')
     ax[2].axhline(z_CL_r_m[0]/z_i, set_left, 1, color='k', linestyle='-.')
@@ -436,6 +437,7 @@ def plot_C_all_Deltas(Cs, Cth, Cqt, z, z_i, z_CL_r_m, labels_in, interp=False, C
     else:
         ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = "+ str(z_i) + "m)", fontsize=16)
         plt.savefig(plotdir + f'{C_or_LM}{what_plotting}{name}prof_scaled_zn.pdf', bbox_inches='tight')
+        plt.show()
     plt.close()
 
 
