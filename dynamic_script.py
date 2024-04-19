@@ -1098,8 +1098,8 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
         scalar_name='q'
     elif scalar == 'q_cloud_liquid_mass':
         scalar_name = 'q_l'
-    elif scalar == 'q_vapour' or  scalar == 'q_v':
-        scalar_name = 'q_v'
+    elif scalar == 'q_vapour':
+        scalar_name = 'qv'
     elif scalar == 'q_total_f':
         scalar_name = 'q'
     elif scalar == 'th' or scalar == 'th_tot' or scalar == 'f(th_on_p)_r':

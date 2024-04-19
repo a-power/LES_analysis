@@ -55,7 +55,7 @@ if case_in == 'BOMEX':
         dx_bar_in = np.array([20, 20, 20, 20, 20, 20])
         dx_hat_in = np.array([40]) #, 80, 160, 320, 640, 1280])
         C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
-        scalar = ['momentum', 'th_e', 'q_v']
+        scalar = ['momentum', 'th_e', 'q_vapour']
 
     elif filtering_filters == True:
         dx_bar_in = 2*np.array([20, 40, 80, 160, 320, 640])
@@ -177,7 +177,7 @@ for it in range(len(dx_hat_in) - nfilt):
             scalar_index = 0
         elif scalar_in == 'th' or scalar_in == 'th_tot' or scalar_in == 'f(th_on_p)_r' or scalar_in == 'th_e':
             scalar_index = 1
-        elif scalar_in == 'q_total' or scalar_in == 'q_v':
+        elif scalar_in == 'q_total' or scalar_in == 'q_vapour':
             scalar_index = 2
         else:
             print('scalar not set to momentum, th, or q_total')
