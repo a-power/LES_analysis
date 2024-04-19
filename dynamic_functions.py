@@ -31,6 +31,7 @@ def sigma_1(n, delta):
 
     return int(np.round(sig_1, 0))
 
+
 def sigma_2(m, delta):
     ''' here  m is: \hat{\overbar{Delta}} = m Delta,
     where delta is the grid spacing of the original data

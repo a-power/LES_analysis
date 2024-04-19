@@ -662,8 +662,6 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
 
 
 
-
-
 def run_dyn_on_filtered_for_beta_contour(res_in, time_in, filt_in, filt_scale, indir, odir, opt,
                                          ingrid, filtered_data, start_point=0,
                                          ref_file = None, time_name = 'time_series_600_600'):

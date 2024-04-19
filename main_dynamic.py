@@ -155,6 +155,7 @@ os.makedirs(outdir, exist_ok = True)
 
 
 
+
 for j in range(len(set_time)):
     for i, model_res in enumerate(model_res_list):
         dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, my_opt,
