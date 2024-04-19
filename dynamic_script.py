@@ -1098,15 +1098,17 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
         scalar_name='q'
     elif scalar == 'q_cloud_liquid_mass':
         scalar_name = 'q_l'
-    elif scalar == 'q_vapour':
+    elif scalar == 'q_vapour' or  scalar == 'q_v':
         scalar_name = 'q_v'
     elif scalar == 'q_total_f':
         scalar_name = 'q'
     elif scalar == 'th' or scalar == 'th_tot' or scalar == 'f(th_on_p)_r':
         scalar_name = 'th'
+    elif scalar == 'th_e':
+        scalar_name = 'th_e'
     else:
-        print("scalar not recognised, only inputs available are 'th', 'q_cloud_liquid_mass', 'q_vapour', or 'q_total'.")
-        return
+        print("scalar not recognised, only inputs available are 'th', 'th_e', 'q_cloud_liquid_mass', 'q_vapour', or 'q_total'. testing of scalar input is in file")
+        scalar_name = scalar
 
     file_in = f'{indir}'
     ds_in = xr.open_dataset(file_in)
