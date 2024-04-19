@@ -25,7 +25,8 @@ def sigma_1(n, delta):
     where delta is the grid spacing of the original data
     '''
 
-    sig_smag = (2/np.pi)*delta
+    sig_smag_energy = (2/np.pi)*delta
+    sig_smag = delta/2
     sig_1 = np.sqrt((n*n/4)*delta*delta - sig_smag*sig_smag)
 
     return int(np.round(sig_1, 0))

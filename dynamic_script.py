@@ -134,9 +134,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                         "u",
                         "v",
                         "w",
-                        "th",
-                        "th_e",
-                        "th_v"]
+                        "th"]
             else:
                 var_list = [
                             "u",
@@ -145,12 +143,11 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             "th",
                             "th_e",
                             "th_v",
-                            "q_total",
-                            "q_vapour",
+                            "q_total"
                             "q_cloud_liquid_mass",
                             "buoyancy"
                             ]
-                # "th_L", "th_v"
+                # "th_L", "th_v", "q_vapour",
 
             field_list = sf.filter_variable_list(dataset, ref_dataset,
                                                  derived_data, filtered_data,
@@ -181,15 +178,9 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             ["u", "th_e"],
                             ["v", "th_e"],
                             ["w", "th_e"],
-                            ["u", "th_v"],
-                            ["v", "th_v"],
-                            ["w", "th_v"],
                             ["u", "q_total"],
                             ["v", "q_total"],
-                            ["w", "q_total"],
-                            ["u", "q_vapour"],
-                            ["v", "q_vapour"],
-                            ["w", "q_vapour"]
+                            ["w", "q_total"]
                             ]
                             # ["u", "th_v"],
                             # ["v", "th_v"],
@@ -199,6 +190,13 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             # ["w", "q_cloud_liquid_mass"],
                             # ["q_total", "q_total"],
                             # ["th_L", "q_cloud_liquid_mass"]
+                            # ,
+                            # ["u", "q_vapour"],
+                            # ["v", "q_vapour"],
+                            # ["w", "q_vapour"]
+                            # ["u", "th_v"],
+                            # ["v", "th_v"],
+                            # ["w", "th_v"],
 
 
             quad_field_list = sf.filter_variable_pair_list(dataset,
@@ -245,17 +243,16 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
             dq_dx.name = 'dq_dx'
             # dq_dx_save = save_field(derived_data, dq_dx)
             dq_dx = re_chunk(dq_dx)
-
-            dqv_dx = dyn.ds_dxi('q_vapour', dataset, ref_dataset, opt, ingrid, max_ch)
-            dqv_dx.name = 'dqv_dx'
-            # dqv_dx_save = save_field(derived_data, dqv_dx)
-            dqv_dx = re_chunk(dqv_dx)
-
             dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
                                          opt, new_filter)
 
-            dqv_dx_filt = sf.filter_field(dqv_dx, filtered_data,
-                                          opt, new_filter)
+            # dqv_dx = dyn.ds_dxi('q_vapour', dataset, ref_dataset, opt, ingrid, max_ch)
+            # dqv_dx.name = 'dqv_dx'
+            # # dqv_dx_save = save_field(derived_data, dqv_dx)
+            # dqv_dx = re_chunk(dqv_dx)
+
+            # dqv_dx_filt = sf.filter_field(dqv_dx, filtered_data,
+            #                               opt, new_filter)
 
 
 
@@ -392,12 +389,12 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
             abs_S_dq_dx_filt = sf.filter_field(abs_S_dq_dx, filtered_data,
                                                 opt, new_filter)
 
-            abs_S_dqv_dx = dqv_dx * abs_S
-            abs_S_dqv_dx.name = 'abs_S_dqv_dx'
-            abs_S_dqv_dx = re_chunk(abs_S_dqv_dx)
-
-            abs_S_dqv_dx_filt = sf.filter_field(abs_S_dqv_dx, filtered_data,
-                                                opt, new_filter)
+            # abs_S_dqv_dx = dqv_dx * abs_S
+            # abs_S_dqv_dx.name = 'abs_S_dqv_dx'
+            # abs_S_dqv_dx = re_chunk(abs_S_dqv_dx)
+            #
+            # abs_S_dqv_dx_filt = sf.filter_field(abs_S_dqv_dx, filtered_data,
+            #                                     opt, new_filter)
 
         # abs_S_dqv_dx_fh_Ri = dqv_dx * abs_S * fh_Ri
         # abs_S_dqv_dx_fh_Ri.name = 'abs_S_dqv_dx_fh_Ri'
@@ -526,13 +523,15 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                             "v",
                             "w",
                             theta,
+                            'th_e',
+                            'th_v',
                             "q_total",
-                            "q_vapour",
                             "q_cloud_liquid_mass",
                             "buoyancy"
                             ]
                 # "th_v",
                 # "th_L",
+                 #"q_vapour",
 
             field_list = sf.filter_variable_list(dataset, ref_dataset,
                                                  derived_data, filtered_data,
@@ -561,13 +560,17 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                             ["u", theta],
                             ["v", theta],
                             ["w", theta],
+                            ["u", "th_e"],
+                            ["v", "th_e"],
+                            ["w", "th_e"],
                             ["u", "q_total"],
                             ["v", "q_total"],
                             ["w", "q_total"],
-                            ["u", "q_vapour"],
-                            ["v", "q_vapour"],
-                            ["w", "q_vapour"]
                             ]
+                            # ["u", "q_vapour"],
+                            # ["v", "q_vapour"],
+                            # ["w", "q_vapour"]
+                            # ]
 
             quad_field_list = sf.filter_variable_pair_list(dataset,
                                                            ref_dataset,
@@ -585,6 +588,10 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
         dth_dx = dyn.ds_dxi(f'f(th_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
         dth_dx.name = 'dth_dx'
         dth_dx = re_chunk(dth_dx)
+
+        dth_e_dx = dyn.ds_dxi(f'f(th_e_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
+        dth_e_dx.name = 'dth_e_dx'
+        dth_e_dx = re_chunk(dth_e_dx)
 
         if case != 'dry':
             dq_dx = dyn.ds_dxi(f'f(q_total_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
@@ -610,6 +617,9 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
         dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
                                     opt, new_filter)
 
+        dth_e_dx_filt = sf.filter_field(dth_e_dx, filtered_data,
+                                      opt, new_filter)
+
         if case != 'dry':
             dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
                                           opt, new_filter)
@@ -627,6 +637,13 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
 
         abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
                                               opt, new_filter)
+
+        abs_S_dth_e_dx = dth_e_dx * abs_S
+        abs_S_dth_e_dx.name = 'abs_S_dth_e_dx'
+        abs_S_dth_e_dx = re_chunk(abs_S_dth_e_dx)
+
+        abs_S_dth_e_dx_filt = sf.filter_field(abs_S_dth_e_dx, filtered_data,
+                                            opt, new_filter)
 
         if case != 'dry':
             abs_S_dq_dx = dq_dx * abs_S
