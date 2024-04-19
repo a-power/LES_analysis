@@ -53,14 +53,14 @@ if case_in == 'BOMEX':
 
     if filtering_filters == False:
         dx_bar_in = np.array([20, 20, 20, 20, 20, 20])
-        dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
+        dx_hat_in = np.array([40]#, 80, 160, 320, 640, 1280])
         C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
         scalar = ['momentum', 'th', 'q_total']
 
     elif filtering_filters == True:
         dx_bar_in = 2*np.array([20, 40, 80, 160, 320, 640])
         if beta == 0:
-            dx_hat_in = 2 * np.array([40]) #, 80, 160, 320, 640, 1280])
+            dx_hat_in = 2 * np.array([40, 80, 160, 320, 640, 1280])
         elif beta == 1:
             dx_hat_in = 4 * np.array([40])#, 80, 160, 320, 640, 1280])
         else:
@@ -90,7 +90,7 @@ elif case_in == 'ARM':
         scalar = ['momentum', 'f(th_on_p)_r', 'q_total']
         dx_bar_in = 2*np.array([25, 50, 100, 200, 400, 800])
         if beta == 0:
-            dx_hat_in = 2 * np.array([50])#, 100, 200, 400, 800, 1600])
+            dx_hat_in = 2 * np.array([50, 100, 200, 400, 800, 1600])
         elif beta == 1:
             dx_hat_in = 4 * np.array([50])#, 100, 200, 400, 800, 1600])
         else:
