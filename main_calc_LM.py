@@ -53,7 +53,7 @@ if case_in == 'BOMEX':
 
     if filtering_filters == False:
         dx_bar_in = np.array([20, 20, 20, 20, 20, 20])
-        dx_hat_in = np.array([40]#, 80, 160, 320, 640, 1280])
+        dx_hat_in = np.array([40]) #, 80, 160, 320, 640, 1280])
         C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
         scalar = ['momentum', 'th', 'q_total']
 
