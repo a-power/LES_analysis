@@ -141,7 +141,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             "v",
                             "w",
                             "th",
-                            "th_e",
+                            "th_L",
                             "th_v",
                             "q_total",
                             "q_cloud_liquid_mass",
@@ -175,9 +175,9 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             ["u", "th"],
                             ["v", "th"],
                             ["w", "th"],
-                            ["u", "th_e"],
-                            ["v", "th_e"],
-                            ["w", "th_e"],
+                            ["u", "th_L"],
+                            ["v", "th_L"],
+                            ["w", "th_L"],
                             ["u", "q_total"],
                             ["v", "q_total"],
                             ["w", "q_total"]
@@ -229,14 +229,14 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
             dth_v_dx_filt = sf.filter_field(dth_v_dx, filtered_data,
                                           opt, new_filter)
 
-            dth_e_dx = dyn.ds_dxi('th_e', dataset, ref_dataset, opt, ingrid, max_ch)
-            print('ran   dth_e_dx = dyn.ds_dxi which has a shape of', np.shape(dth_e_dx))
-            dth_e_dx.name = 'dth_e_dx'
+            dth_L_dx = dyn.ds_dxi('th_L', dataset, ref_dataset, opt, ingrid, max_ch)
+            print('ran   dth_L_dx = dyn.ds_dxi which has a shape of', np.shape(dth_L_dx))
+            dth_L_dx.name = 'dth_L_dx'
             # dth_dx_save = save_field(derived_data, dth_dx)
-            dth_e_dx = re_chunk(dth_e_dx)
-            print('ran  rechunk of dth_dx which has a shape of', np.shape(dth_e_dx))
+            dth_L_dx = re_chunk(dth_L_dx)
+            print('ran  rechunk of dth_dx which has a shape of', np.shape(dth_L_dx))
 
-            dth_e_dx_filt = sf.filter_field(dth_e_dx, filtered_data,
+            dth_L_dx_filt = sf.filter_field(dth_L_dx, filtered_data,
                                             opt, new_filter)
 
             dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid, max_ch)
@@ -372,14 +372,14 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
             print('ran abs_S_dth_v_dx_filt = sf.filter_field(abs_S_dth_v_dx')
 
 
-            abs_S_dth_e_dx = dth_e_dx * abs_S
-            abs_S_dth_e_dx.name = 'abs_S_dth_e_dx'
-            abs_S_dth_e_dx = re_chunk(abs_S_dth_e_dx)
-            print('ran abs_S_dth_e_dx = re_chunk(abs_S_dth_e_dx)')
+            abs_S_dth_L_dx = dth_L_dx * abs_S
+            abs_S_dth_L_dx.name = 'abs_S_dth_L_dx'
+            abs_S_dth_L_dx = re_chunk(abs_S_dth_L_dx)
+            print('ran abs_S_dth_L_dx = re_chunk(abs_S_dth_L_dx)')
 
-            abs_S_dth_e_dx_filt = sf.filter_field(abs_S_dth_e_dx, filtered_data,
+            abs_S_dth_L_dx_filt = sf.filter_field(abs_S_dth_L_dx, filtered_data,
                                                 opt, new_filter)
-            print('ran abs_S_dth_e_dx_filt = sf.filter_field(abs_S_dth_e_dx')
+            print('ran abs_S_dth_L_dx_filt = sf.filter_field(abs_S_dth_L_dx')
 
 
             abs_S_dq_dx = dq_dx * abs_S
@@ -523,7 +523,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                             "v",
                             "w",
                             theta,
-                            'th_e',
+                            'th_L',
                             'th_v',
                             "q_total",
                             "q_cloud_liquid_mass",
@@ -560,9 +560,9 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                             ["u", theta],
                             ["v", theta],
                             ["w", theta],
-                            ["u", "th_e"],
-                            ["v", "th_e"],
-                            ["w", "th_e"],
+                            ["u", "th_L"],
+                            ["v", "th_L"],
+                            ["w", "th_L"],
                             ["u", "q_total"],
                             ["v", "q_total"],
                             ["w", "q_total"],
@@ -589,9 +589,9 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
         dth_dx.name = 'dth_dx'
         dth_dx = re_chunk(dth_dx)
 
-        dth_e_dx = dyn.ds_dxi(f'f(th_e_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
-        dth_e_dx.name = 'dth_e_dx'
-        dth_e_dx = re_chunk(dth_e_dx)
+        dth_L_dx = dyn.ds_dxi(f'f(th_L_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
+        dth_L_dx.name = 'dth_L_dx'
+        dth_L_dx = re_chunk(dth_L_dx)
 
         if case != 'dry':
             dq_dx = dyn.ds_dxi(f'f(q_total_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
@@ -617,7 +617,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
         dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
                                     opt, new_filter)
 
-        dth_e_dx_filt = sf.filter_field(dth_e_dx, filtered_data,
+        dth_L_dx_filt = sf.filter_field(dth_L_dx, filtered_data,
                                       opt, new_filter)
 
         if case != 'dry':
@@ -638,11 +638,11 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
         abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
                                               opt, new_filter)
 
-        abs_S_dth_e_dx = dth_e_dx * abs_S
-        abs_S_dth_e_dx.name = 'abs_S_dth_e_dx'
-        abs_S_dth_e_dx = re_chunk(abs_S_dth_e_dx)
+        abs_S_dth_L_dx = dth_L_dx * abs_S
+        abs_S_dth_L_dx.name = 'abs_S_dth_L_dx'
+        abs_S_dth_L_dx = re_chunk(abs_S_dth_L_dx)
 
-        abs_S_dth_e_dx_filt = sf.filter_field(abs_S_dth_e_dx, filtered_data,
+        abs_S_dth_L_dx_filt = sf.filter_field(abs_S_dth_L_dx, filtered_data,
                                             opt, new_filter)
 
         if case != 'dry':
@@ -1119,10 +1119,10 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
         scalar_name = 'q'
     elif scalar == 'th' or scalar == 'th_tot' or scalar == 'f(th_on_p)_r':
         scalar_name = 'th'
-    elif scalar == 'th_e':
-        scalar_name = 'th_e'
+    elif scalar == 'th_L':
+        scalar_name = 'th_L'
     else:
-        print("scalar not recognised, only inputs available are 'th', 'th_e', 'q_cloud_liquid_mass', 'q_vapour', or 'q_total'. testing of scalar input is in file")
+        print("scalar not recognised, only inputs available are 'th', 'th_L', 'q_cloud_liquid_mass', 'q_vapour', or 'q_total'. testing of scalar input is in file")
         scalar_name = scalar
 
     file_in = f'{indir}'
