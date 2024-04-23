@@ -1121,10 +1121,13 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
         scalar_name = 'q'
     elif scalar == 'th' or scalar == 'th_tot' or scalar == 'f(th_on_p)_r':
         scalar_name = 'th'
+    elif scalar == 'th_e':
+        scalar_name = 'th_e'
     elif scalar == 'th_L':
         scalar_name = 'th_L'
     else:
-        print("scalar not recognised, only inputs available are 'th', 'th_L', 'q_cloud_liquid_mass', 'q_vapour', or 'q_total'. testing of scalar input is in file")
+        print("scalar not recognised, only inputs available are 'th', 'th_L', 'q_cloud_liquid_mass', 'q_vapour', or 'q_total'. ",
+              "testing if scalar input is in file")
         scalar_name = scalar
 
     file_in = f'{indir}'
