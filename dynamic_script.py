@@ -144,10 +144,9 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             "th_L",
                             "th_v",
                             "q_total",
-                            "q_cloud_liquid_mass",
-                            "buoyancy"
+                            "q_cloud_liquid_mass"
                             ]
-                # "th_L", "th_v", "q_vapour",
+                # "th_e", "th_v", "q_vapour", "buoyancy"
 
             field_list = sf.filter_variable_list(dataset, ref_dataset,
                                                  derived_data, filtered_data,
@@ -172,9 +171,6 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             ["v", "v"],
                             ["v", "w"],
                             ["w", "w"],
-                            ["u", "th"],
-                            ["v", "th"],
-                            ["w", "th"],
                             ["u", "th_L"],
                             ["v", "th_L"],
                             ["w", "th_L"],
@@ -182,6 +178,11 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             ["v", "q_total"],
                             ["w", "q_total"]
                             ]
+
+                            # ["u", "th"],
+                            # ["v", "th"],
+                            # ["w", "th"],
+
                             # ["u", "th_v"],
                             # ["v", "th_v"],
                             # ["w", "th_v"],
@@ -206,28 +207,28 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                                                            var_list=var_list,
                                                            grid=ingrid)
 
-        dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, opt, ingrid, max_ch)
-        print('ran   dth_dx = dyn.ds_dxi which has a shape of', np.shape(dth_dx))
-        dth_dx.name = 'dth_dx'
-        # dth_dx_save = save_field(derived_data, dth_dx)
-        dth_dx = re_chunk(dth_dx)
-        print('ran  rechunk of dth_dx which has a shape of', np.shape(dth_dx))
-
-        dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
-                                      opt, new_filter)
-        print('ran sf.filter_field(dth_dx) which has a shape of', np.shape(dth_dx_filt))
-
-        if vapour == True:
-
-            dth_v_dx = dyn.ds_dxi('th_v', dataset, ref_dataset, opt, ingrid, max_ch)
-            print('ran   dth_v_dx = dyn.ds_dxi which has a shape of', np.shape(dth_v_dx))
-            dth_v_dx.name = 'dth_v_dx'
+        if vapour == False:
+            dth_dx = dyn.ds_dxi('th', dataset, ref_dataset, opt, ingrid, max_ch)
+            print('ran   dth_dx = dyn.ds_dxi which has a shape of', np.shape(dth_dx))
+            dth_dx.name = 'dth_dx'
             # dth_dx_save = save_field(derived_data, dth_dx)
-            dth_v_dx = re_chunk(dth_v_dx)
-            print('ran  rechunk of dth_dx which has a shape of', np.shape(dth_v_dx))
+            dth_dx = re_chunk(dth_dx)
+            print('ran  rechunk of dth_dx which has a shape of', np.shape(dth_dx))
 
-            dth_v_dx_filt = sf.filter_field(dth_v_dx, filtered_data,
+            dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
                                           opt, new_filter)
+            print('ran sf.filter_field(dth_dx) which has a shape of', np.shape(dth_dx_filt))
+
+        elif vapour == True:
+
+            # dth_v_dx = dyn.ds_dxi('th_v', dataset, ref_dataset, opt, ingrid, max_ch)
+            # print('ran   dth_v_dx = dyn.ds_dxi which has a shape of', np.shape(dth_v_dx))
+            # dth_v_dx.name = 'dth_v_dx'
+            # # dth_dx_save = save_field(derived_data, dth_dx)
+            # dth_v_dx = re_chunk(dth_v_dx)
+            # print('ran  rechunk of dth_v_dx which has a shape of', np.shape(dth_v_dx))
+            # dth_v_dx_filt = sf.filter_field(dth_v_dx, filtered_data,
+            #                               opt, new_filter)
 
             dth_L_dx = dyn.ds_dxi('th_L', dataset, ref_dataset, opt, ingrid, max_ch)
             print('ran   dth_L_dx = dyn.ds_dxi which has a shape of', np.shape(dth_L_dx))
@@ -254,7 +255,8 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
             # dqv_dx_filt = sf.filter_field(dqv_dx, filtered_data,
             #                               opt, new_filter)
 
-
+        else:
+            print('vapour must be set to either true or false')
 
 
         # deform = defm.deformation(dataset,
@@ -333,15 +335,15 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
 
 
 
+        if vapour == False:
+            abs_S_dth_dx = dth_dx * abs_S
+            abs_S_dth_dx.name = 'abs_S_dth_dx'
+            abs_S_dth_dx = re_chunk(abs_S_dth_dx)
+            print('ran abs_S_dth_dx = re_chunk(abs_S_dth_dx)')
 
-        abs_S_dth_dx = dth_dx * abs_S
-        abs_S_dth_dx.name = 'abs_S_dth_dx'
-        abs_S_dth_dx = re_chunk(abs_S_dth_dx)
-        print('ran abs_S_dth_dx = re_chunk(abs_S_dth_dx)')
-
-        abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
-                                              opt, new_filter)
-        print('ran abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx')
+            abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
+                                                  opt, new_filter)
+            print('ran abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx')
 
         # abs_S_dth_dx_fh_Ri = dth_dx * abs_S * fh_Ri
         # abs_S_dth_dx_fh_Ri.name = 'abs_S_dth_dx_fh_Ri'
@@ -360,16 +362,16 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
         # abs_S_dq_dx_fh_Ri_filt = sf.filter_field(abs_S_dq_dx_fh_Ri, filtered_data,
         #                                     opt, new_filter)
 
-        if vapour == True:
+        elif vapour == True:
 
-            abs_S_dth_v_dx = dth_v_dx * abs_S
-            abs_S_dth_v_dx.name = 'abs_S_dth_v_dx'
-            abs_S_dth_v_dx = re_chunk(abs_S_dth_v_dx)
-            print('ran abs_S_dth_v_dx = re_chunk(abs_S_dth_v_dx)')
-
-            abs_S_dth_v_dx_filt = sf.filter_field(abs_S_dth_v_dx, filtered_data,
-                                                opt, new_filter)
-            print('ran abs_S_dth_v_dx_filt = sf.filter_field(abs_S_dth_v_dx')
+            # abs_S_dth_v_dx = dth_v_dx * abs_S
+            # abs_S_dth_v_dx.name = 'abs_S_dth_v_dx'
+            # abs_S_dth_v_dx = re_chunk(abs_S_dth_v_dx)
+            # print('ran abs_S_dth_v_dx = re_chunk(abs_S_dth_v_dx)')
+            #
+            # abs_S_dth_v_dx_filt = sf.filter_field(abs_S_dth_v_dx, filtered_data,
+            #                                     opt, new_filter)
+            # print('ran abs_S_dth_v_dx_filt = sf.filter_field(abs_S_dth_v_dx')
 
 
             abs_S_dth_L_dx = dth_L_dx * abs_S
