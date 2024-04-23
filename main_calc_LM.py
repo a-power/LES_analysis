@@ -55,7 +55,7 @@ if case_in == 'BOMEX':
         dx_bar_in = np.array([20, 20, 20, 20, 20, 20])
         dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
         C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
-        scalar = ['momentum', 'th_L', 'q_vapour']
+        scalar = ['momentum', 'th_L', 'q_total']
 
     elif filtering_filters == True:
         dx_bar_in = 2*np.array([20, 40, 80, 160, 320, 640])
@@ -68,7 +68,7 @@ if case_in == 'BOMEX':
             sys.exit()
 
         C_res = ['4D', '8D', '16D', '32D', '64D', '128D']
-        scalar = ['th_L']
+        scalar = ['momentum' 'th_L', 'q_total']
         # scalar = ['momentum' 'th_L', 'q_total'] #, 'f(th_on_p)_r'
 
 elif case_in == 'ARM':
