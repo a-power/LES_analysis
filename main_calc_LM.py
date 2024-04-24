@@ -68,7 +68,7 @@ if case_in == 'BOMEX':
             sys.exit()
 
         C_res = ['4D', '8D', '16D', '32D', '64D', '128D']
-        scalar = ['momentum' 'th_L', 'q_total']
+        scalar = ['momentum', 'th_L', 'q_total']
         # scalar = ['momentum' 'th_L', 'q_total'] #, 'f(th_on_p)_r'
 
 elif case_in == 'ARM':
@@ -176,7 +176,8 @@ for it in range(len(dx_hat_in) - nfilt):
 
         if scalar_in == 'momentum':
             scalar_index = 0
-        elif scalar_in == 'th' or scalar_in == 'th_tot' or scalar_in == 'f(th_on_p)_r' or scalar_in == 'th_e' or scalar_in == 'th_L':
+        elif scalar_in == 'th' or scalar_in == 'th_tot' or scalar_in == 'f(th_on_p)_r' \
+                or scalar_in == 'th_e' or scalar_in == 'th_L':
             scalar_index = 1
         elif scalar_in == 'q_total' or scalar_in == 'q_vapour':
             scalar_index = 2
