@@ -150,7 +150,7 @@ for it in range(len(dx_hat_in) - nfilt):
 
         os.makedirs(path_f + folder_ff + 'LM/update/', exist_ok = True)
         dataset_name = [path_f + folder_ff + 'LM/update/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + folder_ff + 'LM/update/' + file_f + f'C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_ff + 'LM/update/' + file_f + f'C_{scalar[1]}_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
                          path_f + folder_ff + 'LM/update/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
 
     elif filtering_filters == False:
@@ -160,7 +160,7 @@ for it in range(len(dx_hat_in) - nfilt):
         print('reading files', data_in)
         os.makedirs(path_f + folder_f + 'LM/update/', exist_ok=True)
         dataset_name = [path_f + folder_f + 'LM/update/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + folder_f + 'LM/update/' + file_f + f'C_th_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_f + 'LM/update/' + file_f + f'C_{scalar[1]}_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
                          path_f + folder_f + 'LM/update/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
 
     DX_in = {
