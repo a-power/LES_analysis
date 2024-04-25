@@ -27,7 +27,7 @@ mygrid = 'p'
 if case == 'BOMEX':
     dx = 20
     if beta==0 or beta==1:
-        homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/update/'
+        homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/'
         dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
     else:
         homedir = '/work/scratch-pw3/apower/BOMEX/first_filt/LM/update/'
@@ -131,8 +131,8 @@ for j, delta_in in enumerate(dx_hat_in):
 
 
     ds = xr.Dataset()
-    ds.to_netcdf(dataset_name + f'{dx_bar_in[j]}_{dx_hat_in[j]}.nc', mode='w')
-    ds_in = {'file': dataset_name + f'{dx_bar_in[j]}_{dx_hat_in[j]}.nc', 'ds': ds}
+    ds.to_netcdf(dataset_name + f'{dx_bar_in[j]}_{dx_hat_in[j]}_{beta_num}.nc', mode='w')
+    ds_in = {'file': dataset_name + f'{dx_bar_in[j]}_{dx_hat_in[j]}_{beta_num}.nc', 'ds': ds}
 
     for i, field_in in enumerate(fields):
 
