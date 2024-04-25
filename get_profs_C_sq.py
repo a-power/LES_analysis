@@ -10,7 +10,7 @@ import argparse
 parser = argparse.ArgumentParser()
 #parser.add_argument('--times', type=str, default='18000')
 parser.add_argument('--times', type=int, default=0)
-parser.add_argument('--beta', type=int, default=1)
+parser.add_argument('--beta', type=int, default=0)
 parser.add_argument('--case', type=str, default='ARM')
 
 times_analysed = [ '18000', '25200', '32400', '39600' ]
