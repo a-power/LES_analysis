@@ -27,10 +27,10 @@ mygrid = 'p'
 if case == 'BOMEX':
     dx = 20
     if beta==0 or beta==1:
-        homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/'
+        homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/update/'
         dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
     else:
-        homedir = '/work/scratch-pw3/apower/BOMEX/first_filt/LM/'
+        homedir = '/work/scratch-pw3/apower/BOMEX/first_filt/LM/update/'
         dir_contour = '/work/scratch-pw3/apower/BOMEX/first_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
     myfile = 'BOMEX_m0020_g0800_all_14400_'
@@ -48,10 +48,10 @@ if case == 'BOMEX':
 elif case == 'ARM':
     dx = 25
     if beta==0 or beta==1:
-        homedir = '/work/scratch-pw3/apower/ARM/second_filt/LM/'
+        homedir = '/work/scratch-pw3/apower/ARM/second_filt/LM/update/'
         dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     else:
-        homedir = '/work/scratch-pw3/apower/ARM/first_filt/LM/'
+        homedir = '/work/scratch-pw3/apower/ARM/first_filt/LM/update/'
         dir_contour = f'/work/scratch-pw3/apower/ARM/first_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     myfile = f"diagnostics_3d_ts_{set_time}_"
 
@@ -84,8 +84,8 @@ dataset_name = outdir+myfile+f'C_cond_profs_'
 # field_dir = ['Cs', 'C_th', 'C_qt']
 
 if data_smoothed == True:
-    fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_field_on_{mygrid})_r', f'f(HR_q_field_on_{mygrid})_r',
-                  f'f(MM_field_on_{mygrid})_r', f'f(RR_th_field_on_{mygrid})_r', f'f(RR_q_field_on_{mygrid})_r']
+    fields = [f'f(LM_field_on_{mygrid})_r', f'f(HR_th_L_field_on_{mygrid})_r', f'f(HR_q_field_on_{mygrid})_r',
+                  f'f(MM_field_on_{mygrid})_r', f'f(RR_th_L_field_on_{mygrid})_r', f'f(RR_q_field_on_{mygrid})_r']
 
     cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
     w_field = f'f(f(w_on_{mygrid})_r_on_{mygrid})_r'
@@ -93,7 +93,7 @@ if data_smoothed == True:
     th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
     buoy_field = f'f(f(buoyancy_on_{mygrid})_r_on_{mygrid})_r'
 else:
-     fields = ['LM_field', 'HR_th_field', 'HR_q_field', 'MM_field', 'RR_th_field', 'RR_q_field']
+     fields = ['LM_field', 'HR_th_L_field', 'HR_q_field', 'MM_field', 'RR_th_L_field', 'RR_q_field']
 
      cloud_field = f'f(q_cloud_liquid_mass_on_{mygrid})_r'
      w_field = f'f(w_on_{mygrid})_r'
@@ -101,7 +101,7 @@ else:
      th_v_field = f'f(th_v_on_{mygrid})_r'
      buoy_field = f'f(buoyancy_on_{mygrid})_r'
 
-field_dir = ['Cs', 'C_th', 'C_qt', 'Cs', 'C_th', 'C_qt']
+field_dir = ['Cs', 'C_th_L', 'C_qt', 'Cs', 'C_th_L', 'C_qt']
 
 
 # cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
@@ -112,7 +112,7 @@ field_dir = ['Cs', 'C_th', 'C_qt', 'Cs', 'C_th', 'C_qt']
 
 
 gen_opts = {'deltas': None,
-            'other_vars': [w_field, buoy_field],
+            'other_vars': [w_field, th_v_field],
             'cloud_thres': 1e-5,
             'other_var_thres': [0.5, 0],
             'less_greater_in': ['less', 'less'],
