@@ -365,27 +365,27 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
         for t_set in t_av_or_not:
             if field == 'Cs_field':
-                print('opening dataset ', data_field_in, f'{deltas[i]}_running_mean_filter_rm00.nc')
-                data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
+                print('opening dataset ', data_field_in, f'{deltas[i]}.nc') #_running_mean_filter_rm00.nc'
+                data_set = xr.open_dataset(data_field_in + f'{deltas[i]}.nc')
                 print('successfully opened dataset')
 
-                print('length of time array for LM is ', len(data_set['f(LM_field_on_p)_r'].data[:, 0, 0, 0]))
+                print('length of time array for LM is ', len(data_set['LM_field'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
                     if x_or_y == 'x':
-                        LM_field = np.mean(data_set['f(LM_field_on_p)_r'].data[:, axis_set, ...], axis=0)
-                        MM_field = np.mean(data_set['f(MM_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                        LM_field = np.mean(data_set['LM_field'].data[:, axis_set, ...], axis=0)
+                        MM_field = np.mean(data_set['MM_field'].data[:, axis_set, ...], axis=0)
                     elif x_or_y == 'y':
-                        LM_field = np.mean(data_set['f(LM_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
-                        MM_field = np.mean(data_set['f(MM_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                        LM_field = np.mean(data_set['LM_field'].data[:, :, axis_set, ...], axis=0)
+                        MM_field = np.mean(data_set['MM_field'].data[:, :, axis_set, ...], axis=0)
                     else:
                         print("x_or_y must be set to either 'x' or 'y', not ", x_or_y)
                 else:
                     if x_or_y == 'x':
-                        LM_field = data_set['f(LM_field_on_p)_r'].data[t_set, axis_set, ...]
-                        MM_field = data_set['f(MM_field_on_p)_r'].data[t_set, axis_set, ...]
+                        LM_field = data_set['LM_field'].data[t_set, axis_set, ...]
+                        MM_field = data_set['MM_field'].data[t_set, axis_set, ...]
                     elif x_or_y == 'y':
-                        LM_field = data_set['f(LM_field_on_p)_r'].data[t_set, :, axis_set, ...]
-                        MM_field = data_set['f(MM_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                        LM_field = data_set['LM_field'].data[t_set, :, axis_set, ...]
+                        MM_field = data_set['MM_field'].data[t_set, :, axis_set, ...]
                     else:
                         print("x_or_y must be set to either 'x' or 'y', not ", x_or_y)
 
@@ -395,23 +395,23 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 print('successfully calculated Cs^2')
 
             elif field == 'Cth_field':
-                data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
+                data_set = xr.open_dataset(data_field_in + f'{deltas[i]}.nc') # _running_mean_filter_rm00
 
-                print('length of time array for HR_th is ', len(data_set['f(HR_th_field_on_p)_r'].data[:, 0, 0, 0]))
+                print('length of time array for HR_th is ', len(data_set['HR_th_L_field'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
                     if x_or_y == 'x':
-                        HR_field = np.mean(data_set['f(HR_th_field_on_p)_r'].data[:, axis_set, ...], axis=0)
-                        RR_field = np.mean(data_set['f(RR_th_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                        HR_field = np.mean(data_set['HR_th_L_field'].data[:, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['RR_th_L_field'].data[:, axis_set, ...], axis=0)
                     elif x_or_y == 'y':
-                        HR_field = np.mean(data_set['f(HR_th_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
-                        RR_field = np.mean(data_set['f(RR_th_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                        HR_field = np.mean(data_set['HR_th_L_field'].data[:, :, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['RR_th_L_field'].data[:, :, axis_set, ...], axis=0)
                 else:
                     if x_or_y == 'x':
-                        HR_field = data_set['f(HR_th_field_on_p)_r'].data[t_set, axis_set, ...]
-                        RR_field = data_set['f(RR_th_field_on_p)_r'].data[t_set, axis_set, ...]
+                        HR_field = data_set['HR_th_L_field'].data[t_set, axis_set, ...]
+                        RR_field = data_set['RR_th_L_field'].data[t_set, axis_set, ...]
                     elif x_or_y == 'y':
-                        HR_field = data_set['f(HR_th_field_on_p)_r'].data[t_set, :, axis_set, ...]
-                        RR_field = data_set['f(RR_th_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                        HR_field = data_set['HR_th_L_field'].data[t_set, :, axis_set, ...]
+                        RR_field = data_set['RR_th_L_field'].data[t_set, :, axis_set, ...]
 
                 data_field_sq = 0.5 * HR_field / RR_field
                 data_field = dyn.get_Cs(data_field_sq)
@@ -419,26 +419,26 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 print('successfully calculated C_th^2')
 
             elif field == 'Cqt_field':
-                data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
+                data_set = xr.open_dataset(data_field_in + f'{deltas[i]}.nc') #_running_mean_filter_rm00
 
                 print('length of time array for HR_qt is ',
-                      len(data_set['f(HR_q_total_f_field_on_p)_r'].data[:, 0, 0, 0]))
+                      len(data_set['HR_q_field'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
                     if x_or_y == 'x':
-                        HR_field = np.mean(data_set['f(HR_q_total_f_field_on_p)_r'].data[:, axis_set, ...], axis=0)
-                        RR_field = np.mean(data_set['f(RR_q_total_f_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                        HR_field = np.mean(data_set['HR_q_field'].data[:, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['RR_q_field'].data[:, axis_set, ...], axis=0)
 
                     elif x_or_y == 'y':
-                        HR_field = np.mean(data_set['f(HR_q_total_f_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
-                        RR_field = np.mean(data_set['f(RR_q_total_f_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                        HR_field = np.mean(data_set['HR_q_field'].data[:, :, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['RR_q_field'].data[:, :, axis_set, ...], axis=0)
                 else:
                     if x_or_y == 'x':
-                        HR_field = data_set['f(HR_q_total_f_field_on_p)_r'].data[t_set, axis_set, ...]
-                        RR_field = data_set['f(RR_q_total_f_field_on_p)_r'].data[t_set, axis_set, ...]
+                        HR_field = data_set['HR_q_field'].data[t_set, axis_set, ...]
+                        RR_field = data_set['RR_q_field'].data[t_set, axis_set, ...]
 
                     elif x_or_y == 'y':
-                        HR_field = data_set['f(HR_q_total_f_field_on_p)_r'].data[t_set, :, axis_set, ...]
-                        RR_field = data_set['f(RR_q_total_f_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                        HR_field = data_set['HR_q_field'].data[t_set, :, axis_set, ...]
+                        RR_field = data_set['RR_q_field'].data[t_set, :, axis_set, ...]
 
                 data_field_sq = 0.5 * HR_field / RR_field
                 data_field = dyn.get_Cs(data_field_sq)
@@ -463,39 +463,39 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
             print('opening the contour dataset')
 
             contour_set = xr.open_dataset(data_field_in +
-                                          f'_ga0{CL_itr}_gaussian_filter_ga0{beta_CL_itr}_running_mean_filter_rm00.nc')
+                                          f'_ga0{CL_itr}_gaussian_filter_ga0{beta_CL_itr}.nc') #_running_mean_filter_rm00
 
             print('successfully opened contour set')
 
-            print('length of time array for cloud field is ',
-                  len(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, 0, 0, 0]))
+            # print('length of time array for cloud field is ',
+            #       len(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, 0, 0, 0]))
             if t_av_or_not == 'yes':
                 if x_or_y == 'x':
-                    cloud_field = np.mean(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, axis_set, ...],
+                    cloud_field = np.mean(contour_set['f(q_cloud_liquid_mass_on_p)_r'].data[:, axis_set, ...],
                                           axis=0)
-                    w_field = np.mean(contour_set['f(f(w_on_p)_r_on_p)_r'].data[:, axis_set, ...], axis=0)
-                    w2_field = np.mean(contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[:, axis_set, ...], axis=0)
-                    th_v_field = np.mean(contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[:, axis_set, ...], axis=0)
+                    w_field = np.mean(contour_set['f(w_on_p)_r'].data[:, axis_set, ...], axis=0)
+                    w2_field = np.mean(contour_set['f(w_on_p.w_on_p)_r'].data[:, axis_set, ...], axis=0)
+                    th_v_field = np.mean(contour_set['f(th_v_on_p)_r'].data[:, axis_set, ...], axis=0)
 
                 elif x_or_y == 'y':
-                    cloud_field = np.mean(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, :, axis_set, ...], axis=0)
-                    w_field = np.mean(contour_set['f(f(w_on_p)_r_on_p)_r'].data[:, :, axis_set, ...], axis=0)
-                    w2_field = np.mean(contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[:, :, axis_set, ...], axis=0)
-                    th_v_field = np.mean(contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                    cloud_field = np.mean(contour_set['f(q_cloud_liquid_mass_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                    w_field = np.mean(contour_set['f(w_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                    w2_field = np.mean(contour_set['f(w_on_p.w_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                    th_v_field = np.mean(contour_set['f(th_v_on_p)_r'].data[:, :, axis_set, ...], axis=0)
 
                 mytime = 't_av'
             else:
                 if x_or_y == 'x':
-                    cloud_field = contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
-                    w_field = contour_set['f(f(w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
-                    w2_field = contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
-                    th_v_field = contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[t_set, axis_set, ...]
+                    cloud_field = contour_set['f(q_cloud_liquid_mass_on_p)_r'].data[t_set, axis_set, ...]
+                    w_field = contour_set['f(w_on_p)_r'].data[t_set, axis_set, ...]
+                    w2_field = contour_set['f(w_on_p.w_on_p)_r'].data[t_set, axis_set, ...]
+                    th_v_field = contour_set['f(th_v_on_p)_r'].data[t_set, axis_set, ...]
 
                 elif x_or_y == 'y':
-                    cloud_field = contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
-                    w_field = contour_set['f(f(w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
-                    w2_field = contour_set['f(f(w_on_p.w_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
-                    th_v_field = contour_set['f(f(th_v_on_p)_r_on_p)_r'].data[t_set, :, axis_set, ...]
+                    cloud_field = contour_set['f(q_cloud_liquid_mass_on_p)_r'].data[t_set, :, axis_set, ...]
+                    w_field = contour_set['f(w_on_p)_r'].data[t_set, :, axis_set, ...]
+                    w2_field = contour_set['f(w_on_p.w_on_p)_r'].data[t_set, :, axis_set, ...]
+                    th_v_field = contour_set['f(th_v_on_p)_r'].data[t_set, :, axis_set, ...]
 
                 mytime = f't{t_set}'
 
@@ -735,7 +735,7 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
         if deltas[i] == '0_0':
             CL_itr = '0'
             beta_CL_itr = '0'
-            delta_label = '2$\\Delta$'
+            delta_label = '4$\\Delta$'
 
         else:
             print('need to code the delta for ', deltas[i])
@@ -746,23 +746,23 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                 data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
                 print('successfully opened dataset')
 
-                print('length of time array for LM is ', len(data_set['f(LM_field_on_p)_r'].data[:, 0, 0, 0]))
+                print('length of time array for LM is ', len(data_set['LM_field'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
                     if x_or_y == 'x':
-                        LM_field = np.mean(data_set['f(LM_field_on_p)_r'].data[:, axis_set, ...], axis=0)
-                        MM_field = np.mean(data_set['f(MM_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                        LM_field = np.mean(data_set['LM_field'].data[:, axis_set, ...], axis=0)
+                        MM_field = np.mean(data_set['MM_field'].data[:, axis_set, ...], axis=0)
                     elif x_or_y == 'y':
-                        LM_field = np.mean(data_set['f(LM_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
-                        MM_field = np.mean(data_set['f(MM_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                        LM_field = np.mean(data_set['LM_field'].data[:, :, axis_set, ...], axis=0)
+                        MM_field = np.mean(data_set['MM_field'].data[:, :, axis_set, ...], axis=0)
                     else:
                         print("x_or_y must be set to either 'x' or 'y', not ", x_or_y)
                 else:
                     if x_or_y == 'x':
-                        LM_field = data_set['f(LM_field_on_p)_r'].data[t_set, axis_set, ...]
-                        MM_field = data_set['f(MM_field_on_p)_r'].data[t_set, axis_set, ...]
+                        LM_field = data_set['LM_field'].data[t_set, axis_set, ...]
+                        MM_field = data_set['MM_field'].data[t_set, axis_set, ...]
                     elif x_or_y == 'y':
-                        LM_field = data_set['f(LM_field_on_p)_r'].data[t_set, :, axis_set, ...]
-                        MM_field = data_set['f(MM_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                        LM_field = data_set['LM_field'].data[t_set, :, axis_set, ...]
+                        MM_field = data_set['MM_field'].data[t_set, :, axis_set, ...]
                     else:
                         print("x_or_y must be set to either 'x' or 'y', not ", x_or_y)
 
@@ -774,21 +774,21 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
             elif field == 'Cth_field':
                 data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
 
-                print('length of time array for HR_th is ', len(data_set['f(HR_th_field_on_p)_r'].data[:, 0, 0, 0]))
+                print('length of time array for HR_th is ', len(data_set['HR_th_L_field'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
                     if x_or_y == 'x':
-                        HR_field = np.mean(data_set['f(HR_th_field_on_p)_r'].data[:, axis_set, ...], axis=0)
-                        RR_field = np.mean(data_set['f(RR_th_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                        HR_field = np.mean(data_set['HR_th_L_field'].data[:, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['RR_th_L_field'].data[:, axis_set, ...], axis=0)
                     elif x_or_y == 'y':
-                        HR_field = np.mean(data_set['f(HR_th_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
-                        RR_field = np.mean(data_set['f(RR_th_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                        HR_field = np.mean(data_set['HR_th_L_field'].data[:, :, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['RR_th_L_field'].data[:, :, axis_set, ...], axis=0)
                 else:
                     if x_or_y == 'x':
-                        HR_field = data_set['f(HR_th_field_on_p)_r'].data[t_set, axis_set, ...]
-                        RR_field = data_set['f(RR_th_field_on_p)_r'].data[t_set, axis_set, ...]
+                        HR_field = data_set['HR_th_L_field'].data[t_set, axis_set, ...]
+                        RR_field = data_set['RR_th_L_field'].data[t_set, axis_set, ...]
                     elif x_or_y == 'y':
-                        HR_field = data_set['f(HR_th_field_on_p)_r'].data[t_set, :, axis_set, ...]
-                        RR_field = data_set['f(RR_th_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                        HR_field = data_set['HR_th_L_field'].data[t_set, :, axis_set, ...]
+                        RR_field = data_set['RR_th_L_field'].data[t_set, :, axis_set, ...]
 
                 data_field_sq = 0.5 * HR_field / RR_field
                 data_field = dyn.get_Cs(data_field_sq)
@@ -799,23 +799,23 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                 data_set = xr.open_dataset(data_field_in + f'{deltas[i]}_running_mean_filter_rm00.nc')
 
                 print('length of time array for HR_qt is ',
-                      len(data_set['f(HR_q_total_f_field_on_p)_r'].data[:, 0, 0, 0]))
+                      len(data_set['HR_q_field'].data[:, 0, 0, 0]))
                 if t_av_or_not == 'yes':
                     if x_or_y == 'x':
-                        HR_field = np.mean(data_set['f(HR_q_total_f_field_on_p)_r'].data[:, axis_set, ...], axis=0)
-                        RR_field = np.mean(data_set['f(RR_q_total_f_field_on_p)_r'].data[:, axis_set, ...], axis=0)
+                        HR_field = np.mean(data_set['HR_q_field'].data[:, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['RR_q_field'].data[:, axis_set, ...], axis=0)
 
                     elif x_or_y == 'y':
-                        HR_field = np.mean(data_set['f(HR_q_total_f_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
-                        RR_field = np.mean(data_set['f(RR_q_total_f_field_on_p)_r'].data[:, :, axis_set, ...], axis=0)
+                        HR_field = np.mean(data_set['HR_q_field'].data[:, :, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['RR_q_field'].data[:, :, axis_set, ...], axis=0)
                 else:
                     if x_or_y == 'x':
-                        HR_field = data_set['f(HR_q_total_f_field_on_p)_r'].data[t_set, axis_set, ...]
-                        RR_field = data_set['f(RR_q_total_f_field_on_p)_r'].data[t_set, axis_set, ...]
+                        HR_field = data_set['HR_q_field'].data[t_set, axis_set, ...]
+                        RR_field = data_set['RR_q_field'].data[t_set, axis_set, ...]
 
                     elif x_or_y == 'y':
-                        HR_field = data_set['f(HR_q_total_f_field_on_p)_r'].data[t_set, :, axis_set, ...]
-                        RR_field = data_set['f(RR_q_total_f_field_on_p)_r'].data[t_set, :, axis_set, ...]
+                        HR_field = data_set['HR_q_field'].data[t_set, :, axis_set, ...]
+                        RR_field = data_set['RR_q_field'].data[t_set, :, axis_set, ...]
 
                 data_field_sq = 0.5 * HR_field / RR_field
                 data_field = dyn.get_Cs(data_field_sq)
@@ -1520,7 +1520,7 @@ def plot_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_path, 
 
             # th_v_c = plt.contour(np.transpose(th_v_field[start_grid:end_grid, :]), colors='black', linestyles='dashed',
             #                      linewidths=1)  # , levels=[0.1, 1, 2])
-            ax1.clabel(th_v_c, inline=True, fontsize=10)
+            # ax1.clabel(th_v_c, inline=True, fontsize=10)
 
             # C_1st = np.percentile(data_field[start_grid:end_grid, 5:z_top_in], C_perc_1st)
             # my_C_levels = [C_1st]

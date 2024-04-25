@@ -30,8 +30,8 @@ set_C_perc_2nd = None
 
 
 if case =='BOMEX':
-    homedir = 'C:/Users/Alanna/Documents/1_PhD/data/'#'/work/scratch-pw3/apower/BOMEX/second_filt/'
-    mydir = homedir + 'C:/Users/Alanna/Documents/1_PhD/data/'#'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
+    homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/' # C:/Users/Alanna/Documents/1_PhD/data/'
+    mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_' #'C:/Users/Alanna/Documents/1_PhD/data/'
     contour_data = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
     plotdir_in = '/gws/nopw/j04/paracon_rdg/users/apower/plots/BOMEX_fields/cloud_contour/'
