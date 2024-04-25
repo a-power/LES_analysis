@@ -27,7 +27,7 @@ mygrid = 'p'
 if case == 'BOMEX':
     dx = 20
     if beta==0 or beta==1:
-        homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/'
+        homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/update/'
         dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
     else:
         homedir = '/work/scratch-pw3/apower/BOMEX/first_filt/LM/update/'
