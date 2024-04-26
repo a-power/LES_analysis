@@ -131,8 +131,8 @@ for j, delta_in in enumerate(dx_hat_in):
 
 
     ds = xr.Dataset()
-    ds.to_netcdf(dataset_name + f'{dx_bar_in[j]}_{dx_hat_in[j]}_{beta_num}.nc', mode='w')
-    ds_in = {'file': dataset_name + f'{dx_bar_in[j]}_{dx_hat_in[j]}_{beta_num}.nc', 'ds': ds}
+    ds.to_netcdf(dataset_name + f'{dx_bar_in[j]}_{dx_hat_in[j]}.nc', mode='w')
+    ds_in = {'file': dataset_name + f'{dx_bar_in[j]}_{dx_hat_in[j]}.nc', 'ds': ds}
 
     for i, field_in in enumerate(fields):
 
