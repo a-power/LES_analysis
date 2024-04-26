@@ -31,7 +31,7 @@ if case=='BOMEX':
     time = '14400'
     if filt_num == 1:
         homedir = '/work/scratch-pw3/apower/BOMEX/first_filt/LM/update/C_profs/BOMEX_m0020_g0800_all_14400_C_cond_profs_'
-        res = ['20_40', '20_80D', '20_160', '20_320', '20_640', '20_1280']
+        res = ['20_40', '20_80', '20_160', '20_320', '20_640', '20_1280']
         #res = ['20_40', '40_80', '80_160', '160_320', '320_640', '640_1280']
     elif filt_num == 2:
         homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/update/C_profs/BOMEX_m0020_g0800_all_14400_C_cond_profs_'
