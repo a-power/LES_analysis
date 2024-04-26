@@ -22,7 +22,7 @@ partitions = ['prof', 'env_prof', 'cloud_prof', 'w_prof', 'w_th_v_prof']
 
 filt_num = 2
 
-data_dir = '/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/data/C_profs_th_L/'
+data_dir = f'/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/data/C_profs_th_L/{case}/'
 os.makedirs(data_dir, exist_ok = True)
 
 if case=='BOMEX':
@@ -72,7 +72,7 @@ for r_ind, r in enumerate(res):
             C_sq[s, p_ind, r_ind, :] = LM / MM
 
 
-np.save(data_dir+f'{case}/C_sq_cond_{time}_{beta}.npy', C_sq)
+np.save(data_dir+f'C_sq_cond_{time}_{beta}.npy', C_sq)
 
             # if s == '_q':
             #     s = '_qt'
