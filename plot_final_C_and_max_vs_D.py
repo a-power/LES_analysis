@@ -23,24 +23,23 @@ what_plotting='_0' # '_beta'
 C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 
 if case == 'ARM':
-    #homedir1st = '/work/scratch-pw3/apower/ARM/corrected_sigmas/smoothed_LM_HR_fields/C_profs/'
-    homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/C_profs/'
-    plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigmas/C_beta_profiles/'
-    file_name = f"diagnostics_3d_ts_{set_time}_gaussian_filter_C_"
-    prof_file = f'/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_{set_time}.nc'
-
-    zn_set = np.arange(0, 4410, 10)
-    z_set = np.arange(-5, 4405, 10)
-    #z_ML = 1
-    z_ML_bottom = 8
-
-    z_cl_r = [130, 200]
-    z_ml_r = [8, 55]
-
+    # #homedir1st = '/work/scratch-pw3/apower/ARM/corrected_sigmas/smoothed_LM_HR_fields/C_profs/'
+    # homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/C_profs/'
+    # plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigmas/C_beta_profiles/'
+    # file_name = f"diagnostics_3d_ts_{set_time}_gaussian_filter_C_"
+    # prof_file = f'/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_{set_time}.nc'
+    #
+    # zn_set = np.arange(0, 4410, 10)
+    # z_set = np.arange(-5, 4405, 10)
+    # #z_ML = 1
+    # z_ML_bottom = 8
+    #
+    # z_cl_r = [130, 200]
+    # z_ml_r = [8, 55]
+    #
     th_name = 'th_v'
 
 elif case == 'BOMEX':
-    beta=True
     what_plotting='_0'
     C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 
@@ -48,15 +47,20 @@ elif case == 'BOMEX':
     prof_file = todd_dir + 'BOMEX_m0020_g0800_all_14400.nc'
 
     if beta == True:
-        homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/beta_filtered_filters/smoothed_LM_HR_fields/C_profs/'
-        plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/scale_dep_plots/C_beta_profiles/'
+        homedir = '/work/scratch-pw3/apower/BOMEX/second_filt/LM/update/C_profs/'
+        plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/plots/C_profiles/'
     else:
-        homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/C_profs_cloud_1e-7/'
-        plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/profiles_cloud_1e-7/diff_C_calc/'
+        homedir = '/work/scratch-pw3/apower/BOMEX/first_filt/LM/update/C_profs/'
+        plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/plots/C_profiles/'
     # if C_or_LM == 'MM':
-    file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_LM_'
+    file_name = f'BOMEX_m0020_g0800_all_14400_C_cond_profs_'
     # else:
     #     file_name = f'BOMEX_m0020_g0800_all_14400_gaussian_filter_{C_or_LM}_'
+
+    if beta_num == 0:
+        res = ['40_80_0', '80_160_0', '160_320_0', '320_640_0', '640_1280_0', '1280_2560_0']
+    else:
+        res = ['40_160_1']
 
     zn_set = np.arange(0, 3020, 20)
     z_set = np.arange(-10, 3010, 20)

@@ -25,7 +25,7 @@ C_or_LM = 'C' # 'C', 'LM', or 'MM'. C_sq_to_C == True for LM and MM
 x_lim_list = [0.355, 0.355, 0.355, 0.355, 0.255, 0.07]
 
 if case == 'ARM':
-    homedir1st = '/work/scratch-pw3/apower/ARM/corrected_sigmas/smoothed_LM_HR_fields/C_profs/'
+    homedir1st = '/work/scratch-pw3/apower/ARM/second_filt/LM/update/C_profs/'
     homedir = '/work/scratch-pw3/apower/ARM/corrected_sigmas/filtering_filtered/smoothed_LM_HR_fields/C_profs/'
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigmas/C_beta_profiles/'
     profiles_dir = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_'
