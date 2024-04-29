@@ -45,7 +45,7 @@ if case_in == 'BOMEX':
     print('using BOMEX')
     path_f = '/work/scratch-pw3/apower/BOMEX/'
     folder_f = 'first_filt/'
-    folder_ff = 'second_filt/'
+    folder_ff = 'second_filt/th/'
     times_list = ['14400']
     time_in = times_list[0]
     file_f = f'BOMEX_m0020_g0800_all_{time_in}_'
