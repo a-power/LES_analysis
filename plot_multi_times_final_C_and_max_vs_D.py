@@ -42,7 +42,7 @@ if case == 'ARM':
 
     set_time = ['18000', '25200', '32400', '39600']
 
-    th_name = 'th_v'
+    th_name = 'th_L'
 
 elif case == 'BOMEX':
 
