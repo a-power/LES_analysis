@@ -13,7 +13,7 @@ parser.add_argument('--t', type=int, default=0)
 parser.add_argument('--b', type=int, default=0)
 parser.add_argument('--start', type=int, default=0)
 parser.add_argument('--case', type=str, default='BOMEX')
-parser.add_argument('--filting_filts', type=str, default='n')
+parser.add_argument('--filting_filts', type=str, default='y')
 
 args = parser.parse_args()
 t_in = args.t
@@ -68,7 +68,7 @@ if case_in == 'BOMEX':
             sys.exit()
 
         C_res = ['4D', '8D', '16D', '32D', '64D', '128D']
-        scalar = ['momentum', 'th_L', 'q_total']
+        scalar = ['th']
         # scalar = ['momentum' 'th_L', 'q_total'] #, 'f(th_on_p)_r'
 
 elif case_in == 'ARM':
