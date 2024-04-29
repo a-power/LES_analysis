@@ -621,7 +621,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
             dth_L_dx = re_chunk(dth_L_dx)
 
         else:
-            dth_dx = dyn.ds_dxi(f'f(th_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
+            dth_dx = dyn.ds_dxi(theta, dataset, ref_dataset, opt, ingrid, max_ch) # f'f(th_on_{ingrid})_r'
             dth_dx.name = 'dth_dx'
             dth_dx = re_chunk(dth_dx)
 

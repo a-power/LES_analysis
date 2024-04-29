@@ -26,7 +26,7 @@ case_in = args.case
 av_type = 'all'
 mygrid = 'p'
 
-th_type = 'th'
+th_type = f'f(th_on_{mygrid})_r'
 
 
 set_save_all = 2
@@ -70,7 +70,7 @@ if case_in == 'BOMEX':
             sys.exit()
 
         C_res = ['4D', '8D', '16D', '32D', '64D', '128D']
-        scalar = ['th']
+        scalar = [th_type]
         # scalar = ['momentum' 'th_L', 'q_total'] #, 'f(th_on_p)_r'
 
 elif case_in == 'ARM':
