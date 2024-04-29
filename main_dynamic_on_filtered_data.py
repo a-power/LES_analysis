@@ -68,7 +68,7 @@ filter_name = 'gaussian'  # "wave_cutoff"
 if case_in=='BOMEX':
     in_dir = '/work/scratch-pw3/apower/BOMEX/first_filt/BOMEX_m'
     model_res = '0020_g0800'
-    outdir = '/work/scratch-pw3/apower/BOMEX/second_filt/'
+    outdir = '/work/scratch-pw3/apower/BOMEX/second_filt/th/'
     dx=20.0
     #time = 14400
 
@@ -98,7 +98,7 @@ if case_in=='BOMEX':
 
 elif case_in=='ARM':
     in_dir = '/work/scratch-pw3/apower/ARM/first_filt/'
-    outdir = '/work/scratch-pw3/apower/ARM/second_filt/'
+    outdir = '/work/scratch-pw3/apower/ARM/second_filt/th/'
     model_res = None
     dx=25
 
@@ -177,4 +177,4 @@ opgrid = 'p'
 
 dy_s.run_dyn_on_filtered(model_res, set_time, filter_name, sigma_list, in_dir, outdir, options,
                         opgrid, filtered_data = f'ga0{str(first_filt_res)}', ref_file = None,
-                        time_name='time', case=case_in, beta_in=beta)
+                        time_name='time', case=case_in, beta_in=beta, c_th=True)

@@ -412,7 +412,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
 
 
 def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, filtered_data,
-            ref_file = None, time_name = 'time_series_600_600', case='ARM', beta_in=0):
+            ref_file = None, time_name = 'time_series_600_600', case='ARM', beta_in=0, c_th=False):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
@@ -520,16 +520,20 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         "w",
                         theta]
             else:
-                var_list = [
-                            "u",
-                            "v",
-                            "w",
-                            theta,
-                            'th_L',
-                            'th_v',
-                            "q_total",
-                            "q_cloud_liquid_mass"
-                            ]
+                if c_th==True:
+                    var_list = [
+                        theta]
+                else:
+                    var_list = [
+                                "u",
+                                "v",
+                                "w",
+                                theta,
+                                'th_L',
+                                'th_v',
+                                "q_total",
+                                "q_cloud_liquid_mass"
+                                ]
                 # "th_v",
                 # "th_L",
                 # "q_vapour"
@@ -553,19 +557,31 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         ["w", theta],
                         ]
             else:
-                var_list = [["u", "u"],
-                            ["u", "v"],
-                            ["u", "w"],
-                            ["v", "v"],
-                            ["v", "w"],
-                            ["w", "w"],
-                            ["u", "th_L"],
-                            ["v", "th_L"],
-                            ["w", "th_L"],
-                            ["u", "q_total"],
-                            ["v", "q_total"],
-                            ["w", "q_total"],
-                            ]
+                if c_th == True:
+                    var_list = [["u", "u"],
+                                ["u", "v"],
+                                ["u", "w"],
+                                ["v", "v"],
+                                ["v", "w"],
+                                ["w", "w"],
+                                ["u", theta],
+                                ["v", theta],
+                                ["w", theta]
+                                ]
+                else:
+                    var_list = [["u", "u"],
+                                ["u", "v"],
+                                ["u", "w"],
+                                ["v", "v"],
+                                ["v", "w"],
+                                ["w", "w"],
+                                ["u", "th_L"],
+                                ["v", "th_L"],
+                                ["w", "th_L"],
+                                ["u", "q_total"],
+                                ["v", "q_total"],
+                                ["w", "q_total"],
+                                ]
 
                             # ,
                             # ["u", theta],
@@ -589,7 +605,13 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                 uvw_names=[f'f(u_on_{ingrid})_r', f'f(v_on_{ingrid})_r', f'f(w_on_{ingrid})_r'])
 
 
-        if case != 'dry':
+        if case != 'dry' and c_th == False:
+            # if c_th == True:
+            #     dth_dx = dyn.ds_dxi(f'f(th_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
+            #     dth_dx.name = 'dth_dx'
+            #     dth_dx = re_chunk(dth_dx)
+            #
+            # else:
             dq_dx = dyn.ds_dxi(f'f(q_total_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
             dq_dx.name = 'dq_dx'
             dq_dx = re_chunk(dq_dx)
@@ -627,7 +649,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                               opt, new_filter)
 
 
-        if case != 'dry':
+        if case != 'dry' and c_th == False:
             dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
                                           opt, new_filter)
             dth_L_dx_filt = sf.filter_field(dth_L_dx, filtered_data,
