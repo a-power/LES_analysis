@@ -570,9 +570,9 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                 ["v", "v"],
                                 ["v", "w"],
                                 ["w", "w"],
-                                ["u", theta],
-                                ["v", theta],
-                                ["w", theta]
+                                ["u", "th_v"],
+                                ["v", "th_v"],
+                                ["w", "th_v"]
                                 ]
                 else:
                     var_list = [["u", "u"],
@@ -627,9 +627,13 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
             dth_L_dx = re_chunk(dth_L_dx)
 
         else:
-            dth_dx = dyn.ds_dxi(theta, dataset, ref_dataset, opt, ingrid, max_ch) # f'f(th_on_{ingrid})_r'
-            dth_dx.name = 'dth_dx'
-            dth_dx = re_chunk(dth_dx)
+            # dth_dx = dyn.ds_dxi(theta, dataset, ref_dataset, opt, ingrid, max_ch) # f'f(th_on_{ingrid})_r'
+            # dth_dx.name = 'dth_dx'
+            # dth_dx = re_chunk(dth_dx)
+
+            dth_v_dx = dyn.ds_dxi('th_v', dataset, ref_dataset, opt, ingrid, max_ch)  # f'f(th_on_{ingrid})_r'
+            dth_v_dx.name = 'dth_v_dx'
+            dth_v_dx = re_chunk(dth_v_dx)
 
         S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
 
@@ -676,15 +680,25 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                                 opt, new_filter)
 
         else:
-            dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
+            # dth_dx_filt = sf.filter_field(dth_dx, filtered_data,
+            #                               opt, new_filter)
+            #
+            # abs_S_dth_dx = dth_dx * abs_S
+            # abs_S_dth_dx.name = 'abs_S_dth_dx'
+            # abs_S_dth_dx = re_chunk(abs_S_dth_dx)
+            #
+            # abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
+            #                                       opt, new_filter)
+
+            dth_v_dx_filt = sf.filter_field(dth_v_dx, filtered_data,
                                           opt, new_filter)
 
-            abs_S_dth_dx = dth_dx * abs_S
-            abs_S_dth_dx.name = 'abs_S_dth_dx'
-            abs_S_dth_dx = re_chunk(abs_S_dth_dx)
+            abs_S_dth_v_dx = dth_v_dx * abs_S
+            abs_S_dth_v_dx.name = 'abs_S_dth_dx'
+            abs_S_dth_v_dx = re_chunk(abs_S_dth_v_dx)
 
-            abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
-                                                  opt, new_filter)
+            abs_S_dth_v_dx_filt = sf.filter_field(abs_S_dth_v_dx, filtered_data,
+                                                opt, new_filter)
 
 
         filtered_data['ds'].close()
