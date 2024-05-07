@@ -47,7 +47,7 @@ if case_in == 'BOMEX':
     print('using BOMEX')
     path_f = '/work/scratch-pw3/apower/BOMEX/'
     folder_f = 'first_filt/'
-    folder_ff = 'second_filt/th/'
+    folder_ff = f'second_filt/{th_type}/'
     times_list = ['14400']
     time_in = times_list[0]
     file_f = f'BOMEX_m0020_g0800_all_{time_in}_'
@@ -57,7 +57,7 @@ if case_in == 'BOMEX':
         dx_bar_in = np.array([20, 20, 20, 20, 20, 20])
         dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
         C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
-        scalar = ['momentum', 'th_L', 'q_total']
+        scalar = ['momentum', th_type, 'q_total']
 
     elif filtering_filters == True:
         dx_bar_in = 2*np.array([20, 40, 80, 160, 320, 640])
@@ -79,7 +79,7 @@ elif case_in == 'ARM':
     time_in = times_list[t_in]
     path_f = '/work/scratch-pw3/apower/ARM/'
     folder_f = 'first_filt/'
-    folder_ff = 'second_filt/'
+    folder_ff = f'second_filt/{th_type}'
     file_f = f'diagnostics_3d_ts_{time_in}_'
     Delta = 25
 
@@ -87,10 +87,10 @@ elif case_in == 'ARM':
         dx_bar_in = np.array([25, 25, 25, 25, 25, 25])
         dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
         C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
-        scalar = ['momentum', 'th_L', 'q_total']
+        scalar = ['momentum', th_type, 'q_total']
 
     elif filtering_filters == True:
-        scalar = ['momentum', 'th_L', 'q_total']
+        scalar = [th_type] #['momentum', 'th_L', 'q_total']
         dx_bar_in = 2*np.array([25, 50, 100, 200, 400, 800])
         if beta == 0:
             dx_hat_in = 2 * np.array([50, 100, 200, 400, 800, 1600])
@@ -162,7 +162,7 @@ for it in range(len(dx_hat_in) - nfilt):
         print('reading files', data_in)
         os.makedirs(path_f + folder_f + 'LM/update/', exist_ok=True)
         dataset_name = [path_f + folder_f + 'LM/update/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + folder_f + 'LM/update/' + file_f + f'C_{scalar[1]}_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_f + 'LM/update/' + file_f + f'C_{th_type}_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
                          path_f + folder_f + 'LM/update/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
 
     DX_in = {
@@ -179,7 +179,7 @@ for it in range(len(dx_hat_in) - nfilt):
         if scalar_in == 'momentum':
             scalar_index = 0
         elif scalar_in == 'th' or scalar_in == 'th_tot' or scalar_in == 'f(th_on_p)_r' \
-                or scalar_in == 'th_e' or scalar_in == 'th_L':
+                or scalar_in == 'th_e' or scalar_in == 'th_L' or scalar_in == 'th_v':
             scalar_index = 1
         elif scalar_in == 'q_total' or scalar_in == 'q_vapour':
             scalar_index = 2
