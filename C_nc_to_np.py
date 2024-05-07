@@ -40,9 +40,9 @@ if case=='BOMEX':
     elif filt_num == 2:
         homedir = f'/work/scratch-pw3/apower/BOMEX/second_filt/LM/{folder}/BOMEX_m0020_g0800_all_14400_C_cond_profs_'
         if beta == 0:
-            res = ['40_80_0', '80_160_0', '160_320_0', '320_640_0', '640_1280_0', '1280_2560_0']
+            res = ['40_80', '80_160', '160_320', '320_640', '640_1280', '1280_2560']
         else:
-            res = ['40_160_1']
+            res = ['40_160']
         #res = ['40_80', '80_160', '160_320', '320_640', '640_1280', '1280_2560']
 
 elif case=='ARM':
@@ -57,9 +57,9 @@ elif case=='ARM':
     elif filt_num == 2:
         homedir = f'/work/scratch-pw3/apower/ARM/second_filt/LM/{folder}/diagnostics_3d_ts_{time}_C_cond_profs_'
         if beta == 0:
-            res = ['50_100_0', '100_200_0', '200_400_0', '400_800_0', '800_1600_0', '1600_3200_0']
+            res = ['50_100', '100_200', '200_400', '400_800', '800_1600', '1600_3200']
         else:
-            res = ['50_200_1']
+            res = ['50_200']
         #res = ['50_100', '100_200', '200_400']
 
 
