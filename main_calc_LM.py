@@ -150,20 +150,20 @@ for it in range(len(dx_hat_in) - nfilt):
         data_in = path_f + folder_ff + file_in
         print('reading files', data_in)
 
-        os.makedirs(path_f + folder_ff + 'LM/update/', exist_ok = True)
-        dataset_name = [path_f + folder_ff + 'LM/update/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + folder_ff + 'LM/update/' + file_f + f'C_{th_type}_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + folder_ff + 'LM/update/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
+        os.makedirs(path_f + folder_ff + 'LM/', exist_ok = True)
+        dataset_name = [path_f + folder_ff + 'LM/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_ff + 'LM/' + file_f + f'C_{th_type}_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_ff + 'LM/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
 
     elif filtering_filters == False:
         print('using 1st filt')
         file_in = file_f + f'gaussian_filter_ga0{i}.nc'
         data_in = path_f + folder_f + file_in
         print('reading files', data_in)
-        os.makedirs(path_f + folder_f + 'LM/update/', exist_ok=True)
-        dataset_name = [path_f + folder_f + 'LM/update/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + folder_f + 'LM/update/' + file_f + f'C_{th_type}_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + folder_f + 'LM/update/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
+        os.makedirs(path_f + folder_f + 'LM/', exist_ok=True)
+        dataset_name = [path_f + folder_f + 'LM/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_f + 'LM/' + file_f + f'C_{th_type}_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_f + 'LM/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
 
     DX_in = {
         'indir': data_in,
