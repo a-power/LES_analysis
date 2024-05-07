@@ -444,6 +444,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
     return
 
 
+
 def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, filtered_data,
             ref_file = None, time_name = 'time_series_600_600', case='ARM', beta_in=0, c_th=False):
 
