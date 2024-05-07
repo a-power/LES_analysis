@@ -143,6 +143,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             "th",
                             "th_L",
                             "th_v",
+                            "th_e",
                             "q_total",
                             "q_cloud_liquid_mass"
                             ]
@@ -180,6 +181,9 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
                             ["u", "th_v"],
                             ["v", "th_v"],
                             ["w", "th_v"],
+                            ["u", "th_e"],
+                            ["v", "th_e"],
+                            ["w", "th_e"],
                             ["u", "q_total"],
                             ["v", "q_total"],
                             ["w", "q_total"]
@@ -244,6 +248,16 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
             print('ran  rechunk of dth_dx which has a shape of', np.shape(dth_L_dx))
 
             dth_L_dx_filt = sf.filter_field(dth_L_dx, filtered_data,
+                                            opt, new_filter)
+
+            dth_e_dx = dyn.ds_dxi('th_e', dataset, ref_dataset, opt, ingrid, max_ch)
+            print('ran   dth_e_dx = dyn.ds_dxi which has a shape of', np.shape(dth_e_dx))
+            dth_e_dx.name = 'dth_e_dx'
+            # dth_dx_save = save_field(derived_data, dth_dx)
+            dth_e_dx = re_chunk(dth_e_dx)
+            print('ran  rechunk of dth_e_dx which has a shape of', np.shape(dth_e_dx))
+
+            dth_e_dx_filt = sf.filter_field(dth_e_dx, filtered_data,
                                             opt, new_filter)
 
             dq_dx = dyn.ds_dxi('q_total', dataset, ref_dataset, opt, ingrid, max_ch)
@@ -380,7 +394,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
             print('ran abs_S_dth_v_dx_filt = sf.filter_field(abs_S_dth_v_dx')
 
 
-            abs_S_dth_L_dx = dth_L_dx * abs_S
+            abs_S_dth_L_dx = dth_e_dx * abs_S
             abs_S_dth_L_dx.name = 'abs_S_dth_L_dx'
             abs_S_dth_L_dx = re_chunk(abs_S_dth_L_dx)
             print('ran abs_S_dth_L_dx = re_chunk(abs_S_dth_L_dx)')
@@ -388,6 +402,15 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
             abs_S_dth_L_dx_filt = sf.filter_field(abs_S_dth_L_dx, filtered_data,
                                                 opt, new_filter)
             print('ran abs_S_dth_L_dx_filt = sf.filter_field(abs_S_dth_L_dx')
+
+            abs_S_dth_e_dx = dth_e_dx * abs_S
+            abs_S_dth_e_dx.name = 'abs_S_dth_e_dx'
+            abs_S_dth_e_dx = re_chunk(abs_S_dth_e_dx)
+            print('ran abs_S_dth_e_dx = re_chunk(abs_S_dth_e_dx)')
+
+            abs_S_dth_e_dx_filt = sf.filter_field(abs_S_dth_e_dx, filtered_data,
+                                                  opt, new_filter)
+            print('ran abs_S_dth_e_dx_filt = sf.filter_field(abs_S_dth_e_dx')
 
 
             abs_S_dq_dx = dq_dx * abs_S
@@ -638,6 +661,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
             dth_L_dx = dyn.ds_dxi(f'f(th_L_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
             dth_L_dx.name = 'dth_L_dx'
             dth_L_dx = re_chunk(dth_L_dx)
+
 
         else:
             # dth_dx = dyn.ds_dxi(theta, dataset, ref_dataset, opt, ingrid, max_ch) # f'f(th_on_{ingrid})_r'
