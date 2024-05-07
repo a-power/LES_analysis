@@ -1286,7 +1286,7 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
 
 
 
-    ds_in.rename({f'f(abs_S_dth_dx)_r': f'f(abs_S_d{scalar_name}_dx)_r'})
+    # ds_in.rename({f'f(abs_S_dth_dx)_r': f'f(abs_S_d{scalar_name}_dx)_r'})
 
 
 
@@ -1302,7 +1302,7 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
 
 
 
-    HAT_abs_S_ds_dx = ds_in[f'f(abs_S_d{scalar_name}_dx)_r'].data[...]
+    HAT_abs_S_ds_dx = ds_in[f'f(abs_S_dth_dx)_r'].data[...] #{scalar_name}
 
     print(f'HAT_abs_S_d{scalar}_dx = ', HAT_abs_S_ds_dx[0, 0, :10, 10, 50])
     print(f'HAT_abs_S_d{scalar}_dy = ', HAT_abs_S_ds_dx[1, 0, :10, 10, 50])
