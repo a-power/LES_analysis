@@ -48,12 +48,16 @@ parser.add_argument('--times', type=str, default='14400')
 parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--filt1', type=int, default=0)
 parser.add_argument('--beta', type=int, default=0)
+parser.add_argument('--th', type=str, default='no')
 
 args = parser.parse_args()
 case_in = args.case
 set_time = args.times
 first_filt_res = args.filt1
 beta = args.beta
+th_set = args.th
+if th_set == 'no':
+    th_set = False
 
 
 opgrid = 'p'
@@ -177,4 +181,4 @@ opgrid = 'p'
 
 dy_s.run_dyn_on_filtered(model_res, set_time, filter_name, sigma_list, in_dir, outdir, options,
                         opgrid, filtered_data = f'ga0{str(first_filt_res)}', ref_file = None,
-                        time_name='time', case=case_in, beta_in=beta, c_th=True)
+                        time_name='time', case=case_in, beta_in=beta, c_th=th_set)

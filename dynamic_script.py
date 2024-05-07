@@ -563,7 +563,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         ["w", theta],
                         ]
             else:
-                if c_th == True:
+                if c_th == 'th_v':
                     var_list = [["u", "u"],
                                 ["u", "v"],
                                 ["u", "w"],
@@ -574,6 +574,19 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                 ["v", "th_v"],
                                 ["w", "th_v"]
                                 ]
+
+                elif c_th == 'th_e':
+                    var_list = [["u", "u"],
+                                ["u", "v"],
+                                ["u", "w"],
+                                ["v", "v"],
+                                ["v", "w"],
+                                ["w", "w"],
+                                ["u", "th_e"],
+                                ["v", "th_e"],
+                                ["w", "th_e"]
+                                ]
+
                 else:
                     var_list = [["u", "u"],
                                 ["u", "v"],
@@ -631,9 +644,9 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
             # dth_dx.name = 'dth_dx'
             # dth_dx = re_chunk(dth_dx)
 
-            dth_v_dx = dyn.ds_dxi('th_v', dataset, ref_dataset, opt, ingrid, max_ch)  # f'f(th_on_{ingrid})_r'
-            dth_v_dx.name = 'dth_v_dx'
-            dth_v_dx = re_chunk(dth_v_dx)
+            dth_var_dx = dyn.ds_dxi(f'{c_th}', dataset, ref_dataset, opt, ingrid, max_ch)  # f'f(th_on_{ingrid})_r'
+            dth_var_dx.name = f'd{c_th}_dx'
+            dth_var_dx = re_chunk(dth_var_dx)
 
         S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
 
@@ -690,14 +703,14 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
             # abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
             #                                       opt, new_filter)
 
-            dth_v_dx_filt = sf.filter_field(dth_v_dx, filtered_data,
+            dth_v_dx_filt = sf.filter_field(dth_var_dx, filtered_data,
                                           opt, new_filter)
 
-            abs_S_dth_v_dx = dth_v_dx * abs_S
-            abs_S_dth_v_dx.name = 'abs_S_dth_dx'
-            abs_S_dth_v_dx = re_chunk(abs_S_dth_v_dx)
+            abs_S_dth_var_dx = dth_var_dx * abs_S
+            abs_S_dth_var_dx.name = f'abs_S_d{c_th}_dx'
+            abs_S_dth_var_dx = re_chunk(abs_S_dth_var_dx)
 
-            abs_S_dth_v_dx_filt = sf.filter_field(abs_S_dth_v_dx, filtered_data,
+            abs_S_dth_var_dx_filt = sf.filter_field(abs_S_dth_var_dx, filtered_data,
                                                 opt, new_filter)
 
 
