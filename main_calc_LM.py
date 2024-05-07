@@ -26,7 +26,7 @@ case_in = args.case
 av_type = 'all'
 mygrid = 'p'
 
-th_type = f'f(th_on_{mygrid})_r'
+th_type = 'th_v' #f'f(th_on_{mygrid})_r'
 
 
 set_save_all = 2
