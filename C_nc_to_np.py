@@ -16,8 +16,10 @@ t_in = args.t
 case = args.case
 beta=args.b
 
-numer = ['LM', 'HR_th_L', 'HR_qt']
-denom = ['MM', 'RR_th_L', 'RR_qt']
+th_type = 'th_v'
+
+numer = ['LM', f'HR_{th_type}', 'HR_qt']
+denom = ['MM', f'RR_{th_type}', 'RR_qt']
 partitions = ['prof', 'env_prof', 'cloud_prof', 'w_prof', 'w_th_v_prof']
 
 filt_num = 2
