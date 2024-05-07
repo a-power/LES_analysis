@@ -20,8 +20,12 @@ th_type = 'th_v'
 q_type = 'qt'
 folder = th_type
 
-numer = ['LM', f'HR_{th_type}', f'HR_{q_type}']
-denom = ['MM', f'RR_{th_type}', f'RR_{q_type}']
+# numer = ['LM', f'HR_{th_type}', f'HR_{q_type}']
+# denom = ['MM', f'RR_{th_type}', f'RR_{q_type}']
+
+numer = [f'HR_{th_type}']
+denom = [f'RR_{th_type}']
+
 partitions = ['prof', 'env_prof', 'cloud_prof', 'w_prof', 'w_th_v_prof']
 
 filt_num = 2
