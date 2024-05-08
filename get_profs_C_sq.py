@@ -33,10 +33,10 @@ mygrid = 'p'
 if case == 'BOMEX':
     dx = 20
     if beta==0 or beta==1:
-        homedir = f'/work/scratch-pw3/apower/BOMEX/second_filt/LM/{sub_folder}/'
+        homedir = f'/work/scratch-pw3/apower/BOMEX/second_filt/{sub_folder}/LM/'
         dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
     else:
-        homedir = f'/work/scratch-pw3/apower/BOMEX/first_filt/LM/{sub_folder}/'
+        homedir = f'/work/scratch-pw3/apower/BOMEX/first_filt/{sub_folder}/LM/'
         dir_contour = '/work/scratch-pw3/apower/BOMEX/first_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
     myfile = 'BOMEX_m0020_g0800_all_14400_'
@@ -54,10 +54,10 @@ if case == 'BOMEX':
 elif case == 'ARM':
     dx = 25
     if beta==0 or beta==1:
-        homedir = f'/work/scratch-pw3/apower/ARM/second_filt/LM/{sub_folder}/'
+        homedir = f'/work/scratch-pw3/apower/ARM/second_filt/{sub_folder}/LM/'
         dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     else:
-        homedir = f'/work/scratch-pw3/apower/ARM/first_filt/LM/{sub_folder}/'
+        homedir = f'/work/scratch-pw3/apower/ARM/first_filt/{sub_folder}/LM/'
         dir_contour = f'/work/scratch-pw3/apower/ARM/first_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     myfile = f"diagnostics_3d_ts_{set_time}_"
 
@@ -99,7 +99,8 @@ if data_smoothed == True:
     th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
     buoy_field = f'f(f(buoyancy_on_{mygrid})_r_on_{mygrid})_r'
 else:
-     fields = ['LM_field', f'HR_{th_set}_field', f'HR_{q_set}_field', 'MM_field', f'RR_{th_set}_field', f'RR_{q_set}_field']
+     fields = [f'HR_{th_set}_field', f'RR_{th_set}_field']
+         #['LM_field', f'HR_{th_set}_field', f'HR_{q_set}_field', 'MM_field', f'RR_{th_set}_field', f'RR_{q_set}_field']
 
      cloud_field = f'f(q_cloud_liquid_mass_on_{mygrid})_r'
      w_field = f'f(w_on_{mygrid})_r'
