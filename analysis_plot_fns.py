@@ -1580,6 +1580,24 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
     elif field == 'Cth_L_sq_field':
         field_name_sq = '$C_{\\theta_L}^2$'
         save_name = 'Cth_L_sq'
+    elif field == 'Cth_e_field':
+        field_name = '$C_{\\theta_e}$'
+        save_name = 'Cth_e'
+    elif field == 'Cth_e_sq_field':
+        field_name_sq = '$C_{\\theta_e}^2$'
+        save_name = 'Cth_e_sq'
+    elif field == 'Cth_v_field':
+        field_name = '$C_{\\theta_v}$'
+        save_name = 'Cth_v'
+    elif field == 'Cth_v_sq_field':
+        field_name_sq = '$C_{\\theta_v}^2$'
+        save_name = 'Cth_v_sq'
+    elif field == 'Cqv_field':
+        field_name = '$C_{qv}$'
+        save_name = 'Cqv'
+    elif field == 'Cqv_sq_field':
+        field_name_sq = '$C_{qv}^2$'
+        save_name = 'Cqv_sq'
     elif field == 'Cqt_field':
         field_name = '$C_{qt}$'
         save_name = 'Cqt'
