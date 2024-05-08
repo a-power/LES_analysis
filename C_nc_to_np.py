@@ -38,11 +38,11 @@ if case=='BOMEX':
     zn_set = np.arange(0, 3020, 20)
     time = '14400'
     if filt_num == 1:
-        homedir = f'/work/scratch-pw3/apower/BOMEX/first_filt/{folder}/LM/BOMEX_m0020_g0800_all_14400_C_cond_profs_'
+        homedir = f'/work/scratch-pw3/apower/BOMEX/first_filt/{folder}/LM/BOMEX_m0020_g0800_all_14400_C_th_v_'
         res = ['20_40', '20_80', '20_160', '20_320', '20_640', '20_1280']
         #res = ['20_40', '40_80', '80_160', '160_320', '320_640', '640_1280']
     elif filt_num == 2:
-        homedir = f'/work/scratch-pw3/apower/BOMEX/second_filt/{folder}/LM/BOMEX_m0020_g0800_all_14400_C_cond_profs_'
+        homedir = f'/work/scratch-pw3/apower/BOMEX/second_filt/{folder}/LM/BOMEX_m0020_g0800_all_14400_C_th_v_'
         if beta == 0:
             res = ['40_80', '80_160', '160_320', '320_640', '640_1280', '1280_2560']
         else:
@@ -55,11 +55,11 @@ elif case=='ARM':
     times_analysed = ['18000', '25200', '32400', '39600']
     time = times_analysed[t_in]
     if filt_num == 1:
-        homedir = f'/work/scratch-pw3/apower/ARM/first_filt/{folder}/LM/diagnostics_3d_ts_{time}_C_cond_profs_'
+        homedir = f'/work/scratch-pw3/apower/ARM/first_filt/{folder}/LM/diagnostics_3d_ts_{time}_C_th_v_'
         res = ['2D', '4D', '8D', '16D', '32D', '64D']
         #res = ['25_50', '50_100', '100_200']
     elif filt_num == 2:
-        homedir = f'/work/scratch-pw3/apower/ARM/second_filt/{folder}/LM/diagnostics_3d_ts_{time}_C_cond_profs_'
+        homedir = f'/work/scratch-pw3/apower/ARM/second_filt/{folder}/LM/diagnostics_3d_ts_{time}_C_th_v_'
         if beta == 0:
             res = ['50_100', '100_200', '200_400', '400_800', '800_1600', '1600_3200']
         else:
