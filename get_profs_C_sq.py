@@ -108,7 +108,7 @@ else:
      th_v_field = f'f(th_v_on_{mygrid})_r'
      buoy_field = f'f(buoyancy_on_{mygrid})_r'
 
-field_dir = ['Cs', f'C_{th_set}', f'C_{q_set}', 'Cs', f'C_{th_set}', f'C_{q_set}']
+field_dir = [f'C_{th_set}', f'C_{th_set}'] #['Cs', f'C_{th_set}', f'C_{q_set}', 'Cs', f'C_{th_set}', f'C_{q_set}']
 
 
 # cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
