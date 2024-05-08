@@ -1619,6 +1619,17 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
             or field == f'f(HR_q_total_field_on_{grid})_r' or field == 'HR_q_field':
         field_name = '$HR_{qt}$'
         save_name = 'HR_qt'
+    elif field == 'HR_th_e_field':
+        field_name = '$HR_{\\theta_e}$'
+        save_name = 'HR_th_e'
+    elif field == 'HR_th_v_field':
+        field_name = '$HR_{\\theta_v}$'
+        save_name = 'HR_th_v'
+    elif field == 'HR_qv_field':
+        field_name = '$HR_{qv}$'
+        save_name = 'HR_qv'
+
+
 
     elif field == 'MM_field' or field == f'f(MM_field_on_{grid})_r':
         field_name = '$MM$'
@@ -1633,6 +1644,16 @@ def get_conditional_profiles(dataset_in, contour_field_in, field, deltas,
             or field == f'f(RR_q_total_field_on_{grid})_r' or field == 'RR_q_field':
         field_name = '$RR_{qt}$'
         save_name = 'RR_qt'
+    elif field == 'RR_th_e_field':
+        field_name = '$RR_{\\theta_e}$'
+        save_name = 'RR_th_e'
+    elif field == 'RR_th_v_field':
+        field_name = '$RR_{\\theta_v}$'
+        save_name = 'RR_th_v'
+    elif field == 'RR_qv_field':
+        field_name = '$RR_{qv}$'
+        save_name = 'RR_qv'
+
     else:
         print(f'field {field} not found')
 
