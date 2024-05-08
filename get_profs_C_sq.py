@@ -40,6 +40,7 @@ if case == 'BOMEX':
         dir_contour = '/work/scratch-pw3/apower/BOMEX/first_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
     myfile = 'BOMEX_m0020_g0800_all_14400_'
+    out_temp = homedir
 
     if beta == 0:
         dx_bar_in = 2 * np.array([20, 40, 80, 160, 320, 640])
@@ -54,12 +55,13 @@ if case == 'BOMEX':
 elif case == 'ARM':
     dx = 25
     if beta==0 or beta==1:
-        homedir = f'/work/scratch-pw3/apower/ARM/second_filt/{sub_folder}/LM/'
+        homedir = f'/work/scratch-pw3/apower/ARM/second_filt/LM/'
         dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     else:
-        homedir = f'/work/scratch-pw3/apower/ARM/first_filt/{sub_folder}/LM/'
+        homedir = f'/work/scratch-pw3/apower/ARM/first_filt/LM/'
         dir_contour = f'/work/scratch-pw3/apower/ARM/first_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     myfile = f"diagnostics_3d_ts_{set_time}_"
+    out_temp = homedir+f'{sub_folder}/'
 
     if beta == 0:
         dx_bar_in = 2 * np.array([25, 50, 100, 200, 400, 800])
@@ -72,7 +74,7 @@ elif case == 'ARM':
         dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
 
 
-outdir = homedir+'C_profs/'
+outdir = out_temp+'C_profs/'
 os.makedirs(outdir, exist_ok = True)
 
 
