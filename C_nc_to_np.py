@@ -75,8 +75,8 @@ for r_ind, r in enumerate(res):
     for p_ind, p in enumerate(partitions):
         for s in range(len(denom)):
 
-            LM = [f'{numer[s]}_{p}'].data[...]
-            MM = [f'{denom[s]}_{p}'].data[...]
+            LM = C_data[f'{numer[s]}_{p}'].data[...]
+            MM = C_data[f'{denom[s]}_{p}'].data[...]
             C_sq[s, p_ind, r_ind, :] = LM / MM
 
 
