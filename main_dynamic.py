@@ -132,6 +132,7 @@ if case=='BOMEX':
     time_name_in = 'time_series_600_600'
     my_opt = options_BOMEX
     set_vapour=True
+    set_c_the=True
 
 elif case=='ARM':
     in_dir = '/work/scratch-pw3/apower/ARM/MONC_out/25m/'
@@ -140,6 +141,7 @@ elif case=='ARM':
     time_name_in = 'time_series_600_600'
     my_opt = options_ARM
     set_vapour=True
+    set_c_the=False
 
 elif case=='dry':
     in_dir = '/storage/silver/MONC_data/Alanna/dry_CBL/MONC_runs/20m/'
@@ -148,6 +150,7 @@ elif case=='dry':
     time_name_in = 'time_series_300_300'
     my_opt = options_dry
     set_vapour=False
+    set_c_the=False
 
 
 os.makedirs(outdir, exist_ok = True)
@@ -159,4 +162,4 @@ os.makedirs(outdir, exist_ok = True)
 for j in range(len(set_time)):
     for i, model_res in enumerate(model_res_list):
         dy_s.run_dyn(model_res, set_time[j], filter_name, sigma_list, in_dir, outdir, my_opt,
-                     opgrid, start_point=start, time_name = time_name_in, vapour=set_vapour)
+                     opgrid, start_point=start, time_name = time_name_in, vapour=set_vapour, c_the=set_c_the)
