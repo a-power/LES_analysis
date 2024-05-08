@@ -74,6 +74,7 @@ if case_in=='BOMEX':
     model_res = '0020_g0800'
     outdir = f'/work/scratch-pw3/apower/BOMEX/second_filt/'
     dx=20.0
+    set_c_the = True
     #time = 14400
 
     options = {
@@ -105,6 +106,7 @@ elif case_in=='ARM':
     outdir = '/work/scratch-pw3/apower/ARM/second_filt/'
     model_res = None
     dx=25
+    set_c_the = False
 
     options = {
                 'FFT_type': 'RFFT',
@@ -136,6 +138,7 @@ elif case_in=='dry':
     model_res = None
     dx=20
     #time = 13800
+    set_c_the = False
 
     options = {
                 'FFT_type': 'RFFT',
@@ -182,4 +185,4 @@ opgrid = 'p'
 
 dy_s.run_dyn_on_filtered(model_res, set_time, filter_name, sigma_list, in_dir, outdir, options,
                         opgrid, filtered_data = f'ga0{str(first_filt_res)}', ref_file = None,
-                        time_name='time', case=case_in, beta_in=beta, c_th=th_set)
+                        time_name='time', case=case_in, beta_in=beta, c_the = set_c_the)
