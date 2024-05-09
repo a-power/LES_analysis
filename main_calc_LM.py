@@ -14,21 +14,21 @@ parser.add_argument('--b', type=int, default=0)
 parser.add_argument('--start', type=int, default=0)
 parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--filting_filts', type=str, default='y')
+parser.add_argument('--th_in', type=str, default='th_e')
+parser.add_argument('--q_in', type=str, default='qv')
 
 args = parser.parse_args()
 t_in = args.t
 beta = args.b
 nfilt = args.start
 filtering_filters_yn = args.filting_filts
+th_type = args.th_in
+q_type = args.q_in
 
 case_in = args.case
 
 av_type = 'all'
 mygrid = 'p'
-
-th_type = 'th_e' #f'f(th_on_{mygrid})_r'
-q_type = 'qv'
-
 
 set_save_all = 2
 
@@ -80,7 +80,7 @@ elif case_in == 'ARM':
     time_in = times_list[t_in]
     path_f = '/work/scratch-pw3/apower/ARM/'
     folder_f = 'first_filt/'
-    folder_ff = f'second_filt/{th_type}'
+    folder_ff = f'second_filt/{th_type}/'
     file_f = f'diagnostics_3d_ts_{time_in}_'
     Delta = 25
 
@@ -91,7 +91,9 @@ elif case_in == 'ARM':
         scalar = ['momentum', th_type, q_type]
 
     elif filtering_filters == True:
+
         scalar = [th_type] #['momentum', 'th_L', 'q_total']
+
         dx_bar_in = 2*np.array([25, 50, 100, 200, 400, 800])
         if beta == 0:
             dx_hat_in = 2 * np.array([50, 100, 200, 400, 800, 1600])
