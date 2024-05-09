@@ -55,13 +55,13 @@ if case == 'BOMEX':
 elif case == 'ARM':
     dx = 25
     if beta==0 or beta==1:
-        homedir = f'/work/scratch-pw3/apower/ARM/second_filt/LM/'
+        homedir = f'/work/scratch-pw3/apower/ARM/second_filt/th_v/LM/'
         dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     else:
         homedir = f'/work/scratch-pw3/apower/ARM/first_filt/LM/'
         dir_contour = f'/work/scratch-pw3/apower/ARM/first_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     myfile = f"diagnostics_3d_ts_{set_time}_"
-    out_temp = homedir+f'{sub_folder}/'
+    out_temp = homedir
 
     if beta == 0:
         dx_bar_in = 2 * np.array([25, 50, 100, 200, 400, 800])
