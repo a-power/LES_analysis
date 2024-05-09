@@ -611,7 +611,10 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                 ["w", "w"],
                                 ["u", "th_e"],
                                 ["v", "th_e"],
-                                ["w", "th_e"]
+                                ["w", "th_e"],
+                                ["u", "q_vapour"],
+                                ["v", "q_vapour"],
+                                ["w", "q_vapour"]
                                 ]
 
                 else:
