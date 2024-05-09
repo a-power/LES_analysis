@@ -114,16 +114,24 @@ def plot_C_Delta_hist_comp(dir_in, field, condits = None, deltas=None):
 
     data_dir = dir_in + 'data/'
     if deltas == None:
-        deltas = ['2', '4', '8', '16', '32', '64']
+        deltas = ['4', '8', '16', '32', '64', '128']
     if condits == None:
-        condits = ['domain', 'ML', 'clear_sky', 'cloud', 'cloud_up', 'cloud_core']
+        condits = ['domain', 'ML', 'NC', 'IC', 'CU', 'CC']
 
     if field == 'Cs_sq':
         scalar = '$C_{s}^2$'
     elif field == 'Cth_sq':
         scalar = '$C_{\\theta}^2$'
+    elif field == 'Cth_L_sq':
+        scalar = '$C_{\\theta_L}^2$'
+    elif field == 'Cth_v_sq':
+        scalar = '$C_{\\theta_v}^2$'
+    elif field == 'Cth_e_sq':
+        scalar = '$C_{\\theta_e}^2$'
+    elif field == 'Cqv_sq':
+        scalar = '$C_{q_v}^2$'
     elif field == 'Cqt_sq':
-        scalar = '$C_{qt}^2$'
+        scalar = '$C_{q_t}^2$'
     else:
         print('field must be Cs_sq, Cth_sq, or Cqt_sq')
 

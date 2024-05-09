@@ -3,11 +3,12 @@ import os
 import analysis_plot_fns as apf
 import numpy as np
 
-
-#homedir = '/work/scratch-pw3/apower/20m_gauss_dyn/on_p_grid/smoothed_LM_HR_fields/'
-homedir = '/storage/silver/MONC_data/Alanna/BOMEX/beta_filtered_filters/smoothed_LM_HR_fields/'
+if subfolder is not None:
+    homedir = f'/work/scratch-pw3/apower/BOMEX/second_filt/{sub_folder}/LM/'
+else:
+    homedir = f'/work/scratch-pw3/apower/BOMEX/second_filt/LM/'
+dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 mydir = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_'
-dir_contour = homedir + 'BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
 plotdir = homedir + 'plots/distribs/'
 #'/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/distribs/'
@@ -20,10 +21,10 @@ dir_qt = mydir + 'C_qt_'
 mygrid = 'p'
 all_times_or_not = 'av' #np.array([0, 1, 2])
 
-cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
-w_field = f'f(f(w_on_{mygrid})_r_on_{mygrid})_r'
-w2_field = f'f(f(w_on_{mygrid}.w_on_{mygrid})_r_on_{mygrid})_r'
-th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
+cloud_field = f'f(q_cloud_liquid_mass_on_{mygrid})_r'
+w_field = f'f(w_on_{mygrid})_r'
+w2_field = f'f(w_on_{mygrid}.w_on_{mygrid})_r'
+th_v_field = f'f(th_v_on_{mygrid})_r'
 
 
 
@@ -31,7 +32,7 @@ gen_options = {'plotdir': plotdir,
             'data_contour': dir_contour,
             'deltas': None,
             'other_vars': [w_field, th_v_field],
-            'cloud_liquid_threshold_in': 10**(-7),
+            'cloud_liquid_threshold_in': 10**(-5),
             'other_var_thres': [0.5, 0],
             'less_greater_in': ['less', 'less'],
             'and_or_in': ['and', 'and'],
