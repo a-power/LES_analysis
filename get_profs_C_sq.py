@@ -11,10 +11,10 @@ parser = argparse.ArgumentParser()
 #parser.add_argument('--times', type=str, default='18000')
 parser.add_argument('--times', type=int, default=0)
 parser.add_argument('--beta', type=int, default=0)
-parser.add_argument('--case', type=str, default='ARM')
-parser.add_argument('--th', type=str, default='th_v')
-parser.add_argument('--q', type=str, default='qt')
-parser.add_argument('--fold', type=str, default='th_v')
+parser.add_argument('--case', type=str, default='BOMEX')
+parser.add_argument('--th', type=str, default='th_e')
+parser.add_argument('--q', type=str, default='qv')
+parser.add_argument('--fold', type=str, default='th_e_and_qv')
 
 times_analysed = [ '18000', '25200', '32400', '39600' ]
 
@@ -101,7 +101,7 @@ if data_smoothed == True:
     th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
     buoy_field = f'f(f(buoyancy_on_{mygrid})_r_on_{mygrid})_r'
 else:
-     fields = [f'HR_{th_set}_field', f'RR_{th_set}_field']
+     fields = [f'HR_{th_set}_field', f'HR_{q_set}_field', f'RR_{th_set}_field' f'RR_{q_set}_field']
          #['LM_field', f'HR_{th_set}_field', f'HR_{q_set}_field', 'MM_field', f'RR_{th_set}_field', f'RR_{q_set}_field']
 
      cloud_field = f'f(q_cloud_liquid_mass_on_{mygrid})_r'
@@ -110,7 +110,7 @@ else:
      th_v_field = f'f(th_v_on_{mygrid})_r'
      buoy_field = f'f(buoyancy_on_{mygrid})_r'
 
-field_dir = [f'C_{th_set}', f'C_{th_set}'] #['Cs', f'C_{th_set}', f'C_{q_set}', 'Cs', f'C_{th_set}', f'C_{q_set}']
+field_dir = [f'C_{th_set}', f'C_{q_set}', f'C_{th_set}' f'C_{q_set}'] #['Cs', f'C_{th_set}', f'C_{q_set}', 'Cs', f'C_{th_set}', f'C_{q_set}']
 
 
 # cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
