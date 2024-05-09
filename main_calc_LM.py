@@ -80,7 +80,7 @@ elif case_in == 'ARM':
     time_in = times_list[t_in]
     path_f = '/work/scratch-pw3/apower/ARM/'
     folder_f = 'first_filt/'
-    folder_ff = f'second_filt/{th_type}/'
+    folder_ff = f'second_filt/'
     file_f = f'diagnostics_3d_ts_{time_in}_'
     Delta = 25
 
@@ -153,10 +153,10 @@ for it in range(len(dx_hat_in) - nfilt):
         data_in = path_f + folder_ff + file_in
         print('reading files', data_in)
 
-        os.makedirs(path_f + folder_ff + 'LM/', exist_ok = True)
-        dataset_name = [path_f + folder_ff + 'LM/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + folder_ff + 'LM/' + file_f + f'C_{th_type}_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + folder_ff + 'LM/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
+        os.makedirs(path_f + folder_ff + 'th_v/LM/', exist_ok = True)
+        dataset_name = [path_f + folder_ff + 'th_v/LM/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_ff + 'th_v/LM/' + file_f + f'C_{th_type}_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_ff + 'th_v/LM/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
 
     elif filtering_filters == False:
         print('using 1st filt')
