@@ -58,7 +58,7 @@ elif case == 'ARM':
         homedir = f'/work/scratch-pw3/apower/ARM/second_filt/th_v/LM/'
         dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     else:
-        homedir = f'/work/scratch-pw3/apower/ARM/first_filt/LM/'
+        homedir = f'/work/scratch-pw3/apower/ARM/first_filt/th_v/LM/'
         dir_contour = f'/work/scratch-pw3/apower/ARM/first_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
     myfile = f"diagnostics_3d_ts_{set_time}_"
     out_temp = homedir
@@ -74,7 +74,7 @@ elif case == 'ARM':
         dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
 
 
-outdir = out_temp+'C_profs/'
+outdir =  +'C_profs/'
 os.makedirs(outdir, exist_ok = True)
 
 
