@@ -554,9 +554,8 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         "w",
                         theta]
             else:
-                if c_th==True:
-                    var_list = [
-                        theta]
+                if c_th is not False:
+                    var_list = [c_th, 'q_vapour']
                 else:
                     var_list = [
                                 "u",
@@ -677,6 +676,10 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
             dth_var_dx.name = f'd{c_th}_dx'
             dth_var_dx = re_chunk(dth_var_dx)
 
+            dqv_dx = dyn.ds_dxi(f'q_vapour', dataset, ref_dataset, opt, ingrid, max_ch)  # f'f(th_on_{ingrid})_r'
+            dqv_dx.name = f'dqv_dx'
+            dqv_dx = re_chunk(dqv_dx)
+
         S_ij_temp, abs_S_temp = defm.shear(deform, no_trace=False)
 
         S_ij = 1 / 2 * S_ij_temp
@@ -741,6 +744,22 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
 
             abs_S_dth_var_dx_filt = sf.filter_field(abs_S_dth_var_dx, filtered_data,
                                                 opt, new_filter)
+
+
+
+
+
+
+
+            dqv_dx_filt = sf.filter_field(dqv_dx, filtered_data,
+                                            opt, new_filter)
+
+            abs_S_dqv_dx = dqv_dx * abs_S
+            abs_S_dqv_dx.name = f'abs_S_dqv_dx'
+            abs_S_dqv_dx = re_chunk(abs_S_dqv_dx)
+
+            abs_S_dqv_dx_filt = sf.filter_field(abs_S_dqv_dx, filtered_data,
+                                                    opt, new_filter)
 
 
         filtered_data['ds'].close()
