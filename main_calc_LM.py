@@ -26,7 +26,8 @@ case_in = args.case
 av_type = 'all'
 mygrid = 'p'
 
-th_type = 'th_v' #f'f(th_on_{mygrid})_r'
+th_type = 'th_e' #f'f(th_on_{mygrid})_r'
+q_type = 'qv'
 
 
 set_save_all = 2
@@ -57,7 +58,7 @@ if case_in == 'BOMEX':
         dx_bar_in = np.array([20, 20, 20, 20, 20, 20])
         dx_hat_in = np.array([40, 80, 160, 320, 640, 1280])
         C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
-        scalar = ['momentum', th_type, 'q_total']
+        scalar = ['momentum', th_type, q_type]
 
     elif filtering_filters == True:
         dx_bar_in = 2*np.array([20, 40, 80, 160, 320, 640])
@@ -70,7 +71,7 @@ if case_in == 'BOMEX':
             sys.exit()
 
         C_res = ['4D', '8D', '16D', '32D', '64D', '128D']
-        scalar = [th_type]
+        scalar = [th_type, q_type]
         # scalar = ['momentum' 'th_L', 'q_total'] #, 'f(th_on_p)_r'
 
 elif case_in == 'ARM':
@@ -87,7 +88,7 @@ elif case_in == 'ARM':
         dx_bar_in = np.array([25, 25, 25, 25, 25, 25])
         dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
         C_res = ['2D', '4D', '8D', '16D', '32D', '64D']
-        scalar = ['momentum', th_type, 'q_total']
+        scalar = ['momentum', th_type, q_type]
 
     elif filtering_filters == True:
         scalar = [th_type] #['momentum', 'th_L', 'q_total']
