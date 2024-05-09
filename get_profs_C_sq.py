@@ -74,7 +74,7 @@ elif case == 'ARM':
         dx_hat_in = np.array([50, 100, 200, 400, 800, 1600])
 
 
-outdir =  +'C_profs/'
+outdir = out_temp+'C_profs/'
 os.makedirs(outdir, exist_ok = True)
 
 
