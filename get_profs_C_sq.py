@@ -101,7 +101,8 @@ if data_smoothed == True:
     th_v_field = f'f(f(th_v_on_{mygrid})_r_on_{mygrid})_r'
     buoy_field = f'f(f(buoyancy_on_{mygrid})_r_on_{mygrid})_r'
 else:
-     fields = [f'HR_{th_set}_field', f'HR_{q_set}_field', f'RR_{th_set}_field' f'RR_{q_set}_field']
+     fields = [f'HR_{th_set}_field', f'RR_{th_set}_field']
+     #[f'HR_{th_set}_field', f'HR_{q_set}_field', f'RR_{th_set}_field',  f'RR_{q_set}_field']
          #['LM_field', f'HR_{th_set}_field', f'HR_{q_set}_field', 'MM_field', f'RR_{th_set}_field', f'RR_{q_set}_field']
 
      cloud_field = f'f(q_cloud_liquid_mass_on_{mygrid})_r'
@@ -110,7 +111,8 @@ else:
      th_v_field = f'f(th_v_on_{mygrid})_r'
      buoy_field = f'f(buoyancy_on_{mygrid})_r'
 
-field_dir = [f'C_{th_set}', f'C_{q_set}', f'C_{th_set}' f'C_{q_set}'] #['Cs', f'C_{th_set}', f'C_{q_set}', 'Cs', f'C_{th_set}', f'C_{q_set}']
+field_dir = [f'C_{th_set}', f'C_{th_set}']
+#[f'C_{th_set}', f'C_{q_set}', f'C_{th_set}', f'C_{q_set}'] #['Cs', f'C_{th_set}', f'C_{q_set}', 'Cs', f'C_{th_set}', f'C_{q_set}']
 
 
 # cloud_field = f'f(f(q_cloud_liquid_mass_on_{mygrid})_r_on_{mygrid})_r'
