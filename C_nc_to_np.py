@@ -16,7 +16,7 @@ t_in = args.t
 case = args.case
 beta=args.b
 
-th_type = 'th_v'
+th_type = 'th_e'
 q_type = 'qt'
 folder = th_type
 
@@ -30,7 +30,7 @@ partitions = ['prof', 'env_prof', 'cloud_prof', 'w_prof', 'w_th_v_prof']
 
 filt_num = 2
 
-data_dir = f'/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/data/{case}/{folder}/'
+data_dir = f'/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/data/{folder}/{case}/'
 os.makedirs(data_dir, exist_ok = True)
 
 if case=='BOMEX':
@@ -42,7 +42,7 @@ if case=='BOMEX':
         res = ['20_40', '20_80', '20_160', '20_320', '20_640', '20_1280']
         #res = ['20_40', '40_80', '80_160', '160_320', '320_640', '640_1280']
     elif filt_num == 2:
-        homedir = f'/work/scratch-pw3/apower/BOMEX/second_filt/{folder}/LM/C_profs/BOMEX_m0020_g0800_all_14400_C_cond_profs_'
+        homedir = f'/work/scratch-pw3/apower/BOMEX/second_filt/{folder}_and_qv/LM/C_profs/BOMEX_m0020_g0800_all_14400_C_cond_profs_'
         if beta == 0:
             res = ['40_80', '80_160', '160_320', '320_640', '640_1280', '1280_2560']
         else:
