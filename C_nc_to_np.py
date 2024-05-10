@@ -30,7 +30,7 @@ partitions = ['prof', 'env_prof', 'cloud_prof', 'w_prof', 'w_th_v_prof']
 
 filt_num = 2
 
-data_dir = f'/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/data/{folder}/{case}/'
+data_dir = f'/gws/nopw/j04/paracon_rdg/users/apower/LES_analysis/data/{case}/{folder}/'
 os.makedirs(data_dir, exist_ok = True)
 
 if case=='BOMEX':
