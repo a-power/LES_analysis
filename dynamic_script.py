@@ -1222,14 +1222,12 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
 
     save_all: 1 is for profiles, 2 is for fields, 3 is for all fields PLUS Lij and Mij"""
 
-    if scalar=='q_total':
-        scalar_name='q'
+    if scalar=='q_total' or scalar=='qt' or scalar == 'q_total_f':
+        scalar_name='qt'
     elif scalar == 'q_cloud_liquid_mass':
         scalar_name = 'q_l'
-    elif scalar == 'q_vapour':
+    elif scalar == 'q_vapour' or scalar=='qv':
         scalar_name = 'qv'
-    elif scalar == 'q_total_f':
-        scalar_name = 'q'
     elif scalar == 'th' or scalar == 'th_tot' or scalar == 'f(th_on_p)_r':
         scalar_name = 'th'
     elif scalar == 'th_e':
@@ -1269,13 +1267,19 @@ def C_scalar(scalar, indir, dx_bar, dx_hat, file_save_to, ingrid, save_all = 2, 
     # ds_in.close()
     #
     # ds_in = xr.open_dataset(file_in)
-    u_s = ds_in[f's(u,{scalar})_on_{ingrid}'].data[...]
-    v_s = ds_in[f's(v,{scalar})_on_{ingrid}'].data[...]
-    w_s = ds_in[f's(w,{scalar})_on_{ingrid}'].data[...]
+    if scalar=='qv':
+        u_s = ds_in[f's(u,q_vapour)_on_{ingrid}'].data[...]
+        v_s = ds_in[f's(v,q_vapour)_on_{ingrid}'].data[...]
+        w_s = ds_in[f's(w,q_vapour)_on_{ingrid}'].data[...]
 
-    print(f's(u,{scalar}) = ', u_s[0, :10, 10, 50])
-    print(f's(v,{scalar}) = ', v_s[0, :10, 10, 50])
-    print(f's(w,{scalar}) = ', w_s[0, :10, 10, 50])
+    else:
+        u_s = ds_in[f's(u,{scalar})_on_{ingrid}'].data[...]
+        v_s = ds_in[f's(v,{scalar})_on_{ingrid}'].data[...]
+        w_s = ds_in[f's(w,{scalar})_on_{ingrid}'].data[...]
+
+    # print(f's(u,{scalar}) = ', u_s[0, :10, 10, 50])
+    # print(f's(v,{scalar}) = ', v_s[0, :10, 10, 50])
+    # print(f's(w,{scalar}) = ', w_s[0, :10, 10, 50])
 
     Hj = dyn.H_j(u_s, v_s, w_s)
 

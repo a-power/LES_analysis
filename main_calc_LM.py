@@ -15,7 +15,7 @@ parser.add_argument('--start', type=int, default=0)
 parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--filting_filts', type=str, default='y')
 parser.add_argument('--th_in', type=str, default='th_e')
-parser.add_argument('--q_in', type=str, default='q_vapour')
+parser.add_argument('--q_in', type=str, default='qv')
 
 args = parser.parse_args()
 t_in = args.t
@@ -71,7 +71,7 @@ if case_in == 'BOMEX':
             sys.exit()
 
         C_res = ['4D', '8D', '16D', '32D', '64D', '128D']
-        scalar = [th_type, q_type]
+        scalar = [th_type]#, q_type]
         # scalar = ['momentum' 'th_L', 'q_total'] #, 'f(th_on_p)_r'
 
 elif case_in == 'ARM':
@@ -154,9 +154,9 @@ for it in range(len(dx_hat_in) - nfilt):
         print('reading files', data_in)
 
         os.makedirs(path_f + folder_ff + 'th_v/LM/', exist_ok = True)
-        dataset_name = [path_f + folder_ff + 'th_v/LM/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + folder_ff + 'th_v/LM/' + file_f + f'C_{th_type}_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
-                         path_f + folder_ff + 'th_v/LM/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
+        dataset_name = [path_f + folder_ff + 'LM/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_ff + 'LM/' + file_f + f'C_{th_type}_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
+                         path_f + folder_ff + 'LM/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
 
     elif filtering_filters == False:
         print('using 1st filt')
@@ -184,7 +184,7 @@ for it in range(len(dx_hat_in) - nfilt):
         elif scalar_in == 'th' or scalar_in == 'th_tot' or scalar_in == 'f(th_on_p)_r' \
                 or scalar_in == 'th_e' or scalar_in == 'th_L' or scalar_in == 'th_v':
             scalar_index = 1
-        elif scalar_in == 'q_total' or scalar_in == 'q_vapour':
+        elif scalar_in == 'q_total' or scalar_in == 'q_vapour' or scalar_in == 'qv' or scalar_in == 'qt':
             scalar_index = 2
         else:
             print('scalar not set to momentum, th, or q_total')
