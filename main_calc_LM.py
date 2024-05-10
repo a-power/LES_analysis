@@ -15,7 +15,7 @@ parser.add_argument('--start', type=int, default=0)
 parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--filting_filts', type=str, default='y')
 parser.add_argument('--th_in', type=str, default='th_e')
-parser.add_argument('--q_in', type=str, default='qv')
+parser.add_argument('--q_in', type=str, default='q_vapour')
 
 args = parser.parse_args()
 t_in = args.t
