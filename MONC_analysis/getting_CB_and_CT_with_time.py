@@ -61,7 +61,7 @@ print(og_xtic)
 
 time_label_temp = np.round(05.50 + og_xtic[0]/(60*60), 2 )
 time_label_temp_min = (( np.round(05.50 + og_xtic[0]/(60*60), 2 ) - np.round(05.50 + og_xtic[0]/(60*60), 0) )*60 )/100
-time_label = time_label_temp + time_label_temp_min
+time_label = np.round(time_label_temp + time_label_temp_min, 2)
 
 plt.xticks(og_xtic[0], time_label)
 
