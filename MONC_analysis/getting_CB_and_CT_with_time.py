@@ -32,7 +32,7 @@ for nt in (list_timestamps):
     filein = f'arm_3d_{str(nt)}.nc'
 
     ds_in = xr.open_dataset(path_MONC_alt+filein)
-    CB_field = ds_in['clbase'].data
+    CB_field = ds_in['clbas'].data
     CT_field = ds_in['cltop'].data
 
     CB_cloud_only = get_cloud_only(CB_field)
