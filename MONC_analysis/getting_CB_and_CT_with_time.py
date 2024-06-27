@@ -44,13 +44,13 @@ for nt, time in enumerate(list_timestamps):
 
 
 
-fig, ax = plt.plot(figsize=(10, 5))
+fig = plt.plot(figsize=(10, 5))
 fig.tight_layout(pad=0.5)
 
 plt.plot(list_timestamps, CB_mean_height_ts, 'k')
 plt.plot(list_timestamps, CT_mean_height_ts, 'k', label='HCs $\\widehat{\\bar{\\Delta}} = 200$m')
 
-ax.legend(fontsize=13, loc='upper right')
+plt.legend(fontsize=13, loc='upper right')
 
 
 bottom, top = plt.ylim()
