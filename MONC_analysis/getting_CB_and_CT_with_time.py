@@ -45,7 +45,7 @@ for nt, time in enumerate(list_timestamps):
 
 
 fig = plt.plot(figsize=(10, 5))
-fig.tight_layout(pad=0.5)
+plt.tight_layout(pad=0.5)
 
 plt.plot(list_timestamps, CB_mean_height_ts, 'k')
 plt.plot(list_timestamps, CT_mean_height_ts, 'k', label='HCs $\\widehat{\\bar{\\Delta}} = 200$m')
