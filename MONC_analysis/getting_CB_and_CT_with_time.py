@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import datetime
 
 
-def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=1):
+def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
 
     mask_no_cloud = ma.masked_less_equal(CT_or_CB_field, dist_from_surf_threas)
 
