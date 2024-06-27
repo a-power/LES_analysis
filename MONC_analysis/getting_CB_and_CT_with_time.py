@@ -55,7 +55,7 @@ plt.legend(fontsize=13, loc='upper right')
 
 
 bottom, top = plt.ylim()
-plt.ylim(bottom=0, top = 2200)
+plt.ylim(bottom=0, top = 4000)
 
 og_xtic = plt.xticks()
 print(og_xtic)
