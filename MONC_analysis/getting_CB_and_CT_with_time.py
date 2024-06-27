@@ -54,9 +54,15 @@ plt.legend(fontsize=13, loc='upper right')
 
 
 bottom, top = plt.ylim()
-plt.ylim(bottom=0)
+plt.ylim(bottom=0, top = 2200)
+
+og_xtic = plt.xticks()
+print(og_xtic)
+plt.xticks(og_xtic[0], str(np.round(05.30 + og_xtic[0]/(60*60), 1 ))+'0L' )
+
+plt.xlabel('Local time (hh.mm)', fontsize=14)
 plt.ylabel('z (m)', fontsize=14)
-plt.xlabel('Cloud top and base height', fontsize=14)
+plt.title('Cloud top and base height', fontsize=14)
 
 plt.tight_layout()
 
