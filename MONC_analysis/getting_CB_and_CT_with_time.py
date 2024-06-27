@@ -27,9 +27,9 @@ list_timestamps = [17400, 18000, 24600, 25200, 31800, 32400, 39000, 39600]
 CB_mean_height_ts = np.zeros(len(list_timestamps))
 CT_mean_height_ts = np.zeros(len(list_timestamps))
 
-for nt in (list_timestamps):
+for nt, time in enumerate(list_timestamps):
 
-    filein = f'arm_3d_{str(nt)}.nc'
+    filein = f'arm_3d_{str(time)}.nc'
 
     ds_in = xr.open_dataset(path_MONC_alt+filein)
     CB_field = ds_in['clbas'].data
