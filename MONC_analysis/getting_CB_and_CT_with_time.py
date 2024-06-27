@@ -59,8 +59,8 @@ plt.ylim(bottom=0, top = 2200)
 og_xtic = plt.xticks()
 print(og_xtic)
 
-time_label_temp = np.round(05.50 + og_xtic[0]/(60*60), 0 )
-time_label_temp_min = (( np.round(05.50 + og_xtic[0]/(60*60), 2 ) - np.round(05.50 + og_xtic[0]/(60*60), 0) )*60 )/100
+time_label_temp = "%.2f"%(05.50 + og_xtic[0]/(60*60))
+time_label_temp_min = (( np.round(05.50 + og_xtic[0]/(60*60), 2 ) - "%.2f"%(05.50 + og_xtic[0]/(60*60)) )*60 )/100
 time_label = np.round(time_label_temp + time_label_temp_min, 2)
 
 plt.xticks(og_xtic[0], time_label)
