@@ -58,7 +58,7 @@ plt.ylim(bottom=0, top = 2200)
 
 og_xtic = plt.xticks()
 print(og_xtic)
-plt.xticks(og_xtic[0], np.round(05.30 + og_xtic[0]/(60*60), 1 ) )
+plt.xticks(og_xtic[0], np.round(05.30 + og_xtic[0]/(60*60), 2 ) )
 
 plt.xlabel('Local time (hh.mm)', fontsize=14)
 plt.ylabel('z (m)', fontsize=14)
