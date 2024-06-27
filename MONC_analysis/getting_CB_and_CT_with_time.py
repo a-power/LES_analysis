@@ -67,7 +67,7 @@ print(og_xtic)
 time_label = np.zeros(len(og_xtic[0]))
 
 for i in range(len(og_xtic[0])):
-    time_label[i] = float(datetime.timedelta(seconds=og_xtic[0][i] + 19800))
+    time_label[i] = str(datetime.timedelta(seconds=og_xtic[0][i] + 19800))
 
 plt.xticks(og_xtic[0], time_label)
 
