@@ -71,7 +71,7 @@ for i in range(len(og_xtic[0])):
 
 plt.xticks(og_xtic[0], time_label)
 
-plt.xlabel('Local time (hh.mm)', fontsize=14)
+plt.xlabel('Local time (hh:mm:ss)', fontsize=14)
 plt.ylabel('z (m)', fontsize=14)
 plt.title('Cloud top and base height', fontsize=14)
 
