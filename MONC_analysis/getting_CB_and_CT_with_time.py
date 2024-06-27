@@ -44,7 +44,7 @@ for nt, time in enumerate(list_timestamps):
 
 
 
-fig = plt.plot(figsize=(10, 5))
+fig = plt.plot(figsize=(12, 4))
 plt.tight_layout(pad=0.5)
 
 plt.plot(list_timestamps, CB_mean_height_ts, 'k')
