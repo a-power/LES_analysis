@@ -7,7 +7,8 @@ import datetime
 
 def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
 
-    mask_no_cloud = ma.masked_less_equal(CT_or_CB_field, dist_from_surf_threas)
+    mask_no_cloud_temp = ma.masked_less_equal(CT_or_CB_field, dist_from_surf_threas)
+    mask_no_cloud =np.ma.filled(mask_no_cloud_temp, np.nan)
 
     return mask_no_cloud
 
@@ -39,8 +40,8 @@ for nt, time in enumerate(list_timestamps):
     CB_cloud_only = get_cloud_only(CB_field)
     CT_cloud_only = get_cloud_only(CT_field)
 
-    CB_mean_height_ts[nt] = np.percentile(CB_cloud_only, 25)
-    CT_mean_height_ts[nt] = np.percentile(CT_cloud_only,90)
+    CB_mean_height_ts[nt] = np.nanpercentile(CB_cloud_only, 25)
+    CT_mean_height_ts[nt] = np.nanpercentile(CT_cloud_only,90)
 
 
 
