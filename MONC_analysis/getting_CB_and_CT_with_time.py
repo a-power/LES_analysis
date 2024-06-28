@@ -40,8 +40,8 @@ for nt, time in enumerate(list_timestamps):
     CB_cloud_only = get_cloud_only(CB_field)
     CT_cloud_only = get_cloud_only(CT_field)
 
-    CB_mean_height_ts[nt] = np.nanpercentile(CB_cloud_only, 25)
-    CT_mean_height_ts[nt] = np.nanpercentile(CT_cloud_only,90)
+    CB_mean_height_ts[nt] = np.nanpercentile(CB_cloud_only, 10)
+    CT_mean_height_ts[nt] = np.nanpercentile(CT_cloud_only,95)
 
 
 
