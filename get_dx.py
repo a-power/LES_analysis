@@ -2,7 +2,7 @@ import numpy as np
 import re
 import xarray as xr
 
-data_test_path = '/storage/silver/scenario/si818415/altered_MONC/400m/arm_18000.nc'
+data_test_path = '/storage/silver/scenario/si818415/altered_MONC/400m/arm_39600.nc'
 data_test = xr.open_dataset(data_test_path)
 
 def _bytarr_to_dict(d):
