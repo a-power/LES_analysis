@@ -3,6 +3,15 @@ import re
 
 data_test = '/storage/silver/scenario/si818415/altered_MONC/400m/arm_18000.nc'
 
+def options_database(source_dataset):
+
+    if 'options_database' in source_dataset.variables:
+        options_database = _bytarr_to_dict(
+            source_dataset['options_database'].values)
+    else:
+        options_database = None
+    return options_database
+
 od = options_database(data_test)
 attrs = data_test.attrs
 
