@@ -5,6 +5,20 @@ import xarray as xr
 data_test_path = '/storage/silver/scenario/si818415/altered_MONC/400m/arm_18000.nc'
 data_test = xr.open_dataset(data_test_path)
 
+def _bytarr_to_dict(d):
+
+    # Converted for xarray use
+
+    while len(np.shape(d))>2:
+        d = d[0]
+    res = {}
+    for i in range(np.shape(d)[0]):
+        opt = d[i,0].decode('utf-8')
+        val = d[i,1].decode('utf-8')
+
+        res[opt] = val
+    return res
+
 def options_database(source_dataset):
 
     if 'options_database' in source_dataset.variables:
