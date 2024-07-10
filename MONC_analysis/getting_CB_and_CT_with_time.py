@@ -15,8 +15,9 @@ def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
 
 
 
-path_ARM25 = '/work/scratch-pw3/apower/ARM/MONC_out/25m/'
+path_ARM25 = '/storage/silver/MONC_data/Alanna/ARM/MONC_out/25m/'
 path_MONC_alt = '/storage/silver/scenario/si818415/altered_MONC/'
+path_MONC_stand = '/storage/silver/scenario/si818415/altered_MONC/'
 
 plotdir = '/home/users/si818415/phd/plots/MONC_alt/'
 
@@ -26,22 +27,28 @@ list_timestamps = [17400, 18000, 24600, 25200, 31800, 32400, 39000, 39600]
 
 
 
-CB_mean_height_ts = np.zeros(len(list_timestamps))
-CT_mean_height_ts = np.zeros(len(list_timestamps))
+CB_mean_height_ts = np.zeros(6, len(list_timestamps))
+CT_mean_height_ts = np.zeros(6, len(list_timestamps))
 
-for nt, time in enumerate(list_timestamps):
+for n in range(6):
+    if n <3:
+        path_in = path_MONC_alt + f'{2**n}00m/'
+    else:
+        path_in = path_MONC_stand + f'{2**(n%3)}00m/'
 
-    filein = f'arm_3d_{str(time)}.nc'
+    for nt, time in enumerate(list_timestamps):
 
-    ds_in = xr.open_dataset(path_MONC_alt+filein)
-    CB_field = ds_in['clbas'].data
-    CT_field = ds_in['cltop'].data
+        filein = f'arm_3d_{str(time)}.nc'
 
-    CB_cloud_only = get_cloud_only(CB_field)
-    CT_cloud_only = get_cloud_only(CT_field)
+        ds_in = xr.open_dataset(path_in+filein)
+        CB_field = ds_in['clbas'].data
+        CT_field = ds_in['cltop'].data
 
-    CB_mean_height_ts[nt] = np.nanpercentile(CB_cloud_only, 10)
-    CT_mean_height_ts[nt] = np.nanpercentile(CT_cloud_only,95)
+        CB_cloud_only = get_cloud_only(CB_field)
+        CT_cloud_only = get_cloud_only(CT_field)
+
+        CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
+        CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only,95)
 
 
 
