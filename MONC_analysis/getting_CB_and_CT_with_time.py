@@ -17,7 +17,7 @@ def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
 
 path_ARM25 = '/storage/silver/MONC_data/Alanna/ARM/MONC_out/25m/'
 path_MONC_alt_HCs = '/storage/silver/scenario/si818415/altered_MONC/'
-path_MONC_stand = '/storage/silver/scenario/si818415/altered_MONC/'
+path_MONC_stand = '/storage/silver/scenario/si818415/og_MONC/'
 
 plotdir = '/home/users/si818415/phd/plots/MONC_alt/'
 
@@ -70,7 +70,7 @@ for i in range(6):
     else:
         plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=line_list[i])
 
-plt.legend(fontsize=13, loc='upper right')
+plt.legend(fontsize=13, loc='upper left')
 
 
 bottom, top = plt.ylim()
