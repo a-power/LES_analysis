@@ -16,7 +16,7 @@ def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
 
 
 path_ARM25 = '/storage/silver/MONC_data/Alanna/ARM/MONC_out/25m/'
-path_MONC_alt = '/storage/silver/scenario/si818415/altered_MONC/'
+path_MONC_alt_HCs = '/storage/silver/scenario/si818415/altered_MONC/'
 path_MONC_stand = '/storage/silver/scenario/si818415/altered_MONC/'
 
 plotdir = '/home/users/si818415/phd/plots/MONC_alt/'
@@ -25,6 +25,12 @@ list_timestamps = [17400, 18000, 24600, 25200, 31800, 32400, 39000, 39600]
 
 #np.ndarray.tolist( np.arange(17400, 40000, 600) )
 
+colour_cycle = ['#377eb8', '#ff7f00', '#4daf4a',
+                  '#f781bf', '#a65628', '#984ea3',
+                  '#999999', '#e41a1c', '#dede00']
+line_list = ['--', '--', '--', ':', ':', ':']
+model_param = ['Stand', 'HCs'] #'HCs $\\widehat{\\bar{\\Delta}}'
+
 
 
 CB_mean_height_ts = np.zeros(6, len(list_timestamps))
@@ -32,9 +38,9 @@ CT_mean_height_ts = np.zeros(6, len(list_timestamps))
 
 for n in range(6):
     if n <3:
-        path_in = path_MONC_alt + f'{2**n}00m/'
+        path_in = path_MONC_stand + f'{2 ** n}00m/'
     else:
-        path_in = path_MONC_stand + f'{2**(n%3)}00m/'
+        path_in = path_MONC_alt_HCs + f'{2 ** (n % 3)}00m/'
 
     for nt, time in enumerate(list_timestamps):
 
@@ -55,9 +61,9 @@ for n in range(6):
 
 fig = plt.plot(figsize=(12, 4))
 plt.tight_layout(pad=0.5)
-
-plt.plot(list_timestamps, CB_mean_height_ts, 'k')
-plt.plot(list_timestamps, CT_mean_height_ts, 'k', label='HCs $\\widehat{\\bar{\\Delta}} = 200$m')
+for i in range(6):
+    plt.plot(list_timestamps, CB_mean_height_ts[i,:], colour_cycle[i%3], line_list[i],)
+    plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 3)}$\\Delta$')
 
 plt.legend(fontsize=13, loc='upper right')
 
