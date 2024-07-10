@@ -43,18 +43,34 @@ for n in range(6):
         path_in = path_MONC_alt_HCs + f'{2 ** (n % 3)}00m/'
 
     for nt, time in enumerate(list_timestamps):
+        if n == 1:
+            if nt > 3:
+                CB_mean_height_ts[n, nt] = np.nan
+                CT_mean_height_ts[n, nt] = np.nan
+            else:
+                filein = f'arm_3d_{str(time)}.nc'
 
-        filein = f'arm_3d_{str(time)}.nc'
+                ds_in = xr.open_dataset(path_in + filein)
+                CB_field = ds_in['clbas'].data
+                CT_field = ds_in['cltop'].data
 
-        ds_in = xr.open_dataset(path_in+filein)
-        CB_field = ds_in['clbas'].data
-        CT_field = ds_in['cltop'].data
+                CB_cloud_only = get_cloud_only(CB_field)
+                CT_cloud_only = get_cloud_only(CT_field)
 
-        CB_cloud_only = get_cloud_only(CB_field)
-        CT_cloud_only = get_cloud_only(CT_field)
+                CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
+                CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
+        else:
+            filein = f'arm_3d_{str(time)}.nc'
 
-        CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
-        CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only,95)
+            ds_in = xr.open_dataset(path_in + filein)
+            CB_field = ds_in['clbas'].data
+            CT_field = ds_in['cltop'].data
+
+            CB_cloud_only = get_cloud_only(CB_field)
+            CT_cloud_only = get_cloud_only(CT_field)
+
+            CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
+            CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
 
 
 
