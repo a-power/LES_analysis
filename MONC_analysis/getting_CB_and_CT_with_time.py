@@ -41,7 +41,7 @@ for n in range(6):
     if n <3:
         path_in = path_MONC_stand + f'{2 ** n}00m/'
     else:
-        path_in = path_MONC_alt_HCs + f'{2 ** (n % 3)}00m/'
+        path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
 
     for nt, time in enumerate(list_timestamps):
         if n == 1:
