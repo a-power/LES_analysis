@@ -31,6 +31,8 @@ var_list = ['wtheta_cn_mean', 'w_qt', 'ww_mean', 'wwsg_mean', 'total_cloud_fract
             'subgrid_buoyant_production', 'subgrid_shear_stress', 'subgrid_turbulent_transport']
 
 zn = np.arange(0, 4410, 10)
+zn_40 = np.arange(0, 4410, 40)
+
 
 
 colour_cycle = ['#377eb8', '#ff7f00', '#4daf4a',
@@ -47,6 +49,7 @@ for nv, var in enumerate(var_list):
     for nt, time in enumerate(list_timestamps):
 
         var_prof = np.zeros( (6, len(zn) ) )
+        var_prof_40 = np.zeros((6, len(zn_40)))
 
         for n in range(6):
             if n <3:
@@ -54,7 +57,10 @@ for nv, var in enumerate(var_list):
 
                 filein = f'arm_{str(time)}.nc'
                 ds_in = xr.open_dataset(path_in + filein)
-                var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis = 0)
+                if n == 2:
+                    var_prof_40[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
+                else:
+                    var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis = 0)
 
             else:
                 path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
@@ -76,8 +82,11 @@ for nv, var in enumerate(var_list):
         for i in range(6):
             # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
             if i < 3:
-
-                plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linewidth=4,
+                if n == 2:
+                    plt.plot(var_prof_40[i, :], zn_40, colour_cycle[i % 3], linewidth=4,
+                             label=f'{2 ** ((i + 2))}$\\Delta$')
+                else:
+                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linewidth=4,
                          label=f'{2 ** ((i + 2))}$\\Delta$')
             else:
 
