@@ -80,7 +80,7 @@ for nv, var in enumerate(var_list):
                 filein = f'arm_{str(time)}.nc'
 
                 ds_in = xr.open_dataset(path_in + filein)
-                if n == 5:
+                if n == 4:
                     var_prof_440[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
                 else:
                     var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis = 0)
@@ -98,7 +98,7 @@ for nv, var in enumerate(var_list):
                     plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linewidth=4,
                          label=f'{2 ** ((i + 2))}$\\Delta$')
             else:
-                if i == 5:
+                if i == 4:
                     plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=line_list[i],
                          marker='*')
                 else:
