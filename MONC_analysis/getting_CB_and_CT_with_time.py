@@ -21,7 +21,8 @@ path_MONC_stand = '/storage/silver/scenario/si818415/og_monc/'
 
 plotdir = '/home/users/si818415/phd/plots/MONC_alt/'
 
-list_timestamps = [17400, 18000, 24600, 25200, 31800, 32400, 39000, 39600]
+list_timestamps = np.arange(600, 40200, 600)
+#[17400, 18000, 24600, 25200, 31800, 32400, 39000, 39600]
 
 #np.ndarray.tolist( np.arange(17400, 40000, 600) )
 
@@ -44,7 +45,7 @@ for n in range(6):
 
     for nt, time in enumerate(list_timestamps):
         if n == 1:
-            if nt > 5:
+            if time > 30000:
                 CB_mean_height_ts[n, nt] = np.nan
                 CT_mean_height_ts[n, nt] = np.nan
             else:
