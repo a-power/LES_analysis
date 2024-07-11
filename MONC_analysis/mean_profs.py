@@ -26,7 +26,7 @@ list_timestamps = [18000, 25200, 32400, 39600]
 #list_timestamps = [17400, 18000, 24600, 25200, 31800, 32400, 39000, 39600]
 #list_timestamps = np.arange(600, 40200, 600)
 
-var_list = ['wtheta_cn_mean', 'w_qt', 'ww_mean', 'wwsg_mean', 'total_cloud_fraction', 'tke_tendancy', 'tke_sq_mean',
+var_list = ['wtheta_cn_mean', 'w_qt', 'ww_mean', 'wwsg_mean', 'total_cloud_fraction', 'tke_tendency', 'tke_sq_mean',
             'resolved_buoyant_production', 'resolved_shear_production', 'resolved_turbulent_transport',
             'subgrid_buoyant_production', 'subgrid_shear_stress', 'subgrid_turbulent_transport']
 
