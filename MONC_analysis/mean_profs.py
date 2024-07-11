@@ -53,28 +53,28 @@ for nv, var in enumerate(var_list):
 
         for n in range(6):
             if n <3:
-                path_in = path_MONC_stand + f'{2 ** n}00m/'
-
-                filein = f'arm_{str(time)}.nc'
-                ds_in = xr.open_dataset(path_in + filein)
-                if n == 2:
-                    var_prof_40[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
-                else:
-                    var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis = 0)
-
-            else:
-                path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
-
-
                 if n == 1:
                     if time > 30000:
                         var_prof[n, :] = np.nan
-
                     else:
                         filein = f'arm_{str(time)}.nc'
-
                         ds_in = xr.open_dataset(path_in + filein)
+                        var_prof_40[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
+
+                else:
+                    filein = f'arm_{str(time)}.nc'
+                    ds_in = xr.open_dataset(path_in + filein)
+                    if n == 2:
+                        var_prof_40[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
+                    else:
                         var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis = 0)
+
+            else:
+                path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
+                filein = f'arm_{str(time)}.nc'
+
+                ds_in = xr.open_dataset(path_in + filein)
+                var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis = 0)
 
 
 
