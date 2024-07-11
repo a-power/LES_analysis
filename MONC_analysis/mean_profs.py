@@ -53,6 +53,7 @@ for nv, var in enumerate(var_list):
 
         for n in range(6):
             if n <3:
+                path_in = path_MONC_stand + f'{2 ** (n - 3)}00m/'
                 if n == 1:
                     if time > 30000:
                         var_prof[n, :] = np.nan
