@@ -30,7 +30,7 @@ var_list = ['wtheta_cn_mean', 'w_qt', 'ww_mean', 'wwsg_mean', 'total_cloud_fract
             'resolved_buoyant_production', 'resolved_shear_production', 'resolved_turbulent_transport',
             'subgrid_buoyant_production', 'subgrid_shear_stress', 'subgrid_turbulent_transport']
 
-zn = np.arange(0, 44000, 10)
+zn = np.arange(0, 4400, 10)
 
 
 colour_cycle = ['#377eb8', '#ff7f00', '#4daf4a',
@@ -54,7 +54,7 @@ for nv, var in enumerate(var_list):
 
                 filein = f'arm_{str(time)}.nc'
                 ds_in = xr.open_dataset(path_in + filein)
-                var_prof[n, :] = ds_in[f'{var}'].data
+                var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis = 0)
 
             else:
                 path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
@@ -68,7 +68,7 @@ for nv, var in enumerate(var_list):
                         filein = f'arm_{str(time)}.nc'
 
                         ds_in = xr.open_dataset(path_in + filein)
-                        var_prof[n, :] = ds_in[f'{var}'].data
+                        var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis = 0)
 
 
 
