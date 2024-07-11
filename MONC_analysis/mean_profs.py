@@ -47,6 +47,7 @@ model_param = ['Stand', 'Stand', 'Stand', 'HCs', 'HCs', 'HCs'] #'HCs $\\widehat{
 
 
 for nv, var in enumerate(var_list):
+    print(var)
     for nt, time in enumerate(list_timestamps):
 
         var_prof = np.zeros( (6, len(zn) ) )
