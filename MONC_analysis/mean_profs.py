@@ -31,6 +31,7 @@ var_list = ['wtheta_cn_mean', 'w_qt', 'ww_mean', 'wwsg_mean', 'total_cloud_fract
             'subgrid_buoyant_production', 'subgrid_shear_stress', 'subgrid_turbulent_transport']
 
 zn = np.arange(0, 4410, 10)
+zn_440 = np.arange(0, 4400, 10)
 zn_40 = np.arange(0, 4410, 40)
 
 
@@ -50,6 +51,7 @@ for nv, var in enumerate(var_list):
 
         var_prof = np.zeros( (6, len(zn) ) )
         var_prof_40 = np.zeros((6, len(zn_40)))
+        var_prof_440 = np.zeros((6, len(zn_440)))
 
         for n in range(6):
             print(n)
@@ -73,11 +75,15 @@ for nv, var in enumerate(var_list):
 
 
             else:
+
                 path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
                 filein = f'arm_{str(time)}.nc'
 
                 ds_in = xr.open_dataset(path_in + filein)
-                var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis = 0)
+                if n == 5:
+                    var_prof_440[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
+                else:
+                    var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis = 0)
 
 
 
@@ -92,8 +98,11 @@ for nv, var in enumerate(var_list):
                     plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linewidth=4,
                          label=f'{2 ** ((i + 2))}$\\Delta$')
             else:
-
-                plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=line_list[i],
+                if n == 5:
+                    plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=line_list[i],
+                         marker='*')
+                else:
+                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=line_list[i],
                          marker='*')
         plt.tight_layout(pad=0.5)
         plt.gcf().set_size_inches(4, 9)
