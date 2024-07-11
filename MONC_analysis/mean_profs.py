@@ -52,6 +52,7 @@ for nv, var in enumerate(var_list):
         var_prof_40 = np.zeros((6, len(zn_40)))
 
         for n in range(6):
+            print(n)
             if n <3:
                 path_in = path_MONC_stand + f'{2 ** (n)}00m/'
                 if n == 1:
