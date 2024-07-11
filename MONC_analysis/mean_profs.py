@@ -30,7 +30,7 @@ var_list = ['wtheta_cn_mean', 'w_qt', 'ww_mean', 'wwsg_mean', 'total_cloud_fract
             'resolved_buoyant_production', 'resolved_shear_production', 'resolved_turbulent_transport',
             'subgrid_buoyant_production', 'subgrid_shear_stress', 'subgrid_turbulent_transport']
 
-zn = np.arange(0, 4400, 10)
+zn = np.arange(0, 4410, 10)
 
 
 colour_cycle = ['#377eb8', '#ff7f00', '#4daf4a',
