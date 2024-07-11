@@ -78,12 +78,13 @@ for n in range(6):
 fig = plt.plot(figsize=(12, 4))
 plt.tight_layout(pad=0.5)
 for i in range(6):
-    plt.plot(list_timestamps, CB_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i])
     # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
     if i < 3:
+        plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=line_list[i])
         plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=line_list[i],
-                 label=f'{2 ** ((i + 1) % 4)}$\\Delta$')
+                 label=f'{2 ** ((i + 2))}$\\Delta$')
     else:
+        plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=line_list[i], linewidth=2, marker='*')
         plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=line_list[i], linewidth=2, marker='*')
 
 plt.legend(fontsize=13, loc='upper left')
