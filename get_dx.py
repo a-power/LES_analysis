@@ -5,10 +5,10 @@ import xarray as xr
 for i in range(6):
     if i < 3:
         model = 'standard'
-        data_test_path = f'/storage/silver/scenario/si818415/og_monc/{2 * (i % 3)}00m/arm_18000.nc'
+        data_test_path = f'/storage/silver/scenario/si818415/og_monc/{2 ** (i % 3)}00m/arm_18000.nc'
     else:
         model = "new param"
-        data_test_path = f'/storage/silver/scenario/si818415/altered_MONC/{2*(i%3)}00m/arm_18000.nc'
+        data_test_path = f'/storage/silver/scenario/si818415/altered_MONC/{2**(i%3)}00m/arm_18000.nc'
 
     data_test = xr.open_dataset(data_test_path)
 
@@ -47,4 +47,4 @@ for i in range(6):
         dx = attrs['dx']
         dy = attrs['dy']
 
-    print(f'{model} {2*(i%3)}00m dx = ', dx)
+    print(f'{model} {2**(i%3)}00m dx = ', dx)
