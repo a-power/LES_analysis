@@ -75,7 +75,7 @@ for n in range(6):
 
 
 
-fig = plt.plot(figsize=(16, 4))
+plt.plot(figsize=(12, 4))
 plt.tight_layout(pad=0.5)
 for i in range(6):
     # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
