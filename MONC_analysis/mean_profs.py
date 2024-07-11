@@ -91,14 +91,14 @@ for nv, var in enumerate(var_list):
         for i in range(6):
             # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
             if i < 3:
-                if n == 2:
+                if i == 2:
                     plt.plot(var_prof_40[i, :], zn_40, colour_cycle[i % 3], linewidth=4,
                              label=f'{2 ** ((i + 2))}$\\Delta$')
                 else:
                     plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linewidth=4,
                          label=f'{2 ** ((i + 2))}$\\Delta$')
             else:
-                if n == 5:
+                if i == 5:
                     plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=line_list[i],
                          marker='*')
                 else:
