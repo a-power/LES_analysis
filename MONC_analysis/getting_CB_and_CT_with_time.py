@@ -87,7 +87,7 @@ for i in range(6):
         plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=line_list[i], marker='*')
         plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=line_list[i], marker='*')
 plt.tight_layout(pad=0.5)
-plt.gcf().set_size_inches(10, 4)
+plt.gcf().set_size_inches(10, 5.5)
 plt.legend(fontsize=13, loc='upper left')
 
 
