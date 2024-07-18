@@ -93,20 +93,20 @@ for nv, var in enumerate(var_list):
             # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
             if i < 3:
                 if i == 2:
-                    plt.plot(var_prof_40[i, :], zn_40, colour_cycle[i % 3], linewidth=1,
+                    plt.plot(var_prof_40[i, :], zn_40, colour_cycle[i % 3], linewidth=2,
                              label=f'{2 ** ((i + 2))}$\\Delta$')
                 else:
-                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linewidth=1,
+                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linewidth=2,
                          label=f'{2 ** ((i + 2))}$\\Delta$')
             else:
                 if i == 4:
-                    plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=line_list[i],
-                         marker='*')
+                    plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=line_list[i])
+                        # marker='*')
                 else:
-                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=line_list[i],
-                         marker='*')
+                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=line_list[i])
+                        # marker='*')
         plt.tight_layout(pad=0.5)
-        plt.gcf().set_size_inches(5, 8)
+        plt.gcf().set_size_inches(5, 7)
         plt.legend(fontsize=13, loc='upper right')
 
         bottom, top = plt.ylim()
