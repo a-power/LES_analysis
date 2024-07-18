@@ -106,7 +106,7 @@ for nv, var in enumerate(var_list):
                     plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=line_list[i],
                          marker='*')
         plt.tight_layout(pad=0.5)
-        plt.gcf().set_size_inches(4, 9)
+        plt.gcf().set_size_inches(5, 8)
         plt.legend(fontsize=13, loc='upper right')
 
         bottom, top = plt.ylim()
