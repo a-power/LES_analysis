@@ -58,14 +58,7 @@ for nv, var in enumerate(var_list):
             print(n)
             if n <3:
                 path_in = path_MONC_stand + f'{2 ** (n)}00m/'
-                if n == 1:
-                    if time > 30000:
-                        var_prof[n, :] = np.nan
-                    else:
-                        filein = f'arm_{str(time)}.nc'
-                        ds_in = xr.open_dataset(path_in + filein)
-                        var_prof[n, :] = np.nan
-                elif n==2:
+                if n==2:
                     filein = f'arm_{str(time)}.nc'
                     ds_in = xr.open_dataset(path_in + filein)
                     var_prof_40[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
