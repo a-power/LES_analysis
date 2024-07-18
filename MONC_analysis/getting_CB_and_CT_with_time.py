@@ -43,7 +43,7 @@ for n in range(6):
     elif n == 3:
         path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
     else:
-        path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/SA/'
+        path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'#SA/'
 
     for nt, time in enumerate(list_timestamps):
         # if n == 1:
@@ -112,10 +112,10 @@ plt.xticks(og_xtic[0], time_label)
 
 plt.xlabel('Local time (hh:mm:ss)', fontsize=14)
 plt.ylabel('z (m)', fontsize=14)
-plt.title('Cloud top and base height for HCsSA', fontsize=14)
+plt.title('Cloud top and base height for HCs', fontsize=14)
 
 plt.tight_layout()
 
-plt.savefig(plotdir+f'ARM_cloud_top_and_base_ts_og_HCsSA.png', bbox_inches='tight')
-plt.savefig(plotdir + f'ARM_cloud_top_and_base_ts_og_HCsSA.pdf', bbox_inches='tight')
+plt.savefig(plotdir+f'ARM_cloud_top_and_base_ts_og_HCs.png', bbox_inches='tight')
+plt.savefig(plotdir + f'ARM_cloud_top_and_base_ts_og_HCs.pdf', bbox_inches='tight')
 plt.close()
