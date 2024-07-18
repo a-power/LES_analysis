@@ -38,10 +38,12 @@ CB_mean_height_ts = np.zeros( (6, len(list_timestamps)) )
 CT_mean_height_ts = np.zeros( (6, len(list_timestamps)) )
 
 for n in range(6):
-    if n <3:
+    if n <3: #unalt
         path_in = path_MONC_stand + f'{2 ** n}00m/'
-    else:
+    elif n == 3:
         path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
+    else:
+        path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/SA/'
 
     for nt, time in enumerate(list_timestamps):
         # if n == 1:
@@ -114,6 +116,6 @@ plt.title('Cloud top and base height', fontsize=14)
 
 plt.tight_layout()
 
-plt.savefig(plotdir+f'ARM_cloud_top_and_base_ts.png', bbox_inches='tight')
-plt.savefig(plotdir + f'ARM_cloud_top_and_base_ts.pdf', bbox_inches='tight')
+plt.savefig(plotdir+f'ARM_cloud_top_and_base_ts_og_HCsSA.png', bbox_inches='tight')
+plt.savefig(plotdir + f'ARM_cloud_top_and_base_ts_og_HCsSA.pdf', bbox_inches='tight')
 plt.close()
