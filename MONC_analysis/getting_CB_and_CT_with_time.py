@@ -83,12 +83,12 @@ plt.plot(figsize=(12, 4))
 for i in range(6):
     # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
     if i >= 3:
-        plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2.5)
-        plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2.5,
+        plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=1.5)
+        plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=1.5,
                  label=f'$\\Delta$ = {2 ** ((i-3))}00m')
 for i in range(3):
-        plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--', marker='o')
-        plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--', marker='o')
+        plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--', marker='x')
+        plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--', marker='x')
 
 plt.tight_layout(pad=0.5)
 plt.gcf().set_size_inches(10, 5.5)
@@ -114,7 +114,7 @@ plt.xticks(og_xtic[0], time_label)
 
 plt.xlabel('Local time (hh:mm:ss)', fontsize=14)
 plt.ylabel('z (m)', fontsize=14)
-plt.title('Cloud top and base height for HCs (solid) vs HCsSA (circle)', fontsize=14)
+plt.title('Cloud top and base height for HCs (solid) vs HCsSA (x)', fontsize=14)
 
 plt.tight_layout()
 
