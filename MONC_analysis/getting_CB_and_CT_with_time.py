@@ -41,6 +41,8 @@ for n in range(6):
     if n == 1 or n == 2: #unalt
         # path_in = path_MONC_stand + f'{2 ** n}00m/'
         path_in = path_MONC_alt_HCs + f'{2 ** (n)}00m/SA/'
+    elif n == 0:
+        path_in = path_MONC_alt_HCs + f'{2 ** (n)}00m/'  # SA/'
     else:
         path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'#SA/'
 
