@@ -82,10 +82,10 @@ plt.plot(figsize=(12, 4))
 for i in range(6):
     # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
     if i >= 3:
-        plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2)
-        plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2,
+        plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=3)
+        plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=3,
                  label=f'{2 ** ((i + 2))}$\\Delta$')
-    else:
+for i in range(3):
         plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=line_list[i], marker='*')
         plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=line_list[i], marker='*')
 
