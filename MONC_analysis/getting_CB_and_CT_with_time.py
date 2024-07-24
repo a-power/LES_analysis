@@ -239,12 +239,12 @@ elif plot_choice == 'all_Cs_at_D_200':
             plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle=':', marker='*',
                      label='S$C_s$0.11')
         elif i == 3:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[1], linewidth=1.5)
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[1], linewidth=1.5,
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[3], linewidth=2)
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[3], linewidth=2,
                      label='H$C_s$')
         elif i == 4:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle='--', marker='x')
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle='--', marker='x',
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[4], linestyle='--', marker='x')
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[4], linestyle='--', marker='x',
                      label='H$C_s$SA')
 
     plt.tight_layout(pad=0.5)
