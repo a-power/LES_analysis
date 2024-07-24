@@ -39,10 +39,11 @@ CT_mean_height_ts = np.zeros( (6, len(list_timestamps)) )
 
 for n in range(6):
     if n == 1 or n == 2: #unalt
-        # path_in = path_MONC_stand + f'{2 ** n}00m/'
-        path_in = path_MONC_alt_HCs + f'{2 ** (n)}00m/SA/'
+        path_in = path_MONC_stand + f'{2 ** n}00m/'
+        #path_in = path_MONC_alt_HCs + f'{2 ** (n)}00m/SA/'
     elif n == 0:
-        path_in = path_MONC_alt_HCs + f'{2 ** (n)}00m/'  # SA/'
+        path_in = path_MONC_stand + f'{2 ** n}00m/'
+        # path_in = path_MONC_alt_HCs + f'{2 ** (n)}00m/'  # SA/'
     else:
         path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'#SA/'
 
@@ -67,12 +68,12 @@ plt.plot(figsize=(12, 4))
 for i in range(6):
     # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
     if i >= 3:
-        plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=1.5)
-        plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=1.5,
+        plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2)
+        plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2,
                  label=f'$\\Delta$ = {2 ** ((i-3))}00m')
 for i in range(3):
-        plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--', marker='x')
-        plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--', marker='x')
+        plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=':', marker='*')
+        plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=':', marker='*')
 
 plt.tight_layout(pad=0.5)
 plt.gcf().set_size_inches(10, 5.5)
@@ -107,6 +108,6 @@ plt.title('Cloud top and base height for HCs (solid) vs HCsSA (x)', fontsize=14)
 
 plt.tight_layout()
 
-plt.savefig(plotdir+f'ARM_cloud_top_and_base_ts_HCs_HCsSA.png', bbox_inches='tight')
-plt.savefig(plotdir + f'ARM_cloud_top_and_base_ts_HCs_HCsSA.pdf', bbox_inches='tight')
+plt.savefig(plotdir+f'ARM_cloud_top_and_base_ts_og_HCs.png', bbox_inches='tight') #_HCsSA
+plt.savefig(plotdir + f'ARM_cloud_top_and_base_ts_og_HCs.pdf', bbox_inches='tight')
 plt.close()
