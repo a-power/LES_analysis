@@ -194,7 +194,7 @@ elif plot_choice == 'all_Cs_at_D_200':
     CB_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
     CT_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
 
-    for n in range(4):
+    for n in range(5):
         if n == 0: #unalt
             path_in = path_MONC_stand + f'200m/'
         elif n == 1:
