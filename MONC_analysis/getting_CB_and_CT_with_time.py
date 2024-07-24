@@ -89,13 +89,17 @@ plt.ylim(bottom=0, top = 4000)
 
 time_label = []
 
-for i in range(len(og_xtic[0])):
-    time_label.append(datetime.timedelta(seconds=og_xtic[0][i] + 19800))
+x_tick_loc = np.arange(32400-19800, 61200-19800, 3600)
 
-plt.xlim(32400, 61200)
+for i in range(len(x_tick_loc)):
+    time_label.append(datetime.timedelta(seconds=x_tick_loc[i] + 19800))
+
 og_xtic = plt.xticks()
 print(og_xtic)
-plt.xticks(og_xtic[0], time_label)
+
+plt.xlim(32400, 61200)
+
+plt.xticks(x_tick_loc[0], time_label)
 
 plt.xlabel('Local time (hh:mm:ss)', fontsize=14)
 plt.ylabel('z (m)', fontsize=14)
