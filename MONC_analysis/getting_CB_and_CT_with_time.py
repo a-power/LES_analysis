@@ -100,7 +100,7 @@ print(og_xtic)
 
 plt.xlim(32400, 61200)
 
-plt.xticks(x_tick_loc[0], time_label)
+plt.xticks(x_tick_loc, time_label)
 
 plt.xlabel('Local time (hh:mm:ss)', fontsize=14)
 plt.ylabel('z (m)', fontsize=14)
