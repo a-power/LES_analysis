@@ -145,14 +145,14 @@ elif plot_choice == 'og_HCs':
     for i in range(6):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
         if i < 3:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2,
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3],
                      linestyle=':', marker='*')
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2,
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3],
                      linestyle=':', marker='*')
 
         else:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3])
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3],
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2.5)
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2.5,
                      label=f'$\\Delta$ = {2 ** ((i-3))}00m')
 
     plt.tight_layout(pad=0.5)
@@ -195,9 +195,11 @@ elif plot_choice == 'all_Cs_at_D_200':
     CT_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
 
     for n in range(6):
-        if n < 3: #unalt
-            path_in = path_MONC_stand + f'{2 ** n}00m/'
-        else:
+        if n == 0: #unalt
+            path_in = path_MONC_stand + f'200m/'
+        elif n == 1:
+            path_in = path_MONC_stand + f'200m/'
+
             path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
 
         for nt, time in enumerate(list_timestamps):
@@ -221,8 +223,8 @@ elif plot_choice == 'all_Cs_at_D_200':
     for i in range(6):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
         if i < 3:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2)
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2,
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2.5)
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2.5,
                      label=f'$\\Delta$ = {2 ** ((i-3))}00m')
         else:
             plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=':', marker='*')
