@@ -145,6 +145,82 @@ elif plot_choice == 'og_HCs':
     for i in range(6):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
         if i < 3:
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2,
+                     linestyle=':', marker='*')
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2,
+                     linestyle=':', marker='*')
+
+        else:
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3])
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3],
+                     label=f'$\\Delta$ = {2 ** ((i-3))}00m')
+
+    plt.tight_layout(pad=0.5)
+    plt.gcf().set_size_inches(10, 5.5)
+    plt.legend(fontsize=13, loc='upper left')
+
+
+    bottom, top = plt.ylim()
+    plt.ylim(bottom=0, top = 4000)
+
+    time_label = []
+
+    x_tick_loc = np.arange(32400-19800, 61200-19800, 3600)
+
+    for i in range(len(x_tick_loc)):
+        print(x_tick_loc[i])
+        time_label.append(datetime.timedelta(seconds=(int(x_tick_loc[i]) + 19800)))
+
+    og_xtic = plt.xticks()
+    print(og_xtic)
+
+    plt.xticks(x_tick_loc, time_label)
+    plt.xlim(32400 - 19800, 61200 - 19800)
+
+    plt.xlabel('Local time (hh:mm:ss)', fontsize=14)
+    plt.ylabel('z (m)', fontsize=14)
+    plt.title('Cloud top and base height for HCs (solid) vs SCs0.23 (star)', fontsize=14)
+
+    plt.tight_layout()
+
+    plt.savefig(plotdir+f'ARM_cloud_top_and_base_ts_og_HCs.png', bbox_inches='tight') #_HCsSA
+    plt.savefig(plotdir + f'ARM_cloud_top_and_base_ts_og_HCs.pdf', bbox_inches='tight')
+    plt.close()
+
+
+
+elif plot_choice == 'all_Cs_at_D_200':
+
+    CB_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
+    CT_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
+
+    for n in range(6):
+        if n < 3: #unalt
+            path_in = path_MONC_stand + f'{2 ** n}00m/'
+        else:
+            path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
+
+        for nt, time in enumerate(list_timestamps):
+
+            filein = f'arm_3d_{str(time)}.nc'
+
+            ds_in = xr.open_dataset(path_in + filein)
+            CB_field = ds_in['clbas'].data
+            CT_field = ds_in['cltop'].data
+
+            CB_cloud_only = get_cloud_only(CB_field)
+            CT_cloud_only = get_cloud_only(CT_field)
+
+            CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
+            CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
+
+
+
+
+    plt.plot(figsize=(12, 4))
+    for i in range(6):
+        # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
+        if i < 3:
             plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2)
             plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2,
                      label=f'$\\Delta$ = {2 ** ((i-3))}00m')
