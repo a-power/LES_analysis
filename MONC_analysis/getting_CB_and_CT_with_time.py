@@ -4,7 +4,7 @@ import xarray as xr
 import matplotlib.pyplot as plt
 import datetime
 
-plot_choice = 'og_HCs'
+plot_choice = 'all_Cs_at_D_200' #'og_HCs'  'HCs_HCsSA'  'all_Cs_at_D_200'
 
 def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
 
@@ -194,13 +194,17 @@ elif plot_choice == 'all_Cs_at_D_200':
     CB_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
     CT_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
 
-    for n in range(6):
+    for n in range(4):
         if n == 0: #unalt
             path_in = path_MONC_stand + f'200m/'
         elif n == 1:
-            path_in = path_MONC_stand + f'200m/'
-
-            path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
+            path_in = path_MONC_stand + f'200m/Cs_0_137/'
+        elif n == 2:
+            path_in = path_MONC_stand + f'200m/Cs_0_11/'
+        elif n == 3:
+            path_in = path_MONC_alt_HCs + f'200m/'
+        elif n == 4:
+            path_in = path_MONC_alt_HCs + f'200m/SA/'
 
         for nt, time in enumerate(list_timestamps):
 
@@ -222,13 +226,26 @@ elif plot_choice == 'all_Cs_at_D_200':
     plt.plot(figsize=(12, 4))
     for i in range(6):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
-        if i < 3:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2.5)
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2.5,
-                     label=f'$\\Delta$ = {2 ** ((i-3))}00m')
-        else:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=':', marker='*')
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle=':', marker='*')
+        if i == 0:
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle=':', marker='*')
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle=':', marker='*',
+                     label='S$C_s$0.23') #f'$\\Delta$ = {2 ** ((i-3))}00m'
+        elif i == 1:
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle=':', marker='*')
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle=':', marker='*',
+                     label='S$C_s$0.137')
+        elif i == 2:
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle=':', marker='*')
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle=':', marker='*',
+                     label='S$C_s$0.11')
+        elif i == 3:
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[1], linewidth=2.5)
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[1], linewidth=2.5,
+                     label='H$C_s$')
+        elif i == 4:
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle='--', marker='x')
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle='--', marker='x',
+                     label='H$C_s$SA')
 
     plt.tight_layout(pad=0.5)
     plt.gcf().set_size_inches(10, 5.5)
@@ -258,6 +275,6 @@ elif plot_choice == 'all_Cs_at_D_200':
 
     plt.tight_layout()
 
-    plt.savefig(plotdir+f'ARM_cloud_top_and_base_ts_og_HCs.png', bbox_inches='tight') #_HCsSA
-    plt.savefig(plotdir + f'ARM_cloud_top_and_base_ts_og_HCs.pdf', bbox_inches='tight')
+    plt.savefig(plotdir+f'ARM_cloud_top_and_base_ts_D_200_all_Cs_cases.png', bbox_inches='tight') #_HCsSA
+    plt.savefig(plotdir + f'ARM_cloud_top_and_base_ts_D_200_all_Cs_cases.pdf', bbox_inches='tight')
     plt.close()
