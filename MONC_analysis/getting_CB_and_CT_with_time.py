@@ -47,23 +47,7 @@ for n in range(6):
         path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'#SA/'
 
     for nt, time in enumerate(list_timestamps):
-        # if n == 1:
-        #     if time > 30000:
-        #         CB_mean_height_ts[n, nt] = np.nan
-        #         CT_mean_height_ts[n, nt] = np.nan
-        #     else:
-        #         filein = f'arm_3d_{str(time)}.nc'
-        #
-        #         ds_in = xr.open_dataset(path_in + filein)
-        #         CB_field = ds_in['clbas'].data
-        #         CT_field = ds_in['cltop'].data
-        #
-        #         CB_cloud_only = get_cloud_only(CB_field)
-        #         CT_cloud_only = get_cloud_only(CT_field)
-        #
-        #         CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
-        #         CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
-        # else:
+
         filein = f'arm_3d_{str(time)}.nc'
 
         ds_in = xr.open_dataset(path_in + filein)
@@ -98,8 +82,6 @@ plt.legend(fontsize=13, loc='upper left')
 bottom, top = plt.ylim()
 plt.ylim(bottom=0, top = 4000)
 
-og_xtic = plt.xticks()
-print(og_xtic)
 
 # time_label_temp = "%.2f"%(05.50 + og_xtic[0]/(60*60))
 # time_label_temp_min = (( np.round(05.50 + og_xtic[0]/(60*60), 2 ) - "%.2f"%(05.50 + og_xtic[0]/(60*60)) )*60 )/100
@@ -110,6 +92,9 @@ time_label = []
 for i in range(len(og_xtic[0])):
     time_label.append(datetime.timedelta(seconds=og_xtic[0][i] + 19800))
 
+plt.xlim(32400, 61200)
+og_xtic = plt.xticks()
+print(og_xtic)
 plt.xticks(og_xtic[0], time_label)
 
 plt.xlabel('Local time (hh:mm:ss)', fontsize=14)
