@@ -92,7 +92,8 @@ time_label = []
 x_tick_loc = np.arange(32400-19800, 61200-19800, 3600)
 
 for i in range(len(x_tick_loc)):
-    time_label.append(datetime.timedelta(seconds=x_tick_loc[i] + 19800))
+    print(x_tick_loc[i])
+    time_label.append(datetime.timedelta(seconds=(int(x_tick_loc[i]) + 19800)))
 
 og_xtic = plt.xticks()
 print(og_xtic)
