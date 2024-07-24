@@ -98,9 +98,8 @@ for i in range(len(x_tick_loc)):
 og_xtic = plt.xticks()
 print(og_xtic)
 
-plt.xlim(32400, 61200)
-
 plt.xticks(x_tick_loc, time_label)
+#plt.xlim(32400 - 19800, 61200 - 19800)
 
 plt.xlabel('Local time (hh:mm:ss)', fontsize=14)
 plt.ylabel('z (m)', fontsize=14)
