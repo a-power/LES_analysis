@@ -38,7 +38,7 @@ zn = np.arange(-5, 4400, 10)
 def get_25m_ref(var):
 
     ref_tstamps = np.arange(1200, 39600, 1200)
-    ref_25m = np.zeros(640, 441)
+    ref_25m = np.zeros((640, 441))
 
     for ts, time_stamp in enumerate(ref_tstamps):
         file_in = path_ARM25 + f'{time_stamp}.nc'
