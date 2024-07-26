@@ -16,7 +16,7 @@ def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
 
 
 
-path_ARM25 = '/storage/silver/MONC_data/Alanna/ARM/MONC_out/25m/'
+path_ARM25 = '/storage/silver/greybls/si818415/arm_2d_25/diagnostics_ts_'
 path_MONC_alt_HCs = '/storage/silver/scenario/si818415/altered_MONC/'
 path_MONC_stand = '/storage/silver/scenario/si818415/og_monc/'
 
@@ -32,6 +32,44 @@ colour_cycle = ['#377eb8', '#ff7f00', '#4daf4a',
                   '#999999', '#e41a1c', '#dede00']
 line_list = [':', ':', ':', '--', '--', '--']
 model_param = ['Stand', 'Stand', 'Stand', 'HCs', 'HCs', 'HCs'] #'HCs $\\widehat{\\bar{\\Delta}}'
+
+zn = np.arange(-5, 4400, 10)
+
+def get_25m_ref(var):
+
+    ref_tstamps = np.arange(1200, 39600, 1200)
+    ref_25m = np.zeros(640, 441)
+
+    for ts, time_stamp in enumerate(ref_tstamps):
+        file_in = path_ARM25 + f'{time_stamp}.nc'
+        ds_in = xr.open_dataset(path_in + file_in)
+
+        for nt in range(20):
+            ref_25m[32*ts + nt, :] = ds_in[f'{var}'].data[nt, :]
+
+    return ref_25m
+
+
+def get_CT_and_CB(ts_of_cloud_frac_prof):
+
+    CT_ref_25m = np.zeros(640)
+    CB_ref_25m = np.zeros(640)
+
+    for nt in range(640):
+        for i in range(441):
+            if ts_of_cloud_frac_prof[nt, 440-i] >= 0.001:
+                CT_ref_25m[nt] = zn[440-i]
+            if ts_of_cloud_frac_prof[nt, i] >= 0.001:
+                CB_ref_25m[nt] = zn[i]
+
+    return CB_ref_25m, CT_ref_25m
+
+plot_ref_tstamps = np.arange(1200, 39600, 60)
+
+
+ts_cloud_prof = get_25m_ref('total_cloud_fraction')
+
+CB_LES_25m, CT_LES_25m = get_CT_and_CB(ts_cloud_prof)
 
 
 if plot_choice == 'HCs_HCsSA':
@@ -65,6 +103,10 @@ if plot_choice == 'HCs_HCsSA':
 
 
     plt.plot(figsize=(12, 4))
+
+    plt.plot(plot_ref_tstamps, CB_LES_25m, 'k')
+    plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', label='25m LES')
+
     for i in range(6):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
         if i >= 3:
@@ -142,6 +184,10 @@ elif plot_choice == 'og_HCs':
 
 
     plt.plot(figsize=(12, 4))
+
+    plt.plot(plot_ref_tstamps, CB_LES_25m, 'k')
+    plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', label='25m LES')
+
     for i in range(6):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
         if i < 3:
@@ -190,6 +236,10 @@ elif plot_choice == 'og_HCs':
 
 
 elif plot_choice == 'all_Cs_at_D_200':
+
+
+    plt.plot(plot_ref_tstamps, CB_LES_25m, 'k')
+    plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', label='25m LES')
 
     CB_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
     CT_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
