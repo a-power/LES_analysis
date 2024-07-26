@@ -16,7 +16,7 @@ def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
 
 
 
-path_ARM25 = '/storage/silver/greybls/si818415/arm_2d_25/diagnostics_ts_'
+path_ARM25 = '/storage/silver/greybls/si818415/arm_2d_25m/diagnostics_ts_'
 path_MONC_alt_HCs = '/storage/silver/scenario/si818415/altered_MONC/'
 path_MONC_stand = '/storage/silver/scenario/si818415/og_monc/'
 
