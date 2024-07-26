@@ -45,7 +45,7 @@ def get_25m_ref(var):
         ds_in = xr.open_dataset(file_in)
 
         for nt in range(20):
-            ref_25m[32*ts + nt, :] = ds_in[f'{var}'].data[nt, :]
+            ref_25m[20*ts + nt, :] = ds_in[f'{var}'].data[nt, :]
 
     return ref_25m
 
