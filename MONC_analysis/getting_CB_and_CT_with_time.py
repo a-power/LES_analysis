@@ -42,7 +42,7 @@ def get_25m_ref(var):
 
     for ts, time_stamp in enumerate(ref_tstamps):
         file_in = path_ARM25 + f'{time_stamp}.nc'
-        ds_in = xr.open_dataset(path_in + file_in)
+        ds_in = xr.open_dataset(file_in)
 
         for nt in range(20):
             ref_25m[32*ts + nt, :] = ds_in[f'{var}'].data[nt, :]
