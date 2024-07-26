@@ -261,7 +261,7 @@ elif plot_choice == 'all_Cs_at_D_200':
         for nt, time in enumerate(list_timestamps):
 
             if n == 5:
-                if time > 12600:
+                if time > 29400:
                         CB_mean_height_ts[n, nt] = np.nan
                         CT_mean_height_ts[n, nt] = np.nan
                 else:
