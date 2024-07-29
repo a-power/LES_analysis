@@ -38,6 +38,8 @@ zn = np.arange(-5, 4400, 10)
 
 def get_25m_ref(filein, var, len_ts, stepsize, nt_per_file):
 
+    print(filein)
+
     ref_tstamps = np.arange(1200, 39600, stepsize)
     ref_25m = np.zeros((len_ts, 441))
 
