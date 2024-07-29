@@ -275,30 +275,31 @@ elif plot_choice == 'all_Cs_at_D_200':
 
         # for nt, time in enumerate(list_timestamps):
 
-            # if n == 5:
-            #     if time > 29400:
-            #             CB_mean_height_ts[n, nt] = np.nan
-            #             CT_mean_height_ts[n, nt] = np.nan
-            #     else:
-            #         filein = f'arm_3d_{str(time)}.nc'
-            #
-            #         ds_in = xr.open_dataset(path_in + filein)
-            #         CB_field = ds_in['clbas'].data
-            #         CT_field = ds_in['cltop'].data
-            #
-            #         CB_cloud_only = get_cloud_only(CB_field)
-            #         CT_cloud_only = get_cloud_only(CT_field)
-            #
-            #         CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
-            #         CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
-            # else:
+        if n == 5:
+            for nt, time in enumerate(list_timestamps):
+                if time > 34800:
+                        CB_mean_height_ts[n, nt] = np.nan
+                        CT_mean_height_ts[n, nt] = np.nan
+                else:
+                    filein = f'arm_3d_{str(time)}.nc'
+
+                    ds_in = xr.open_dataset(path_in + filein)
+                    CB_field = ds_in['clbas'].data
+                    CT_field = ds_in['cltop'].data
+
+                    CB_cloud_only = get_cloud_only(CB_field)
+                    CT_cloud_only = get_cloud_only(CT_field)
+
+                    CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
+                    CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
+        else:
 
 
             # filein = f'arm_3d_{str(time)}.nc'
 
-        ts_cloud_prof, len_zn_out = get_25m_ref(path_in + 'arm_', 'total_cloud_fraction', 640, 600, 10)
+            ts_cloud_prof, len_zn_out = get_25m_ref(path_in + 'arm_', 'total_cloud_fraction', 640, 600, 10)
 
-        CB_mean_height_ts[n, :], CT_mean_height_ts[n, :] = get_CT_and_CB(ts_cloud_prof, 640, len_zn_out)
+            CB_mean_height_ts[n, :], CT_mean_height_ts[n, :] = get_CT_and_CB(ts_cloud_prof, 640, len_zn_out)
 
             # CB_field = ds_in['clbas'].data
             # CT_field = ds_in['cltop'].data
