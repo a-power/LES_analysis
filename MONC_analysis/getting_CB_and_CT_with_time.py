@@ -2,6 +2,7 @@ import numpy as np
 import numpy.ma as ma
 import xarray as xr
 import matplotlib.pyplot as plt
+from scipy.signal import savgol_filter
 import datetime
 
 plot_choice = 'all_Cs_at_D_200' #'og_HCs'  'HCs_HCsSA'  'all_Cs_at_D_200'
@@ -61,6 +62,12 @@ def get_CT_and_CB(ts_of_cloud_frac_prof):
                 CT_ref_25m[nt] = zn[440-i]
             if ts_of_cloud_frac_prof[nt, i] >= 0.001:
                 CB_ref_25m[nt] = zn[i]
+
+    CT_ref_25m[CT_ref_25m==0] = np.nan
+    CB_ref_25m[CB_ref_25m==0] = np.nan
+
+    CT_ref_25m = savgol_filter(CT_ref_25m, 5, 3)
+    CB_ref_25m = savgol_filter(CB_ref_25m, 5, 3)
 
     return CB_ref_25m, CT_ref_25m
 
@@ -237,7 +244,6 @@ elif plot_choice == 'og_HCs':
 
 elif plot_choice == 'all_Cs_at_D_200':
 
-
     plt.plot(plot_ref_tstamps, CB_LES_25m, 'k')
     plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', label='25m LES')
 
@@ -260,36 +266,40 @@ elif plot_choice == 'all_Cs_at_D_200':
 
         for nt, time in enumerate(list_timestamps):
 
-            if n == 5:
-                if time > 29400:
-                        CB_mean_height_ts[n, nt] = np.nan
-                        CT_mean_height_ts[n, nt] = np.nan
-                else:
-                    filein = f'arm_3d_{str(time)}.nc'
+            # if n == 5:
+            #     if time > 29400:
+            #             CB_mean_height_ts[n, nt] = np.nan
+            #             CT_mean_height_ts[n, nt] = np.nan
+            #     else:
+            #         filein = f'arm_3d_{str(time)}.nc'
+            #
+            #         ds_in = xr.open_dataset(path_in + filein)
+            #         CB_field = ds_in['clbas'].data
+            #         CT_field = ds_in['cltop'].data
+            #
+            #         CB_cloud_only = get_cloud_only(CB_field)
+            #         CT_cloud_only = get_cloud_only(CT_field)
+            #
+            #         CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
+            #         CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
+            # else:
 
-                    ds_in = xr.open_dataset(path_in + filein)
-                    CB_field = ds_in['clbas'].data
-                    CT_field = ds_in['cltop'].data
 
-                    CB_cloud_only = get_cloud_only(CB_field)
-                    CT_cloud_only = get_cloud_only(CT_field)
+            # filein = f'arm_3d_{str(time)}.nc'
+            filein = f'arm_{str(time)}.nc'
+            ds_in = xr.open_dataset(path_in + filein)
 
-                    CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
-                    CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
-            else:
+            cloud_prof = get_25m_ref('total_cloud_fraction')
+            CB_mean_height_ts[n, nt], CT_mean_height_ts[n, nt] = get_CT_and_CB(cloud_prof)
 
-
-                filein = f'arm_3d_{str(time)}.nc'
-
-                ds_in = xr.open_dataset(path_in + filein)
-                CB_field = ds_in['clbas'].data
-                CT_field = ds_in['cltop'].data
-
-                CB_cloud_only = get_cloud_only(CB_field)
-                CT_cloud_only = get_cloud_only(CT_field)
-
-                CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
-                CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
+            # CB_field = ds_in['clbas'].data
+            # CT_field = ds_in['cltop'].data
+            #
+            # CB_cloud_only = get_cloud_only(CB_field)
+            # CT_cloud_only = get_cloud_only(CT_field)
+            #
+            # CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
+            # CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
 
 
 
