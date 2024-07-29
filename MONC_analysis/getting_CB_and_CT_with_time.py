@@ -247,8 +247,11 @@ elif plot_choice == 'all_Cs_at_D_200':
     plt.plot(plot_ref_tstamps, CB_LES_25m, 'k')
     plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', label='25m LES')
 
-    CB_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
-    CT_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
+    # CB_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
+    # CT_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
+
+    CB_mean_height_ts = np.zeros( (7, 640) )
+    CT_mean_height_ts = np.zeros( (7, 640) )
 
     for n in range(6):
         if n == 0: #unalt
@@ -289,7 +292,7 @@ elif plot_choice == 'all_Cs_at_D_200':
 
         ts_cloud_prof = get_25m_ref(path_in + 'arm_', 'total_cloud_fraction', 640, 600, 10)
 
-        CB_LES_25m, CT_LES_25m = get_CT_and_CB(ts_cloud_prof, 640)
+        CB_mean_height_ts[n, :], CT_mean_height_ts[n, :] = get_CT_and_CB(ts_cloud_prof, 640)
 
             # CB_field = ds_in['clbas'].data
             # CT_field = ds_in['cltop'].data
