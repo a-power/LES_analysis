@@ -41,7 +41,11 @@ def get_25m_ref(filein, var, len_ts, stepsize, nt_per_file):
     print(filein)
 
     ref_tstamps = np.arange(1200, 39600, stepsize)
-    ref_25m = np.zeros((len_ts, 441))
+
+    test_ds_in = xr.open_dataset(filein + f'{ref_tstamps[0]}.nc')
+    len_zn = len(test_ds_in[f'{var}'].data[0, :])
+
+    ref_25m = np.zeros((len_ts, len_zn))
 
     for ts, time_stamp in enumerate(ref_tstamps):
         ds_in = xr.open_dataset(filein+ f'{time_stamp}.nc')
@@ -49,18 +53,18 @@ def get_25m_ref(filein, var, len_ts, stepsize, nt_per_file):
         for nt in range(nt_per_file):
             ref_25m[nt_per_file*ts + nt, :] = ds_in[f'{var}'].data[nt, :]
 
-    return ref_25m
+    return ref_25m, len_zn
 
 
-def get_CT_and_CB(ts_of_cloud_frac_prof, len_ts):
+def get_CT_and_CB(ts_of_cloud_frac_prof, len_ts, len_zn_in):
 
     CT_ref_25m = np.zeros(len_ts)
     CB_ref_25m = np.zeros(len_ts)
 
     for nt in range(len_ts):
-        for i in range(441):
-            if ts_of_cloud_frac_prof[nt, 440-i] >= 0.001:
-                CT_ref_25m[nt] = zn[440-i]
+        for i in range(len_zn_in):
+            if ts_of_cloud_frac_prof[nt, (len_zn_in-1)-i] >= 0.001:
+                CT_ref_25m[nt] = zn[(len_zn_in-1)-i]
             if ts_of_cloud_frac_prof[nt, i] >= 0.001:
                 CB_ref_25m[nt] = zn[i]
 
@@ -76,9 +80,9 @@ plot_ref_tstamps = np.arange(1200, 39600, 60)
 
 file_in_25m = path_ARM25
 
-ts_cloud_prof = get_25m_ref(file_in_25m, 'total_cloud_fraction', 640, 1200, 20)
+ts_cloud_prof, len_zn_25 = get_25m_ref(file_in_25m, 'total_cloud_fraction', 640, 1200, 20)
 
-CB_LES_25m, CT_LES_25m = get_CT_and_CB(ts_cloud_prof, 640)
+CB_LES_25m, CT_LES_25m = get_CT_and_CB(ts_cloud_prof, 640, len_zn_25)
 
 
 if plot_choice == 'HCs_HCsSA':
@@ -292,9 +296,9 @@ elif plot_choice == 'all_Cs_at_D_200':
 
             # filein = f'arm_3d_{str(time)}.nc'
 
-        ts_cloud_prof = get_25m_ref(path_in + 'arm_', 'total_cloud_fraction', 640, 600, 10)
+        ts_cloud_prof, len_zn_out = get_25m_ref(path_in + 'arm_', 'total_cloud_fraction', 640, 600, 10)
 
-        CB_mean_height_ts[n, :], CT_mean_height_ts[n, :] = get_CT_and_CB(ts_cloud_prof, 640)
+        CB_mean_height_ts[n, :], CT_mean_height_ts[n, :] = get_CT_and_CB(ts_cloud_prof, 640, len_zn_out)
 
             # CB_field = ds_in['clbas'].data
             # CT_field = ds_in['cltop'].data
