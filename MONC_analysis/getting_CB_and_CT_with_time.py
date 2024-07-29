@@ -66,8 +66,8 @@ def get_CT_and_CB(ts_of_cloud_frac_prof):
     CT_ref_25m[CT_ref_25m==0] = np.nan
     CB_ref_25m[CB_ref_25m==0] = np.nan
 
-    CT_ref_25m = savgol_filter(CT_ref_25m, 5, 3)
-    CB_ref_25m = savgol_filter(CB_ref_25m, 5, 3)
+    #CT_ref_25m = savgol_filter(CT_ref_25m, 5, 3)
+    #CB_ref_25m = savgol_filter(CB_ref_25m, 5, 3)
 
     return CB_ref_25m, CT_ref_25m
 
