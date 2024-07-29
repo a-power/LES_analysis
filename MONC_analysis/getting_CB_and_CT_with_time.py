@@ -36,27 +36,26 @@ model_param = ['Stand', 'Stand', 'Stand', 'HCs', 'HCs', 'HCs'] #'HCs $\\widehat{
 
 zn = np.arange(-5, 4400, 10)
 
-def get_25m_ref(var):
+def get_25m_ref(filein, var, len_ts, stepsize, nt_per_file):
 
-    ref_tstamps = np.arange(1200, 39600, 1200)
-    ref_25m = np.zeros((640, 441))
+    ref_tstamps = np.arange(1200, 39600, stepsize)
+    ref_25m = np.zeros((len_ts, 441))
 
     for ts, time_stamp in enumerate(ref_tstamps):
-        file_in = path_ARM25 + f'{time_stamp}.nc'
-        ds_in = xr.open_dataset(file_in)
+        ds_in = xr.open_dataset(filein+ f'{time_stamp}.nc')
 
-        for nt in range(20):
-            ref_25m[20*ts + nt, :] = ds_in[f'{var}'].data[nt, :]
+        for nt in range(nt_per_file):
+            ref_25m[nt_per_file*ts + nt, :] = ds_in[f'{var}'].data[nt, :]
 
     return ref_25m
 
 
-def get_CT_and_CB(ts_of_cloud_frac_prof):
+def get_CT_and_CB(ts_of_cloud_frac_prof, len_ts):
 
-    CT_ref_25m = np.zeros(640)
-    CB_ref_25m = np.zeros(640)
+    CT_ref_25m = np.zeros(len_ts)
+    CB_ref_25m = np.zeros(len_ts)
 
-    for nt in range(640):
+    for nt in range(len_ts):
         for i in range(441):
             if ts_of_cloud_frac_prof[nt, 440-i] >= 0.001:
                 CT_ref_25m[nt] = zn[440-i]
@@ -73,10 +72,11 @@ def get_CT_and_CB(ts_of_cloud_frac_prof):
 
 plot_ref_tstamps = np.arange(1200, 39600, 60)
 
+file_in_25m = path_ARM25
 
-ts_cloud_prof = get_25m_ref('total_cloud_fraction')
+ts_cloud_prof = get_25m_ref(file_in_25m, 'total_cloud_fraction', 640, 1200, 20)
 
-CB_LES_25m, CT_LES_25m = get_CT_and_CB(ts_cloud_prof)
+CB_LES_25m, CT_LES_25m = get_CT_and_CB(ts_cloud_prof, 640)
 
 
 if plot_choice == 'HCs_HCsSA':
@@ -264,7 +264,7 @@ elif plot_choice == 'all_Cs_at_D_200':
         elif n == 5:
             path_in = path_MONC_alt_HCs + '200m/HCth_L/'
 
-        for nt, time in enumerate(list_timestamps):
+        # for nt, time in enumerate(list_timestamps):
 
             # if n == 5:
             #     if time > 29400:
@@ -286,11 +286,10 @@ elif plot_choice == 'all_Cs_at_D_200':
 
 
             # filein = f'arm_3d_{str(time)}.nc'
-            filein = f'arm_{str(time)}.nc'
-            ds_in = xr.open_dataset(path_in + filein)
 
-            cloud_prof = get_25m_ref('total_cloud_fraction')
-            CB_mean_height_ts[n, nt], CT_mean_height_ts[n, nt] = get_CT_and_CB(cloud_prof)
+        ts_cloud_prof = get_25m_ref(path_in + 'arm_', 'total_cloud_fraction', 640, 600, 10)
+
+        CB_LES_25m, CT_LES_25m = get_CT_and_CB(ts_cloud_prof, 640)
 
             # CB_field = ds_in['clbas'].data
             # CT_field = ds_in['cltop'].data
