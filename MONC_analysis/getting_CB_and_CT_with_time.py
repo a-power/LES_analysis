@@ -317,24 +317,24 @@ elif plot_choice == 'all_Cs_at_D_200':
     for i in range(6):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
         if i == 0:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle=':', marker='*')
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle=':', marker='*',
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle=':', marker='*')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle=':', marker='*',
                      label='S$C_s$0.23') #f'$\\Delta$ = {2 ** ((i-3))}00m'
         elif i == 1:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle=':', marker='*')
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle=':', marker='*',
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle=':', marker='*')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle=':', marker='*',
                      label='S$C_s$0.137')
         elif i == 2:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle=':', marker='*')
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle=':', marker='*',
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle=':', marker='*')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle=':', marker='*',
                      label='S$C_s$0.11')
         elif i == 3:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[3], linewidth=2)
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[3], linewidth=2,
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[3], linewidth=2)
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[3], linewidth=2,
                      label='H$C_s$')
         elif i == 4:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[4], linestyle='--', marker='x')
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[4], linestyle='--', marker='x',
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4], linestyle='--', marker='x')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4], linestyle='--', marker='x',
                      label='H$C_s$SA')
 
         elif i == 5:
