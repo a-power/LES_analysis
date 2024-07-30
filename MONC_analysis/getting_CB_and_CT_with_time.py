@@ -346,7 +346,7 @@ elif plot_choice == 'all_Cs_at_D_200':
         elif i == 3:
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[3]) #, linestyle='--')#, linewidth=2)
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[3],
-                     label='$C_s$ prof$')
+                     label='$C_s$ prof')
         elif i == 4:
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4]) #, linestyle='--')#, marker='x')
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
