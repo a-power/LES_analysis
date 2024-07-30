@@ -6,7 +6,7 @@ from scipy.signal import savgol_filter
 import datetime
 
 plot_choice = 'all_Cs_at_D_200' #'og_HCs'  'HCs_HCsSA'  'all_Cs_at_D_200'
-res_in_m = '400'
+res_in_m = '200'
 
 def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
 
