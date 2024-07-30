@@ -354,7 +354,7 @@ elif plot_choice == 'all_Cs_at_D_200':
         elif i == 5:
             plt.plot(list_timestamps, CB_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5]) #, linestyle='--')#, marker='^')
             plt.plot(list_timestamps, CT_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5],
-                     label='$C_sC_{\\theta_L} profs$')
+                     label='$C_s C_{\\theta_L}$ profs')
 
     plt.tight_layout(pad=0.5)
     plt.gcf().set_size_inches(10, 5.5)
