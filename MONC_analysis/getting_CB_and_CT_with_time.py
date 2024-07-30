@@ -339,9 +339,9 @@ elif plot_choice == 'all_Cs_at_D_200':
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
         if i == 0:
             print(f'S$C_s$0.23:, len(plot_ref_tstamps) = {len(plot_ref_tstamps)}, and len(CB_mean_height_ts = {CB_mean_height_ts[i, :]}')
-            # plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle='--')#, marker='*')
-            # plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle='--',
-            #          label='Smag 0.23') #f'$\\Delta$ = {2 ** ((i-3))}00m'
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle='--')#, marker='*')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle='--',
+                     label='Smag 0.23') #f'$\\Delta$ = {2 ** ((i-3))}00m'
         # elif i == 1:
         #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle='--')#, marker='*')
         #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle='--',
@@ -391,7 +391,7 @@ elif plot_choice == 'all_Cs_at_D_200':
 
     plt.tight_layout()
 
-    save_name = f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_11_vs_HCsSA_cases'
+    save_name = f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_23_Cs0_11_vs_HCsSA_cases'
         # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_11_vs_HCsSA_cases'
         # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_137_vs_HCs_cases'
         # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_all_Cs_cases'
