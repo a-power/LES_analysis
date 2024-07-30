@@ -214,7 +214,7 @@ elif plot_choice == 'og_HCs':
     plt.plot(figsize=(12, 4))
 
     plt.plot(plot_ref_tstamps, CB_LES_25m, 'k')
-    plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', label='25m LES')
+    plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', label='$\\Delta = $ 25m LES')
 
     for i in range(6):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
@@ -394,8 +394,8 @@ elif plot_choice == 'all_Cs_at_D_200':
     plt.tight_layout()
 
     save_name = f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_23_Cs_sa_vs_HCsSA_cases'
-        # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_11_vs_HCsSA_cases'
-        # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_137_vs_HCs_cases'
+        # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_23_Cs_sa_vs_HCsSA_cases'
+        # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_23_Cs0_137_vs_HCs_cases'
         # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_all_Cs_cases'
 
     plt.savefig(plotdir+f'{save_name}.png', bbox_inches='tight') #_HCsSA
