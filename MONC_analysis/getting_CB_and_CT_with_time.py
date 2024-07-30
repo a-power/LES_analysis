@@ -325,8 +325,8 @@ elif plot_choice == 'all_Cs_at_D_200':
     plt.plot(figsize=(12, 4))
     for i in range(6):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
-        # if i == 0:
-        #     print(f'S$C_s$0.23:, len(plot_ref_tstamps) = {len(plot_ref_tstamps)}, and len(CB_mean_height_ts = {CB_mean_height_ts[i, :]}')
+        if i == 0:
+             print(f'S$C_s$0.23:, len(plot_ref_tstamps) = {len(plot_ref_tstamps)}, and len(CB_mean_height_ts = {CB_mean_height_ts[i, :]}')
         #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle='--')#, marker='*')
         #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle='--',
         #              label='S$C_s$0.23') #f'$\\Delta$ = {2 ** ((i-3))}00m'
