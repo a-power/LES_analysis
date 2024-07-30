@@ -6,6 +6,7 @@ from scipy.signal import savgol_filter
 import datetime
 
 plot_choice = 'all_Cs_at_D_200' #'og_HCs'  'HCs_HCsSA'  'all_Cs_at_D_200'
+res_in_m = '400'
 
 def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
 
@@ -273,19 +274,19 @@ elif plot_choice == 'all_Cs_at_D_200':
     CB_mean_height_ts = np.zeros( (7, 640) )
     CT_mean_height_ts = np.zeros( (7, 640) )
 
-    for n in range(6):
+    for n in range(5):
         if n == 0: #unalt
-            path_in = path_MONC_stand + f'200m/'
+            path_in = path_MONC_stand + f'{res_in_m}m/'
         elif n == 1:
-            path_in = path_MONC_stand + f'200m/Cs_0_137/'
+            path_in = path_MONC_stand + f'{res_in_m}m/Cs_0_137/'
         elif n == 2:
-            path_in = path_MONC_stand + f'200m/Cs_0_11/'
+            path_in = path_MONC_stand + f'{res_in_m}m/Cs_0_11/'
         elif n == 3:
-            path_in = path_MONC_alt_HCs + f'200m/'
+            path_in = path_MONC_alt_HCs + f'{res_in_m}m/'
         elif n == 4:
-            path_in = path_MONC_alt_HCs + f'200m/SA/'
-        elif n == 5:
-            path_in = path_MONC_alt_HCs + '200m/HCth_L/'
+            path_in = path_MONC_alt_HCs + f'{res_in_m}m/SA/'
+        # elif n == 5:
+        #     path_in = path_MONC_alt_HCs + f'{res_in_m}m/HCth_L/'
 
         # for nt, time in enumerate(list_timestamps):
 
@@ -384,10 +385,10 @@ elif plot_choice == 'all_Cs_at_D_200':
 
     plt.tight_layout()
 
-    save_name = 'ARM_cloud_top_and_base_ts_D_200_Cs0_11_vs_HCsSA_cases'
-        # 'ARM_cloud_top_and_base_ts_D_200_Cs0_11_vs_HCsSA_cases'
-        # 'ARM_cloud_top_and_base_ts_D_200_Cs0_137_vs_HCs_cases'
-        # 'ARM_cloud_top_and_base_ts_D_200_all_Cs_cases'
+    save_name = f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_11_vs_HCsSA_cases'
+        # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_11_vs_HCsSA_cases'
+        # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_137_vs_HCs_cases'
+        # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_all_Cs_cases'
 
     plt.savefig(plotdir+f'{save_name}.png', bbox_inches='tight') #_HCsSA
     plt.savefig(plotdir + f'{save_name}.pdf', bbox_inches='tight')
