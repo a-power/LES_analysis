@@ -375,7 +375,7 @@ elif plot_choice == 'all_Cs_at_D_200':
 
     plt.xlabel('Local time (hh:mm:ss)', fontsize=14)
     plt.ylabel('z (m)', fontsize=14)
-    plt.title('Cloud top and base height for HCs (solid) vs SCs0.23 (star)', fontsize=14)
+    plt.title('Cloud top and base height', fontsize=14)
 
     plt.tight_layout()
 
