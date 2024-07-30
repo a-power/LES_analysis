@@ -35,6 +35,7 @@ line_list = [':', ':', ':', '--', '--', '--']
 model_param = ['Stand', 'Stand', 'Stand', 'HCs', 'HCs', 'HCs'] #'HCs $\\widehat{\\bar{\\Delta}}'
 
 zn = np.arange(-5, 4400, 10)
+zn_dx40 = np.arange(-5, 4400, 40)
 
 def get_25m_ref(filein, var, len_ts, stepsize, nt_per_file):
 
@@ -58,15 +59,20 @@ def get_25m_ref(filein, var, len_ts, stepsize, nt_per_file):
 
 def get_CT_and_CB(ts_of_cloud_frac_prof, len_ts, len_zn_in):
 
+    if len_zn_in == 111:
+        z_cord = zn_dx40
+    else:
+        z_cord = zn
+
     CT_ref_25m = np.zeros(len_ts)
     CB_ref_25m = np.zeros(len_ts)
 
     for nt in range(len_ts):
         for i in range(len_zn_in):
             if ts_of_cloud_frac_prof[nt, (len_zn_in-1)-i] >= 0.001:
-                CT_ref_25m[nt] = zn[(len_zn_in-1)-i]
+                CT_ref_25m[nt] = z_cord[(len_zn_in-1)-i]
             if ts_of_cloud_frac_prof[nt, i] >= 0.001:
-                CB_ref_25m[nt] = zn[i]
+                CB_ref_25m[nt] = z_cord[i]
 
     CT_ref_25m[CT_ref_25m==0] = np.nan
     CB_ref_25m[CB_ref_25m==0] = np.nan
