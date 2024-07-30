@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import savgol_filter
 import datetime
 
-plot_choice = 'all_Cs_at_D_200' #'og_HCs'  'HCs_HCsSA'  'all_Cs_at_D_200'
+plot_choice = 'og_HCs' #'og_HCs'  'HCs_HCsSA'  'all_Cs_at_D_200'
 
 def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
 
@@ -132,8 +132,8 @@ if plot_choice == 'HCs_HCsSA':
             plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=1.5,
                      label=f'$\\Delta$ = {2 ** ((i-3))}00m')
     for i in range(3):
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--', marker='x')
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--', marker='x')
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--')
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--')
 
     plt.tight_layout(pad=0.5)
     plt.gcf().set_size_inches(10, 5.5)
@@ -185,7 +185,6 @@ elif plot_choice == 'og_HCs':
             path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
 
         ts_cloud_prof, len_zn_out = get_25m_ref(path_in + 'arm_', 'total_cloud_fraction', 640, 600, 10)
-
         CB_mean_height_ts[n, :], CT_mean_height_ts[n, :] = get_CT_and_CB(ts_cloud_prof, 640, len_zn_out)
 
         # for nt, time in enumerate(list_timestamps):
@@ -214,13 +213,13 @@ elif plot_choice == 'og_HCs':
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
         if i < 3:
             plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3],
-                     linestyle=':', marker='*')
+                     linestyle=':')
             plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3],
-                     linestyle=':', marker='*')
+                     linestyle=':')
 
         else:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2.5)
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=2.5,
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3])
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3],
                      label=f'$\\Delta$ = {2 ** ((i-3))}00m')
 
     plt.tight_layout(pad=0.5)
