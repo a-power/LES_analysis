@@ -86,8 +86,9 @@ CB_LES_25m, CT_LES_25m = get_CT_and_CB(ts_cloud_prof, 640, len_zn_25)
 
 
 if plot_choice == 'HCs_HCsSA':
-    CB_mean_height_ts = np.zeros( (6, len(list_timestamps)) )
-    CT_mean_height_ts = np.zeros( (6, len(list_timestamps)) )
+
+    CB_mean_height_ts = np.zeros( (6, 640))  # len(list_timestamps)) )
+    CT_mean_height_ts = np.zeros( (6, 640))  # len(list_timestamps)) )
 
     for n in range(6):
         if n == 1 or n == 2: #unalt
@@ -98,19 +99,23 @@ if plot_choice == 'HCs_HCsSA':
         else:
             path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'#SA/'
 
-        for nt, time in enumerate(list_timestamps):
 
-            filein = f'arm_3d_{str(time)}.nc'
+        ts_cloud_prof, len_zn_out = get_25m_ref(path_in + 'arm_', 'total_cloud_fraction', 640, 600, 10)
+        CB_mean_height_ts[n, :], CT_mean_height_ts[n, :] = get_CT_and_CB(ts_cloud_prof, 640, len_zn_out)
 
-            ds_in = xr.open_dataset(path_in + filein)
-            CB_field = ds_in['clbas'].data
-            CT_field = ds_in['cltop'].data
-
-            CB_cloud_only = get_cloud_only(CB_field)
-            CT_cloud_only = get_cloud_only(CT_field)
-
-            CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
-            CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
+        # for nt, time in enumerate(list_timestamps):
+        #
+        #     filein = f'arm_3d_{str(time)}.nc'
+        #
+        #     ds_in = xr.open_dataset(path_in + filein)
+        #     CB_field = ds_in['clbas'].data
+        #     CT_field = ds_in['cltop'].data
+        #
+        #     CB_cloud_only = get_cloud_only(CB_field)
+        #     CT_cloud_only = get_cloud_only(CT_field)
+        #
+        #     CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
+        #     CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
 
 
 
@@ -170,8 +175,8 @@ if plot_choice == 'HCs_HCsSA':
 
 elif plot_choice == 'og_HCs':
 
-    CB_mean_height_ts = np.zeros( (6, len(list_timestamps)) )
-    CT_mean_height_ts = np.zeros( (6, len(list_timestamps)) )
+    CB_mean_height_ts = np.zeros( (6, 640))  # len(list_timestamps)) )
+    CT_mean_height_ts = np.zeros( (6, 640))  # len(list_timestamps)) )
 
     for n in range(6):
         if n < 3: #unalt
@@ -179,19 +184,23 @@ elif plot_choice == 'og_HCs':
         else:
             path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
 
-        for nt, time in enumerate(list_timestamps):
+        ts_cloud_prof, len_zn_out = get_25m_ref(path_in + 'arm_', 'total_cloud_fraction', 640, 600, 10)
 
-            filein = f'arm_3d_{str(time)}.nc'
+        CB_mean_height_ts[n, :], CT_mean_height_ts[n, :] = get_CT_and_CB(ts_cloud_prof, 640, len_zn_out)
 
-            ds_in = xr.open_dataset(path_in + filein)
-            CB_field = ds_in['clbas'].data
-            CT_field = ds_in['cltop'].data
-
-            CB_cloud_only = get_cloud_only(CB_field)
-            CT_cloud_only = get_cloud_only(CT_field)
-
-            CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
-            CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
+        # for nt, time in enumerate(list_timestamps):
+        #
+        #     filein = f'arm_3d_{str(time)}.nc'
+        #
+        #     ds_in = xr.open_dataset(path_in + filein)
+        #     CB_field = ds_in['clbas'].data
+        #     CT_field = ds_in['cltop'].data
+        #
+        #     CB_cloud_only = get_cloud_only(CB_field)
+        #     CT_cloud_only = get_cloud_only(CT_field)
+        #
+        #     CB_mean_height_ts[n, nt] = np.nanpercentile(CB_cloud_only, 5)
+        #     CT_mean_height_ts[n, nt] = np.nanpercentile(CT_cloud_only, 95)
 
 
 
@@ -250,8 +259,8 @@ elif plot_choice == 'og_HCs':
 
 elif plot_choice == 'all_Cs_at_D_200':
 
-    plt.plot(plot_ref_tstamps, CB_LES_25m, 'k')
-    plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', label='25m LES')
+    plt.plot(plot_ref_tstamps, CB_LES_25m, 'k', linewidth=2)
+    plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', linewidth=2, label='25m LES')
 
     # CB_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
     # CT_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
@@ -318,30 +327,29 @@ elif plot_choice == 'all_Cs_at_D_200':
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
         if i == 0:
             print(f'S$C_s$0.23:, len(plot_ref_tstamps) = {len(plot_ref_tstamps)}, and len(CB_mean_height_ts = {CB_mean_height_ts[i, :]}')
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle=':')#, marker='*')
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle=':',
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle='--')#, marker='*')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle='--',
                      label='S$C_s$0.23') #f'$\\Delta$ = {2 ** ((i-3))}00m'
         elif i == 1:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle=':')#, marker='*')
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle=':',
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle='--')#, marker='*')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle='--',
                      label='S$C_s$0.137')
         elif i == 2:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle=':')#, marker='*')
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle=':',
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle='--')#, marker='*')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle='--',
                      label='S$C_s$0.11')
         elif i == 3:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[3], linestyle='--')#, linewidth=2)
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[3], linestyle='--',
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[3]) #, linestyle='--')#, linewidth=2)
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[3],
                      label='H$C_s$')
         elif i == 4:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4], linestyle='--')#, marker='x')
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4], linestyle='--',
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4]) #, linestyle='--')#, marker='x')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
                      label='H$C_s$SA')
-
         elif i == 5:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5], linestyle='--')#, marker='^')
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5], linestyle='--',
-                     label='H$C_sC_{\theta_L}$')
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5]) #, linestyle='--')#, marker='^')
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5],
+                     label='H$C_sC_{\\theta_L}$')
 
     plt.tight_layout(pad=0.5)
     plt.gcf().set_size_inches(10, 5.5)
