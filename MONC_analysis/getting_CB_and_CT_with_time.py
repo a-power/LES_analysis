@@ -130,7 +130,7 @@ if plot_choice == 'HCs_HCsSA':
     plt.plot(figsize=(12, 4))
 
     plt.plot(plot_ref_tstamps, CB_LES_25m, 'k')
-    plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', label='25m LES')
+    plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', label='$\\Delta = $ 25m LES')
 
     for i in range(6):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
@@ -266,7 +266,7 @@ elif plot_choice == 'og_HCs':
 elif plot_choice == 'all_Cs_at_D_200':
 
     plt.plot(plot_ref_tstamps, CB_LES_25m, 'k', linewidth=2)
-    plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', linewidth=2, label='25m LES')
+    plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', linewidth=2, label='$\\Delta = $ 25m LES')
 
     # CB_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
     # CT_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
