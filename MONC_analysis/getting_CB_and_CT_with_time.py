@@ -259,8 +259,8 @@ elif plot_choice == 'og_HCs':
 
 elif plot_choice == 'all_Cs_at_D_200':
 
-    plt.plot(plot_ref_tstamps, CB_LES_25m, 'k', linewidth=2)
-    plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', linewidth=2, label='25m LES')
+    plt.plot(plot_ref_tstamps, CB_LES_25m, 'k')#, linewidth=2)
+    plt.plot(plot_ref_tstamps, CT_LES_25m, 'k', label='25m LES')
 
     # CB_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
     # CT_mean_height_ts = np.zeros( (7, len(list_timestamps)) )
@@ -325,31 +325,31 @@ elif plot_choice == 'all_Cs_at_D_200':
     plt.plot(figsize=(12, 4))
     for i in range(6):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
-        if i == 0:
-            print(f'S$C_s$0.23:, len(plot_ref_tstamps) = {len(plot_ref_tstamps)}, and len(CB_mean_height_ts = {CB_mean_height_ts[i, :]}')
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle='--')#, marker='*')
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle='--',
-                     label='S$C_s$0.23') #f'$\\Delta$ = {2 ** ((i-3))}00m'
-        elif i == 1:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle='--')#, marker='*')
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle='--',
-                     label='S$C_s$0.137')
+        # if i == 0:
+        #     print(f'S$C_s$0.23:, len(plot_ref_tstamps) = {len(plot_ref_tstamps)}, and len(CB_mean_height_ts = {CB_mean_height_ts[i, :]}')
+        #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle='--')#, marker='*')
+        #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle='--',
+        #              label='S$C_s$0.23') #f'$\\Delta$ = {2 ** ((i-3))}00m'
+        # elif i == 1:
+        #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle='--')#, marker='*')
+        #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle='--',
+        #              label='S$C_s$0.137')
         elif i == 2:
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle='--')#, marker='*')
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle='--',
                      label='S$C_s$0.11')
-        elif i == 3:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[3]) #, linestyle='--')#, linewidth=2)
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[3],
-                     label='H$C_s$')
+        # elif i == 3:
+        #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[3]) #, linestyle='--')#, linewidth=2)
+        #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[3],
+        #              label='H$C_s$')
         elif i == 4:
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4]) #, linestyle='--')#, marker='x')
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
                      label='H$C_s$SA')
-        elif i == 5:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5]) #, linestyle='--')#, marker='^')
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5],
-                     label='H$C_sC_{\\theta_L}$')
+        # elif i == 5:
+        #     plt.plot(list_timestamps, CB_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5]) #, linestyle='--')#, marker='^')
+        #     plt.plot(list_timestamps, CT_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5],
+        #              label='H$C_sC_{\\theta_L}$')
 
     plt.tight_layout(pad=0.5)
     plt.gcf().set_size_inches(10, 5.5)
@@ -379,6 +379,9 @@ elif plot_choice == 'all_Cs_at_D_200':
 
     plt.tight_layout()
 
-    plt.savefig(plotdir+f'ARM_cloud_top_and_base_ts_D_200_all_Cs_cases.png', bbox_inches='tight') #_HCsSA
-    plt.savefig(plotdir + f'ARM_cloud_top_and_base_ts_D_200_all_Cs_cases.pdf', bbox_inches='tight')
+    save_name = 'ARM_cloud_top_and_base_ts_D_200_Cs0_11_vs_HCsSA_cases'
+        #'ARM_cloud_top_and_base_ts_D_200_all_Cs_cases'
+
+    plt.savefig(plotdir+f'{save_name}.png', bbox_inches='tight') #_HCsSA
+    plt.savefig(plotdir + f'{save_name}.pdf', bbox_inches='tight')
     plt.close()
