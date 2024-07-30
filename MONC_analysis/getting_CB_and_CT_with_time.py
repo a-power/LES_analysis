@@ -278,9 +278,15 @@ elif plot_choice == 'all_Cs_at_D_200':
         if n == 0: #unalt
             path_in = path_MONC_stand + f'{res_in_m}m/'
         elif n == 1:
-            path_in = path_MONC_stand + f'{res_in_m}m/dz_40m/Cs0_137/' #Cs_0_137/
+            if res_in_m == '400':
+                path_in = path_MONC_stand + f'{res_in_m}m/dz_40m/Cs0_137/' #Cs_0_137/
+            else:
+                path_in = path_MONC_stand + f'{res_in_m}m/Cs_0_137/'
         elif n == 2:
-            path_in = path_MONC_stand + f'{res_in_m}m/dz_40m/Cs0_075' #/Cs_0_11/'
+            if res_in_m == '400':
+                path_in = path_MONC_stand + f'{res_in_m}m/dz_40m/Cs0_075/' #/Cs_0_11/'
+            else:
+                path_in = path_MONC_stand + f'{res_in_m}m/Cs_0_11/'
         elif n == 3:
             path_in = path_MONC_alt_HCs + f'{res_in_m}m/'
         elif n == 4:
