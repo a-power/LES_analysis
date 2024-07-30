@@ -164,7 +164,7 @@ if plot_choice == 'HCs_HCsSA':
 
     plt.xlabel('Local time (hh:mm:ss)', fontsize=14)
     plt.ylabel('z (m)', fontsize=14)
-    plt.title('Cloud top and base height for HCs (solid) vs HCsSA (x)', fontsize=14)
+    plt.title('Cloud top and base height', fontsize=14)
 
     plt.tight_layout()
 
@@ -247,7 +247,7 @@ elif plot_choice == 'og_HCs':
 
     plt.xlabel('Local time (hh:mm:ss)', fontsize=14)
     plt.ylabel('z (m)', fontsize=14)
-    plt.title('Cloud top and base height for HCs (solid) vs SCs0.23 (star)', fontsize=14)
+    plt.title('Cloud top and base height', fontsize=14)
 
     plt.tight_layout()
 
@@ -330,22 +330,22 @@ elif plot_choice == 'all_Cs_at_D_200':
         #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle='--')#, marker='*')
         #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle='--',
         #              label='S$C_s$0.23') #f'$\\Delta$ = {2 ** ((i-3))}00m'
-        elif i == 1:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle='--')#, marker='*')
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle='--',
-                     label='S$C_s$0.137')
-        # elif i == 2:
-        #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle='--')#, marker='*')
-        #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle='--',
-        #              label='S$C_s$0.11')
-        elif i == 3:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[3]) #, linestyle='--')#, linewidth=2)
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[3],
-                     label='H$C_s$')
-        # elif i == 4:
-        #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4]) #, linestyle='--')#, marker='x')
-        #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
-        #              label='H$C_s$SA')
+        # elif i == 1:
+        #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle='--')#, marker='*')
+        #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle='--',
+        #              label='S$C_s$0.137')
+        elif i == 2:
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle='--')#, marker='*')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle='--',
+                     label='S$C_s$0.11')
+        # elif i == 3:
+        #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[3]) #, linestyle='--')#, linewidth=2)
+        #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[3],
+        #              label='H$C_s$')
+        elif i == 4:
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4]) #, linestyle='--')#, marker='x')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
+                     label='H$C_s$SA')
         # elif i == 5:
         #     plt.plot(list_timestamps, CB_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5]) #, linestyle='--')#, marker='^')
         #     plt.plot(list_timestamps, CT_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5],
@@ -379,7 +379,8 @@ elif plot_choice == 'all_Cs_at_D_200':
 
     plt.tight_layout()
 
-    save_name = 'ARM_cloud_top_and_base_ts_D_200_Cs0_137_vs_HCs_cases'
+    save_name = 'ARM_cloud_top_and_base_ts_D_200_Cs0_11_vs_HCsSA_cases'
+        #'ARM_cloud_top_and_base_ts_D_200_Cs0_137_vs_HCs_cases'
         #'ARM_cloud_top_and_base_ts_D_200_all_Cs_cases'
 
     plt.savefig(plotdir+f'{save_name}.png', bbox_inches='tight') #_HCsSA
