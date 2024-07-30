@@ -128,12 +128,12 @@ if plot_choice == 'HCs_HCsSA':
     for i in range(6):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
         if i >= 3:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=1.5)
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=1.5,
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=1.5)
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=1.5,
                      label=f'$\\Delta$ = {2 ** ((i-3))}00m')
     for i in range(3):
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--')
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--')
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--')
 
     plt.tight_layout(pad=0.5)
     plt.gcf().set_size_inches(10, 5.5)
@@ -212,14 +212,14 @@ elif plot_choice == 'og_HCs':
     for i in range(6):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
         if i < 3:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3],
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[i % 3],
                      linestyle=':')
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3],
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[i % 3],
                      linestyle=':')
 
         else:
-            plt.plot(list_timestamps, CB_mean_height_ts[i, :], colour_cycle[i % 3])
-            plt.plot(list_timestamps, CT_mean_height_ts[i, :], colour_cycle[i % 3],
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[i % 3])
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[i % 3],
                      label=f'$\\Delta$ = {2 ** ((i-3))}00m')
 
     plt.tight_layout(pad=0.5)
