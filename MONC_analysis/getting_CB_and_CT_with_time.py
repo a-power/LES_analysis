@@ -92,8 +92,8 @@ def get_CT_and_CB(ts_of_cloud_frac_prof, len_ts, len_zn_in):
     temp_CT = savgol_filter((CT_ref_25m[CT_nan_end:]), 5, 3)
     temp_CB = savgol_filter((CB_ref_25m[CB_nan_end:]), 5, 3)
 
-    CT_ref_25m[:CT_nan_end] = temp_CT
-    CB_ref_25m[:CB_nan_end] = temp_CB
+    CT_ref_25m[CT_nan_end:] = temp_CT
+    CB_ref_25m[CB_nan_end:] = temp_CB
 
     return CB_ref_25m, CT_ref_25m
 
