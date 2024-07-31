@@ -293,8 +293,8 @@ elif plot_choice == 'all_Cs_at_D_200':
             path_in = path_MONC_alt_HCs + f'{res_in_m}m/'
         elif n == 4:
             path_in = path_MONC_alt_HCs + f'{res_in_m}m/SA/'
-        # elif n == 5:
-        #     path_in = path_MONC_alt_HCs + f'{res_in_m}m/HCth_L/'
+        elif n == 5:
+            path_in = path_MONC_alt_HCs + f'{res_in_m}m/HCth_L/'
 
         # for nt, time in enumerate(list_timestamps):
 
