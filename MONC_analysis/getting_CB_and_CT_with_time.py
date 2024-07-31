@@ -3,6 +3,7 @@ import numpy.ma as ma
 import xarray as xr
 import matplotlib.pyplot as plt
 from scipy.signal import savgol_filter
+import numpy.ma as ma
 import datetime
 
 plot_choice = 'og_HCs' #'og_HCs'  'HCs_HCsSA'  'all_Cs_at_D_200'
@@ -78,8 +79,8 @@ def get_CT_and_CB(ts_of_cloud_frac_prof, len_ts, len_zn_in):
     CT_ref_25m[CT_ref_25m==0] = np.nan
     CB_ref_25m[CB_ref_25m==0] = np.nan
 
-    #CT_ref_25m = savgol_filter(CT_ref_25m, 5, 3)
-    #CB_ref_25m = savgol_filter(CB_ref_25m, 5, 3)
+    CT_ref_25m = savgol_filter(ma.masked_invalid(CT_ref_25m), 5, 3)
+    CB_ref_25m = savgol_filter(ma.masked_invalid(CB_ref_25m), 5, 3)
 
     return CB_ref_25m, CT_ref_25m
 
