@@ -79,8 +79,14 @@ def get_CT_and_CB(ts_of_cloud_frac_prof, len_ts, len_zn_in):
     CT_ref_25m[CT_ref_25m==0] = np.nan
     CB_ref_25m[CB_ref_25m==0] = np.nan
 
-    CT_ref_25m = savgol_filter(ma.masked_invalid(CT_ref_25m), 5, 3)
-    CB_ref_25m = savgol_filter(ma.masked_invalid(CB_ref_25m), 5, 3)
+    CT_nan_index = np.argwhere(np.isnan(CT_ref_25m))
+    CB_nan_index = np.argwhere(np.isnan(CB_ref_25m))
+
+    CT_nan_end = CT_nan_index[-1, 1]
+    CB_nan_end = CB_nan_index[-1, 1]
+
+    CT_ref_25m[:CT_nan_end] = savgol_filter((CT_ref_25m[CT_nan_end:]), 5, 3)
+    CB_ref_25m[:CB_nan_end] = savgol_filter((CB_ref_25m[CB_nan_end:]), 5, 3)
 
     return CB_ref_25m, CT_ref_25m
 
