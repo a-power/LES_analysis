@@ -89,8 +89,8 @@ def get_CT_and_CB(ts_of_cloud_frac_prof, len_ts, len_zn_in):
 
     print('value of CT_nan_end and CB_nan_end is ', CT_nan_end, ' and ', CB_nan_end)
 
-    temp_CT = savgol_filter((CT_ref_25m[CT_nan_end+1:]), 29, 7)
-    temp_CB = savgol_filter((CB_ref_25m[CB_nan_end+1:]), 29, 7)
+    temp_CT = savgol_filter((CT_ref_25m[CT_nan_end+1:]), 31, 5)
+    temp_CB = savgol_filter((CB_ref_25m[CB_nan_end+1:]), 31, 5)
 
     print('len of temp_CT and temp_CB is ', len(temp_CT), ' and ', len(temp_CB))
 
