@@ -171,7 +171,7 @@ if plot_choice == 'HCs_HCsSA':
 
     plt.xlabel('Local time (hh:mm:ss)', fontsize=14)
     plt.ylabel('z (m)', fontsize=14)
-    plt.title('Cloud top and base height: profile based parametrization (solid) vs scale aware profile (dashed)', fontsize=14)
+    plt.title('Cloud top and base height: $C_s$ profile (solid) vs scale aware $C_s$ profile (dashed)', fontsize=14)
 
     plt.tight_layout()
 
@@ -253,7 +253,7 @@ elif plot_choice == 'og_HCs':
 
     plt.xlabel('Local time (hh:mm:ss)', fontsize=14)
     plt.ylabel('z (m)', fontsize=14)
-    plt.title('Cloud top and base height: profile based parametrization (solid) vs standard Smagorinsky (dotted)', fontsize=14)
+    plt.title('Cloud top and base height: $C_s$ profile (solid) vs Smagorinsky (dotted)', fontsize=14)
 
     plt.tight_layout()
 
