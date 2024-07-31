@@ -94,8 +94,8 @@ def get_CT_and_CB(ts_of_cloud_frac_prof, len_ts, len_zn_in):
 
     print('len of temp_CT and temp_CB is ', len(temp_CT), ' and ', len(temp_CB))
 
-    CT_ref_25m[CT_nan_end:] = temp_CT
-    CB_ref_25m[CB_nan_end:] = temp_CB
+    CT_ref_25m[CT_nan_end+1:] = temp_CT
+    CB_ref_25m[CB_nan_end+1:] = temp_CB
 
     return CB_ref_25m, CT_ref_25m
 
