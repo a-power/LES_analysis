@@ -139,8 +139,8 @@ if plot_choice == 'HCs_HCsSA':
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linewidth=1.5,
                      label=f'$\\Delta$ = {2 ** ((i-3))}00m')
     for i in range(3):
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--')
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], linestyle='--')
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[i % 3], marker = '.')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[i % 3], marker = '.')
 
     plt.tight_layout(pad=0.5)
     plt.gcf().set_size_inches(10, 5.5)
