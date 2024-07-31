@@ -6,7 +6,7 @@ from scipy.signal import savgol_filter
 import numpy.ma as ma
 import datetime
 
-plot_choice = 'HCs_HCsSA' #'og_HCs'  'HCs_HCsSA'  'all_Cs_at_D_200'
+plot_choice = 'all_Cs_at_D_200' #'og_HCs'  'HCs_HCsSA'  'all_Cs_at_D_200'
 res_in_m = '200'
 
 def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
@@ -360,22 +360,22 @@ elif plot_choice == 'all_Cs_at_D_200':
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle='--')#, marker='*')
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle='--',
                      label='Smag 0.23') #f'$\\Delta$ = {2 ** ((i-3))}00m'
-        # elif i == 1:
-        #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle='--')#, marker='*')
-        #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle='--',
-        #              label=f'Smag 0.137')
-        # elif i == 2:
-        #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle='--')#, marker='*')
-        #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle='--',
-        #              label=f'Smag {sa_smag}')
+        elif i == 1:
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle='--')#, marker='*')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle='--',
+                     label=f'Smag 0.137')
+        elif i == 2:
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle='--')#, marker='*')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle='--',
+                     label=f'Smag {sa_smag}')
         elif i == 3:
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[3]) #, linestyle='--')#, linewidth=2)
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[3],
                      label='$C_s$ prof')
-        # elif i == 4:
-        #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4]) #, linestyle='--')#, marker='x')
-        #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
-        #              label='S-A $C_s$ prof')
+        elif i == 4:
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4]) #, linestyle='--')#, marker='x')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
+                     label='S-A $C_s$ prof')
         elif i == 5:
             plt.plot(list_timestamps, CB_mean_height_ts[i, :len(list_timestamps)], 'g', linewidth = 2) #, linestyle='--')#, marker='^')
             plt.plot(list_timestamps, CT_mean_height_ts[i, :len(list_timestamps)], 'g', linewidth = 2,
@@ -409,10 +409,11 @@ elif plot_choice == 'all_Cs_at_D_200':
 
     plt.tight_layout()
 
-    save_name = f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_23_vs_HCs_vs_HCth_cases'
+    save_name = f'ARM_cloud_top_and_base_ts_D_{res_in_m}_all_Cs_cases'
         # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_23_Cs_sa_vs_HCsSA_cases'
         # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_23_Cs0_137_vs_HCs_cases'
         # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_all_Cs_cases'
+        # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_23_vs_HCs_vs_HCth_cases'
 
     plt.savefig(plotdir+f'{save_name}.png', bbox_inches='tight') #_HCsSA
     plt.savefig(plotdir + f'{save_name}.pdf', bbox_inches='tight')
