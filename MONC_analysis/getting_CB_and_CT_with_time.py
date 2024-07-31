@@ -360,7 +360,7 @@ elif plot_choice == 'all_Cs_at_D_200':
         #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4]) #, linestyle='--')#, marker='x')
         #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
         #              label='S-A $C_s$ prof')
-        # elif i == 5:
+        elif i == 5:
             plt.plot(list_timestamps, CB_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5]) #, linestyle='--')#, marker='^')
             plt.plot(list_timestamps, CT_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5],
                      label='$C_s C_{\\theta_L}$ profs')
