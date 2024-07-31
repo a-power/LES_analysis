@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import savgol_filter
 import datetime
 
-plot_choice = 'HCs_HCsSA' #'og_HCs'  'HCs_HCsSA'  'all_Cs_at_D_200'
+plot_choice = 'og_HCs' #'og_HCs'  'HCs_HCsSA'  'all_Cs_at_D_200'
 res_in_m = '200'
 
 def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
