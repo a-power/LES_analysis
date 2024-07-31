@@ -6,7 +6,7 @@ from scipy.signal import savgol_filter
 import datetime
 
 plot_choice = 'all_Cs_at_D_200' #'og_HCs'  'HCs_HCsSA'  'all_Cs_at_D_200'
-res_in_m = '400'
+res_in_m = '200'
 
 def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
 
@@ -344,10 +344,10 @@ elif plot_choice == 'all_Cs_at_D_200':
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle='--')#, marker='*')
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle='--',
                      label='Smag 0.23') #f'$\\Delta$ = {2 ** ((i-3))}00m'
-        elif i == 1:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle='--')#, marker='*')
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle='--',
-                     label=f'Smag 0.137')
+        # elif i == 1:
+        #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle='--')#, marker='*')
+        #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle='--',
+        #              label=f'Smag 0.137')
         # elif i == 2:
         #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle='--')#, marker='*')
         #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle='--',
@@ -361,9 +361,9 @@ elif plot_choice == 'all_Cs_at_D_200':
         #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
         #              label='S-A $C_s$ prof')
         # elif i == 5:
-        #     plt.plot(list_timestamps, CB_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5]) #, linestyle='--')#, marker='^')
-        #     plt.plot(list_timestamps, CT_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5],
-        #              label='$C_s C_{\\theta_L}$ profs')
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5]) #, linestyle='--')#, marker='^')
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5],
+                     label='$C_s C_{\\theta_L}$ profs')
 
     plt.tight_layout(pad=0.5)
     plt.gcf().set_size_inches(10, 5.5)
@@ -393,7 +393,7 @@ elif plot_choice == 'all_Cs_at_D_200':
 
     plt.tight_layout()
 
-    save_name = f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_23_Cs0_137_vs_HCs_cases'
+    save_name = f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_23_vs_HCs_vs_HCth_cases'
         # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_23_Cs_sa_vs_HCsSA_cases'
         # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_Cs0_23_Cs0_137_vs_HCs_cases'
         # f'ARM_cloud_top_and_base_ts_D_{res_in_m}_all_Cs_cases'
