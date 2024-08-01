@@ -57,6 +57,9 @@ for nv, var in enumerate(var_list):
     print(var)
     for nt, time in enumerate(list_timestamps):
 
+        clock_time_int = 05.30 + int(time) / (60 * 60)
+        clock_time = str(clock_time_int) + '0L'
+
         var_prof = np.zeros( (7, len(zn) ) )
         var_prof_40 = np.zeros((7, len(zn_40)))
         var_prof_440 = np.zeros((7, len(zn_440)))
@@ -116,8 +119,10 @@ for nv, var in enumerate(var_list):
                     plt.plot(var_prof[i, :], zn, colour_cycle[i % 3],
                          label='$\\Delta$'+f' = {(2**i)}00m')
                         # marker='*')
+
+        plt.title(f'{clock_time}: Smag 0.23 (dotted) vs '+'$C_s$ prof (solid)')
         plt.tight_layout(pad=0.5)
-        plt.gcf().set_size_inches(5, 7)
+        plt.gcf().set_size_inches(5.5, 7)
         plt.legend(fontsize=13, loc='upper right')
 
         bottom, top = plt.ylim()
