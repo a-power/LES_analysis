@@ -29,7 +29,7 @@ var_list = ['wtheta_cn_mean', 'wtheta_ad_mean', 'wtsg_mean',
             'wqv_cn_mean', 'wqv_ad_mean', 'wqv_sg_mean', 'w_qt',
             'ww_mean', 'wwsg_mean',
             'theta_mean', 'total_cloud_fraction',
-            'viscosity_coeff_mean', 'diffusion_coeff_mean', 'dissipation_mean',
+            'viscosity_coef_mean', 'diffusion_coef_mean', 'dissipation_mean',
             'resolved_buoyant_production', 'resolved_shear_production', 'resolved_turbulent_transport',
             'subgrid_buoyant_production', 'subgrid_shear_stress', 'subgrid_turbulent_transport']
 
