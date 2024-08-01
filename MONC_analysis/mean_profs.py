@@ -14,8 +14,7 @@ def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=1):
 
 
 
-
-path_ARM25 = '/storage/silver/MONC_data/Alanna/ARM/MONC_out/25m/'
+path_ARM25 = '/storage/silver/greybls/si818415/arm_2d_25m/diagnostics_ts_'
 path_MONC_alt_HCs = '/storage/silver/scenario/si818415/altered_MONC/'
 path_MONC_stand = '/storage/silver/scenario/si818415/og_monc/'
 
@@ -26,9 +25,15 @@ list_timestamps = [18000, 25200, 32400, 39600]
 #list_timestamps = [17400, 18000, 24600, 25200, 31800, 32400, 39000, 39600]
 #list_timestamps = np.arange(600, 40200, 600)
 
-var_list = ['wtheta_cn_mean', 'w_qt', 'ww_mean', 'wwsg_mean', 'total_cloud_fraction', 'tke_tendency', 'tkesg_mean',
+var_list = ['wtheta_cn_mean', 'wtheta_ad_mean', 'wtsg_mean',
+            'wqv_cn_mean', 'wqv_ad_mean', 'wqv_sg_mean', 'w_qt',
+            'ww_mean', 'wwsg_mean',
+            'theta_mean', 'total_cloud_fraction',
+            'viscosity_coeff_mean', 'diffusion_coeff_mean', 'dissipation_mean',
             'resolved_buoyant_production', 'resolved_shear_production', 'resolved_turbulent_transport',
             'subgrid_buoyant_production', 'subgrid_shear_stress', 'subgrid_turbulent_transport']
+
+# 'tke_tendency', 'tkesg_mean'
 
 zn = np.arange(0, 4410, 10)
 zn_440 = np.arange(0, 4400, 10)
@@ -39,8 +44,10 @@ zn_40 = np.arange(0, 4410, 40)
 colour_cycle = ['#377eb8', '#ff7f00', '#4daf4a',
                   '#f781bf', '#a65628', '#984ea3',
                   '#999999', '#e41a1c', '#dede00']
+
 line_list = ['--', '--', '--', ':', ':', ':']
-model_param = ['Stand', 'Stand', 'Stand', 'HCs', 'HCs', 'HCs'] #'HCs $\\widehat{\\bar{\\Delta}}'
+model_param = ['Smag 0.23', 'Smag 0.137', 'Smag 0.11', 'Smag 0.075',
+               '$C_s$ prof', 'S-A $C_s$ prof', '$C_s C_{\\theta_L}$ prof'] #'HCs $\\widehat{\\bar{\\Delta}}'
 
 
 
@@ -50,11 +57,11 @@ for nv, var in enumerate(var_list):
     print(var)
     for nt, time in enumerate(list_timestamps):
 
-        var_prof = np.zeros( (6, len(zn) ) )
-        var_prof_40 = np.zeros((6, len(zn_40)))
-        var_prof_440 = np.zeros((6, len(zn_440)))
+        var_prof = np.zeros( (7, len(zn) ) )
+        var_prof_40 = np.zeros((7, len(zn_40)))
+        var_prof_440 = np.zeros((7, len(zn_440)))
 
-        for n in range(6):
+        for n in range(7):
             print(n)
             if n <3:
                 path_in = path_MONC_stand + f'{2 ** (n)}00m/'
@@ -68,7 +75,7 @@ for nv, var in enumerate(var_list):
                     var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis = 0)
 
 
-            else:
+            elif n<6:
 
                 path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
                 filein = f'arm_{str(time)}.nc'
@@ -79,24 +86,35 @@ for nv, var in enumerate(var_list):
                 else:
                     var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis = 0)
 
+            else:
+                path_in = path_ARM25
+                filein = f'{str(time)}.nc'
+
+                ds_in = xr.open_dataset(path_in + filein)
+                var_prof[6, :] = np.mean(ds_in[f'{var}'].data, axis=0)
+
 
 
         plt.plot(figsize=(5, 8))
+
+        plt.plot(var_prof[6, :], zn, 'k', linewidth=2,
+                 label='LES $\\Delta$ = 25m')
+
         for i in range(6):
             # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
             if i < 3:
                 if i == 2:
-                    plt.plot(var_prof_40[i, :], zn_40, colour_cycle[i % 3], linewidth=2,
-                             label=f'{2 ** ((i + 2))}$\\Delta$')
+                    plt.plot(var_prof_40[i, :], zn_40, colour_cycle[i % 3], linestyle=':',
+                             label='$\\Delta$'+f' = {(2**i)}00m')
                 else:
-                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linewidth=2,
-                         label=f'{2 ** ((i + 2))}$\\Delta$')
+                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':',
+                         label='$\\Delta$'+f' = {(2**i)}00m')
             else:
                 if i == 4:
-                    plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=line_list[i])
+                    plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3])
                         # marker='*')
                 else:
-                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=line_list[i])
+                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3])
                         # marker='*')
         plt.tight_layout(pad=0.5)
         plt.gcf().set_size_inches(5, 7)
