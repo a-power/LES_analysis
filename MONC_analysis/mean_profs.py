@@ -173,7 +173,10 @@ elif plotting == 'HCs_vs_SAHCs':
             for n in range(7):
                 print(n)
                 if n < 3:
-                    path_in = path_MONC_alt_HCs + f'SA/{2 ** (n)}00m/'
+                    if n == 0:
+                        path_in = path_MONC_alt_HCs + f'/{2 ** (n)}00m/'
+                    else:
+                        path_in = path_MONC_alt_HCs + f'/SA/{2 ** (n)}00m/'
 
                     filein = f'arm_{str(time)}.nc'
                     ds_in = xr.open_dataset(path_in + filein)
