@@ -21,7 +21,7 @@ path_ARM25 = '/storage/silver/greybls/si818415/arm_2d_25m/diagnostics_ts_'
 path_MONC_alt_HCs = '/storage/silver/scenario/si818415/altered_MONC/'
 path_MONC_stand = '/storage/silver/scenario/si818415/og_monc/'
 
-plotdir = '/home/users/si818415/phd/plots/MONC_alt/mean_profs/'
+plotdir = f'/home/users/si818415/phd/plots/MONC_alt/mean_profs/{plotting}'
 os.makedirs(plotdir, exist_ok = True)
 
 list_timestamps = [18000, 25200, 32400, 39600]
