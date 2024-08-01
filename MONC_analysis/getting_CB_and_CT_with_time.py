@@ -7,7 +7,7 @@ import numpy.ma as ma
 import datetime
 
 plot_choice = 'all_Cs_at_D_200' #'og_HCs'  'HCs_HCsSA'  'all_Cs_at_D_200'
-res_in_m = '400'
+res_in_m = '200'
 
 def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=10):
 
@@ -290,7 +290,7 @@ elif plot_choice == 'all_Cs_at_D_200':
     CB_mean_height_ts = np.zeros( (7, 640) )
     CT_mean_height_ts = np.zeros( (7, 640) )
 
-    for n in range(5):
+    for n in range(6):
         if n == 0: #unalt
             path_in = path_MONC_stand + f'{res_in_m}m/'
         elif n == 1:
@@ -376,10 +376,10 @@ elif plot_choice == 'all_Cs_at_D_200':
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4]) #, linestyle='--')#, marker='x')
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
                      label='S-A $C_s$ prof')
-        # elif i == 5:
-        #     plt.plot(list_timestamps, CB_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5], linewidth = 1) #, linestyle='--')#, marker='^')
-        #     plt.plot(list_timestamps, CT_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5], linewidth = 1,
-        #              label='$C_s C_{\\theta_L}$ profs')
+        elif i == 5:
+            plt.plot(list_timestamps, CB_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5], linewidth = 1) #, linestyle='--')#, marker='^')
+            plt.plot(list_timestamps, CT_mean_height_ts[i, :len(list_timestamps)], colour_cycle[5], linewidth = 1,
+                     label='$C_s C_{\\theta_L}$ profs')
 
     plt.tight_layout(pad=0.5)
     plt.gcf().set_size_inches(10, 5.5)
