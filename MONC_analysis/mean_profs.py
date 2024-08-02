@@ -116,11 +116,11 @@ if plotting == 'og_vs_Hs':
                 else:
                     if i == 4:
                         plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3],
-                                 label='$\\Delta$'+f' = {(2**i)}00m')
+                                 label='$\\Delta$'+f' = {(2**(i-3))}00m')
                             # marker='*')
                     else:
                         plt.plot(var_prof[i, :], zn, colour_cycle[i % 3],
-                             label='$\\Delta$'+f' = {(2**i)}00m')
+                             label='$\\Delta$'+f' = {(2**(i-3))}00m')
                             # marker='*')
 
             plt.title(f'{clock_time}: Smag 0.23 (dotted) vs '+'$C_s$ prof (solid)')
