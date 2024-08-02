@@ -13,7 +13,7 @@ def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=1):
     return mask_no_cloud
 
 
-plotting = 'HCs_vs_SAHCs' # 'og_vs_HCs' 'HCs_vs_SAHCs' 'SAHCs_vs_SA_Smag'
+plotting = 'SAHCs_vs_SA_Smag' # 'og_vs_HCs' 'HCs_vs_SAHCs' 'SAHCs_vs_SA_Smag'
 
 
 
@@ -236,8 +236,9 @@ elif plotting == 'SAHCs_vs_SA_Smag':
 
             for n in range(7):
                 print(n)
+                Cs_val = ['/', '/Cs_0_11/', '/dz_40m/Cs_0_075/']
                 if n < 3:
-                    path_in = path_MONC_stand + f'{2 ** (n)}00m/'
+                    path_in = path_MONC_stand + f'{2 ** (n)}00m{Cs_val[n]}'
                     if n == 2:
                         filein = f'arm_{str(time)}.nc'
                         ds_in = xr.open_dataset(path_in + filein)
@@ -274,18 +275,18 @@ elif plotting == 'SAHCs_vs_SA_Smag':
             for i in range(6):
                 # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
                 if i < 3:
-                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--')
+                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='-.')
                 else:
                     if i == 4:
-                        plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3],
+                        plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle='--',
                                  label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
                     else:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3],
+                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
                                  label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
 
-            plt.title(f'{clock_time}: Scale aware $C_s$ prof (dashed) vs ' + '$C_s$ prof (solid)')
+            plt.title(f'{clock_time}: Scale aware Smag (dash dot) vs Scale aware $C_s$ prof (dashed)')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
@@ -297,8 +298,8 @@ elif plotting == 'SAHCs_vs_SA_Smag':
 
             plt.tight_layout()
 
-            plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_HCs_vs_SAHCs.png', bbox_inches='tight')
-            plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_HCs_vs_SAHCs.pdf', bbox_inches='tight')
+            plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_SA_Smag_vs_SAHCs.png', bbox_inches='tight')
+            plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_SA_Smag_vs_SAHCs.pdf', bbox_inches='tight')
             plt.close()
 
 
