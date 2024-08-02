@@ -13,7 +13,7 @@ def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=1):
     return mask_no_cloud
 
 
-plotting = 'og_vs_HCs' # 'og_vs_HCs' 'HCs_vs_SAHCs' 'SAHCs_vs_SA_Smag'
+plotting = 'HCs_vs_SAHCs' # 'og_vs_HCs' 'HCs_vs_SAHCs' 'SAHCs_vs_SA_Smag'
 
 
 
@@ -237,14 +237,15 @@ elif plotting == 'SAHCs_vs_SA_Smag':
             for n in range(7):
                 print(n)
                 if n < 3:
-                    if n == 0:
-                        path_in = path_MONC_alt_HCs + f'/{2 ** (n)}00m/'
+                    path_in = path_MONC_stand + f'{2 ** (n)}00m/'
+                    if n == 2:
+                        filein = f'arm_{str(time)}.nc'
+                        ds_in = xr.open_dataset(path_in + filein)
+                        var_prof_40[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
                     else:
-                        path_in = path_MONC_alt_HCs + f'/{2 ** (n)}00m/SA/'
-
-                    filein = f'arm_{str(time)}.nc'
-                    ds_in = xr.open_dataset(path_in + filein)
-                    var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
+                        filein = f'arm_{str(time)}.nc'
+                        ds_in = xr.open_dataset(path_in + filein)
+                        var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
 
 
                 elif n < 6:
@@ -277,11 +278,11 @@ elif plotting == 'SAHCs_vs_SA_Smag':
                 else:
                     if i == 4:
                         plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3],
-                                 label='$\\Delta$' + f' = {(2 ** i)}00m')
+                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
                     else:
                         plt.plot(var_prof[i, :], zn, colour_cycle[i % 3],
-                                 label='$\\Delta$' + f' = {(2 ** i)}00m')
+                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
 
             plt.title(f'{clock_time}: Scale aware $C_s$ prof (dashed) vs ' + '$C_s$ prof (solid)')
@@ -290,21 +291,6 @@ elif plotting == 'SAHCs_vs_SA_Smag':
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
-            # plt.ylim(bottom=0, top=4000)
-
-            # og_xtic = plt.xticks()
-            # print(og_xtic)
-            #
-            # # time_label_temp = "%.2f"%(05.50 + og_xtic[0]/(60*60))
-            # # time_label_temp_min = (( np.round(05.50 + og_xtic[0]/(60*60), 2 ) - "%.2f"%(05.50 + og_xtic[0]/(60*60)) )*60 )/100
-            # # time_label = np.round(time_label_temp + time_label_temp_min, 2)
-            #
-            # time_label = []
-            #
-            # for i in range(len(og_xtic[0])):
-            #     time_label.append(datetime.timedelta(seconds=og_xtic[0][i] + 19800))
-            #
-            # plt.xticks(og_xtic[0], time_label)
 
             plt.xlabel(f'{var}', fontsize=14)
             plt.ylabel('z (m)', fontsize=14)
