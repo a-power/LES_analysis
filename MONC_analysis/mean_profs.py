@@ -236,7 +236,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
 
             for n in range(7):
                 print(n)
-                Cs_val = ['/', '/Cs_0_11/', '/dz_40m/Cs_0_075/']
+                Cs_val = ['/', '/Cs_0_11/', '/dz_40m/Cs0_075/']
                 if n < 3:
                     path_in = path_MONC_stand + f'{2 ** (n)}00m{Cs_val[n]}'
                     if n == 2:
