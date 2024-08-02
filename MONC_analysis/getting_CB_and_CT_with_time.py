@@ -293,7 +293,7 @@ elif plot_choice == 'all_Cs_at_D_200':
     CT_mean_height_ts = np.zeros( (7, 640) )
     cloud_init = np.zeros(6)
 
-    for n in range(6):
+    for n in range(5):
         if n == 0: #unalt
             path_in = path_MONC_stand + f'{res_in_m}m/'
         elif n == 1:
