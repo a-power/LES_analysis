@@ -31,7 +31,7 @@ list_timestamps = np.arange(600, 40200, 600)
 #np.ndarray.tolist( np.arange(17400, 40000, 600) )
 
 colour_cycle = ['#377eb8', '#ff7f00', '#4daf4a',
-                  '#f781bf', '#a65628', '#984ea3',
+                  '#f781bf', '#a65628', '#dede00', '#984ea3',
                   '#999999', '#e41a1c', '#dede00']
 line_list = [':', ':', ':', '--', '--', '--']
 model_param = ['Stand', 'Stand', 'Stand', 'HCs', 'HCs', 'HCs'] #'HCs $\\widehat{\\bar{\\Delta}}'
