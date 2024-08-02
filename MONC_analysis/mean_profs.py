@@ -54,7 +54,7 @@ model_param = ['Smag 0.23', 'Smag 0.137', 'Smag 0.11', 'Smag 0.075',
 
 
 
-if plotting == 'og_vs_Hs':
+if plotting == 'og_vs_HCs':
 
     for nv, var in enumerate(var_list):
         print(var)
@@ -107,7 +107,7 @@ if plotting == 'og_vs_Hs':
                      label='LES $\\Delta$ = 25m')
 
             for i in range(6):
-                # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
+                #plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
                 if i < 3:
                     if i == 2:
                         plt.plot(var_prof_40[i, :], zn_40, colour_cycle[i % 3], linestyle=':')
@@ -129,21 +129,6 @@ if plotting == 'og_vs_Hs':
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
-            # plt.ylim(bottom=0, top=4000)
-
-            # og_xtic = plt.xticks()
-            # print(og_xtic)
-            #
-            # # time_label_temp = "%.2f"%(05.50 + og_xtic[0]/(60*60))
-            # # time_label_temp_min = (( np.round(05.50 + og_xtic[0]/(60*60), 2 ) - "%.2f"%(05.50 + og_xtic[0]/(60*60)) )*60 )/100
-            # # time_label = np.round(time_label_temp + time_label_temp_min, 2)
-            #
-            # time_label = []
-            #
-            # for i in range(len(og_xtic[0])):
-            #     time_label.append(datetime.timedelta(seconds=og_xtic[0][i] + 19800))
-            #
-            # plt.xticks(og_xtic[0], time_label)
 
             plt.xlabel(f'{var}', fontsize=14)
             plt.ylabel('z (m)', fontsize=14)
@@ -213,11 +198,11 @@ elif plotting == 'HCs_vs_SAHCs':
                 else:
                     if i == 4:
                         plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3],
-                                 label='$\\Delta$' + f' = {(2 ** i)}00m')
+                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
                     else:
                         plt.plot(var_prof[i, :], zn, colour_cycle[i % 3],
-                                 label='$\\Delta$' + f' = {(2 ** i)}00m')
+                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
 
             plt.title(f'{clock_time}: Scale aware $C_s$ prof (dashed) vs ' + '$C_s$ prof (solid)')
@@ -226,21 +211,6 @@ elif plotting == 'HCs_vs_SAHCs':
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
-            # plt.ylim(bottom=0, top=4000)
-
-            # og_xtic = plt.xticks()
-            # print(og_xtic)
-            #
-            # # time_label_temp = "%.2f"%(05.50 + og_xtic[0]/(60*60))
-            # # time_label_temp_min = (( np.round(05.50 + og_xtic[0]/(60*60), 2 ) - "%.2f"%(05.50 + og_xtic[0]/(60*60)) )*60 )/100
-            # # time_label = np.round(time_label_temp + time_label_temp_min, 2)
-            #
-            # time_label = []
-            #
-            # for i in range(len(og_xtic[0])):
-            #     time_label.append(datetime.timedelta(seconds=og_xtic[0][i] + 19800))
-            #
-            # plt.xticks(og_xtic[0], time_label)
 
             plt.xlabel(f'{var}', fontsize=14)
             plt.ylabel('z (m)', fontsize=14)
