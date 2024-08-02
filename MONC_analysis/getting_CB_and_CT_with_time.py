@@ -293,7 +293,7 @@ elif plot_choice == 'all_Cs_at_D_200':
     CT_mean_height_ts = np.zeros( (7, 640) )
     cloud_init = np.zeros(6)
 
-    for n in range(5):
+    for n in range(6):
         if n == 0: #unalt
             path_in = path_MONC_stand + f'{res_in_m}m/'
         elif n == 1:
@@ -384,11 +384,11 @@ elif plot_choice == 'all_Cs_at_D_200':
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
                      label='S-A $C_s$ prof')
             plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[i])
-        # elif i == 5:
-        #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[5]) #, linestyle='--')#, marker='^')
-        #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[5],
-        #              label='$C_s C_{\\theta_L}$ profs')
-        #     plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[i])
+        elif i == 5:
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[5]) #, linestyle='--')#, marker='^')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[5],
+                     label='$C_s C_{\\theta_L}$ profs')
+            plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[i])
 
     plt.tight_layout(pad=0.5)
     plt.gcf().set_size_inches(10, 5.5)
