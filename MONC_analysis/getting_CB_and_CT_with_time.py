@@ -378,17 +378,17 @@ elif plot_choice == 'all_Cs_at_D_200':
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[3]) #, linestyle='--')#, linewidth=2)
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[3],
                      label='$C_s$ prof')
-            plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[n])
+            plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[i])
         elif i == 4:
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4]) #, linestyle='--')#, marker='x')
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
                      label='S-A $C_s$ prof')
-            plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[n])
+            plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[i])
         elif i == 5:
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[5]) #, linestyle='--')#, marker='^')
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[5],
                      label='$C_s C_{\\theta_L}$ profs')
-            plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[n])
+            plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[i])
 
     plt.tight_layout(pad=0.5)
     plt.gcf().set_size_inches(10, 5.5)
