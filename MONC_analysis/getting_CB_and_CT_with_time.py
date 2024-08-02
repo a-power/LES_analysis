@@ -97,7 +97,7 @@ def get_CT_and_CB(ts_of_cloud_frac_prof, len_ts, len_zn_in):
     CT_ref_25m[CT_nan_end+1:] = temp_CT
     CB_ref_25m[CB_nan_end+1:] = temp_CB
 
-    return CB_ref_25m, CT_ref_25m
+    return CB_ref_25m, CT_ref_25m, CB_nan_end
 
 plot_ref_tstamps = np.arange(1200, 39600, 60)
 
@@ -105,13 +105,14 @@ file_in_25m = path_ARM25
 
 ts_cloud_prof, len_zn_25 = get_25m_ref(file_in_25m, 'total_cloud_fraction', 640, 1200, 20)
 
-CB_LES_25m, CT_LES_25m = get_CT_and_CB(ts_cloud_prof, 640, len_zn_25)
+CB_LES_25m, CT_LES_25m, cloud_init_25 = get_CT_and_CB(ts_cloud_prof, 640, len_zn_25)
 
 
 if plot_choice == 'HCs_HCsSA':
 
     CB_mean_height_ts = np.zeros( (6, 640))  # len(list_timestamps)) )
     CT_mean_height_ts = np.zeros( (6, 640))  # len(list_timestamps)) )
+    cloud_init = np.zeros(6)
 
     for n in range(6):
         if n == 1 or n == 2: #unalt
@@ -124,7 +125,7 @@ if plot_choice == 'HCs_HCsSA':
 
 
         ts_cloud_prof, len_zn_out = get_25m_ref(path_in + 'arm_', 'total_cloud_fraction', 640, 600, 10)
-        CB_mean_height_ts[n, :], CT_mean_height_ts[n, :] = get_CT_and_CB(ts_cloud_prof, 640, len_zn_out)
+        CB_mean_height_ts[n, :], CT_mean_height_ts[n, :], cloud_init[n] = get_CT_and_CB(ts_cloud_prof, 640, len_zn_out)
 
         # for nt, time in enumerate(list_timestamps):
         #
@@ -200,6 +201,7 @@ elif plot_choice == 'og_HCs':
 
     CB_mean_height_ts = np.zeros( (6, 640))  # len(list_timestamps)) )
     CT_mean_height_ts = np.zeros( (6, 640))  # len(list_timestamps)) )
+    cloud_init = np.zeros(6)
 
     for n in range(6):
         if n < 3: #unalt
@@ -208,7 +210,7 @@ elif plot_choice == 'og_HCs':
             path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
 
         ts_cloud_prof, len_zn_out = get_25m_ref(path_in + 'arm_', 'total_cloud_fraction', 640, 600, 10)
-        CB_mean_height_ts[n, :], CT_mean_height_ts[n, :] = get_CT_and_CB(ts_cloud_prof, 640, len_zn_out)
+        CB_mean_height_ts[n, :], CT_mean_height_ts[n, :], cloud_init[n] = get_CT_and_CB(ts_cloud_prof, 640, len_zn_out)
 
         # for nt, time in enumerate(list_timestamps):
         #
@@ -289,6 +291,7 @@ elif plot_choice == 'all_Cs_at_D_200':
 
     CB_mean_height_ts = np.zeros( (7, 640) )
     CT_mean_height_ts = np.zeros( (7, 640) )
+    cloud_init = np.zeros(6)
 
     for n in range(6):
         if n == 0: #unalt
@@ -338,7 +341,7 @@ elif plot_choice == 'all_Cs_at_D_200':
 
         ts_cloud_prof, len_zn_out = get_25m_ref(path_in + 'arm_', 'total_cloud_fraction', 640, 600, 10)
 
-        CB_mean_height_ts[n, :], CT_mean_height_ts[n, :] = get_CT_and_CB(ts_cloud_prof, 640, len_zn_out)
+        CB_mean_height_ts[n, :], CT_mean_height_ts[n, :], cloud_init[n] = get_CT_and_CB(ts_cloud_prof, 640, len_zn_out)
 
             # CB_field = ds_in['clbas'].data
             # CT_field = ds_in['cltop'].data
@@ -360,26 +363,32 @@ elif plot_choice == 'all_Cs_at_D_200':
         #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[0], linestyle='--')#, marker='*')
         #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[0], linestyle='--',
         #              label='Smag 0.23') #f'$\\Delta$ = {2 ** ((i-3))}00m'
+        #     plt.vines(cloud_init[i], 250, 1500, colour_cycle[i], linestyle='--')
         # elif i == 1:
         #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle='--')#, marker='*')
         #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle='--',
         #              label=f'Smag 0.137')
+        #     plt.vines(cloud_init[i], 250, 1500, colour_cycle[i], linestyle='--')
         # elif i == 2:
         #     plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle='--')#, marker='*')
         #     plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle='--',
         #              label=f'Smag {sa_smag}')
+        #     plt.vines(cloud_init[i], 250, 1500, colour_cycle[i], linestyle='--')
         elif i == 3:
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[3]) #, linestyle='--')#, linewidth=2)
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[3],
                      label='$C_s$ prof')
+            plt.vines(cloud_init[i], 250, 1500, colour_cycle[n])
         elif i == 4:
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4]) #, linestyle='--')#, marker='x')
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
                      label='S-A $C_s$ prof')
+            plt.vines(cloud_init[i], 250, 1500, colour_cycle[n])
         elif i == 5:
             plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[5]) #, linestyle='--')#, marker='^')
             plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[5],
                      label='$C_s C_{\\theta_L}$ profs')
+            plt.vines(cloud_init[i], 250, 1500, colour_cycle[n])
 
     plt.tight_layout(pad=0.5)
     plt.gcf().set_size_inches(10, 5.5)
