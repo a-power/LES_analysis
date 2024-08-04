@@ -205,7 +205,7 @@ elif plotting == 'HCs_vs_SAHCs':
                                  label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
 
-            plt.title(f'{clock_time}: Scale aware $C_s$ prof (dashed) vs ' + '$C_s$ prof (solid)')
+            plt.title(f'{clock_time}: S-A $C_s$ prof (dashed) vs ' + '$C_s$ prof (solid)')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
@@ -289,7 +289,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
                                  label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
 
-            plt.title(f'{clock_time}: Scale aware Smag (dash dot) vs Scale aware $C_s$ prof (dashed)')
+            plt.title(f'{clock_time}: S-A Smag (dash dot) vs S-A $C_s$ prof (dashed)')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
