@@ -285,7 +285,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
                         plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='-.')
                 else:
                     if i == 4:
-                        plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle='--',
+                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
                                  label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
                     else:
