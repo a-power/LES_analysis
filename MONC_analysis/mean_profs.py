@@ -116,14 +116,14 @@ if plotting == 'og_vs_HCs':
                 else:
                     if i == 4:
                         plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3],
-                                 label='$\\Delta$'+f' = {(2**(i-3))}00m')
+                                 label='$\\Delta$'+f' = {(2**(i-3))}00m', linestyle='--')
                             # marker='*')
                     else:
                         plt.plot(var_prof[i, :], zn, colour_cycle[i % 3],
-                             label='$\\Delta$'+f' = {(2**(i-3))}00m')
+                             label='$\\Delta$'+f' = {(2**(i-3))}00m', linestyle='--')
                             # marker='*')
 
-            plt.title(f'{clock_time}: Smag 0.23 (dotted) vs '+'$C_s$ prof (solid)')
+            plt.title(f'{clock_time}: Smag 0.23 (dot) vs '+'$C_s$ prof (dash)')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
@@ -198,14 +198,14 @@ elif plotting == 'HCs_vs_SAHCs':
                 else:
                     if i == 4:
                         plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3],
-                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
+                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m', linestyle=':')
                         # marker='*')
                     else:
                         plt.plot(var_prof[i, :], zn, colour_cycle[i % 3],
-                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
+                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m', linestyle=':')
                         # marker='*')
 
-            plt.title(f'{clock_time}: S-A $C_s$ prof (dashed) vs ' + '$C_s$ prof (solid)')
+            plt.title(f'{clock_time}:'+' $C_s$ prof (dot) vs S-A $C_s$ prof (dash)')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
@@ -293,7 +293,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
                                  label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
 
-            plt.title(f'{clock_time}: S-A Smag (dash dot) vs S-A $C_s$ prof (dashed)')
+            plt.title(f'{clock_time}: S-A Smag (dot) vs S-A $C_s$ prof (dash)')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
@@ -383,7 +383,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                                  label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
 
-            plt.title(f'{clock_time}: S-A Smag (dash dot) vs S-A $C_s$ prof (dashed)')
+            plt.title(f'{clock_time}: S-A $C_s$ prof (dot) vs S-A $C_s$'+'$C_{\\theta_L}$ profs (dash)')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
