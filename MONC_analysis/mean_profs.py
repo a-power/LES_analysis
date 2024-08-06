@@ -259,10 +259,10 @@ elif plotting == 'SAHCs_vs_SA_Smag':
                     filein = f'arm_{str(time)}.nc'
                     ds_in = xr.open_dataset(path_in + filein)
 
-                    if n == 4:
-                        var_prof_440[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
-                    else:
-                        var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
+                    # if n == 4:
+                    #     var_prof_440[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
+                    # else:
+                    var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
 
                 else:
                     path_in = path_ARM25
