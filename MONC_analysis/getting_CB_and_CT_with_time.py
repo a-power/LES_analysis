@@ -291,9 +291,9 @@ elif plot_choice == 'all_Cs_at_D_200':
 
     CB_mean_height_ts = np.zeros( (7, 640) )
     CT_mean_height_ts = np.zeros( (7, 640) )
-    cloud_init = np.zeros(6)
+    cloud_init = np.zeros(7)
 
-    for n in range(6):
+    for n in range(7):
         if n == 0: #unalt
             path_in = path_MONC_stand + f'{res_in_m}m/'
         elif n == 1:
@@ -314,6 +314,8 @@ elif plot_choice == 'all_Cs_at_D_200':
             path_in = path_MONC_alt_HCs + f'{res_in_m}m/SA/'
         elif n == 5:
             path_in = path_MONC_alt_HCs + f'{res_in_m}m/HCth_L/'
+        elif n == 6:
+            path_in = path_MONC_alt_HCs + f'{res_in_m}m/HCth_L/SA/'
 
         # for nt, time in enumerate(list_timestamps):
 
@@ -356,7 +358,7 @@ elif plot_choice == 'all_Cs_at_D_200':
 
 
     plt.plot(figsize=(12, 4))
-    for i in range(6):
+    for i in range(7):
         # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
         if i == 0:
             print(f'S$C_s$0.23:, len(plot_ref_tstamps) = {len(plot_ref_tstamps)}')
@@ -365,29 +367,34 @@ elif plot_choice == 'all_Cs_at_D_200':
                      label='Smag 0.23') #f'$\\Delta$ = {2 ** ((i-3))}00m'
             plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[i], linestyle='--')
         elif i == 1:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[1], linestyle='--')#, marker='*')
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[1], linestyle='--',
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[i], linestyle='--')#, marker='*')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[i], linestyle='--',
                      label=f'Smag 0.137')
             plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[i], linestyle='--')
         elif i == 2:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[2], linestyle='--')#, marker='*')
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[2], linestyle='--',
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[i], linestyle='--')#, marker='*')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[i], linestyle='--',
                      label=f'Smag {sa_smag}')
             plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[i], linestyle='--')
         elif i == 3:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[3]) #, linestyle='--')#, linewidth=2)
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[3],
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[i]) #, linestyle='--')#, linewidth=2)
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[i],
                      label='$C_s$ prof')
             plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[i])
         elif i == 4:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[4]) #, linestyle='--')#, marker='x')
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[4],
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[i])#, linestyle='--', marker='x')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[i],
                      label='S-A $C_s$ prof')
             plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[i])
         elif i == 5:
-            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[5]) #, linestyle='--')#, marker='^')
-            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[5],
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[i]) #, linestyle='--')#, marker='^')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[i],
                      label='$C_s C_{\\theta_L}$ profs')
+            plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[i])
+        elif i == 6:
+            plt.plot(plot_ref_tstamps, CB_mean_height_ts[i, :], colour_cycle[i])  # , linestyle='--')#, marker='^')
+            plt.plot(plot_ref_tstamps, CT_mean_height_ts[i, :], colour_cycle[i],
+                     label='S-A $C_s C_{\\theta_L}$ profs')
             plt.vlines(plot_ref_tstamps[int(cloud_init[i])], 250, 1500, colour_cycle[i])
 
     plt.tight_layout(pad=0.5)
