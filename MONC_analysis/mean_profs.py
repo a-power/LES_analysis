@@ -280,9 +280,9 @@ elif plotting == 'SAHCs_vs_SA_Smag':
                 # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
                 if i < 3:
                     if i == 2:
-                        plt.plot(var_prof_40[i, :], zn_40, colour_cycle[i % 3], linestyle='-.')
-                    else:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='-.')
+                        plt.plot(var_prof_40[i, :], zn_40, colour_cycle[i % 3], linestyle=':')
+                    if i == 1:
+                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':')
                 else:
                     if i == 4:
                         plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
@@ -299,7 +299,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
-
+            plt.ylim(bottom=600, top=3600)
             plt.xlabel(f'{var}', fontsize=14)
             plt.ylabel('z (m)', fontsize=14)
 
