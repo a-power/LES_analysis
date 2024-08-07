@@ -13,7 +13,7 @@ def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=1):
     return mask_no_cloud
 
 
-plotting = 'og_vs_HCs' # 'og_vs_HCs' 'HCs_vs_SAHCs' 'SAHCs_vs_SA_Smag'
+plotting = 'HCs_vs_SAHCs' # 'og_vs_HCs' 'HCs_vs_SAHCs' 'SAHCs_vs_SA_Smag'
 
 
 
@@ -194,15 +194,14 @@ elif plotting == 'HCs_vs_SAHCs':
             for i in range(6):
                 # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
                 if i < 3:
-                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--')
+                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
+                                 label='$\\Delta$' + f' = {(2 ** (i))}00m')
                 else:
                     if i == 4:
-                        plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3],
-                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m', linestyle=':')
+                        plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=':')
                         # marker='*')
                     else:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3],
-                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m', linestyle=':')
+                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':')
                         # marker='*')
 
             plt.title(f'{clock_time}:'+' $C_s$ prof (dot) vs S-A $C_s$ prof (dash)')
@@ -369,18 +368,11 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
             for i in range(6):
                 # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
                 if i < 3:
-                    if i == 2:
-                        plt.plot(var_prof_40[i, :], zn_40, colour_cycle[i % 3], linestyle=':')
-                    else:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':')
+                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
+                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
+
                 else:
-                    if i == 4:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
-                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
-                        # marker='*')
-                    else:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
-                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
+                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':')
                         # marker='*')
 
             plt.title(f'{clock_time}: S-A $C_s$ prof (dot) vs S-A $C_s$'+'$C_{\\theta_L}$ profs (dash)')
