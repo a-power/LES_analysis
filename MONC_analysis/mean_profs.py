@@ -351,7 +351,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                     filein = f'arm_{str(time)}.nc'
                     ds_in = xr.open_dataset(path_in + filein)
 
-                    if n == 4:
+                    if n == 3:
                         var_prof_440[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
                     else:
                         var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
@@ -381,9 +381,9 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                 else:
                     if i == 5:
                         plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='-.')
-                    elif i == 3:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':')
                     elif i == 4:
+                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':')
+                    elif i == 3:
                         plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=':')
                         # marker='*')
 
