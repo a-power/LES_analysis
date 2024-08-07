@@ -139,6 +139,7 @@ if plotting == 'og_vs_HCs':
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
+            plt.ylim(0, 1.3)
 
             plt.xlabel(f'{var}', fontsize=14)
             plt.ylabel('$z$/$z_\\text{CT}$', fontsize=14)
@@ -220,6 +221,7 @@ elif plotting == 'HCs_vs_SAHCs':
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
+            plt.ylim(0, 1.3)
 
             plt.xlabel(f'{var}', fontsize=14)
             plt.ylabel('$z$/$z_\\text{CT}$', fontsize=14)
@@ -308,6 +310,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
+            plt.ylim(0, 1.3)
             #plt.ylim(bottom=600, top=3600)
             plt.xlabel(f'{var}', fontsize=14)
             plt.ylabel('$z$/$z_\\text{CT}$', fontsize=14)
@@ -406,6 +409,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
+            plt.ylim(0, 1.3)
             #plt.ylim(bottom=600, top = 3600)
 
             plt.xlabel(f'{var}', fontsize=14)
