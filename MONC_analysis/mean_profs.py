@@ -383,8 +383,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                         plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='-.')
                     elif i == 3:
                         plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':')
-                    elif i ==4:
-                        elif i == 3:
+                    elif i == 4:
                         plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=':')
                         # marker='*')
 
