@@ -57,7 +57,7 @@ for t, times in enumerate(list_timestamps):
 
     ds_in = xr.open_dataset(path_ARM25 + f'{str(times)}.nc')
     cloud25 = np.mean(ds_in['total_cloud_fraction'].data, axis=0)
-    for i in range(len(cloud25), 0, -1):
+    for i in range(len(cloud25)-1, 0, -1):
         if cloud25[i] != 0:
             cloudtop25[t] = zn[i]
             break
