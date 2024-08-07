@@ -13,7 +13,7 @@ def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=1):
     return mask_no_cloud
 
 
-plotting = 'SAHCs_vs_SAHCsCth_L' # 'og_vs_HCs' 'HCs_vs_SAHCs' 'SAHCs_vs_SA_Smag'
+plotting = 'SAHCs_vs_SAHCsCth_L' # 'og_vs_HCs' 'HCs_vs_SAHCs' 'SAHCs_vs_SA_Smag' 'SAHCs_vs_SAHCsCth_L'
 
 
 
@@ -373,21 +373,24 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                 if i < 3:
                     if i == 2:
                         plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='-',
-                                 label='$\\Delta$' + ' = 400m (S-A)')
+                                 label='$\\Delta$' + ' = 400m, S-A $C_s$ & $C_{\\theta_L}$ profs')
                     else:
                         plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
-                                 label='$\\Delta$' + f' = {(2 ** (i+1))}00m')
+                                 label='$\\Delta$' + f' = {(2 ** (i+1))}00m, ' + '$C_s$ & $C_{\\theta_L}$ profs')
 
                 else:
                     if i == 5:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='-.')
+                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='-.',
+                                 label='$\\Delta$' + ' = 400m, S-A $C_s$ prof')
                     elif i == 4:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':')
+                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':',
+                                 label='$\\Delta$' + ' = 200m, $C_s$ prof')
                     elif i == 3:
-                        plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=':')
+                        plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=':',
+                                 label='$\\Delta$' + ' = 400m, $C_s$ prof')
                         # marker='*')
 
-            plt.title(f'{clock_time}: $C_s$ prof (dot) & S-A (dash dot) vs $C_s$'+'$C_{\\theta_L}$ profs (dash) & S-A (solid)')
+            plt.title(f'{clock_time}:' + ' $C_s$ prof vs $C_s$ & $C_{\\theta_L}$ profs')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
