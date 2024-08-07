@@ -384,10 +384,10 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                                  label='$\\Delta$' + ' = 400m, S-A $C_s$ prof')
                     elif i == 4:
                         plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':',
-                                 label='$\\Delta$' + ' = 200m, $C_s$ prof')
+                                 label='$\\Delta$' + ' = 400m, $C_s$ prof')
                     elif i == 3:
                         plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=':',
-                                 label='$\\Delta$' + ' = 400m, $C_s$ prof')
+                                 label='$\\Delta$' + ' = 200m, $C_s$ prof')
                         # marker='*')
 
             plt.title(f'{clock_time}:' + ' $C_s$ prof vs $C_s$ & $C_{\\theta_L}$ profs')
