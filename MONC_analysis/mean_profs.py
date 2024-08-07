@@ -325,7 +325,6 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
 
             for n in range(7):
                 print(n)
-                Cs_val = ['/', '/Cs_0_11/', '/dz_40m/Cs0_075/']
                 if n < 3:
                     path_in = path_MONC_stand + f'{2 ** (n)}00m{Cs_val[n]}'
                     if n == 2:
@@ -368,11 +367,14 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
             for i in range(6):
                 # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
                 if i < 3:
-                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
-                                 label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
+                    if i ==0:
+                        print('no SA data')
+                    else:
+                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--')
 
                 else:
-                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':')
+                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':',
+                                 label='$\\Delta$' + f' = {(2 ** i)}00m')
                         # marker='*')
 
             plt.title(f'{clock_time}: S-A $C_s$ prof (dot) vs S-A $C_s$'+'$C_{\\theta_L}$ profs (dash)')
