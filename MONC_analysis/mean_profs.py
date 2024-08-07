@@ -13,7 +13,7 @@ def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=1):
     return mask_no_cloud
 
 
-plotting = 'HCs_vs_SAHCs' # 'og_vs_HCs' 'HCs_vs_SAHCs' 'SAHCs_vs_SA_Smag' 'SAHCs_vs_SAHCsCth_L'
+plotting = 'SAHCs_vs_SA_Smag' # 'og_vs_HCs' 'HCs_vs_SAHCs' 'SAHCs_vs_SA_Smag' 'SAHCs_vs_SAHCsCth_L'
 
 
 
