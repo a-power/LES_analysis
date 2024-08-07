@@ -52,6 +52,16 @@ line_list = ['--', '--', '--', ':', ':', ':']
 model_param = ['Smag 0.23', 'Smag 0.137', 'Smag 0.11', 'Smag 0.075',
                '$C_s$ prof', 'S-A $C_s$ prof', '$C_s C_{\\theta_L}$ prof'] #'HCs $\\widehat{\\bar{\\Delta}}'
 
+cloudtop25 = np.zeros((len(list_timestamps)))
+for t, times in enumerate(list_timestamps):
+
+    ds_in = xr.open_dataset(path_ARM25 + f'{str(times)}.nc')
+    cloud25 = np.mean(ds_in['total_cloud_fraction'].data, axis=0)
+    for i in range(len(cloud25), 0, -1):
+        if cloud25[i] != 0:
+            cloudtop25[t] = zn[i]
+            break
+
 
 
 if plotting == 'og_vs_HCs':
@@ -110,16 +120,16 @@ if plotting == 'og_vs_HCs':
                 #plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
                 if i < 3:
                     if i == 2:
-                        plt.plot(var_prof_40[i, :], zn_40, colour_cycle[i % 3], linestyle=':')
+                        plt.plot(var_prof_40[i, :], zn_40/cloudtop25[nt], colour_cycle[i % 3], linestyle=':')
                     else:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':')
+                        plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle=':')
                 else:
                     if i == 4:
-                        plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3],
+                        plt.plot(var_prof_440[i, :], zn_440/cloudtop25[nt], colour_cycle[i % 3],
                                  label='$\\Delta$'+f' = {(2**(i-3))}00m', linestyle='--')
                             # marker='*')
                     else:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3],
+                        plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3],
                              label='$\\Delta$'+f' = {(2**(i-3))}00m', linestyle='--')
                             # marker='*')
 
@@ -131,7 +141,7 @@ if plotting == 'og_vs_HCs':
             bottom, top = plt.ylim()
 
             plt.xlabel(f'{var}', fontsize=14)
-            plt.ylabel('z (m)', fontsize=14)
+            plt.ylabel('$z$/$z_\\text{CT}$', fontsize=14)
 
             plt.tight_layout()
 
@@ -194,14 +204,14 @@ elif plotting == 'HCs_vs_SAHCs':
             for i in range(6):
                 # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
                 if i < 3:
-                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
+                    plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle='--',
                                  label='$\\Delta$' + f' = {(2 ** (i))}00m')
                 else:
                     if i == 4:
-                        plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=':')
+                        plt.plot(var_prof_440[i, :], zn_440/cloudtop25[nt], colour_cycle[i % 3], linestyle=':')
                         # marker='*')
                     else:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':')
+                        plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle=':')
                         # marker='*')
 
             plt.title(f'{clock_time}:'+' $C_s$ prof (dot) vs S-A $C_s$ prof (dash)')
@@ -212,7 +222,7 @@ elif plotting == 'HCs_vs_SAHCs':
             bottom, top = plt.ylim()
 
             plt.xlabel(f'{var}', fontsize=14)
-            plt.ylabel('z (m)', fontsize=14)
+            plt.ylabel('$z$/$z_\\text{CT}$', fontsize=14)
 
             plt.tight_layout()
 
@@ -279,16 +289,16 @@ elif plotting == 'SAHCs_vs_SA_Smag':
                 # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
                 if i < 3:
                     if i == 2:
-                        plt.plot(var_prof_40[i, :], zn_40, colour_cycle[i % 3], linestyle=':')
+                        plt.plot(var_prof_40[i, :], zn_40/cloudtop25[nt], colour_cycle[i % 3], linestyle=':')
                     if i == 1:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':')
+                        plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle=':')
                 else:
                     if i == 4:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
+                        plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle='--',
                                  label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
                     else:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
+                        plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle='--',
                                  label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
 
@@ -298,9 +308,9 @@ elif plotting == 'SAHCs_vs_SA_Smag':
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
-            plt.ylim(bottom=600, top=3600)
+            #plt.ylim(bottom=600, top=3600)
             plt.xlabel(f'{var}', fontsize=14)
-            plt.ylabel('z (m)', fontsize=14)
+            plt.ylabel('$z$/$z_\\text{CT}$', fontsize=14)
 
             plt.tight_layout()
 
@@ -372,18 +382,18 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                 # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
                 if i < 3:
                     if i == 2:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='-',
+                        plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle='-',
                                  label='$\\Delta$' + ' = 400m, S-A $C_s$ & $C_{\\theta_L}$ profs')
                     else:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
+                        plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle='--',
                                  label='$\\Delta$' + f' = {(2 ** (i+1))}00m, ' + '$C_s$ & $C_{\\theta_L}$ profs')
 
                 else:
                     if i == 5:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='-.',
+                        plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle='-.',
                                  label='$\\Delta$' + ' = 400m, S-A $C_s$ prof')
                     elif i == 4:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':',
+                        plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle=':',
                                  label='$\\Delta$' + ' = 400m, $C_s$ prof')
                     elif i == 3:
                         plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=':',
@@ -396,10 +406,10 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
-            plt.ylim(bottom=600, top = 3600)
+            #plt.ylim(bottom=600, top = 3600)
 
             plt.xlabel(f'{var}', fontsize=14)
-            plt.ylabel('z (m)', fontsize=14)
+            plt.ylabel('$z$/$z_\\text{CT}$', fontsize=14)
 
             plt.tight_layout()
 
