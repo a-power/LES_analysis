@@ -142,7 +142,7 @@ if plotting == 'og_vs_HCs':
             plt.ylim(0, 1.3)
 
             plt.xlabel(f'{var}', fontsize=14)
-            plt.ylabel('$z$/$z_\\text{CT}$', fontsize=14)
+            plt.ylabel('$z$/$z_{CT}$', fontsize=14)
 
             plt.tight_layout()
 
@@ -224,7 +224,7 @@ elif plotting == 'HCs_vs_SAHCs':
             plt.ylim(0, 1.3)
 
             plt.xlabel(f'{var}', fontsize=14)
-            plt.ylabel('$z$/$z_\\text{CT}$', fontsize=14)
+            plt.ylabel('$z$/$z_{CT}$', fontsize=14)
 
             plt.tight_layout()
 
@@ -313,7 +313,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
             plt.ylim(0, 1.3)
             #plt.ylim(bottom=600, top=3600)
             plt.xlabel(f'{var}', fontsize=14)
-            plt.ylabel('$z$/$z_\\text{CT}$', fontsize=14)
+            plt.ylabel('$z$/$z_{CT}$', fontsize=14)
 
             plt.tight_layout()
 
@@ -413,7 +413,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
             #plt.ylim(bottom=600, top = 3600)
 
             plt.xlabel(f'{var}', fontsize=14)
-            plt.ylabel('$z$/$z_\\text{CT}$', fontsize=14)
+            plt.ylabel('$z$/$z_{CT}$', fontsize=14)
 
             plt.tight_layout()
 
