@@ -13,7 +13,7 @@ def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=1):
     return mask_no_cloud
 
 
-plotting = 'HCs_vs_SAHCs' # 'og_vs_HCs' 'HCs_vs_SAHCs' 'SAHCs_vs_SA_Smag'
+plotting = 'SAHCs_vs_SAHCsCth_L' # 'og_vs_HCs' 'HCs_vs_SAHCs' 'SAHCs_vs_SA_Smag'
 
 
 
@@ -326,23 +326,27 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
             for n in range(7):
                 print(n)
                 if n < 3:
-                    path_in = path_MONC_stand + f'{2 ** (n)}00m{Cs_val[n]}'
-                    if n == 2:
-                        filein = f'arm_{str(time)}.nc'
-                        ds_in = xr.open_dataset(path_in + filein)
-                        var_prof_40[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
-                    else:
-                        filein = f'arm_{str(time)}.nc'
-                        ds_in = xr.open_dataset(path_in + filein)
-                        var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
+                    if n == 0:
+                        path_in = path_MONC_alt_HCs + '200m/HCth_L/'
+                    elif n == 1:
+                        path_in = path_MONC_alt_HCs + '400m/HCth_L/'
+                    elif n == 2:
+                        path_in = path_MONC_alt_HCs + '400m/HCth_L/SA/'
+
+
+                    filein = f'arm_{str(time)}.nc'
+                    ds_in = xr.open_dataset(path_in + filein)
+                    var_prof[n, :] = np.mean(ds_in[f'{var}'].data, axis=0)
 
 
                 elif n < 6:
 
                     if n == 3:
-                        path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/'
-                    else:
-                        path_in = path_MONC_alt_HCs + f'{2 ** (n - 3)}00m/SA/'
+                        path_in = path_MONC_alt_HCs + '200m/'
+                    elif n == 4:
+                        path_in = path_MONC_alt_HCs + '400m/'
+                    elif n == 5:
+                        path_in = path_MONC_alt_HCs + '400m/SA/'
 
                     filein = f'arm_{str(time)}.nc'
                     ds_in = xr.open_dataset(path_in + filein)
@@ -367,17 +371,21 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
             for i in range(6):
                 # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
                 if i < 3:
-                    if i ==0:
-                        print('no SA data')
+                    if i == 2:
+                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='-',
+                                 label='$\\Delta$' + ' = 400m (S-A)')
                     else:
-                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--')
+                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='--',
+                                 label='$\\Delta$' + f' = {(2 ** (i+1))}00m')
 
                 else:
-                    plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':',
-                                 label='$\\Delta$' + f' = {(2 ** i)}00m')
+                    if i == 5:
+                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle='-.')
+                    else:
+                        plt.plot(var_prof[i, :], zn, colour_cycle[i % 3], linestyle=':')
                         # marker='*')
 
-            plt.title(f'{clock_time}: S-A $C_s$ prof (dot) vs S-A $C_s$'+'$C_{\\theta_L}$ profs (dash)')
+            plt.title(f'{clock_time}: $C_s$ prof (dot) & S-A (dash dot) vs $C_s$'+'$C_{\\theta_L}$ profs (dash) & S-A (solid)')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
