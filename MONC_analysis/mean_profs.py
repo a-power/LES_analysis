@@ -113,7 +113,7 @@ if plotting == 'og_vs_HCs':
 
             plt.plot(figsize=(5, 8))
 
-            plt.plot(var_prof[6, :], zn, 'k', linewidth=2,
+            plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2,
                      label='LES $\\Delta$ = 25m')
 
             for i in range(6):
@@ -199,7 +199,7 @@ elif plotting == 'HCs_vs_SAHCs':
 
             plt.plot(figsize=(5, 8))
 
-            plt.plot(var_prof[6, :], zn, 'k', linewidth=2,
+            plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2,
                      label='LES $\\Delta$ = 25m')
 
             for i in range(6):
@@ -284,7 +284,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
 
             plt.plot(figsize=(5, 8))
 
-            plt.plot(var_prof[6, :], zn, 'k', linewidth=2,
+            plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2,
                      label='LES $\\Delta$ = 25m')
 
             for i in range(6):
@@ -378,7 +378,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
 
             plt.plot(figsize=(5, 8))
 
-            plt.plot(var_prof[6, :], zn, 'k', linewidth=2,
+            plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2,
                      label='LES $\\Delta$ = 25m')
 
             for i in range(6):
@@ -399,7 +399,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                         plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle=':',
                                  label='$\\Delta$' + ' = 400m, $C_s$ prof')
                     elif i == 3:
-                        plt.plot(var_prof_440[i, :], zn_440, colour_cycle[i % 3], linestyle=':',
+                        plt.plot(var_prof_440[i, :], zn_440/cloudtop25[nt], colour_cycle[i % 3], linestyle=':',
                                  label='$\\Delta$' + ' = 200m, $C_s$ prof')
                         # marker='*')
 
