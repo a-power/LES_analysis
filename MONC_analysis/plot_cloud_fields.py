@@ -40,7 +40,7 @@ for nf, file_n in enumerate(model_setups):
     #       len(contour_set['f(f(q_cloud_liquid_mass_on_p)_r_on_p)_r'].data[:, 0, 0, 0]))
 
 
-    cloud_top_field = ds_in['cltop'].data[...]
+    cloud_top_field = ds_in['cltop'].data[0,...]
 
     mask_no_cloud = ma.masked_less_equal(cloud_top_field, 0)
 
