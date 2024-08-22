@@ -56,7 +56,7 @@ for nf, file_n in enumerate(model_setups):
 
     print('beginning plots')
 
-    fig1, ax1 = plt.subplots(figsize=(20, 5))
+    fig1, ax1 = plt.subplots()
     plt.title(f'{model_setup_names[nf]}' + ' with $\\widehat{\\bar{\\Delta}} = $' + '400m', fontsize=16)
 
     # mycmap = plt.get_cmap('YlOrRd').copy()
