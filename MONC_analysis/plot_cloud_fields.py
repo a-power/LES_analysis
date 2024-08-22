@@ -29,6 +29,8 @@ model_setups = [path_MONC_stand+'400m/', path_MONC_alt_HCs+'400m/', path_MONC_al
 model_setup_names = ['Smag', '$C_s$ prof', '$C_s$ S-A prof', '$C_s$ & $Pr_{\\theta_L}$ prof',
                      '$C_s$ & $Pr_{\\theta_L}$ S-A prof']
 
+model_setup_save = ['Smag', 'Cs', 'Cs_S-A', 'Cs_Pr', 'Cs_Pr']
+
 for nf, file_n in enumerate(model_setups):
 
     ds_in = xr.open_dataset(file_n + f'arm_3d_{str(times)}.nc')
@@ -80,6 +82,6 @@ for nf, file_n in enumerate(model_setups):
     # og_ytic = plt.yticks()
     # plt.yticks(z_tix_in, z_labels_in)  # plt.yticks(np.linspace(0, 151, 7) , np.linspace(0, 3, 7))
 
-    plt.savefig(plotdir + f'Cloud_top_{model_setup_names[nf]}_32400.pdf',
+    plt.savefig(plotdir + f'Cloud_top_{model_setup_save[nf]}_32400.pdf',
                 bbox_inches='tight')
     plt.clf()
