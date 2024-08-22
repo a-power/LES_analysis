@@ -1,6 +1,6 @@
 import numpy as np
 import os
-import matpltlib as plt
+import matplotlib.pyplot as plt
 import analysis_plot_fns as apf
 import argparse
 import xarray as xr
