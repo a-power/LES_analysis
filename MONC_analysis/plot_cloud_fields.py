@@ -29,7 +29,7 @@ model_setups = [path_MONC_stand+'400m/', path_MONC_alt_HCs+'400m/', path_MONC_al
 model_setup_names = ['Smag', '$C_s$ prof', '$C_s$ S-A prof', '$C_s$ & $Pr_{\\theta_L}$ prof',
                      '$C_s$ & $Pr_{\\theta_L}$ S-A prof']
 
-model_setup_save = ['Smag', 'Cs', 'Cs_S-A', 'Cs_Pr', 'Cs_Pr']
+model_setup_save = ['Smag', 'Cs', 'Cs_S-A', 'Cs_Pr', 'Cs_Pr_S-A']
 
 for nf, file_n in enumerate(model_setups):
 
