@@ -134,12 +134,12 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
     prof_data_temp = xr.open_dataset(file_path+f'{set_time[0]}.nc')
     zn_out = prof_data_temp['zn'].data[...]
 
-    wth_prof = np.zeros(len(times), len(zn_out))
-    th_prof = np.zeros(len(times), len(zn_out))
-    cloud_prof = np.zeros(len(times), len(zn_out))
-    z = np.zeros(len(times), len(zn_out))
-    z_i = np.zeros(len(times), len(zn_out))
-    w_max_prof_in = np.zeros(len(times), len(zn_out))
+    wth_prof = np.zeros((len(times), len(zn_out)))
+    th_prof = np.zeros((len(times), len(zn_out)))
+    cloud_prof = np.zeros((len(times), len(zn_out)))
+    z = np.zeros((len(times), len(zn_out)))
+    z_i = np.zeros((len(times), len(zn_out)))
+    w_max_prof_in = np.zeros((len(times), len(zn_out)))
 
     for it, time_in in enumerate(times):
 
