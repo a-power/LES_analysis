@@ -152,19 +152,19 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
         clock_time_int = 05.30 + int(time_in) / (60 * 60)
         clock_time = str(clock_time_int) + '0L'
 
-        ax[0].plot(wth_prof[it,:], z[it, :] / z_i[it, :], color=colours[it], label = f'{clock_time}'+' (z$_{ML}$ = ' + str(int(z_i)) + 'm)')
+        ax[0].plot(wth_prof[it,:], z[it, :] / z_i[it], color=colours[it], label = f'{clock_time}'+' (z$_{ML}$ = ' + str(int(z_i[it])) + 'm)')
         ax[0].set_xlabel("$ \\overline{w' \\theta} (K m s^{-1})$", fontsize=16)
         ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
         ax[0].set_xticks(ax[0].get_xticks()[::2])
         ax[0].legend(fontsize=16)
 
-        ax[1].plot(cloud_prof[it,:]*100, z[it, :] / z_i[it, :], color=colours[it], label = f'{clock_time} '+' z$_{ML}$ = ' + str(int(z_i)) + 'm)')
+        ax[1].plot(cloud_prof[it,:]*100, z[it, :] / z_i[it], color=colours[it], label = f'{clock_time} '+' z$_{ML}$ = ' + str(int(z_i[it])) + 'm)')
         ax[1].set_xlabel('cloud cover (%)', fontsize=16)
 
-        ax[2].plot(th_prof[it,:], z[it, :] / z_i[it, :], color=colours[it], label = f'{clock_time}'+' (z$_{ML}$ = ' + str(int(z_i)) + 'm)')
+        ax[2].plot(th_prof[it,:], z[it, :] / z_i[it], color=colours[it], label = f'{clock_time}'+' (z$_{ML}$ = ' + str(int(z_i[it])) + 'm)')
         ax[2].set_xlabel("$ \\overline{\\theta}$ (K)", fontsize=16)
 
-        ax[3].plot(w_max_prof_in[it,:], z[it, :] / z_i[it, :], color=colours[it], label = f'{clock_time}'+' (z$_{ML}$ = ' + str(int(z_i)) + 'm)')
+        ax[3].plot(w_max_prof_in[it,:], z[it, :] / z_i[it], color=colours[it], label = f'{clock_time}'+' (z$_{ML}$ = ' + str(int(z_i[it])) + 'm)')
         ax[3].set_xlabel("$ w'_{max}$ (m s^{-1})", fontsize=16)
 
         # else:
