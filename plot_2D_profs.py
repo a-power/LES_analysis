@@ -111,8 +111,8 @@ def get_w_max_profs(field_path_in, time_stamp=-1):
 def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
 
 
-    colours = ['tab:red', 'black', 'tab:green', 'tab:blue', 'tab:purple',
-               'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink', 'tab:orange']
+    colours = ['tab:red' 'tab:green', 'tab:blue', 'tab:orange', 'tab:purple',
+               'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
 
 
     # if len(times) == 1:
@@ -156,16 +156,16 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
         ax[0].set_xlabel("$ \\overline{w' \\theta} (K m s^{-1})$", fontsize=16)
         ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
         ax[0].set_xticks(ax[0].get_xticks()[::2])
-        ax[0].legend(fontsize=16)
 
-        ax[1].plot(cloud_prof[it,:]*100, z[it, :] / z_i[it], color=colours[it], label = f'{clock_time} '+' z$_{ML}$ = ' + str(int(z_i[it])) + 'm)')
-        ax[1].set_xlabel('cloud cover (%)', fontsize=16)
+        ax[3].plot(cloud_prof[it,:]*100, z[it, :] / z_i[it], color=colours[it], label = f'{clock_time} '+' z$_{ML}$ = ' + str(int(z_i[it])) + 'm)')
+        ax[3].set_xlabel('cloud cover (%)', fontsize=16)
+        ax[3].legend(fontsize=13)
 
         ax[2].plot(th_prof[it,:], z[it, :] / z_i[it], color=colours[it], label = f'{clock_time}'+' (z$_{ML}$ = ' + str(int(z_i[it])) + 'm)')
         ax[2].set_xlabel("$ \\overline{\\theta}$ (K)", fontsize=16)
 
-        ax[3].plot(w_max_prof_in[it,:], z[it, :] / z_i[it], color=colours[it], label = f'{clock_time}'+' (z$_{ML}$ = ' + str(int(z_i[it])) + 'm)')
-        ax[3].set_xlabel("$ w'_{max}$ (m s^{-1})", fontsize=16)
+        ax[1].plot(w_max_prof_in[it,:], z[it, :] / z_i[it], color=colours[it], label = f'{clock_time}'+' (z$_{ML}$ = ' + str(int(z_i[it])) + 'm)')
+        ax[1].set_xlabel("$ w'_{max}$ (m s^{-1})", fontsize=16)
 
         # else:
         #     ax[0].plot(wth_prof, z / z_i, color=colours[it])
