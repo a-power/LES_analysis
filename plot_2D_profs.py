@@ -21,8 +21,8 @@ case = args.case_in
 if case == 'ARM':
 
     plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/ARM/corrected_sigma/MONC_profiles/'
-    prof_file = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_ts_' #diagnostics_ts_18000.nc
-    field_file = '/work/scratch-pw3/apower/ARM/MONC_out/diagnostics_3d_ts_'
+    prof_file = '/work/scratch-pw3/apower/ARM/MONC_out/25m/diagnostics_ts_' #diagnostics_ts_18000.nc
+    field_file = '/work/scratch-pw3/apower/ARM/MONC_out/25m/diagnostics_3d_ts_'
 
     zn_set = np.arange(0, 4410, 10)
     z_set = np.arange(-5, 4405, 10)
