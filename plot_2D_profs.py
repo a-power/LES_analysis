@@ -115,10 +115,10 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink', 'tab:orange']
 
 
-    if len(times) == 1:
-        fig, ax = plt.subplots(nrows=1, ncols=4, sharey=True, figsize=(13, 4))
-    else:
-        fig, ax = plt.subplots(nrows=4, ncols=len(times), sharey=False, figsize=(14,19))
+    # if len(times) == 1:
+    fig, ax = plt.subplots(nrows=1, ncols=4, sharey=True, figsize=(13, 4))
+    # else:
+    #     fig, ax = plt.subplots(nrows=4, ncols=len(times), sharey=False, figsize=(14,19))
 
     fig.tight_layout(pad=0.5)
 
@@ -131,81 +131,90 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
     setright2 = 0
     setright3 = 0
 
+    prof_data_temp = xr.open_dataset(file_path+f'{set_time[0]}.nc')
+    zn_out = prof_data_temp['zn'].data[...]
+
+    wth_prof = np.zeros(len(times), len(zn_out))
+    th_prof = np.zeros(len(times), len(zn_out))
+    cloud_prof = np.zeros(len(times), len(zn_out))
+    z = np.zeros(len(times), len(zn_out))
+    z_i = np.zeros(len(times), len(zn_out))
+    w_max_prof_in = np.zeros(len(times), len(zn_out))
 
     for it, time_in in enumerate(times):
 
         file_in = file_path + f'{time_in}.nc'
         field_in = field_path + f'{time_in}.nc'
 
-        wth_prof,  th_prof, cloud_prof, z, z_i = get_cloud_wth_profs(file_in, time_stamp=time_stamp_in)
-        w_max_prof_in = get_w_max_profs(field_in, time_stamp=time_stamp_in)
+        wth_prof[it,:], th_prof[it,:], cloud_prof[it,:], z[it,:], z_i[it,:] = get_cloud_wth_profs(file_in, time_stamp=time_in)
+        w_max_prof_in[it,:] = get_w_max_profs(field_in, time_stamp=time_in)
 
         clock_time_int = 05.30 + int(time_in) / (60 * 60)
         clock_time = str(clock_time_int) + '0L'
 
-        if len(times) == 1:
-            ax[0].plot(wth_prof, z / z_i, color='black')
-            ax[0].set_xlabel("$ \\overline{w' \\theta} (K m s^{-1})$", fontsize=16)
-            ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
-            ax[0].set_xticks(ax[0].get_xticks()[::2])
+        ax[0].plot(wth_prof[it,:], z[it, :] / z_i[it, :], color=colours[it], label = f'{clock_time}'+' (z$_{ML}$ = " + str(int(z_i)) + "m)')
+        ax[0].set_xlabel("$ \\overline{w' \\theta} (K m s^{-1})$", fontsize=16)
+        ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
+        ax[0].set_xticks(ax[0].get_xticks()[::2])
+        ax[0].legend(fontsize=16)
 
-            ax[1].plot(cloud_prof*100, z / z_i, color='black')
-            ax[1].set_xlabel('cloud cover (%)', fontsize=16)
+        ax[1].plot(cloud_prof[it,:]*100, z[it, :] / z_i[it, :], color=colours[it], label = f'{clock_time} '+' z$_{ML}$ = " + str(int(z_i)) + "m)')
+        ax[1].set_xlabel('cloud cover (%)', fontsize=16)
 
-            ax[2].plot(th_prof, z / z_i, color='black')
-            ax[2].set_xlabel("$ \\overline{\\theta}$ (K)", fontsize=16)
+        ax[2].plot(th_prof[it,:], z[it, :] / z_i[it, :], color=colours[it], label = f'{clock_time}'+' (z$_{ML}$ = " + str(int(z_i)) + "m)')
+        ax[2].set_xlabel("$ \\overline{\\theta}$ (K)", fontsize=16)
 
-            ax[3].plot(w_max_prof_in, z / z_i, color='black')
-            ax[3].set_xlabel("$ w'_{max}$ (m s^{-1})", fontsize=16)
+        ax[3].plot(w_max_prof_in[it,:], z[it, :] / z_i[it, :], color=colours[it], label = f'{clock_time}'+' (z$_{ML}$ = " + str(int(z_i)) + "m)')
+        ax[3].set_xlabel("$ w'_{max}$ (m s^{-1})", fontsize=16)
 
-        else:
-            ax[0, it].plot(wth_prof, z / z_i, color='black')
-            ax[0, it].set_xlabel("$ \\overline{w' \\theta'}$ at "  + clock_time, fontsize=16)
-            ax[0, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
+        # else:
+        #     ax[0].plot(wth_prof, z / z_i, color=colours[it])
+        #     ax[0].set_xlabel("$ \\overline{w' \\theta'}$ at "  + clock_time, fontsize=16)
+        #     ax[0].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
+        #
+        #     left0, right0 = ax[0, it].set_xlim()
+        #     if left0 < setleft0:
+        #         setleft0 = left0
+        #     if right0 > setright0:
+        #         setright0 = right0
+        #
+        #     ax[1].plot(cloud_prof * 100, z / z_i, color=colours[it])
+        #     ax[1].set_xlabel('cloud cover (%) at '  + clock_time, fontsize=16)
+        #     ax[1].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
+        #
+        #     left1, right1 = ax[1, it].set_xlim()
+        #     if left1 < setleft1:
+        #         setleft1 = left1
+        #     if right1 > setright1:
+        #         setright1 = right1
+        #
+        #     ax[2].plot(th_prof, z / z_i, color=colours[it])
+        #     ax[2].set_xlabel("$ \\overline{\\theta'}$ at "  + clock_time, fontsize=16)
+        #     ax[2].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
+        #
+        #     left2, right2 = ax[2, it].set_xlim()
+        #     if left2 < setleft2:
+        #         setleft2 = left2
+        #     if right2 > setright2:
+        #         setright2 = right2
+        #
+        #     ax[3].plot(w_max_prof_in, z / z_i, color=colours[it])
+        #     ax[3].set_xlabel("$ w'_{max}$", fontsize=16)
+        #     ax[3].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
+        #
+        #     left3, right3 = ax[3, it].set_xlim()
+        #     if left3 < setleft3:
+        #         setleft3 = left3
+        #     if right3 > setright3:
+        #         setright3 = right3
 
-            left0, right0 = ax[0, it].set_xlim()
-            if left0 < setleft0:
-                setleft0 = left0
-            if right0 > setright0:
-                setright0 = right0
-
-            ax[1, it].plot(cloud_prof * 100, z / z_i, color='black')
-            ax[1, it].set_xlabel('cloud cover (%) at '  + clock_time, fontsize=16)
-            ax[1, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
-
-            left1, right1 = ax[1, it].set_xlim()
-            if left1 < setleft1:
-                setleft1 = left1
-            if right1 > setright1:
-                setright1 = right1
-
-            ax[2, it].plot(th_prof, z / z_i, color='black')
-            ax[2, it].set_xlabel("$ \\overline{\\theta'}$ at "  + clock_time, fontsize=16)
-            ax[2, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
-
-            left2, right2 = ax[2, it].set_xlim()
-            if left2 < setleft2:
-                setleft2 = left2
-            if right2 > setright2:
-                setright2 = right2
-
-            ax[3, it].plot(w_max_prof_in, z / z_i, color='black')
-            ax[3, it].set_xlabel("$ w'_{max}$", fontsize=16)
-            ax[3, it].set_ylabel("z/z$_{ML}$ (z$_{ML}$ = " + str(int(z_i)) + "m)", fontsize=16)
-
-            left3, right3 = ax[3, it].set_xlim()
-            if left3 < setleft3:
-                setleft3 = left3
-            if right3 > setright3:
-                setright3 = right3
-
-    if len(times) != 1:
-        for itn in range(len(times)):
-            ax[0, itn].set_xlim(right=setright0, left=setleft0)
-            ax[1, itn].set_xlim(right=setright1, left=setleft1)
-            ax[2, itn].set_xlim(right=setright2, left=setleft2)
-            ax[3, itn].set_xlim(right=setright3, left=setleft3)
-            ax[0, itn].set_xticks(ax[0, itn].get_xticks()[::2])
+    # if len(times) != 1:
+    #     for itn in range(len(times)):
+    #         ax[0, itn].set_xlim(right=setright0, left=setleft0)
+    #         ax[1, itn].set_xlim(right=setright1, left=setleft1)
+    #         ax[2, itn].set_xlim(right=setright2, left=setleft2)
+    #         ax[3, itn].set_xlim(right=setright3, left=setleft3)
+    #         ax[0, itn].set_xticks(ax[0, itn].get_xticks()[::2])
 
 
     plt.tight_layout()
