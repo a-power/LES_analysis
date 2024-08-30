@@ -138,7 +138,7 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
     th_prof = np.zeros((len(times), len(zn_out)))
     cloud_prof = np.zeros((len(times), len(zn_out)))
     z = np.zeros((len(times), len(zn_out)))
-    z_i = np.zeros((len(times), len(zn_out)))
+    z_i = np.zeros((len(times)))
     w_max_prof_in = np.zeros((len(times), len(zn_out)))
 
     for it, time_in in enumerate(times):
@@ -146,7 +146,7 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
         file_in = file_path + f'{time_in}.nc'
         field_in = field_path + f'{time_in}.nc'
 
-        wth_prof[it,:], th_prof[it,:], cloud_prof[it,:], z[it,:], z_i[it,:] = get_cloud_wth_profs(file_in, time_stamp='mean')
+        wth_prof[it,:], th_prof[it,:], cloud_prof[it,:], z[it,:], z_i[it] = get_cloud_wth_profs(file_in, time_stamp='mean')
         w_max_prof_in[it,:] = get_w_max_profs(field_in, time_stamp='mean')
 
         clock_time_int = 05.30 + int(time_in) / (60 * 60)
