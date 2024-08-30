@@ -116,7 +116,7 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
 
 
     # if len(times) == 1:
-    fig, ax = plt.subplots(nrows=1, ncols=4, sharey=True, figsize=(13, 4))
+    fig, ax = plt.subplots(nrows=1, ncols=4, sharey=True, figsize=(13, 5))
     # else:
     #     fig, ax = plt.subplots(nrows=4, ncols=len(times), sharey=False, figsize=(14,19))
 
@@ -165,7 +165,7 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
         ax[2].set_xlabel("$ \\overline{\\theta}$ (K)", fontsize=16)
 
         ax[1].plot(w_max_prof_in[it,:], z[it, :] / z_i[it], color=colours[it], label = f'{clock_time}'+' (z$_{ML}$ = ' + str(int(z_i[it])) + 'm)')
-        ax[1].set_xlabel("$ w'_{max}$ (m s^{-1})", fontsize=16)
+        ax[1].set_xlabel("$ w'_{max}$ (m s$^{-1}$)", fontsize=16)
 
         # else:
         #     ax[0].plot(wth_prof, z / z_i, color=colours[it])
