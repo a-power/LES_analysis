@@ -111,7 +111,7 @@ def get_w_max_profs(field_path_in, time_stamp=-1):
 def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
 
 
-    colours = ['tab:red' 'tab:green', 'tab:blue', 'tab:orange', 'tab:purple',
+    colours = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple',
                'tab:cyan', 'tab:gray', 'tab:brown', 'tab:olive', 'tab:pink']
 
 
