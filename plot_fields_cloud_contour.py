@@ -163,7 +163,7 @@ Cqt_options = {'field': 'Cqt_field',
 
 
 apf.plotfield(**plot_var_fields_options, **Cs_options)
-apf.plotfield(**plot_var_fields_options, **Cth_options)
+# apf.plotfield(**plot_var_fields_options, **Cth_options)
 apf.plotfield(**plot_var_fields_options, **Cqt_options)
 
 # apf.plot_cloud_field(plotdir_in, x_or_y=my_x_y, axis_set=my_axis, set_percentile=None, var_field=set_var_field,
