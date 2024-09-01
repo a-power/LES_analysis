@@ -106,9 +106,7 @@ plot_var_fields_options = {'plot_dir': plotdir_in,
                             'delta_grid': Dx_grid,
                             'z_top_in': z_top,
                             'z_tix_in': z_tix,
-                            'z_labels_in': z_labels,
-                            'C_perc_1st': set_C_perc_1st,
-                            'C_perc_2nd': set_C_perc_2nd
+                            'z_labels_in': z_labels
                             }
 
 
