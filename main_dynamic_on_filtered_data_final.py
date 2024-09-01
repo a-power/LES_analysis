@@ -56,8 +56,7 @@ set_time = args.times
 first_filt_res = args.filt1
 beta = args.beta
 th_set = args.th
-if th_set == 'no':
-    th_set = False
+
 
 
 opgrid = 'p'
@@ -72,7 +71,7 @@ filter_name = 'gaussian'  # "wave_cutoff"
 if case_in=='BOMEX':
     in_dir = '/work/scratch-pw3/apower/BOMEX/first_filt/BOMEX_m'
     model_res = '0020_g0800'
-    outdir = f'/work/scratch-pw3/apower/BOMEX/second_filt/'
+    outdir = f'/work/scratch-pw3/apower/BOMEX/second_filt/th/'
     dx=20.0
     set_c_the = True
     #time = 14400
@@ -104,7 +103,7 @@ if case_in=='BOMEX':
 
 elif case_in=='ARM':
     in_dir = '/work/scratch-pw3/apower/ARM/first_filt/'
-    outdir = '/work/scratch-pw3/apower/ARM/second_filt/'
+    outdir = '/work/scratch-pw3/apower/ARM/second_filt/th/'
     model_res = None
     dx=25
     set_c_the = False
@@ -161,7 +160,7 @@ elif case_in=='dry':
 else:
     print(case_in, ": case isn't coded for yet")
 
-if th_set is not False:
+if th_set != 'no':
     outdir = outdir + f'{th_set}/'
 
 if beta == 0:
