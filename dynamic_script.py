@@ -609,9 +609,9 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                 ["v", "v"],
                                 ["v", "w"],
                                 ["w", "w"],
-                                ["u", "th"],
-                                ["v", "th"],
-                                ["w", "th"]
+                                ["u", theta],
+                                ["v", theta],
+                                ["w", theta]
                                 ]
 
                 elif c_th == 'th_e':
