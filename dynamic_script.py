@@ -446,7 +446,7 @@ def run_dyn(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid,
 
 
 def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, ingrid, filtered_data,
-            ref_file = None, time_name = 'time_series_600_600', case='ARM', beta_in=0, c_th=False):
+            ref_file = None, time_name = 'time_series_600_600', case='ARM', beta_in=0, c_the=False, c_th='th'):
 
     """ function takes in:
      dx: the grid spacing and number of grid points in the format:  """
@@ -554,8 +554,8 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         "w",
                         theta]
             else:
-                if c_th is not False:
-                    var_list = [c_th]
+                if c_th == 'th':
+                    var_list = ["th"]
                 else:
                     var_list = [
                                 "u",
@@ -609,9 +609,9 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                 ["v", "v"],
                                 ["v", "w"],
                                 ["w", "w"],
-                                ["u", theta],
-                                ["v", theta],
-                                ["w", theta]
+                                ["u", "th"],
+                                ["v", "th"],
+                                ["w", "th"]
                                 ]
 
                 elif c_th == 'th_e':
@@ -666,7 +666,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                 uvw_names=[f'f(u_on_{ingrid})_r', f'f(v_on_{ingrid})_r', f'f(w_on_{ingrid})_r'])
 
 
-        if case != 'dry' and c_th == False:
+        if case != 'dry' and c_the == False and c_th != 'th':
             # if c_th == True:
             #     dth_dx = dyn.ds_dxi(f'f(th_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
             #     dth_dx.name = 'dth_dx'
@@ -680,6 +680,11 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
             dth_L_dx = dyn.ds_dxi(f'f(th_L_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)
             dth_L_dx.name = 'dth_L_dx'
             dth_L_dx = re_chunk(dth_L_dx)
+
+        elif c_th == 'th':
+            dth_var_dx = dyn.ds_dxi(f'f(th_on_{ingrid})_r', dataset, ref_dataset, opt, ingrid, max_ch)  # f'f(th_on_{ingrid})_r'
+            dth_var_dx.name = f'd{c_th}_dx'
+            dth_var_dx = re_chunk(dth_var_dx)
 
 
         else:
@@ -719,7 +724,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                               opt, new_filter)
 
 
-        if case != 'dry' and c_th == False:
+        if case != 'dry' and c_the == False and c_th != 'th':
             dq_dx_filt = sf.filter_field(dq_dx, filtered_data,
                                           opt, new_filter)
             dth_L_dx_filt = sf.filter_field(dth_L_dx, filtered_data,
@@ -750,7 +755,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
             # abs_S_dth_dx_filt = sf.filter_field(abs_S_dth_dx, filtered_data,
             #                                       opt, new_filter)
 
-            dth_v_dx_filt = sf.filter_field(dth_var_dx, filtered_data,
+            dth_dx_filt = sf.filter_field(dth_var_dx, filtered_data,
                                           opt, new_filter)
 
             abs_S_dth_var_dx = dth_var_dx * abs_S
@@ -760,21 +765,17 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
             abs_S_dth_var_dx_filt = sf.filter_field(abs_S_dth_var_dx, filtered_data,
                                                 opt, new_filter)
 
+            if c_th != 'th':
 
+                dqv_dx_filt = sf.filter_field(dqv_dx, filtered_data,
+                                                opt, new_filter)
 
+                abs_S_dqv_dx = dqv_dx * abs_S
+                abs_S_dqv_dx.name = f'abs_S_dqv_dx'
+                abs_S_dqv_dx = re_chunk(abs_S_dqv_dx)
 
-
-
-
-            dqv_dx_filt = sf.filter_field(dqv_dx, filtered_data,
-                                            opt, new_filter)
-
-            abs_S_dqv_dx = dqv_dx * abs_S
-            abs_S_dqv_dx.name = f'abs_S_dqv_dx'
-            abs_S_dqv_dx = re_chunk(abs_S_dqv_dx)
-
-            abs_S_dqv_dx_filt = sf.filter_field(abs_S_dqv_dx, filtered_data,
-                                                    opt, new_filter)
+                abs_S_dqv_dx_filt = sf.filter_field(abs_S_dqv_dx, filtered_data,
+                                                        opt, new_filter)
 
 
         filtered_data['ds'].close()
