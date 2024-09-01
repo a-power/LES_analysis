@@ -9,8 +9,8 @@ parser.add_argument('--times', type=str, default='32400')
 parser.add_argument('--var_f', type=str, default='w') #'w', 'TKE', 'w_th_v'
 parser.add_argument('--x_y', type=str, default='y')
 parser.add_argument('--axis', type=int, default=297)
-parser.add_argument('--x_s', type=float, default=3)#0
-parser.add_argument('--x_e', type=float, default=6)#19.2) 5.5)
+parser.add_argument('--x_s', type=float, default=0)#0
+parser.add_argument('--x_e', type=float, default=5.5)#19.2) 5.5)
 args = parser.parse_args()
 case = args.case_in
 set_time = args.times
@@ -20,10 +20,10 @@ x_start = args.x_s
 x_end = args.x_e
 set_var_field = args.var_f
 
-deltas_in = ['0_0']#, '1_0', '2_0', '3_0', '4_0', '5_0']
+deltas_in = ['50_100']#, '1_0', '2_0', '3_0', '4_0', '5_0']
 #['2D', '4D', '8D', '16D', '32D', '64D']
 
-set_cb_in = [-1.5, 2.0] #[None, None]
+set_cb_in = [-0.12, 0.12] #[None, None]
 
 
 set_C_perc_1st = 98
@@ -46,8 +46,8 @@ if case =='BOMEX':
     # #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
 
 elif case == 'ARM':
-    homedir = '/work/scratch-pw3/apower/ARM/first_filt/'
-    mydir = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_"
+    homedir = '/work/scratch-pw3/apower/ARM/second_filt/'
+    mydir = homedir + f"diagnostics_3d_ts_{set_time}_"
     contour_data = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_ga0"
 
     plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/plots/ARM_fields/cloud_contour/'
@@ -163,26 +163,30 @@ Cqt_options = {'field': 'Cqt_field',
            }
 
 
-apf.plot_cloud_field(plotdir_in, x_or_y=my_x_y, axis_set=my_axis, set_percentile=None, var_field=set_var_field,
-                 var_path=contour_data, t_av_or_not=time_av_or_not, start_end=x_axis_start_end, z_top_in=z_top,
-                 z_tix_in=z_tix, z_labels_in=z_labels, deltas=deltas_in, set_cb=set_cb_in, delta_grid=25)
+apf.plotfield(plotdir, start_end=x_axis_start_end, **Cs_options)
+apf.plotfield(plotdir, start_end=x_axis_start_end, **Cth_options)
+apf.plotfield(plotdir, start_end=x_axis_start_end, **Cqt_options)
+
+# apf.plot_cloud_field(plotdir_in, x_or_y=my_x_y, axis_set=my_axis, set_percentile=None, var_field=set_var_field,
+#                  var_path=contour_data, t_av_or_not=time_av_or_not, start_end=x_axis_start_end, z_top_in=z_top,
+#                  z_tix_in=z_tix, z_labels_in=z_labels, deltas=deltas_in, set_cb=set_cb_in, delta_grid=25)
 
 # # apf.plotfield(plotdir, start_end=x_axis_start_end, **LijMij_options)
 # #
 # # apf.plotfield(plotdir, start_end=x_axis_start_end, **MijMij_options)
 # #
-# apf.plot_C_contours(**plot_var_fields_options, **Cs_options)
-# #
+# apf.plot_C_contours(**plot_var_fields_options, **)
+#
 # #
 # # apf.plotfield(plotdir, start_end=x_axis_start_end, **HjRj_th_options)
 #
 # # apf.plotfield(plotdir, start_end=x_axis_start_end, **RjRj_th_options)
 # #
-# apf.plot_C_contours(**plot_var_fields_options, **Cth_options)
+# apf.plot_C_contours(**plot_var_fields_options, **)
 # #
 # #
 # # apf.plotfield(plotdir, start_end=x_axis_start_end, **HjRj_qt_options)
 #
 # # apf.plotfield(plotdir, start_end=x_axis_start_end, **RjRj_qt_options)
 #
-# apf.plot_C_contours(**plot_var_fields_options, **Cqt_options)
+# apf.plot_C_contours(**plot_var_fields_options, **)

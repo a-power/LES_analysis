@@ -330,7 +330,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
     myvmax_C_sq = set_cb[1][1]
 
     if deltas==None:
-        deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+        deltas = ['4D', '8D', '16D', '32D', '64D', '128D']
 
     start = start_end[0]
     start_grid = int(start/(0.001*delta_grid)) # going from km to grid spacing co-ords (20m or 25m grid)
@@ -363,10 +363,10 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
 
     for i in range(len(deltas)):
-        if deltas[i] == '0_0':
+        if deltas[i] == '50_100':
             CL_itr = '0'
             beta_CL_itr = '0'
-            delta_label = '2$\\Delta$'
+            delta_label = '4$\\Delta$'
 
         else:
             print('need to code the delta for ', deltas[i])
@@ -695,7 +695,7 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
     myvmax_var = set_cb[1]
 
     if deltas==None:
-        deltas = ['2D', '4D', '8D', '16D', '32D', '64D']
+        deltas = ['4D', '8D', '16D', '32D', '64D', '128D']
 
     start = start_end[0]
     start_grid = int(start/(0.001*delta_grid)) # going from km to grid spacing co-ords (20m or 25m grid)
@@ -1157,27 +1157,27 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
         if deltas[i] == '0_0':
             CL_itr = '0'
             beta_CL_itr = '0'
-            delta_label = '2$\\Delta$'
+            delta_label = '4$\\Delta$'
         elif deltas[i] == '1_0':
             CL_itr = '1'
             beta_CL_itr = '0'
-            delta_label = '4$\\Delta$'
+            delta_label = '8$\\Delta$'
         elif deltas[i] == '2_0':
             CL_itr = '2'
             beta_CL_itr = '0'
-            delta_label = '8$\\Delta$'
+            delta_label = '16$\\Delta$'
         elif deltas[i] == '3_0':
             CL_itr = '3'
             beta_CL_itr = '0'
-            delta_label = '16$\\Delta$'
+            delta_label = '32$\\Delta$'
         elif deltas[i] == '4_0':
             CL_itr = '4'
             beta_CL_itr = '0'
-            delta_label = '32$\\Delta$'
+            delta_label = '64$\\Delta$'
         elif deltas[i] == '5_0':
             CL_itr = '5'
             beta_CL_itr = '0'
-            delta_label = '64$\\Delta$'
+            delta_label = '128$\\Delta$'
 
         else:
             print('need to code the delta for ', deltas[i])
@@ -1187,8 +1187,7 @@ def plot_cloud_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_
             print('opening the contour dataset')
 
             var_field_data = xr.open_dataset(var_path +
-                                          f'{CL_itr}.nc') #_gaussian_filter_ga0{beta_CL_itr}.nc')
-
+                                          f'{CL_itr}_gaussian_filter_ga0{beta_CL_itr}.nc')
             print('successfully opened contour set')
 
             print('length of time array for cloud field is ',
@@ -1469,27 +1468,27 @@ def plot_field(plot_dir, x_or_y, axis_set, set_percentile, var_field, var_path, 
         if deltas[i] == '0_0':
             CL_itr = '0'
             beta_CL_itr = '0'
-            delta_label = '2$\\Delta$'
+            delta_label = '4$\\Delta$'
         elif deltas[i] == '1_0':
             CL_itr = '1'
             beta_CL_itr = '0'
-            delta_label = '4$\\Delta$'
+            delta_label = '8$\\Delta$'
         elif deltas[i] == '2_0':
             CL_itr = '2'
             beta_CL_itr = '0'
-            delta_label = '8$\\Delta$'
+            delta_label = '16$\\Delta$'
         elif deltas[i] == '3_0':
             CL_itr = '3'
             beta_CL_itr = '0'
-            delta_label = '16$\\Delta$'
+            delta_label = '32$\\Delta$'
         elif deltas[i] == '4_0':
             CL_itr = '4'
             beta_CL_itr = '0'
-            delta_label = '32$\\Delta$'
+            delta_label = '64$\\Delta$'
         elif deltas[i] == '5_0':
             CL_itr = '5'
             beta_CL_itr = '0'
-            delta_label = '64$\\Delta$'
+            delta_label = '124$\\Delta$'
 
         else:
             print('need to code the delta for ', deltas[i])
