@@ -162,7 +162,8 @@ else:
     print(case_in, ": case isn't coded for yet")
 
 if th_set != 'no':
-    outdir = outdir + f'{th_set}/'
+    print('should now make child dir')
+    #outdir = outdir + f'{th_set}/'
 
 if beta == 0:
         sigma_list = np.array([df.sigma_2(2**(first_filt_res+2), dx)])
