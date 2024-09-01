@@ -166,11 +166,11 @@ if th_set != 'no':
     #outdir = outdir + f'{th_set}/'
 
 if beta == 0:
-        sigma_list = np.array([df.sigma_2(2**(first_filt_res+2), dx)])
+    sigma_list = np.array([df.sigma_2(2**(first_filt_res+2), dx)])
 elif beta == 1:
-        sigma_list = np.array([df.sigma_2(2**(first_filt_res+3), dx)])
+    sigma_list = np.array([df.sigma_2(2**(first_filt_res+3), dx)])
 else:
-        print('need to set up the sigma list for first_filt_res = ', first_filt_res)
+    print('need to set up the sigma list for first_filt_res = ', first_filt_res)
 
 ################################
 
