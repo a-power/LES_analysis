@@ -94,7 +94,9 @@ general_options = {'set_cb': set_cb_in,
                     }
 
 
-plot_var_fields_options = {'plot_dir': plotdir_in,
+
+plot_var_fields_options = {'set_cb': set_cb_in,
+                           'plot_dir': plotdir_in,
                             'axis_set': my_axis,
                             'var_path': contour_data,
                             'x_or_y': my_x_y,
@@ -163,9 +165,10 @@ Cqt_options = {'field': 'Cqt_field',
            }
 
 
-apf.plotfield(plotdir_in, start_end=x_axis_start_end, **Cs_options)
-apf.plotfield(plotdir_in, start_end=x_axis_start_end, **Cth_options)
-apf.plotfield(plotdir_in, start_end=x_axis_start_end, **Cqt_options)
+
+apf.plotfield(plotdir_in, start_end=x_axis_start_end, **plot_var_fields_options, **Cs_options)
+apf.plotfield(plotdir_in, start_end=x_axis_start_end, **plot_var_fields_options, **Cth_options)
+apf.plotfield(plotdir_in, start_end=x_axis_start_end, **plot_var_fields_options, **Cqt_options)
 
 # apf.plot_cloud_field(plotdir_in, x_or_y=my_x_y, axis_set=my_axis, set_percentile=None, var_field=set_var_field,
 #                  var_path=contour_data, t_av_or_not=time_av_or_not, start_end=x_axis_start_end, z_top_in=z_top,
