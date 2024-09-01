@@ -555,7 +555,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         theta]
             else:
                 if c_th == 'th':
-                    var_list = ['th'] #[theta]
+                    var_list = [theta]
                 else:
                     var_list = [
                                 "u",
@@ -609,10 +609,10 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                 ["v", "v"],
                                 ["v", "w"],
                                 ["w", "w"],
-                                ["u", "th"],
-                                ["v", "th"],
-                                ["w", "th"]
-                                ]  # theta]
+                                ["u", theta],
+                                ["v", theta],
+                                ["w", theta]
+                                ]
 
                 elif c_th == 'th_e':
                     var_list = [["u", "u"],
