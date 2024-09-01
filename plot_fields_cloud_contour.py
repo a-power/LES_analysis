@@ -48,7 +48,7 @@ if case =='BOMEX':
 elif case == 'ARM':
     homedir = '/work/scratch-pw3/apower/ARM/second_filt/'
     mydir = homedir + f"LM/update/diagnostics_3d_ts_{set_time}_"
-    contour_data = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter_ga0"
+    contour_data = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter"
 
     plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/plots/ARM_fields/cloud_contour/'
 
