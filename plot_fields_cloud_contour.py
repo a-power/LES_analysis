@@ -23,7 +23,7 @@ set_var_field = args.var_f
 deltas_in = ['50_100']#, '1_0', '2_0', '3_0', '4_0', '5_0']
 #['2D', '4D', '8D', '16D', '32D', '64D']
 
-set_cb_in = [-0.12, 0.12] #[None, None]
+set_cb_in = [ [0.1, 0.3] , [-0.12, 0.12] ] #[None, None]
 
 
 set_C_perc_1st = 98
@@ -94,12 +94,13 @@ general_options = {'set_cb': set_cb_in,
                     }
 
 
+
 plot_var_fields_options = {'plot_dir': plotdir_in,
                             'axis_set': my_axis,
-                            'var_path': contour_data,
+                            'contour_field_in': contour_data,
                             'x_or_y': my_x_y,
+                            'set_cb': set_cb_in,
                             't_av_or_not': time_av_or_not,
-                            'var_field': set_var_field,
                             'start_end': x_axis_start_end,
                             'deltas': deltas_in,
                             'delta_grid': Dx_grid,
