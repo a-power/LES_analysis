@@ -330,7 +330,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
     myvmax_C_sq = set_cb[1][1]
 
     if deltas==None:
-        deltas = ['4D', '8D', '16D', '32D', '64D', '128D']
+        deltas = ['50_100']
 
     start = start_end[0]
     start_grid = int(start/(0.001*delta_grid)) # going from km to grid spacing co-ords (20m or 25m grid)
@@ -470,7 +470,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
             print('opening the contour dataset')
 
-            contour_set = xr.open_dataset(data_field_in +
+            contour_set = xr.open_dataset(contour_field_in +
                                           f'_ga0{CL_itr}_gaussian_filter_ga0{beta_CL_itr}.nc') #_running_mean_filter_rm00
 
             print('successfully opened contour set')
