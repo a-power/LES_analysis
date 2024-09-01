@@ -154,6 +154,7 @@ elif case_in=='dry':
                             'v': [f'f(v_on_{opgrid})_r'],
                             'w': [f'f(w_on_{opgrid})_r'],
                             'th_tot': [f'f(th_on_{opgrid})_r'],
+                            'th': [f'f(th_on_{opgrid})_r']
                             }
                 }
 
@@ -186,4 +187,4 @@ opgrid = 'p'
 
 dy_s.run_dyn_on_filtered(model_res, set_time, filter_name, sigma_list, in_dir, outdir, options,
                         opgrid, filtered_data = f'ga0{str(first_filt_res)}', ref_file = None,
-                        time_name='time', case=case_in, beta_in=beta, c_the = set_c_the)
+                        time_name='time', case=case_in, beta_in=beta, c_the = set_c_the, c_th = th_set)
