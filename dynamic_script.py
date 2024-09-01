@@ -555,7 +555,7 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                         theta]
             else:
                 if c_th is not False:
-                    var_list = [c_th, 'q_vapour']
+                    var_list = [c_th]
                 else:
                     var_list = [
                                 "u",
@@ -600,6 +600,18 @@ def run_dyn_on_filtered(res_in, time_in, filt_in, filt_scale, indir, odir, opt, 
                                 ["u", "th_v"],
                                 ["v", "th_v"],
                                 ["w", "th_v"]
+                                ]
+
+                if c_th == 'th':
+                    var_list = [["u", "u"],
+                                ["u", "v"],
+                                ["u", "w"],
+                                ["v", "v"],
+                                ["v", "w"],
+                                ["w", "w"],
+                                ["u", "th"],
+                                ["v", "th"],
+                                ["w", "th"]
                                 ]
 
                 elif c_th == 'th_e':
