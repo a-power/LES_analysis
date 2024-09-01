@@ -48,7 +48,7 @@ parser.add_argument('--times', type=str, default='14400')
 parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--filt1', type=int, default=0)
 parser.add_argument('--beta', type=int, default=0)
-parser.add_argument('--th', type=str, default='th')
+parser.add_argument('--th', type=str, default='no')
 
 args = parser.parse_args()
 case_in = args.case
