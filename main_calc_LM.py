@@ -14,7 +14,7 @@ parser.add_argument('--b', type=int, default=0)
 parser.add_argument('--start', type=int, default=0)
 parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--filting_filts', type=str, default='y')
-parser.add_argument('--th_in', type=str, default='th_e')
+parser.add_argument('--th_in', type=str, default='th')
 parser.add_argument('--q_in', type=str, default='qv')
 
 args = parser.parse_args()
@@ -48,7 +48,7 @@ if case_in == 'BOMEX':
     print('using BOMEX')
     path_f = '/work/scratch-pw3/apower/BOMEX/'
     folder_f = 'first_filt/'
-    folder_ff = f'second_filt/{th_type}_and_{q_type}/'
+    folder_ff = f'second_filt/' #{th_type}_and_{q_type}/
     times_list = ['14400']
     time_in = times_list[0]
     file_f = f'BOMEX_m0020_g0800_all_{time_in}_'
@@ -153,7 +153,7 @@ for it in range(len(dx_hat_in) - nfilt):
         data_in = path_f + folder_ff + file_in
         print('reading files', data_in)
 
-        os.makedirs(path_f + folder_ff + 'th_v/LM/', exist_ok = True)
+        os.makedirs(path_f + folder_ff + '/LM/', exist_ok = True)
         dataset_name = [path_f + folder_ff + 'LM/' + file_f + f'Cs_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
                          path_f + folder_ff + 'LM/' + file_f + f'C_{th_type}_{dx_bar_in[i]}_{dx_hat_in[i]}.nc',
                          path_f + folder_ff + 'LM/' + file_f + f'C_qt_{dx_bar_in[i]}_{dx_hat_in[i]}.nc']
