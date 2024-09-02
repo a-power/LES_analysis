@@ -572,7 +572,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                         levels=[0.1, 0.5]) #start_grid:end_grid
             ax1.clabel(w_c, inline=True, fontsize=8)
             # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=1, levels=[0.1])
-            plt.xlabel(f'x (km) (cross section with {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km) (km)', fontsize=16)
+            plt.xlabel(f'x (km) (cross section with {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km)', fontsize=16)
 
             plt.ylabel("z (km)", fontsize=16)
             plt.xlim(start_grid, end_grid)
@@ -1124,7 +1124,7 @@ def plot_C_contours(plot_dir, field, x_or_y, axis_set, data_field_in, set_percen
                         levels=my_C_levels) #darkslategrey
             ax1.clabel(C_contour, inline=True, fontsize=10, fmt='%1.2f')
             # plt.contour(np.transpose(w2_field[start_grid:end_grid, 0:101]), colors='darkslategrey', linewidths=2, levels=[0.1])
-            plt.xlabel(f'x (km) (cross section with {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km) (km)', fontsize=16)
+            plt.xlabel(f'x (km) (cross section with {x_or_y} = {round(axis_set*delta_grid/1000, 1)}km)', fontsize=16)
 
             plt.ylabel("z (km)", fontsize=16)
             plt.xlim(start_grid, end_grid)
