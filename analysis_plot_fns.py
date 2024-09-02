@@ -402,7 +402,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
                 print('successfully calculated Cs^2')
 
-            elif field == 'Cth_field':
+            elif field == 'Cth_L_field':
                 data_set = xr.open_dataset(data_field_in + f'{deltas[i]}.nc') # _running_mean_filter_rm00
 
                 print('length of time array for HR_th is ', len(data_set['HR_th_L_field'].data[:, 0, 0, 0]))
@@ -424,7 +424,33 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
                 data_field_sq = 0.5 * HR_field / RR_field
                 data_field = dyn.get_Cs(data_field_sq)
 
+                print('successfully calculated C_th_L^2')
+
+
+            elif field == 'Cth_field':
+                data_set = xr.open_dataset(data_field_in + f'{deltas[i]}.nc') # _running_mean_filter_rm00
+
+                print('length of time array for HR_th is ', len(data_set['HR_th_field'].data[:, 0, 0, 0]))
+                if t_av_or_not == 'yes':
+                    if x_or_y == 'x':
+                        HR_field = np.mean(data_set['HR_th_field'].data[:, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['RR_th_field'].data[:, axis_set, ...], axis=0)
+                    elif x_or_y == 'y':
+                        HR_field = np.mean(data_set['HR_th_field'].data[:, :, axis_set, ...], axis=0)
+                        RR_field = np.mean(data_set['RR_th_field'].data[:, :, axis_set, ...], axis=0)
+                else:
+                    if x_or_y == 'x':
+                        HR_field = data_set['HR_th_field'].data[t_set, axis_set, ...]
+                        RR_field = data_set['RR_th_field'].data[t_set, axis_set, ...]
+                    elif x_or_y == 'y':
+                        HR_field = data_set['HR_th_field'].data[t_set, :, axis_set, ...]
+                        RR_field = data_set['RR_th_field'].data[t_set, :, axis_set, ...]
+
+                data_field_sq = 0.5 * HR_field / RR_field
+                data_field = dyn.get_Cs(data_field_sq)
+
                 print('successfully calculated C_th^2')
+
 
             elif field == 'Cqt_field':
                 data_set = xr.open_dataset(data_field_in + f'{deltas[i]}.nc') #_running_mean_filter_rm00
@@ -569,23 +595,23 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
                 if myvmin_C_sq != None:
 
-                    if set_percentile_C_sq[0] == 'min':
-                        myvmin_temp = np.min(data_field_sq[start_grid:end_grid, 5:z_top_in])
-                        myvmin = myvmin_temp + abs(0.6*myvmin_temp)
-                        myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:z_top_in], set_percentile_C_sq[1])
+                    # if set_percentile_C_sq[0] == 'min':
+                    #     myvmin_temp = np.min(data_field_sq[start_grid:end_grid, 5:z_top_in])
+                    #     myvmin = myvmin_temp + abs(0.6*myvmin_temp)
+                    #     myvmax = np.percentile(data_field_sq[start_grid:end_grid, 5:z_top_in], set_percentile_C_sq[1])
+                    #
+                    #     mylevels = np.linspace(myvmin, myvmax, 8)
+                    #     cf = plt.contourf(np.transpose(data_field_sq), cmap=cm.bwr,
+                    #               norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
+                    #               levels=mylevels, extend='both')
+                    # else:
+                    myvmin = myvmin_C_sq
+                    myvmax = myvmax_C_sq
 
-                        mylevels = np.linspace(myvmin, myvmax, 8)
-                        cf = plt.contourf(np.transpose(data_field_sq), cmap=cm.bwr,
-                                  norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
-                                  levels=mylevels, extend='both')
-                    else:
-                        myvmin = myvmin_C_sq
-                        myvmax = myvmax_C_sq
-
-                        mylevels = np.linspace(myvmin, myvmax, 8)
-                        cf = plt.contourf(np.transpose(data_field_sq), cmap=cm.bwr,
-                                          norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
-                                          levels=mylevels, extend='both')
+                    mylevels = np.linspace(myvmin, myvmax, 8)
+                    cf = plt.contourf(np.transpose(data_field_sq), cmap=cm.bwr,
+                                      norm=TwoSlopeNorm(vmin=myvmin, vcenter=0, vmax=myvmax),
+                                      levels=mylevels, extend='both')
 
                 else:
                    cf = plt.contourf(np.transpose(data_field_sq), cmap=cm.bwr, vcenter=0, extend='both')

@@ -48,6 +48,7 @@ if case =='BOMEX':
 elif case == 'ARM':
     homedir = '/work/scratch-pw3/apower/ARM/second_filt/'
     mydir = homedir + f"LM/update/diagnostics_3d_ts_{set_time}_"
+    thdir = homedir + f"LM/th/diagnostics_3d_ts_{set_time}_"
     contour_data = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter"
 
     plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/plots/ARM_fields/cloud_contour/'
@@ -67,7 +68,7 @@ else:
 os.makedirs(plotdir_in, exist_ok = True)
 
 dir_s = mydir + 'Cs_'
-dir_th = mydir + 'C_th_'
+dir_th = thdir + 'C_th_'
 dir_qt = mydir + 'C_qt_'
 
 in_set_percentile = None #[25,99] for C
@@ -163,7 +164,7 @@ Cqt_options = {'field': 'Cqt_field',
 
 
 apf.plotfield(**plot_var_fields_options, **Cs_options)
-# apf.plotfield(**plot_var_fields_options, **Cth_options)
+apf.plotfield(**plot_var_fields_options, **Cth_options)
 apf.plotfield(**plot_var_fields_options, **Cqt_options)
 
 # apf.plot_cloud_field(plotdir_in, x_or_y=my_x_y, axis_set=my_axis, set_percentile=None, var_field=set_var_field,
