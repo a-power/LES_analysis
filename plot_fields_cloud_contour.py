@@ -4,13 +4,13 @@ import analysis_plot_fns as apf
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--case_in', type=str, default='ARM') #BOMEX
-parser.add_argument('--times', type=str, default='32400')
+parser.add_argument('--case_in', type=str, default='BOMEX') #BOMEX ARM
+parser.add_argument('--times', type=str, default='14400') #32400
 parser.add_argument('--var_f', type=str, default='w') #'w', 'TKE', 'w_th_v'
 parser.add_argument('--x_y', type=str, default='y')
-parser.add_argument('--axis', type=int, default=297)
+parser.add_argument('--axis', type=int, default=300) #297
 parser.add_argument('--x_s', type=float, default=0)#0
-parser.add_argument('--x_e', type=float, default=5.5)#19.2) 5.5)
+parser.add_argument('--x_e', type=float, default=4)#19.2) 5.5)
 args = parser.parse_args()
 case = args.case_in
 set_time = args.times
@@ -23,7 +23,7 @@ set_var_field = args.var_f
 deltas_in = ['50_100']#, '1_0', '2_0', '3_0', '4_0', '5_0']
 #['2D', '4D', '8D', '16D', '32D', '64D']
 
-set_cb_in = [ [0.1, 0.3] , [-0.12, 0.12] ] #[None, None]
+ #[None, None]
 
 
 set_C_perc_1st = 98
@@ -43,6 +43,7 @@ if case =='BOMEX':
     time_av_or_not = np.array([0, 1, 2])
     z_tix = np.linspace(0, z_top, 5)
     z_labels = np.linspace(0, 2, 5)
+    set_cb_in = [[0.16, 0.3], [-0.1, 0.1]]
     #0, 1, 2 #'yes' (in the array)
     # #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
 
@@ -53,6 +54,8 @@ elif case == 'ARM':
     contour_data = homedir + f"diagnostics_3d_ts_{set_time}_gaussian_filter"
 
     plotdir_in = f'/gws/nopw/j04/paracon_rdg/users/apower/plots/ARM_fields/cloud_contour/'
+
+    set_cb_in = [[0.1, 0.3], [-0.12, 0.12]]
 
     z_top = 250
     z_tix = np.linspace(0, z_top, 6)
