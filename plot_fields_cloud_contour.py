@@ -43,7 +43,7 @@ if case =='BOMEX':
     time_av_or_not = np.array([0, 1, 2])
     z_tix = np.linspace(0, z_top, 5)
     z_labels = np.linspace(0, 2, 5)
-    set_cb_in = [[0.16, 0.3], [-0.1, 0.1]]
+    set_cb_in = [[0.1, 0.3], [-0.12, 0.12]]
 
     deltas_in = ['40_80']
     #0, 1, 2 #'yes' (in the array)
