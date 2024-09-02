@@ -4,13 +4,13 @@ import analysis_plot_fns as apf
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--case_in', type=str, default='BOMEX') #BOMEX ARM
-parser.add_argument('--times', type=str, default='14400') #32400
+parser.add_argument('--case_in', type=str, default='ARM') #BOMEX ARM
+parser.add_argument('--times', type=str, default='32400') #32400 #14400
 parser.add_argument('--var_f', type=str, default='w') #'w', 'TKE', 'w_th_v'
 parser.add_argument('--x_y', type=str, default='y')
-parser.add_argument('--axis', type=int, default=300) #297
+parser.add_argument('--axis', type=int, default=297) #297 #300
 parser.add_argument('--x_s', type=float, default=0)#0
-parser.add_argument('--x_e', type=float, default=4)#19.2) 5.5)
+parser.add_argument('--x_e', type=float, default=5.5)#19.2) 5.5) #4
 args = parser.parse_args()
 case = args.case_in
 set_time = args.times
