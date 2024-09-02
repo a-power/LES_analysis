@@ -363,7 +363,7 @@ def plotfield(plot_dir, field, x_or_y, axis_set, data_field_in, set_percentile, 
 
 
     for i in range(len(deltas)):
-        if deltas[i] == '50_100':
+        if deltas[i] == '50_100' or deltas[i] == '40_80':
             CL_itr = '0'
             beta_CL_itr = '0'
             delta_label = '4$\\Delta$'
