@@ -20,7 +20,7 @@ x_start = args.x_s
 x_end = args.x_e
 set_var_field = args.var_f
 
-deltas_in = ['50_100']#, '1_0', '2_0', '3_0', '4_0', '5_0']
+#, '1_0', '2_0', '3_0', '4_0', '5_0']
 #['2D', '4D', '8D', '16D', '32D', '64D']
 
  #[None, None]
@@ -44,6 +44,8 @@ if case =='BOMEX':
     z_tix = np.linspace(0, z_top, 5)
     z_labels = np.linspace(0, 2, 5)
     set_cb_in = [[0.16, 0.3], [-0.1, 0.1]]
+
+    deltas_in = ['40_80']
     #0, 1, 2 #'yes' (in the array)
     # #if not then give the time stamp index/indices (integer) you want to look at (eg 0, 1, ..)
 
@@ -60,6 +62,8 @@ elif case == 'ARM':
     z_top = 250
     z_tix = np.linspace(0, z_top, 6)
     z_labels = np.linspace(0, 2.5, 6)
+
+    deltas_in = ['50_100']
 
     Dx_grid = 25
     time_av_or_not = np.array([0, 1])
