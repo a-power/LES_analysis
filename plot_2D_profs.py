@@ -161,8 +161,7 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
 
         ax[3].plot(cloud_prof[it,:]*100, z[it, :] / z_i[it], color=colours[it], label = f'{clock_time},'+' z$_{ML}$ = ' + str(int(z_i[it])) + 'm')
         ax[3].set_xlabel('cloud cover (%)', fontsize=16)
-        if case == 'ARM':
-            ax[3].legend(fontsize=13)
+        ax[3].legend(fontsize=13)
 
         ax[2].plot(th_prof[it,:], z[it, :] / z_i[it], color=colours[it], label = f'{clock_time},'+' z$_{ML}$ = ' + str(int(z_i[it])) + 'm')
         ax[2].set_xlabel("$ \\overline{\\theta}$ (K)", fontsize=16)
