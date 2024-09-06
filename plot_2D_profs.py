@@ -151,8 +151,11 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
         wth_prof[it,:], th_prof[it,:], cloud_prof[it,:], z[it,:], z_i[it] = get_cloud_wth_profs(file_in, time_stamp='mean')
         w_max_prof_in[it,:] = get_w_max_profs(field_in, time_stamp='mean')
 
-        clock_time_int = 05.30 + int(time_in) / (60 * 60)
-        clock_time = str(clock_time_int) + '0L'
+        if case == 'ARM':
+            clock_time_int = 05.30 + int(time_in) / (60 * 60)
+            clock_time = str(clock_time_int) + '0L'
+        else:
+            clock_time = '4 hours'
 
         ax[0].plot(wth_prof[it,:], z[it, :] / z_i[it], color=colours[it], label = f'{clock_time},'+' z$_{ML}$ = ' + str(int(z_i[it])) + 'm')
         ax[0].set_xlabel("$ \\overline{w' \\theta}$ (K m s$^{-1}$)", fontsize=16)
