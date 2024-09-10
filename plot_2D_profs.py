@@ -11,7 +11,7 @@ np.seterr(invalid='ignore')
 
 parser = argparse.ArgumentParser()
 #parser.add_argument('--times', type=str, default='28800')
-parser.add_argument('--case_in', type=str, default='ARM')
+parser.add_argument('--case_in', type=str, default='BOMEX')
 args = parser.parse_args()
 
 case = args.case_in
@@ -157,13 +157,16 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
         else:
             clock_time = '4 hours'
 
-        loc = plt.MultipleLocator(base=0.025)
+        locA = plt.MultipleLocator(base=0.025)
+        locB = plt.MultipleLocator(base=0.005)
 
         ax[0].plot(wth_prof[it,:], z[it, :] / z_i[it], color=colours[it], label = f'{clock_time},'+' z$_{ML}$ = ' + str(int(z_i[it])) + 'm')
         ax[0].set_xlabel("$ \\overline{w' \\theta}$ (K m s$^{-1}$)", fontsize=16)
         ax[0].set_ylabel("z/z$_{ML}$", fontsize=16)
         if case == 'ARM':
-            ax[0].xaxis.set_major_locator(loc)
+            ax[0].xaxis.set_major_locator(locA)
+        if case == 'BOMEX':
+            ax[0].xaxis.set_major_locator(locB)
         ax[0].set_xticks(ax[0].get_xticks()[::2])
 
         ax[3].plot(cloud_prof[it,:]*100, z[it, :] / z_i[it], color=colours[it], label = f'{clock_time},'+' z$_{ML}$ = ' + str(int(z_i[it])) + 'm')
