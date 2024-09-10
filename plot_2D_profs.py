@@ -158,7 +158,7 @@ def plot_MONC_profs(file_path, field_path, times, time_stamp_in='mean'):
             clock_time = '4 hours'
 
         locA = plt.MultipleLocator(base=0.025)
-        locB = plt.MultipleLocator(base=0.01)
+        locB = plt.MultipleLocator(base=0.005)
 
         ax[0].plot(wth_prof[it,:], z[it, :] / z_i[it], color=colours[it], label = f'{clock_time},'+' z$_{ML}$ = ' + str(int(z_i[it])) + 'm')
         ax[0].set_xlabel("$ \\overline{w' \\theta}$ (K m s$^{-1}$)", fontsize=16)
