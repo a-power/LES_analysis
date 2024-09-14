@@ -48,7 +48,7 @@ parser.add_argument('--times', type=str, default='14400')
 parser.add_argument('--case', type=str, default='BOMEX')
 parser.add_argument('--filt1', type=int, default=0)
 parser.add_argument('--beta', type=int, default=0)
-parser.add_argument('--th', type=str, default='no')
+parser.add_argument('--th', type=str, default='th_L')
 
 args = parser.parse_args()
 case_in = args.case
@@ -71,7 +71,7 @@ filter_name = 'gaussian'  # "wave_cutoff"
 if case_in=='BOMEX':
     in_dir = '/work/scratch-pw3/apower/BOMEX/first_filt/BOMEX_m'
     model_res = '0020_g0800'
-    outdir = f'/work/scratch-pw3/apower/BOMEX/second_filt/th/'
+    outdir = f'/work/scratch-pw3/apower/BOMEX/second_filt/'
     dx=20.0
     set_c_the = True
     #time = 14400
@@ -103,7 +103,7 @@ if case_in=='BOMEX':
 
 elif case_in=='ARM':
     in_dir = '/work/scratch-pw3/apower/ARM/first_filt/'
-    outdir = '/work/scratch-pw3/apower/ARM/second_filt/th/'
+    outdir = '/work/scratch-pw3/apower/ARM/second_filt/'
     model_res = None
     dx=25
     set_c_the = False
