@@ -103,7 +103,7 @@ if case_in=='BOMEX':
 
 elif case_in=='ARM':
     in_dir = '/work/scratch-pw3/apower/ARM/first_filt/'
-    outdir = '/work/scratch-pw3/apower/ARM/second_filt/'
+    outdir = '/work/scratch-pw3/apower/ARM/second_filt/th_L/'
     model_res = None
     dx=25
     set_c_the = False
