@@ -80,7 +80,7 @@ elif case_in == 'ARM':
     time_in = times_list[t_in]
     path_f = '/work/scratch-pw3/apower/ARM/'
     folder_f = 'first_filt/'
-    folder_ff = f'second_filt/th/'
+    folder_ff = f'second_filt/'
     file_f = f'diagnostics_3d_ts_{time_in}_'
     Delta = 25
 
@@ -131,7 +131,7 @@ elif case_in=='dry':
             print('beta must be =0 or =1')
             sys.exit()
         C_res = ['4D', '8D', '16D', '32D', '64D', '128D']
-        scalar = ['momentum', 'f(th_on_p)_r']
+        scalar = ['f(th_on_p)_r'] #'momentum',
 
 
 else:
