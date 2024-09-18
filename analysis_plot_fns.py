@@ -116,7 +116,7 @@ def plot_C_Delta_hist_comp(dir_in, field, condits = None, deltas=None):
     if deltas == None:
         deltas = ['4', '8', '16', '32', '64', '128']
     if condits == None:
-        condits = ['domain', 'ML', 'NC', 'IC', 'CU', 'CC']
+        condits = ['domain', 'ML', 'CFE', 'IC', 'CU', 'CC']
 
     if field == 'Cs_sq':
         scalar = '$C_{s}^2$'

@@ -5,32 +5,44 @@ import numpy as np
 import mask_cloud_vs_env as clo
 import matplotlib.ticker as ticker
 import numpy.ma as ma
+import dynamic_functions as dyn
 
 
-BOMEX_homedir = f'/work/scratch-pw3/apower/BOMEX/second_filt/LM/update/BOMEX_m0020_g0800_all_14400_'
-BOMEX_dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g0800_all_14400_gaussian_filter_ga0'
 
 
-ARM_homedir = f'/work/scratch-pw3/apower/ARM/second_filt/LM/update/diagnostics_3d_ts_{set_time}_'
-ARM_dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_{set_time}_gaussian_filter_ga0'
+BOMEX_homedir = f'/work/scratch-pw3/apower/BOMEX/second_filt/LM/update/BOMEX_m0020_g0800_all_'
+BOMEX_dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g0800_all_'
+
+ARM_homedir = f'/work/scratch-pw3/apower/ARM/second_filt/LM/update/diagnostics_3d_ts_'
+ARM_dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_'
 
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/plots/distribs/'
 #'/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/distribs/'
 os.makedirs(plotdir, exist_ok = True)
 
-cloud_field = f'f(q_cloud_liquid_mass_on_{mygrid})_r'
+cloud_field = f'f(q_cloud_liquid_mass_on_p)_r'
 
 fields = [ ['LM_field', 'MM_field'], ['HR_th_field', 'RR_th_field'],
            ['HR_th_L_field', 'RR_th_L_field'], ['HR_q_field', 'RR_q_field'] ]
+bomex_res=['40_80', '160_320', '640_1280']
+arm_res=['50_100', '200_400', '800_1600']
+Deltas = ['4$\\Delta$', '16$\\Delta$', '64$\\Delta$']
+
+times = ['14400', '18000', '25200', '32400', '39600']
+
+BOMEX_ML_range = np.array([100, 400])
+BOMEX_CL_range = np.array([500, 1500])
+
+ARM_ML_range = np.array([ [100, 700], [100, 900], [100, 1000], [100, 1000] ])
+ARM_CL_range = np.array([ [900, 1050], [1100, 1400], [1250, 1850], [1400, 2150] ])
+
+BOMEX_ML_ind = BOMEX_ML_range/20
+BOMEX_CL_ind = BOMEX_CL_range/20
+ARM_ML_ind = ARM_ML_range/10
+ARM_CL_ind = ARM_CL_range/10
 
 
-gen_options = {'deltas': None,
-            'cloud_liquid_threshold_in': 10**(-7),
-            'times': -1,
-            'grid': 'p',
-            'return_all_in': False,
-            'set_bins':50
-            }
+set_bins=50
 
 field_names = ['Cs_field', 'Cth_field', 'Cth_L_field', 'Cqt_field']
 field_latex = ['$C_{s}$', '$C_{\\theta}$', '$C_{\\theta_L}$', '$C_{q_t}$']
@@ -40,8 +52,195 @@ field_latex_sq = ['$C_{s}^2$', '$C_{\\theta}^2$', '$C_{\\theta_L}^2$', '$C_{q_t}
 
 
 
+def get_data_per_delta(dir_in, dir_cloud, time, res_in):
 
-def plot_hist(plotdir_in, delta, data1, data2, data3, data4, data5, what_plotting, bins_in):
+    data_s4 = xr.open_dataset(dir_in+f'{time}_Cs_{res_in[0]}.nc')
+    data_s16 = xr.open_dataset(dir_in+f'{time}_Cs_{res_in[1]}.nc')
+    data_s64 = xr.open_dataset(dir_in+f'{time}_Cs_{res_in[2]}.nc')
+
+    data_th4 = xr.open_dataset(dir_in+f'{time}_C_th_{res_in[0]}.nc')
+    data_th16 = xr.open_dataset(dir_in+f'{time}_C_th_{res_in[1]}.nc')
+    data_th64 = xr.open_dataset(dir_in+f'{time}_C_th_{res_in[2]}.nc')
+
+    data_th_L4 = xr.open_dataset(dir_in+f'{time}_C_th_L_{res_in[0]}.nc')
+    data_th_L16 = xr.open_dataset(dir_in+f'{time}_C_th_L_{res_in[1]}.nc')
+    data_th_L64 = xr.open_dataset(dir_in+f'{time}_C_th_L_{res_in[2]}.nc')
+
+    data_qt4 = xr.open_dataset(dir_in+f'{time}_C_qt_{res_in[0]}.nc')
+    data_qt16 = xr.open_dataset(dir_in+f'{time}_C_qt_{res_in[1]}.nc')
+    data_qt64 = xr.open_dataset(dir_in+f'{time}_C_qt_{res_in[2]}.nc')
+
+    data_s4_LM = data_s4[f'{fields[0][0]}'].data[-1,...]
+    data_s16_LM = data_s16[f'{fields[0][0]}'].data[-1,...]
+    data_s64_LM = data_s64[f'{fields[0][0]}'].data[-1,...]
+
+    data_th4_LM = data_th4[f'{fields[1][0]}'].data[-1,...]
+    data_th16_LM = data_th16[f'{fields[1][0]}'].data[-1,...]
+    data_th64_LM = data_th64[f'{fields[1][0]}'].data[-1,...]
+
+    data_th_L4_LM = data_th_L4[f'{fields[2][0]}'].data[-1,...]
+    data_th_L16_LM = data_th_L16[f'{fields[2][0]}'].data[-1,...]
+    data_th_L64_LM = data_th_L64[f'{fields[2][0]}'].data[-1,...]
+
+    data_qt4_LM = data_qt4[f'{fields[3][0]}'].data[-1,...]
+    data_qt16_LM = data_qt16[f'{fields[3][0]}'].data[-1,...]
+    data_qt64_LM = data_qt64[f'{fields[3][0]}'].data[-1,...]
+
+
+    data_s4_MM = data_s4[f'{fields[0][1]}'].data[-1,...]
+    data_s16_MM = data_s16[f'{fields[0][1]}'].data[-1,...]
+    data_s64_MM = data_s64[f'{fields[0][1]}'].data[-1,...]
+
+    data_th4_MM = data_th4[f'{fields[1][1]}'].data[-1,...]
+    data_th16_MM = data_th16[f'{fields[1][1]}'].data[-1,...]
+    data_th64_MM = data_th64[f'{fields[1][1]}'].data[-1,...]
+
+    data_th_L4_MM = data_th_L4[f'{fields[2][1]}'].data[-1,...]
+    data_th_L16_MM = data_th_L16[f'{fields[2][1]}'].data[-1,...]
+    data_th_L64_MM = data_th_L64[f'{fields[2][1]}'].data[-1,...]
+
+    data_qt4_MM = data_qt4[f'{fields[3][1]}'].data[-1,...]
+    data_qt16_MM = data_qt16[f'{fields[3][1]}'].data[-1,...]
+    data_qt64_MM = data_qt64[f'{fields[3][1]}'].data[-1,...]
+
+
+    data_cl4 = dir_cloud+f'{time}_gaussian_filter_ga00_gaussian_filter_ga00.nc'
+    data_cl16 = dir_cloud+f'{time}_gaussian_filter_ga02_gaussian_filter_ga00.nc'
+    data_cl64 = dir_cloud+f'{time}_gaussian_filter_ga04_gaussian_filter_ga00.nc'
+
+
+    data_s_list = [dyn.get_Cs(0.5*data_s4_LM/data_s4_MM), dyn.get_Cs(0.5*data_s16_LM/data_s16_MM),
+                   dyn.get_Cs(0.5*data_s64_LM/data_s64_MM)]
+    data_th_list = [dyn.get_Cs(0.5*data_th4_LM/data_th4_MM), dyn.get_Cs(0.5*data_th16_LM/data_th16_MM),
+                    dyn.get_Cs(0.5*data_th64_LM/data_th64_MM)]
+    data_th_L_list = [dyn.get_Cs(0.5*data_th_L4_LM/data_th_L4_MM), dyn.get_Cs(0.5*data_th_L16_LM/data_th_L16_MM),
+                      dyn.get_Cs(0.5*data_th_L64_LM/data_th_L64_MM)]
+    data_qt_list = [dyn.get_Cs(0.5*data_qt4_LM/data_qt4_MM), dyn.get_Cs(0.5*data_qt16_LM/data_qt16_MM),
+                    dyn.get_Cs(0.5*data_qt64_LM/data_qt64_MM)]
+
+    data_cl_list = [data_cl4, data_cl16, data_cl64]
+
+
+
+    data_s4_LM = None
+    data_s16_LM = None
+    data_s64_LM = None
+    data_th4_LM = None
+    data_th16_LM = None
+    data_th64_LM = None
+    data_th_L4_LM = None
+    data_th_L16_LM = None
+    data_th_L64_LM = None
+    data_qt4_LM = None
+    data_qt16_LM = None
+    data_qt64_LM = None
+    data_s4_MM = None
+    data_s16_MM = None
+    data_s64_MM = None
+    data_th4_MM = None
+    data_th16_MM = None
+    data_th64_MM = None
+    data_th_L4_MM = None
+    data_th_L16_MM = None
+    data_th_L64_MM = None
+    data_qt4_MM = None
+    data_qt16_MM = None
+    data_qt64_MM = None
+
+
+    data_field_s_cloud_4D, data_field_s_env_4D, data_field_th_cloud_4D, data_field_th_env_4D, \
+        data_field_th_L_cloud_4D, data_field_th_L_env_4D, data_field_qt_cloud_4D, data_field_qt_env_4D \
+        = apply_masks(data_s_list[0], data_th_list[0], data_th_L_list[0], data_qt_list[0], data_cl_list[0])
+
+    data_field_s_cloud_16D, data_field_s_env_16D, data_field_th_cloud_16D, data_field_th_env_16D, \
+        data_field_th_L_cloud_16D, data_field_th_L_env_16D, data_field_qt_cloud_16D, data_field_qt_env_16D \
+        = apply_masks(data_s_list[1], data_th_list[1], data_th_L_list[1], data_qt_list[1], data_cl_list[1])
+
+    data_field_s_cloud_64D, data_field_s_env_64D, data_field_th_cloud_64D, data_field_th_env_64D, \
+        data_field_th_L_cloud_64D, data_field_th_L_env_64D, data_field_qt_cloud_64D, data_field_qt_env_64D \
+        = apply_masks(data_s_list[2], data_th_list[2], data_th_L_list[2], data_qt_list[2], data_cl_list[2])
+
+    data_s_list = None
+    data_th_list = None
+    data_th_L_list = None
+    data_qt_list = None
+
+    data_s_list_cloud = [data_field_s_cloud_4D, data_field_s_cloud_16D, data_field_s_cloud_64D]
+    data_s_list_env = [data_field_s_env_4D, data_field_s_env_16D, data_field_s_env_64D]
+
+    data_th_list_cloud = [data_field_th_cloud_4D, data_field_th_cloud_16D, data_field_th_cloud_64D]
+    data_th_list_env = [data_field_th_env_4D, data_field_th_env_16D, data_field_th_env_64D]
+
+    data_th_L_list_cloud = [data_field_th_L_cloud_4D, data_field_th_L_cloud_16D, data_field_th_L_cloud_64D]
+    data_th_L_list_env = [data_field_th_L_env_4D, data_field_th_L_env_16D, data_field_th_L_env_64D]
+
+    data_qt_list_cloud = [data_field_qt_cloud_4D, data_field_qt_cloud_16D, data_field_qt_cloud_64D]
+    data_qt_list_env = [data_field_qt_env_4D, data_field_qt_env_16D, data_field_qt_env_64D]
+
+
+    return data_s_list_cloud, data_s_list_env, data_th_list_cloud, data_th_list_env, \
+        data_th_L_list_cloud, data_th_L_list_env, data_qt_list_cloud, data_qt_list_env
+
+
+
+
+
+def cloud_and_env_masks(data_in, cloud_liquid_threshold=10**(-7), grid='p'):
+
+    data_in_new = data_in
+    ds_in = xr.open_dataset(data_in_new)
+
+    if f'f(q_cloud_liquid_mass_on_{grid})_r' in ds_in:
+        q_in = ds_in[f'f(q_cloud_liquid_mass_on_{grid})_r']
+    elif f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r' in ds_in:
+        q_in = ds_in[f'f(f(q_cloud_liquid_mass_on_{grid})_r_on_{grid})_r']
+    elif 'q_cloud_liquid_mass' in ds_in:
+        q_in = ds_in['q_cloud_liquid_mass']
+
+
+    q_cloud = q_in.data[-1,...]
+
+    if cloud_liquid_threshold == 0:
+        masked_q_cloud = ma.masked_less_equal(q_cloud, cloud_liquid_threshold)  # masking lower values
+        masked_q_env = ma.masked_greater(q_cloud, cloud_liquid_threshold)
+    else:
+        masked_q_cloud = ma.masked_less(q_cloud, cloud_liquid_threshold) #masking lower values
+        masked_q_env = ma.masked_greater_equal(q_cloud, cloud_liquid_threshold) #masking larger values
+
+    cloud_only_mask = ma.getmaskarray(masked_q_cloud)
+    env_only_mask = ma.getmaskarray(masked_q_env)
+
+    masked_q_cloud = None
+    masked_q_env = None
+
+    return cloud_only_mask, env_only_mask
+
+
+def apply_masks(data_field_s, data_field_th, data_field_th_L, data_field_qt, data_cl_list):
+
+    cloud_only_mask, env_only_mask = cloud_and_env_masks(data_cl_list)
+
+
+    data_field_s_cloud = ma.masked_array(data_field_s, mask=cloud_only_mask)
+    data_field_s_env = ma.masked_array(data_field_s, mask=env_only_mask)
+
+    data_field_th_cloud = ma.masked_array(data_field_th, mask=cloud_only_mask)
+    data_field_th_env = ma.masked_array(data_field_th, mask=env_only_mask)
+
+    data_field_th_L_cloud = ma.masked_array(data_field_th_L, mask=cloud_only_mask)
+    data_field_th_L_env = ma.masked_array(data_field_th_L, mask=env_only_mask)
+
+    data_field_qt_cloud = ma.masked_array(data_field_qt, mask=cloud_only_mask)
+    data_field_qt_env = ma.masked_array(data_field_qt, mask=env_only_mask)
+
+    return data_field_s_cloud, data_field_s_env, data_field_th_cloud, data_field_th_env, \
+        data_field_th_L_cloud, data_field_th_L_env, data_field_qt_cloud, data_field_qt_env
+
+
+
+
+
+def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set_bins, what_plotting='C'):
 
     colours = ['tab:blue', 'tab:brown', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple',
                'tab:olive', 'tab:cyan', 'tab:gray', 'tab:pink']
@@ -51,29 +250,54 @@ def plot_hist(plotdir_in, delta, data1, data2, data3, data4, data5, what_plottin
     else:
         fields_latex_in = field_latex_sq
 
+    if region == 'ML':
+        B1 = BOMEX_ML_range[0][0]
+        B2 = BOMEX_ML_range[0][1]
+
+        A1 = ARM_ML_range[:][0]
+        A2 = ARM_ML_range[:][1]
+
+    elif region == 'IC' or region == 'CFE':
+        B1 = BOMEX_CL_range[0][0]
+        B2 = BOMEX_CL_range[0][1]
+
+        A1 = ARM_CL_range[:][0]
+        A2 = ARM_CL_range[:][1]
+
+    elif region == 'DA':
+        B1 = 0
+        B2 = 1
+
+        A1 = [0, 0, 0, 0]
+        A2 = [1, 1, 1, 1]
+
 
     fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(16, 18), sharex='row', sharey='row')
     for i in range(4):
         for j in range(3):
-            ax[i,j].hist(data1[i,j,:].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[0],
-                     weights=np.ones(len(data1[i,j,:])) / len(data1[i,j,:]), label='BOMEX')
-            ax[i,j].hist(data2[i,j,:].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[1],
-                     weights=np.ones(len(data2[i,j,:])) / len(data2[i,j,:]), label='ARM 10:30L')
-            ax[i,j].hist(data3[i,j,:].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[2],
-                     weights=np.ones(len(data3[i,j,:])) / len(data3[i,j,:]), label='ARM 12:30L')
-            ax[i,j].hist(data4[i,j,:].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[3],
-                     weights=np.ones(len(data4[i,j,:])) / len(data4[i,j,:]), label='ARM 14:30L')
-            ax[i,j].hist(data5[i,j,:].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[4],
-                     weights=np.ones(len(data5[i,j,:])) / len(data5[i,j,:]), label='ARM 16:30L')
+
+
+            ax[i,j].hist(data1[i][j,B1:B2].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[0],
+                     weights=np.ones(len(data1[i][j,B1:B2])) / len(data1[i][j,B1:B2]), label='BOMEX')
+            ax[i,j].hist(data2[i][j,A1[0]:A2[0]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[1],
+                     weights=np.ones(len(data2[i][j,A1[0]:A2[0]])) / len(data2[i][j,A1[0]:A2[0]]), label='ARM 10:30L')
+            ax[i,j].hist(data3[i][j,A1[1]:A2[1]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[2],
+                     weights=np.ones(len(data3[i][j,A1[1]:A2[1]])) / len(data3[i][j,A1[1]:A2[1]]), label='ARM 12:30L')
+            ax[i,j].hist(data4[i][j,A1[2]:A2[2]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[3],
+                     weights=np.ones(len(data4[i][j,A1[2]:A2[2]])) / len(data4[i][j,A1[2]:A2[2]]), label='ARM 14:30L')
+            ax[i,j].hist(data5[i][j,A1[3]:A2[3]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[4],
+                     weights=np.ones(len(data5[i][j,A1[3]:A2[3]])) / len(data5[i][j,A1[3]:A2[3]]), label='ARM 16:30L')
             ax[i,j].set_xlabel(f"{fields_latex_in[i]}", fontsize=16)
+            ax[0,j].set_title(f'{Deltas[j]}')
         ax[i,0].set_ylabel("Percentage of Occurrences", fontsize=16)
+
 
     # bottom_set, top_set = plt.ylim()
     # print('y_min = ', bottom_set, 'y_max = ', top_set)
     ax[4,0].legend(fontsize=12, loc='best')
     #plt.vlines(0, ymin=0, ymax=((1e9)), linestyles='dashed', colors='black', linewidths=0.5)
     ax.yaxis.set_major_formatter(ticker.PercentFormatter(1))
-    plt.savefig(plotdir_in + f'hist_of_{what_plotting}_values_{delta}.pdf',
+    plt.savefig(plotdir_in + f'hist_of_{what_plotting}_values_{region}.pdf',
                 bbox_inches='tight')
     plt.clf()
 
@@ -84,13 +308,45 @@ def plot_hist(plotdir_in, delta, data1, data2, data3, data4, data5, what_plottin
 
 
 
+BOMEX_s_list_cloud, BOMEX_s_list_env, BOMEX_th_list_cloud, BOMEX_th_list_env, \
+        BOMEX_th_L_list_cloud, BOMEX_th_L_list_env, BOMEX_qt_list_cloud, BOMEX_qt_list_env = \
+    get_data_per_delta(BOMEX_homedir, BOMEX_dir_contour, times[0], bomex_res)
+
+ARM1_s_list_cloud, ARM1_s_list_env, ARM1_th_list_cloud, ARM1_th_list_env, \
+        ARM1_th_L_list_cloud, ARM1_th_L_list_env, ARM1_qt_list_cloud, ARM1_qt_list_env = \
+    get_data_per_delta(ARM_homedir, ARM_dir_contour, times[1], arm_res)
+
+ARM2_s_list_cloud, ARM2_s_list_env, ARM2_th_list_cloud, ARM2_th_list_env, \
+        ARM2_th_L_list_cloud, ARM2_th_L_list_env, ARM2_qt_list_cloud, ARM2_qt_list_env = \
+    get_data_per_delta(ARM_homedir, ARM_dir_contour, times[2], arm_res)
+
+ARM3_s_list_cloud, ARM3_s_list_env, ARM3_th_list_cloud, ARM3_th_list_env, \
+        ARM3_th_L_list_cloud, ARM3_th_L_list_env, ARM3_qt_list_cloud, ARM3_qt_list_env = \
+    get_data_per_delta(ARM_homedir, ARM_dir_contour, times[3], arm_res)
+
+ARM4_s_list_cloud, ARM4_s_list_env, ARM4_th_list_cloud, ARM4_th_list_env, \
+        ARM4_th_L_list_cloud, ARM4_th_L_list_env, ARM4_qt_list_cloud, ARM4_qt_list_env = \
+    get_data_per_delta(ARM_homedir, ARM_dir_contour, times[4], arm_res)
 
 
-for i in range(len(data_field_list)):
-    cloud_only_mask, env_only_mask = clo.cloud_vs_env_masks(data_cl_list[i])
 
-    data_field = data_field_list[i][f'{field}'].data[...]
-    print(np.shape(data_field[0, ...]))
 
-    data_field_cloud = ma.masked_array(data_field[-1,...], mask=cloud_only_mask) #only look at one time stamp
-    data_field_env = ma.masked_array(data_field[-1,...], mask=env_only_mask) #only look at one time stamp
+BOMEX_env = [BOMEX_s_list_env, BOMEX_th_list_env, BOMEX_th_L_list_env, BOMEX_qt_list_env]
+BOMEX_IC = [BOMEX_s_list_cloud, BOMEX_th_list_cloud, BOMEX_th_L_list_cloud, BOMEX_qt_list_cloud]
+
+ARM1_env = [ARM1_s_list_env, ARM1_th_list_env, ARM1_th_L_list_env, ARM1_qt_list_env]
+ARM1_IC = [ARM1_s_list_cloud, ARM1_th_list_cloud, ARM1_th_L_list_cloud, ARM1_qt_list_cloud]
+
+ARM2_env = [ARM2_s_list_env, ARM2_th_list_env, ARM2_th_L_list_env, ARM2_qt_list_env]
+ARM2_IC = [ARM2_s_list_cloud, ARM2_th_list_cloud, ARM2_th_L_list_cloud, ARM2_qt_list_cloud]
+
+ARM3_env = [ARM3_s_list_env, ARM3_th_list_env, ARM3_th_L_list_env, ARM3_qt_list_env]
+ARM3_IC = [ARM3_s_list_cloud, ARM3_th_list_cloud, ARM3_th_L_list_cloud, ARM3_qt_list_cloud]
+
+ARM4_env = [ARM4_s_list_env, ARM4_th_list_env, ARM4_th_L_list_env, ARM4_qt_list_env]
+ARM4_IC = [ARM4_s_list_cloud, ARM4_th_list_cloud, ARM4_th_L_list_cloud, ARM4_qt_list_cloud]
+
+
+plot_hist(plotdir, BOMEX_env, ARM1_env, ARM2_env, ARM3_env, ARM4_env, region='ML')
+plot_hist(plotdir,  BOMEX_env, ARM1_env, ARM2_env, ARM3_env, ARM4_env, region='IC')
+plot_hist(plotdir, BOMEX_IC, ARM1_IC, ARM2_IC, ARM3_IC, ARM4_IC, region='CFE')
