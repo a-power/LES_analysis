@@ -25,7 +25,7 @@ cloud_field = f'f(q_cloud_liquid_mass_on_p)_r'
 fields = [ ['LM_field', 'MM_field'], ['HR_th_field', 'RR_th_field'],
            ['HR_th_L_field', 'RR_th_L_field'], ['HR_q_field', 'RR_q_field'] ]
 bomex_res=['40_80', '160_320', '640_1280']
-arm_res=['50_100', '400_800', '800_1600'] #'200_400'
+arm_res=['50_100', '200_400', '800_1600']
 Deltas = ['4$\\Delta$', '16$\\Delta$', '64$\\Delta$']
 
 times = ['14400', '18000', '25200', '32400', '39600']
@@ -69,6 +69,8 @@ def get_data_per_delta(dir_in, dir_cloud, time, res_in):
     data_qt4 = xr.open_dataset(dir_in+f'{time}_C_qt_{res_in[0]}.nc')
     data_qt16 = xr.open_dataset(dir_in+f'{time}_C_qt_{res_in[1]}.nc')
     data_qt64 = xr.open_dataset(dir_in+f'{time}_C_qt_{res_in[2]}.nc')
+
+    print('datasets opened')
 
     data_s4_LM = data_s4[f'{fields[0][0]}'].data[-1,...]
     data_s16_LM = data_s16[f'{fields[0][0]}'].data[-1,...]
@@ -118,6 +120,8 @@ def get_data_per_delta(dir_in, dir_cloud, time, res_in):
     data_qt_list = [dyn.get_Cs(0.5*data_qt4_LM/data_qt4_MM), dyn.get_Cs(0.5*data_qt16_LM/data_qt16_MM),
                     dyn.get_Cs(0.5*data_qt64_LM/data_qt64_MM)]
 
+    print('all C calculated')
+
     data_cl_list = [data_cl4, data_cl16, data_cl64]
 
 
@@ -159,6 +163,8 @@ def get_data_per_delta(dir_in, dir_cloud, time, res_in):
     data_field_s_cloud_64D, data_field_s_env_64D, data_field_th_cloud_64D, data_field_th_env_64D, \
         data_field_th_L_cloud_64D, data_field_th_L_env_64D, data_field_qt_cloud_64D, data_field_qt_env_64D \
         = apply_masks(data_s_list[2], data_th_list[2], data_th_L_list[2], data_qt_list[2], data_cl_list[2])
+
+    print('masks applied to C fields')
 
     data_s_list = None
     data_th_list = None
