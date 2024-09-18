@@ -25,7 +25,7 @@ cloud_field = f'f(q_cloud_liquid_mass_on_p)_r'
 fields = [ ['LM_field', 'MM_field'], ['HR_th_field', 'RR_th_field'],
            ['HR_th_L_field', 'RR_th_L_field'], ['HR_q_field', 'RR_q_field'] ]
 bomex_res=['40_80', '160_320', '640_1280']
-arm_res=['50_100', '200_400', '800_1600']
+arm_res=['50_100', '400_800', '800_1600'] #'200_400'
 Deltas = ['4$\\Delta$', '16$\\Delta$', '64$\\Delta$']
 
 times = ['14400', '18000', '25200', '32400', '39600']
