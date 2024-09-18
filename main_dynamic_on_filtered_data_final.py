@@ -111,7 +111,7 @@ elif case_in=='ARM':
     options = {
                 'FFT_type': 'RFFT',
                 'save_all': 'Yes',
-                'override': True,
+                'override': False,
                 'th_ref': 0.0,
                 'dx': 25.0,
                 'dy': 25.0,
