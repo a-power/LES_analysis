@@ -80,7 +80,7 @@ elif case_in == 'ARM':
     time_in = times_list[t_in]
     path_f = '/work/scratch-pw3/apower/ARM/'
     folder_f = 'first_filt/'
-    folder_ff = f'second_filt/th/th/'
+    folder_ff = f'second_filt/th/'
     file_f = f'diagnostics_3d_ts_{time_in}_'
     Delta = 25
 
