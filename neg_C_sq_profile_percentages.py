@@ -144,7 +144,6 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, data_field_list, 
         data_field_env = ma.masked_array(data_field_LM, mask=env_only_mask)
         print('applied env mask')
 
-        C_field_sq = None
 
         print('shape of env is = ', np.shape(data_field_env), 'shape of cloud is = ', np.shape(data_field_cloud))
 
