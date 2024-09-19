@@ -6,10 +6,12 @@ import mask_cloud_vs_env as clo
 import matplotlib.ticker as ticker
 import numpy.ma as ma
 import dynamic_functions as dyn
-import sys
+import functools
 
-sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
+print = functools.partial(print, flush=True)
 
+
+print('test')
 
 
 
