@@ -21,6 +21,8 @@ BOMEX_dir_contour = '/work/scratch-pw3/apower/BOMEX/second_filt/BOMEX_m0020_g080
 ARM_homedir = f'/work/scratch-pw3/apower/ARM/second_filt/LM/update/diagnostics_3d_ts_'
 ARM_dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_'
 
+save_dir = '/work/scratch-pw3/apower/distrib_of_C/'
+
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/plots/distribs/'
 #'/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/distribs/'
 os.makedirs(plotdir, exist_ok = True)
@@ -310,6 +312,7 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
         A2 = [1, 1, 1, 1]
 
 
+
     fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(16, 18), sharex='row', sharey='row')
     for i in range(4):
         for j in range(3):
@@ -384,6 +387,21 @@ ARM3_IC = [ARM3_s_list_cloud, ARM3_th_list_cloud, ARM3_th_L_list_cloud, ARM3_qt_
 ARM4_env = [ARM4_s_list_env, ARM4_th_list_env, ARM4_th_L_list_env, ARM4_qt_list_env]
 ARM4_IC = [ARM4_s_list_cloud, ARM4_th_list_cloud, ARM4_th_L_list_cloud, ARM4_qt_list_cloud]
 
+
+np.save(f'{save_dir}BOMEX_env.npy', BOMEX_env)
+np.save(f'{save_dir}BOMEX_IC.npy', BOMEX_IC)
+
+np.save(f'{save_dir}ARM1_env.npy', ARM1_env)
+np.save(f'{save_dir}ARM1_IC.npy', ARM1_IC)
+
+np.save(f'{save_dir}ARM2_env.npy', ARM2_env)
+np.save(f'{save_dir}ARM2_IC.npy', ARM2_IC)
+
+np.save(f'{save_dir}ARM3_env.npy', ARM3_env)
+np.save(f'{save_dir}ARM3_IC.npy', ARM3_IC)
+
+np.save(f'{save_dir}ARM4_env.npy', ARM4_env)
+np.save(f'{save_dir}ARM4_IC.npy', ARM4_IC)
 
 plot_hist(plotdir, BOMEX_env, ARM1_env, ARM2_env, ARM3_env, ARM4_env, region='ML')
 plot_hist(plotdir,  BOMEX_env, ARM1_env, ARM2_env, ARM3_env, ARM4_env, region='IC')
