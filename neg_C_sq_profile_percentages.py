@@ -10,6 +10,9 @@ import functools
 
 print = functools.partial(print, flush=True)
 
+np.seterr(divide='ignore')
+
+
 
 print('test')
 
