@@ -121,7 +121,7 @@ def cloud_and_env_masks(dataset_in, cloud_liquid_threshold=10**(-7), grid='p'):
 
 
 
-def negs_in_field(plotdir, field, c, z, z_i, data_field_list, data_cl_list):
+def negs_in_field(plotdir, field, c, c_latex, z, z_i, data_field_list, data_cl_list):
 
     deltas = ['4$\\Delta$', '16$\\Delta$', '64$\\Delta$']
     colours = ['tab:orange', 'tab:red', 'tab:cyan']
@@ -177,7 +177,7 @@ def negs_in_field(plotdir, field, c, z, z_i, data_field_list, data_cl_list):
     #            np.round(np.linspace((0) * (20 / 480), (151) * (20 / 480), len(og_xtic[0])), 1))
 
     plt.ylabel("$z/z_{ML}$", fontsize=16)
-    plt.xlabel(f"Percentage of Negative {list_of_C_latex[C]} Values", fontsize=16)
+    plt.xlabel(f"Percentage of Negative {c_latex} Values", fontsize=16)
     plt.savefig(plotdir + f'neg_{c}_vs_z.pdf', bbox_inches='tight')
     plt.clf()
 
@@ -190,6 +190,7 @@ for iters in range(len(list_of_C_latex)):
 
     C = list_of_c_names[iters]
     field = fields[iters]
+    c_lat = list_of_C_latex[iters]
 
     for nt, t in enumerate(times):
         if t == '14400':
@@ -207,4 +208,4 @@ for iters in range(len(list_of_C_latex)):
 
         data_C_list, data_cloud_list = get_data_per_delta(dir_in, dir_cloud, C, t, res_in)
 
-        negs_in_field(plotdir, field, C, z, z_i, data_C_list, data_cloud_list)
+        negs_in_field(plotdir, field, C, c_lat, z, z_i, data_C_list, data_cloud_list)
