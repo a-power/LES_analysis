@@ -131,7 +131,9 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, data_field_list, 
     colours = ['tab:orange', 'tab:red', 'tab:cyan']
 
     fig1 = plt.figure(figsize=(4, 6))
+    ax1 = fig1.add_subplot(111)
     fig2 = plt.figure(figsize=(4, 6))
+    ax2 = fig2.add_subplot(111)
 
     for i in range(len(data_field_list)):
 
@@ -166,29 +168,29 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, data_field_list, 
             print('counted points in env')
 
 
-        fig1.plot((counter_env/number_of_points_env)*100, z/z_i, label=f'{deltas[i]}', color=colours[i])
-        fig1.plot((counter_cloud/number_of_points_cloud)*100, z/z_i, linestyle='--', color=colours[i]) #label='$C_s$ IC')
+        ax1.plot((counter_env/number_of_points_env)*100, z/z_i, label=f'{deltas[i]}', color=colours[i])
+        ax1.plot((counter_cloud/number_of_points_cloud)*100, z/z_i, linestyle='--', color=colours[i]) #label='$C_s$ IC')
         print(f'plotted profile for {deltas[i]}')
 
-        fig2.plot(counter_env, z/z_i, label=f'{deltas[i]}', color=colours[i])
-        fig2.plot(counter_cloud, z/z_i, linestyle='--', color=colours[i])
+        ax2.plot(counter_env, z/z_i, label=f'{deltas[i]}', color=colours[i])
+        ax2.plot(counter_cloud, z/z_i, linestyle='--', color=colours[i])
 
-    fig1.legend()
-    fig2.legend()
+    ax1.legend()
+    ax2.legend()
 
     # og_xtic = plt.xticks()
     # plt.xticks(og_xtic[0],
     #            np.round(np.linspace((0) * (20 / 480), (151) * (20 / 480), len(og_xtic[0])), 1))
 
-    fig1.ylabel("$z/z_{ML}$", fontsize=16)
-    fig1.xlabel(f"Percentage of Negative {c_latex} Values", fontsize=16)
+    ax1.set_ylabel("$z/z_{ML}$", fontsize=16)
+    ax1.set_xlabel(f"Percentage of Negative {c_latex} Values", fontsize=16)
     fig1.savefig(plotdir + f'percent_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
-    fig1.clf()
+    # ax1.clf()
 
-    fig2.ylabel("$z/z_{ML}$", fontsize=16)
-    fig2.xlabel(f"Number of Negative {c_latex} Values", fontsize=16)
+    ax2.set_ylabel("$z/z_{ML}$", fontsize=16)
+    ax2.set_xlabel(f"Number of Negative {c_latex} Values", fontsize=16)
     fig2.savefig(plotdir + f'number_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
-    fig2.clf()
+    #ax2.clf()
 
     print(f'plotted all deltas neg vs z for {c}')
 
