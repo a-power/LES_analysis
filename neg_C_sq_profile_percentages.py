@@ -134,30 +134,38 @@ def negs_in_field(plotdir, field, c, z, z_i, data_field_list, data_cl_list):
         print('imported LM and MM')
 
         C_field_sq = 0.5 * data_field_LM / data_field_MM
+        print('calced c^2')
 
         data_field_LM = None
         data_field_MM = None
 
         data_field_cloud = ma.masked_array(C_field_sq, mask=cloud_only_mask)
+        print('applied cloud mask')
         data_field_env = ma.masked_array(C_field_sq, mask=env_only_mask)
+        print('applied env mask')
 
         C_field_sq = None
 
         print('shape of env is = ', np.shape(data_field_env), 'shape of cloud is = ', np.shape(data_field_cloud))
 
         number_of_points_env = ma.MaskedArray.count(data_field_env)
+        print('counted points in cloud')
         number_of_points_cloud = ma.MaskedArray.count(data_field_cloud)
+        print('counted points in env')
 
         counter_env = np.zeros(len(data_field_env[0, 0, :]))
         counter_cloud = np.zeros(len(data_field_cloud[0,0,:]))
 
         for j in range(len(data_field_cloud[0,0,:])):
             counter_cloud[j] = np.count_nonzero(data_field_cloud[:,:,j] < 0)
+            print('counted neg vals in cloud')
             counter_env[j] = np.count_nonzero(data_field_env[:, :, j] < 0)
+            print('counted neg vals in env')
 
 
         plt.plot((counter_env/number_of_points_env)*100, z/z_i, label=f'{deltas[i]}', color=colours[i])
         plt.plot((counter_cloud/number_of_points_cloud)*100, z/z_i, linestyle='--', color=colours[i]) #label='$C_s$ IC')
+        print(f'plotted profile for {deltas[i]}')
 
     plt.legend()
 
@@ -170,7 +178,7 @@ def negs_in_field(plotdir, field, c, z, z_i, data_field_list, data_cl_list):
     plt.savefig(plotdir + f'neg_{c}_vs_z.pdf', bbox_inches='tight')
     plt.clf()
 
-    print(f'plotted neg vs z for {c}')
+    print(f'plotted all deltas neg vs z for {c}')
 
     plt.close('all')
 
