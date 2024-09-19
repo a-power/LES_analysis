@@ -573,6 +573,24 @@ def get_Cs(Cs_sq):
     return Cs
 
 
+def get_Cs_no_copy(Cs_sq):
+    """ calculates C_s from C_s^2 by setting neg values to zero
+    and sq rooting"""
+
+    Cs_sq[Cs_sq < 0] = 0
+    Cs = np.sqrt(Cs_sq)
+
+    return Cs
+
+
+def get_Cs_where(Cs_sq):
+    """ calculates C_s from C_s^2 by setting neg values to zero
+    and sq rooting"""
+    Cs = np.where(Cs_sq < 0, Cs_sq, np.sqrt(Cs_sq))
+
+    return Cs
+
+
 def Cs_profiles(L_ij, M_ij, return_all=1):
     """ Calculates the horizontal average Cs value at each level
     using the Lij and Mij fields as input.
