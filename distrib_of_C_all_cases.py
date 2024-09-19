@@ -6,6 +6,9 @@ import mask_cloud_vs_env as clo
 import matplotlib.ticker as ticker
 import numpy.ma as ma
 import dynamic_functions as dyn
+import sys
+
+sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
 
 
 
