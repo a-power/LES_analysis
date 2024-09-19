@@ -75,8 +75,8 @@ def get_data_per_delta(dir_in, dir_cloud, time, res_in):
     data_s16_MM = data_s16[f'{fields[0][1]}'].data[-1,...]
     data_s64_MM = data_s64[f'{fields[0][1]}'].data[-1,...]
 
-    data_s_list = [dyn.get_Cs(0.5*data_s4_LM/data_s4_MM), dyn.get_Cs(0.5*data_s16_LM/data_s16_MM),
-                   dyn.get_Cs(0.5*data_s64_LM/data_s64_MM)]
+    data_s_list = [dyn.get_Cs_where(0.5*data_s4_LM/data_s4_MM), dyn.get_Cs_where(0.5*data_s16_LM/data_s16_MM),
+                   dyn.get_Cs_where(0.5*data_s64_LM/data_s64_MM)]
     data_s4_LM = None
     data_s16_LM = None
     data_s64_LM = None
@@ -102,8 +102,8 @@ def get_data_per_delta(dir_in, dir_cloud, time, res_in):
     data_th16_MM = data_th16[f'{fields[1][1]}'].data[-1,...]
     data_th64_MM = data_th64[f'{fields[1][1]}'].data[-1,...]
 
-    data_th_list = [dyn.get_Cs(0.5*data_th4_LM/data_th4_MM), dyn.get_Cs(0.5*data_th16_LM/data_th16_MM),
-                    dyn.get_Cs(0.5*data_th64_LM/data_th64_MM)]
+    data_th_list = [dyn.get_Cs_where(0.5*data_th4_LM/data_th4_MM), dyn.get_Cs_where(0.5*data_th16_LM/data_th16_MM),
+                    dyn.get_Cs_where(0.5*data_th64_LM/data_th64_MM)]
     data_th4_LM = None
     data_th16_LM = None
     data_th64_LM = None
@@ -130,8 +130,8 @@ def get_data_per_delta(dir_in, dir_cloud, time, res_in):
     data_th_L16_MM = data_th_L16[f'{fields[2][1]}'].data[-1, ...]
     data_th_L64_MM = data_th_L64[f'{fields[2][1]}'].data[-1, ...]
 
-    data_th_L_list = [dyn.get_Cs(0.5*data_th_L4_LM/data_th_L4_MM), dyn.get_Cs(0.5*data_th_L16_LM/data_th_L16_MM),
-                      dyn.get_Cs(0.5*data_th_L64_LM/data_th_L64_MM)]
+    data_th_L_list = [dyn.get_Cs_where(0.5*data_th_L4_LM/data_th_L4_MM), dyn.get_Cs_where(0.5*data_th_L16_LM/data_th_L16_MM),
+                      dyn.get_Cs_where(0.5*data_th_L64_LM/data_th_L64_MM)]
     data_th_L4_LM = None
     data_th_L16_LM = None
     data_th_L64_LM = None
