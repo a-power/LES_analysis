@@ -58,98 +58,120 @@ def get_data_per_delta(dir_in, dir_cloud, time, res_in):
     data_s16 = xr.open_dataset(dir_in+f'{time}_Cs_{res_in[1]}.nc')
     data_s64 = xr.open_dataset(dir_in+f'{time}_Cs_{res_in[2]}.nc')
 
-    data_th4 = xr.open_dataset(dir_in+f'{time}_C_th_{res_in[0]}.nc')
-    data_th16 = xr.open_dataset(dir_in+f'{time}_C_th_{res_in[1]}.nc')
-    data_th64 = xr.open_dataset(dir_in+f'{time}_C_th_{res_in[2]}.nc')
-
-    data_th_L4 = xr.open_dataset(dir_in+f'{time}_C_th_L_{res_in[0]}.nc')
-    data_th_L16 = xr.open_dataset(dir_in+f'{time}_C_th_L_{res_in[1]}.nc')
-    data_th_L64 = xr.open_dataset(dir_in+f'{time}_C_th_L_{res_in[2]}.nc')
-
-    data_qt4 = xr.open_dataset(dir_in+f'{time}_C_qt_{res_in[0]}.nc')
-    data_qt16 = xr.open_dataset(dir_in+f'{time}_C_qt_{res_in[1]}.nc')
-    data_qt64 = xr.open_dataset(dir_in+f'{time}_C_qt_{res_in[2]}.nc')
-
-    print('datasets opened')
+    print('datasets Cs opened')
 
     data_s4_LM = data_s4[f'{fields[0][0]}'].data[-1,...]
     data_s16_LM = data_s16[f'{fields[0][0]}'].data[-1,...]
     data_s64_LM = data_s64[f'{fields[0][0]}'].data[-1,...]
 
-    data_th4_LM = data_th4[f'{fields[1][0]}'].data[-1,...]
-    data_th16_LM = data_th16[f'{fields[1][0]}'].data[-1,...]
-    data_th64_LM = data_th64[f'{fields[1][0]}'].data[-1,...]
-
-    data_th_L4_LM = data_th_L4[f'{fields[2][0]}'].data[-1,...]
-    data_th_L16_LM = data_th_L16[f'{fields[2][0]}'].data[-1,...]
-    data_th_L64_LM = data_th_L64[f'{fields[2][0]}'].data[-1,...]
-
-    data_qt4_LM = data_qt4[f'{fields[3][0]}'].data[-1,...]
-    data_qt16_LM = data_qt16[f'{fields[3][0]}'].data[-1,...]
-    data_qt64_LM = data_qt64[f'{fields[3][0]}'].data[-1,...]
-
-
     data_s4_MM = data_s4[f'{fields[0][1]}'].data[-1,...]
     data_s16_MM = data_s16[f'{fields[0][1]}'].data[-1,...]
     data_s64_MM = data_s64[f'{fields[0][1]}'].data[-1,...]
 
+    data_s_list = [dyn.get_Cs(0.5*data_s4_LM/data_s4_MM), dyn.get_Cs(0.5*data_s16_LM/data_s16_MM),
+                   dyn.get_Cs(0.5*data_s64_LM/data_s64_MM)]
+    data_s4_LM = None
+    data_s16_LM = None
+    data_s64_LM = None
+    data_s4_MM = None
+    data_s16_MM = None
+    data_s64_MM = None
+
+    data_s4.close()
+    data_s16.close()
+    data_s64.close()
+    print('Cs calculated')
+
+
+
+    data_th4 = xr.open_dataset(dir_in+f'{time}_C_th_{res_in[0]}.nc')
+    data_th16 = xr.open_dataset(dir_in+f'{time}_C_th_{res_in[1]}.nc')
+    data_th64 = xr.open_dataset(dir_in+f'{time}_C_th_{res_in[2]}.nc')
+
+    data_th4_LM = data_th4[f'{fields[1][0]}'].data[-1,...]
+    data_th16_LM = data_th16[f'{fields[1][0]}'].data[-1,...]
+    data_th64_LM = data_th64[f'{fields[1][0]}'].data[-1,...]
     data_th4_MM = data_th4[f'{fields[1][1]}'].data[-1,...]
     data_th16_MM = data_th16[f'{fields[1][1]}'].data[-1,...]
     data_th64_MM = data_th64[f'{fields[1][1]}'].data[-1,...]
 
-    data_th_L4_MM = data_th_L4[f'{fields[2][1]}'].data[-1,...]
-    data_th_L16_MM = data_th_L16[f'{fields[2][1]}'].data[-1,...]
-    data_th_L64_MM = data_th_L64[f'{fields[2][1]}'].data[-1,...]
+    data_th_list = [dyn.get_Cs(0.5*data_th4_LM/data_th4_MM), dyn.get_Cs(0.5*data_th16_LM/data_th16_MM),
+                    dyn.get_Cs(0.5*data_th64_LM/data_th64_MM)]
+    data_th4_LM = None
+    data_th16_LM = None
+    data_th64_LM = None
+    data_th4_MM = None
+    data_th16_MM = None
+    data_th64_MM = None
 
-    data_qt4_MM = data_qt4[f'{fields[3][1]}'].data[-1,...]
-    data_qt16_MM = data_qt16[f'{fields[3][1]}'].data[-1,...]
-    data_qt64_MM = data_qt64[f'{fields[3][1]}'].data[-1,...]
+    data_th4.close
+    data_th16.close
+    data_th64.close
+    print('Cth calculated')
+
+
+
+
+    data_th_L4 = xr.open_dataset(dir_in+f'{time}_C_th_L_{res_in[0]}.nc')
+    data_th_L16 = xr.open_dataset(dir_in+f'{time}_C_th_L_{res_in[1]}.nc')
+    data_th_L64 = xr.open_dataset(dir_in+f'{time}_C_th_L_{res_in[2]}.nc')
+
+    data_th_L4_LM = data_th_L4[f'{fields[2][0]}'].data[-1, ...]
+    data_th_L16_LM = data_th_L16[f'{fields[2][0]}'].data[-1, ...]
+    data_th_L64_LM = data_th_L64[f'{fields[2][0]}'].data[-1, ...]
+    data_th_L4_MM = data_th_L4[f'{fields[2][1]}'].data[-1, ...]
+    data_th_L16_MM = data_th_L16[f'{fields[2][1]}'].data[-1, ...]
+    data_th_L64_MM = data_th_L64[f'{fields[2][1]}'].data[-1, ...]
+
+    data_th_L_list = [dyn.get_Cs(0.5*data_th_L4_LM/data_th_L4_MM), dyn.get_Cs(0.5*data_th_L16_LM/data_th_L16_MM),
+                      dyn.get_Cs(0.5*data_th_L64_LM/data_th_L64_MM)]
+    data_th_L4_LM = None
+    data_th_L16_LM = None
+    data_th_L64_LM = None
+    data_th_L4_MM = None
+    data_th_L16_MM = None
+    data_th_L64_MM = None
+
+    data_th_L4.close()
+    data_th_L16.close()
+    data_th_L64.close()
+    print('Cth_L calculated')
+
+
+
+    data_qt4 = xr.open_dataset(dir_in+f'{time}_C_qt_{res_in[0]}.nc')
+    data_qt16 = xr.open_dataset(dir_in+f'{time}_C_qt_{res_in[1]}.nc')
+    data_qt64 = xr.open_dataset(dir_in+f'{time}_C_qt_{res_in[2]}.nc')
+
+    data_qt4_LM = data_qt4[f'{fields[3][0]}'].data[-1, ...]
+    data_qt16_LM = data_qt16[f'{fields[3][0]}'].data[-1, ...]
+    data_qt64_LM = data_qt64[f'{fields[3][0]}'].data[-1, ...]
+    data_qt4_MM = data_qt4[f'{fields[3][1]}'].data[-1, ...]
+    data_qt16_MM = data_qt16[f'{fields[3][1]}'].data[-1, ...]
+    data_qt64_MM = data_qt64[f'{fields[3][1]}'].data[-1, ...]
+
+    data_qt_list = [dyn.get_Cs(0.5*data_qt4_LM/data_qt4_MM), dyn.get_Cs(0.5*data_qt16_LM/data_qt16_MM),
+                    dyn.get_Cs(0.5*data_qt64_LM/data_qt64_MM)]
+    data_qt4_LM = None
+    data_qt16_LM = None
+    data_qt64_LM = None
+    data_qt4_MM = None
+    data_qt16_MM = None
+    data_qt64_MM = None
+
+    data_qt4.close()
+    data_qt16.close()
+    data_qt64.close()
+    print('Cqt calculated')
+
+    print('all C calculated')
 
 
     data_cl4 = dir_cloud+f'{time}_gaussian_filter_ga00_gaussian_filter_ga00.nc'
     data_cl16 = dir_cloud+f'{time}_gaussian_filter_ga02_gaussian_filter_ga00.nc'
     data_cl64 = dir_cloud+f'{time}_gaussian_filter_ga04_gaussian_filter_ga00.nc'
 
-
-    data_s_list = [dyn.get_Cs(0.5*data_s4_LM/data_s4_MM), dyn.get_Cs(0.5*data_s16_LM/data_s16_MM),
-                   dyn.get_Cs(0.5*data_s64_LM/data_s64_MM)]
-    data_th_list = [dyn.get_Cs(0.5*data_th4_LM/data_th4_MM), dyn.get_Cs(0.5*data_th16_LM/data_th16_MM),
-                    dyn.get_Cs(0.5*data_th64_LM/data_th64_MM)]
-    data_th_L_list = [dyn.get_Cs(0.5*data_th_L4_LM/data_th_L4_MM), dyn.get_Cs(0.5*data_th_L16_LM/data_th_L16_MM),
-                      dyn.get_Cs(0.5*data_th_L64_LM/data_th_L64_MM)]
-    data_qt_list = [dyn.get_Cs(0.5*data_qt4_LM/data_qt4_MM), dyn.get_Cs(0.5*data_qt16_LM/data_qt16_MM),
-                    dyn.get_Cs(0.5*data_qt64_LM/data_qt64_MM)]
-
-    print('all C calculated')
-
     data_cl_list = [data_cl4, data_cl16, data_cl64]
-
-
-
-    data_s4_LM = None
-    data_s16_LM = None
-    data_s64_LM = None
-    data_th4_LM = None
-    data_th16_LM = None
-    data_th64_LM = None
-    data_th_L4_LM = None
-    data_th_L16_LM = None
-    data_th_L64_LM = None
-    data_qt4_LM = None
-    data_qt16_LM = None
-    data_qt64_LM = None
-    data_s4_MM = None
-    data_s16_MM = None
-    data_s64_MM = None
-    data_th4_MM = None
-    data_th16_MM = None
-    data_th64_MM = None
-    data_th_L4_MM = None
-    data_th_L16_MM = None
-    data_th_L64_MM = None
-    data_qt4_MM = None
-    data_qt16_MM = None
-    data_qt64_MM = None
 
 
     data_field_s_cloud_4D, data_field_s_env_4D, data_field_th_cloud_4D, data_field_th_env_4D, \
@@ -170,6 +192,7 @@ def get_data_per_delta(dir_in, dir_cloud, time, res_in):
     data_th_list = None
     data_th_L_list = None
     data_qt_list = None
+    data_cl_list = None
 
     data_s_list_cloud = [data_field_s_cloud_4D, data_field_s_cloud_16D, data_field_s_cloud_64D]
     data_s_list_env = [data_field_s_env_4D, data_field_s_env_16D, data_field_s_env_64D]
@@ -229,15 +252,19 @@ def apply_masks(data_field_s, data_field_th, data_field_th_L, data_field_qt, dat
 
     data_field_s_cloud = ma.masked_array(data_field_s, mask=cloud_only_mask)
     data_field_s_env = ma.masked_array(data_field_s, mask=env_only_mask)
+    data_field_s=None
 
     data_field_th_cloud = ma.masked_array(data_field_th, mask=cloud_only_mask)
     data_field_th_env = ma.masked_array(data_field_th, mask=env_only_mask)
+    data_field_th=None
 
     data_field_th_L_cloud = ma.masked_array(data_field_th_L, mask=cloud_only_mask)
     data_field_th_L_env = ma.masked_array(data_field_th_L, mask=env_only_mask)
+    data_field_th_L =None
 
     data_field_qt_cloud = ma.masked_array(data_field_qt, mask=cloud_only_mask)
     data_field_qt_env = ma.masked_array(data_field_qt, mask=env_only_mask)
+    data_field_qt=None
 
     return data_field_s_cloud, data_field_s_env, data_field_th_cloud, data_field_th_env, \
         data_field_th_L_cloud, data_field_th_L_env, data_field_qt_cloud, data_field_qt_env
