@@ -181,7 +181,7 @@ for iters in range(len(list_of_C_latex)):
     field = fields[iters]
 
     for nt, t in enumerate(times):
-        if nt == '14400':
+        if t == '14400':
             dir_in = BOMEX_homedir
             dir_cloud = BOMEX_dir_contour
             res_in = bomex_res
