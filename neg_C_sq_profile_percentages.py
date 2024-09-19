@@ -34,10 +34,11 @@ arm_res=['50_100', '200_400', '800_1600']
 Deltas = ['4$\\Delta$', '16$\\Delta$', '64$\\Delta$']
 
 times = ['14400', '18000', '25200', '32400', '39600']
+z_i_all = [430, 795, 955, 1095, 1255]
 
 dx_BOMEX=20
 z_BOMEX = np.arange(0, 3020, 20)
-z_i_BOMEX = 430 #1120
+z_i_BOMEX = [430] #1120
 
 
 dx_ARM=25
@@ -121,43 +122,35 @@ def cloud_and_env_masks(dataset_in, cloud_liquid_threshold=10**(-7), grid='p'):
 
 
 
-def negs_in_field(plotdir, field, c, c_latex, z, z_i, data_field_list, data_cl_list):
+def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, data_field_list, data_cl_list):
 
     deltas = ['4$\\Delta$', '16$\\Delta$', '64$\\Delta$']
     colours = ['tab:orange', 'tab:red', 'tab:cyan']
 
-    plt.figure(figsize=(7, 6))
+    fig1 = plt.figure(figsize=(4, 6))
+    fig2 = plt.figure(figsize=(4, 6))
 
     for i in range(len(data_field_list)):
 
         cloud_only_mask, env_only_mask = cloud_and_env_masks(data_cl_list[i])
 
         data_field_LM = data_field_list[i][f'{field[0]}'].data[-1,...]
-        data_field_MM = data_field_list[i][f'{field[1]}'].data[-1, ...]
-        print('imported LM and MM')
 
-        C_field_sq = 0.5 * data_field_LM / data_field_MM
-        print('calced c^2')
-
-        data_field_LM = None
-        data_field_MM = None
-
-        data_field_cloud = ma.masked_array(C_field_sq, mask=cloud_only_mask)
+        data_field_cloud = ma.masked_array(data_field_LM, mask=cloud_only_mask)
         print('applied cloud mask')
-        data_field_env = ma.masked_array(C_field_sq, mask=env_only_mask)
+        data_field_env = ma.masked_array(data_field_LM, mask=env_only_mask)
         print('applied env mask')
 
         C_field_sq = None
 
         print('shape of env is = ', np.shape(data_field_env), 'shape of cloud is = ', np.shape(data_field_cloud))
 
-        number_of_points_env = ma.MaskedArray.count(data_field_env)
-        print('counted points in cloud')
-        number_of_points_cloud = ma.MaskedArray.count(data_field_cloud)
-        print('counted points in env')
 
         counter_env = np.zeros(len(data_field_env[0, 0, :]))
         counter_cloud = np.zeros(len(data_field_cloud[0,0,:]))
+
+        number_of_points_env = np.zeros(len(data_field_env[0, 0, :]))
+        number_of_points_cloud = np.zeros(len(data_field_cloud[0,0,:]))
 
         for j in range(len(data_field_cloud[0,0,:])):
             counter_cloud[j] = np.count_nonzero(data_field_cloud[:,:,j] < 0)
@@ -165,25 +158,37 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, data_field_list, data_cl_l
             counter_env[j] = np.count_nonzero(data_field_env[:, :, j] < 0)
             print('counted neg vals in env')
 
+            number_of_points_env[j] = ma.MaskedArray.count(data_field_env[:,:,j])
+            print('counted points in cloud')
+            number_of_points_cloud[j] = ma.MaskedArray.count(data_field_cloud[:,:,j])
+            print('counted points in env')
 
-        plt.plot((counter_env/number_of_points_env)*100, z/z_i, label=f'{deltas[i]}', color=colours[i])
-        plt.plot((counter_cloud/number_of_points_cloud)*100, z/z_i, linestyle='--', color=colours[i]) #label='$C_s$ IC')
+
+        fig1.plot((counter_env/number_of_points_env)*100, z/z_i, label=f'{deltas[i]}', color=colours[i])
+        fig1.plot((counter_cloud/number_of_points_cloud)*100, z/z_i, linestyle='--', color=colours[i]) #label='$C_s$ IC')
         print(f'plotted profile for {deltas[i]}')
 
-    plt.legend()
+        fig2.plot(counter_env, z/z_i, label=f'{deltas[i]}', color=colours[i])
+        fig2.plot(counter_cloud, z/z_i, linestyle='--', color=colours[i])
+
+    fig1.legend()
+    fig2.legend()
 
     # og_xtic = plt.xticks()
     # plt.xticks(og_xtic[0],
     #            np.round(np.linspace((0) * (20 / 480), (151) * (20 / 480), len(og_xtic[0])), 1))
 
-    plt.ylabel("$z/z_{ML}$", fontsize=16)
-    plt.xlabel(f"Percentage of Negative {c_latex} Values", fontsize=16)
-    plt.savefig(plotdir + f'neg_{c}_vs_z.pdf', bbox_inches='tight')
-    plt.clf()
+    fig1.ylabel("$z/z_{ML}$", fontsize=16)
+    fig1.xlabel(f"Percentage of Negative {c_latex} Values", fontsize=16)
+    fig1.savefig(plotdir + f'percent_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
+    fig1.clf()
+
+    fig2.ylabel("$z/z_{ML}$", fontsize=16)
+    fig2.xlabel(f"Number of Negative {c_latex} Values", fontsize=16)
+    fig2.savefig(plotdir + f'number_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
+    fig2.clf()
 
     print(f'plotted all deltas neg vs z for {c}')
-
-    plt.close('all')
 
 
 for iters in range(len(list_of_C_latex)):
@@ -198,14 +203,14 @@ for iters in range(len(list_of_C_latex)):
             dir_cloud = BOMEX_dir_contour
             res_in = bomex_res
             z = z_BOMEX
-            z_i = z_i_BOMEX
+            z_i = z_i_all[nt]
         else:
             dir_in = ARM_homedir
             dir_cloud = ARM_dir_contour
             res_in = arm_res
             z = z_ARM
-            z_i = z_i_ARM
+            z_i = z_i_all[nt]
 
         data_C_list, data_cloud_list = get_data_per_delta(dir_in, dir_cloud, C, t, res_in)
 
-        negs_in_field(plotdir, field, C, c_lat, z, z_i, data_C_list, data_cloud_list)
+        negs_in_field(plotdir, field, C, c_lat, z, z_i, t, data_C_list, data_cloud_list)
