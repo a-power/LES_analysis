@@ -215,10 +215,10 @@ def get_data_per_delta(dir_in, dir_cloud, c_in, time, res_in):
     #
     # np.save(f'{save_dir}{c_in}_case_{time}_deltas_field', data_s_list)
 
-    data_s_list = np.load(f'{save_dir}Cs_case_{time}_deltas_field')
-    data_th_list = np.load(f'{save_dir}C_th_case_{time}_deltas_field')
-    data_th_L_list = np.load(f'{save_dir}C_th_L_case_{time}_deltas_field')
-    data_qt_list = np.load(f'{save_dir}C_qt_case_{time}_deltas_field')
+    data_s_list = np.load(f'{save_dir}Cs_case_{time}_deltas_field.npy')
+    data_th_list = np.load(f'{save_dir}C_th_case_{time}_deltas_field.npy')
+    data_th_L_list = np.load(f'{save_dir}C_th_L_case_{time}_deltas_field.npy')
+    data_qt_list = np.load(f'{save_dir}C_qt_case_{time}_deltas_field.npy')
 
 
     data_cl4 = dir_cloud+f'{time}_gaussian_filter_ga00_gaussian_filter_ga00.nc'
