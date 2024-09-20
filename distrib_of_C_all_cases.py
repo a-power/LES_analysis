@@ -102,7 +102,7 @@ def get_data_per_delta(dir_in, dir_cloud, c_in, time, res_in):
 
     print(f'{c_in} calculated')
 
-    np.save(f'{save_dir}{c_in}_3_deltas_field', data_s_list)
+    np.save(f'{save_dir}{c_in}_case_{time}_deltas_field', data_s_list)
     data_s4_LM = None
     data_s16_LM = None
     data_s64_LM = None
