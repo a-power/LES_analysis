@@ -143,35 +143,70 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, data_field_list, 
 
         data_field_LM = data_field_list[i][f'{field[0]}'].data[-1,...]
 
-        data_field_cloud = ma.masked_array(data_field_LM, mask=cloud_only_mask)
-        print('applied cloud mask')
-        data_field_env = ma.masked_array(data_field_LM, mask=env_only_mask)
-        print('applied env mask')
+        data_field_cloud_temp = ma.masked_array(data_field_LM, mask=cloud_only_mask)
+        print('applied cloud mask, shape of cloud_only_fields = ', np.shape(data_field_cloud_temp))
+        data_field_env_temp = ma.masked_array(data_field_LM, mask=env_only_mask)
+        print('applied env mask, shape of env_only_fields = ', np.shape(data_field_env_temp))
+
+
+
+        data_field_cloud = ma.filled(data_field_cloud_temp, 0)
+        data_field_env = ma.filled(data_field_env_temp, 0)
+
+        data_field_cloud_temp = None
+        data_field_env_temp = None
+
 
 
         print('shape of env is = ', np.shape(data_field_env), 'shape of cloud is = ', np.shape(data_field_cloud))
 
 
-        counter_env = np.zeros(len(data_field_env[0, 0, :]))
-        counter_cloud = np.zeros(len(data_field_cloud[0,0,:]))
+        counter_env = np.zeros(len(data_field_env[0, 0, :]), dtype=float)
+        counter_cloud = np.zeros(len(data_field_cloud[0,0,:]), dtype=float)
 
-        number_of_points_env = np.zeros(len(data_field_env[0, 0, :]))
-        number_of_points_cloud = np.zeros(len(data_field_cloud[0,0,:]))
+        counter_cloud_no_messin = np.zeros(len(data_field_cloud[0, 0, :]), dtype=float)
+
+        number_of_points_env = np.zeros(len(data_field_env[0, 0, :]), dtype=float)
+        number_of_points_cloud = np.zeros(len(data_field_cloud[0,0,:]), dtype=float)
+
+        counter_LM = np.zeros(len(data_field_env[0, 0, :]), dtype=float)
+
+        # total_count = len(data_field_LM[:,0,0])*len(data_field_LM[0,:,0])*len(data_field_LM[0,0,:])
 
         for j in range(len(data_field_cloud[0,0,:])):
+
+            counter_LM[j] = np.count_nonzero(data_field_LM[:,:,j] < 0)
+
             counter_cloud[j] = np.count_nonzero(data_field_cloud[:,:,j] < 0)
-            print('counted neg vals in cloud')
+            counter_cloud_no_messin[j] = counter_cloud[j]
+
             counter_env[j] = np.count_nonzero(data_field_env[:, :, j] < 0)
-            print('counted neg vals in env')
 
             number_of_points_env[j] = ma.MaskedArray.count(data_field_env[:,:,j])
-            print('counted points in cloud')
+
             number_of_points_cloud[j] = ma.MaskedArray.count(data_field_cloud[:,:,j])
-            print('counted points in env')
+
+
+            if counter_cloud[j] > number_of_points_cloud[j] or number_of_points_cloud[j] == 0:
+                print(j)
+                print('number of negatives in cloud = ', counter_cloud[j],
+                      ' and total number of cloudy points is = ', number_of_points_cloud[j])
+                counter_cloud_no_messin[j] = np.nan
+
+        print('counted neg vals in whole domain')
+        np.save(f'{save_dir}number_domain_neg_{c}_vs_z_{time_in}.npy', counter_LM)
+        print('counted neg vals in cloud')
+        np.save(f'{save_dir}number_neg_IC_{c}_vs_z_{time_in}.npy', counter_cloud)
+        print('counted neg vals in env')
+        np.save(f'{save_dir}number_neg_CFE_{c}_vs_z_{time_in}.npy', counter_env)
+        print('counted points in cloud')
+        np.save(f'{save_dir}number_total_IC_points_{c}_vs_z_{time_in}.npy', number_of_points_env)
+        print('counted points in env')
+        np.save(f'{save_dir}number_total_CFE_points_{c}_vs_z_{time_in}.npy', number_of_points_cloud)
 
 
         ax1.plot((counter_env/number_of_points_env)*100, z/z_i, label=f'{deltas[i]}', color=colours[i])
-        ax1.plot((counter_cloud/number_of_points_cloud)*100, z/z_i, linestyle='--', color=colours[i]) #label='$C_s$ IC')
+        ax1.plot((counter_cloud_no_messin/number_of_points_cloud)*100, z/z_i, linestyle='--', color=colours[i]) #label='$C_s$ IC')
         print(f'plotted profile for {deltas[i]}')
 
         ax2.plot(counter_env, z/z_i, label=f'{deltas[i]}', color=colours[i])
