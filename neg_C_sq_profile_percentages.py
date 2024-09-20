@@ -182,9 +182,9 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, data_field_list, 
 
             counter_env[j] = np.count_nonzero(data_field_env[:, :, j] < 0)
 
-            number_of_points_env[j] = ma.MaskedArray.count(data_field_env[:,:,j])
+            number_of_points_env[j] = np.count_nonzero(data_field_env[:,:,j]) #ma.MaskedArray.count(data_field_env[:,:,j])
 
-            number_of_points_cloud[j] = ma.MaskedArray.count(data_field_cloud[:,:,j])
+            number_of_points_cloud[j] = np.count_nonzero(data_field_cloud[:,:,j]) #ma.MaskedArray.count(data_field_cloud[:,:,j])
 
 
             if counter_cloud[j] > number_of_points_cloud[j] or number_of_points_cloud[j] == 0:
