@@ -338,26 +338,29 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
     else:
         fields_latex_in = field_latex_sq
 
-    if region == 'ML':
-        B1 = BOMEX_ML_range[0]
-        B2 = BOMEX_ML_range[1]
+    # ARM_ML_range = np.array([[100, 700], [100, 900], [100, 1000], [100, 1000]])
+    # ARM_CL_range = np.array([[900, 1050], [1100, 1400], [1250, 1850], [1400, 2150]])
 
-        A1 = ARM_ML_range[:][0]
-        A2 = ARM_ML_range[:][1]
+    if region == 'ML':
+        B1 = int(BOMEX_ML_ind[0])
+        B2 = int(BOMEX_ML_ind[1])
+
+        A1 = ARM_ML_ind[10,10,10,10]
+        A2 = ARM_ML_ind[70,90,100,100]
 
     elif region == 'IC' or region == 'CFE':
-        B1 = BOMEX_CL_range[0]
-        B2 = BOMEX_CL_range[1]
+        B1 = int(BOMEX_CL_ind[0])
+        B2 = int(BOMEX_CL_ind[1])
 
-        A1 = ARM_CL_range[:][0]
-        A2 = ARM_CL_range[:][1]
+        A1 = [90,110,125,140]
+        A2 = [105,140,185,215]
 
     elif region == 'DA':
         B1 = 0
-        B2 = 1
+        B2 = -1
 
         A1 = [0, 0, 0, 0]
-        A2 = [1, 1, 1, 1]
+        A2 = [-1, -1, -1, -1]
 
 
 
