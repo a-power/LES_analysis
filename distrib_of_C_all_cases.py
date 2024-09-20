@@ -377,16 +377,18 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
 
             print('shape of data1  = ', np.shape(data1))
 
-            ax[i,j].hist(data1[i,j,:,:,B1:B2].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[0],
-                     weights=np.ones(ma.count(data1[i,j,:,:,B1:B2])) / ma.count(data1[i,j,:,:,B1:B2]), label='BOMEX')
+            print('B1 and B2 = ', B1, B2, ' with type = ', type(B1), type(B2))
+
+            ax[i,j].hist(data1[i][j][:,:,B1:B2].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[0],
+                     weights=np.ones(ma.count(data1[i][j][:,:,B1:B2])) / ma.count(data1[i][j][:,:,B1:B2]), label='BOMEX')
             ax[i,j].hist(data2[i,j,:,:,A1[0]:A2[0]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[1],
-                     weights=np.ones(ma.count(data2[i,j,:,:,A1[0]:A2[0]])) / ma.count(data2[i,j,:,:,A1[0]:A2[0]]), label='ARM 10:30L')
-            ax[i,j].hist(data3[i,j,:,:,A1[1]:A2[1]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[2],
-                     weights=np.ones(ma.count(data3[i,j,:,:,A1[1]:A2[1]])) / ma.count(data3[i,j,:,:,A1[1]:A2[1]]), label='ARM 12:30L')
-            ax[i,j].hist(data4[i,j,:,:,A1[2]:A2[2]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[3],
-                     weights=np.ones(ma.count(data4[i,j,:,:,A1[2]:A2[2]])) / ma.count(data4[i,j,:,:,A1[2]:A2[2]]), label='ARM 14:30L')
-            ax[i,j].hist(data5[i,j,:,:,A1[3]:A2[3]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[4],
-                     weights=np.ones(ma.count(data5[i,j,:,:,A1[3]:A2[3]])) / ma.count(data5[i,j,:,:,A1[3]:A2[3]]), label='ARM 16:30L')
+                     weights=np.ones(ma.count(data2[i][j][:,:,A1[0]:A2[0]])) / ma.count(data2[i][j][:,:,A1[0]:A2[0]]), label='ARM 10:30L')
+            ax[i,j].hist(data3[i][j][:,:,A1[1]:A2[1]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[2],
+                     weights=np.ones(ma.count(data3[i][j][:,:,A1[1]:A2[1]])) / ma.count(data3[i][j][:,:,A1[1]:A2[1]]), label='ARM 12:30L')
+            ax[i,j].hist(data4[i][j][:,:,A1[2]:A2[2]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[3],
+                     weights=np.ones(ma.count(data4[i][j][:,:,A1[2]:A2[2]])) / ma.count(data4[i][j][:,:,A1[2]:A2[2]]), label='ARM 14:30L')
+            ax[i,j].hist(data5[i][j][:,:,A1[3]:A2[3]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[4],
+                     weights=np.ones(ma.count(data5[i][j][:,:,A1[3]:A2[3]])) / ma.count(data5[i][j][:,:,A1[3]:A2[3]]), label='ARM 16:30L')
             ax[i,j].set_xlabel(f"{fields_latex_in[i]}", fontsize=16)
             ax[0,j].set_title(f'{Deltas[j]}')
         ax[i,0].set_ylabel("Percentage of Occurrences", fontsize=16)
