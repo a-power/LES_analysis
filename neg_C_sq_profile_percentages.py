@@ -239,7 +239,7 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, nt_in, data_field
     ax3.set_title(f"{labels_title[nt_in]}", fontsize=13)
     ax3.set_ylabel("$z/z_{ML}$ $z_{ML} = $"+f'{z_i}m', fontsize=16)
     ax3.set_xlabel(f"% of Negative {c_latex} Across Domain", fontsize=13)
-    fig3.savefig(plotdir + f'number_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
+    fig3.savefig(plotdir + f'overall_percent_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
     #ax2.clf()
 
     print(f'plotted all deltas neg vs z for {c}')
