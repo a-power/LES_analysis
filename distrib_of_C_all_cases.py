@@ -308,18 +308,22 @@ def apply_masks(data_field_s, data_field_th, data_field_th_L, data_field_qt, dat
     data_field_s_cloud = ma.masked_array(data_field_s, mask=cloud_only_mask)
     data_field_s_env = ma.masked_array(data_field_s, mask=env_only_mask)
     data_field_s=None
+    print('applied mask to Cs')
 
     data_field_th_cloud = ma.masked_array(data_field_th, mask=cloud_only_mask)
     data_field_th_env = ma.masked_array(data_field_th, mask=env_only_mask)
     data_field_th=None
+    print('applied mask to C_th')
 
     data_field_th_L_cloud = ma.masked_array(data_field_th_L, mask=cloud_only_mask)
     data_field_th_L_env = ma.masked_array(data_field_th_L, mask=env_only_mask)
     data_field_th_L =None
+    print('applied mask to C_th_L')
 
     data_field_qt_cloud = ma.masked_array(data_field_qt, mask=cloud_only_mask)
     data_field_qt_env = ma.masked_array(data_field_qt, mask=env_only_mask)
     data_field_qt=None
+    print('applied mask to C_qt')
 
     return data_field_s_cloud, data_field_s_env, data_field_th_cloud, data_field_th_env, \
         data_field_th_L_cloud, data_field_th_L_env, data_field_qt_cloud, data_field_qt_env
@@ -373,16 +377,16 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
 
             print('shape of data1  = ', np.shape(data1))
 
-            ax[i,j].hist(data1[i][j,B1:B2].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[0],
-                     weights=np.ones(len(data1[i][j,B1:B2])) / len(data1[i][j,B1:B2]), label='BOMEX')
-            ax[i,j].hist(data2[i][j,A1[0]:A2[0]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[1],
-                     weights=np.ones(len(data2[i][j,A1[0]:A2[0]])) / len(data2[i][j,A1[0]:A2[0]]), label='ARM 10:30L')
-            ax[i,j].hist(data3[i][j,A1[1]:A2[1]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[2],
-                     weights=np.ones(len(data3[i][j,A1[1]:A2[1]])) / len(data3[i][j,A1[1]:A2[1]]), label='ARM 12:30L')
-            ax[i,j].hist(data4[i][j,A1[2]:A2[2]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[3],
-                     weights=np.ones(len(data4[i][j,A1[2]:A2[2]])) / len(data4[i][j,A1[2]:A2[2]]), label='ARM 14:30L')
-            ax[i,j].hist(data5[i][j,A1[3]:A2[3]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[4],
-                     weights=np.ones(len(data5[i][j,A1[3]:A2[3]])) / len(data5[i][j,A1[3]:A2[3]]), label='ARM 16:30L')
+            ax[i,j].hist(data1[i][j,:,:,B1:B2].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[0],
+                     weights=np.ones(ma.count(data1[i][j,:,:,B1:B2])) / ma.count(data1[i][j,:,:,B1:B2]), label='BOMEX')
+            ax[i,j].hist(data2[i][j,:,:,A1[0]:A2[0]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[1],
+                     weights=np.ones(ma.count(data2[i][j,:,:,A1[0]:A2[0]])) / ma.count(data2[i][j,:,:,A1[0]:A2[0]]), label='ARM 10:30L')
+            ax[i,j].hist(data3[i][j,:,:,A1[1]:A2[1]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[2],
+                     weights=np.ones(ma.count(data3[i][j,:,:,A1[1]:A2[1]])) / ma.count(data3[i][j,:,:,A1[1]:A2[1]]), label='ARM 12:30L')
+            ax[i,j].hist(data4[i][j,:,:,A1[2]:A2[2]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[3],
+                     weights=np.ones(ma.count(data4[i][j,:,:,A1[2]:A2[2]])) / ma.count(data4[i][j,:,:,A1[2]:A2[2]]), label='ARM 14:30L')
+            ax[i,j].hist(data5[i][j,:,:,A1[3]:A2[3]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[4],
+                     weights=np.ones(ma.count(data5[i][j,:,:,A1[3]:A2[3]])) / ma.count(data5[i][j,:,:,A1[3]:A2[3]]), label='ARM 16:30L')
             ax[i,j].set_xlabel(f"{fields_latex_in[i]}", fontsize=16)
             ax[0,j].set_title(f'{Deltas[j]}')
         ax[i,0].set_ylabel("Percentage of Occurrences", fontsize=16)
