@@ -150,7 +150,7 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, nt_in, data_field
         data_field_env_temp = ma.masked_array(data_field_LM, mask=env_only_mask)
         print('applied env mask, shape of env_only_fields = ', np.shape(data_field_env_temp))
 
-        total_points_each_level = data_field_LM[:,0,0]*data_field_LM[0,:,0]
+        total_points_each_level = len(data_field_LM[:,0,0])*len(data_field_LM[0,:,0])
 
         data_field_cloud = ma.filled(data_field_cloud_temp, 0)
         data_field_env = ma.filled(data_field_env_temp, 0)
