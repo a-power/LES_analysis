@@ -345,8 +345,8 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
         B1 = int(BOMEX_ML_ind[0])
         B2 = int(BOMEX_ML_ind[1])
 
-        A1 = ARM_ML_ind[10,10,10,10]
-        A2 = ARM_ML_ind[70,90,100,100]
+        A1 = [10,10,10,10]
+        A2 = [70,90,100,100]
 
     elif region == 'IC' or region == 'CFE':
         B1 = int(BOMEX_CL_ind[0])
