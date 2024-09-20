@@ -341,16 +341,19 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
     # ARM_ML_range = np.array([[100, 700], [100, 900], [100, 1000], [100, 1000]])
     # ARM_CL_range = np.array([[900, 1050], [1100, 1400], [1250, 1850], [1400, 2150]])
 
+    # BOMEX_ML_range = np.array([100, 400])
+    # BOMEX_CL_range = np.array([500, 1500])
+
     if region == 'ML':
-        B1 = int(BOMEX_ML_ind[0])
-        B2 = int(BOMEX_ML_ind[1])
+        B1 = 5
+        B2 = 20
 
         A1 = [10,10,10,10]
         A2 = [70,90,100,100]
 
     elif region == 'IC' or region == 'CFE':
-        B1 = int(BOMEX_CL_ind[0])
-        B2 = int(BOMEX_CL_ind[1])
+        B1 = 25
+        B2 = 75
 
         A1 = [90,110,125,140]
         A2 = [105,140,185,215]
@@ -368,6 +371,7 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
     for i in range(4):
         for j in range(3):
 
+            print('shape of data1  = ', np.shape(data1))
 
             ax[i,j].hist(data1[i][j,B1:B2].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[0],
                      weights=np.ones(len(data1[i][j,B1:B2])) / len(data1[i][j,B1:B2]), label='BOMEX')
