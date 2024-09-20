@@ -136,6 +136,8 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, nt_in, data_field
     ax1 = fig1.add_subplot(111)
     fig2 = plt.figure(figsize=(4, 6))
     ax2 = fig2.add_subplot(111)
+    fig3 = plt.figure(figsize=(4, 6))
+    ax3 = fig3.add_subplot(111)
 
     for i in range(len(data_field_list)):
 
@@ -148,7 +150,7 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, nt_in, data_field
         data_field_env_temp = ma.masked_array(data_field_LM, mask=env_only_mask)
         print('applied env mask, shape of env_only_fields = ', np.shape(data_field_env_temp))
 
-
+        total_points_each_level = data_field_LM[:,0,0]*data_field_LM[0,:,0]
 
         data_field_cloud = ma.filled(data_field_cloud_temp, 0)
         data_field_env = ma.filled(data_field_env_temp, 0)
@@ -212,8 +214,12 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, nt_in, data_field
         ax2.plot(counter_env, z/z_i, label=f'{deltas[i]}', color=colours[i])
         ax2.plot(counter_cloud, z/z_i, linestyle='--', color=colours[i])
 
+        ax3.plot((counter_env / total_points_each_level) * 100, z / z_i, label=f'{deltas[i]}', color=colours[i])
+        ax3.plot((counter_cloud_no_messin / total_points_each_level) * 100, z / z_i, linestyle='--', color=colours[i])
+
     ax1.legend()
     ax2.legend()
+    ax3.legend()
 
     # og_xtic = plt.xticks()
     # plt.xticks(og_xtic[0],
@@ -229,6 +235,11 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, nt_in, data_field
     ax2.set_ylabel("$z/z_{ML}$ $z_{ML} = $"+f'{z_i}m', fontsize=16)
     ax2.set_xlabel(f"Number of Negative {c_latex} Values", fontsize=13)
     fig2.savefig(plotdir + f'number_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
+
+    ax3.set_title(f"{labels_title[nt_in]}", fontsize=13)
+    ax3.set_ylabel("$z/z_{ML}$ $z_{ML} = $"+f'{z_i}m', fontsize=16)
+    ax3.set_xlabel(f"% of Negative {c_latex} Across Domain", fontsize=13)
+    fig3.savefig(plotdir + f'number_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
     #ax2.clf()
 
     print(f'plotted all deltas neg vs z for {c}')
