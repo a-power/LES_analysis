@@ -395,11 +395,11 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
 
 
 
-
+#dir_in, dir_cloud, c_in, time, res_in
 
 BOMEX_s_list_cloud, BOMEX_s_list_env, BOMEX_th_list_cloud, BOMEX_th_list_env, \
         BOMEX_th_L_list_cloud, BOMEX_th_L_list_env, BOMEX_qt_list_cloud, BOMEX_qt_list_env = \
-    get_data_per_delta(BOMEX_homedir, BOMEX_dir_contour, times[0], bomex_res)
+    get_data_per_delta(BOMEX_homedir, BOMEX_dir_contour, 'C', times[0], bomex_res)
 BOMEX_env = [BOMEX_s_list_env, BOMEX_th_list_env, BOMEX_th_L_list_env, BOMEX_qt_list_env]
 BOMEX_IC = [BOMEX_s_list_cloud, BOMEX_th_list_cloud, BOMEX_th_L_list_cloud, BOMEX_qt_list_cloud]
 # np.save(f'{save_dir}BOMEX_env.npy', BOMEX_env)
@@ -407,7 +407,7 @@ BOMEX_IC = [BOMEX_s_list_cloud, BOMEX_th_list_cloud, BOMEX_th_L_list_cloud, BOME
 
 ARM1_s_list_cloud, ARM1_s_list_env, ARM1_th_list_cloud, ARM1_th_list_env, \
         ARM1_th_L_list_cloud, ARM1_th_L_list_env, ARM1_qt_list_cloud, ARM1_qt_list_env = \
-    get_data_per_delta(ARM_homedir, ARM_dir_contour, times[1], arm_res)
+    get_data_per_delta(ARM_homedir, ARM_dir_contour, 'C', times[1], arm_res)
 ARM1_env = [ARM1_s_list_env, ARM1_th_list_env, ARM1_th_L_list_env, ARM1_qt_list_env]
 ARM1_IC = [ARM1_s_list_cloud, ARM1_th_list_cloud, ARM1_th_L_list_cloud, ARM1_qt_list_cloud]
 # np.save(f'{save_dir}ARM1_env.npy', ARM1_env)
@@ -415,7 +415,7 @@ ARM1_IC = [ARM1_s_list_cloud, ARM1_th_list_cloud, ARM1_th_L_list_cloud, ARM1_qt_
 
 ARM2_s_list_cloud, ARM2_s_list_env, ARM2_th_list_cloud, ARM2_th_list_env, \
         ARM2_th_L_list_cloud, ARM2_th_L_list_env, ARM2_qt_list_cloud, ARM2_qt_list_env = \
-    get_data_per_delta(ARM_homedir, ARM_dir_contour, times[2], arm_res)
+    get_data_per_delta(ARM_homedir, ARM_dir_contour, 'C', times[2], arm_res)
 ARM2_env = [ARM2_s_list_env, ARM2_th_list_env, ARM2_th_L_list_env, ARM2_qt_list_env]
 ARM2_IC = [ARM2_s_list_cloud, ARM2_th_list_cloud, ARM2_th_L_list_cloud, ARM2_qt_list_cloud]
 # np.save(f'{save_dir}ARM2_env.npy', ARM2_env)
@@ -423,7 +423,7 @@ ARM2_IC = [ARM2_s_list_cloud, ARM2_th_list_cloud, ARM2_th_L_list_cloud, ARM2_qt_
 
 ARM3_s_list_cloud, ARM3_s_list_env, ARM3_th_list_cloud, ARM3_th_list_env, \
         ARM3_th_L_list_cloud, ARM3_th_L_list_env, ARM3_qt_list_cloud, ARM3_qt_list_env = \
-    get_data_per_delta(ARM_homedir, ARM_dir_contour, times[3], arm_res)
+    get_data_per_delta(ARM_homedir, ARM_dir_contour, 'C', times[3], arm_res)
 ARM3_env = [ARM3_s_list_env, ARM3_th_list_env, ARM3_th_L_list_env, ARM3_qt_list_env]
 ARM3_IC = [ARM3_s_list_cloud, ARM3_th_list_cloud, ARM3_th_L_list_cloud, ARM3_qt_list_cloud]
 # np.save(f'{save_dir}ARM3_env.npy', ARM3_env)
@@ -431,7 +431,7 @@ ARM3_IC = [ARM3_s_list_cloud, ARM3_th_list_cloud, ARM3_th_L_list_cloud, ARM3_qt_
 
 ARM4_s_list_cloud, ARM4_s_list_env, ARM4_th_list_cloud, ARM4_th_list_env, \
         ARM4_th_L_list_cloud, ARM4_th_L_list_env, ARM4_qt_list_cloud, ARM4_qt_list_env = \
-    get_data_per_delta(ARM_homedir, ARM_dir_contour, times[4], arm_res)
+    get_data_per_delta(ARM_homedir, ARM_dir_contour, 'C', times[4], arm_res)
 ARM4_env = [ARM4_s_list_env, ARM4_th_list_env, ARM4_th_L_list_env, ARM4_qt_list_env]
 ARM4_IC = [ARM4_s_list_cloud, ARM4_th_list_cloud, ARM4_th_L_list_cloud, ARM4_qt_list_cloud]
 # np.save(f'{save_dir}ARM4_env.npy', ARM4_env)
