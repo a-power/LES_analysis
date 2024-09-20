@@ -24,8 +24,10 @@ ARM_homedir = f'/work/scratch-pw3/apower/ARM/second_filt/LM/update/diagnostics_3
 ARM_dir_contour = f'/work/scratch-pw3/apower/ARM/second_filt/diagnostics_3d_ts_'
 
 plotdir = '/gws/nopw/j04/paracon_rdg/users/apower/plots/neg_C_sq_profiles/'
+save_dir = '/work/scratch-pw3/apower/neg_Csq_values/'
 #'/gws/nopw/j04/paracon_rdg/users/apower/on_p_grid/plots/distribs/'
 os.makedirs(plotdir, exist_ok = True)
+os.makedirs(save_dir, exist_ok = True)
 
 cloud_field = f'f(q_cloud_liquid_mass_on_p)_r'
 
