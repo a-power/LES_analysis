@@ -122,12 +122,12 @@ def cloud_and_env_masks(dataset_in, cloud_liquid_threshold=10**(-7), grid='p'):
     return cloud_only_mask, env_only_mask
 
 
+labels_title = ['BOMEX', 'ARM 10:30L', 'ARM 12:30L', 'ARM 14:30L', 'ARM 16:30L']
 
 
 
 
-
-def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, data_field_list, data_cl_list):
+def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, nt_in, data_field_list, data_cl_list):
 
     deltas = ['4$\\Delta$', '16$\\Delta$', '64$\\Delta$']
     colours = ['tab:orange', 'tab:red', 'tab:cyan']
@@ -219,13 +219,15 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, data_field_list, 
     # plt.xticks(og_xtic[0],
     #            np.round(np.linspace((0) * (20 / 480), (151) * (20 / 480), len(og_xtic[0])), 1))
 
-    ax1.set_ylabel("$z/z_{ML}$", fontsize=16)
-    ax1.set_xlabel(f"Percentage of Negative {c_latex} Values", fontsize=16)
+    ax1.set_title(f"{labels_title[nt_in]}", fontsize=13)
+    ax1.set_ylabel("$z/z_{ML}$ $z_{ML} = $"+f'{z_i}m', fontsize=16)
+    ax1.set_xlabel(f"Percentage of Negative {c_latex} Values", fontsize=13)
     fig1.savefig(plotdir + f'percent_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
     # ax1.clf()
 
-    ax2.set_ylabel("$z/z_{ML}$", fontsize=16)
-    ax2.set_xlabel(f"Number of Negative {c_latex} Values", fontsize=16)
+    ax2.set_title(f"{labels_title[nt_in]}", fontsize=13)
+    ax2.set_ylabel("$z/z_{ML}$ $z_{ML} = $"+f'{z_i}m', fontsize=16)
+    ax2.set_xlabel(f"Number of Negative {c_latex} Values", fontsize=13)
     fig2.savefig(plotdir + f'number_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
     #ax2.clf()
 
@@ -254,4 +256,4 @@ for iters in range(len(list_of_C_latex)):
 
         data_C_list, data_cloud_list = get_data_per_delta(dir_in, dir_cloud, C, t, res_in)
 
-        negs_in_field(plotdir, field, C, c_lat, z, z_i, t, data_C_list, data_cloud_list)
+        negs_in_field(plotdir, field, C, c_lat, z, z_i, t, nt, data_C_list, data_cloud_list)
