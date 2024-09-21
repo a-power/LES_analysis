@@ -404,9 +404,9 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
                 else:
                     data_cl_in = ARM_dir_contour
 
-                data_cl4 = data_cl_in + f'{time}_gaussian_filter_ga00_gaussian_filter_ga00.nc'
-                data_cl16 = data_cl_in + f'{time}_gaussian_filter_ga02_gaussian_filter_ga00.nc'
-                data_cl64 = data_cl_in + f'{time}_gaussian_filter_ga04_gaussian_filter_ga00.nc'
+                data_cl4 = data_cl_in + f'{times[m]}_gaussian_filter_ga00_gaussian_filter_ga00.nc'
+                data_cl16 = data_cl_in + f'{times[m]}_gaussian_filter_ga02_gaussian_filter_ga00.nc'
+                data_cl64 = data_cl_in + f'{times[m]}_gaussian_filter_ga04_gaussian_filter_ga00.nc'
 
                 data_cl_list = [data_cl4, data_cl16, data_cl64]
 
