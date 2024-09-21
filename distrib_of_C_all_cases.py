@@ -334,12 +334,6 @@ def apply_masks(data_field_s, data_field_th, data_field_th_L, data_field_qt, dat
 
 def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set_bins, what_plotting='C'):
 
-    data_cl4 = dir_cloud+f'{time}_gaussian_filter_ga00_gaussian_filter_ga00.nc'
-    data_cl16 = dir_cloud+f'{time}_gaussian_filter_ga02_gaussian_filter_ga00.nc'
-    data_cl64 = dir_cloud+f'{time}_gaussian_filter_ga04_gaussian_filter_ga00.nc'
-
-    data_cl_list = [data_cl4, data_cl16, data_cl64]
-
     colours = ['tab:blue', 'tab:brown', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple',
                'tab:olive', 'tab:cyan', 'tab:gray', 'tab:pink']
 
@@ -404,12 +398,20 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
             print('A1[0] and A2[0] = ', A1[0], A2[0], ' with type = ', type(A1[0]), type(A2[0]))
 
             for m in range(5):
+
                 if m == 0:
                     data_cl_in = BOMEX_dir_contour
                 else:
                     data_cl_in = ARM_dir_contour
 
-                cloud_only, env_only = cloud_and_env_masks(data_cl_in, cloud_liquid_threshold=10 ** (-7), grid='p')
+                data_cl4 = data_cl_in + f'{time}_gaussian_filter_ga00_gaussian_filter_ga00.nc'
+                data_cl16 = data_cl_in + f'{time}_gaussian_filter_ga02_gaussian_filter_ga00.nc'
+                data_cl64 = data_cl_in + f'{time}_gaussian_filter_ga04_gaussian_filter_ga00.nc'
+
+                data_cl_list = [data_cl4, data_cl16, data_cl64]
+
+                cloud_only, env_only = cloud_and_env_masks(data_cl_list[j], cloud_liquid_threshold=10 ** (-7), grid='p')
+
                 if region == 'ML':
                     mask_use = env_only
                 elif region == 'IC' or region == 'CFE':
