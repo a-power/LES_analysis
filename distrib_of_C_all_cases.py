@@ -414,8 +414,10 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
 
                 if region == 'ML':
                     mask_use = env_only
-                elif region == 'IC' or region == 'CFE':
+                elif region == 'IC':
                     mask_use = cloud_only
+                elif region == 'CFE':
+                    mask_use = env_only
                 if m == 0:
                     data1_masked = ma.masked_array(data1[i,j,:,:,:], mask=mask_use)
                     num_unmasked1 = ma.count(data1_masked[:,:,B1:B2])
