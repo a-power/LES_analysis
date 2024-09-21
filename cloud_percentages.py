@@ -92,6 +92,7 @@ def cloud_percentage(dataset_in, cl_bottom, cl_top, cloud_liquid_threshold=10**(
 labels_title = ['BOMEX', 'ARM 10:30L', 'ARM 12:30L', 'ARM 14:30L', 'ARM 16:30L']
 
 
+plt.figure(figsize=(4, 6))
 
 for nt, t in enumerate(times):
     if t == '14400':
@@ -114,29 +115,15 @@ for nt, t in enumerate(times):
 
         perc[i] = cloud_percentage(dataset_in, cl_bottom, cl_top, cloud_liquid_threshold=10**(-7), grid='p')
 
+    plt.plot(Deltas, perc, label=labels_title)
 
-
-
-
-ax1.plot((counter_env/number_of_points_env)*100, z/z_i, label=f'{deltas[i]}', color=colours[i])
-ax1.plot((counter_cloud_no_messin/number_of_points_cloud)*100, z/z_i, linestyle='--', color=colours[i]) #label='$C_s$ IC')
-print(f'plotted profile for {deltas[i]}')
-
-ax2.plot(counter_env, z/z_i, label=f'{deltas[i]}', color=colours[i])
-ax2.plot(counter_cloud, z/z_i, linestyle='--', color=colours[i])
-
-ax3.plot((counter_env / total_points_each_level) * 100, z / z_i, label=f'{deltas[i]}', color=colours[i])
-ax3.plot((counter_cloud_no_messin / total_points_each_level) * 100, z / z_i, linestyle='--', color=colours[i])
-
-ax1.legend()
-ax2.legend()
-ax3.legend()
+plt.legend()
 
 # og_xtic = plt.xticks()
 # plt.xticks(og_xtic[0],
 #            np.round(np.linspace((0) * (20 / 480), (151) * (20 / 480), len(og_xtic[0])), 1))
 
-ax1.set_title(f"{labels_title[nt_in]}", fontsize=13)
-ax1.set_ylabel("$z/z_{ML}$ $z_{ML} = $"+f'{z_i}m', fontsize=16)
-ax1.set_xlabel(f"Percentage of Negative {c_latex} Values", fontsize=13)
-fig1.savefig(plotdir + f'percent_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
+# ax1.title(f"{labels_title[nt_in]}", fontsize=13)
+plt.ylabel('Percentage of Cloud Cover', fontsize=16)
+plt.xlabel("$\\widehat{\\bar{\\Delta}}$", fontsize=13)
+plt.savefig(plotdir + f'percent_cloud_cover.pdf', bbox_inches='tight')
