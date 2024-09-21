@@ -59,7 +59,7 @@ ARM_ML_ind = ARM_ML_range/10
 ARM_CL_ind = ARM_CL_range/10
 
 
-set_bins=50
+set_bins=120
 
 field_names = ['Cs_field', 'Cth_field', 'Cth_L_field', 'Cqt_field']
 field_latex = ['$C_{s}$', '$C_{\\theta}$', '$C_{\\theta_L}$', '$C_{q_t}$']
@@ -409,9 +409,9 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
                      weights=np.ones(arm_horiz_domain*(A2[3]-A1[3])) / (arm_horiz_domain*(A2[3]-A1[3])), label='ARM 16:30L')
             ax[i,j].set_xlabel(f"{fields_latex_in[i]}", fontsize=16)
             ax[i,j].yaxis.set_major_formatter(ticker.PercentFormatter(1))
-            ax[i,j].set_xlim(0, 0.5)
+            ax[i,j].set_xlim(0, 0.4)
             ax[0,j].set_title(f'{Deltas[j]}')
-        ax[i,0].set_ylabel("Percentage of Occurrences", fontsize=16)
+        ax[i,0].set_ylabel("Percentage of Occurrences", fontsize=14)
 
 
     # bottom_set, top_set = plt.ylim()
