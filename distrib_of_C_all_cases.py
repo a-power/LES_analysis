@@ -369,14 +369,19 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
         A1 = [0, 0, 0, 0]
         A2 = [-1, -1, -1, -1]
 
-        bomex_shape = np.shape(data1)
-        arm_shape = np.shape(data2)
+    bomex_shape = np.shape(data1)
+    arm_shape = np.shape(data2)
 
-        data1 = data1.reshape(bomex_shape[0], bomex_shape[1], bomex_shape[2], bomex_shape[3], bomex_shape[4])
-        data2 = data2.reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
-        data3 = data3.reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
-        data4 = data4.reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
-        data5 = data5.reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
+    data1 = data1.reshape(bomex_shape[0], bomex_shape[1], bomex_shape[2], bomex_shape[3], bomex_shape[4])
+    data2 = data2.reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
+    data3 = data3.reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
+    data4 = data4.reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
+    data5 = data5.reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
+
+    print('reshaped all')
+
+    bomex_horiz_domain = len(bomex_shape[2]) * len(bomex_shape[3])
+    arm_horiz_domain = len(arm_shape[2]) * len(arm_shape[3])
 
 
 
@@ -387,17 +392,19 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
             print('shape of data1  = ', np.shape(data1))
 
             print('B1 and B2 = ', B1, B2, ' with type = ', type(B1), type(B2))
+            print('A1 and A2 = ', A1, A2, ' with type = ', type(A1), type(A2))
+            print('A1[0] and A2[0] = ', A1[0], A2[0], ' with type = ', type(A1[0]), type(A2[0]))
 
             ax[i,j].hist(data1[i,j,:,:,B1:B2].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[0],
-                     weights=np.ones(ma.count(data1[i,j,:,:,B1:B2])) / ma.count(data1[i,j,:,:,B1:B2]), label='BOMEX')
+                     weights=np.ones(bomex_horiz_domain*(B2-B1)) / (bomex_horiz_domain*(B2-B1)), label='BOMEX')
             ax[i,j].hist(data2[i,j,:,:,A1[0]:A2[0]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[1],
-                     weights=np.ones(ma.count(data2[i,j,:,:,A1[0]:A2[0]])) / ma.count(data2[i,j,:,:,A1[0]:A2[0]]), label='ARM 10:30L')
+                     weights=np.ones(arm_horiz_domain*(A2[0]-A1[0])) / (arm_horiz_domain*(A2[0]-A1[0])), label='ARM 10:30L')
             ax[i,j].hist(data3[i,j,:,:,A1[1]:A2[1]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[2],
-                     weights=np.ones(ma.count(data3[i,j,:,:,A1[1]:A2[1]])) / ma.count(data3[i,j,:,:,A1[1]:A2[1]]), label='ARM 12:30L')
+                     weights=np.ones(arm_horiz_domain*(A2[1]-A1[1])) / (arm_horiz_domain*(A2[1]-A1[1])), label='ARM 12:30L')
             ax[i,j].hist(data4[i,j,:,:,A1[2]:A2[2]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[3],
-                     weights=np.ones(ma.count(data4[i,j,:,:,A1[2]:A2[2]])) / ma.count(data4[i,j,:,:,A1[2]:A2[2]]), label='ARM 14:30L')
+                     weights=np.ones(arm_horiz_domain*(A2[2]-A1[2])) / (arm_horiz_domain*(A2[2]-A1[2])), label='ARM 14:30L')
             ax[i,j].hist(data5[i,j,:,:,A1[3]:A2[3]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[4],
-                     weights=np.ones(ma.count(data5[i,j,:,:,A1[3]:A2[3]])) / ma.count(data5[i,j,:,:,A1[3]:A2[3]]), label='ARM 16:30L')
+                     weights=np.ones(arm_horiz_domain*(A2[3]-A1[3])) / (arm_horiz_domain*(A2[3]-A1[3])), label='ARM 16:30L')
             ax[i,j].set_xlabel(f"{fields_latex_in[i]}", fontsize=16)
             ax[0,j].set_title(f'{Deltas[j]}')
         ax[i,0].set_ylabel("Percentage of Occurrences", fontsize=16)
