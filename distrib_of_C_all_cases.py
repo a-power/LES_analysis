@@ -380,8 +380,8 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
 
     print('reshaped all')
 
-    bomex_horiz_domain = len(bomex_shape[2]) * len(bomex_shape[3])
-    arm_horiz_domain = len(arm_shape[2]) * len(arm_shape[3])
+    bomex_horiz_domain = bomex_shape[2] * bomex_shape[3]
+    arm_horiz_domain = arm_shape[2] * arm_shape[3]
 
 
 
