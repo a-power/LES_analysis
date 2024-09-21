@@ -414,7 +414,7 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
 
     # bottom_set, top_set = plt.ylim()
     # print('y_min = ', bottom_set, 'y_max = ', top_set)
-    ax[4,0].legend(fontsize=12, loc='best')
+    ax[3,0].legend(fontsize=12, loc='best')
     #plt.vlines(0, ymin=0, ymax=((1e9)), linestyles='dashed', colors='black', linewidths=0.5)
     ax.yaxis.set_major_formatter(ticker.PercentFormatter(1))
     plt.savefig(plotdir_in + f'hist_of_{what_plotting}_values_{region}.pdf',
