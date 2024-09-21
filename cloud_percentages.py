@@ -41,7 +41,7 @@ A2 = [105, 140, 185, 215]
 
 
 
-def get_data_per_delta(dir_in, dir_cloud, C, time, res_in):
+def get_data_per_delta(dir_cloud, time):
 
     data_cl_list = []
 
@@ -56,7 +56,7 @@ def get_data_per_delta(dir_in, dir_cloud, C, time, res_in):
 
 
 
-def cloud_percentage(dataset_in, cloud_liquid_threshold=10**(-7), cl_bottom, cl_top, grid='p'):
+def cloud_percentage(dataset_in, cl_bottom, cl_top, cloud_liquid_threshold=10**(-7), grid='p'):
 
     ds_in = xr.open_dataset(dataset_in)
 
@@ -93,29 +93,26 @@ labels_title = ['BOMEX', 'ARM 10:30L', 'ARM 12:30L', 'ARM 14:30L', 'ARM 16:30L']
 
 
 
-for iters in range(len(list_of_C_latex)):
+for nt, t in enumerate(times):
+    if t == '14400':
+        dir_in = BOMEX_homedir
+        dir_cloud = BOMEX_dir_contour
+        res_in = bomex_res
+        z = z_BOMEX
+        z_i = z_i_all[nt]
+    else:
+        dir_in = ARM_homedir
+        dir_cloud = ARM_dir_contour
+        res_in = arm_res
+        z = z_ARM
+        z_i = z_i_all[nt]
 
-    C = list_of_c_names[iters]
-    field = fields[iters]
-    c_lat = list_of_C_latex[iters]
+    data_cl_list_out = get_data_per_delta(dir_cloud, time)
+    perc = np.zeros(len(len(data_cl_list_out)))
 
-    for nt, t in enumerate(times):
-        if t == '14400':
-            dir_in = BOMEX_homedir
-            dir_cloud = BOMEX_dir_contour
-            res_in = bomex_res
-            z = z_BOMEX
-            z_i = z_i_all[nt]
-        else:
-            dir_in = ARM_homedir
-            dir_cloud = ARM_dir_contour
-            res_in = arm_res
-            z = z_ARM
-            z_i = z_i_all[nt]
+    for i in range(len(data_cl_list_out)):
 
-        data_C_list, data_cloud_list = get_data_per_delta(dir_in, dir_cloud, C, t, res_in)
-
-        negs_in_field(plotdir, field, C, c_lat, z, z_i, t, nt, data_C_list, data_cloud_list)
+        perc[i] = cloud_percentage(dataset_in, cl_bottom, cl_top, cloud_liquid_threshold=10**(-7), grid='p')
 
 
 
