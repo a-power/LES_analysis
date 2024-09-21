@@ -100,10 +100,8 @@ plt.figure(figsize=(4, 6))
 for nt, t in enumerate(times):
     if t == '14400':
         dir_cloud = BOMEX_dir_contour
-        res_in = bomex_res
     else:
         dir_cloud = ARM_dir_contour
-        res_in = arm_res
 
     data_cl_list_out = get_data_per_delta(dir_cloud, t)
     perc = np.zeros(len(data_cl_list_out))
