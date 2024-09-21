@@ -39,6 +39,9 @@ B2 = 75
 A1 = [90, 110, 125, 140]
 A2 = [105, 140, 185, 215]
 
+c_b = [25, 90, 110, 125, 140]
+c_t = [75, 105, 140, 185, 215]
+
 
 
 def get_data_per_delta(dir_cloud, time):
@@ -96,24 +99,18 @@ plt.figure(figsize=(4, 6))
 
 for nt, t in enumerate(times):
     if t == '14400':
-        dir_in = BOMEX_homedir
         dir_cloud = BOMEX_dir_contour
         res_in = bomex_res
-        z = z_BOMEX
-        z_i = z_i_all[nt]
     else:
-        dir_in = ARM_homedir
         dir_cloud = ARM_dir_contour
         res_in = arm_res
-        z = z_ARM
-        z_i = z_i_all[nt]
 
-    data_cl_list_out = get_data_per_delta(dir_cloud, time)
-    perc = np.zeros(len(len(data_cl_list_out)))
+    data_cl_list_out = get_data_per_delta(dir_cloud, t)
+    perc = np.zeros(len(data_cl_list_out))
 
     for i in range(len(data_cl_list_out)):
 
-        perc[i] = cloud_percentage(dataset_in, cl_bottom, cl_top, cloud_liquid_threshold=10**(-7), grid='p')
+        perc[i] = cloud_percentage(data_cl_list_out[i], c_b[i], c_t[i])
 
     plt.plot(Deltas, perc, label=labels_title)
 
