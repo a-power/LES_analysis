@@ -95,7 +95,7 @@ def cloud_percentage(dataset_in, cl_bottom, cl_top, cloud_liquid_threshold=10**(
 labels_title = ['BOMEX', 'ARM 10:30L', 'ARM 12:30L', 'ARM 14:30L', 'ARM 16:30L']
 
 
-plt.figure(figsize=(4, 6))
+plt.figure(figsize=(10, 6))
 
 for nt, t in enumerate(times):
     if t == '14400':
@@ -114,7 +114,7 @@ for nt, t in enumerate(times):
 
         perc[i] = cloud_percentage(data_cl_list_out[i], c_b[nt], c_t[nt])
 
-    plt.plot(Deltas, perc, label=labels_title)
+    plt.plot(Deltas, perc*100, label=labels_title[nt])
 
 plt.legend()
 
