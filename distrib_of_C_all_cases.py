@@ -385,11 +385,13 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
 
 
 
-    fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(16, 18), sharex='row', sharey='row')
+    fig, ax = plt.subplots(nrows=4, ncols=3, figsize=(16, 18), sharex='row', sharey='row')
     for i in range(4):
         for j in range(3):
 
             print('shape of data1  = ', np.shape(data1))
+            print('i = ', i)
+            print('j = ', j)
 
             print('B1 and B2 = ', B1, B2, ' with type = ', type(B1), type(B2))
             print('A1 and A2 = ', A1, A2, ' with type = ', type(A1), type(A2))
