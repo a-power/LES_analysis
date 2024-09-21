@@ -385,7 +385,7 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
 
 
 
-    fig, ax = plt.subplots(nrows=4, ncols=3, figsize=(16, 18), sharex='row', sharey='row')
+    fig, ax = plt.subplots(nrows=4, ncols=3, figsize=(14, 16), sharex='row', sharey='row')
     for i in range(4):
         for j in range(3):
 
