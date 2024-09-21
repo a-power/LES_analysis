@@ -409,7 +409,7 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
                      weights=np.ones(arm_horiz_domain*(A2[3]-A1[3])) / (arm_horiz_domain*(A2[3]-A1[3])), label='ARM 16:30L')
             ax[i,j].set_xlabel(f"{fields_latex_in[i]}", fontsize=16)
             ax[i,j].yaxis.set_major_formatter(ticker.PercentFormatter(1))
-            a[i,j].set_xlim(0, 0.5)
+            ax[i,j].set_xlim(0, 0.5)
             ax[0,j].set_title(f'{Deltas[j]}')
         ax[i,0].set_ylabel("Percentage of Occurrences", fontsize=16)
 
