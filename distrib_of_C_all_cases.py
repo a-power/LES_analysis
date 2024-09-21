@@ -372,11 +372,11 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
     bomex_shape = np.shape(data1)
     arm_shape = np.shape(data2)
 
-    data1 = data1.reshape(bomex_shape[0], bomex_shape[1], bomex_shape[2], bomex_shape[3], bomex_shape[4])
-    data2 = data2.reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
-    data3 = data3.reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
-    data4 = data4.reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
-    data5 = data5.reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
+    data1 = np.asarray(data1).reshape(bomex_shape[0], bomex_shape[1], bomex_shape[2], bomex_shape[3], bomex_shape[4])
+    data2 = np.asarray(data2).reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
+    data3 = np.asarray(data3).reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
+    data4 = np.asarray(data4).reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
+    data5 = np.asarray(data5).reshape(arm_shape[0], arm_shape[1], arm_shape[2], arm_shape[3], arm_shape[4])
 
     print('reshaped all')
 
