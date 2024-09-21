@@ -132,11 +132,11 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, nt_in, data_field
     deltas = ['4$\\Delta$', '16$\\Delta$', '64$\\Delta$']
     colours = ['tab:orange', 'tab:red', 'tab:cyan']
 
-    fig1 = plt.figure(figsize=(3, 5))
+    fig1 = plt.figure(figsize=(3, 4.5))
     ax1 = fig1.add_subplot(111)
-    fig2 = plt.figure(figsize=(3, 5))
+    fig2 = plt.figure(figsize=(3, 4.5))
     ax2 = fig2.add_subplot(111)
-    fig3 = plt.figure(figsize=(3, 5))
+    fig3 = plt.figure(figsize=(3, 4.5))
     ax3 = fig3.add_subplot(111)
 
     for i in range(len(data_field_list)):
@@ -217,9 +217,9 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, nt_in, data_field
         ax3.plot((counter_env / total_points_each_level) * 100, z / z_i, label=f'{deltas[i]}', color=colours[i])
         ax3.plot((counter_cloud_no_messin / total_points_each_level) * 100, z / z_i, linestyle='--', color=colours[i])
 
-    ax1.legend(fontsize=16)
-    ax2.legend(fontsize=16)
-    ax3.legend(fontsize=16)
+    ax1.legend(fontsize=14, loc='upper right')
+    ax2.legend(fontsize=14, loc='upper right')
+    ax3.legend(fontsize=14, loc='upper right')
 
     # og_xtic = plt.xticks()
     # plt.xticks(og_xtic[0],
