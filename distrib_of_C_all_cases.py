@@ -334,6 +334,12 @@ def apply_masks(data_field_s, data_field_th, data_field_th_L, data_field_qt, dat
 
 def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set_bins, what_plotting='C'):
 
+    data_cl4 = dir_cloud+f'{time}_gaussian_filter_ga00_gaussian_filter_ga00.nc'
+    data_cl16 = dir_cloud+f'{time}_gaussian_filter_ga02_gaussian_filter_ga00.nc'
+    data_cl64 = dir_cloud+f'{time}_gaussian_filter_ga04_gaussian_filter_ga00.nc'
+
+    data_cl_list = [data_cl4, data_cl16, data_cl64]
+
     colours = ['tab:blue', 'tab:brown', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple',
                'tab:olive', 'tab:cyan', 'tab:gray', 'tab:pink']
 
@@ -397,16 +403,46 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
             print('A1 and A2 = ', A1, A2, ' with type = ', type(A1), type(A2))
             print('A1[0] and A2[0] = ', A1[0], A2[0], ' with type = ', type(A1[0]), type(A2[0]))
 
-            ax[i,j].hist(data1[i,j,:,:,B1:B2].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[0],
-                     weights=np.ones(bomex_horiz_domain*(B2-B1)) / (bomex_horiz_domain*(B2-B1)), label='BOMEX')
-            ax[i,j].hist(data2[i,j,:,:,A1[0]:A2[0]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[1],
-                     weights=np.ones(arm_horiz_domain*(A2[0]-A1[0])) / (arm_horiz_domain*(A2[0]-A1[0])), label='ARM 10:30L')
-            ax[i,j].hist(data3[i,j,:,:,A1[1]:A2[1]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[2],
-                     weights=np.ones(arm_horiz_domain*(A2[1]-A1[1])) / (arm_horiz_domain*(A2[1]-A1[1])), label='ARM 12:30L')
-            ax[i,j].hist(data4[i,j,:,:,A1[2]:A2[2]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[3],
-                     weights=np.ones(arm_horiz_domain*(A2[2]-A1[2])) / (arm_horiz_domain*(A2[2]-A1[2])), label='ARM 14:30L')
-            ax[i,j].hist(data5[i,j,:,:,A1[3]:A2[3]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[4],
-                     weights=np.ones(arm_horiz_domain*(A2[3]-A1[3])) / (arm_horiz_domain*(A2[3]-A1[3])), label='ARM 16:30L')
+            for m in range(5):
+                if m == 0:
+                    data_cl_in = BOMEX_dir_contour
+                else:
+                    data_cl_in = ARM_dir_contour
+
+                cloud_only, env_only = cloud_and_env_masks(data_cl_in, cloud_liquid_threshold=10 ** (-7), grid='p')
+                if region == 'ML':
+                    mask_use = env_only
+                elif region == 'IC' or region == 'CFE':
+                    mask_use = cloud_only
+                if m == 0:
+                    data1_masked = ma.masked_array(data1[i,j,:,:,:], mask=mask_use)
+                    num_unmasked1 = ma.count(data1_masked[:,:,B1:B2])
+                elif m == 1:
+                    data2_masked = ma.masked_array(data2[i,j,:,:,:], mask=mask_use)
+                    num_unmasked2 = ma.count(data2_masked[:,:,A1[0]:A2[0]])
+                elif m == 2:
+                    data3_masked = ma.masked_array(data3[i,j,:,:,:], mask=mask_use)
+                    num_unmasked3 = ma.count(data3_masked[:,:,A1[1]:A2[1]])
+                elif m == 3:
+                    data4_masked = ma.masked_array(data4[i,j,:,:,:], mask=mask_use)
+                    num_unmasked4 = ma.count(data4_masked[:,:,A1[2]:A2[2]])
+                elif m == 4:
+                    data5_masked = ma.masked_array(data5[i,j,:,:,:], mask=mask_use)
+                    num_unmasked5 = ma.count(data5_masked[:,:,A1[3]:A2[3]])
+
+
+
+
+            ax[i,j].hist(data1_masked[:,:,B1:B2].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[0],
+                     weights=np.ones(bomex_horiz_domain*(B2-B1)) / (num_unmasked1), label='BOMEX')
+            ax[i,j].hist(data2_masked[:,:,A1[0]:A2[0]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[1],
+                     weights=np.ones(arm_horiz_domain*(A2[0]-A1[0])) / (num_unmasked2), label='ARM 10:30L')
+            ax[i,j].hist(data3_masked[:,:,A1[1]:A2[1]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[2],
+                     weights=np.ones(arm_horiz_domain*(A2[1]-A1[1])) / (num_unmasked3), label='ARM 12:30L')
+            ax[i,j].hist(data4_masked[:,:,A1[2]:A2[2]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[3],
+                     weights=np.ones(arm_horiz_domain*(A2[2]-A1[2])) / (num_unmasked4), label='ARM 14:30L')
+            ax[i,j].hist(data5_masked[:,:,A1[3]:A2[3]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[4],
+                     weights=np.ones(arm_horiz_domain*(A2[3]-A1[3])) / (num_unmasked5), label='ARM 16:30L')
             ax[i,j].set_xlabel(f"{fields_latex_in[i]}", fontsize=16)
             ax[i,j].yaxis.set_major_formatter(ticker.PercentFormatter(1))
             ax[i,j].set_xlim(0, 0.3)
