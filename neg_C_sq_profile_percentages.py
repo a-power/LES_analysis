@@ -132,11 +132,11 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, nt_in, data_field
     deltas = ['4$\\Delta$', '16$\\Delta$', '64$\\Delta$']
     colours = ['tab:orange', 'tab:red', 'tab:cyan']
 
-    fig1 = plt.figure(figsize=(3, 4.5))
+    fig1 = plt.figure(figsize=(3.5, 4.5))
     ax1 = fig1.add_subplot(111)
-    fig2 = plt.figure(figsize=(3, 4.5))
+    fig2 = plt.figure(figsize=(3.5, 4.5))
     ax2 = fig2.add_subplot(111)
-    fig3 = plt.figure(figsize=(3, 4.5))
+    fig3 = plt.figure(figsize=(3.5, 4.5))
     ax3 = fig3.add_subplot(111)
 
     for i in range(len(data_field_list)):
@@ -217,28 +217,28 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, nt_in, data_field
         ax3.plot((counter_env / total_points_each_level) * 100, z / z_i, label=f'{deltas[i]}', color=colours[i])
         ax3.plot((counter_cloud_no_messin / total_points_each_level) * 100, z / z_i, linestyle='--', color=colours[i])
 
-    ax1.legend(fontsize=14, loc='upper right')
-    ax2.legend(fontsize=14, loc='upper right')
-    ax3.legend(fontsize=14, loc='upper right')
+    ax1.legend(fontsize=13, loc='upper right')
+    ax2.legend(fontsize=13, loc='upper right')
+    ax3.legend(fontsize=13, loc='upper right')
 
     # og_xtic = plt.xticks()
     # plt.xticks(og_xtic[0],
     #            np.round(np.linspace((0) * (20 / 480), (151) * (20 / 480), len(og_xtic[0])), 1))
 
-    ax1.set_title(f"{labels_title[nt_in]}", fontsize=16)
-    ax1.set_ylabel("$z/z_{ML}$ $z_{ML} = $"+f'{z_i}m', fontsize=16)
-    ax1.set_xlabel(f"% of Negative {c_latex} Values", fontsize=16)
+    ax1.set_title(f"{labels_title[nt_in]}", fontsize=13)
+    ax1.set_ylabel("$z/z_{ML}$ $z_{ML} = $"+f'{z_i}m', fontsize=13)
+    ax1.set_xlabel(f"% of Negative {c_latex} Values", fontsize=13)
     fig1.savefig(plotdir + f'percent_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
     # ax1.clf()
 
-    ax2.set_title(f"{labels_title[nt_in]}", fontsize=16)
-    ax2.set_ylabel("$z/z_{ML}$ $z_{ML} = $"+f'{z_i}m', fontsize=16)
-    ax2.set_xlabel(f"Number of Negative {c_latex} Values", fontsize=16)
+    ax2.set_title(f"{labels_title[nt_in]}", fontsize=13)
+    ax2.set_ylabel("$z/z_{ML}$ $z_{ML} = $"+f'{z_i}m', fontsize=13)
+    ax2.set_xlabel(f"Number of Negative {c_latex} Values", fontsize=13)
     fig2.savefig(plotdir + f'number_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
 
-    ax3.set_title(f"{labels_title[nt_in]}", fontsize=16)
-    ax3.set_ylabel("$z/z_{ML}$ $z_{ML} = $"+f'{z_i}m', fontsize=16)
-    ax3.set_xlabel(f"% of Negative {c_latex}", fontsize=16)
+    ax3.set_title(f"{labels_title[nt_in]}", fontsize=13)
+    ax3.set_ylabel("$z/z_{ML}$ $z_{ML} = $"+f'{z_i}m', fontsize=13)
+    ax3.set_xlabel(f"% of Negative {c_latex}", fontsize=13)
     fig3.savefig(plotdir + f'overall_percent_neg_{c}_vs_z_{time_in}.pdf', bbox_inches='tight')
     #ax2.clf()
 
