@@ -421,35 +421,41 @@ def plot_hist(plotdir_in, data1, data2, data3, data4, data5, region, bins_in=set
                 if m == 0:
                     data1_masked = ma.masked_array(data1[i,j,:,:,:], mask=mask_use)
                     num_unmasked1 = ma.count(data1_masked[:,:,B1:B2])
+                    ax[i, j].hist(data1_masked[:, :, B1:B2].flatten(), bins=bins_in, histtype='step', stacked=False,
+                                  color=colours[0],
+                                  weights=np.ones(bomex_horiz_domain * (B2 - B1)) / (num_unmasked1), label='BOMEX')
+
                 elif m == 1:
                     data2_masked = ma.masked_array(data2[i,j,:,:,:], mask=mask_use)
                     num_unmasked2 = ma.count(data2_masked[:,:,A1[0]:A2[0]])
+                    ax[i, j].hist(data2_masked[:, :, A1[0]:A2[0]].flatten(), bins=bins_in, histtype='step',
+                                  stacked=False, color=colours[1],
+                                  weights=np.ones(arm_horiz_domain * (A2[0] - A1[0])) / (num_unmasked2),
+                                  label='ARM 10:30L')
                 elif m == 2:
                     data3_masked = ma.masked_array(data3[i,j,:,:,:], mask=mask_use)
                     num_unmasked3 = ma.count(data3_masked[:,:,A1[1]:A2[1]])
+                    ax[i, j].hist(data3_masked[:, :, A1[1]:A2[1]].flatten(), bins=bins_in, histtype='step',
+                                  stacked=False, color=colours[2],
+                                  weights=np.ones(arm_horiz_domain * (A2[1] - A1[1])) / (num_unmasked3),
+                                  label='ARM 12:30L')
                 elif m == 3:
                     data4_masked = ma.masked_array(data4[i,j,:,:,:], mask=mask_use)
                     num_unmasked4 = ma.count(data4_masked[:,:,A1[2]:A2[2]])
+                    ax[i, j].hist(data4_masked[:, :, A1[2]:A2[2]].flatten(), bins=bins_in, histtype='step',
+                                  stacked=False, color=colours[3],
+                                  weights=np.ones(arm_horiz_domain * (A2[2] - A1[2])) / (num_unmasked4),
+                                  label='ARM 14:30L')
+
                 elif m == 4:
                     data5_masked = ma.masked_array(data5[i,j,:,:,:], mask=mask_use)
                     num_unmasked5 = ma.count(data5_masked[:,:,A1[3]:A2[3]])
-
-
-
-                ax[i,j].hist(data1_masked[:,:,B1:B2].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[0],
-                         weights=np.ones(bomex_horiz_domain*(B2-B1)) / (num_unmasked1), label='BOMEX')
-                ax[i,j].hist(data2_masked[:,:,A1[0]:A2[0]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[1],
-                         weights=np.ones(arm_horiz_domain*(A2[0]-A1[0])) / (num_unmasked2), label='ARM 10:30L')
-                ax[i,j].hist(data3_masked[:,:,A1[1]:A2[1]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[2],
-                         weights=np.ones(arm_horiz_domain*(A2[1]-A1[1])) / (num_unmasked3), label='ARM 12:30L')
-                ax[i,j].hist(data4_masked[:,:,A1[2]:A2[2]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[3],
-                         weights=np.ones(arm_horiz_domain*(A2[2]-A1[2])) / (num_unmasked4), label='ARM 14:30L')
-                ax[i,j].hist(data5_masked[:,:,A1[3]:A2[3]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[4],
+                    ax[i,j].hist(data5_masked[:,:,A1[3]:A2[3]].flatten(), bins=bins_in, histtype='step', stacked=False, color=colours[4],
                          weights=np.ones(arm_horiz_domain*(A2[3]-A1[3])) / (num_unmasked5), label='ARM 16:30L')
-                ax[i,j].set_xlabel(f"{fields_latex_in[i]}", fontsize=16)
-                ax[i,j].yaxis.set_major_formatter(ticker.PercentFormatter(1))
-                ax[i,j].set_xlim(0, 0.3)
-                ax[0,j].set_title(f'{region} '+'$\\widehat{\\bar{\\Delta}}$ = '+f'{Deltas[j]}', fontsize=14)
+            ax[i,j].set_xlabel(f"{fields_latex_in[i]}", fontsize=16)
+            ax[i,j].yaxis.set_major_formatter(ticker.PercentFormatter(1))
+            ax[i,j].set_xlim(0, 0.3)
+            ax[0,j].set_title(f'{region} '+'$\\widehat{\\bar{\\Delta}}$ = '+f'{Deltas[j]}', fontsize=14)
         ax[i,0].set_ylabel("Percentage of Occurrences", fontsize=14)
 
 
