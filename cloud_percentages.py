@@ -95,7 +95,7 @@ def cloud_percentage(dataset_in, cl_bottom, cl_top, cloud_liquid_threshold=10**(
 labels_title = ['BOMEX', 'ARM 10:30L', 'ARM 12:30L', 'ARM 14:30L', 'ARM 16:30L']
 
 
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(8, 4))
 
 for nt, t in enumerate(times):
     if t == '14400':
@@ -123,6 +123,6 @@ plt.legend()
 #            np.round(np.linspace((0) * (20 / 480), (151) * (20 / 480), len(og_xtic[0])), 1))
 
 # ax1.title(f"{labels_title[nt_in]}", fontsize=13)
-plt.ylabel('Percentage of Cloud Cover', fontsize=16)
-plt.xlabel("$\\widehat{\\bar{\\Delta}}$", fontsize=13)
+plt.ylabel('Percentage of Cloud Cover', fontsize=14)
+plt.xlabel("$\\widehat{\\bar{\\Delta}}$", fontsize=14)
 plt.savefig(plotdir + f'percent_cloud_cover.pdf', bbox_inches='tight')
