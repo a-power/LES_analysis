@@ -123,6 +123,8 @@ plt.legend()
 #            np.round(np.linspace((0) * (20 / 480), (151) * (20 / 480), len(og_xtic[0])), 1))
 
 # ax1.title(f"{labels_title[nt_in]}", fontsize=13)
+plt.xlim(0,102)
+plt.ylim(Deltas[0], Deltas[-1])
 plt.ylabel('Percentage of Cloud Cover', fontsize=14)
 plt.xlabel("$\\widehat{\\bar{\\Delta}}$", fontsize=14)
 plt.savefig(plotdir + f'percent_cloud_cover.pdf', bbox_inches='tight')
