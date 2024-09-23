@@ -132,7 +132,7 @@ def negs_in_field(plotdir, field, c, c_latex, z, z_i, time_in, nt_in, data_field
     deltas = ['4$\\Delta$', '16$\\Delta$', '64$\\Delta$']
     colours = ['tab:orange', 'tab:red', 'tab:cyan']
 
-    fig1 = plt.figure(figsize=(3.5, 4.5))
+    fig1 = plt.figure(figsize=(3.5, 5.5))
     ax1 = fig1.add_subplot(111)
     fig2 = plt.figure(figsize=(3.5, 4.5))
     ax2 = fig2.add_subplot(111)
