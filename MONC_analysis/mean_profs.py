@@ -148,7 +148,7 @@ if plotting == 'og_vs_HCs':
             else:
                 plt.title(f'BOMEX: Smag 0.23 (dot) vs ' + '$C_s$ prof (dash)')
             plt.tight_layout(pad=0.5)
-            #plt.gcf().set_size_inches(5.5, 7)
+            plt.gcf().set_size_inches(3, 5)
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
@@ -232,7 +232,7 @@ elif plotting == 'HCs_vs_SAHCs':
             else:
                 plt.title(f'BOMEX:'+' $C_s$ prof (dot) vs S-A $C_s$ prof (dash)')
             plt.tight_layout(pad=0.5)
-            #plt.gcf().set_size_inches(5.5, 7)
+            plt.gcf().set_size_inches(3, 5)
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
@@ -321,7 +321,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
 
             plt.title(f'{clock_time}: S-A Smag (dot) vs S-A $C_s$ prof (dash)')
             plt.tight_layout(pad=0.5)
-            #plt.gcf().set_size_inches(5.5, 7)
+            plt.gcf().set_size_inches(3, 5)
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
@@ -420,7 +420,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
 
             plt.title(f'{clock_time}:' + ' $C_s$ prof vs $C_s$ & $C_{\\theta_L}$ profs')
             plt.tight_layout(pad=0.5)
-            # plt.gcf().set_size_inches(5.5, 7)
+            plt.gcf().set_size_inches(3, 5)
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
