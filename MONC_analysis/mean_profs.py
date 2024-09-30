@@ -402,8 +402,8 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
 
             plt.plot(figsize=(6.5,8))
 
-            plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2,
-                     label='LES $\\Delta$ = 25m')
+            plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2)
+                     #label='LES $\\Delta$ = 25m')
 
             for i in range(6):
                 # plt.plot(list_timestamps, CT_mean_height_ts[i,:], colour_cycle[i%3], linestyle=line_list[i], label=model_param[i]+f'{2 ** ((i+1) % 8)}$\\Delta$')
