@@ -39,15 +39,16 @@ list_timestamps = [18000, 25200, 32400, 39600]
 #list_timestamps = [17400, 18000, 24600, 25200, 31800, 32400, 39000, 39600]
 #list_timestamps = np.arange(600, 40200, 600)
 
-var_list = ['wtheta_cn_mean', 'wtheta_ad_mean', 'wtsg_mean',
-            'wqv_cn_mean', 'wqv_ad_mean', 'wqv_sg_mean', 'w_qt',
-            'ww_mean', 'wwsg_mean', 'qt_qt', 'sqt_qt',
-            'theta_mean', 'total_cloud_fraction', 'tkesg_mean',
-            'viscosity_coef_mean', 'diffusion_coef_mean', 'dissipation_mean'] #,
+var_list = ['wtheta_cn_mean', 'w_qt', 'theta_mean', 'total_cloud_fraction'] #,
             # 'resolved_buoyant_production', 'resolved_shear_production', 'resolved_turbulent_transport'] #,
-            # 'subgrid_buoyant_production', 'subgrid_shear_stress', 'subgrid_turbulent_transport']
+            # 'subgrid_buoyant_production', 'subgrid_shear_stress', 'subgrid_turbulent_transport', 'wtheta_ad_mean',
+#  'wtsg_mean', 'ww_mean', 'wwsg_mean', 'qt_qt', 'sqt_qt',
+#             'wqv_cn_mean', 'wqv_ad_mean', 'wqv_sg_mean', , 'tkesg_mean',
+#             'viscosity_coef_mean', 'diffusion_coef_mean', 'dissipation_mean']
 
 # 'tke_tendency', 'tkesg_mean'
+
+var_names = ["$\\overline{w'\\theta'}$", "$\\overline{w' q_t}$", "$\\overline{\\theta}$", "total cloud fraction"]
 
 zn = np.arange(0, 4410, 10)
 zn_440 = np.arange(0, 4400, 10)
@@ -147,6 +148,8 @@ if plotting == 'og_vs_HCs':
                 plt.title(f'{clock_time}: Smag 0.23 & '+'$C_s$')
             else:
                 plt.title(f'Smag 0.23 &' + '$C_s$')
+            if var == 'w_qt':
+                plt.xticks(xticks, [f'{x:.2e}' for x in xticks])
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(3.5, 5)
             plt.legend(fontsize=13, loc='upper right')
@@ -154,7 +157,7 @@ if plotting == 'og_vs_HCs':
             bottom, top = plt.ylim()
             plt.ylim(0, 1.3)
 
-            plt.xlabel(f'{var}', fontsize=14)
+            plt.xlabel(f'{var_names[nv]}', fontsize=14)
             if nt == 0:
                 plt.ylabel('$z$/$z_{CT}$', fontsize=14)
 
@@ -228,6 +231,8 @@ elif plotting == 'HCs_vs_SAHCs':
                     else:
                         plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle=':')
                         # marker='*')
+            if var == 'w_qt':
+                plt.xticks(xticks, [f'{x:.2e}' for x in xticks])
             if case == 'ARM':
                 plt.title(f'{clock_time}: Smag'+' $C_s$ & S-A $C_s$')
             else:
@@ -239,7 +244,7 @@ elif plotting == 'HCs_vs_SAHCs':
             bottom, top = plt.ylim()
             plt.ylim(0, 1.3)
 
-            plt.xlabel(f'{var}', fontsize=14)
+            plt.xlabel(f'{var_names[nv]}', fontsize=14)
             if nt == 0:
                 plt.ylabel('$z$/$z_{CT}$', fontsize=14)
 
@@ -320,7 +325,8 @@ elif plotting == 'SAHCs_vs_SA_Smag':
                         plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle='--',
                                  label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
-
+            if var == 'w_qt':
+                plt.xticks(xticks, [f'{x:.2e}' for x in xticks])
             plt.title(f'{clock_time}: S-A Smag & S-A $C_s$')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(3.5,5)
@@ -329,7 +335,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
             bottom, top = plt.ylim()
             plt.ylim(0, 1.3)
             #plt.ylim(bottom=600, top=3600)
-            plt.xlabel(f'{var}', fontsize=14)
+            plt.xlabel(f'{var_names[nv]}', fontsize=14)
             if nt == 0:
                 plt.ylabel('$z$/$z_{CT}$', fontsize=14)
 
@@ -420,7 +426,8 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                         plt.plot(var_prof_440[i, :], zn_440/cloudtop25[nt], colour_cycle[i % 3], linestyle=':',
                                  label='$\\Delta$' + ' = 200m, $C_s$ prof')
                         # marker='*')
-
+            if var == 'w_qt':
+                plt.xticks(xticks, [f'{x:.2e}' for x in xticks])
             plt.title(f'{clock_time}:' + ' $C_s$ & $C_s C_{\\theta_L}$')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(3.5, 5)
@@ -430,7 +437,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
             plt.ylim(0, 1.3)
             #plt.ylim(bottom=600, top = 3600)
 
-            plt.xlabel(f'{var}', fontsize=14)
+            plt.xlabel(f'{var_names[nv]}', fontsize=14)
             if nt == 0:
                 plt.ylabel('$z$/$z_{CT}$', fontsize=14)
 
