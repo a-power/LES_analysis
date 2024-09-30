@@ -111,7 +111,7 @@ if plotting == 'og_vs_HCs':
 
 
 
-            plt.plot(figsize=(5, 8))
+            plt.plot(figsize=(3, 5.5))
 
             plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2,
                      label='LES $\\Delta$ = 25m')
@@ -197,7 +197,7 @@ elif plotting == 'HCs_vs_SAHCs':
                     ds_in = xr.open_dataset(path_in + filein)
                     var_prof[6, :] = np.mean(ds_in[f'{var}'].data, axis=0)
 
-            plt.plot(figsize=(5, 8))
+            plt.plot(figsize=(3, 5.5))
 
             plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2,
                      label='LES $\\Delta$ = 25m')
@@ -282,7 +282,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
                     ds_in = xr.open_dataset(path_in + filein)
                     var_prof[6, :] = np.mean(ds_in[f'{var}'].data, axis=0)
 
-            plt.plot(figsize=(5, 8))
+            plt.plot(figsize=(3, 5.5))
 
             plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2,
                      label='LES $\\Delta$ = 25m')
@@ -376,7 +376,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                     ds_in = xr.open_dataset(path_in + filein)
                     var_prof[6, :] = np.mean(ds_in[f'{var}'].data, axis=0)
 
-            plt.plot(figsize=(5, 8))
+            plt.plot(figsize=(3, 5.5))
 
             plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2,
                      label='LES $\\Delta$ = 25m')
