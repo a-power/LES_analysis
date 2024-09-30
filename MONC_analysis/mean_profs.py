@@ -148,7 +148,7 @@ if plotting == 'og_vs_HCs':
             else:
                 plt.title(f'Smag 0.23 &' + '$C_s$')
             plt.tight_layout(pad=0.5)
-            plt.gcf().set_size_inches(3, 5)
+            plt.gcf().set_size_inches(4, 5)
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
@@ -233,7 +233,7 @@ elif plotting == 'HCs_vs_SAHCs':
             else:
                 plt.title('$C_s$ & S-A $C_s$')
             plt.tight_layout(pad=0.5)
-            plt.gcf().set_size_inches(3, 5)
+            plt.gcf().set_size_inches(4, 5)
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
@@ -323,7 +323,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
 
             plt.title(f'{clock_time}: S-A Smag & S-A $C_s$')
             plt.tight_layout(pad=0.5)
-            plt.gcf().set_size_inches(3,5)
+            plt.gcf().set_size_inches(4,5)
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
@@ -423,7 +423,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
 
             plt.title(f'{clock_time}:' + ' $C_s$ & $C_s C_{\\theta_L}$')
             plt.tight_layout(pad=0.5)
-            plt.gcf().set_size_inches(3, 5)
+            plt.gcf().set_size_inches(4, 5)
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
