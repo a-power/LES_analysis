@@ -432,7 +432,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(3.5, 5)
             if nt == 0:
-                plt.legend(fontsize=13, loc='lower right')
+                plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
             plt.ylim(0, 1.3)
