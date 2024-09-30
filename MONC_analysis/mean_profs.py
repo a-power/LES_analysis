@@ -410,7 +410,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                 if i < 3:
                     if i == 2:
                         plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle='-',
-                                 label='$\\Delta$' + ' = 400m, SA$C_s$$C_{\\theta_L}$ ')
+                                 label='$\\Delta$' + ' = 400m, SA $C_s$$C_{\\theta_L}$ ')
                     else:
                         plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle='--',
                                  label='$\\Delta$' + f' = {(2 ** (i+1))}00m, ' + '$C_s$$C_{\\theta_L}$')
@@ -418,7 +418,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                 else:
                     if i == 5:
                         plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle='-.',
-                                 label='$\\Delta$' + ' = 400m, S-A$C_s$')
+                                 label='$\\Delta$' + ' = 400m, SA $C_s$')
                     elif i == 4:
                         plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle=':',
                                  label='$\\Delta$' + ' = 400m, $C_s$')
@@ -431,7 +431,8 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
             plt.title(f'{clock_time}:' + ' $C_s$ & $C_s C_{\\theta_L}$')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(3.5, 5)
-            plt.legend(fontsize=13, loc='upper right')
+            if nt == 0:
+                plt.legend(fontsize=13, loc='lower right')
 
             bottom, top = plt.ylim()
             plt.ylim(0, 1.3)
