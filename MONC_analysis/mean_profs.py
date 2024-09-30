@@ -4,7 +4,17 @@ import xarray as xr
 import matplotlib.pyplot as plt
 import datetime
 import os
+import argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--time', type=str, default='32400')
+parser.add_argument('--case', type=str, default='ARM')
+parser.add_argument('--p', type=int, default=0)
+
+args = parser.parse_args()
+set_time = [ args.time ]
+case = args.case
+p = args.p
 
 def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=1):
 
@@ -13,7 +23,8 @@ def get_cloud_only(CT_or_CB_field, dist_from_surf_threas=1):
     return mask_no_cloud
 
 
-plotting = 'og_vs_HCs' # 'og_vs_HCs' 'HCs_vs_SAHCs' 'SAHCs_vs_SA_Smag' 'SAHCs_vs_SAHCsCth_L'
+plotting_list = ['og_vs_HCs', 'HCs_vs_SAHCs', 'SAHCs_vs_SA_Smag', 'SAHCs_vs_SAHCsCth_L']
+plotting = plotting_list[p]
 
 
 
@@ -132,8 +143,10 @@ if plotting == 'og_vs_HCs':
                         plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3],
                              label='$\\Delta$'+f' = {(2**(i-3))}00m', linestyle='--')
                             # marker='*')
-
-            plt.title(f'{clock_time}: Smag 0.23 (dot) vs '+'$C_s$ prof (dash)')
+            if case == 'ARM':
+                plt.title(f'ARM {clock_time}: Smag 0.23 (dot) vs '+'$C_s$ prof (dash)')
+            else:
+                plt.title(f'BOMEX: Smag 0.23 (dot) vs ' + '$C_s$ prof (dash)')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
@@ -214,8 +227,10 @@ elif plotting == 'HCs_vs_SAHCs':
                     else:
                         plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle=':')
                         # marker='*')
-
-            plt.title(f'{clock_time}:'+' $C_s$ prof (dot) vs S-A $C_s$ prof (dash)')
+            if case == 'ARM':
+                plt.title(f'ARM {clock_time}: Smag'+' $C_s$ prof (dot) vs S-A $C_s$ prof (dash)')
+            else:
+                plt.title(f'BOMEX:'+' $C_s$ prof (dot) vs S-A $C_s$ prof (dash)')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
