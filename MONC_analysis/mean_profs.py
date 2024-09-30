@@ -122,7 +122,7 @@ if plotting == 'og_vs_HCs':
 
 
 
-            plt.plot(figsize=(3, 5.5))
+            plt.plot(figsize=(3, 5))
 
             plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2,
                      label='LES $\\Delta$ = 25m')
@@ -148,7 +148,7 @@ if plotting == 'og_vs_HCs':
             else:
                 plt.title(f'BOMEX: Smag 0.23 (dot) vs ' + '$C_s$ prof (dash)')
             plt.tight_layout(pad=0.5)
-            plt.gcf().set_size_inches(5.5, 7)
+            #plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
@@ -159,7 +159,7 @@ if plotting == 'og_vs_HCs':
 
             plt.tight_layout()
 
-            plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_HCs_vs_stand.png', bbox_inches='tight')
+            #plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_HCs_vs_stand.png', bbox_inches='tight')
             plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_HCs_vs_stand.pdf', bbox_inches='tight')
             plt.close()
 
@@ -210,7 +210,7 @@ elif plotting == 'HCs_vs_SAHCs':
                     ds_in = xr.open_dataset(path_in + filein)
                     var_prof[6, :] = np.mean(ds_in[f'{var}'].data, axis=0)
 
-            plt.plot(figsize=(3, 5.5))
+            plt.plot(figsize=(3, 5))
 
             plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2,
                      label='LES $\\Delta$ = 25m')
@@ -232,7 +232,7 @@ elif plotting == 'HCs_vs_SAHCs':
             else:
                 plt.title(f'BOMEX:'+' $C_s$ prof (dot) vs S-A $C_s$ prof (dash)')
             plt.tight_layout(pad=0.5)
-            plt.gcf().set_size_inches(5.5, 7)
+            #plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
@@ -243,7 +243,7 @@ elif plotting == 'HCs_vs_SAHCs':
 
             plt.tight_layout()
 
-            plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_HCs_vs_SAHCs.png', bbox_inches='tight')
+            #plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_HCs_vs_SAHCs.png', bbox_inches='tight')
             plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_HCs_vs_SAHCs.pdf', bbox_inches='tight')
             plt.close()
 
@@ -297,7 +297,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
                     ds_in = xr.open_dataset(path_in + filein)
                     var_prof[6, :] = np.mean(ds_in[f'{var}'].data, axis=0)
 
-            plt.plot(figsize=(3, 5.5))
+            plt.plot(figsize=(3, 5))
 
             plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2,
                      label='LES $\\Delta$ = 25m')
@@ -321,7 +321,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
 
             plt.title(f'{clock_time}: S-A Smag (dot) vs S-A $C_s$ prof (dash)')
             plt.tight_layout(pad=0.5)
-            plt.gcf().set_size_inches(5.5, 7)
+            #plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
@@ -332,7 +332,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
 
             plt.tight_layout()
 
-            plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_SA_Smag_vs_SAHCs.png', bbox_inches='tight')
+            #plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_SA_Smag_vs_SAHCs.png', bbox_inches='tight')
             plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_SA_Smag_vs_SAHCs.pdf', bbox_inches='tight')
             plt.close()
 
@@ -391,7 +391,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                     ds_in = xr.open_dataset(path_in + filein)
                     var_prof[6, :] = np.mean(ds_in[f'{var}'].data, axis=0)
 
-            plt.plot(figsize=(3, 5.5))
+            plt.plot(figsize=(3, 5))
 
             plt.plot(var_prof[6, :], zn/cloudtop25[nt], 'k', linewidth=2,
                      label='LES $\\Delta$ = 25m')
@@ -420,7 +420,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
 
             plt.title(f'{clock_time}:' + ' $C_s$ prof vs $C_s$ & $C_{\\theta_L}$ profs')
             plt.tight_layout(pad=0.5)
-            plt.gcf().set_size_inches(5.5, 7)
+            # plt.gcf().set_size_inches(5.5, 7)
             plt.legend(fontsize=13, loc='upper right')
 
             bottom, top = plt.ylim()
@@ -432,7 +432,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
 
             plt.tight_layout()
 
-            plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_SAHCs_vs_SAHCsCth_L.png', bbox_inches='tight')
+            #plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_SAHCs_vs_SAHCsCth_L.png', bbox_inches='tight')
             plt.savefig(plotdir + f'ARM_{var}_{time}_mean_prof_SAHCs_vs_SAHCsCth_L.pdf', bbox_inches='tight')
             plt.close()
 
