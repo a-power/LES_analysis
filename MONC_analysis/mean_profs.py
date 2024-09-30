@@ -149,7 +149,7 @@ if plotting == 'og_vs_HCs':
             else:
                 plt.title(f'Smag 0.23 &' + '$C_s$')
             if var == 'w_qt':
-                plt.xticks(xticks, [f'{x:.2e}' for x in xticks])
+                plt.gca().ticklabel_format(axis='x', style='sci', scilimits=(0, 0))
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(3.5, 5)
             plt.legend(fontsize=13, loc='upper right')
@@ -232,7 +232,7 @@ elif plotting == 'HCs_vs_SAHCs':
                         plt.plot(var_prof[i, :], zn/cloudtop25[nt], colour_cycle[i % 3], linestyle=':')
                         # marker='*')
             if var == 'w_qt':
-                plt.xticks(xticks, [f'{x:.2e}' for x in xticks])
+                plt.gca().ticklabel_format(axis='x', style='sci', scilimits=(0, 0))
             if case == 'ARM':
                 plt.title(f'{clock_time}: Smag'+' $C_s$ & S-A $C_s$')
             else:
@@ -326,7 +326,7 @@ elif plotting == 'SAHCs_vs_SA_Smag':
                                  label='$\\Delta$' + f' = {(2 ** (i-3))}00m')
                         # marker='*')
             if var == 'w_qt':
-                plt.xticks(xticks, [f'{x:.2e}' for x in xticks])
+                plt.gca().ticklabel_format(axis='x', style='sci', scilimits=(0, 0))
             plt.title(f'{clock_time}: S-A Smag & S-A $C_s$')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(3.5,5)
@@ -427,7 +427,7 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                                  label='$\\Delta$' + ' = 200m, $C_s$ prof')
                         # marker='*')
             if var == 'w_qt':
-                plt.xticks(xticks, [f'{x:.2e}' for x in xticks])
+                plt.gca().ticklabel_format(axis='x', style='sci', scilimits=(0, 0))
             plt.title(f'{clock_time}:' + ' $C_s$ & $C_s C_{\\theta_L}$')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(3.5, 5)
