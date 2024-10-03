@@ -145,14 +145,15 @@ if plotting == 'og_vs_HCs':
                              label='$\\Delta$'+f' = {(2**(i-3))}00m', linestyle='--')
                             # marker='*')
             if case == 'ARM':
-                plt.title(f'{clock_time}: Smag 0.23 & '+'$C_s$')
+                plt.title(f'{clock_time}: Smag0.23 & '+'$C_s$prof')
             else:
                 plt.title(f'Smag 0.23 &' + '$C_s$')
             if var == 'w_qt':
                 plt.gca().ticklabel_format(axis='x', style='sci', scilimits=(0, 0))
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(3.5, 5)
-            plt.legend(fontsize=13, loc='upper right')
+            if nt == 0:
+                plt.legend(fontsize=13, loc='lower right')
 
             bottom, top = plt.ylim()
             plt.ylim(0, 1.3)
@@ -234,7 +235,7 @@ elif plotting == 'HCs_vs_SAHCs':
             if var == 'w_qt':
                 plt.gca().ticklabel_format(axis='x', style='sci', scilimits=(0, 0))
             if case == 'ARM':
-                plt.title(f'{clock_time}: Smag'+' $C_s$ & S-A $C_s$')
+                plt.title(f'{clock_time}:'+' $C_s$ (dotted) & SA$C_s$ (dashed)')
             else:
                 plt.title('$C_s$ & S-A $C_s$')
             plt.tight_layout(pad=0.5)
@@ -428,11 +429,11 @@ elif plotting == 'SAHCs_vs_SAHCsCth_L':
                         # marker='*')
             if var == 'w_qt':
                 plt.gca().ticklabel_format(axis='x', style='sci', scilimits=(0, 0))
-            plt.title(f'{clock_time}:' + ' $C_s$ & $C_s C_{\\theta_L}$')
+            plt.title(f'{clock_time}:' + ' $C_s$prof & $C_s C_{\\theta_L}$profs')
             plt.tight_layout(pad=0.5)
             plt.gcf().set_size_inches(3.5, 5)
             if nt == 0:
-                plt.legend(fontsize=13, loc='upper right')
+                plt.legend(fontsize=13, loc='lower right')
 
             bottom, top = plt.ylim()
             plt.ylim(0, 1.3)
