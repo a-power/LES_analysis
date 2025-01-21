@@ -95,7 +95,7 @@ def cloud_percentage(dataset_in, cl_bottom, cl_top, cloud_liquid_threshold=10**(
 labels_title = ['BOMEX', 'ARM 10:30L', 'ARM 12:30L', 'ARM 14:30L', 'ARM 16:30L']
 
 
-plt.figure(figsize=(8, 4))
+plt.figure(figsize=(6, 4))
 
 for nt, t in enumerate(times):
     if t == '14400':
