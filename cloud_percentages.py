@@ -112,6 +112,8 @@ for nt, t in enumerate(times):
         print('len of c_b = ', c_b[nt])
         print('len of c_t = ', c_t[nt])
 
+        print('looking in dataset: ', data_cl_list_out[i])
+
         perc[i] = cloud_percentage(data_cl_list_out[i], c_b[nt], c_t[nt])
 
     plt.plot(Deltas, perc*100, label=labels_title[nt])
