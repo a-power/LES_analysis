@@ -59,7 +59,7 @@ ARM_ML_ind = ARM_ML_range/10
 ARM_CL_ind = ARM_CL_range/10
 
 
-set_bins=160
+set_bins=np.linspace(0.0, 0.3, 20)
 
 field_names = ['Cs_field', 'Cth_field', 'Cth_L_field', 'Cqt_field']
 field_latex = ['$C_{s}$', '$C_{\\theta}$', '$C_{\\theta_L}$', '$C_{q_t}$']
