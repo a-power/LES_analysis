@@ -520,4 +520,5 @@ ARM4_IC = [ARM4_s_list_cloud, ARM4_th_list_cloud, ARM4_th_L_list_cloud, ARM4_qt_
 
 # plot_hist(plotdir, BOMEX_env, ARM1_env, ARM2_env, ARM3_env, ARM4_env, region='ML')
 # plot_hist(plotdir,  BOMEX_env, ARM1_env, ARM2_env, ARM3_env, ARM4_env, region='IC')
+print("plotting CFE")
 plot_hist(plotdir, BOMEX_IC, ARM1_IC, ARM2_IC, ARM3_IC, ARM4_IC, region='CFE')
